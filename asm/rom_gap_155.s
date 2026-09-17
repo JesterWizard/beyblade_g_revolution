@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x0804E20C..0x08050863
+@ Unmatched ROM 0x0804E59C..0x080507B7
 	.section .rodata
 	.global gRomGap155
 gRomGap155:
-	.incbin "baserom.gba", 0x4E20C, 0x2658
+	.incbin "baserom.gba", 0x4E59C, 0x221C

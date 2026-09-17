@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x0806FE50..0x0806FE83
+@ Unmatched ROM 0x0807041E..0x08070467
 	.section .rodata
 	.global gRomGap279
 gRomGap279:
-	.incbin "baserom.gba", 0x6FE50, 0x34
+	.incbin "baserom.gba", 0x7041E, 0x4A
