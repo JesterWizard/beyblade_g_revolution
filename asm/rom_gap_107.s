@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x0805087C..0x08052933
+@ Unmatched ROM 0x0804CA54..0x0804D58B
 	.section .rodata
 	.global gRomGap107
 gRomGap107:
-	.incbin "baserom.gba", 0x5087C, 0x20B8
+	.incbin "baserom.gba", 0x4CA54, 0xB38

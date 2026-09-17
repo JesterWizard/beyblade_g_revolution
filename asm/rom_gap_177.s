@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x080686E4..0x08068807
+@ Unmatched ROM 0x0806801E..0x0806801F
 	.section .rodata
 	.global gRomGap177
 gRomGap177:
-	.incbin "baserom.gba", 0x686E4, 0x124
+	.incbin "baserom.gba", 0x6801E, 0x2
