@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x080429CC..0x08042AFF
+@ Unmatched ROM 0x080423F2..0x080424E7
 	.section .rodata
 	.global gRomGap100
 gRomGap100:
-	.incbin "baserom.gba", 0x429CC, 0x134
+	.incbin "baserom.gba", 0x423F2, 0xF6
