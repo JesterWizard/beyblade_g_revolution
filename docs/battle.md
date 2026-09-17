@@ -42,12 +42,15 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `+0x0874` | `unk0874` | `s16` thunk arg (`sub_0802E1EC`) |
 | `+0x1688` | `unk1688` | `Unk1688Entry *` (24-byte records) |
 | `+0x1694` | `unk1694` | `Unk1694 *` (4-byte records) |
+| `+0x16C8` | `unk16C8` | compare cookie for `sub_08073440` |
+| `+0x16E0` / `+0x16E4` | `unk16E0` / `unk16E4` | `{ptr, word}` lists |
 | `+0x1710` | `unk1710[27]` | `s32` handles (`-1` = empty) |
 | `+0x177C` / `+0x1780` | `unk177C` / `unk1780` | `s32` handles |
 | `+0x1798` / `+0x179C` | `unk1798` / `unk179C` | copied to/from `*gUnk_03000630` |
 | `+0x1800` | `unk1800` | LCG seed / arena word |
 | `+0x1808` | `unk1808` | flags (`0x200` / `0x2000`) |
 | `+0x1818` | `unk1818` | table-row index |
+| `+0x181A` | `unk181A` | last `sub_080603E0` arg |
 | `+0x1834` | `unk1834` | flag byte |
 | `+0x1861` | `unk1861[0x53]` | signed occupancy bytes |
 
@@ -65,6 +68,9 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_0803E440` | **semantic C** — count positive `unk1861[]` |
 | `sub_0806013C` | **semantic C** — invalidate `unk177C`/`unk1780` |
 | `sub_08060220` | **semantic C** — invalidate `unk1710[idx]` |
+| `sub_080603E0` | **semantic C** — `sub_08071FC8` on `unk1710[0..0x18]`, set `unk181A` |
+| `sub_08043BDC` | **semantic C** — walk `unk16E4` vs `unk16C8` |
+| `sub_08060428` family | **semantic C** — thunks to `sub_080601C4` |
 | `sub_08072F94` | readable Thumb — agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
 | `sub_0803DD60` family | readable Thumb — main-work table via `+0x1818` |
 | `sub_08034894` | readable Thumb — agbcc prologue / pool ordering |
@@ -72,7 +78,7 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | readable Thumb — C adds `push {lr}` |
 | `sub_0806A6F8` | readable Thumb — large input hub |
 
-10 / 160 battle functions are semantic C; the rest are readable Thumb (0 opcode `.byte`). C matching still needs permuter / hand-refine on pool-order and leaf-prologue stubs.
+12 / 160 battle functions are semantic C (progress.py); more thunks are semantic C but lack battle IWRAM pools. Remainder is readable Thumb (0 opcode `.byte`).
 
 ## Tools
 

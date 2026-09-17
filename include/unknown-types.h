@@ -103,11 +103,17 @@ struct Unk0C /* 0x0c */
     /* 00 */ u8 filler_00[0x0c];
 };
 
-/* Battle work block (*gBattleWork). sub_080314FC. */
-struct BattleWork /* >= 0x11c */
+/* Battle work block (*gBattleWork). sub_080314FC, sub_08033530. */
+struct BattleWork /* >= 0x2089 */
 {
-    /* 000 */ u8 filler_00[0x118];
-    /* 118 */ u32 unk118;
+    /* 0000 */ u8 filler_00[0x118];
+    /* 0118 */ u32 unk118;
+    /* 011C */ u8 filler_011C[0x1E90];
+    /* 1FAC */ u8 unk1FAC;
+    /* 1FAD */ u8 filler_1FAD[0x6F];
+    /* 201C */ u32 unk201C;
+    /* 2020 */ u8 filler_2020[0x68];
+    /* 2088 */ u8 unk2088;
 };
 
 /* 4-byte records pointed to by MainWork.unk1694. sub_0802C62C. */
@@ -117,6 +123,20 @@ struct Unk1694 /* 0x04 */
     /* 01 */ u8 unk01;
     /* 02 */ u8 unk02;
     /* 03 */ s8 unk03;
+};
+
+/* {u32, u32} ROM table. sub_0802B994. */
+struct Unk7709C /* 0x08 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+};
+
+/* {ptr, word} records. sub_08043B90, sub_08043BDC. */
+struct Unk16E0 /* 0x08 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ s32 unk04;
 };
 
 /* 0x18-stride records pointed to by MainWork.unk1688. sub_08044EE8. */
@@ -142,7 +162,12 @@ struct MainWork /* >= 0x18B4 */
     /* 168C */ void *unk168C;
     /* 1690 */ void *unk1690;
     /* 1694 */ struct Unk1694 *unk1694;
-    /* 1698 */ u8 filler_1698[0x78];
+    /* 1698 */ u8 filler_1698[0x30];
+    /* 16C8 */ void *unk16C8;
+    /* 16CC */ u8 filler_16CC[0x14];
+    /* 16E0 */ struct Unk16E0 *unk16E0;
+    /* 16E4 */ struct Unk16E0 *unk16E4;
+    /* 16E8 */ u8 filler_16E8[0x28];
     /* 1710 */ s32 unk1710[27];
     /* 177C */ s32 unk177C;
     /* 1780 */ s32 unk1780;
@@ -156,7 +181,10 @@ struct MainWork /* >= 0x18B4 */
     /* 180C */ u8 filler_180C[0xC];
     /* 1818 */ u8 unk1818;
     /* 1819 */ u8 unk1819;
-    /* 181A */ u8 filler_181A[0x1A];
+    /* 181A */ u8 unk181A;
+    /* 181B */ u8 filler_181B[4];
+    /* 181F */ s8 unk181F;
+    /* 1820 */ u8 filler_1820[0x14];
     /* 1834 */ u8 unk1834;
     /* 1835 */ u8 filler_1835[0x2C];
     /* 1861 */ s8 unk1861[0x53];
@@ -189,6 +217,13 @@ struct Unk0630 /* >= 0x48 */
     /* 00 */ u8 filler_00[0x40];
     /* 40 */ u32 unk40;
     /* 44 */ u32 unk44;
+};
+
+/* Byte at +0x16. sub_08071F84, sub_08071F98. */
+struct Unk71F84 /* >= 0x17 */
+{
+    /* 00 */ u8 filler_00[0x16];
+    /* 16 */ u8 unk16;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

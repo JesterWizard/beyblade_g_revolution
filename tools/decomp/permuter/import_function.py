@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
 from m2c_asm import m2c_decompile  # noqa: E402
 from opcode_stubs import is_opcode_stub  # noqa: E402
@@ -26,7 +26,7 @@ from opcode_stubs import is_opcode_stub  # noqa: E402
 NON = ROOT / "asm" / "nonmatchings"
 MATCHED = ROOT / "src" / "matched"
 PERM = ROOT / "tools" / "decomp-permuter"
-COMPILE_SH = ROOT / "scripts" / "decomp" / "permuter" / "compile.sh"
+COMPILE_SH = ROOT / "tools" / "decomp" / "permuter" / "compile.sh"
 
 
 def to_glabel_asm(function: str) -> str:

@@ -43,7 +43,7 @@ _INCBIN = re.compile(
 )
 _HEX_BYTE = re.compile(r"0x[0-9A-Fa-f]{2}")
 
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from opcode_stubs import file_kind  # noqa: E402
 
 

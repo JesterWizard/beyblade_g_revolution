@@ -32,7 +32,7 @@ CANDIDATES: list[tuple[str, str, str]] = [
     ),
 ]
 
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from match_function import write_single_function_c
 
 converted = 0

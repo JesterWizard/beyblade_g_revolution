@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
 from asm_bytes import integration_plan  # noqa: E402
 

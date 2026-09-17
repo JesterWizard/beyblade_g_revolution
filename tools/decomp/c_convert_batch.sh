@@ -19,7 +19,7 @@ MANIFEST = ROOT / "build" / "matched.json"
 manifest = json.loads(MANIFEST.read_text()) if MANIFEST.is_file() else {"functions": []}
 already = {f["src"] for f in manifest["functions"] if f.get("src")}
 
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from c_patterns import guess_c
 from match_function import write_single_function_c
 

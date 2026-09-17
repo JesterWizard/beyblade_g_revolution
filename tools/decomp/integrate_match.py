@@ -13,10 +13,10 @@ ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "build" / "matched.json"
 NON = ROOT / "asm" / "nonmatchings"
 MATCH = ROOT / "asm" / "matchings"
-GEN = ROOT / "scripts" / "decomp" / "gen_rom_layout.py"
-MATCH_SCRIPT = ROOT / "scripts" / "decomp" / "match_function.py"
+GEN = ROOT / "tools" / "decomp" / "gen_rom_layout.py"
+MATCH_SCRIPT = ROOT / "tools" / "decomp" / "match_function.py"
 
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from asm_bytes import addr_from_name, integration_plan, write_matching_asm  # noqa: E402
 
 

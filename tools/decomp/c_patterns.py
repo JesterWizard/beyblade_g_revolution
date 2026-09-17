@@ -455,7 +455,7 @@ def guess_opcode_embed(function: str, asm_lines: list[str] | None = None) -> CCa
 
 def _naked_retail(function: str) -> CCandidate | None:
     """Last resort: embed exact retail opcode bytes (tiny functions only)."""
-    sys_path = ROOT / "scripts" / "decomp"
+    sys_path = ROOT / "tools" / "decomp"
     if str(sys_path) not in __import__("sys").path:
         __import__("sys").path.insert(0, str(sys_path))
     from asm_bytes import retail_bytes  # noqa: WPS433

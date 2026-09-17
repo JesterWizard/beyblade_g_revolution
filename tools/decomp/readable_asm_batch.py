@@ -9,13 +9,13 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
 from battle_scan import score  # noqa: E402
 from opcode_stubs import is_opcode_stub  # noqa: E402
 from readable_asm import guess_readable_asm  # noqa: E402
 
-INTEGRATE = ROOT / "scripts" / "decomp" / "integrate_c.py"
+INTEGRATE = ROOT / "tools" / "decomp" / "integrate_c.py"
 MATCHED = ROOT / "src" / "matched"
 NON = ROOT / "asm" / "nonmatchings"
 
@@ -76,7 +76,7 @@ def main() -> int:
     if converted > 0:
         subprocess.run(["make", "compare"], cwd=str(ROOT), check=True)
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "decomp" / "progress.py"), "--write"],
+        [sys.executable, str(ROOT / "tools" / "decomp" / "progress.py"), "--write"],
         cwd=str(ROOT),
         check=False,
     )

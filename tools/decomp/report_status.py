@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 import sys
 
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from progress import collect, format_human, write_artifacts  # noqa: E402
 
 STATUS = ROOT / "docs" / "decomp-status.md"

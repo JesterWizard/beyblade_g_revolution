@@ -8,18 +8,26 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **36/633 (5.7%)** |
-| **Decompiled C (bytes)** | **676/90,272 (0.7%)** |
-| Not opcode (C + readable Thumb) | 188/633 (29.7% fn, 42.4% bytes) |
-| Readable Thumb | 152/633 (24.0%) |
-| Opcode `.byte` embeds | 445/633 (70.3%) |
+| **Decompiled C (functions)** | **50/633 (7.9%)** |
+| **Decompiled C (bytes)** | **992/90,272 (1.1%)** |
+| Not opcode (C + readable Thumb) | 200/633 (31.6% fn, 42.5% bytes) |
+| Readable Thumb | 150/633 (23.7%) |
+| Opcode `.byte` embeds | 433/633 (68.4%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 10/160 (6.2% fn, 1.1% bytes) |
+| Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+14)
+
+- Semantic C: `sub_080603E0`, `sub_08043BDC`, `sub_08060428`/`38`/`48`/`58`, `sub_08060394`, `sub_080602C0`, `sub_08033F24`, `sub_08034414`, `sub_08032DB8`, `sub_080686D8`, `sub_08071F84`, `sub_08071F98`
+- Grew `MainWork` (`unk16C8`/`unk16E0`/`unk16E4`/`unk181A`/`unk181F`) and `BattleWork` (`unk1FAC`/`unk201C`/`unk2088`)
+- Tooling: decomp scripts import `tools/decomp/` (leftover `scripts/decomp` Path joins)
+- Near-miss: `sub_08043B90` (extra `movs r0,#0`), `sub_08033530` (reg alloc), `sub_0804495C` (leaf prologue)
+- `make compare`: **OK**
 
 ### 2026-09-17 — Phase 3b battle: reloc + readable Thumb + semantic C (+8)
 

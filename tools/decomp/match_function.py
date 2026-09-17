@@ -31,7 +31,7 @@ CPPFLAGS = [
     "-std=gnu89",
 ]
 
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from asm_bytes import addr_from_name, asm_text_bytes, retail_bytes  # noqa: E402
 
 

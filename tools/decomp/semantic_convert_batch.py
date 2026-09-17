@@ -10,15 +10,15 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
 from c_patterns import guess_c  # noqa: E402
 from m2c_asm import m2c_decompile  # noqa: E402
 from match_function import reference_size, write_single_function_c  # noqa: E402
 from opcode_stubs import list_opcode_stubs  # noqa: E402
 
-INTEGRATE = ROOT / "scripts" / "decomp" / "integrate_c.py"
-MATCH = ROOT / "scripts" / "decomp" / "match_function.py"
+INTEGRATE = ROOT / "tools" / "decomp" / "integrate_c.py"
+MATCH = ROOT / "tools" / "decomp" / "match_function.py"
 NON = ROOT / "asm" / "nonmatchings"
 
 
@@ -147,7 +147,7 @@ def main() -> int:
     if converted > 0:
         subprocess.run(["make", "compare"], cwd=str(ROOT), check=True)
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "decomp" / "progress.py"), "--write"],
+        [sys.executable, str(ROOT / "tools" / "decomp" / "progress.py"), "--write"],
         cwd=str(ROOT),
         check=False,
     )
