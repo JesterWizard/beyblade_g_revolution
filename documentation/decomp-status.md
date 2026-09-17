@@ -7,10 +7,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Non-matching asm | 633 |
-| Matching asm (linked) | 71 |
+| Matching asm (linked) | **633** |
 | `src/*.c` files | 1 |
-| `pct_asm_matched` | 10.1% |
-| Phase | 1 (ASM match loop) |
+| `pct_asm_matched` | 50.0% (633/1266 tracked) |
+| Phase | **1 complete** → Phase 2 (RAM map) / Phase 3 (C decomp) |
 
 ## Batch log
 
@@ -37,13 +37,14 @@ First 4 functions + `src/stubs.c`.
 
 ## Next
 
-- Replace asm matchings with byte-matched C (`match_function.py` + `src/`)
-- Add IWRAM symbols to `asm/ram_map*.s` instead of hardcoded `0x03…` in C
-- Continue integrating score-5 triage candidates
+- **Phase 2:** `python3 tools/scan_ram_literals.py --emit-asm` — flesh `asm/ram_map*.s` / `include/ram_map.h`
+- **Phase 3:** Convert asm matchings to byte-matched C (`match_function.py` + `src/`)
+- **Phase 4:** Function renames in `beyblade_g_revolution.toml`
+- **Phase 5:** Migrate from fixed-VMA peel to shiftable layout (≥80% matched ✓; still 980 fixed-VMA sections)
 
 ## Blockers
 
-- None (`make compare` green with 31 peeled functions)
+- None (`make compare` OK with all 633 functions linked)
 
 ### 2026-09-17 — match_batch (+10, 41/633 linked)
 - Functions: `sub_080473E4`, `sub_08061BDC`, `sub_08062634`, `sub_08062A1C`, `sub_0806644C`, `sub_08068584`, `sub_08072F94`, `sub_0802B8BC`, `sub_0803EDC8`, `sub_080400C0`

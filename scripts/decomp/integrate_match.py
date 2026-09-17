@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -17,11 +16,8 @@ MATCH = ROOT / "asm" / "matchings"
 GEN = ROOT / "scripts" / "decomp" / "gen_rom_layout.py"
 MATCH_SCRIPT = ROOT / "scripts" / "decomp" / "match_function.py"
 
-HEADER = """@ Matched — integrated by scripts/decomp/integrate_match.py
-.syntax unified
-.thumb
-.text
-"""
+sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
+from asm_bytes import addr_from_name, integration_plan, write_matching_asm  # noqa: E402
 
 
 def load_manifest() -> dict:
@@ -33,21 +29,6 @@ def load_manifest() -> dict:
 def save_manifest(data: dict) -> None:
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps(data, indent=2) + "\n")
-
-
-def addr_from_name(name: str) -> str:
-    return f"0x{name.replace('sub_', '')}"
-
-
-def normalize_asm(name: str, src: Path, dst: Path) -> None:
-    lines = src.read_text().splitlines()
-    body: list[str] = []
-    for line in lines:
-        s = line.strip()
-        if not s or s.startswith("@") or s in {".syntax unified", ".text", ".thumb"}:
-            continue
-        body.append(line)
-    dst.write_text(HEADER + "\n".join(body) + "\n")
 
 
 def main() -> int:
@@ -73,14 +54,21 @@ def main() -> int:
             print(result.stderr, file=sys.stderr)
             return result.returncode
 
+    plan = integration_plan(name)
+    if plan is None:
+        print(f"cannot integrate {name}", file=sys.stderr)
+        return 1
+    mode, size = plan
+
     MATCH.mkdir(parents=True, exist_ok=True)
-    normalize_asm(name, non_asm, MATCH / f"{name}.s")
+    write_matching_asm(name, mode, size, MATCH / f"{name}.s", non_asm)
 
     data = load_manifest()
     entry = {
         "name": name,
-        "addr": addr_from_name(name),
+        "addr": f"0x{addr_from_name(name):08X}",
         "src": args.c_file or "",
+        "mode": mode,
     }
     data["functions"] = [f for f in data["functions"] if f["name"] != name]
     data["functions"].append(entry)
@@ -90,7 +78,7 @@ def main() -> int:
     if result.returncode != 0:
         return result.returncode
 
-    print(f"integrated {name} @ {entry['addr']}")
+    print(f"integrated {name} @ {entry['addr']} ({mode}, {size}B)")
     return 0
 
 

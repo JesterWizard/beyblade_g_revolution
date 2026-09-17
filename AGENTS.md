@@ -5,7 +5,7 @@ hands-off: you run tools, integrate results, and report summaries. Do not ask th
 to run commands unless a hard blocker requires credentials they alone control
 (e.g. baserom missing). **Cursor is the agent** — Mizuchi/Claude API is optional.
 
-Read **[ARCHITECTURE.md](ARCHITECTURE.md)** and **[documentation/decomp-agent.md](documentation/decomp-agent.md)** first.
+Read **[ARCHITECTURE.md](ARCHITECTURE.md)**, **[documentation/decomp-roadmap.md](documentation/decomp-roadmap.md)** (master plan), and **[documentation/decomp-agent.md](documentation/decomp-agent.md)** first.
 
 ## Mission
 
@@ -25,25 +25,37 @@ This installs agbcc, gbafix, Luvdis, m2c, generates `asm/nonmatchings/`, and ver
 
 ## Every work session (repeat until done)
 
+**Autonomous loop — no user approval between batches.** See
+[documentation/decomp-roadmap.md](documentation/decomp-roadmap.md) for phases.
+
 ```bash
 # 1. Status
 python3 scripts/decomp/report_status.py
-
-# 2. Ensure map + asm exist
-make compare
-test -d asm/nonmatchings && test "$(ls -A asm/nonmatchings)"
-
-# 3. Batch decompile (default 10 easiest functions)
-scripts/decomp/cursor_batch.sh 10
-# Then fix/refine m2c seeds in mizuchi-output/ and verify:
-#   python3 scripts/decomp/match_function.py sub_XXXXXXXX mizuchi-output/sub_XXXXXXXX.c
-
-# 4. Full-ROM verify
 make compare
 
-# 5. Report to user (see template below)
+# 2. Match + integrate + commit (10 functions)
+scripts/decomp/match_batch.sh 10
+
+# 3. Every 3–5 batches: RAM map pass
+python3 tools/scan_ram_literals.py --emit-asm
+# Update asm/ram_map_*.s + documentation/ram-map.md
+
+# 4. When match_function.py passes: add C to src/, plan asm removal
+python3 scripts/decomp/match_function.py sub_XXXXXXXX src/module.c
+
+# 5. Phase 5 gate check (shiftable ROM)
+python3 scripts/decomp/check_shiftable.py
+
+# 6. Report to user (template below)
 python3 scripts/decomp/report_status.py
 ```
+
+Optional: `scripts/decomp/cursor_batch.sh 10` for m2c seeds when tackling hard functions.
+
+### Commit policy
+
+**Commit after every successful `match_batch.sh`** — do not ask the user. Message:
+`decomp: match batch (+N functions, M/633 total)`. Never commit if `make compare` fails.
 
 If `asm/nonmatchings/` is empty:
 
@@ -95,7 +107,12 @@ bash scripts/setup.sh
 | m2ctx | `tools/m2ctx.py` | Context for decompiler |
 | Luvdis | `tools/luvdis/` | Initial disassembly |
 | Triage | `scripts/decomp/triage_functions.py` | Pick easy functions first |
-| Batch | `scripts/decomp/cursor_batch.sh` | Cursor-native batch (primary) |
+| Match batch | `scripts/decomp/match_batch.sh` | **Primary:** verify asm → integrate → compare → commit |
+| Verify asm | `scripts/decomp/verify_asm_bytes.py` | Baserom byte check before integrate |
+| Integrate | `scripts/decomp/integrate_match.py` | Land match into ROM peel |
+| ROM layout | `scripts/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
+| Shiftable check | `scripts/decomp/check_shiftable.py` | Phase 5 gate |
+| Cursor batch | `scripts/decomp/cursor_batch.sh` | m2c seeds for hard functions |
 | Mizuchi batch | `scripts/decomp/run_batch.sh` | Optional Mizuchi runner |
 | Status | `scripts/decomp/report_status.py` | Progress summary |
 
@@ -125,6 +142,7 @@ Post this after every batch (fill in values):
 |----------|-----------|
 | Pipeline / directories | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | Hands-off commands | [documentation/decomp-agent.md](documentation/decomp-agent.md) |
+| Master plan | [documentation/decomp-roadmap.md](documentation/decomp-roadmap.md) |
 | Live progress | [documentation/decomp-status.md](documentation/decomp-status.md) |
 | RAM addresses | [documentation/ram-map.md](documentation/ram-map.md) |
 | Install / deps | [INSTALL.md](INSTALL.md) |

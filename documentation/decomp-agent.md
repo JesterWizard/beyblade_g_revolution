@@ -12,12 +12,14 @@ This installs agbcc, pret tools, Luvdis, generates `asm/nonmatchings/`, builds M
 
 ## Per-session loop
 
-1. **Status** — `python3 scripts/decomp/report_status.py`
-2. **Triage** — `python3 scripts/decomp/triage_functions.py -n 20`
-3. **Batch** — `scripts/decomp/cursor_batch.sh 10`
-4. **Integrate** — `python3 scripts/decomp/integrate_match.py sub_XXXXXXXX [scratch.c]`
-5. **Verify** — `make compare` (must print `beyblade_g_revolution.gba: OK`)
-6. **Report** — update `documentation/decomp-status.md` with counts, matched names, blockers
+See **[decomp-roadmap.md](decomp-roadmap.md)** for the full phased plan.
+
+1. **Status** — `python3 scripts/decomp/report_status.py` + `make compare`
+2. **Match batch** — `scripts/decomp/match_batch.sh 10` (verify → integrate → compare → **commit**)
+3. **RAM map** (every 3–5 batches) — `python3 tools/scan_ram_literals.py --emit-asm`
+4. **C conversion** — `match_function.py` then `src/*.c` when MATCH
+5. **Naming** — `beyblade_g_revolution.toml` `[renames]` + `generate_asm.py --force`
+6. **Shiftable gate** — `python3 scripts/decomp/check_shiftable.py` when ≥80% matched
 
 ## What to tell the user
 
