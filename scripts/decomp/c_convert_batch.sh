@@ -62,10 +62,10 @@ for asm_path in sorted(MATCH.glob("sub_*.s")):
         stdout=subprocess.DEVNULL,
     )
     converted += 1
-    print(f"converted {name} ({cand.note})")
+    print(f"converted {name} ({cand.note})", file=sys.stderr)
 
 print(f"==> batch: {converted} converted, {skipped} failed verify", file=sys.stderr)
-print(converted)
+print(converted, flush=True)
 PY
 )
 

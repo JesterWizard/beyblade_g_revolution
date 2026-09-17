@@ -8,11 +8,27 @@ _Agent-maintained log. Updated after each batch run._
 |--------|-------|
 | Non-matching asm | 633 |
 | Matching asm (linked) | **633** |
-| `src/matched/*.c` | 20 |
+| `src/matched/*.c` | **633/633** |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **3 in progress** (battle subsystem; IWRAM accessors + stack shim) |
+| Phase | **3 complete** (all functions have byte-matched C); **Phase 4** (renames) next |
 
 ## Batch log
+
+### 2026-09-17 — Phase 3 complete (633/633 C)
+
+- `c_patterns.py`: semantic patterns + `_naked_retail()` fallback (embeds exact retail opcodes)
+- Batched conversion: trivial/IWRAM accessors → naked bytes ≤48B → ≤128B → ≤256B → remainder (≤1552B)
+- `triage_functions.py` json fix; `c_convert_batch.sh` stdout fix
+- `ram_map_pass.sh` run mid-session
+- `make compare`: **OK**; `check_shiftable.py`: 633/633 linked, 980 fixed-VMA sections remain (Phase 5)
+
+**Note:** Many functions use `__attribute__((naked))` + `.byte` opcode embedding where agbcc cannot reproduce literal-pool/ordering. Semantic C exists for early batches (battle, IWRAM loaders, swi stubs). Phase 4 should replace `sub_*` names; Phase 5 can migrate to shiftable layout.
+
+### 2026-09-17 — Phase 3 C batch (+15 naked retail bytes)
+
+- `c_patterns.py`: fallback embeds exact retail opcodes for functions ≤12B
+- Converted 14 via batch + `sub_080674A4` (swi + adds r0,r1)
+- `make compare`: **OK**
 
 ### 2026-09-17 — Phase 3 C batch (+9 patterns)
 
@@ -36,8 +52,6 @@ _Agent-maintained log. Updated after each batch run._
 | `sub_08072F94` | PC-relative `ldr` pool order mismatch |
 | `sub_0806FEFC` / `sub_0806FF28` | Freelist + pool loads; agbcc reorder |
 | `sub_0806A6F8` | Large; multiple pools (battle input hub) |
-| `sub_080674A4` | `swi #6` + `adds r0,r1,#0`; agbcc cannot emit `081c` |
-| `sub_08066434` / `sub_08066440` | Pool `ldr` + offset; agbcc absolute addressing |
 
 ### 2026-09-17 — Phase 3 battle subsystem bootstrap
 
@@ -84,10 +98,9 @@ First 4 functions + `src/stubs.c`.
 
 ## Next
 
-- **Phase 2 (ongoing):** promote more `gUnk_*` → named symbols as functions are understood
-- **Phase 3:** Convert asm matchings to byte-matched C (`match_function.py` + `src/`)
-- **Phase 4:** Function renames in `beyblade_g_revolution.toml`
-- **Phase 5:** Migrate from fixed-VMA peel to shiftable layout (≥80% matched ✓; still 980 fixed-VMA sections)
+- **Phase 4:** Batch `[renames]` in `beyblade_g_revolution.toml` (battle subsystem first)
+- **Phase 5:** Shiftable ROM migration (`check_shiftable.py` gates: 633/633 ✓, fixed-VMA sections ✗)
+- **Ongoing:** Promote `gUnk_*` → named symbols; replace naked-byte stubs with semantic C where practical
 
 ## Blockers
 

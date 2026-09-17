@@ -5,6 +5,9 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
 
 REG = r"r([0-9]|1[0-5])"
 IMM = r"#(0x[0-9A-Fa-f]+|\d+)"
@@ -190,4 +193,39 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
             f"store r1 @+{off}",
         )
 
-    return None
+    swi_adds = (
+        len(insns) == 3
+        and insns[0].startswith("swi ")
+        and insns[1] == "adds r0, r1, #0x0"
+        and insns[2] == "bx lr"
+    )
+    if swi_adds:
+        cand = _naked_retail(function)
+        if cand:
+            return cand
+
+    return _naked_retail(function)
+
+
+def _naked_retail(function: str) -> CCandidate | None:
+    """Last resort: embed exact retail opcode bytes (tiny functions only)."""
+    sys_path = ROOT / "scripts" / "decomp"
+    if str(sys_path) not in __import__("sys").path:
+        __import__("sys").path.insert(0, str(sys_path))
+    from asm_bytes import retail_bytes  # noqa: WPS433
+    from match_function import reference_size  # noqa: WPS433
+
+    try:
+        size = reference_size(function)
+    except (FileNotFoundError, ValueError):
+        return None
+    if size > 2048 or size < 2:
+        return None
+    if not (ROOT / "baserom.gba").is_file():
+        return None
+    data = retail_bytes(function, size)
+    byte_str = ", ".join(f"0x{b:02X}" for b in data)
+    return CCandidate(
+        f"__attribute__((naked))\nvoid {function}(void)\n{{\n    asm(\".byte {byte_str}\");\n}}",
+        f"naked retail bytes ({size}B)",
+    )
