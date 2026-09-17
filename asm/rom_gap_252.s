@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x08068EC0..0x080691E3
+@ Unmatched ROM 0x0806883A..0x08068883
 	.section .rodata
 	.global gRomGap252
 gRomGap252:
-	.incbin "baserom.gba", 0x68EC0, 0x324
+	.incbin "baserom.gba", 0x6883A, 0x4A

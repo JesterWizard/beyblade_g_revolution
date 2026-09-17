@@ -236,3 +236,7 @@ First 4 functions + `src/stubs.c`.
 ### 2026-09-17 — match_batch (+10, 511/633 linked)
 - Functions: `sub_0806225C`, `sub_080688C8`, `sub_08032604`, `sub_08051444`, `sub_08037430`, `sub_0804EBF0`, `sub_0803C5DC`, `sub_0807027C`, `sub_0802E048`, `sub_0805E044`
 - make compare: OK
+
+### 2026-09-17 — match_batch (+10, 521/633 linked)
+- Functions: `sub_0803C500`, `sub_080632F8`, `sub_08054CF4`, `sub_080553B8`, `sub_08063D68`, `sub_080353A0`, `sub_08038438`, `sub_080474AC`, `sub_0802D8DC`, `sub_0803FFB0`
+- make compare: OK
