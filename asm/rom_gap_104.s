@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x0806EEC6..0x0806FDB3
+@ Unmatched ROM 0x0806BE44..0x0806DEF3
 	.section .rodata
 	.global gRomGap104
 gRomGap104:
-	.incbin "baserom.gba", 0x6EEC6, 0xEEE
+	.incbin "baserom.gba", 0x6BE44, 0x20B0
