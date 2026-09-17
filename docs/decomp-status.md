@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **90/633 (14.2%)** |
-| **Decompiled C (bytes)** | **2,118/90,272 (2.3%)** |
-| Not opcode (C + readable Thumb) | 240/633 (37.9% fn, 43.8% bytes) |
+| **Decompiled C (functions)** | **91/633 (14.4%)** |
+| **Decompiled C (bytes)** | **2,152/90,272 (2.4%)** |
+| Not opcode (C + readable Thumb) | 241/633 (38.1% fn, 43.8% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 393/633 (62.1%) |
+| Opcode `.byte` embeds | 392/633 (61.9%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -21,9 +21,9 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
-### 2026-09-18 — Phase 3b semantic C (+2)
+### 2026-09-18 — Phase 3b semantic C (+3)
 
-- Semantic C: `sub_080405E8` (append to `Unk047C` pointer table), `sub_0805D1AC` (nested `sub_08068418` / `sub_08067CE8`)
+- Semantic C: `sub_080405E8` (append to `Unk047C` pointer table), `sub_0805D1AC` (nested `sub_08068418` / `sub_08067CE8`), `sub_08062238` (free `unk08` then `sub_08062684`)
 - Grew `Unk047C` (`unk00[0x200]`, `unk80C`)
 - `make compare`: **OK**
 

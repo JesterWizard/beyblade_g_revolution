@@ -246,10 +246,12 @@ struct Unk0798 /* >= 0xa2 */
     /* a0 */ u16 unkA0;
 };
 
-/* Stores at +0x18/+0x1c/+0x20. sub_08062634, sub_08062684. */
+/* Stores at +0x18/+0x1c/+0x20, pointer at +8. sub_08062634, sub_08062238. */
 struct Unk62634 /* >= 0x24 */
 {
-    /* 00 */ u8 filler_00[0x18];
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ void *unk08;
+    /* 0c */ u8 filler_0C[0xC];
     /* 18 */ u32 unk18;
     /* 1c */ u32 unk1C;
     /* 20 */ u32 unk20;
