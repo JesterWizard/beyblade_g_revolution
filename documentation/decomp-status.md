@@ -11,11 +11,20 @@ _Agent-maintained log. Updated after each batch run._
 | `src/matched/*.c` | **633/633** |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
 | Phase | **3b in progress** — replace opcode stubs with semantic C / readable Thumb |
-| Semantic C | 28 / 633 (struct-member convention) |
-| Readable Thumb | 124 / 633 (122 battle) |
-| Opcode `.byte` embeds | 481 / 633 |
+| Semantic C | **36** / 633 (struct-member convention) |
+| Readable Thumb | 152 / 633 |
+| Opcode `.byte` embeds | 445 / 633 |
 
 ## Batch log
+
+### 2026-09-17 — Phase 3b battle: reloc + readable Thumb + semantic C (+8)
+
+- `match_function.py`: Thumb `R_ARM_THM_CALL` reloc patcher also covers `_080…` local labels (not only `sub_*`)
+- Remaining **36** battle `.byte` stubs → readable Thumb (`readable_asm_batch.py`); **0 battle opcode left**
+- Semantic C: `sub_080433F4`, `sub_0802E1EC`, `sub_0802BA4C`, `sub_08044EE8`, `sub_0803E440`, `sub_0806013C`, `sub_08060220`, `sub_080628B4`
+- Grew `MainWork`: `unk1688`/`unk1694`/`unk1710[]`/`unk177C`/`unk1780`/`unk1798`/`unk179C`/`unk1819`/`unk1861[]`
+- Near-miss (keep readable Thumb): `sub_080428C4`/`sub_080475C4`/`sub_080475F4`/`sub_0806FF28` (extra `push {lr}`), `sub_0806FEFC` (CSE `tail = head+0x10`), table family (pool order / `idx-1` fold)
+- `make compare`: **OK**
 
 ### 2026-09-17 — C convention: struct members (aw2bhr style)
 
@@ -85,9 +94,11 @@ agbcc cannot reproduce these as C (literal-pool / instruction scheduling). They 
 | Function | Reason |
 |----------|--------|
 | `sub_08072F94` | agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
-| `sub_0803DD60` family | main-work table via `+0x1818`; same-size pool/reg order |
+| `sub_0803DD60` family | main-work table via `+0x1818`; same-size pool/reg order (`idx-1` folds into `base-4`) |
 | `sub_08034894` | agbcc extra prologue / pool ordering |
-| `sub_0806FEFC` / `sub_0806FF28` | Freelist; C adds a prologue |
+| `sub_0806FEFC` | Freelist pop; agbcc CSEs `gBtlObjListTail` as `head+0x10` |
+| `sub_0806FF28` / `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | C adds `push {lr}` on a retail leaf |
+| `sub_0802C62C` | Same size; count/`want` register swap (`r3` vs `r4`) |
 | `sub_0806A6F8` | Large input hub; C not attempted |
 
 ### 2026-09-17 — Phase 3 battle subsystem bootstrap
@@ -136,7 +147,7 @@ First 4 functions + `src/stubs.c`.
 
 ## Next
 
-- **Phase 3b:** Semantic C via m2c + permuter; readable Thumb is an intermediate (not extensible C)
+- **Phase 3b:** More battle semantic C (`sub_080428C4` family, freelist, table lookups via permuter); types on `gUnk_03000268` / `gUnk_03000630`
 - **Phase 4:** Batch `[renames]` in `beyblade_g_revolution.toml` (battle subsystem first)
 - **Phase 5:** Shiftable ROM migration (`check_shiftable.py` gates: 633/633 ✓, fixed-VMA sections ✗)
 

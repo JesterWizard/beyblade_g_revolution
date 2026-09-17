@@ -89,8 +89,17 @@ def encode_thumb_bl(from_addr: int, to_addr: int) -> bytes:
     return hw1.to_bytes(2, "little") + hw2.to_bytes(2, "little")
 
 
+def reloc_target_addr(name: str) -> int | None:
+    """ROM address for a Thumb BL reloc symbol (`sub_080…` or `_080…`)."""
+    if name.startswith("sub_"):
+        return addr_from_name(name)
+    if re.fullmatch(r"_[0-9A-Fa-f]{7,8}", name):
+        return int(name[1:], 16)
+    return None
+
+
 def apply_thm_call_relocs(obj_path: Path, function: str, data: bytes) -> bytes:
-    """Patch unlinked Thumb BL stubs using ROM addresses from `sub_*` names."""
+    """Patch unlinked Thumb BL stubs using ROM addresses from symbol names."""
     result = subprocess.run(
         ["arm-none-eabi-readelf", "-r", str(obj_path)],
         capture_output=True,
@@ -109,11 +118,12 @@ def apply_thm_call_relocs(obj_path: Path, function: str, data: bytes) -> bytes:
             continue
         off = int(parts[0], 16)
         target_name = parts[-1]
-        if not target_name.startswith("sub_"):
+        target = reloc_target_addr(target_name)
+        if target is None:
             continue
         if off + 4 > len(out):
             continue
-        encoded = encode_thumb_bl(base + off, addr_from_name(target_name))
+        encoded = encode_thumb_bl(base + off, target)
         out[off : off + 4] = encoded
     return bytes(out)
 

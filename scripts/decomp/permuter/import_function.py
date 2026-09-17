@@ -91,16 +91,16 @@ struct BtlObjNode *sub_0806FEFC(void)
     struct BtlObjNode *node;
     struct BtlObjNode *tail;
 
-    node = *(struct BtlObjNode **)gBtlObjListHead;
+    node = gBtlObjListHead;
     if (node != 0)
     {
-        *(struct BtlObjNode **)gBtlObjListHead = node->prev;
-        tail = *(struct BtlObjNode **)gBtlObjListTail;
+        gBtlObjListHead = node->prev;
+        tail = gBtlObjListTail;
         if (tail != 0)
             tail->next = node;
-        node->prev = *(struct BtlObjNode **)gBtlObjListTail;
+        node->prev = gBtlObjListTail;
         node->next = 0;
-        *(struct BtlObjNode **)gBtlObjListTail = node;
+        gBtlObjListTail = node;
     }
     return node;
 }

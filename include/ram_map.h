@@ -16,6 +16,8 @@
 
 #undef gMainWorkPtr
 #undef gBattleWork
+#undef gBtlObjListHead
+#undef gBtlObjListTail
 #define gMainWorkPtr (*(struct MainWork **)0x03000198)
 #define gBattleWork (*(struct BattleWork **)0x03000290)
 
@@ -28,8 +30,8 @@
 #define gBtlKeysNew        0x0300406C
 #define gBtlKeyQueuePtr    0x03004070
 #define gBtlKeyQueueCount  0x03004074
-#define gBtlObjListHead    0x030040A8
-#define gBtlObjListTail    0x030040B8
+#define gBtlObjListHead (*(struct BtlObjNode **)0x030040A8)
+#define gBtlObjListTail (*(struct BtlObjNode **)0x030040B8)
 #define gBtlObjTable       0x03004150
 #define gBtlObjTableCount  0x03004154
 #define gBtlObjLiveCount   0x03004158

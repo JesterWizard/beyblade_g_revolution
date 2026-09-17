@@ -7,4 +7,10 @@
  * Named replacements belong in [renames] (Phase 4), then this entry drops.
  */
 
+s8 sub_08042BE8(s16 a);
+void sub_0806A434(void *a);
+void sub_08071F84(s32 a);
+void sub_08071FC8(s32 a);
+u32 sub_08074264(u32 a, u32 b);
+
 #endif /* GUARD_UNKNOWN_FUNCTIONS_H */
