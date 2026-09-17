@@ -37,12 +37,16 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 
 | Function | Status |
 |----------|--------|
-| `sub_080628E4` | **C** — `src/matched/sub_080628E4.c` |
-| `sub_080314FC` | **C** — `src/matched/sub_080314FC.c` |
-| `sub_08072F94` | asm — literal-pool load order (agbcc mismatch) |
-| `sub_08034894` | asm — agbcc prologue / pool ordering |
-| `sub_0806FEFC` / `sub_0806FF28` | asm — object freelist + pools |
-| `sub_0806A6F8` | asm — large |
+| `sub_080628E4` | **semantic C** — `src/matched/sub_080628E4.c` |
+| `sub_080314FC` | **semantic C** — `src/matched/sub_080314FC.c` |
+| `sub_08072F94` | readable Thumb — agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
+| `sub_0803DD60` family | readable Thumb — main-work table via `+0x1818` |
+| `sub_08034894` | readable Thumb — agbcc prologue / pool ordering |
+| `sub_0806FEFC` / `sub_0806FF28` | readable Thumb — object freelist |
+| `sub_0806A6F8` | readable Thumb — large input hub |
+| 36 remaining battle | still `.byte` — `bl` to non-`sub_*` labels |
+
+122 / 160 battle functions are readable Thumb; 2 are semantic C. Convert remaining `.byte` after reloc patcher covers `_080…` local labels. C matching still needs permuter / hand-refine.
 
 ## Tools
 

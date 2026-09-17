@@ -31,24 +31,20 @@ def main() -> None:
     c_linked = 0
     semantic_c = 0
     opcode_c = 0
+    asm_c = 0
     if MANIFEST.is_file():
         data = json.loads(MANIFEST.read_text())
         linked = len(data.get("functions", []))
         c_linked = sum(1 for f in data.get("functions", []) if f.get("src"))
-        for f in data.get("functions", []):
-            if not f.get("src"):
-                continue
-            kind = f.get("kind")
-            if kind == "opcode":
-                opcode_c += 1
-            elif kind == "semantic":
-                semantic_c += 1
-    if matched_src.is_dir() and semantic_c == 0 and opcode_c == 0:
-        from opcode_stubs import is_opcode_stub  # noqa: WPS433
+    if matched_src.is_dir():
+        from opcode_stubs import file_kind  # noqa: WPS433
 
         for path in matched_src.glob("sub_*.c"):
-            if is_opcode_stub(path):
+            kind = file_kind(path)
+            if kind == "opcode":
                 opcode_c += 1
+            elif kind == "asm":
+                asm_c += 1
             else:
                 semantic_c += 1
 
@@ -60,6 +56,7 @@ def main() -> None:
         "src_matched_c": src_matched_c,
         "c_in_rom": c_linked,
         "semantic_c": semantic_c,
+        "readable_asm_c": asm_c,
         "opcode_embed_c": opcode_c,
         "total_tracked": non + matched_asm,
         "pct_asm_matched": round(100 * matched_asm / (non + matched_asm), 1)

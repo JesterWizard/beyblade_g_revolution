@@ -64,6 +64,12 @@ if [ ! -d tools/m2c/m2c ]; then
   git clone --depth 1 https://github.com/matt-kempster/m2c tools/m2c
 fi
 
+# decomp-permuter (agbcc matching at scale)
+if [ ! -d tools/decomp-permuter/.git ]; then
+  echo "==> Setting up decomp-permuter"
+  bash scripts/decomp/permuter/setup.sh || true
+fi
+
 echo "==> Verifying matching build"
 make compare
 

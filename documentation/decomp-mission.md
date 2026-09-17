@@ -67,8 +67,10 @@ scripts/decomp/c_convert_batch.sh 30
 python3 scripts/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
 python3 scripts/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --note <subsystem>/<role>
 
-# 4. Hard functions
+# 4. Hard functions (literal-pool / agbcc ordering)
 scripts/decomp/cursor_batch.sh 10              # m2c seeds, no API key
+scripts/decomp/permuter/permute.sh import sub_XXXXXXXX
+scripts/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 4 --stop-on-zero
 
 # 5. RAM map (every 3–5 conversion batches)
 scripts/decomp/ram_map_pass.sh

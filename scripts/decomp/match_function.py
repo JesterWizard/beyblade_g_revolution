@@ -81,14 +81,54 @@ def compile_c(c_path: Path, obj_path: Path) -> None:
     )
 
 
-def obj_text_bytes(obj_path: Path) -> bytes:
+def encode_thumb_bl(from_addr: int, to_addr: int) -> bytes:
+    """R_ARM_THM_CALL: 32-bit Thumb BL from `from_addr` to `to_addr`."""
+    offset = to_addr - (from_addr + 4)
+    hw1 = 0xF000 | ((offset >> 12) & 0x7FF)
+    hw2 = 0xF800 | ((offset >> 1) & 0x7FF)
+    return hw1.to_bytes(2, "little") + hw2.to_bytes(2, "little")
+
+
+def apply_thm_call_relocs(obj_path: Path, function: str, data: bytes) -> bytes:
+    """Patch unlinked Thumb BL stubs using ROM addresses from `sub_*` names."""
+    result = subprocess.run(
+        ["arm-none-eabi-readelf", "-r", str(obj_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0 or "R_ARM_THM_CALL" not in result.stdout:
+        return data
+    base = addr_from_name(function)
+    out = bytearray(data)
+    for line in result.stdout.splitlines():
+        if "R_ARM_THM_CALL" not in line:
+            continue
+        parts = line.split()
+        if len(parts) < 5:
+            continue
+        off = int(parts[0], 16)
+        target_name = parts[-1]
+        if not target_name.startswith("sub_"):
+            continue
+        if off + 4 > len(out):
+            continue
+        encoded = encode_thumb_bl(base + off, addr_from_name(target_name))
+        out[off : off + 4] = encoded
+    return bytes(out)
+
+
+def obj_text_bytes(obj_path: Path, function: str | None = None) -> bytes:
     with tempfile.TemporaryDirectory() as tmp:
         bin_path = Path(tmp) / "fn.bin"
         subprocess.run(
             ["arm-none-eabi-objcopy", "-O", "binary", "-j", ".text", str(obj_path), str(bin_path)],
             check=True,
         )
-        return bin_path.read_bytes()
+        data = bin_path.read_bytes()
+    if function:
+        data = apply_thm_call_relocs(obj_path, function, data)
+    return data
 
 
 def reference_size(function: str) -> int:
@@ -168,7 +208,7 @@ def main() -> int:
 
         obj = Path(tmp) / "scratch.o"
         compile_c(compile_path, obj)
-        got = normalize_compiled(obj_text_bytes(obj), size)
+        got = normalize_compiled(obj_text_bytes(obj, args.function), size)
 
         if got == want:
             print("MATCH")

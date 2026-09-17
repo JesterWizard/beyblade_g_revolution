@@ -14,14 +14,21 @@ def is_opcode_stub(path: Path) -> bool:
     return "__attribute__((naked))" in text and 'asm(".byte' in text
 
 
-def is_semantic_c(path: Path) -> bool:
+def is_readable_asm(path: Path) -> bool:
     text = path.read_text()
-    if 'asm(".byte' in text:
-        return False
-    if "__attribute__((naked))" in text and "asm(" in text:
-        # naked asm shims (stack shim, mov pc lr) count as semantic enough
-        return True
-    return True
+    return "__attribute__((naked))" in text and "asm(" in text and 'asm(".byte' not in text
+
+
+def is_semantic_c(path: Path) -> bool:
+    return not is_opcode_stub(path) and not is_readable_asm(path)
+
+
+def file_kind(path: Path) -> str:
+    if is_opcode_stub(path):
+        return "opcode"
+    if is_readable_asm(path):
+        return "asm"
+    return "semantic"
 
 
 def list_opcode_stubs() -> list[str]:
@@ -35,7 +42,15 @@ def list_opcode_stubs() -> list[str]:
 def list_semantic() -> list[str]:
     out: list[str] = []
     for path in sorted(MATCHED.glob("sub_*.c")):
-        if not is_opcode_stub(path):
+        if is_semantic_c(path):
+            out.append(path.stem)
+    return out
+
+
+def list_readable_asm() -> list[str]:
+    out: list[str] = []
+    for path in sorted(MATCHED.glob("sub_*.c")):
+        if is_readable_asm(path):
             out.append(path.stem)
     return out
 
@@ -56,7 +71,9 @@ def main() -> int:
     else:
         opcode = list_opcode_stubs()
         semantic = list_semantic()
+        readable = list_readable_asm()
         print(f"semantic: {len(semantic)}")
+        print(f"readable asm: {len(readable)}")
         print(f"opcode stubs: {len(opcode)}")
         return 0
 

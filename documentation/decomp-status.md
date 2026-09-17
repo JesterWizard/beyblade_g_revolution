@@ -10,10 +10,20 @@ _Agent-maintained log. Updated after each batch run._
 | Matching asm (linked) | **633** |
 | `src/matched/*.c` | **633/633** |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **3b in progress** — replace 612 opcode stubs with semantic C |
-| Semantic C | 30 / 633 (603 opcode `.byte` embeds remain) |
+| Phase | **3b in progress** — replace opcode stubs with semantic C / readable Thumb |
+| Semantic C | 28 / 633 |
+| Readable Thumb | 124 / 633 (122 battle) |
+| Opcode `.byte` embeds | 481 / 633 |
 
 ## Batch log
+
+### 2026-09-17 — decomp-permuter + battle readable Thumb (+122)
+
+- Wired [decomp-permuter](https://github.com/simonlindholm/decomp-permuter): `permuter_settings.toml`, `scripts/decomp/permuter/`
+- `match_function.py` now applies `R_ARM_THM_CALL` so `bl sub_*` matches retail encodings
+- Battle `.byte` stubs → readable Thumb (`--kind asm`): **122 converted**, 36 still opcode (BL to non-`sub_*`)
+- Permuter on `sub_08072F94`: base score 50 (agbcc always deref-first); 11k+ iters, no score-0 — keep as readable Thumb until C matches
+- `make compare`: **OK**
 
 ### 2026-09-17 — Phase 3b semantic batch (+15)
 
@@ -62,12 +72,15 @@ _Agent-maintained log. Updated after each batch run._
 
 ### Asm-only (documented blockers)
 
+agbcc cannot reproduce these as C (literal-pool / instruction scheduling). They now have **readable Thumb** in `src/matched/` instead of `.byte` blobs. Permuter target when C is close.
+
 | Function | Reason |
 |----------|--------|
-| `sub_08034894` | agbcc extra prologue / literal-pool ordering |
-| `sub_08072F94` | PC-relative `ldr` pool order mismatch |
-| `sub_0806FEFC` / `sub_0806FF28` | Freelist + pool loads; agbcc reorder |
-| `sub_0806A6F8` | Large; multiple pools (battle input hub) |
+| `sub_08072F94` | agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
+| `sub_0803DD60` family | main-work table via `+0x1818`; same-size pool/reg order |
+| `sub_08034894` | agbcc extra prologue / pool ordering |
+| `sub_0806FEFC` / `sub_0806FF28` | Freelist; C adds a prologue |
+| `sub_0806A6F8` | Large input hub; C not attempted |
 
 ### 2026-09-17 — Phase 3 battle subsystem bootstrap
 
@@ -109,14 +122,15 @@ First 4 functions + `src/stubs.c`.
 |--------|---------|
 | `scripts/decomp/cursor_batch.sh` | Triage + m2c seeds |
 | `scripts/decomp/integrate_match.py` | Link match into ROM peel |
-| `scripts/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP) |
+| `scripts/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP; patches Thumb BL relocs) |
 | `scripts/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
+| `scripts/decomp/permuter/` | decomp-permuter wrappers (agbcc pool/order search) |
 
 ## Next
 
+- **Phase 3b:** Semantic C via m2c + permuter; readable Thumb is an intermediate (not extensible C)
 - **Phase 4:** Batch `[renames]` in `beyblade_g_revolution.toml` (battle subsystem first)
 - **Phase 5:** Shiftable ROM migration (`check_shiftable.py` gates: 633/633 ✓, fixed-VMA sections ✗)
-- **Ongoing:** Promote `gUnk_*` → named symbols; replace naked-byte stubs with semantic C where practical
 
 ## Blockers
 

@@ -104,6 +104,7 @@ bash scripts/setup.sh
 | Tool | Path | Role |
 |------|------|------|
 | Cursor batch | `scripts/decomp/cursor_batch.sh` | Triage → m2c seed → agent refine → match |
+| decomp-permuter | `scripts/decomp/permuter/` | agbcc literal-pool / instruction-order search |
 | Mizuchi (opt.) | `tools/mizuchi/` | Full m2c → permuter → Claude pipeline (needs npm) |
 | Config | `mizuchi.yaml` | Mizuchi config (`enable: false` by default) |
 | agbcc | `tools/agbcc/bin/agbcc` | Matching compiler |
@@ -116,6 +117,7 @@ bash scripts/setup.sh
 | ROM layout | `scripts/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
 | Shiftable check | `scripts/decomp/check_shiftable.py` | Phase 5 gate |
 | Cursor batch | `scripts/decomp/cursor_batch.sh` | m2c seeds for hard functions |
+| decomp-permuter | `scripts/decomp/permuter/` | agbcc pool/ordering search |
 | Mizuchi batch | `scripts/decomp/run_batch.sh` | Optional Mizuchi runner |
 | Status | `scripts/decomp/report_status.py` | Progress summary |
 

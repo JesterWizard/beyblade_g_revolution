@@ -94,16 +94,30 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("limit", type=int, nargs="?", default=30)
     parser.add_argument("--pool-free-only", action="store_true")
+    parser.add_argument(
+        "--battle",
+        action="store_true",
+        help="Prefer battle-scan functions (includes literal-pool IWRAM accessors)",
+    )
     args = parser.parse_args()
 
     stubs = list_opcode_stubs()
+    battle_names: set[str] = set()
+    if args.battle:
+        from battle_scan import score  # noqa: WPS433
+
+        for path in NON.glob("sub_*.s"):
+            n, _, _ = score(path)
+            if n:
+                battle_names.add(path.stem)
+        stubs = [n for n in stubs if n in battle_names]
     ranked: list[tuple[int, str]] = []
     for name in stubs:
         asm = NON / f"{name}.s"
         if not asm.is_file():
             continue
         text = asm.read_text()
-        if args.pool_free_only and ".4byte" in text:
+        if args.pool_free_only and not args.battle and ".4byte" in text:
             continue
         try:
             size = reference_size(name)

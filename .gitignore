@@ -27,6 +27,8 @@ tools/ramscrgen/
 tools/gbagfx/
 tools/src/
 tools/bin/
+tools/decomp-permuter/
+nonmatchings/
 
 .DS_Store
 .idea/

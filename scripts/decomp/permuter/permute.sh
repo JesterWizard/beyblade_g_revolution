@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Wrappers around simonlindholm/decomp-permuter for this repo.
+#
+#   scripts/decomp/permuter/permute.sh import <function>
+#   scripts/decomp/permuter/permute.sh run nonmatchings/<function> [-j N] [--stop-on-zero]
+#   scripts/decomp/permuter/permute.sh bg  nonmatchings/<function> [-j N] [--stop-on-zero]
+set -euo pipefail
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
+PERM="$ROOT/tools/decomp-permuter"
+cd "$ROOT"
+
+if [ ! -d "$PERM" ]; then
+  echo "decomp-permuter not set up. Run: scripts/decomp/permuter/setup.sh" >&2
+  exit 1
+fi
+
+cmd="${1:-}"; shift || true
+case "$cmd" in
+  import)
+    exec python3 "$ROOT/scripts/decomp/permuter/import_function.py" "$@"
+    ;;
+  run)
+    exec python3 "$PERM/permuter.py" "$@"
+    ;;
+  bg)
+    dir="${1:?usage: $0 bg nonmatchings/<function> [permuter args]}"
+    shift || true
+    log="${dir%/}/permute.log"
+    mkdir -p "${dir%/}"
+    setsid python3 "$PERM/permuter.py" "$dir" "$@" >"$log" 2>&1 < /dev/null &
+    echo "permuter detached pid $!; log: $log"
+    echo "  watch: tail -f $log"
+    echo "  stop:  pkill -f 'permuter.py.*$(basename "${dir%/}")'"
+    ;;
+  *)
+    echo "usage: $0 {import <function> | run <dir> [-j N] [--stop-on-zero] | bg <dir> ...}" >&2
+    exit 1
+    ;;
+esac

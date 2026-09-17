@@ -60,9 +60,9 @@ def main() -> int:
     parser.add_argument("--note", default="", help="conversion note for manifest")
     parser.add_argument(
         "--kind",
-        choices=("semantic", "opcode"),
+        choices=("semantic", "opcode", "asm"),
         default="",
-        help="semantic = readable C; opcode = naked .byte embed (default: infer)",
+        help="semantic = readable C; asm = readable Thumb; opcode = .byte embed",
     )
     parser.add_argument(
         "--skip-compare",
@@ -91,7 +91,7 @@ def main() -> int:
             return 2
         compile_c(scratch, Path(tmp) / "out.o")
         size = reference_size(name)
-        got = normalize_compiled(obj_text_bytes(Path(tmp) / "out.o"), size)
+        got = normalize_compiled(obj_text_bytes(Path(tmp) / "out.o", name), size)
         want = retail_bytes(name, size)
         if got != want:
             print(f"bytes mismatch after normalize for {name}", file=sys.stderr)
@@ -103,7 +103,12 @@ def main() -> int:
     data = load_manifest()
     kind = args.kind
     if not kind:
-        kind = "opcode" if '__attribute__((naked))' in body and 'asm(".byte' in body else "semantic"
+        if '__attribute__((naked))' in body and 'asm(".byte' in body:
+            kind = "opcode"
+        elif "__attribute__((naked))" in body and "asm(" in body:
+            kind = "asm"
+        else:
+            kind = "semantic"
 
     entry = {
         "name": name,

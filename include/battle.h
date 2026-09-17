@@ -10,6 +10,7 @@
  */
 
 #define BTL_MAIN_WORK_FIELD_1800 0x1800
+#define BTL_MAIN_WORK_FIELD_1818 0x1818
 
 struct BtlObjNode {
     struct BtlObjNode *next;

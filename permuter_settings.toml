@@ -1,0 +1,13 @@
+# decomp-permuter configuration (agbcc / GBA Thumb).
+# Used by tools/decomp-permuter/import.py. Wrappers: scripts/decomp/permuter/
+
+compiler_type = "gcc"
+
+# import.py extracts -I/-D/-nostdinc for cpp, then generates compile.sh from
+# this pipeline. permute.sh overwrites that compile.sh with the two-step
+# scripts/decomp/permuter/compile.sh (pipefail; no false 0-scores).
+compiler_command = "arm-none-eabi-gcc -E -P -undef -nostdinc -I include -I tools/agbcc/include -I tools/agbcc -DMODERN=0 -std=gnu89 | tools/agbcc/bin/agbcc -mthumb-interwork -Wimplicit -Wparentheses -O2 -fhex-asm -g -o /dev/stdout | arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork"
+
+assembler_command = "arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork"
+
+asm_prelude_file = "scripts/decomp/permuter/prelude.inc"

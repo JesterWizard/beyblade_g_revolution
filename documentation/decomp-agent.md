@@ -47,6 +47,7 @@ After each batch, post a short summary:
 | Cursor batch | `scripts/decomp/cursor_batch.sh` |
 | Integrate | `scripts/decomp/integrate_match.py` |
 | ROM layout | `scripts/decomp/gen_rom_layout.py` |
+| decomp-permuter | `scripts/decomp/permuter/` (`tools/decomp-permuter/`) |
 | Mizuchi (opt.) | `tools/mizuchi/` |
 | Config | `mizuchi.yaml` |
 | agbcc | `tools/agbcc/bin/agbcc` |
