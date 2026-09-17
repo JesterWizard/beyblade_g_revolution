@@ -9,8 +9,9 @@ blockers (see [AGENTS.md](../AGENTS.md)).
 | Metric | Value (2026-09-17) |
 |--------|-------------------|
 | Luvdis functions | 633 (`asm/nonmatchings/`) |
-| Linked in ROM | 31 (`asm/matchings/`, `build/matched.json`) |
+| Linked in ROM | **633** (`asm/matchings/`, `build/matched.json`) |
 | C in `src/` | 4 stubs in `stubs.c` |
+| IWRAM pool symbols | 247 auto + 3 named (`ram_map_iwram_pool.inc`) |
 | `make compare` | Must stay **OK** every batch |
 | ROM layout | Fixed-VMA peel (`asm/rom_layout.ld`) |
 

@@ -37,8 +37,8 @@ make compare
 scripts/decomp/match_batch.sh 10
 
 # 3. Every 3–5 batches: RAM map pass
-python3 tools/scan_ram_literals.py --emit-asm
-# Update asm/ram_map_*.s + documentation/ram-map.md
+scripts/decomp/ram_map_pass.sh
+# Promote gUnk_* → named SET_DATA in asm/ram_map_*.s as roles become clear
 
 # 4. When match_function.py passes: add C to src/, plan asm removal
 python3 scripts/decomp/match_function.py sub_XXXXXXXX src/module.c

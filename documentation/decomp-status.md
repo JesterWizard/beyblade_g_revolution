@@ -10,9 +10,17 @@ _Agent-maintained log. Updated after each batch run._
 | Matching asm (linked) | **633** |
 | `src/*.c` files | 1 |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **1 complete** → Phase 2 (RAM map) / Phase 3 (C decomp) |
+| Phase | **2 in progress** (RAM map pass done; C decomp next) |
 
 ## Batch log
+
+### 2026-09-17 — Phase 2 RAM map pass
+
+- Rescanned `baserom.gba` literal pools: 250 IWRAM refs, high-water `0x03005694`
+- Removed sigma_star_saga placeholder `KNOWN_IWRAM`; known symbols now parsed from `asm/ram_map_*.s`
+- Emitted `asm/ram_map_iwram_pool.inc` (247 `gUnk_*`), `include/ram_map_pool.h`, `documentation/ram-map.md`
+- Promoted: `gMainWorkPtr`, `gBattleWork`, `gBattlerArena`
+- Added `scripts/decomp/ram_map_pass.sh`; `make compare`: **OK**
 
 ### 2026-09-17 — batch 3 (20 functions)
 
@@ -37,7 +45,7 @@ First 4 functions + `src/stubs.c`.
 
 ## Next
 
-- **Phase 2:** `python3 tools/scan_ram_literals.py --emit-asm` — flesh `asm/ram_map*.s` / `include/ram_map.h`
+- **Phase 2 (ongoing):** promote more `gUnk_*` → named symbols as functions are understood
 - **Phase 3:** Convert asm matchings to byte-matched C (`match_function.py` + `src/`)
 - **Phase 4:** Function renames in `beyblade_g_revolution.toml`
 - **Phase 5:** Migrate from fixed-VMA peel to shiftable layout (≥80% matched ✓; still 980 fixed-VMA sections)

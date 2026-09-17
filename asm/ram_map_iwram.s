@@ -21,6 +21,14 @@ SET_DATA UsedFreeRamSpaceTop, FreeRamSpaceTop
     .set UsedFreeRamSpaceTop, UsedFreeRamSpaceTop + \size
 .endm
 
+@ -- Promoted from baserom literal-pool scan (Phase 2) -------------------------
+@ Deref'd as the root arena pointer across battle + menu code (989 pool hits).
+SET_DATA gMainWorkPtr, 0x03000198
+@ Battle / menu work block (185 pool hits; see sub_0803C500 et al.).
+SET_DATA gBattleWork, 0x03000290
+@ Battle arena scratch cluster referenced by sub_0806A6F8 / sub_08065CD0.
+SET_ARRAY gBattlerArena, 0x03004060, 0x10C
+
 .include "ram_map_iwram_pool.inc"
 
 @ -- Custom free-space allocations ---------------------------------------------
