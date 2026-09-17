@@ -29,6 +29,21 @@ SET_DATA gBattleWork, 0x03000290
 @ Battle arena scratch cluster referenced by sub_0806A6F8 / sub_08065CD0.
 SET_ARRAY gBattlerArena, 0x03004060, 0x10C
 
+@ -- Battle subsystem fields (Phase 3 — traced from battle input / object code) -----
+SET_DATA gBtlInputMask, 0x03003F60
+SET_DATA gBtlState, 0x03003F64
+SET_DATA gBtlKeysHeld, 0x03004060
+SET_DATA gBtlKeysNew, 0x0300406C
+SET_DATA gBtlKeyQueuePtr, 0x03004070
+SET_DATA gBtlKeyQueueCount, 0x03004074
+SET_DATA gBtlObjListHead, 0x030040A8
+SET_DATA gBtlObjListTail, 0x030040B8
+SET_DATA gBtlObjTable, 0x03004150
+SET_DATA gBtlObjTableCount, 0x03004154
+SET_DATA gBtlObjLiveCount, 0x03004158
+SET_DATA gBtlLookupBase, 0x03004130
+SET_DATA gBtlLookupPtr, 0x03004148
+
 .include "ram_map_iwram_pool.inc"
 
 @ -- Custom free-space allocations ---------------------------------------------

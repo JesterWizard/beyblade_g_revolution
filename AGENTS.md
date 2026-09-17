@@ -5,7 +5,8 @@ hands-off: you run tools, integrate results, and report summaries. Do not ask th
 to run commands unless a hard blocker requires credentials they alone control
 (e.g. baserom missing). **Cursor is the agent** — Mizuchi/Claude API is optional.
 
-Read **[ARCHITECTURE.md](ARCHITECTURE.md)**, **[documentation/decomp-roadmap.md](documentation/decomp-roadmap.md)** (master plan), and **[documentation/decomp-agent.md](documentation/decomp-agent.md)** first.
+Read **[documentation/decomp-mission.md](documentation/decomp-mission.md)** (standing goal + fork policy),
+**[ARCHITECTURE.md](ARCHITECTURE.md)**, **[documentation/decomp-roadmap.md](documentation/decomp-roadmap.md)** (master plan), and **[documentation/decomp-agent.md](documentation/decomp-agent.md)** first.
 
 ## Mission
 
@@ -142,9 +143,11 @@ Post this after every batch (fill in values):
 
 | Question | Look here |
 |----------|-----------|
+| **Standing mission / fork policy** | [documentation/decomp-mission.md](documentation/decomp-mission.md) |
 | Pipeline / directories | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | Hands-off commands | [documentation/decomp-agent.md](documentation/decomp-agent.md) |
 | Master plan | [documentation/decomp-roadmap.md](documentation/decomp-roadmap.md) |
+| Battle subsystem | [documentation/battle.md](documentation/battle.md) |
 | Live progress | [documentation/decomp-status.md](documentation/decomp-status.md) |
 | RAM addresses | [documentation/ram-map.md](documentation/ram-map.md) |
 | Install / deps | [INSTALL.md](INSTALL.md) |

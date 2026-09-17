@@ -4,6 +4,9 @@ This is the **master plan** for hands-off progress. The agent follows this
 without waiting for user approval between batches. Escalate only on hard
 blockers (see [AGENTS.md](../AGENTS.md)).
 
+**Start here for the copy-paste mission prompt and fork tree:**
+[decomp-mission.md](decomp-mission.md).
+
 ## Current baseline
 
 | Metric | Value (2026-09-17) |

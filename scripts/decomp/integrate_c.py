@@ -67,7 +67,10 @@ def main() -> int:
 
     name = args.function
     if args.c_body.startswith("@") and len(args.c_body) > 1:
-        body = Path(args.c_body[1:]).read_text()
+        body_path = Path(args.c_body[1:])
+        if not body_path.is_file():
+            body_path = ROOT / args.c_body[1:]
+        body = body_path.read_text()
     else:
         body = args.c_body
 

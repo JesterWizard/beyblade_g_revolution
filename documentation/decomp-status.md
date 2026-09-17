@@ -8,11 +8,33 @@ _Agent-maintained log. Updated after each batch run._
 |--------|-------|
 | Non-matching asm | 633 |
 | Matching asm (linked) | **633** |
-| `src/matched/*.c` | 9 |
+| `src/matched/*.c` | 11 |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **3 in progress** (C decomp; 9 functions in `src/matched/`) |
+| Phase | **3 in progress** (battle subsystem; 10 C in `src/matched/`) |
 
 ## Batch log
+
+### 2026-09-17 — Phase 3 battle C batch (+1)
+
+- `sub_080314FC` → `src/matched/sub_080314FC.c` (battle work field @ +0x118)
+- `scripts/decomp/battle_convert_batch.sh` added
+- `make compare`: **OK**
+
+### Asm-only (documented blockers)
+
+| Function | Reason |
+|----------|--------|
+| `sub_08034894` | agbcc extra prologue / literal-pool ordering |
+| `sub_08072F94` | PC-relative `ldr` pool order mismatch |
+| `sub_0806FEFC` / `sub_0806FF28` | Freelist + pool loads; agbcc reorder |
+| `sub_0806A6F8` | Large; multiple pools (battle input hub) |
+
+### 2026-09-17 — Phase 3 battle subsystem bootstrap
+
+- `include/battle.h`, `documentation/battle.md`, `scripts/decomp/battle_scan.py`
+- Named battle IWRAM: `gBtlInputMask`, `gBtlKeysHeld`, object table, key queue, …
+- First battle C: `sub_080628E4` (main-work arena write @ `+0x1800`)
+- `make compare`: **OK**
 
 ### 2026-09-17 — Phase 3 C batch (trivial patterns)
 

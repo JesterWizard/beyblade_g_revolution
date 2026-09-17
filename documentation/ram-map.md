@@ -25,7 +25,7 @@ _Last scan: 2026-09-17 (`baserom.gba` Thumb LDR literal pools)._
 
 | Region | Pool-backed (aligned) | Named (manual) | Auto `gUnk_*` | High-water (below stack) |
 |--------|----------------------:|---------------:|--------------:|--------------------------|
-| IWRAM | 250 | 3 | 247 | 0x03005698 |
+| IWRAM | 250 | 15 | 235 | 0x03005698 |
 | EWRAM | 0 | 0 | 0 | (see occupancy) |
 | SRAM bus | 0 | 0 | 0 | — |
 
@@ -72,13 +72,13 @@ _Last scan: 2026-09-17 (`baserom.gba` Thumb LDR literal pools)._
 | `0x03000290` | 185 | `gBattleWork` |
 | `0x03000748` | 87 | `gUnk_03000748` |
 | `0x030002A0` | 83 | `gUnk_030002A0` |
-| `0x03004060` | 45 | `gBattlerArena` |
+| `0x03004060` | 45 | `gBtlKeysHeld` |
 | `0x03000798` | 37 | `gUnk_03000798` |
 | `0x03000278` | 28 | `gUnk_03000278` |
 | `0x03000674` | 24 | `gUnk_03000674` |
 | `0x030008E4` | 21 | `gUnk_030008E4` |
 | `0x03000400` | 20 | `gUnk_03000400` |
-| `0x03003F60` | 20 | `gUnk_03003F60` |
+| `0x03003F60` | 20 | `gBtlInputMask` |
 | `0x03000670` | 20 | `gUnk_03000670` |
 | `0x03000678` | 20 | `gUnk_03000678` |
 | `0x0300026C` | 19 | `gUnk_0300026C` |
@@ -100,6 +100,18 @@ _Last scan: 2026-09-17 (`baserom.gba` Thumb LDR literal pools)._
 |--------|---------|
 | `gMainWorkPtr` | `0x03000198` |
 | `gBattleWork` | `0x03000290` |
-| `gBattlerArena` | `0x03004060` |
+| `gBtlInputMask` | `0x03003F60` |
+| `gBtlState` | `0x03003F64` |
+| `gBtlKeysHeld` | `0x03004060` |
+| `gBtlKeysNew` | `0x0300406C` |
+| `gBtlKeyQueuePtr` | `0x03004070` |
+| `gBtlKeyQueueCount` | `0x03004074` |
+| `gBtlObjListHead` | `0x030040A8` |
+| `gBtlObjListTail` | `0x030040B8` |
+| `gBtlLookupBase` | `0x03004130` |
+| `gBtlLookupPtr` | `0x03004148` |
+| `gBtlObjTable` | `0x03004150` |
+| `gBtlObjTableCount` | `0x03004154` |
+| `gBtlObjLiveCount` | `0x03004158` |
 
 <!-- AUTO-GENERATED: scan_ram_literals.py --end -->

@@ -1,0 +1,32 @@
+---
+description: Autonomous GBA decomp mission — run until C + names complete
+alwaysApply: true
+---
+
+# Decomp autonomous mission
+
+You are the hands-off decompilation agent. **Read [documentation/decomp-mission.md](documentation/decomp-mission.md) first** each session.
+
+## Non-negotiables
+
+- `make compare` must stay **OK** every batch
+- Do **not** stop for approval between batches unless escalated
+- Do **not** hand-edit `asm/nonmatchings/*.s`
+- C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`
+
+## Current focus
+
+Phases 1–2 done. Work **Phase 3** (C in `src/matched/`) then **Phase 4** (`[renames]` in `beyblade_g_revolution.toml`). **Battle subsystem first** (`scripts/decomp/battle_scan.py`).
+
+## At each fork
+
+1. Trivial → `c_convert_batch.sh` / `integrate_c.py`
+2. Hard → m2c / `cursor_batch.sh` → `match_function.py`
+3. Literal-pool mismatch → keep asm, document blocker
+4. Role clear → promote RAM (`ram_map_pass.sh`), then rename batch
+
+## Each batch
+
+`report_status.py` → work → `make compare` → update `decomp-status.md` → **commit** (per AGENTS.md unless user said no commits).
+
+Full fork tree, done criteria, and copy-paste prompt: **documentation/decomp-mission.md**.

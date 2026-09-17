@@ -12,7 +12,8 @@ This installs agbcc, pret tools, Luvdis, generates `asm/nonmatchings/`, builds M
 
 ## Per-session loop
 
-See **[decomp-roadmap.md](decomp-roadmap.md)** for the full phased plan.
+See **[decomp-mission.md](decomp-mission.md)** for the standing goal and fork policy,
+and **[decomp-roadmap.md](decomp-roadmap.md)** for the full phased plan.
 
 1. **Status** — `python3 scripts/decomp/report_status.py` + `make compare`
 2. **Match batch** — `scripts/decomp/match_batch.sh 10` (verify → integrate → compare → **commit**)
