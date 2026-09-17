@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x08040F4C..0x08041347
+@ Unmatched ROM 0x080413BA..0x080415FB
 	.section .rodata
 	.global gRomGap113
 gRomGap113:
-	.incbin "baserom.gba", 0x40F4C, 0x3FC
+	.incbin "baserom.gba", 0x413BA, 0x242

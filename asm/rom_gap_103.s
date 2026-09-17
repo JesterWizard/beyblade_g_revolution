@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x0803EBD8..0x0803EC33
+@ Unmatched ROM 0x0803ECE0..0x0803EDC7
 	.section .rodata
 	.global gRomGap103
 gRomGap103:
-	.incbin "baserom.gba", 0x3EBD8, 0x5C
+	.incbin "baserom.gba", 0x3ECE0, 0xE8
