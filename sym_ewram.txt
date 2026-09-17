@@ -1,0 +1,2 @@
+# Prefer asm/ram_map_ewram.s for absolute EWRAM symbols (ygodm8-style).
+# Keep this file for future ramscrgen peels if needed.
