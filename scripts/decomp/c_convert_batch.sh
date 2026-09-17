@@ -59,6 +59,7 @@ for asm_path in sorted(MATCH.glob("sub_*.s")):
             "--skip-compare",
         ],
         check=True,
+        stdout=subprocess.DEVNULL,
     )
     converted += 1
     print(f"converted {name} ({cand.note})")

@@ -8,11 +8,19 @@ _Agent-maintained log. Updated after each batch run._
 |--------|-------|
 | Non-matching asm | 633 |
 | Matching asm (linked) | **633** |
-| `src/matched/*.c` | 11 |
+| `src/matched/*.c` | 20 |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **3 in progress** (battle subsystem; 10 C in `src/matched/`) |
+| Phase | **3 in progress** (battle subsystem; IWRAM accessors + stack shim) |
 
 ## Batch log
+
+### 2026-09-17 — Phase 3 C batch (+9 patterns)
+
+- Fixed `triage_functions.py` (`json` shadowing bug)
+- Extended `c_patterns.py`: naked return, swi+r2 prep, IWRAM pool loaders, stack shim
+- Fixed `c_convert_batch.sh` stdout capture from `integrate_c.py`
+- New C: `sub_0802B90C`, `sub_080429C0`, `sub_08043974`, `sub_08062A14`, `sub_08066390`, `sub_080674B4`, `sub_08071808`, `sub_08074144`, `sub_08067B98`
+- `make compare`: **OK**
 
 ### 2026-09-17 — Phase 3 battle C batch (+1)
 
@@ -28,6 +36,8 @@ _Agent-maintained log. Updated after each batch run._
 | `sub_08072F94` | PC-relative `ldr` pool order mismatch |
 | `sub_0806FEFC` / `sub_0806FF28` | Freelist + pool loads; agbcc reorder |
 | `sub_0806A6F8` | Large; multiple pools (battle input hub) |
+| `sub_080674A4` | `swi #6` + `adds r0,r1,#0`; agbcc cannot emit `081c` |
+| `sub_08066434` / `sub_08066440` | Pool `ldr` + offset; agbcc absolute addressing |
 
 ### 2026-09-17 — Phase 3 battle subsystem bootstrap
 

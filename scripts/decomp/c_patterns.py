@@ -49,10 +49,34 @@ def function_insns(function: str, asm_lines: list[str]) -> list[str]:
     return out
 
 
+def _asm_text(function: str, asm_lines: list[str]) -> str:
+    """Slice from function label through next global label (includes literal pool)."""
+    start = None
+    for i, line in enumerate(asm_lines):
+        if line.strip() == f"{function}:":
+            start = i
+            break
+    if start is None:
+        return ""
+    end = len(asm_lines)
+    for j in range(start + 1, len(asm_lines)):
+        stripped = asm_lines[j].strip()
+        if stripped.endswith(":") and not stripped.startswith(".") and not stripped.startswith("_"):
+            end = j
+            break
+    return "\n".join(asm_lines[start:end])
+
+
 def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     insns = function_insns(function, asm_lines)
     if not insns:
         return None
+
+    if insns == ["mov pc, lr"]:
+        return CCandidate(
+            f"__attribute__((naked))\nvoid {function}(void)\n{{\n    asm(\"mov pc, lr\");\n}}",
+            "naked return",
+        )
 
     if insns == ["bx lr"]:
         return CCandidate(f"void {function}(void)\n{{\n}}", "empty return")
@@ -89,12 +113,73 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
             f"store byte {val} @+{off}",
         )
 
+    m0 = re.fullmatch(rf"movs r2, {IMM}", insns[0])
+    m1 = re.fullmatch(rf"swi {IMM}", insns[1]) if len(insns) > 1 else None
+    if len(insns) == 3 and insns[2] == "bx lr" and m0 and m1 and m0.group(1) == "#0x00":
+        n = m1.group(1)
+        return CCandidate(
+            f"void {function}(void)\n{{\n    asm volatile(\"movs r2, #0\");\n    asm(\"swi {n}\");\n}}",
+            f"swi {n} prep r2",
+        )
+
     m = re.fullmatch(rf"swi {IMM}", insns[0])
     if len(insns) == 2 and insns[1] == "bx lr" and m:
         n = m.group(1)
         return CCandidate(
             f"void {function}(void)\n{{\n    asm(\"swi {n}\");\n}}",
             f"swi {n}",
+        )
+
+    blob = _asm_text(function, asm_lines)
+    m = re.search(
+        rf"{function}:\n\tldr r0, _[0-9A-Fa-f]+ @ =(0x[0-9A-Fa-f]+)\n\tbx lr",
+        blob,
+    )
+    if m:
+        addr = m.group(1)
+        return CCandidate(
+            f"u32 {function}(void)\n{{\n    return {addr};\n}}",
+            "return iwram ptr",
+        )
+
+    m = re.search(
+        rf"{function}:\n\tldr r0, _[0-9A-Fa-f]+ @ =(0x[0-9A-Fa-f]+)\n\tldr r0, \[r0, #0x00\]\n\tbx lr",
+        blob,
+    )
+    if m:
+        addr = m.group(1)
+        return CCandidate(
+            f"u32 {function}(void)\n{{\n    return *(u32 *){addr};\n}}",
+            "load u32 from iwram",
+        )
+
+    m = re.search(
+        rf"{function}:\n\tldr r0, _[0-9A-Fa-f]+ @ =(0x[0-9A-Fa-f]+)\n\tldrh r0, \[r0, #0x00\]\n\tbx lr",
+        blob,
+    )
+    if m:
+        addr = m.group(1)
+        return CCandidate(
+            f"u16 {function}(void)\n{{\n    return *(u16 *){addr};\n}}",
+            "load u16 from iwram",
+        )
+
+    if insns == ["push {r0, r1, r2, r3}", "add sp, #0x010", "bx lr"]:
+        return CCandidate(
+            f"__attribute__((naked))\nvoid {function}(void)\n{{\n"
+            f'    asm("push {{r0, r1, r2, r3}}\\nadd sp, #0x10\\n bx lr");\n}}',
+            "stack shim",
+        )
+
+    m = re.search(
+        rf"{function}:\n\tldr r1, _[0-9A-Fa-f]+ @ =(0x[0-9A-Fa-f]+)\n\tstrb r0, \[r1, #0x00\]\n\tbx lr",
+        blob,
+    )
+    if m:
+        addr = m.group(1)
+        return CCandidate(
+            f"void {function}(u8 v)\n{{\n    *(u8 *){addr} = v;\n}}",
+            "store u8 to iwram",
         )
 
     m = re.fullmatch(rf"strb r1, \[r0, {IMM}\]", insns[0])

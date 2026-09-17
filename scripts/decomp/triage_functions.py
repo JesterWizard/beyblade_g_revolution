@@ -1,15 +1,21 @@
 #!/usr/bin/env python3
-"""Rank non-matching asm functions by estimated difficulty (smaller = easier)."""
+"""Rank functions for C conversion by estimated difficulty (smaller = easier).
+
+Phase 3: triage all Luvdis functions in asm/nonmatchings/ except those already
+converted to C (build/matched.json ``src`` field).
+"""
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 ASM_DIR = ROOT / "asm" / "nonmatchings"
+MANIFEST = ROOT / "build" / "matched.json"
 
 LABEL_RE = re.compile(r"^([A-Za-z0-9_]+):\s*$")
 
@@ -45,18 +51,21 @@ def main() -> int:
         print(f"error: {ASM_DIR} missing — run scripts/setup.sh", file=sys.stderr)
         return 1
 
-    matched = {p.stem for p in (ROOT / "asm" / "matchings").glob("*.s")}
-    files = [p for p in ASM_DIR.glob("*.s") if p.stem not in matched]
+    converted: set[str] = set()
+    if MANIFEST.is_file():
+        data = json.loads(MANIFEST.read_text())
+        converted = {
+            f["name"] for f in data.get("functions", []) if f.get("src")
+        }
+    files = [p for p in ASM_DIR.glob("*.s") if p.stem not in converted]
     if not files:
-        print(f"error: no .s files in {ASM_DIR}", file=sys.stderr)
+        print(f"error: no functions left to convert in {ASM_DIR}", file=sys.stderr)
         return 1
 
     ranked = sorted(score_file(p) for p in files)
     pick = ranked[: args.n]
 
     if args.json:
-        import json
-
         print(json.dumps([name for _, name in pick]))
     else:
         for score, name in pick:
