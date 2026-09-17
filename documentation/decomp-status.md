@@ -11,11 +11,19 @@ _Agent-maintained log. Updated after each batch run._
 | `src/matched/*.c` | **633/633** |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
 | Phase | **3b in progress** — replace opcode stubs with semantic C / readable Thumb |
-| Semantic C | 28 / 633 |
+| Semantic C | 28 / 633 (struct-member convention) |
 | Readable Thumb | 124 / 633 (122 battle) |
 | Opcode `.byte` embeds | 481 / 633 |
 
 ## Batch log
+
+### 2026-09-17 — C convention: struct members (aw2bhr style)
+
+- Added `include/unknown-types.h` / `unknown-functions.h`; growing structs with `filler_XX` + `unkXX`
+- Typed RAM macros: `gMainWorkPtr`, `gBattleWork` in `ram_map.h`
+- Converted existing semantic C from offset-casts to `a->unkXX` / `g->unkXX`
+- `c_patterns.py` now emits member stores; SWI r2=0 uses a register asm local, not `asm volatile`
+- `make compare`: **OK**
 
 ### 2026-09-17 — decomp-permuter + battle readable Thumb (+122)
 

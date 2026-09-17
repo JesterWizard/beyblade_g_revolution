@@ -3,6 +3,6 @@
 // @ 0x080674b4
 void sub_080674B4(void)
 {
-    asm volatile("movs r2, #0");
-    asm("swi 5");
+    register int r2 asm("r2") = 0;
+    asm("swi 5" : : "r"(r2));
 }

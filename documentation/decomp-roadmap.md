@@ -108,7 +108,7 @@ Phase 2 is **never finished** but should be **non-blocking** for Phase 1 batches
 ### Per-function workflow
 
 ```bash
-# 1. Write/refine C (use global.h, ram_map.h — no raw 0x03 unless unavoidable)
+# 1. Write/refine C (unknown-types.h members, ram_map.h names — no raw 0x03 unless unavoidable)
 # 2. Verify
 python3 scripts/decomp/match_function.py sub_XXXXXXXX src/module.c
 # 3. Integrate C into build (future: link src/*.o in peel; today asm stays until C linked)
@@ -120,7 +120,8 @@ make compare
 
 - C89 / agbcc only on matching paths
 - Comment header: `// @ 0x080XXXXXX`
-- One subsystem per `src/<module>.c` (e.g. `iwram.c`, `swi.c`, `stubs.c`)
+- Struct members in `include/unknown-types.h` (`a->unkA0`), not offset-casts or `asm volatile` — see decomp-mission.md **C style**
+- One file per function in `src/matched/` until Phase 5; then one subsystem per `src/<module>.c`
 - No `static` locals in append code that land in IWRAM `.bss`
 
 ### Exit criteria (Phase 3 ongoing)

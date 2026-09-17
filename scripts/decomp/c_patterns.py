@@ -4,13 +4,46 @@
 from __future__ import annotations
 
 import re
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from unknown_types import parse_imm, struct_from_function, unk_name  # noqa: E402
 
 REG = r"r([0-9]|1[0-5])"
 IMM = r"#(0x[0-9A-Fa-f]+|\d+)"
+
+
+def _st(function: str) -> str:
+    return struct_from_function(function)
+
+
+def _pool_sym(addr: str) -> str:
+    return f"gUnk_{int(addr, 16):08X}"
+
+
+def _member_load(function: str, ctype: str, off: str) -> str:
+    st = _st(function)
+    n = parse_imm(off)
+    field = unk_name(n)
+    return (
+        f"{ctype} {function}(struct {st} *a)\n"
+        f"{{\n    return a->{field};\n}}"
+    )
+
+
+def _member_store(function: str, ctype: str, off: str, value: str, extra_params: str = "") -> str:
+    st = _st(function)
+    field = unk_name(parse_imm(off))
+    params = f"struct {st} *a"
+    if extra_params:
+        params += ", " + extra_params
+    return (
+        f"void {function}({params})\n"
+        f"{{\n    a->{field} = {value};\n}}"
+    )
 
 
 @dataclass
@@ -86,18 +119,18 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
 
     m = re.fullmatch(rf"ldrb r0, \[r0, {IMM}\]", insns[0])
     if len(insns) == 2 and insns[1] == "bx lr" and m:
-        return CCandidate(
-            f"u8 {function}(u8 *a)\n{{\n    return *a;\n}}",
-            "load u8",
-        )
+        off = m.group(1)
+        if parse_imm(off) == 0:
+            return CCandidate(
+                f"u8 {function}(u8 *a)\n{{\n    return *a;\n}}",
+                "load u8",
+            )
+        return CCandidate(_member_load(function, "u8", off), f"load u8 +{off}")
 
     m = re.fullmatch(rf"ldr r0, \[r0, {IMM}\]", insns[0])
     if len(insns) == 2 and insns[1] == "bx lr" and m:
         off = m.group(1)
-        return CCandidate(
-            f"u32 {function}(void *a)\n{{\n    return *(u32 *)((u8 *)a + {off});\n}}",
-            f"load u32 +{off}",
-        )
+        return CCandidate(_member_load(function, "u32", off), f"load u32 +{off}")
 
     m = re.fullmatch(rf"movs r0, {IMM}", insns[0])
     if len(insns) == 2 and insns[1] == "bx lr" and m:
@@ -112,7 +145,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
         val = m0.group(1)
         off = m1.group(1)
         return CCandidate(
-            f"void {function}(void *a)\n{{\n    *(u8 *)((u8 *)a + {off}) = {val};\n}}",
+            _member_store(function, "u8", off, val),
             f"store byte {val} @+{off}",
         )
 
@@ -121,7 +154,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if len(insns) == 3 and insns[2] == "bx lr" and m0 and m1 and m0.group(1) == "#0x00":
         n = m1.group(1)
         return CCandidate(
-            f"void {function}(void)\n{{\n    asm volatile(\"movs r2, #0\");\n    asm(\"swi {n}\");\n}}",
+            f"void {function}(void)\n{{\n    register int r2 asm(\"r2\") = 0;\n    asm(\"swi {n}\" : : \"r\"(r2));\n}}",
             f"swi {n} prep r2",
         )
 
@@ -141,7 +174,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if m:
         addr = m.group(1)
         return CCandidate(
-            f"u32 {function}(void)\n{{\n    return {addr};\n}}",
+            f"u32 {function}(void)\n{{\n    return {_pool_sym(addr)};\n}}",
             "return iwram ptr",
         )
 
@@ -152,7 +185,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if m:
         addr = m.group(1)
         return CCandidate(
-            f"u32 {function}(void)\n{{\n    return *(u32 *){addr};\n}}",
+            f"u32 {function}(void)\n{{\n    return *(u32 *){_pool_sym(addr)};\n}}",
             "load u32 from iwram",
         )
 
@@ -163,7 +196,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if m:
         addr = m.group(1)
         return CCandidate(
-            f"u16 {function}(void)\n{{\n    return *(u16 *){addr};\n}}",
+            f"u16 {function}(void)\n{{\n    return *(u16 *){_pool_sym(addr)};\n}}",
             "load u16 from iwram",
         )
 
@@ -181,7 +214,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if m:
         addr = m.group(1)
         return CCandidate(
-            f"void {function}(u8 v)\n{{\n    *(u8 *){addr} = v;\n}}",
+            f"void {function}(u8 v)\n{{\n    *(u8 *){_pool_sym(addr)} = v;\n}}",
             "store u8 to iwram",
         )
 
@@ -189,7 +222,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if len(insns) == 2 and insns[1] == "bx lr" and m:
         off = m.group(1)
         return CCandidate(
-            f"void {function}(void *a, u8 v)\n{{\n    *(u8 *)((u8 *)a + {off}) = v;\n}}",
+            _member_store(function, "u8", off, "v", "u8 v"),
             f"store r1 @+{off}",
         )
 
@@ -204,10 +237,13 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     ):
         off0 = re.fullmatch(rf"adds r3, {IMM}", insns[1]).group(1)
         off1 = re.fullmatch(rf"adds r0, {IMM}", insns[3]).group(1)
+        st = _st(function)
+        f0 = unk_name(parse_imm(off0))
+        f1 = unk_name(parse_imm(off1))
         return CCandidate(
-            f"void {function}(void *a, u16 v1, u16 v2)\n{{\n"
-            f"    *(u16 *)((u8 *)a + {off0}) = v1;\n"
-            f"    *(u16 *)((u8 *)a + {off1}) = v2;\n}}",
+            f"void {function}(struct {st} *a, u16 v1, u16 v2)\n{{\n"
+            f"    a->{f0} = v1;\n"
+            f"    a->{f1} = v2;\n}}",
             f"store two u16 @+{off0}/+{off1}",
         )
 
@@ -219,11 +255,12 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
         and insns[3] == "strh r2, [r0, #0x02]"
         and insns[4] == "bx lr"
     ):
+        st = _st(function)
         return CCandidate(
-            f"void {function}(void *a, u32 v)\n{{\n"
-            f"    *(u16 *)a = 0;\n"
-            f"    *(u32 *)((u8 *)a + 4) = v;\n"
-            f"    *(u16 *)((u8 *)a + 2) = 0;\n}}",
+            f"void {function}(struct {st} *a, u32 v)\n{{\n"
+            f"    a->unk00 = 0;\n"
+            f"    a->unk04 = v;\n"
+            f"    a->unk02 = 0;\n}}",
             "init u16/u32 fields",
         )
 
@@ -239,8 +276,7 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
         base = int(m0.group(1), 0)
         off = base << 2
         return CCandidate(
-            f"void {function}(void *a, u32 v)\n{{\n"
-            f"    *(u32 *)((u8 *)a + {off:#x}) = v;\n}}",
+            _member_store(function, "u32", off, "v", "u32 v"),
             f"store u32 @+{off:#x}",
         )
 
@@ -255,11 +291,12 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
         o1 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[1]).group(1)
         o2 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[2]).group(1)
         o3 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[3]).group(1)
+        st = _st(function)
         return CCandidate(
-            f"void {function}(void *a)\n{{\n"
-            f"    *(u32 *)((u8 *)a + {o1}) = 0;\n"
-            f"    *(u32 *)((u8 *)a + {o2}) = 0;\n"
-            f"    *(u32 *)((u8 *)a + {o3}) = 0;\n}}",
+            f"void {function}(struct {st} *a)\n{{\n"
+            f"    a->{unk_name(parse_imm(o1))} = 0;\n"
+            f"    a->{unk_name(parse_imm(o2))} = 0;\n"
+            f"    a->{unk_name(parse_imm(o3))} = 0;\n}}",
             "zero three u32 fields",
         )
 
@@ -275,12 +312,13 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
         o2 = re.fullmatch(rf"str r2, \[r0, {IMM}\]", insns[0]).group(1)
         o3 = re.fullmatch(rf"str r3, \[r0, {IMM}\]", insns[1]).group(1)
         o1 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[2]).group(1)
+        st = _st(function)
         return CCandidate(
-            f"void {function}(void *a, u32 v1, u32 v2, u32 v3)\n{{\n"
-            f"    *(u32 *)((u8 *)a + {o2}) = v2;\n"
-            f"    *(u32 *)((u8 *)a + {o3}) = v3;\n"
-            f"    *(u32 *)((u8 *)a + {o1}) = v1;\n"
-            f"    *(u32 *)a = 0;\n}}",
+            f"void {function}(struct {st} *a, u32 v1, u32 v2, u32 v3)\n{{\n"
+            f"    a->{unk_name(parse_imm(o2))} = v2;\n"
+            f"    a->{unk_name(parse_imm(o3))} = v3;\n"
+            f"    a->{unk_name(parse_imm(o1))} = v1;\n"
+            f"    a->unk00 = 0;\n}}",
             "store three u32 + clear base",
         )
 
@@ -297,11 +335,12 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     ):
         base = re.fullmatch(rf"adds r0, {IMM}", insns[1]).group(1)
         b = int(base, 0)
+        st = _st(function)
         return CCandidate(
-            f"void {function}(void *a, u16 v1, u16 v2, u16 v3)\n{{\n"
-            f"    *(u16 *)((u8 *)a + {b:#x}) = v1;\n"
-            f"    *(u16 *)((u8 *)a + {b + 2:#x}) = v2;\n"
-            f"    *(u16 *)((u8 *)a + {b + 4:#x}) = v3;\n}}",
+            f"void {function}(struct {st} *a, u16 v1, u16 v2, u16 v3)\n{{\n"
+            f"    a->{unk_name(b)} = v1;\n"
+            f"    a->{unk_name(b + 2)} = v2;\n"
+            f"    a->{unk_name(b + 4)} = v3;\n}}",
             f"store three u16 @+{b:#x}",
         )
 
@@ -320,14 +359,15 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
         and insns[10] == "str r1, [r0, #0x14]"
         and insns[11] == "bx lr"
     ):
+        st = _st(function)
         return CCandidate(
-            f"void {function}(u32 *a, u32 v1, u32 v2, u32 v3)\n{{\n"
-            f"    a[0] = v1;\n"
-            f"    a[1] = v2;\n"
-            f"    a[2] = v3;\n"
-            f"    a[3] = 0x7800;\n"
-            f"    a[4] = 0x5000;\n"
-            f"    a[5] = 0;\n}}",
+            f"void {function}(struct {st} *a, u32 v1, u32 v2, u32 v3)\n{{\n"
+            f"    a->unk00 = v1;\n"
+            f"    a->unk04 = v2;\n"
+            f"    a->unk08 = v3;\n"
+            f"    a->unk0C = 0x7800;\n"
+            f"    a->unk10 = 0x5000;\n"
+            f"    a->unk14 = 0;\n}}",
             "init six-word struct",
         )
 
@@ -342,11 +382,12 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
         and insns[6] == "adds r0, r0, r1"
         and insns[7] == "bx lr"
     ):
+        st = _st(function)
         return CCandidate(
-            f"void *{function}(void *a, u32 idx)\n{{\n"
+            f"void *{function}(struct {st} *a, u32 idx)\n{{\n"
             f"    u8 bit;\n"
-            f"    bit = *(u8 *)((u8 *)a + 6);\n"
-            f"    return (u8 *)a + (idx << bit) + *(u32 *)((u8 *)a + 0x10);\n}}",
+            f"    bit = a->unk06;\n"
+            f"    return (u8 *)a + (idx << bit) + a->unk10;\n}}",
             "indexed struct offset",
         )
 
@@ -364,9 +405,8 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if m:
         addend, ptr = m.group(1), m.group(2)
         return CCandidate(
-            f'#include "ram_map.h"\n'
             f"u8 {function}(void)\n{{\n"
-            f"    return *(u8 *)({addend} + *(u32 *){ptr});\n}}",
+            f"    return *(u8 *)({addend} + *(u32 *){_pool_sym(ptr)});\n}}",
             "iwram ptr + addend ldrb",
         )
 
@@ -391,14 +431,11 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
     if m:
         table = m.group(1)
         return CCandidate(
-            f'#include "ram_map.h"\n#include "battle.h"\n'
             f"u32 {function}(u32 idx)\n{{\n"
-            f"    u8 *work;\n"
             f"    u32 **tables;\n"
             f"    u32 *row;\n"
             f"    tables = (u32 **){table};\n"
-            f"    work = *(u8 **)gMainWorkPtr;\n"
-            f"    row = tables[*(u8 *)(work + BTL_MAIN_WORK_FIELD_1818)];\n"
+            f"    row = tables[gMainWorkPtr->unk1818];\n"
             f"    return row[idx];\n}}",
             f"main-work table lookup {table}",
         )

@@ -3,11 +3,22 @@
 
 #include "gba/types.h"
 #include "ram_map_pool.h"
+#include "unknown-types.h"
 
-/* Hand-maintained symbols (see asm/ram_map_iwram.s). */
+/*
+ * Hand-maintained symbols (see asm/ram_map_iwram.s).
+ *
+ * Pool header keeps address constants (needed by match_function.py, which
+ * compares unlinked .text). Promoted pointer globals are typed dereference
+ * macros so C can write `gMainWorkPtr->unk1800` instead of
+ * `*(u32 *)((u8 *)*(u32 **)0x03000198 + 0x1800)`.
+ */
 
-#define gMainWorkPtr     0x03000198
-#define gBattleWork      0x03000290
+#undef gMainWorkPtr
+#undef gBattleWork
+#define gMainWorkPtr (*(struct MainWork **)0x03000198)
+#define gBattleWork (*(struct BattleWork **)0x03000290)
+
 #define gBattlerArena    0x03004060
 #define gBattlerArenaEnd 0x0300416C
 

@@ -31,14 +31,14 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_0803C500` | Battle UI setup (`gBattleWork`) |
 | `sub_08065CD0` | Battle scene driver |
 | `sub_0807309C` / `sub_08073114` | Battle object table alloc / remove |
-| `sub_080628E4` | Write main-work slot @ `+0x1800` (C in `src/matched/`) |
+| `sub_080628E4` | Write `gMainWorkPtr->unk1800` (semantic C) |
 
 ## C conversion status
 
 | Function | Status |
 |----------|--------|
-| `sub_080628E4` | **semantic C** — `src/matched/sub_080628E4.c` |
-| `sub_080314FC` | **semantic C** — `src/matched/sub_080314FC.c` |
+| `sub_080628E4` | **semantic C** — `gMainWorkPtr->unk1800` |
+| `sub_080314FC` | **semantic C** — `gBattleWork->unk118` |
 | `sub_08072F94` | readable Thumb — agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
 | `sub_0803DD60` family | readable Thumb — main-work table via `+0x1818` |
 | `sub_08034894` | readable Thumb — agbcc prologue / pool ordering |

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08062098
-u32 sub_08062098(void *a)
+u32 sub_08062098(struct Unk62098 *a)
 {
-    return *(u32 *)((u8 *)a + 0x18);
+    return a->unk18;
 }

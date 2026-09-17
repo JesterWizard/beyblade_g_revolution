@@ -74,13 +74,11 @@ u8 sub_08072F94(void)
 
 u32 sub_0803DD60(u32 idx)
 {
-    u8 *work;
     u32 **tables;
     u32 *row;
 
     tables = (u32 **)0x0807B0C4;
-    work = *(u8 **)gMainWorkPtr;
-    row = tables[*(u8 *)(work + BTL_MAIN_WORK_FIELD_1818)];
+    row = tables[gMainWorkPtr->unk1818];
     return row[idx];
 }
 """,

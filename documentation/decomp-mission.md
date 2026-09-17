@@ -117,6 +117,28 @@ Rename (`sub_*` → `BtlFoo`) only in **Phase 4**, after the function's role is 
 
 ---
 
+## C style (default)
+
+Follow the [aw2bhr](https://github.com/Mad-Man-Dan/aw2bhr) matching style. New semantic C must compile with agbcc and `match_function.py` → MATCH.
+
+| Do | Don't |
+|----|--------|
+| `a->unkA0 = v` on a growing struct in `include/unknown-types.h` | `*(u16 *)((u8 *)a + 0xa0) = v` |
+| `gMainWorkPtr->unk1800 = v` (typed macro in `ram_map.h`) | `*(u32 *)((u8 *)*(u32 **)0x03000198 + 0x1800) = v` |
+| `filler_XX` for unread bytes; `unkXX` for accessed fields | Per-file `void *` + ad-hoc offsets |
+| `register int r2 asm("r2") = 0; asm("swi 5" : : "r"(r2));` for BIOS | `asm volatile("movs r2, #0")` to force registers |
+| Add a field to a struct (superset) | Move a field or change its type without re-matching every user |
+
+- Structs are a **superset**: adding a field is fine; moving one is not. Offsets and sizeof are load-bearing.
+- `volatile` on a store only when the ROM kept extra narrowing (`lsl #24; lsr #24` before `strb`).
+- Naked `.byte` / unified `asm(...)` is for documented opcode stubs, not new C.
+- `include/unknown-functions.h` gets prototypes when one `sub_*` needs to call another.
+- Keep per-function `src/matched/*.c` until Phase 5 (do not pack consecutive functions into one file yet).
+
+`c_patterns.py` emits member stores against `struct Unk*` names from `scripts/decomp/unknown_types.py`. If a new offset appears, add the field (split a `filler_`) in `unknown-types.h` before integrating.
+
+---
+
 ## Commit policy
 
 Per [AGENTS.md](../AGENTS.md): **commit after every successful batch without asking the user.**
@@ -170,6 +192,7 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 | Live log | `documentation/decomp-status.md` |
 | Battle notes | `documentation/battle.md` |
 | Matched C | `src/matched/*.c` |
+| Types | `include/unknown-types.h`, `include/unknown-functions.h` |
 | Manifest | `build/matched.json` |
 | Renames | `beyblade_g_revolution.toml` `[renames]` |
 

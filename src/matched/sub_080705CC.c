@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080705cc
-void sub_080705CC(void *a)
+void sub_080705CC(struct Unk705CC *a)
 {
-    *(u8 *)((u8 *)a + 0x19) = 0x01;
+    a->unk19 = 1;
 }

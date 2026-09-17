@@ -39,6 +39,7 @@ After each batch, post a short summary:
 - Always run full-ROM `make compare` after integrating matches
 - C89 only for matching paths; no silent UB fixes
 - RAM symbols go in `asm/ram_map*.s`, not hardcoded `0x03…` addresses
+- Semantic C uses struct members in `unknown-types.h`, not offset-casts or `asm volatile`
 
 ## Tool paths
 

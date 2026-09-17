@@ -6,6 +6,9 @@
 #include "config.h"
 #include "runtime.h"
 #include "gba/gba.h"
+#include "unknown-types.h"
+#include "unknown-functions.h"
+#include "ram_map.h"
 
 // Place game-wide types, externs, and helpers here as the decomp grows.
 

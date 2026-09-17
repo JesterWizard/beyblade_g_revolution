@@ -2,8 +2,14 @@
 
 Absolute IWRAM / EWRAM / save-bus symbols live in `asm/ram_map*.s` and are
 included into a single `asm/ram_map.s` object. C code should include
-`include/ram_map.h` (hand-written symbols) and `include/ram_map_pool.h`
-(auto-generated pool inventory) instead of hardcoding `0x03…` / `0x02…`.
+`include/ram_map.h` (typed views of promoted symbols) and
+`include/ram_map_pool.h` (auto-generated address constants) instead of
+hardcoding `0x03…` / `0x02…`.
+
+Promoted pointer globals (`gMainWorkPtr`, `gBattleWork`) are **typed
+dereference macros** so matching C can write `gMainWorkPtr->unk1800`. Layouts
+live in `include/unknown-types.h`. Pool `#define`s stay as raw addresses so
+`match_function.py` (unlinked `.text`) still sees the literal.
 
 ## Regeneration
 
