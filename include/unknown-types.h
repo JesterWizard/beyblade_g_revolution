@@ -264,12 +264,80 @@ struct Unk7069C /* >= 0x16 */
     /* 14 */ u8 unk14;
 };
 
-/* Byte + pointer. sub_080312EC. */
+/* Bytes + words + pointer. sub_08031294, sub_080312EC. */
 struct Unk312EC /* >= 0x10 */
 {
     /* 00 */ u8 unk00;
-    /* 01 */ u8 filler_01[0xB];
+    /* 01 */ u8 unk01;
+    /* 02 */ u8 filler_02[2];
+    /* 04 */ s32 unk04;
+    /* 08 */ u32 unk08;
     /* 0c */ void *unk0C;
+};
+
+/* Word count + dest. sub_08062728. */
+struct Unk62728 /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u32 *unk04;
+    /* 08 */ u32 unk08;
+};
+
+/* ldrsh at +0, pointer at +4. sub_08033958. */
+struct Unk33958 /* >= 0x08 */
+{
+    /* 00 */ s16 unk00;
+    /* 02 */ u8 filler_02[2];
+    /* 04 */ s32 *unk04;
+};
+
+/* Clear fields if non-NULL. sub_08061E40. */
+struct Unk61E40 /* >= 0x16 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u32 unk04;
+    /* 08 */ u8 filler_08[2];
+    /* 0a */ u16 unk0A;
+    /* 0c */ u8 filler_0C[4];
+    /* 10 */ u16 unk10;
+    /* 12 */ u8 filler_12[3];
+    /* 15 */ u8 unk15;
+};
+
+/* Compare **a vs b, then base + (b<<4). sub_0806DEF4. */
+struct Unk6DEF4 /* >= 0x08 */
+{
+    /* 00 */ s32 *unk00;
+    /* 04 */ s32 unk04;
+};
+
+/* Signed store + flag. sub_08033F30. */
+struct Unk33F30 /* >= 0x1d */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ s32 unk14;
+    /* 18 */ u32 unk18;
+    /* 1c */ u8 unk1C;
+};
+
+/* *gUnk_0300026C then +8, halfword at +0x18. sub_0802D8C4. */
+struct Unk026CInner /* >= 0x1a */
+{
+    /* 00 */ u8 filler_00[0x18];
+    /* 18 */ u16 unk18;
+};
+
+struct Unk026C /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ struct Unk026CInner *unk08;
+};
+
+/* Free pointer at +0x10. sub_08072CC0. */
+struct Unk72CC0 /* >= 0x14 */
+{
+    /* 00 */ u8 filler_00[0x10];
+    /* 10 */ void *unk10;
 };
 
 /* IWRAM triple at 0x03000180. sub_08067890. */
@@ -325,8 +393,42 @@ struct Unk68014Rec /* 0x08 */
 
 struct Unk68014 /* >= 0x28 */
 {
-    /* 00 */ u8 filler_00[0x20];
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ u32 unk08;
+    /* 0c */ u8 filler_0C[0xC];
+    /* 18 */ u32 unk18;
+    /* 1c */ u8 filler_1C[4];
     /* 20 */ struct Unk68014Rec unk20[1];
+};
+
+/* Pointer + fields at +0x30..+0x4C. sub_080346C0. */
+struct Unk346C0Inner /* >= 0x50 */
+{
+    /* 00 */ u8 filler_00[0x30];
+    /* 30 */ u32 unk30;
+    /* 34 */ u32 unk34;
+    /* 38 */ u8 filler_38[0x10];
+    /* 48 */ u32 unk48;
+    /* 4c */ u32 unk4C;
+};
+
+struct Unk346C0 /* >= 0x04 */
+{
+    /* 00 */ struct Unk346C0Inner *unk00;
+};
+
+/* Word at +0xC, then *a +8. sub_0806BE08. */
+struct Unk6BE08Inner /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ u32 unk08;
+};
+
+struct Unk6BE08 /* >= 0x10 */
+{
+    /* 00 */ struct Unk6BE08Inner *unk00;
+    /* 04 */ u8 filler_04[8];
+    /* 0c */ u32 unk0C;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

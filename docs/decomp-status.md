@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **60/633 (9.5%)** |
-| **Decompiled C (bytes)** | **1,172/90,272 (1.3%)** |
-| Not opcode (C + readable Thumb) | 210/633 (33.2% fn, 42.7% bytes) |
+| **Decompiled C (functions)** | **63/633 (10.0%)** |
+| **Decompiled C (bytes)** | **1,226/90,272 (1.4%)** |
+| Not opcode (C + readable Thumb) | 213/633 (33.6% fn, 42.8% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 423/633 (66.8%) |
+| Opcode `.byte` embeds | 420/633 (66.4%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,12 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+3)
+
+- Semantic C: `sub_080674A4` (SWI 6 remainder), `sub_080447B4` (NULL-terminated `sub_08059AE0` list), `sub_080346C0` (store 4 fields if `*a`)
+- Grew `Unk312EC` / `Unk68014`; extra-`push {lr}` still blocks `sub_08061E40`/`62728`/`6AC68`/`69F00`/`6BE08`/`717F0`
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+10)
 
