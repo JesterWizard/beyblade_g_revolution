@@ -1,8 +1,10 @@
 #include "global.h"
 
 // @ 0x08035878
-__attribute__((naked))
-void sub_08035878(void)
+void sub_08035878(void *a, u32 v1, u32 v2, u32 v3)
 {
-    asm(".byte 0x82, 0x60, 0xC3, 0x60, 0x41, 0x60, 0x00, 0x21, 0x01, 0x60, 0x70, 0x47");
+    *(u32 *)((u8 *)a + 0x08) = v2;
+    *(u32 *)((u8 *)a + 0x0c) = v3;
+    *(u32 *)((u8 *)a + 0x04) = v1;
+    *(u32 *)a = 0;
 }

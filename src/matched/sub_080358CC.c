@@ -1,8 +1,9 @@
 #include "global.h"
 
 // @ 0x080358cc
-__attribute__((naked))
-void sub_080358CC(void)
+void sub_080358CC(void *a)
 {
-    asm(".byte 0x00, 0x21, 0x81, 0x60, 0xC1, 0x60, 0x41, 0x60, 0x70, 0x47");
+    *(u32 *)((u8 *)a + 0x08) = 0;
+    *(u32 *)((u8 *)a + 0x0c) = 0;
+    *(u32 *)((u8 *)a + 0x04) = 0;
 }

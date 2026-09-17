@@ -59,6 +59,12 @@ def main() -> int:
     parser.add_argument("c_body", help='C function body (or "@" + path to read body from)')
     parser.add_argument("--note", default="", help="conversion note for manifest")
     parser.add_argument(
+        "--kind",
+        choices=("semantic", "opcode"),
+        default="",
+        help="semantic = readable C; opcode = naked .byte embed (default: infer)",
+    )
+    parser.add_argument(
         "--skip-compare",
         action="store_true",
         help="skip make compare (batch runners verify once at end)",
@@ -95,11 +101,16 @@ def main() -> int:
     write_matching_bytes(name, want, MATCH / f"{name}.s")
 
     data = load_manifest()
+    kind = args.kind
+    if not kind:
+        kind = "opcode" if '__attribute__((naked))' in body and 'asm(".byte' in body else "semantic"
+
     entry = {
         "name": name,
         "addr": f"0x{addr_from_name(name):08X}",
         "src": rel_src,
         "mode": "c",
+        "kind": kind,
     }
     if args.note:
         entry["note"] = args.note

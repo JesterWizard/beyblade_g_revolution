@@ -1,8 +1,9 @@
 #include "global.h"
 
 // @ 0x0806bb38
-__attribute__((naked))
-void sub_0806BB38(void)
+void *sub_0806BB38(void *a, u32 idx)
 {
-    asm(".byte 0x02, 0x1C, 0x08, 0x1C, 0x93, 0x79, 0x98, 0x40, 0x10, 0x18, 0x11, 0x69, 0x40, 0x18, 0x70, 0x47");
+    u8 bit;
+    bit = *(u8 *)((u8 *)a + 6);
+    return (u8 *)a + (idx << bit) + *(u32 *)((u8 *)a + 0x10);
 }

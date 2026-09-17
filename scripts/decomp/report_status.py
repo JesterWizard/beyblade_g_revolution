@@ -7,6 +7,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys
+
+sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
 NON = ROOT / "asm" / "nonmatchings"
 MATCH = ROOT / "asm" / "matchings"
 SRC = ROOT / "src"
@@ -26,10 +29,28 @@ def main() -> None:
     src_matched_c = len(list(matched_src.glob("*.c"))) if matched_src.is_dir() else 0
     linked = 0
     c_linked = 0
+    semantic_c = 0
+    opcode_c = 0
     if MANIFEST.is_file():
         data = json.loads(MANIFEST.read_text())
         linked = len(data.get("functions", []))
         c_linked = sum(1 for f in data.get("functions", []) if f.get("src"))
+        for f in data.get("functions", []):
+            if not f.get("src"):
+                continue
+            kind = f.get("kind")
+            if kind == "opcode":
+                opcode_c += 1
+            elif kind == "semantic":
+                semantic_c += 1
+    if matched_src.is_dir() and semantic_c == 0 and opcode_c == 0:
+        from opcode_stubs import is_opcode_stub  # noqa: WPS433
+
+        for path in matched_src.glob("sub_*.c"):
+            if is_opcode_stub(path):
+                opcode_c += 1
+            else:
+                semantic_c += 1
 
     summary = {
         "nonmatching_asm": non,
@@ -38,6 +59,8 @@ def main() -> None:
         "src_c_files": src_c + src_matched_c,
         "src_matched_c": src_matched_c,
         "c_in_rom": c_linked,
+        "semantic_c": semantic_c,
+        "opcode_embed_c": opcode_c,
         "total_tracked": non + matched_asm,
         "pct_asm_matched": round(100 * matched_asm / (non + matched_asm), 1)
         if (non + matched_asm)

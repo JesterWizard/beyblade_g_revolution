@@ -10,11 +10,27 @@ _Agent-maintained log. Updated after each batch run._
 | Matching asm (linked) | **633** |
 | `src/matched/*.c` | **633/633** |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **3 complete** (all functions have byte-matched C); **Phase 4** (renames) next |
+| Phase | **3b in progress** — replace 612 opcode stubs with semantic C |
+| Semantic C | 30 / 633 (603 opcode `.byte` embeds remain) |
 
 ## Batch log
 
-### 2026-09-17 — Phase 3 complete (633/633 C)
+### 2026-09-17 — Phase 3b semantic batch (+15)
+
+- `c_patterns.py`: field init, offset stores, three-u16/u32 patterns
+- Converted: `sub_080338E4`, `sub_080346A8`, `sub_080358CC`, `sub_08035878`, `sub_08068574`, `sub_0806BB38`, `sub_0806B5B8`, `sub_0803EDC8`, `sub_08036190`, …
+- `make compare`: **OK**
+
+### 2026-09-17 — Phase 3b semantic C bootstrap
+
+- Goal: replace `__attribute__((naked))` + `.byte` opcode embeds with readable, byte-matched C
+- Added `scripts/decomp/semantic_convert_batch.py`, `m2c_asm.py`, `opcode_stubs.py`
+- `c_patterns.guess_c()` no longer falls back to opcode embed (use `guess_opcode_embed()` explicitly)
+- First semantic replacement: `sub_08068584` (two `strh` field stores)
+- Run: `scripts/decomp/semantic_convert_batch.sh 30 --pool-free-only` for easy wins
+- Pool/literal-pool functions (e.g. `sub_08061610`) need m2c + hand refine or permuter
+
+### 2026-09-17 — Phase 3 complete (633/633 C placeholders)
 
 - `c_patterns.py`: semantic patterns + `_naked_retail()` fallback (embeds exact retail opcodes)
 - Batched conversion: trivial/IWRAM accessors → naked bytes ≤48B → ≤128B → ≤256B → remainder (≤1552B)

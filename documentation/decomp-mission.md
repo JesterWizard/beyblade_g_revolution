@@ -39,9 +39,11 @@ and beyblade_g_revolution.toml [renames] covers all functions with self-document
 
 ---
 
-## Session loop (current phase: 3 → 4)
+## Session loop (current phase: 3b → 4)
 
-Phase 1 (link all asm) is **complete**. Default loop:
+Phase 1 (link all asm) is **complete**. Phase 3 placed byte-matched C for all 633 functions; **many are opcode embeds** (`asm(".byte …")`). **Phase 3b** replaces those with semantic C.
+
+Default loop:
 
 ```bash
 # 1. Status gate
@@ -54,7 +56,13 @@ scripts/decomp/battle_convert_batch.sh 10
 scripts/decomp/battle_cursor_batch.sh 5      # m2c seeds for hard battle fns
 python3 scripts/decomp/triage_functions.py -n 10
 
-# 3. Convert (try routes in Fork policy order)
+# 3. Semantic C (replace opcode stubs — priority)
+scripts/decomp/semantic_convert_batch.sh 30 --pool-free-only
+python3 scripts/decomp/m2c_asm.py sub_XXXXXXXX          # m2c seed
+python3 scripts/decomp/match_function.py sub_XXXXXXXX … # refine until MATCH
+python3 scripts/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --kind semantic
+
+# 3b. Trivial patterns only (no opcode embed fallback)
 scripts/decomp/c_convert_batch.sh 30
 python3 scripts/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
 python3 scripts/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --note <subsystem>/<role>

@@ -1,8 +1,9 @@
 #include "global.h"
 
 // @ 0x080338e4
-__attribute__((naked))
-void sub_080338E4(void)
+void sub_080338E4(void *a, u32 v)
 {
-    asm(".byte 0x00, 0x22, 0x02, 0x80, 0x41, 0x60, 0x42, 0x80, 0x70, 0x47");
+    *(u16 *)a = 0;
+    *(u32 *)((u8 *)a + 4) = v;
+    *(u16 *)((u8 *)a + 2) = 0;
 }

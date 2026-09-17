@@ -193,17 +193,173 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
             f"store r1 @+{off}",
         )
 
-    swi_adds = (
-        len(insns) == 3
-        and insns[0].startswith("swi ")
-        and insns[1] == "adds r0, r1, #0x0"
-        and insns[2] == "bx lr"
-    )
-    if swi_adds:
-        cand = _naked_retail(function)
-        if cand:
-            return cand
+    if (
+        len(insns) == 6
+        and insns[0] == "adds r3, r0, #0x0"
+        and re.fullmatch(rf"adds r3, {IMM}", insns[1])
+        and insns[2] == "strh r1, [r3, #0x00]"
+        and re.fullmatch(rf"adds r0, {IMM}", insns[3])
+        and insns[4] == "strh r2, [r0, #0x00]"
+        and insns[5] == "bx lr"
+    ):
+        off0 = re.fullmatch(rf"adds r3, {IMM}", insns[1]).group(1)
+        off1 = re.fullmatch(rf"adds r0, {IMM}", insns[3]).group(1)
+        return CCandidate(
+            f"void {function}(void *a, u16 v1, u16 v2)\n{{\n"
+            f"    *(u16 *)((u8 *)a + {off0}) = v1;\n"
+            f"    *(u16 *)((u8 *)a + {off1}) = v2;\n}}",
+            f"store two u16 @+{off0}/+{off1}",
+        )
 
+    if (
+        len(insns) == 5
+        and insns[0] == "movs r2, #0x00"
+        and insns[1] == "strh r2, [r0, #0x00]"
+        and insns[2] == "str r1, [r0, #0x04]"
+        and insns[3] == "strh r2, [r0, #0x02]"
+        and insns[4] == "bx lr"
+    ):
+        return CCandidate(
+            f"void {function}(void *a, u32 v)\n{{\n"
+            f"    *(u16 *)a = 0;\n"
+            f"    *(u32 *)((u8 *)a + 4) = v;\n"
+            f"    *(u16 *)((u8 *)a + 2) = 0;\n}}",
+            "init u16/u32 fields",
+        )
+
+    m0 = re.fullmatch(rf"movs r2, {IMM}", insns[0])
+    if (
+        len(insns) == 5
+        and m0
+        and insns[1] == "lsls r2, r2, #0x02"
+        and insns[2] == "adds r0, r0, r2"
+        and insns[3] == "str r1, [r0, #0x00]"
+        and insns[4] == "bx lr"
+    ):
+        base = int(m0.group(1), 0)
+        off = base << 2
+        return CCandidate(
+            f"void {function}(void *a, u32 v)\n{{\n"
+            f"    *(u32 *)((u8 *)a + {off:#x}) = v;\n}}",
+            f"store u32 @+{off:#x}",
+        )
+
+    if (
+        len(insns) == 5
+        and insns[0] == "movs r1, #0x00"
+        and re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[1])
+        and re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[2])
+        and re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[3])
+        and insns[4] == "bx lr"
+    ):
+        o1 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[1]).group(1)
+        o2 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[2]).group(1)
+        o3 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[3]).group(1)
+        return CCandidate(
+            f"void {function}(void *a)\n{{\n"
+            f"    *(u32 *)((u8 *)a + {o1}) = 0;\n"
+            f"    *(u32 *)((u8 *)a + {o2}) = 0;\n"
+            f"    *(u32 *)((u8 *)a + {o3}) = 0;\n}}",
+            "zero three u32 fields",
+        )
+
+    if (
+        len(insns) == 6
+        and re.fullmatch(rf"str r2, \[r0, {IMM}\]", insns[0])
+        and re.fullmatch(rf"str r3, \[r0, {IMM}\]", insns[1])
+        and re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[2])
+        and insns[3] == "movs r1, #0x00"
+        and insns[4] == "str r1, [r0, #0x00]"
+        and insns[5] == "bx lr"
+    ):
+        o2 = re.fullmatch(rf"str r2, \[r0, {IMM}\]", insns[0]).group(1)
+        o3 = re.fullmatch(rf"str r3, \[r0, {IMM}\]", insns[1]).group(1)
+        o1 = re.fullmatch(rf"str r1, \[r0, {IMM}\]", insns[2]).group(1)
+        return CCandidate(
+            f"void {function}(void *a, u32 v1, u32 v2, u32 v3)\n{{\n"
+            f"    *(u32 *)((u8 *)a + {o2}) = v2;\n"
+            f"    *(u32 *)((u8 *)a + {o3}) = v3;\n"
+            f"    *(u32 *)((u8 *)a + {o1}) = v1;\n"
+            f"    *(u32 *)a = 0;\n}}",
+            "store three u32 + clear base",
+        )
+
+    if (
+        len(insns) == 8
+        and insns[0] == "mov r12, r0"
+        and re.fullmatch(rf"adds r0, {IMM}", insns[1])
+        and insns[2] == "strh r1, [r0, #0x00]"
+        and insns[3] == "adds r0, #0x02"
+        and insns[4] == "strh r2, [r0, #0x00]"
+        and insns[5] == "adds r0, #0x02"
+        and insns[6] == "strh r3, [r0, #0x00]"
+        and insns[7] == "bx lr"
+    ):
+        base = re.fullmatch(rf"adds r0, {IMM}", insns[1]).group(1)
+        b = int(base, 0)
+        return CCandidate(
+            f"void {function}(void *a, u16 v1, u16 v2, u16 v3)\n{{\n"
+            f"    *(u16 *)((u8 *)a + {b:#x}) = v1;\n"
+            f"    *(u16 *)((u8 *)a + {b + 2:#x}) = v2;\n"
+            f"    *(u16 *)((u8 *)a + {b + 4:#x}) = v3;\n}}",
+            f"store three u16 @+{b:#x}",
+        )
+
+    if (
+        len(insns) >= 10
+        and insns[0] == "str r1, [r0, #0x00]"
+        and insns[1] == "str r2, [r0, #0x04]"
+        and insns[2] == "str r3, [r0, #0x08]"
+        and insns[3] == "movs r1, #0xf0"
+        and insns[4] == "lsls r1, r1, #0x07"
+        and insns[5] == "str r1, [r0, #0x0c]"
+        and insns[6] == "movs r1, #0xa0"
+        and insns[7] == "lsls r1, r1, #0x07"
+        and insns[8] == "str r1, [r0, #0x10]"
+        and insns[9] == "movs r1, #0x00"
+        and insns[10] == "str r1, [r0, #0x14]"
+        and insns[11] == "bx lr"
+    ):
+        return CCandidate(
+            f"void {function}(u32 *a, u32 v1, u32 v2, u32 v3)\n{{\n"
+            f"    a[0] = v1;\n"
+            f"    a[1] = v2;\n"
+            f"    a[2] = v3;\n"
+            f"    a[3] = 0x7800;\n"
+            f"    a[4] = 0x5000;\n"
+            f"    a[5] = 0;\n}}",
+            "init six-word struct",
+        )
+
+    if (
+        len(insns) == 8
+        and insns[0] == "adds r2, r0, #0x0"
+        and insns[1] == "adds r0, r1, #0x0"
+        and insns[2] == "ldrb r3, [r2, #0x06]"
+        and insns[3] == "lsls r0, r3"
+        and insns[4] == "adds r0, r2, r0"
+        and insns[5] == "ldr r1, [r2, #0x10]"
+        and insns[6] == "adds r0, r0, r1"
+        and insns[7] == "bx lr"
+    ):
+        return CCandidate(
+            f"void *{function}(void *a, u32 idx)\n{{\n"
+            f"    u8 bit;\n"
+            f"    bit = *(u8 *)((u8 *)a + 6);\n"
+            f"    return (u8 *)a + (idx << bit) + *(u32 *)((u8 *)a + 0x10);\n}}",
+            "indexed struct offset",
+        )
+
+    return None
+
+
+def guess_opcode_embed(function: str, asm_lines: list[str] | None = None) -> CCandidate | None:
+    """Embed exact retail bytes — use only when semantic conversion is blocked."""
+    if asm_lines is None:
+        path = ROOT / "asm" / "nonmatchings" / f"{function}.s"
+        if not path.is_file():
+            return None
+        asm_lines = path.read_text().splitlines()
     return _naked_retail(function)
 
 
