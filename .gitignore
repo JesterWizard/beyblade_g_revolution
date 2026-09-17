@@ -39,3 +39,6 @@ Thumbs.db
 *.sna
 .fuse_hidden*
 *.ss*
+
+__pycache__/
+*.pyc

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-shot bootstrap for hands-off decompilation tooling.
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT"
 
 echo "==> Beyblade G Revolution decomp bootstrap"
@@ -49,13 +49,13 @@ fi
 # Generate per-function assembly if missing
 if [ ! -d asm/nonmatchings ] || [ -z "$(ls -A asm/nonmatchings 2>/dev/null || true)" ]; then
   echo "==> Generating assembly from baserom"
-  python3 scripts/generate_asm.py
+  python3 tools/decomp/generate_asm.py
 fi
 
-# Mizuchi (optional — needs npm; Cursor uses scripts/decomp/cursor_batch.sh)
+# Mizuchi (optional — needs npm; Cursor uses tools/decomp/cursor_batch.sh)
 if command -v npm >/dev/null 2>&1 && [ ! -d tools/mizuchi/.git ]; then
   echo "==> Setting up Mizuchi (optional)"
-  bash scripts/tools/mizuchi/setup.sh || true
+  bash tools/decomp/setup_mizuchi.sh || true
 fi
 
 # m2c for programmatic decomp seeds
@@ -67,11 +67,11 @@ fi
 # decomp-permuter (agbcc matching at scale)
 if [ ! -d tools/decomp-permuter/.git ]; then
   echo "==> Setting up decomp-permuter"
-  bash scripts/decomp/permuter/setup.sh || true
+  bash tools/decomp/permuter/setup.sh || true
 fi
 
 echo "==> Verifying matching build"
 make compare
 
 echo "==> Bootstrap complete"
-echo "    Next: scripts/decomp/run_batch.sh 10"
+echo "    Next: tools/decomp/run_batch.sh 10"
