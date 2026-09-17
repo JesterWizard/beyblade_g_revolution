@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x0805D9F0..0x0805DA6F
+@ Unmatched ROM 0x08059D36..0x08059DC7
 	.section .rodata
 	.global gRomGap131
 gRomGap131:
-	.incbin "baserom.gba", 0x5D9F0, 0x80
+	.incbin "baserom.gba", 0x59D36, 0x92
