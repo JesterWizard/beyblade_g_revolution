@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 NON = ROOT / "asm" / "nonmatchings"
 MATCH = ROOT / "asm" / "matchings"
 SRC = ROOT / "src"
+MANIFEST = ROOT / "build" / "matched.json"
 STATUS = ROOT / "documentation" / "decomp-status.md"
 
 
@@ -21,10 +22,14 @@ def main() -> None:
     non = count_s(NON)
     matched_asm = count_s(MATCH)
     src_c = len(list(SRC.glob("*.c"))) if SRC.is_dir() else 0
+    linked = 0
+    if MANIFEST.is_file():
+        linked = len(json.loads(MANIFEST.read_text()).get("functions", []))
 
     summary = {
         "nonmatching_asm": non,
         "matching_asm": matched_asm,
+        "linked_in_rom": linked,
         "src_c_files": src_c,
         "total_tracked": non + matched_asm,
         "pct_asm_matched": round(100 * matched_asm / (non + matched_asm), 1)

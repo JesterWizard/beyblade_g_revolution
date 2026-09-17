@@ -30,12 +30,8 @@ SECTIONS {
         __iwram_end = .;
     } > IWRAM
 
-    /* Named .rom so orphan .text (libgcc) does not extend the baserom image. */
-    .rom :
-    {
-        asm/rom.o(.rodata)
-        . = ALIGN(4);
-    } > ROM = 0xFF
+    /* Retail ROM image (incbin peels + matched asm at fixed VMAs). */
+    INCLUDE rom_layout.ld
 
     /* Custom code past the 4MB retail image (ygodm8-style append). */
     __append_start = .;

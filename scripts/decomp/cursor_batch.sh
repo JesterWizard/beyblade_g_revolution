@@ -25,7 +25,7 @@ while read -r fn; do
   out="mizuchi-output/${fn}.c"
   echo "--- $fn" | tee -a "$LOG"
   tail -n +5 "$asm" | PYTHONPATH=tools/m2c python3 "$M2C_PY" - > "$out" 2>>"$LOG" || true
-  if [ -s "$out" ]; then
+  if [ -s "$out" ] && ! grep -q 'Decompilation failure' "$out"; then
     echo "wrote $out" | tee -a "$LOG"
     python3 scripts/decomp/match_function.py "$fn" "$out" >>"$LOG" 2>&1 || true
   fi

@@ -1,9 +1,5 @@
-@ Unmatched ROM image (full baserom until peels begin).
-@ As functions/data are decompiled, shrink this .incbin and move ranges into
-@ real asm/C objects listed in ld_script.ld.
-
+@ Unmatched ROM head 0x08000000..0x08033A93
 	.section .rodata
-	.align 2
 	.global gBaserom
 gBaserom:
-	.incbin "baserom.gba"
+	.incbin "baserom.gba", 0x0, 0x33A94

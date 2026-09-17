@@ -45,7 +45,8 @@ def main() -> int:
         print(f"error: {ASM_DIR} missing — run scripts/setup.sh", file=sys.stderr)
         return 1
 
-    files = list(ASM_DIR.glob("*.s"))
+    matched = {p.stem for p in (ROOT / "asm" / "matchings").glob("*.s")}
+    files = [p for p in ASM_DIR.glob("*.s") if p.stem not in matched]
     if not files:
         print(f"error: no .s files in {ASM_DIR}", file=sys.stderr)
         return 1

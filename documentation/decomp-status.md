@@ -7,32 +7,50 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Non-matching asm | 633 |
-| Matching asm | 0 |
-| `src/*.c` files | 1 (4 functions verified, not yet linked) |
-| Verified matches (scratch) | 4 |
+| Matching asm (linked) | 11 |
+| `src/*.c` files | 1 |
+| `pct_asm_matched` | 1.7% |
 
-## Matched functions
+## Matched + linked (ROM peel)
 
-- [x] `sub_08067A9C` → `src/stubs.c` (empty return stub)
-- [x] `sub_0806EEC4` → `src/stubs.c` (empty return stub)
-- [x] `sub_08033A94` → `src/stubs.c` (`ldrb` load)
-- [x] `sub_08062098` → `src/stubs.c` (struct field load at +0x18)
+- [x] `sub_08033A94` — `ldrb` load → `src/stubs.c`
+- [x] `sub_08062098` — field load at +0x18 → `src/stubs.c`
+- [x] `sub_08062A14` — literal pool load (`asm/matchings`)
+- [x] `sub_08067A9C` — empty return stub → `src/stubs.c`
+- [x] `sub_0806EEC4` — empty return stub → `src/stubs.c`
+- [x] `sub_080674A0` — `swi #6` stub
+- [x] `sub_080674A4` — `swi #6` + `mov r0, r1`
+- [x] `sub_080674AC` — `swi #17` stub
+- [x] `sub_080674B0` — `swi #8` stub
+- [x] `sub_080674B4` — `swi #5` stub
+- [x] `sub_08074144` — `mov pc, lr` stub
 
-## Pending / failed
+## Tooling added this session
 
-- [ ] `sub_08074144` — `mov pc, lr` stub; agbcc emits `bx lr` (needs asm or permuter)
-- [ ] `sub_0802B90C` — literal-pool load; m2c needs Luvdis asm cleanup
+- `scripts/decomp/gen_rom_layout.py` — baserom peel + fixed-VMA linker fragment
+- `scripts/decomp/integrate_match.py` — land a match into `asm/matchings/` + regenerate layout
+- `build/matched.json` — manifest of linked functions
+- `asm/rom_layout.ld` — generated; included from `ld_script.ld`
 
 ## Batch log
+
+### 2026-09-17 — linker integration + second batch
+
+- ROM peel wired: 11 functions linked at retail addresses
+- `make compare`: **OK**
+- Triage skips `asm/matchings/`; m2c failures no longer fed to agbcc
 
 ### 2026-09-17 — bootstrap + first Cursor batch
 
 - Fixed `scripts/generate_asm.py` split (trim gap `.byte` between functions)
-- `make compare`: OK
-- `scripts/decomp/cursor_batch.sh 5`: 4/5 verified via `match_function.py`
-- Blocker: full linker integration (shrink `asm/rom.s`, `ld_script.ld`) not wired yet — matched C lives in `src/` but is not linked
+- First 4 functions verified via `match_function.py` + `src/stubs.c`
+
+## Next
+
+- Decompile `sub_0802B90C` and other literal-pool helpers (m2c needs asm preprocessor)
+- Replace asm matchings with C as `match_function.py` passes
+- Run `scripts/decomp/cursor_batch.sh 10` on fresh triage list
 
 ## Blockers
 
-- Linker peel / LynJump integration needed before matched `src/` affects `make compare`
-- Mizuchi optional (needs npm + `ANTHROPIC_API_KEY`); primary path is `scripts/decomp/cursor_batch.sh`
+- None for matching build (`make compare` green with 11 peeled functions)

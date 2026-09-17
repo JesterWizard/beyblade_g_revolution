@@ -14,9 +14,10 @@ This installs agbcc, pret tools, Luvdis, generates `asm/nonmatchings/`, builds M
 
 1. **Status** — `python3 scripts/decomp/report_status.py`
 2. **Triage** — `python3 scripts/decomp/triage_functions.py -n 20`
-3. **Batch** — `scripts/decomp/run_batch.sh 10`
-4. **Verify** — `make compare` (must print `beyblade_g_revolution.gba: OK`)
-5. **Report** — update `documentation/decomp-status.md` with counts, matched names, blockers
+3. **Batch** — `scripts/decomp/cursor_batch.sh 10`
+4. **Integrate** — `python3 scripts/decomp/integrate_match.py sub_XXXXXXXX [scratch.c]`
+5. **Verify** — `make compare` (must print `beyblade_g_revolution.gba: OK`)
+6. **Report** — update `documentation/decomp-status.md` with counts, matched names, blockers
 
 ## What to tell the user
 
@@ -40,7 +41,10 @@ After each batch, post a short summary:
 
 | Tool | Location |
 |------|----------|
-| Mizuchi | `tools/mizuchi/` |
+| Cursor batch | `scripts/decomp/cursor_batch.sh` |
+| Integrate | `scripts/decomp/integrate_match.py` |
+| ROM layout | `scripts/decomp/gen_rom_layout.py` |
+| Mizuchi (opt.) | `tools/mizuchi/` |
 | Config | `mizuchi.yaml` |
 | agbcc | `tools/agbcc/bin/agbcc` |
 | m2ctx | `tools/m2ctx.py` |

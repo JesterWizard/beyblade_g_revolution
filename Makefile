@@ -114,8 +114,13 @@ RAM_MAP_FRAGMENTS := \
 	$(ASM_SUBDIR)/ram_map_sram.s \
 	$(ASM_SUBDIR)/ram_map_iwram_pool.inc \
 	$(ASM_SUBDIR)/ram_map_ewram_pool.inc
+ASM_MATCHINGS := $(wildcard $(ASM_SUBDIR)/matchings/*.s)
+ASM_ROM_GAPS := $(wildcard $(ASM_SUBDIR)/rom_gap_*.s)
 ASM_SRCS := \
 	$(ASM_SUBDIR)/rom.s \
+	$(ASM_SUBDIR)/rom_tail.s \
+	$(ASM_ROM_GAPS) \
+	$(ASM_MATCHINGS) \
 	$(ASM_SUBDIR)/ram_map.s
 DATA_ASM_SRCS :=
 
@@ -164,6 +169,10 @@ $(ASM_BUILDDIR)/ram_map.o: $(RAM_MAP_FRAGMENTS)
 $(ASM_BUILDDIR)/%.o: $(ASM_SUBDIR)/%.s
 	$(AS) $(ASFLAGS) -I . -o $@ $<
 
+$(ASM_BUILDDIR)/matchings/%.o: $(ASM_SUBDIR)/matchings/%.s
+	@mkdir -p $(ASM_BUILDDIR)/matchings
+	$(AS) $(ASFLAGS) -I . -o $@ $<
+
 $(DATA_ASM_BUILDDIR)/%.o: $(DATA_ASM_SUBDIR)/%.s
 	$(AS) $(ASFLAGS) -I . -o $@ $<
 
@@ -190,7 +199,7 @@ $(CONFIG_BUILDDIR)/%.o: $(CONFIG_SUBDIR)/%.c
 		-o $@ $<
 
 LD_SCRIPT := ld_script.ld
-LDFLAGS = -Map ../../$(MAP)
+LDFLAGS = -Map ../../$(MAP) -L ../../asm
 
 $(ELF): $(LD_SCRIPT) $(OBJS)
 	cd $(OBJ_DIR) && $(LD) $(LDFLAGS) -T ../../$(LD_SCRIPT) -o ../../$@ $(OBJS_REL) $(LIB)
