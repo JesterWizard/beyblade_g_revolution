@@ -7,50 +7,39 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Non-matching asm | 633 |
-| Matching asm (linked) | 11 |
+| Matching asm (linked) | 31 |
 | `src/*.c` files | 1 |
-| `pct_asm_matched` | 1.7% |
-
-## Matched + linked (ROM peel)
-
-- [x] `sub_08033A94` — `ldrb` load → `src/stubs.c`
-- [x] `sub_08062098` — field load at +0x18 → `src/stubs.c`
-- [x] `sub_08062A14` — literal pool load (`asm/matchings`)
-- [x] `sub_08067A9C` — empty return stub → `src/stubs.c`
-- [x] `sub_0806EEC4` — empty return stub → `src/stubs.c`
-- [x] `sub_080674A0` — `swi #6` stub
-- [x] `sub_080674A4` — `swi #6` + `mov r0, r1`
-- [x] `sub_080674AC` — `swi #17` stub
-- [x] `sub_080674B0` — `swi #8` stub
-- [x] `sub_080674B4` — `swi #5` stub
-- [x] `sub_08074144` — `mov pc, lr` stub
-
-## Tooling added this session
-
-- `scripts/decomp/gen_rom_layout.py` — baserom peel + fixed-VMA linker fragment
-- `scripts/decomp/integrate_match.py` — land a match into `asm/matchings/` + regenerate layout
-- `build/matched.json` — manifest of linked functions
-- `asm/rom_layout.ld` — generated; included from `ld_script.ld`
+| `pct_asm_matched` | 4.8% |
 
 ## Batch log
 
-### 2026-09-17 — linker integration + second batch
+### 2026-09-17 — batch 3 (20 functions)
 
-- ROM peel wired: 11 functions linked at retail addresses
-- `make compare`: **OK**
-- Triage skips `asm/matchings/`; m2c failures no longer fed to agbcc
+Integrated 20 asm-verified functions including literal-pool loaders (`sub_0802B90C`, `sub_080429C0`, …), IWRAM accessors, and field setters. `make compare`: **OK**.
 
-### 2026-09-17 — bootstrap + first Cursor batch
+### 2026-09-17 — linker integration + batch 2
 
-- Fixed `scripts/generate_asm.py` split (trim gap `.byte` between functions)
-- First 4 functions verified via `match_function.py` + `src/stubs.c`
+11 functions linked via ROM peel tooling.
+
+### 2026-09-17 — bootstrap + batch 1
+
+First 4 functions + `src/stubs.c`.
+
+## Tooling
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/decomp/cursor_batch.sh` | Triage + m2c seeds |
+| `scripts/decomp/integrate_match.py` | Link match into ROM peel |
+| `scripts/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP) |
+| `scripts/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
 
 ## Next
 
-- Decompile `sub_0802B90C` and other literal-pool helpers (m2c needs asm preprocessor)
-- Replace asm matchings with C as `match_function.py` passes
-- Run `scripts/decomp/cursor_batch.sh 10` on fresh triage list
+- Replace asm matchings with byte-matched C (`match_function.py` + `src/`)
+- Add IWRAM symbols to `asm/ram_map*.s` instead of hardcoded `0x03…` in C
+- Continue integrating score-5 triage candidates
 
 ## Blockers
 
-- None for matching build (`make compare` green with 11 peeled functions)
+- None (`make compare` green with 31 peeled functions)

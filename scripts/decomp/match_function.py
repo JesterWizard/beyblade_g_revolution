@@ -11,28 +11,57 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-ASM_DIR = ROOT / "asm" / "nonmatchings"
+NONMATCH = ROOT / "asm" / "nonmatchings"
+MATCH = ROOT / "asm" / "matchings"
 AGBCC = ROOT / "tools/agbcc/bin/agbcc"
+CPPFLAGS = [
+    "-iquote",
+    "include",
+    "-Wno-trigraphs",
+    "-DMODERN=0",
+    "-I",
+    "tools/agbcc/include",
+    "-I",
+    "tools/agbcc",
+    "-nostdinc",
+    "-undef",
+    "-std=gnu89",
+]
+
+
+def preprocess(c_path: Path, out_path: Path) -> None:
+    subprocess.run(
+        ["arm-none-eabi-gcc", "-E", *CPPFLAGS, str(c_path), "-o", str(out_path)],
+        check=True,
+        cwd=str(ROOT),
+    )
 
 
 def compile_c(c_path: Path, obj_path: Path) -> Path:
     asm_path = obj_path.with_suffix(".s")
-    subprocess.run(
-        [
-            str(AGBCC),
-            str(c_path),
-            "-o",
-            str(asm_path),
-            "-mthumb-interwork",
-            "-Wimplicit",
-            "-Wparentheses",
-            "-Werror",
-            "-O2",
-            "-g",
-            "-fhex-asm",
-        ],
-        check=True,
-    )
+    with tempfile.NamedTemporaryFile(suffix=".i", delete=False) as tmp:
+        i_path = Path(tmp.name)
+    try:
+        preprocess(c_path, i_path)
+        subprocess.run(
+            [
+                str(AGBCC),
+                str(i_path),
+                "-o",
+                str(asm_path),
+                "-mthumb-interwork",
+                "-Wimplicit",
+                "-Wparentheses",
+                "-Werror",
+                "-O2",
+                "-g",
+                "-fhex-asm",
+            ],
+            check=True,
+            cwd=str(ROOT),
+        )
+    finally:
+        i_path.unlink(missing_ok=True)
     subprocess.run(
         [
             "arm-none-eabi-as",
@@ -65,9 +94,11 @@ def main() -> int:
     parser.add_argument("c_file", help="scratch .c with the function")
     args = parser.parse_args()
 
-    asm_file = ASM_DIR / f"{args.function}.s"
+    asm_file = MATCH / f"{args.function}.s"
     if not asm_file.is_file():
-        print(f"missing {asm_file}", file=sys.stderr)
+        asm_file = NONMATCH / f"{args.function}.s"
+    if not asm_file.is_file():
+        print(f"missing asm for {args.function}", file=sys.stderr)
         return 1
     if not AGBCC.is_file():
         print("missing agbcc — run scripts/setup.sh", file=sys.stderr)
