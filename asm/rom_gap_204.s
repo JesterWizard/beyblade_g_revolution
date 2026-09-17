@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x080726DE..0x080726DF
+@ Unmatched ROM 0x08071BA0..0x08071E03
 	.section .rodata
 	.global gRomGap204
 gRomGap204:
-	.incbin "baserom.gba", 0x726DE, 0x2
+	.incbin "baserom.gba", 0x71BA0, 0x264
