@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x08071814..0x08071B4B
+@ Unmatched ROM 0x08071304..0x0807179B
 	.section .rodata
 	.global gRomGap314
 gRomGap314:
-	.incbin "baserom.gba", 0x71814, 0x338
+	.incbin "baserom.gba", 0x71304, 0x498
