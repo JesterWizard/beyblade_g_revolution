@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x08060446..0x08060447
+@ Unmatched ROM 0x08060174..0x0806021F
 	.section .rodata
 	.global gRomGap121
 gRomGap121:
-	.incbin "baserom.gba", 0x60446, 0x2
+	.incbin "baserom.gba", 0x60174, 0xAC
