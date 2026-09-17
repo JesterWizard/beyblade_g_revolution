@@ -99,5 +99,11 @@ void sub_08039BD4(void *a);
 void sub_0803A1E4(void *a);
 void sub_08061BAC(void);
 void sub_080611F0(void);
+void sub_080405E8(void *a);
+void sub_08047594(void);
+void *sub_08042B28(u32 i);
+void *sub_08042B50(u32 i);
+void sub_08067B98(void *a, u32 b);
+void sub_0805D1AC(void);
 
 #endif /* GUARD_UNKNOWN_FUNCTIONS_H */
