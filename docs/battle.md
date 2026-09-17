@@ -68,6 +68,7 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_0803E440` | **semantic C** — count positive `unk1861[]` |
 | `sub_0806013C` | **semantic C** — invalidate `unk177C`/`unk1780` |
 | `sub_08060220` | **semantic C** — invalidate `unk1710[idx]` |
+| `sub_08071FAC` | **semantic C** — `unk16==2` → `1` via `sub_08071F44` |
 | `sub_080603E0` | **semantic C** — `sub_08071FC8` on `unk1710[0..0x18]`, set `unk181A` |
 | `sub_08043BDC` | **semantic C** — walk `unk16E4` vs `unk16C8` |
 | `sub_08060428` family | **semantic C** — thunks to `sub_080601C4` |

@@ -18,8 +18,14 @@
 #undef gBattleWork
 #undef gBtlObjListHead
 #undef gBtlObjListTail
+#undef gUnk_03000180
+#undef gUnk_0300047C
+#undef gUnk_03000798
 #define gMainWorkPtr (*(struct MainWork **)0x03000198)
 #define gBattleWork (*(struct BattleWork **)0x03000290)
+#define gUnk_03000180 (*(struct Unk0180 *)0x03000180)
+#define gUnk_0300047C (*(struct Unk047C **)0x0300047C)
+#define gUnk_03000798 (*(struct Unk0798 **)0x03000798)
 
 #define gBattlerArena    0x03004060
 #define gBattlerArenaEnd 0x0300416C

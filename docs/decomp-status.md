@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **50/633 (7.9%)** |
-| **Decompiled C (bytes)** | **992/90,272 (1.1%)** |
-| Not opcode (C + readable Thumb) | 200/633 (31.6% fn, 42.5% bytes) |
+| **Decompiled C (functions)** | **60/633 (9.5%)** |
+| **Decompiled C (bytes)** | **1,172/90,272 (1.3%)** |
+| Not opcode (C + readable Thumb) | 210/633 (33.2% fn, 42.7% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 433/633 (68.4%) |
+| Opcode `.byte` embeds | 423/633 (66.8%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+10)
+
+- Semantic C: `sub_08071FAC`, `sub_080312D8`, `sub_080400C0`, `sub_08061784`/`B4`, `sub_08061A98`/`AA8`, `sub_08067890`, `sub_08069C14`, `sub_08068014`
+- Promoted RAM: `gUnk_03000180` (`Unk0180`), `gUnk_0300047C` (`Unk047C *`), `gUnk_03000798` (`Unk0798 *` with `unk98`/`unk9C`/`unkA0` packing)
+- Near-miss: `sub_080312EC` (`ldrb r1` vs `r0`), `sub_080473E4` (CSE of `0x03000634`/`63C`), `sub_0807069C` (`strh` +2 vs +4), `sub_08062A1C`/`66434`/`66440` (folded `base+off` pool)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+14)
 

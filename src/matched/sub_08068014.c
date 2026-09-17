@@ -1,8 +1,12 @@
 #include "global.h"
 
 // @ 0x08068014
-__attribute__((naked))
-void sub_08068014(void)
+
+void *sub_08068014(struct Unk68014 **slot, u32 i)
 {
-    asm(".byte 0x00, 0x68, 0x20, 0x30, 0xC9, 0x00, 0x40, 0x18, 0x70, 0x47");
+    struct Unk68014Rec *p;
+
+    p = (*slot)->unk20;
+    return &p[i];
 }
+

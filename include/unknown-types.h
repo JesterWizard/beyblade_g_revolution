@@ -226,4 +226,107 @@ struct Unk71F84 /* >= 0x17 */
     /* 16 */ u8 unk16;
 };
 
+/* *gUnk_03000798. sub_08061784 family. */
+struct Unk0798 /* >= 0xa2 */
+{
+    /* 00 */ u8 filler_00[0x8C];
+    /* 8c */ u32 unk8C;
+    /* 90 */ u8 filler_90[8];
+    /* 98 */ u16 unk98;
+    /* 9a */ u8 filler_9A[2];
+    /* 9c */ u16 unk9C;
+    /* 9e */ u8 filler_9E[2];
+    /* a0 */ u16 unkA0;
+};
+
+/* Stores at +0x18/+0x1c/+0x20. sub_08062634, sub_08062684. */
+struct Unk62634 /* >= 0x24 */
+{
+    /* 00 */ u8 filler_00[0x18];
+    /* 18 */ u32 unk18;
+    /* 1c */ u32 unk1C;
+    /* 20 */ u32 unk20;
+};
+
+/* Byte at +0x14. sub_08061BDC. */
+struct Unk61BDC /* >= 0x15 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ u8 unk14;
+};
+
+/* Halfword at +4, object at +0x14. sub_0807069C. */
+struct Unk7069C /* >= 0x16 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u16 unk04;
+    /* 06 */ u8 filler_06[0xE];
+    /* 14 */ u8 unk14;
+};
+
+/* Byte + pointer. sub_080312EC. */
+struct Unk312EC /* >= 0x10 */
+{
+    /* 00 */ u8 unk00;
+    /* 01 */ u8 filler_01[0xB];
+    /* 0c */ void *unk0C;
+};
+
+/* IWRAM triple at 0x03000180. sub_08067890. */
+struct Unk0180 /* 0x0c */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u32 unk08;
+};
+
+/* Byte at +0x5E. sub_08069C14. */
+struct Unk69C14 /* >= 0x5f */
+{
+    /* 00 */ u8 filler_00[0x5E];
+    /* 5e */ u8 unk5E;
+};
+
+/* Word at +0x800. sub_080400C0. */
+struct Unk047C /* >= 0x804 */
+{
+    /* 000 */ u8 filler_00[0x800];
+    /* 800 */ u32 unk800;
+};
+
+/* Stride-4 u16 table. sub_0802B8BC. */
+struct Unk0264 /* 0x04 */
+{
+    /* 00 */ u16 unk00;
+    /* 02 */ u16 unk02;
+};
+
+/* Bytes at +0x34/+0x35 from gUnk_03000970. */
+struct Unk0970 /* >= 0x36 */
+{
+    /* 00 */ u8 filler_00[0x34];
+    /* 34 */ u8 unk34;
+    /* 35 */ u8 unk35;
+};
+
+/* Word at +0x114 from gUnk_030007B0. sub_08062A1C. */
+struct Unk07B0 /* >= 0x118 */
+{
+    /* 000 */ u8 filler_00[0x114];
+    /* 114 */ u32 unk114;
+};
+
+/* Header + 8-byte records. sub_08068014. */
+struct Unk68014Rec /* 0x08 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+};
+
+struct Unk68014 /* >= 0x28 */
+{
+    /* 00 */ u8 filler_00[0x20];
+    /* 20 */ struct Unk68014Rec unk20[1];
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */
