@@ -7,9 +7,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Non-matching asm | 633 |
-| Matching asm (linked) | 31 |
+| Matching asm (linked) | 71 |
 | `src/*.c` files | 1 |
-| `pct_asm_matched` | 4.8% |
+| `pct_asm_matched` | 10.1% |
+| Phase | 1 (ASM match loop) |
 
 ## Batch log
 
@@ -58,4 +59,8 @@ First 4 functions + `src/stubs.c`.
 
 ### 2026-09-17 — match_batch (+10, 71/633 linked)
 - Functions: `sub_08036190`, `sub_08042E78`, `sub_08068884`, `sub_08069F00`, `sub_0806A954`, `sub_0806BE08`, `sub_080346C0`, `sub_0803DD60`, `sub_0803EBB0`, `sub_0803EC34`
+- make compare: OK
+
+### 2026-09-17 — match_batch (+10, 81/633 linked)
+- Functions: `sub_08033F24`, `sub_08034414`, `sub_08032DB8`, `sub_080686D8`, `sub_080602C0`, `sub_08060394`, `sub_08060428`, `sub_08060438`, `sub_08060448`, `sub_08060458`
 - make compare: OK
