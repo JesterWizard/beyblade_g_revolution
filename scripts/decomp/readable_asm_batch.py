@@ -75,6 +75,11 @@ def main() -> int:
     print(converted, flush=True)
     if converted > 0:
         subprocess.run(["make", "compare"], cwd=str(ROOT), check=True)
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "decomp" / "progress.py"), "--write"],
+        cwd=str(ROOT),
+        check=False,
+    )
     return 0
 
 

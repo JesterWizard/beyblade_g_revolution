@@ -75,5 +75,6 @@ PY
 if [ "${CONVERTED:-0}" -gt 0 ]; then
   make compare
 fi
+python3 scripts/decomp/progress.py --write
 
 echo "==> battle_convert_batch: ${CONVERTED:-0} integrated"

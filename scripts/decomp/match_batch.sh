@@ -80,7 +80,10 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
     asm/matchings/ \
     asm/rom.s asm/rom_tail.s asm/rom_gap_*.s asm/rom_layout.ld \
     build/matched.json \
-    documentation/decomp-status.md 2>/dev/null || true
+    documentation/decomp-status.md \
+    documentation/decomp-progress.json \
+    documentation/decomp-progress.svg \
+    README.md 2>/dev/null || true
   git add -u asm/rom_gap_*.s 2>/dev/null || true
   git commit -m "$(cat <<EOF
 decomp: match batch (+${MATCHED} functions, ${TOTAL}/633 total)

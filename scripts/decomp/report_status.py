@@ -3,73 +3,38 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+
 import sys
 
 sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
-NON = ROOT / "asm" / "nonmatchings"
-MATCH = ROOT / "asm" / "matchings"
-SRC = ROOT / "src"
-MANIFEST = ROOT / "build" / "matched.json"
+from progress import collect, format_human, write_artifacts  # noqa: E402
+
 STATUS = ROOT / "documentation" / "decomp-status.md"
+STATUS_START = "<!-- decomp-progress:start -->"
+STATUS_END = "<!-- decomp-progress:end -->"
 
 
-def count_s(dirpath: Path) -> int:
-    return len(list(dirpath.glob("*.s"))) if dirpath.is_dir() else 0
+def _progress_excerpt() -> str:
+    if not STATUS.is_file():
+        return ""
+    text = STATUS.read_text()
+    if STATUS_START in text and STATUS_END in text:
+        body = text.split(STATUS_START, 1)[1].split(STATUS_END, 1)[0].strip()
+        return body
+    return ""
 
 
 def main() -> None:
-    non = count_s(NON)
-    matched_asm = count_s(MATCH)
-    matched_src = SRC / "matched"
-    src_c = len(list(SRC.glob("*.c"))) if SRC.is_dir() else 0
-    src_matched_c = len(list(matched_src.glob("*.c"))) if matched_src.is_dir() else 0
-    linked = 0
-    c_linked = 0
-    semantic_c = 0
-    opcode_c = 0
-    asm_c = 0
-    if MANIFEST.is_file():
-        data = json.loads(MANIFEST.read_text())
-        linked = len(data.get("functions", []))
-        c_linked = sum(1 for f in data.get("functions", []) if f.get("src"))
-    if matched_src.is_dir():
-        from opcode_stubs import file_kind  # noqa: WPS433
-
-        for path in matched_src.glob("sub_*.c"):
-            kind = file_kind(path)
-            if kind == "opcode":
-                opcode_c += 1
-            elif kind == "asm":
-                asm_c += 1
-            else:
-                semantic_c += 1
-
-    summary = {
-        "nonmatching_asm": non,
-        "matching_asm": matched_asm,
-        "linked_in_rom": linked,
-        "src_c_files": src_c + src_matched_c,
-        "src_matched_c": src_matched_c,
-        "c_in_rom": c_linked,
-        "semantic_c": semantic_c,
-        "readable_asm_c": asm_c,
-        "opcode_embed_c": opcode_c,
-        "total_tracked": non + matched_asm,
-        "pct_asm_matched": round(100 * matched_asm / (non + matched_asm), 1)
-        if (non + matched_asm)
-        else 0.0,
-    }
-
-    print("=== Beyblade G Revolution decomp status ===")
-    for k, v in summary.items():
-        print(f"  {k}: {v}")
-    if STATUS.is_file():
+    data = collect()
+    write_artifacts(data)
+    print(format_human(data))
+    excerpt = _progress_excerpt()
+    if excerpt:
         print()
-        print(STATUS.read_text())
+        print(excerpt)
 
 
 if __name__ == "__main__":

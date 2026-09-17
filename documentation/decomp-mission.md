@@ -190,6 +190,7 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 | Mission (this file) | `documentation/decomp-mission.md` |
 | Master plan | `documentation/decomp-roadmap.md` |
 | Live log | `documentation/decomp-status.md` |
+| C-vs-original counter | `documentation/decomp-progress.json` / `decomp-progress.svg` |
 | Battle notes | `documentation/battle.md` |
 | Matched C | `src/matched/*.c` |
 | Types | `include/unknown-types.h`, `include/unknown-functions.h` |
@@ -200,9 +201,9 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 
 ## Progress snapshot (update in decomp-status.md)
 
-See `python3 scripts/decomp/report_status.py` for live counts:
+See `python3 scripts/decomp/progress.py` (or `report_status.py`) for live counts:
 
 - Linked in ROM: 633/633
-- C in `src/matched/`: growing (trivial + battle)
+- **Decompiled C:** semantic `src/matched/` vs original function bytes (opcode embeds do not count)
 - Renames: Phase 4 not started
 - Shiftable: Phase 5 gated

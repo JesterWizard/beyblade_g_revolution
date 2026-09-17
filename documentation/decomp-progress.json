@@ -1,0 +1,165 @@
+{
+  "generated": "2026-09-17T22:52:07Z",
+  "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
+  "expected_functions": 633,
+  "src_matched": 633,
+  "linked_in_rom": 633,
+  "total_bytes": 90272,
+  "missing_size": 0,
+  "kinds": {
+    "semantic": {
+      "functions": 36,
+      "bytes": 676,
+      "pct_functions": 5.7,
+      "pct_bytes": 0.7
+    },
+    "readable_asm": {
+      "functions": 152,
+      "bytes": 37562,
+      "pct_functions": 24.0,
+      "pct_bytes": 41.6
+    },
+    "opcode": {
+      "functions": 445,
+      "bytes": 52034,
+      "pct_functions": 70.3,
+      "pct_bytes": 57.6
+    }
+  },
+  "decomp": {
+    "headline": "semantic C vs original function code",
+    "functions": 36,
+    "bytes": 676,
+    "pct_functions": 5.7,
+    "pct_bytes": 0.7
+  },
+  "non_blob": {
+    "note": "semantic C + readable Thumb (no .byte retail paste)",
+    "functions": 188,
+    "bytes": 38238,
+    "pct_functions": 29.7,
+    "pct_bytes": 42.4
+  },
+  "readable_asm": {
+    "functions": 152,
+    "bytes": 37562
+  },
+  "opcode": {
+    "functions": 445,
+    "bytes": 52034
+  },
+  "battle": {
+    "functions": 160,
+    "semantic": 10,
+    "readable_asm": 150,
+    "opcode": 0,
+    "bytes": 37974,
+    "semantic_bytes": 420,
+    "pct_functions": 6.2,
+    "pct_bytes": 1.1
+  },
+  "largest_opcode": [
+    {
+      "name": "sub_0806C7D4",
+      "addr": "0x0806C7D4",
+      "kind": "opcode",
+      "bytes": 1302
+    },
+    {
+      "name": "sub_0804DB28",
+      "addr": "0x0804DB28",
+      "kind": "opcode",
+      "bytes": 900
+    },
+    {
+      "name": "sub_0806C388",
+      "addr": "0x0806C388",
+      "kind": "opcode",
+      "bytes": 710
+    },
+    {
+      "name": "sub_080706B0",
+      "addr": "0x080706B0",
+      "kind": "opcode",
+      "bytes": 626
+    },
+    {
+      "name": "sub_0806960C",
+      "addr": "0x0806960C",
+      "kind": "opcode",
+      "bytes": 600
+    },
+    {
+      "name": "sub_0806B764",
+      "addr": "0x0806B764",
+      "kind": "opcode",
+      "bytes": 588
+    },
+    {
+      "name": "sub_08067CE8",
+      "addr": "0x08067CE8",
+      "kind": "opcode",
+      "bytes": 548
+    },
+    {
+      "name": "sub_08060E48",
+      "addr": "0x08060E48",
+      "kind": "opcode",
+      "bytes": 532
+    },
+    {
+      "name": "sub_0806EC20",
+      "addr": "0x0806EC20",
+      "kind": "opcode",
+      "bytes": 516
+    },
+    {
+      "name": "sub_0802ECD8",
+      "addr": "0x0802ECD8",
+      "kind": "opcode",
+      "bytes": 498
+    },
+    {
+      "name": "sub_0806E060",
+      "addr": "0x0806E060",
+      "kind": "opcode",
+      "bytes": 492
+    },
+    {
+      "name": "sub_08068A08",
+      "addr": "0x08068A08",
+      "kind": "opcode",
+      "bytes": 460
+    },
+    {
+      "name": "sub_08048DB8",
+      "addr": "0x08048DB8",
+      "kind": "opcode",
+      "bytes": 440
+    },
+    {
+      "name": "sub_08035054",
+      "addr": "0x08035054",
+      "kind": "opcode",
+      "bytes": 432
+    },
+    {
+      "name": "sub_08068BD4",
+      "addr": "0x08068BD4",
+      "kind": "opcode",
+      "bytes": 420
+    }
+  ],
+  "history": [
+    {
+      "generated": "2026-09-17T22:52:07Z",
+      "semantic": 36,
+      "readable_asm": 152,
+      "opcode": 445,
+      "semantic_bytes": 676,
+      "total_bytes": 90272,
+      "pct_functions": 5.7,
+      "pct_bytes": 0.7
+    }
+  ]
+}

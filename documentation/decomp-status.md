@@ -4,16 +4,20 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Progress
 
+<!-- decomp-progress:start -->
 | Metric | Value |
 |--------|-------|
-| Non-matching asm | 633 |
-| Matching asm (linked) | **633** |
-| `src/matched/*.c` | **633/633** |
-| `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **3b in progress** — replace opcode stubs with semantic C / readable Thumb |
-| Semantic C | **36** / 633 (struct-member convention) |
-| Readable Thumb | 152 / 633 |
-| Opcode `.byte` embeds | 445 / 633 |
+| Linked in ROM | **633/633** (100% peeled) |
+| **Decompiled C (functions)** | **36/633 (5.7%)** |
+| **Decompiled C (bytes)** | **676/90,272 (0.7%)** |
+| Not opcode (C + readable Thumb) | 188/633 (29.7% fn, 42.4% bytes) |
+| Readable Thumb | 152/633 (24.0%) |
+| Opcode `.byte` embeds | 445/633 (70.3%) |
+| `src/matched/*.c` | 633/633 |
+| Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
+| Battle semantic C | 10/160 (6.2% fn, 1.1% bytes) |
+| Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
+<!-- decomp-progress:end -->
 
 ## Batch log
 

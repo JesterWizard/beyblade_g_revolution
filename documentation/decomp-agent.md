@@ -27,7 +27,7 @@ and **[decomp-roadmap.md](decomp-roadmap.md)** for the full phased plan.
 After each batch, post a short summary:
 
 - Functions attempted / matched / failed
-- Current `pct_asm_matched` (from `report_status.py`)
+- Current decompiled C % (functions + bytes, from `progress.py` / `report_status.py`)
 - Whether `make compare` still passes
 - Link to latest log in `mizuchi-output/`
 - Any blockers (missing agbcc, empty asm dir, Mizuchi timeout)
@@ -54,3 +54,4 @@ After each batch, post a short summary:
 | agbcc | `tools/agbcc/bin/agbcc` |
 | m2ctx | `tools/m2ctx.py` |
 | Luvdis | `tools/luvdis/` |
+| Progress | `scripts/decomp/progress.py` |

@@ -82,6 +82,8 @@ bash scripts/setup.sh
 | `include/*.h` | Types discovered during decomp |
 | `beyblade_g_revolution.toml` | Function renames (`[renames]`) |
 | `documentation/decomp-status.md` | Progress log after each batch |
+| `documentation/decomp-progress.json` | Live C-vs-original counters (functions + bytes) |
+| `documentation/decomp-progress.svg` | README percentage bar |
 | `ld_script.ld` / `Makefile` | When adding new `src/` objects |
 
 ## What you must NOT do
@@ -120,7 +122,8 @@ bash scripts/setup.sh
 | Cursor batch | `scripts/decomp/cursor_batch.sh` | m2c seeds for hard functions |
 | decomp-permuter | `scripts/decomp/permuter/` | agbcc pool/ordering search |
 | Mizuchi batch | `scripts/decomp/run_batch.sh` | Optional Mizuchi runner |
-| Status | `scripts/decomp/report_status.py` | Progress summary |
+| Status | `scripts/decomp/report_status.py` | Progress summary + refresh counter |
+| Progress bar | `scripts/decomp/progress.py` | Semantic C % vs original (JSON + SVG) |
 
 ## User report template
 
@@ -130,7 +133,7 @@ Post this after every batch (fill in values):
 ## Decomp batch report
 
 - **Matched this batch:** N / attempted M
-- **Total asm matched:** X% (from report_status.py)
+- **Decompiled C:** X% functions / Y% bytes (from `progress.py`)
 - **make compare:** OK / FAILED
 - **Log:** mizuchi-output/batch-*.log
 - **Blockers:** none / <describe>
@@ -151,7 +154,7 @@ Post this after every batch (fill in values):
 | Hands-off commands | [documentation/decomp-agent.md](documentation/decomp-agent.md) |
 | Master plan | [documentation/decomp-roadmap.md](documentation/decomp-roadmap.md) |
 | Battle subsystem | [documentation/battle.md](documentation/battle.md) |
-| Live progress | [documentation/decomp-status.md](documentation/decomp-status.md) |
+| Live progress | [documentation/decomp-status.md](documentation/decomp-status.md), [decomp-progress.svg](documentation/decomp-progress.svg) |
 | RAM addresses | [documentation/ram-map.md](documentation/ram-map.md) |
 | Install / deps | [INSTALL.md](INSTALL.md) |
 
