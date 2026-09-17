@@ -262,13 +262,15 @@ struct Unk61BDC /* >= 0x15 */
     /* 14 */ u8 unk14;
 };
 
-/* Halfword at +4, object at +0x14. sub_0807069C. */
-struct Unk7069C /* >= 0x16 */
+/* Halfword at +4, object at +0x14, pointer at +0x2C. sub_0807069C, sub_08070678. */
+struct Unk7069C /* >= 0x30 */
 {
     /* 00 */ u32 unk00;
     /* 04 */ u16 unk04;
     /* 06 */ u8 filler_06[0xE];
     /* 14 */ u8 unk14;
+    /* 15 */ u8 filler_15[0x17];
+    /* 2c */ struct Unk705CC *unk2C;
 };
 
 /* Bytes + words + pointer. sub_08031294, sub_080312EC. */
