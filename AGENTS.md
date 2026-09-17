@@ -40,8 +40,10 @@ scripts/decomp/match_batch.sh 10
 scripts/decomp/ram_map_pass.sh
 # Promote gUnk_* → named SET_DATA in asm/ram_map_*.s as roles become clear
 
-# 4. When match_function.py passes: add C to src/, plan asm removal
-python3 scripts/decomp/match_function.py sub_XXXXXXXX src/module.c
+# 4. Phase 3: trivial C batch, or hand-convert + integrate
+scripts/decomp/c_convert_batch.sh 30
+python3 scripts/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
+python3 scripts/decomp/integrate_c.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
 
 # 5. Phase 5 gate check (shiftable ROM)
 python3 scripts/decomp/check_shiftable.py

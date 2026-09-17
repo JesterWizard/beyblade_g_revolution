@@ -21,16 +21,23 @@ def count_s(dirpath: Path) -> int:
 def main() -> None:
     non = count_s(NON)
     matched_asm = count_s(MATCH)
+    matched_src = SRC / "matched"
     src_c = len(list(SRC.glob("*.c"))) if SRC.is_dir() else 0
+    src_matched_c = len(list(matched_src.glob("*.c"))) if matched_src.is_dir() else 0
     linked = 0
+    c_linked = 0
     if MANIFEST.is_file():
-        linked = len(json.loads(MANIFEST.read_text()).get("functions", []))
+        data = json.loads(MANIFEST.read_text())
+        linked = len(data.get("functions", []))
+        c_linked = sum(1 for f in data.get("functions", []) if f.get("src"))
 
     summary = {
         "nonmatching_asm": non,
         "matching_asm": matched_asm,
         "linked_in_rom": linked,
-        "src_c_files": src_c,
+        "src_c_files": src_c + src_matched_c,
+        "src_matched_c": src_matched_c,
+        "c_in_rom": c_linked,
         "total_tracked": non + matched_asm,
         "pct_asm_matched": round(100 * matched_asm / (non + matched_asm), 1)
         if (non + matched_asm)

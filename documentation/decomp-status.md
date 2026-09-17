@@ -8,11 +8,18 @@ _Agent-maintained log. Updated after each batch run._
 |--------|-------|
 | Non-matching asm | 633 |
 | Matching asm (linked) | **633** |
-| `src/*.c` files | 1 |
+| `src/matched/*.c` | 9 |
 | `pct_asm_matched` | 50.0% (633/1266 tracked) |
-| Phase | **2 in progress** (RAM map pass done; C decomp next) |
+| Phase | **3 in progress** (C decomp; 9 functions in `src/matched/`) |
 
 ## Batch log
+
+### 2026-09-17 — Phase 3 C batch (trivial patterns)
+
+- Fixed `match_function.py` (retail baserom byte compare; was broken objdump filter)
+- Added `integrate_c.py`, `c_patterns.py`, `c_convert_batch.sh`
+- Converted **9** trivial functions → `src/matched/*.c` (`make compare`: **OK**)
+- Patterns: empty return, `ldrb` load, `ldr` + offset, `strb` field set, `swi` stubs
 
 ### 2026-09-17 — Phase 2 RAM map pass
 

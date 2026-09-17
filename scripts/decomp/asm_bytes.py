@@ -23,6 +23,12 @@ def addr_from_name(name: str) -> int:
     return int(name.replace("sub_", ""), 16)
 
 
+def retail_bytes(name: str, size: int) -> bytes:
+    off = addr_from_name(name) - ROM_BASE
+    rom = BASEROM.read_bytes()
+    return rom[off : off + size]
+
+
 def asm_text_bytes(asm_path: Path) -> bytes:
     with tempfile.TemporaryDirectory() as tmp:
         obj = Path(tmp) / "fn.o"
@@ -66,6 +72,21 @@ def integration_plan(name: str) -> tuple[str, int] | None:
     if want:
         return ("slice", len(got))
     return None
+
+
+def write_matching_bytes(name: str, data: bytes, dst: Path) -> None:
+    lines = [
+        HEADER.rstrip(),
+        ".thumb_func",
+        f".global {name}",
+        f"{name}:",
+    ]
+    if len(data) % 2:
+        data += b"\x00"
+    for i in range(0, len(data), 2):
+        word = data[i] | (data[i + 1] << 8)
+        lines.append(f"\t.short 0x{word:04X}")
+    dst.write_text("\n".join(lines) + "\n")
 
 
 def write_matching_asm(name: str, mode: str, size: int, dst: Path, src: Path) -> None:
