@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x080717EE..0x080717EF
+@ Unmatched ROM 0x08071304..0x0807179B
 	.section .rodata
 	.global gRomGap320
 gRomGap320:
-	.incbin "baserom.gba", 0x717EE, 0x2
+	.incbin "baserom.gba", 0x71304, 0x498
