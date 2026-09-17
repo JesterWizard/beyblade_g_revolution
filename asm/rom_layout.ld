@@ -25,197 +25,221 @@
     .rom_gap_003 0x0802D8DC : {
         asm/rom_gap_003.o(.rodata)
     } > ROM
+    .rom_sub_080312EC 0x080312EC : {
+        asm/matchings/sub_080312EC.o(.text)
+    } > ROM
+    .rom_gap_004 0x08031300 : {
+        asm/rom_gap_004.o(.rodata)
+    } > ROM
     .rom_sub_080314FC 0x080314FC : {
         asm/matchings/sub_080314FC.o(.text)
     } > ROM
-    .rom_gap_004 0x08031510 : {
-        asm/rom_gap_004.o(.rodata)
+    .rom_gap_005 0x08031510 : {
+        asm/rom_gap_005.o(.rodata)
     } > ROM
     .rom_sub_08032DB8 0x08032DB8 : {
         asm/matchings/sub_08032DB8.o(.text)
     } > ROM
-    .rom_gap_005 0x08032DC4 : {
-        asm/rom_gap_005.o(.rodata)
+    .rom_gap_006 0x08032DC4 : {
+        asm/rom_gap_006.o(.rodata)
     } > ROM
     .rom_sub_080338E4 0x080338E4 : {
         asm/matchings/sub_080338E4.o(.text)
     } > ROM
-    .rom_gap_006 0x080338EE : {
-        asm/rom_gap_006.o(.rodata)
+    .rom_gap_007 0x080338EE : {
+        asm/rom_gap_007.o(.rodata)
     } > ROM
     .rom_sub_08033958 0x08033958 : {
         asm/matchings/sub_08033958.o(.text)
     } > ROM
-    .rom_gap_007 0x0803396C : {
-        asm/rom_gap_007.o(.rodata)
+    .rom_gap_008 0x0803396C : {
+        asm/rom_gap_008.o(.rodata)
     } > ROM
     .rom_sub_08033A94 0x08033A94 : {
         asm/matchings/sub_08033A94.o(.text)
     } > ROM
-    .rom_gap_008 0x08033A98 : {
-        asm/rom_gap_008.o(.rodata)
+    .rom_gap_009 0x08033A98 : {
+        asm/rom_gap_009.o(.rodata)
     } > ROM
     .rom_sub_08033F24 0x08033F24 : {
         asm/matchings/sub_08033F24.o(.text)
     } > ROM
-    .rom_gap_009 0x08033F2E : {
-        asm/rom_gap_009.o(.rodata)
+    .rom_gap_010 0x08033F2E : {
+        asm/rom_gap_010.o(.rodata)
     } > ROM
     .rom_sub_08033F30 0x08033F30 : {
         asm/matchings/sub_08033F30.o(.text)
     } > ROM
-    .rom_gap_010 0x08033F48 : {
-        asm/rom_gap_010.o(.rodata)
+    .rom_gap_011 0x08033F48 : {
+        asm/rom_gap_011.o(.rodata)
     } > ROM
     .rom_sub_08034414 0x08034414 : {
         asm/matchings/sub_08034414.o(.text)
     } > ROM
-    .rom_gap_011 0x0803441E : {
-        asm/rom_gap_011.o(.rodata)
+    .rom_gap_012 0x0803441E : {
+        asm/rom_gap_012.o(.rodata)
     } > ROM
     .rom_sub_080346A8 0x080346A8 : {
         asm/matchings/sub_080346A8.o(.text)
     } > ROM
-    .rom_gap_012 0x080346B2 : {
-        asm/rom_gap_012.o(.rodata)
+    .rom_gap_013 0x080346B2 : {
+        asm/rom_gap_013.o(.rodata)
     } > ROM
     .rom_sub_080346C0 0x080346C0 : {
         asm/matchings/sub_080346C0.o(.text)
     } > ROM
-    .rom_gap_013 0x080346DA : {
-        asm/rom_gap_013.o(.rodata)
+    .rom_gap_014 0x080346DA : {
+        asm/rom_gap_014.o(.rodata)
+    } > ROM
+    .rom_sub_08034FDC 0x08034FDC : {
+        asm/matchings/sub_08034FDC.o(.text)
+    } > ROM
+    .rom_gap_015 0x08034FF8 : {
+        asm/rom_gap_015.o(.rodata)
     } > ROM
     .rom_sub_08035878 0x08035878 : {
         asm/matchings/sub_08035878.o(.text)
     } > ROM
-    .rom_gap_014 0x08035884 : {
-        asm/rom_gap_014.o(.rodata)
+    .rom_gap_016 0x08035884 : {
+        asm/rom_gap_016.o(.rodata)
     } > ROM
     .rom_sub_080358CC 0x080358CC : {
         asm/matchings/sub_080358CC.o(.text)
     } > ROM
-    .rom_gap_015 0x080358D6 : {
-        asm/rom_gap_015.o(.rodata)
+    .rom_gap_017 0x080358D6 : {
+        asm/rom_gap_017.o(.rodata)
     } > ROM
     .rom_sub_08036190 0x08036190 : {
         asm/matchings/sub_08036190.o(.text)
     } > ROM
-    .rom_gap_016 0x080361A8 : {
-        asm/rom_gap_016.o(.rodata)
+    .rom_gap_018 0x080361A8 : {
+        asm/rom_gap_018.o(.rodata)
     } > ROM
     .rom_sub_0803DD60 0x0803DD60 : {
         asm/matchings/sub_0803DD60.o(.text)
     } > ROM
-    .rom_gap_017 0x0803DD88 : {
-        asm/rom_gap_017.o(.rodata)
+    .rom_gap_019 0x0803DD88 : {
+        asm/rom_gap_019.o(.rodata)
     } > ROM
     .rom_sub_0803EBB0 0x0803EBB0 : {
         asm/matchings/sub_0803EBB0.o(.text)
     } > ROM
-    .rom_gap_018 0x0803EBD8 : {
-        asm/rom_gap_018.o(.rodata)
+    .rom_gap_020 0x0803EBD8 : {
+        asm/rom_gap_020.o(.rodata)
     } > ROM
     .rom_sub_0803EC34 0x0803EC34 : {
         asm/matchings/sub_0803EC34.o(.text)
     } > ROM
-    .rom_gap_019 0x0803EC5C : {
-        asm/rom_gap_019.o(.rodata)
+    .rom_gap_021 0x0803EC5C : {
+        asm/rom_gap_021.o(.rodata)
+    } > ROM
+    .rom_sub_0803ECB8 0x0803ECB8 : {
+        asm/matchings/sub_0803ECB8.o(.text)
+    } > ROM
+    .rom_gap_022 0x0803ECE0 : {
+        asm/rom_gap_022.o(.rodata)
     } > ROM
     .rom_sub_0803EDC8 0x0803EDC8 : {
         asm/matchings/sub_0803EDC8.o(.text)
     } > ROM
-    .rom_gap_020 0x0803EDDC : {
-        asm/rom_gap_020.o(.rodata)
+    .rom_gap_023 0x0803EDDC : {
+        asm/rom_gap_023.o(.rodata)
     } > ROM
     .rom_sub_0803EDF0 0x0803EDF0 : {
         asm/matchings/sub_0803EDF0.o(.text)
     } > ROM
-    .rom_gap_021 0x0803EE04 : {
-        asm/rom_gap_021.o(.rodata)
+    .rom_gap_024 0x0803EE04 : {
+        asm/rom_gap_024.o(.rodata)
     } > ROM
     .rom_sub_080400C0 0x080400C0 : {
         asm/matchings/sub_080400C0.o(.text)
     } > ROM
-    .rom_gap_022 0x080400D4 : {
-        asm/rom_gap_022.o(.rodata)
+    .rom_gap_025 0x080400D4 : {
+        asm/rom_gap_025.o(.rodata)
     } > ROM
     .rom_sub_080429C0 0x080429C0 : {
         asm/matchings/sub_080429C0.o(.text)
     } > ROM
-    .rom_gap_023 0x080429CC : {
-        asm/rom_gap_023.o(.rodata)
+    .rom_gap_026 0x080429CC : {
+        asm/rom_gap_026.o(.rodata)
     } > ROM
     .rom_sub_08042E78 0x08042E78 : {
         asm/matchings/sub_08042E78.o(.text)
     } > ROM
-    .rom_gap_024 0x08042E94 : {
-        asm/rom_gap_024.o(.rodata)
+    .rom_gap_027 0x08042E94 : {
+        asm/rom_gap_027.o(.rodata)
     } > ROM
     .rom_sub_08043974 0x08043974 : {
         asm/matchings/sub_08043974.o(.text)
     } > ROM
-    .rom_gap_025 0x08043980 : {
-        asm/rom_gap_025.o(.rodata)
+    .rom_gap_028 0x08043980 : {
+        asm/rom_gap_028.o(.rodata)
     } > ROM
     .rom_sub_080473E4 0x080473E4 : {
         asm/matchings/sub_080473E4.o(.text)
     } > ROM
-    .rom_gap_026 0x080473F8 : {
-        asm/rom_gap_026.o(.rodata)
+    .rom_gap_029 0x080473F8 : {
+        asm/rom_gap_029.o(.rodata)
+    } > ROM
+    .rom_sub_08060254 0x08060254 : {
+        asm/matchings/sub_08060254.o(.text)
+    } > ROM
+    .rom_gap_030 0x0806026C : {
+        asm/rom_gap_030.o(.rodata)
     } > ROM
     .rom_sub_080602C0 0x080602C0 : {
         asm/matchings/sub_080602C0.o(.text)
     } > ROM
-    .rom_gap_027 0x080602CE : {
-        asm/rom_gap_027.o(.rodata)
+    .rom_gap_031 0x080602CE : {
+        asm/rom_gap_031.o(.rodata)
     } > ROM
     .rom_sub_08060394 0x08060394 : {
         asm/matchings/sub_08060394.o(.text)
     } > ROM
-    .rom_gap_028 0x080603A2 : {
-        asm/rom_gap_028.o(.rodata)
+    .rom_gap_032 0x080603A2 : {
+        asm/rom_gap_032.o(.rodata)
     } > ROM
     .rom_sub_08060428 0x08060428 : {
         asm/matchings/sub_08060428.o(.text)
     } > ROM
-    .rom_gap_029 0x08060436 : {
-        asm/rom_gap_029.o(.rodata)
+    .rom_gap_033 0x08060436 : {
+        asm/rom_gap_033.o(.rodata)
     } > ROM
     .rom_sub_08060438 0x08060438 : {
         asm/matchings/sub_08060438.o(.text)
     } > ROM
-    .rom_gap_030 0x08060446 : {
-        asm/rom_gap_030.o(.rodata)
+    .rom_gap_034 0x08060446 : {
+        asm/rom_gap_034.o(.rodata)
     } > ROM
     .rom_sub_08060448 0x08060448 : {
         asm/matchings/sub_08060448.o(.text)
     } > ROM
-    .rom_gap_031 0x08060456 : {
-        asm/rom_gap_031.o(.rodata)
+    .rom_gap_035 0x08060456 : {
+        asm/rom_gap_035.o(.rodata)
     } > ROM
     .rom_sub_08060458 0x08060458 : {
         asm/matchings/sub_08060458.o(.text)
     } > ROM
-    .rom_gap_032 0x08060466 : {
-        asm/rom_gap_032.o(.rodata)
+    .rom_gap_036 0x08060466 : {
+        asm/rom_gap_036.o(.rodata)
     } > ROM
     .rom_sub_08061610 0x08061610 : {
         asm/matchings/sub_08061610.o(.text)
     } > ROM
-    .rom_gap_033 0x08061628 : {
-        asm/rom_gap_033.o(.rodata)
+    .rom_gap_037 0x08061628 : {
+        asm/rom_gap_037.o(.rodata)
     } > ROM
     .rom_sub_08061784 0x08061784 : {
         asm/matchings/sub_08061784.o(.text)
     } > ROM
-    .rom_gap_034 0x08061794 : {
-        asm/rom_gap_034.o(.rodata)
+    .rom_gap_038 0x08061794 : {
+        asm/rom_gap_038.o(.rodata)
     } > ROM
     .rom_sub_080617B4 0x080617B4 : {
         asm/matchings/sub_080617B4.o(.text)
     } > ROM
-    .rom_gap_035 0x080617C4 : {
-        asm/rom_gap_035.o(.rodata)
+    .rom_gap_039 0x080617C4 : {
+        asm/rom_gap_039.o(.rodata)
     } > ROM
     .rom_sub_08061A98 0x08061A98 : {
         asm/matchings/sub_08061A98.o(.text)
@@ -223,50 +247,50 @@
     .rom_sub_08061AA8 0x08061AA8 : {
         asm/matchings/sub_08061AA8.o(.text)
     } > ROM
-    .rom_gap_036 0x08061AB8 : {
-        asm/rom_gap_036.o(.rodata)
+    .rom_gap_040 0x08061AB8 : {
+        asm/rom_gap_040.o(.rodata)
     } > ROM
     .rom_sub_08061BDC 0x08061BDC : {
         asm/matchings/sub_08061BDC.o(.text)
     } > ROM
-    .rom_gap_037 0x08061BE8 : {
-        asm/rom_gap_037.o(.rodata)
+    .rom_gap_041 0x08061BE8 : {
+        asm/rom_gap_041.o(.rodata)
     } > ROM
     .rom_sub_08061E40 0x08061E40 : {
         asm/matchings/sub_08061E40.o(.text)
     } > ROM
-    .rom_gap_038 0x08061E54 : {
-        asm/rom_gap_038.o(.rodata)
+    .rom_gap_042 0x08061E54 : {
+        asm/rom_gap_042.o(.rodata)
     } > ROM
     .rom_sub_08062098 0x08062098 : {
         asm/matchings/sub_08062098.o(.text)
     } > ROM
-    .rom_gap_039 0x0806209C : {
-        asm/rom_gap_039.o(.rodata)
+    .rom_gap_043 0x0806209C : {
+        asm/rom_gap_043.o(.rodata)
     } > ROM
     .rom_sub_08062634 0x08062634 : {
         asm/matchings/sub_08062634.o(.text)
     } > ROM
-    .rom_gap_040 0x08062640 : {
-        asm/rom_gap_040.o(.rodata)
+    .rom_gap_044 0x08062640 : {
+        asm/rom_gap_044.o(.rodata)
     } > ROM
     .rom_sub_08062684 0x08062684 : {
         asm/matchings/sub_08062684.o(.text)
     } > ROM
-    .rom_gap_041 0x08062698 : {
-        asm/rom_gap_041.o(.rodata)
+    .rom_gap_045 0x08062698 : {
+        asm/rom_gap_045.o(.rodata)
     } > ROM
     .rom_sub_08062728 0x08062728 : {
         asm/matchings/sub_08062728.o(.text)
     } > ROM
-    .rom_gap_042 0x0806273A : {
-        asm/rom_gap_042.o(.rodata)
+    .rom_gap_046 0x0806273A : {
+        asm/rom_gap_046.o(.rodata)
     } > ROM
     .rom_sub_080628E4 0x080628E4 : {
         asm/matchings/sub_080628E4.o(.text)
     } > ROM
-    .rom_gap_043 0x080628F8 : {
-        asm/rom_gap_043.o(.rodata)
+    .rom_gap_047 0x080628F8 : {
+        asm/rom_gap_047.o(.rodata)
     } > ROM
     .rom_sub_08062A14 0x08062A14 : {
         asm/matchings/sub_08062A14.o(.text)
@@ -274,8 +298,8 @@
     .rom_sub_08062A1C 0x08062A1C : {
         asm/matchings/sub_08062A1C.o(.text)
     } > ROM
-    .rom_gap_044 0x08062A2C : {
-        asm/rom_gap_044.o(.rodata)
+    .rom_gap_048 0x08062A2C : {
+        asm/rom_gap_048.o(.rodata)
     } > ROM
     .rom_sub_08066390 0x08066390 : {
         asm/matchings/sub_08066390.o(.text)
@@ -283,8 +307,8 @@
     .rom_sub_0806639C 0x0806639C : {
         asm/matchings/sub_0806639C.o(.text)
     } > ROM
-    .rom_gap_045 0x080663B8 : {
-        asm/rom_gap_045.o(.rodata)
+    .rom_gap_049 0x080663B8 : {
+        asm/rom_gap_049.o(.rodata)
     } > ROM
     .rom_sub_08066434 0x08066434 : {
         asm/matchings/sub_08066434.o(.text)
@@ -295,8 +319,8 @@
     .rom_sub_0806644C 0x0806644C : {
         asm/matchings/sub_0806644C.o(.text)
     } > ROM
-    .rom_gap_046 0x0806645C : {
-        asm/rom_gap_046.o(.rodata)
+    .rom_gap_050 0x0806645C : {
+        asm/rom_gap_050.o(.rodata)
     } > ROM
     .rom_sub_080674A0 0x080674A0 : {
         asm/matchings/sub_080674A0.o(.text)
@@ -304,8 +328,8 @@
     .rom_sub_080674A4 0x080674A4 : {
         asm/matchings/sub_080674A4.o(.text)
     } > ROM
-    .rom_gap_047 0x080674AA : {
-        asm/rom_gap_047.o(.rodata)
+    .rom_gap_051 0x080674AA : {
+        asm/rom_gap_051.o(.rodata)
     } > ROM
     .rom_sub_080674AC 0x080674AC : {
         asm/matchings/sub_080674AC.o(.text)
@@ -316,32 +340,44 @@
     .rom_sub_080674B4 0x080674B4 : {
         asm/matchings/sub_080674B4.o(.text)
     } > ROM
-    .rom_gap_048 0x080674BA : {
-        asm/rom_gap_048.o(.rodata)
+    .rom_gap_052 0x080674BA : {
+        asm/rom_gap_052.o(.rodata)
+    } > ROM
+    .rom_sub_08067634 0x08067634 : {
+        asm/matchings/sub_08067634.o(.text)
+    } > ROM
+    .rom_gap_053 0x08067648 : {
+        asm/rom_gap_053.o(.rodata)
     } > ROM
     .rom_sub_08067890 0x08067890 : {
         asm/matchings/sub_08067890.o(.text)
     } > ROM
-    .rom_gap_049 0x080678A4 : {
-        asm/rom_gap_049.o(.rodata)
+    .rom_gap_054 0x080678A4 : {
+        asm/rom_gap_054.o(.rodata)
+    } > ROM
+    .rom_sub_080679C0 0x080679C0 : {
+        asm/matchings/sub_080679C0.o(.text)
+    } > ROM
+    .rom_gap_055 0x080679DC : {
+        asm/rom_gap_055.o(.rodata)
     } > ROM
     .rom_sub_08067A9C 0x08067A9C : {
         asm/matchings/sub_08067A9C.o(.text)
     } > ROM
-    .rom_gap_050 0x08067A9E : {
-        asm/rom_gap_050.o(.rodata)
+    .rom_gap_056 0x08067A9E : {
+        asm/rom_gap_056.o(.rodata)
     } > ROM
     .rom_sub_08067B98 0x08067B98 : {
         asm/matchings/sub_08067B98.o(.text)
     } > ROM
-    .rom_gap_051 0x08067B9E : {
-        asm/rom_gap_051.o(.rodata)
+    .rom_gap_057 0x08067B9E : {
+        asm/rom_gap_057.o(.rodata)
     } > ROM
     .rom_sub_08068014 0x08068014 : {
         asm/matchings/sub_08068014.o(.text)
     } > ROM
-    .rom_gap_052 0x0806801E : {
-        asm/rom_gap_052.o(.rodata)
+    .rom_gap_058 0x0806801E : {
+        asm/rom_gap_058.o(.rodata)
     } > ROM
     .rom_sub_08068574 0x08068574 : {
         asm/matchings/sub_08068574.o(.text)
@@ -349,92 +385,104 @@
     .rom_sub_08068584 0x08068584 : {
         asm/matchings/sub_08068584.o(.text)
     } > ROM
-    .rom_gap_053 0x08068590 : {
-        asm/rom_gap_053.o(.rodata)
+    .rom_gap_059 0x08068590 : {
+        asm/rom_gap_059.o(.rodata)
     } > ROM
     .rom_sub_080686D8 0x080686D8 : {
         asm/matchings/sub_080686D8.o(.text)
     } > ROM
-    .rom_gap_054 0x080686E4 : {
-        asm/rom_gap_054.o(.rodata)
+    .rom_gap_060 0x080686E4 : {
+        asm/rom_gap_060.o(.rodata)
     } > ROM
     .rom_sub_08068884 0x08068884 : {
         asm/matchings/sub_08068884.o(.text)
     } > ROM
-    .rom_gap_055 0x0806889C : {
-        asm/rom_gap_055.o(.rodata)
+    .rom_gap_061 0x0806889C : {
+        asm/rom_gap_061.o(.rodata)
+    } > ROM
+    .rom_sub_08069C14 0x08069C14 : {
+        asm/matchings/sub_08069C14.o(.text)
+    } > ROM
+    .rom_gap_062 0x08069C28 : {
+        asm/rom_gap_062.o(.rodata)
     } > ROM
     .rom_sub_08069F00 0x08069F00 : {
         asm/matchings/sub_08069F00.o(.text)
     } > ROM
-    .rom_gap_056 0x08069F18 : {
-        asm/rom_gap_056.o(.rodata)
+    .rom_gap_063 0x08069F18 : {
+        asm/rom_gap_063.o(.rodata)
     } > ROM
     .rom_sub_0806A954 0x0806A954 : {
         asm/matchings/sub_0806A954.o(.text)
     } > ROM
-    .rom_gap_057 0x0806A970 : {
-        asm/rom_gap_057.o(.rodata)
+    .rom_gap_064 0x0806A970 : {
+        asm/rom_gap_064.o(.rodata)
     } > ROM
     .rom_sub_0806AC68 0x0806AC68 : {
         asm/matchings/sub_0806AC68.o(.text)
     } > ROM
-    .rom_gap_058 0x0806AC7E : {
-        asm/rom_gap_058.o(.rodata)
+    .rom_gap_065 0x0806AC7E : {
+        asm/rom_gap_065.o(.rodata)
     } > ROM
     .rom_sub_0806B5B8 0x0806B5B8 : {
         asm/matchings/sub_0806B5B8.o(.text)
     } > ROM
-    .rom_gap_059 0x0806B5C8 : {
-        asm/rom_gap_059.o(.rodata)
+    .rom_gap_066 0x0806B5C8 : {
+        asm/rom_gap_066.o(.rodata)
     } > ROM
     .rom_sub_0806BB38 0x0806BB38 : {
         asm/matchings/sub_0806BB38.o(.text)
     } > ROM
-    .rom_gap_060 0x0806BB48 : {
-        asm/rom_gap_060.o(.rodata)
+    .rom_gap_067 0x0806BB48 : {
+        asm/rom_gap_067.o(.rodata)
     } > ROM
     .rom_sub_0806BE08 0x0806BE08 : {
         asm/matchings/sub_0806BE08.o(.text)
     } > ROM
-    .rom_gap_061 0x0806BE20 : {
-        asm/rom_gap_061.o(.rodata)
+    .rom_gap_068 0x0806BE20 : {
+        asm/rom_gap_068.o(.rodata)
     } > ROM
     .rom_sub_0806DEF4 0x0806DEF4 : {
         asm/matchings/sub_0806DEF4.o(.text)
     } > ROM
-    .rom_gap_062 0x0806DF08 : {
-        asm/rom_gap_062.o(.rodata)
+    .rom_gap_069 0x0806DF08 : {
+        asm/rom_gap_069.o(.rodata)
     } > ROM
     .rom_sub_0806EEC4 0x0806EEC4 : {
         asm/matchings/sub_0806EEC4.o(.text)
     } > ROM
-    .rom_gap_063 0x0806EEC6 : {
-        asm/rom_gap_063.o(.rodata)
+    .rom_gap_070 0x0806EEC6 : {
+        asm/rom_gap_070.o(.rodata)
     } > ROM
     .rom_sub_080705A4 0x080705A4 : {
         asm/matchings/sub_080705A4.o(.text)
     } > ROM
-    .rom_gap_064 0x080705C0 : {
-        asm/rom_gap_064.o(.rodata)
+    .rom_gap_071 0x080705C0 : {
+        asm/rom_gap_071.o(.rodata)
     } > ROM
     .rom_sub_080705CC 0x080705CC : {
         asm/matchings/sub_080705CC.o(.text)
     } > ROM
-    .rom_gap_065 0x080705D2 : {
-        asm/rom_gap_065.o(.rodata)
+    .rom_gap_072 0x080705D2 : {
+        asm/rom_gap_072.o(.rodata)
     } > ROM
     .rom_sub_080705D4 0x080705D4 : {
         asm/matchings/sub_080705D4.o(.text)
     } > ROM
-    .rom_gap_066 0x080705DA : {
-        asm/rom_gap_066.o(.rodata)
+    .rom_gap_073 0x080705DA : {
+        asm/rom_gap_073.o(.rodata)
     } > ROM
     .rom_sub_080705DC 0x080705DC : {
         asm/matchings/sub_080705DC.o(.text)
     } > ROM
-    .rom_gap_067 0x080705F8 : {
-        asm/rom_gap_067.o(.rodata)
+    .rom_gap_074 0x080705F8 : {
+        asm/rom_gap_074.o(.rodata)
+    } > ROM
+    .rom_sub_0807069C 0x0807069C : {
+        asm/matchings/sub_0807069C.o(.text)
+    } > ROM
+    .rom_gap_075 0x080706B0 : {
+        asm/rom_gap_075.o(.rodata)
     } > ROM
     .rom_sub_080717F0 0x080717F0 : {
         asm/matchings/sub_080717F0.o(.text)
@@ -442,14 +490,23 @@
     .rom_sub_08071808 0x08071808 : {
         asm/matchings/sub_08071808.o(.text)
     } > ROM
-    .rom_gap_068 0x08071814 : {
-        asm/rom_gap_068.o(.rodata)
+    .rom_gap_076 0x08071814 : {
+        asm/rom_gap_076.o(.rodata)
+    } > ROM
+    .rom_sub_08071F84 0x08071F84 : {
+        asm/matchings/sub_08071F84.o(.text)
+    } > ROM
+    .rom_sub_08071F98 0x08071F98 : {
+        asm/matchings/sub_08071F98.o(.text)
+    } > ROM
+    .rom_gap_077 0x08071FAC : {
+        asm/rom_gap_077.o(.rodata)
     } > ROM
     .rom_sub_08072F94 0x08072F94 : {
         asm/matchings/sub_08072F94.o(.text)
     } > ROM
-    .rom_gap_069 0x08072FA8 : {
-        asm/rom_gap_069.o(.rodata)
+    .rom_gap_078 0x08072FA8 : {
+        asm/rom_gap_078.o(.rodata)
     } > ROM
     .rom_sub_08074144 0x08074144 : {
         asm/matchings/sub_08074144.o(.text)
