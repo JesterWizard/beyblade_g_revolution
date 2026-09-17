@@ -52,8 +52,8 @@ struct Unk346A8 /* >= 0x2f4 */
     /* 2f0 */ u32 unk2F0;
 };
 
-/* Packed u16s at +0x9a..+0xa2. sub_08068574, sub_08068584. */
-struct Unk68574 /* >= 0xa4 */
+/* Packed u16s at +0x9a..+0xae. sub_08068574, sub_08068584, sub_08068558. */
+struct Unk68574 /* >= 0xb0 */
 {
     /* 00 */ u8 filler_00[0x9a];
     /* 9a */ u16 unk9A;
@@ -61,6 +61,11 @@ struct Unk68574 /* >= 0xa4 */
     /* 9e */ u16 unk9E;
     /* a0 */ u16 unkA0;
     /* a2 */ u16 unkA2;
+    /* a4 */ u8 filler_A4[4];
+    /* a8 */ u16 unkA8;
+    /* aa */ u16 unkAA;
+    /* ac */ u16 unkAC;
+    /* ae */ u16 unkAE;
 };
 
 /* Byte at +0x19. sub_080705CC, sub_080705D4. */
@@ -219,10 +224,12 @@ struct Unk0630 /* >= 0x48 */
     /* 44 */ u32 unk44;
 };
 
-/* Byte at +0x16. sub_08071F84, sub_08071F98. */
+/* Byte at +0x16, halfword at +0x10. sub_08071F84, sub_08071FC8. */
 struct Unk71F84 /* >= 0x17 */
 {
-    /* 00 */ u8 filler_00[0x16];
+    /* 00 */ u8 filler_00[0x10];
+    /* 10 */ u16 unk10;
+    /* 12 */ u8 filler_12[4];
     /* 16 */ u8 unk16;
 };
 
@@ -427,6 +434,39 @@ struct Unk6BE08Inner /* >= 0x0c */
 struct Unk6BE08 /* >= 0x10 */
 {
     /* 00 */ struct Unk6BE08Inner *unk00;
+    /* 04 */ u8 filler_04[8];
+    /* 0c */ u32 unk0C;
+};
+
+/* Unk35878 at +8, flags at +0x18. sub_08034FF8, sub_08034FDC. */
+struct Unk34FF8 /* >= 0x1a */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ struct Unk35878 unk08;
+    /* 18 */ u8 unk18;
+    /* 19 */ u8 unk19;
+};
+
+/* Slot list at +4. sub_080626B8. */
+struct Unk626B8 /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u32 *unk04;
+    /* 08 */ u32 unk08;
+};
+
+/* Flag at +8, pointers at +0/+4. sub_08045A84. */
+struct Unk45A84 /* >= 0x0c */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ void *unk04;
+    /* 08 */ u8 unk08;
+};
+
+/* Pointer at +0, word at +0xC. sub_08062044. */
+struct Unk62044 /* >= 0x10 */
+{
+    /* 00 */ void *unk00;
     /* 04 */ u8 filler_04[8];
     /* 0c */ u32 unk0C;
 };
