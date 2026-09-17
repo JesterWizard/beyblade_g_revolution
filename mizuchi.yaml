@@ -1,0 +1,65 @@
+# Mizuchi config for Beyblade G Revolution (GBA / agbcc matching decomp).
+# Run: scripts/decomp/run_batch.sh  (after scripts/setup.sh)
+
+global:
+  getContextScript: |
+    python3 tools/m2ctx.py "$(echo "{{targetObjectPath}}" | sed 's|.*/build/||; s|\.o$|.c|' | sed 's|^bbgr/||')"
+    cat ctx.c
+  maxRetries: 25
+  outputDir: mizuchi-output
+
+  compilerScript: |
+    ASM_FILE="{{objFilePath}}.s"
+    if [ ! -x tools/agbcc/bin/agbcc ]; then
+      echo "error: tools/agbcc/bin/agbcc missing — run scripts/setup.sh" >&2
+      exit 1
+    fi
+    tools/agbcc/bin/agbcc \
+      "{{cFilePath}}" -o "$ASM_FILE" \
+      -mthumb-interwork -Wimplicit -Wparentheses -Werror -O2 -g -fhex-asm
+    sed '/\.size/d' "$ASM_FILE" > "$ASM_FILE.stripped" && mv "$ASM_FILE.stripped" "$ASM_FILE"
+    arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork "$ASM_FILE" -o "{{objFilePath}}"
+
+  promptsDir: ./prompts
+  mapFilePath: beyblade_g_revolution.map
+  target: gba
+  nonMatchingAsmFolders:
+    - asm/nonmatchings
+  matchingAsmFolders:
+    - asm/matchings
+  excludeFromScan:
+    - tools
+    - build
+    - mizuchi-output
+    - src_custom
+
+plugins:
+  objdiff:
+    diffSettings:
+      arm.archVersion: 'v4t'
+      functionRelocDiffs: 'none'
+
+  # Cursor agent substitutes for Claude Runner — programmatic phase only.
+  claude-runner:
+    enable: false
+
+  m2c:
+    enable: true
+
+  decomp-permuter:
+    enable: true
+    maxIterations: 1000
+    timeoutMs: 120000
+    flags:
+      - '--show-errors'
+      - '-j 4'
+    compilerType: gcc
+
+  integrator:
+    enable: true
+    integratorModule: ./mizuchi-integrator.mjs
+    verifyBuildScript: |
+      cd {{worktreePath}} && make compare
+    autoAction: commit
+    commitMessageTemplate: 'match {{functionName}}'
+    branchTemplate: 'mizuchi/{{functionName}}'

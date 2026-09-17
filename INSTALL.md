@@ -52,6 +52,16 @@ For append/hack C only (`src_custom/`, `configs/`), `make modern` uses `arm-none
 ## Build / compare
 
 ```bash
-make modern      # builds beyblade_g_revolution.gba from baserom.gba
-make compare     # builds and checks rom.sha1 (vanilla rebuild only)
+make compare     # builds and checks rom.sha1 (vanilla rebuild)
+make HACKS=1 modern   # append ROM with runtime + src_custom
 ```
+
+## AI decompilation toolchain
+
+```bash
+bash scripts/setup.sh
+export ANTHROPIC_API_KEY=sk-...   # required for Mizuchi Claude Runner
+scripts/decomp/run_batch.sh 10
+```
+
+See [AGENTS.md](AGENTS.md) and [documentation/decomp-agent.md](documentation/decomp-agent.md).

@@ -12,9 +12,19 @@ See [INSTALL.md](INSTALL.md).
 
 ```bash
 # after placing baserom.gba
-make modern
 make compare          # vanilla rebuild (default HACKS=0)
 make HACKS=1 modern   # link append ROM (runtime + src_custom)
+```
+
+## Hands-off AI decompilation
+
+See [AGENTS.md](AGENTS.md). One-time setup, then batch runs:
+
+```bash
+bash scripts/setup.sh              # agbcc, Luvdis, Mizuchi
+export ANTHROPIC_API_KEY=...       # for Mizuchi Claude phase
+scripts/decomp/run_batch.sh 10     # decompile 10 easy functions
+python3 scripts/decomp/report_status.py
 ```
 
 ## Layout

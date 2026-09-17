@@ -1,0 +1,9 @@
+# Function renames and module boundaries for scripts/generate_asm.py
+# Key = original label (sub_08001234), value = descriptive name.
+
+[renames]
+# sub_08001234 = "ExampleFunction"
+
+[modules]
+# Optional: assign functions to src modules by address range.
+# bank_00 = { start = "0x08000000", end = "0x08010000" }

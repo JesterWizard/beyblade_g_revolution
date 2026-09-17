@@ -11,6 +11,14 @@
 *.ddump
 *.diff
 build/
+ctx.c
+mizuchi-db.json
+mizuchi-output/
+claude-cache.json
+asm/nonmatchings/
+asm/matchings/
+tools/mizuchi/
+tools/luvdis/
 tools/agbcc
 tools/scaninc/
 tools/preproc/
