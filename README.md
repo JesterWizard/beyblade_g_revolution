@@ -16,6 +16,16 @@ Decompiled C is **5.7%** of functions (36/633) and **0.7%** of original function
 | Not opcode (bytes) | `██████████████░░░░░░░░░░░░░░░░░░` | **42.4%** | 38,238/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
+```mermaid
+xychart-beta
+    title "Decompiled C vs original (%)"
+    x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
+    y-axis "Percent" 0 --> 100
+    bar [5.7, 0.7, 29.7, 42.4]
+```
+
+![Decompiled C vs original](docs/decomp-progress.svg)
+
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
 | Semantic C | 36 (5.7%) | 676 (0.7%) |
@@ -24,7 +34,7 @@ Decompiled C is **5.7%** of functions (36/633) and **0.7%** of original function
 
 Battle: **6.2%** functions / **1.1%** bytes in semantic C (10/160; 0 opcode left).
 
-Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 scripts/decomp/progress.py --write` or `make progress`.
+Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`.
 
 <!-- decomp-progress:end -->
 
@@ -43,25 +53,28 @@ make HACKS=1 modern   # link append ROM (runtime + src_custom)
 See [AGENTS.md](AGENTS.md). One-time setup, then batch runs:
 
 ```bash
-bash scripts/setup.sh              # agbcc, Luvdis, Mizuchi
+bash build_tools.sh              # agbcc, Luvdis, Mizuchi
 export ANTHROPIC_API_KEY=...       # for Mizuchi Claude phase
-scripts/decomp/run_batch.sh 10     # decompile 10 easy functions
-python3 scripts/decomp/report_status.py
+tools/decomp/run_batch.sh 10     # decompile 10 easy functions
+python3 tools/decomp/report_status.py
 ```
 
 ## Layout
 
+pret/pokeemerald-style matching tree, plus a small ygodm8 hack overlay:
+
 | Path | Role |
 |------|------|
-| `asm/` | Hand-written / disassembled ARM/Thumb + baserom peels |
-| `asm/ram_map*.s` | IWRAM / EWRAM / save address registry ([ygodm8](https://github.com/JesterWizard/ygodm8/blob/master/asm/ram_map.s)-style) |
-| `src/` | Decompiled vanilla C |
-| `src_custom/` | Hack hooks (`*_hooks.c`) + `LynJump.event` |
-| `configs/runtime.c` | Boolean / value toggles for hacks |
-| `data/`, `graphics/`, `sound/` | Extracted assets (empty for now) |
-| `ld_script.ld` | Memory map; append region starts after the 4MB baserom |
-| `tools/apply_lynjump.py` | Post-link absolute jump stubs into the ROM |
-| `rom.sha1` | Matching checksum for `make compare` |
+| `asm/` | Matching ARM/Thumb + baserom peels |
+| `src/` | Matching C (`src/matched/` until Phase 5 packs by module) |
+| `include/` | Headers (`gba/`, `ram_map.h`, types) |
+| `data/` | Extracted data (`data/event_scripts/` reserved) |
+| `docs/` | Decomp notes, RAM map, progress bar |
+| `graphics/`, `sound/`, `constants/` | Extracted assets / asm constants (reserved) |
+| `tools/` | pret tools + `tools/decomp/` matching pipeline |
+| `libagbsyscall/` | BIOS syscall helpers |
+| `ld_script.ld`, `sym_*.txt`, `rom.sha1` | Linker map, RAM symbols, compare checksum |
+| `src_custom/`, `configs/` | ygodm8-style append hacks (not used by `make compare`) |
 
 ## Matching workflow
 

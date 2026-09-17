@@ -14,5 +14,5 @@ fi
 
 python3 -m pip install -q toml 2>/dev/null || pip3 install -q toml || true
 python3 -c "import toml" || { echo "error: python3 module toml required" >&2; exit 1; }
-chmod +x scripts/decomp/permuter/compile.sh scripts/decomp/permuter/permute.sh
-echo "Done. Import a function: scripts/decomp/permuter/permute.sh import sub_08072F94"
+chmod +x tools/decomp/permuter/compile.sh tools/decomp/permuter/permute.sh
+echo "Done. Import a function: tools/decomp/permuter/permute.sh import sub_08072F94"

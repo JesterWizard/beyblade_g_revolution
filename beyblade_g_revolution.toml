@@ -1,4 +1,4 @@
-# Function renames and module boundaries for scripts/generate_asm.py
+# Function renames and module boundaries for tools/decomp/generate_asm.py
 # Key = original label (sub_08001234), value = descriptive name.
 
 [renames]

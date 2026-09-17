@@ -44,7 +44,7 @@ def main() -> int:
         print("Shiftable migration may proceed.")
         return 0
 
-    print("Not shiftable yet — continue Phase 1–4 (see documentation/decomp-roadmap.md).")
+    print("Not shiftable yet — continue Phase 1–4 (see docs/decomp-roadmap.md).")
     return 2
 
 

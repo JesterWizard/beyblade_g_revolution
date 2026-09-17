@@ -40,7 +40,7 @@ _Agent-maintained log. Updated after each batch run._
 
 ### 2026-09-17 — decomp-permuter + battle readable Thumb (+122)
 
-- Wired [decomp-permuter](https://github.com/simonlindholm/decomp-permuter): `permuter_settings.toml`, `scripts/decomp/permuter/`
+- Wired [decomp-permuter](https://github.com/simonlindholm/decomp-permuter): `permuter_settings.toml`, `tools/decomp/permuter/`
 - `match_function.py` now applies `R_ARM_THM_CALL` so `bl sub_*` matches retail encodings
 - Battle `.byte` stubs → readable Thumb (`--kind asm`): **122 converted**, 36 still opcode (BL to non-`sub_*`)
 - Permuter on `sub_08072F94`: base score 50 (agbcc always deref-first); 11k+ iters, no score-0 — keep as readable Thumb until C matches
@@ -55,10 +55,10 @@ _Agent-maintained log. Updated after each batch run._
 ### 2026-09-17 — Phase 3b semantic C bootstrap
 
 - Goal: replace `__attribute__((naked))` + `.byte` opcode embeds with readable, byte-matched C
-- Added `scripts/decomp/semantic_convert_batch.py`, `m2c_asm.py`, `opcode_stubs.py`
+- Added `tools/decomp/semantic_convert_batch.py`, `m2c_asm.py`, `opcode_stubs.py`
 - `c_patterns.guess_c()` no longer falls back to opcode embed (use `guess_opcode_embed()` explicitly)
 - First semantic replacement: `sub_08068584` (two `strh` field stores)
-- Run: `scripts/decomp/semantic_convert_batch.sh 30 --pool-free-only` for easy wins
+- Run: `tools/decomp/semantic_convert_batch.sh 30 --pool-free-only` for easy wins
 - Pool/literal-pool functions (e.g. `sub_08061610`) need m2c + hand refine or permuter
 
 ### 2026-09-17 — Phase 3 complete (633/633 C placeholders)
@@ -88,7 +88,7 @@ _Agent-maintained log. Updated after each batch run._
 ### 2026-09-17 — Phase 3 battle C batch (+1)
 
 - `sub_080314FC` → `src/matched/sub_080314FC.c` (battle work field @ +0x118)
-- `scripts/decomp/battle_convert_batch.sh` added
+- `tools/decomp/battle_convert_batch.sh` added
 - `make compare`: **OK**
 
 ### Asm-only (documented blockers)
@@ -107,7 +107,7 @@ agbcc cannot reproduce these as C (literal-pool / instruction scheduling). They 
 
 ### 2026-09-17 — Phase 3 battle subsystem bootstrap
 
-- `include/battle.h`, `documentation/battle.md`, `scripts/decomp/battle_scan.py`
+- `include/battle.h`, `docs/battle.md`, `tools/decomp/battle_scan.py`
 - Named battle IWRAM: `gBtlInputMask`, `gBtlKeysHeld`, object table, key queue, …
 - First battle C: `sub_080628E4` (main-work arena write @ `+0x1800`)
 - `make compare`: **OK**
@@ -123,9 +123,9 @@ agbcc cannot reproduce these as C (literal-pool / instruction scheduling). They 
 
 - Rescanned `baserom.gba` literal pools: 250 IWRAM refs, high-water `0x03005694`
 - Removed sigma_star_saga placeholder `KNOWN_IWRAM`; known symbols now parsed from `asm/ram_map_*.s`
-- Emitted `asm/ram_map_iwram_pool.inc` (247 `gUnk_*`), `include/ram_map_pool.h`, `documentation/ram-map.md`
+- Emitted `asm/ram_map_iwram_pool.inc` (247 `gUnk_*`), `include/ram_map_pool.h`, `docs/ram-map.md`
 - Promoted: `gMainWorkPtr`, `gBattleWork`, `gBattlerArena`
-- Added `scripts/decomp/ram_map_pass.sh`; `make compare`: **OK**
+- Added `tools/decomp/ram_map_pass.sh`; `make compare`: **OK**
 
 ### 2026-09-17 — batch 3 (20 functions)
 
@@ -143,11 +143,11 @@ First 4 functions + `src/stubs.c`.
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/decomp/cursor_batch.sh` | Triage + m2c seeds |
-| `scripts/decomp/integrate_match.py` | Link match into ROM peel |
-| `scripts/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP; patches Thumb BL relocs) |
-| `scripts/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
-| `scripts/decomp/permuter/` | decomp-permuter wrappers (agbcc pool/order search) |
+| `tools/decomp/cursor_batch.sh` | Triage + m2c seeds |
+| `tools/decomp/integrate_match.py` | Link match into ROM peel |
+| `tools/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP; patches Thumb BL relocs) |
+| `tools/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
+| `tools/decomp/permuter/` | decomp-permuter wrappers (agbcc pool/order search) |
 
 ## Next
 

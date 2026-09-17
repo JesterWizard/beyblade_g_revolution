@@ -14,7 +14,7 @@ live in `include/unknown-types.h`. Pool `#define`s stay as raw addresses so
 ## Regeneration
 
 ```bash
-scripts/decomp/ram_map_pass.sh
+tools/decomp/ram_map_pass.sh
 # or:
 python3 tools/scan_ram_literals.py --emit-asm --emit-h --emit-doc
 make compare

@@ -12,7 +12,7 @@ NON = ROOT / "asm" / "nonmatchings"
 BASEROM = ROOT / "baserom.gba"
 ROM_BASE = 0x08000000
 
-HEADER = """@ Matched — integrated by scripts/decomp/integrate_match.py
+HEADER = """@ Matched — integrated by tools/decomp/integrate_match.py
 .syntax unified
 .thumb
 .text

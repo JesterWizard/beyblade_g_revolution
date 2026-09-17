@@ -135,7 +135,7 @@ def main() -> int:
         print(f"missing {NON / name}.s", file=sys.stderr)
         return 1
     if not PERM.is_dir():
-        print("run scripts/decomp/permuter/setup.sh first", file=sys.stderr)
+        print("run tools/decomp/permuter/setup.sh first", file=sys.stderr)
         return 1
 
     staging = ROOT / "build" / "permuter-import"
@@ -163,7 +163,7 @@ def main() -> int:
     shutil.copy(COMPILE_SH, workdir / "compile.sh")
     (workdir / "compile.sh").chmod(0o755)
     print(f"imported {name} -> {workdir.relative_to(ROOT)}")
-    print(f"next: scripts/decomp/permuter/permute.sh run {workdir.relative_to(ROOT)} -j 4 --stop-on-zero")
+    print(f"next: tools/decomp/permuter/permute.sh run {workdir.relative_to(ROOT)} -j 4 --stop-on-zero")
     return 0
 
 

@@ -7,7 +7,7 @@ Usage:
   python3 tools/scan_ram_literals.py [--rom baserom.gba]
   python3 tools/scan_ram_literals.py --emit-asm    # refresh asm/*_pool.inc
   python3 tools/scan_ram_literals.py --emit-h      # refresh include/ram_map_pool.h
-  python3 tools/scan_ram_literals.py --emit-doc      # refresh documentation/ram-map.md
+  python3 tools/scan_ram_literals.py --emit-doc      # refresh docs/ram-map.md
 """
 
 from __future__ import annotations
@@ -317,7 +317,7 @@ included into a single `asm/ram_map.s` object. C code should include
 ## Regeneration
 
 ```bash
-scripts/decomp/ram_map_pass.sh
+tools/decomp/ram_map_pass.sh
 # or:
 python3 tools/scan_ram_literals.py --emit-asm --emit-h --emit-doc
 make compare
@@ -384,7 +384,7 @@ def main() -> int:
     ap.add_argument(
         "--emit-doc",
         action="store_true",
-        help="Refresh auto-generated section in documentation/ram-map.md",
+        help="Refresh auto-generated section in docs/ram-map.md",
     )
     args = ap.parse_args()
     root = Path.cwd()
@@ -428,7 +428,7 @@ def main() -> int:
             known_ewram,
             iwram_pool_count,
             ewram_pool_count,
-            root / "documentation" / "ram-map.md",
+            root / "docs" / "ram-map.md",
         )
 
     return 0

@@ -5,7 +5,7 @@ This document describes how the AI agent runs the toolchain without user interve
 ## Prerequisites (agent runs once)
 
 ```bash
-bash scripts/setup.sh
+bash build_tools.sh
 ```
 
 This installs agbcc, pret tools, Luvdis, generates `asm/nonmatchings/`, builds Mizuchi, and verifies `make compare`.
@@ -15,12 +15,12 @@ This installs agbcc, pret tools, Luvdis, generates `asm/nonmatchings/`, builds M
 See **[decomp-mission.md](decomp-mission.md)** for the standing goal and fork policy,
 and **[decomp-roadmap.md](decomp-roadmap.md)** for the full phased plan.
 
-1. **Status** — `python3 scripts/decomp/report_status.py` + `make compare`
-2. **Match batch** — `scripts/decomp/match_batch.sh 10` (verify → integrate → compare → **commit**)
+1. **Status** — `python3 tools/decomp/report_status.py` + `make compare`
+2. **Match batch** — `tools/decomp/match_batch.sh 10` (verify → integrate → compare → **commit**)
 3. **RAM map** (every 3–5 batches) — `python3 tools/scan_ram_literals.py --emit-asm`
 4. **C conversion** — `match_function.py` then `src/*.c` when MATCH
 5. **Naming** — `beyblade_g_revolution.toml` `[renames]` + `generate_asm.py --force`
-6. **Shiftable gate** — `python3 scripts/decomp/check_shiftable.py` when ≥80% matched
+6. **Shiftable gate** — `python3 tools/decomp/check_shiftable.py` when ≥80% matched
 
 ## What to tell the user
 
@@ -34,7 +34,7 @@ After each batch, post a short summary:
 
 ## Rules
 
-- Never edit `asm/nonmatchings/*.s` by hand — use `beyblade_g_revolution.toml` renames + `scripts/generate_asm.py --force`
+- Never edit `asm/nonmatchings/*.s` by hand — use `beyblade_g_revolution.toml` renames + `tools/decomp/generate_asm.py --force`
 - Never accept a match without objdiff 0-diff (Mizuchi enforces this)
 - Always run full-ROM `make compare` after integrating matches
 - C89 only for matching paths; no silent UB fixes
@@ -45,13 +45,13 @@ After each batch, post a short summary:
 
 | Tool | Location |
 |------|----------|
-| Cursor batch | `scripts/decomp/cursor_batch.sh` |
-| Integrate | `scripts/decomp/integrate_match.py` |
-| ROM layout | `scripts/decomp/gen_rom_layout.py` |
-| decomp-permuter | `scripts/decomp/permuter/` (`tools/decomp-permuter/`) |
+| Cursor batch | `tools/decomp/cursor_batch.sh` |
+| Integrate | `tools/decomp/integrate_match.py` |
+| ROM layout | `tools/decomp/gen_rom_layout.py` |
+| decomp-permuter | `tools/decomp/permuter/` (`tools/decomp-permuter/`) |
 | Mizuchi (opt.) | `tools/mizuchi/` |
 | Config | `mizuchi.yaml` |
 | agbcc | `tools/agbcc/bin/agbcc` |
 | m2ctx | `tools/m2ctx.py` |
 | Luvdis | `tools/luvdis/` |
-| Progress | `scripts/decomp/progress.py` |
+| Progress | `tools/decomp/progress.py` |

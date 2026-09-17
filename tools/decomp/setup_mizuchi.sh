@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Clone and build Mizuchi into tools/mizuchi/ (gitignored).
 set -euo pipefail
-ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
+ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 MIZ="$ROOT/tools/mizuchi"
 REPO="https://github.com/macabeus/mizuchi.git"
 

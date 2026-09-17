@@ -194,7 +194,7 @@ def main() -> int:
         print("missing baserom.gba", file=sys.stderr)
         return 1
     if not AGBCC.is_file():
-        print("missing agbcc — run scripts/setup.sh", file=sys.stderr)
+        print("missing agbcc — run build_tools.sh", file=sys.stderr)
         return 1
 
     try:

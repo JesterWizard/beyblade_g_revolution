@@ -9,7 +9,7 @@ LOG="$ROOT/mizuchi-output/cursor-batch-$(date +%Y%m%d-%H%M%S).log"
 mkdir -p mizuchi-output
 
 echo "==> Cursor batch: triage top $COUNT functions" | tee "$LOG"
-python3 scripts/decomp/triage_functions.py -n "$COUNT" | tee -a "$LOG"
+python3 tools/decomp/triage_functions.py -n "$COUNT" | tee -a "$LOG"
 
 # Ensure m2c
 M2C_PY="tools/m2c/m2c.py"
@@ -27,9 +27,9 @@ while read -r fn; do
   tail -n +5 "$asm" | PYTHONPATH=tools/m2c python3 "$M2C_PY" - > "$out" 2>>"$LOG" || true
   if [ -s "$out" ] && ! grep -q 'Decompilation failure' "$out"; then
     echo "wrote $out" | tee -a "$LOG"
-    python3 scripts/decomp/match_function.py "$fn" "$out" >>"$LOG" 2>&1 || true
+    python3 tools/decomp/match_function.py "$fn" "$out" >>"$LOG" 2>&1 || true
   fi
-done < <(python3 scripts/decomp/triage_functions.py -n "$COUNT" --json | python3 -c "import json,sys; print('\n'.join(json.load(sys.stdin)))")
+done < <(python3 tools/decomp/triage_functions.py -n "$COUNT" --json | python3 -c "import json,sys; print('\n'.join(json.load(sys.stdin)))")
 
-python3 scripts/decomp/report_status.py | tee -a "$LOG"
+python3 tools/decomp/report_status.py | tee -a "$LOG"
 echo "==> Log: $LOG"

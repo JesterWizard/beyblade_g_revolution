@@ -16,7 +16,7 @@ done
 cd "$ROOT"
 
 if [ ! -x tools/agbcc/bin/agbcc ]; then
-  echo "error: tools/agbcc/bin/agbcc missing — run scripts/setup.sh" >&2
+  echo "error: tools/agbcc/bin/agbcc missing — run build_tools.sh" >&2
   exit 1
 fi
 

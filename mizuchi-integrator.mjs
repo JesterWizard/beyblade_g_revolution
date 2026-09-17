@@ -35,7 +35,7 @@ function pickModule(name) {
 }
 
 function noteIntegration(projectRoot, functionName, module) {
-  const logPath = join(projectRoot, 'documentation', 'decomp-status.md');
+  const logPath = join(projectRoot, 'docs', 'decomp-status.md');
   const line = `- [x] \`${functionName}\` → \`src/${module}.c\` (Mizuchi)\n`;
   let text = '';
   if (existsSync(logPath)) {

@@ -10,13 +10,13 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-PROMPTS = ROOT / "prompts"
+PROMPTS = ROOT / "tools" / "decomp" / "prompts"
 ASM = ROOT / "asm" / "nonmatchings"
 
 
 def triage(n: int) -> list[str]:
     out = subprocess.check_output(
-        [sys.executable, str(ROOT / "scripts/decomp/triage_functions.py"), "-n", str(n), "--json"],
+        [sys.executable, str(ROOT / "tools/decomp/triage_functions.py"), "-n", str(n), "--json"],
         text=True,
     )
     return json.loads(out)

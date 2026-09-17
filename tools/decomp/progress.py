@@ -4,10 +4,10 @@
 Opcode `.byte` embeds are the retail machine code pasted into a C wrapper —
 they do not count as decompiled. Readable Thumb is matching asm, not C.
 
-  python3 scripts/decomp/progress.py           # human summary
-  python3 scripts/decomp/progress.py --json
-  python3 scripts/decomp/progress.py --write   # JSON + SVG + status table
-  python3 scripts/decomp/progress.py --top 15
+  python3 tools/decomp/progress.py           # human summary
+  python3 tools/decomp/progress.py --json
+  python3 tools/decomp/progress.py --write   # JSON + SVG + status table
+  python3 tools/decomp/progress.py --top 15
 """
 
 from __future__ import annotations
@@ -26,10 +26,10 @@ MATCHED_SRC = ROOT / "src" / "matched"
 MATCH_ASM = ROOT / "asm" / "matchings"
 NON_ASM = ROOT / "asm" / "nonmatchings"
 MANIFEST = ROOT / "build" / "matched.json"
-STATUS = ROOT / "documentation" / "decomp-status.md"
+STATUS = ROOT / "docs" / "decomp-status.md"
 README = ROOT / "README.md"
-PROGRESS_JSON = ROOT / "documentation" / "decomp-progress.json"
-PROGRESS_SVG = ROOT / "documentation" / "decomp-progress.svg"
+PROGRESS_JSON = ROOT / "docs" / "decomp-progress.json"
+PROGRESS_SVG = ROOT / "docs" / "decomp-progress.svg"
 
 EXPECTED_FUNCTIONS = 633
 PHASE_LABEL = "3b in progress — replace opcode stubs with semantic C / readable Thumb"
@@ -515,13 +515,13 @@ def readme_section(data: dict[str, Any]) -> str:
         + "\n\n"
         + mermaid
         + "\n\n"
-        + "![Decompiled C vs original](documentation/decomp-progress.svg)\n\n"
+        + "![Decompiled C vs original](docs/decomp-progress.svg)\n\n"
         + "\n".join(mix)
         + battle_line
         + "\nOpcode `.byte` embeds are the retail machine code and do not count as "
         "decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay "
         "`.incbin`'d from `baserom.gba` so `make compare` can stay green. "
-        "Refresh with `python3 scripts/decomp/progress.py --write` or `make progress`.\n"
+        "Refresh with `python3 tools/decomp/progress.py --write` or `make progress`.\n"
         + f"\n{STATUS_END}\n"
     )
 

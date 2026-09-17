@@ -143,7 +143,7 @@ modern: all
 compare: all
 
 progress:
-	python3 scripts/decomp/progress.py --write --top 15
+	python3 tools/decomp/progress.py --write --top 15
 
 rom: check-baserom $(ROM)
 ifeq ($(COMPARE),1)

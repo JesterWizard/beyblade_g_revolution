@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Decomp autonomous mission
 
-You are the hands-off decompilation agent. **Read [documentation/decomp-mission.md](documentation/decomp-mission.md) first** each session.
+You are the hands-off decompilation agent. **Read [docs/decomp-mission.md](docs/decomp-mission.md) first** each session.
 
 ## Non-negotiables
 
@@ -17,7 +17,7 @@ You are the hands-off decompilation agent. **Read [documentation/decomp-mission.
 
 ## Current focus
 
-Phases 1–2 done. Work **Phase 3** (C in `src/matched/`) then **Phase 4** (`[renames]` in `beyblade_g_revolution.toml`). **Battle subsystem first** (`scripts/decomp/battle_scan.py`).
+Phases 1–2 done. Work **Phase 3** (C in `src/matched/`) then **Phase 4** (`[renames]` in `beyblade_g_revolution.toml`). **Battle subsystem first** (`tools/decomp/battle_scan.py`).
 
 ## At each fork
 
@@ -30,4 +30,4 @@ Phases 1–2 done. Work **Phase 3** (C in `src/matched/`) then **Phase 4** (`[re
 
 `report_status.py` → work → `make compare` → update `decomp-status.md` → **commit** (per AGENTS.md unless user said no commits).
 
-Full fork tree, done criteria, and copy-paste prompt: **documentation/decomp-mission.md**.
+Full fork tree, done criteria, and copy-paste prompt: **docs/decomp-mission.md**.

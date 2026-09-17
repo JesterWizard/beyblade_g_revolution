@@ -27,7 +27,7 @@ blockers (see [AGENTS.md](../AGENTS.md)).
 ### Per batch (repeat until `matching_asm == 633`)
 
 ```bash
-scripts/decomp/match_batch.sh 10    # integrate + compare + commit
+tools/decomp/match_batch.sh 10    # integrate + compare + commit
 ```
 
 What the batch does:
@@ -37,7 +37,7 @@ What the batch does:
 3. On match → `integrate_match.py` → regenerate `asm/rom_layout.ld` + gap incbins.
 4. `make compare` (full ROM SHA1).
 5. **Git commit** on success (see [Commit policy](#commit-policy)).
-6. Append one line to `documentation/decomp-status.md`.
+6. Append one line to `docs/decomp-status.md`.
 
 ### Matching rules
 
@@ -49,7 +49,7 @@ What the batch does:
 
 ### Exit criteria (Phase 1 done)
 
-- `python3 scripts/decomp/report_status.py` → `matching_asm: 633`
+- `python3 tools/decomp/report_status.py` → `matching_asm: 633`
 - `build/matched.json` lists all functions
 - `make compare` OK
 
@@ -75,14 +75,14 @@ make compare
 2. **Promote** high-confidence hits from `gUnk_*` in `ram_map_*_pool.inc` to named
    `SET_DATA` in `asm/ram_map_iwram.s` / `asm/ram_map_ewram.s` when role is clear
    (e.g. `0x03000264` seen in `sub_0802B90C` → name after tracing).
-3. **Update** `include/ram_map.h` and `documentation/ram-map.md` with a used/free table
+3. **Update** `include/ram_map.h` and `docs/ram-map.md` with a used/free table
    (mirror sigma_star_saga format: hardware span, vanilla high-water, safe pool, stack).
 4. **Tighten** `FreeRamSpaceTop` / `FreeEwramSpaceTop` only after scan + margin;
    keep `.error` guards in `ram_map_iwram.s`.
 
 ### RAM map deliverable
 
-`documentation/ram-map.md` must contain:
+`docs/ram-map.md` must contain:
 
 - Occupancy table (USED / SAFE / leave-alone)
 - Named symbols table (growing as functions are understood)
@@ -110,7 +110,7 @@ Phase 2 is **never finished** but should be **non-blocking** for Phase 1 batches
 ```bash
 # 1. Write/refine C (unknown-types.h members, ram_map.h names — no raw 0x03 unless unavoidable)
 # 2. Verify
-python3 scripts/decomp/match_function.py sub_XXXXXXXX src/module.c
+python3 tools/decomp/match_function.py sub_XXXXXXXX src/module.c
 # 3. Integrate C into build (future: link src/*.o in peel; today asm stays until C linked)
 # 4. Remove asm/matchings/sub_XXXXXXXX.s only after C is in ROM peel
 make compare
@@ -148,7 +148,7 @@ sub_080705CC = "SetField19One"
 Then:
 
 ```bash
-python3 scripts/generate_asm.py --force   # regen labels (do not hand-edit nonmatchings)
+python3 tools/decomp/generate_asm.py --force   # regen labels (do not hand-edit nonmatchings)
 # Update C identifiers + integrator manifest to match
 make compare
 ```
@@ -191,7 +191,7 @@ Current peel (`gen_rom_layout.py`) assigns each matched function a **fixed VMA**
    `rom.s` (head incbin) → `src/foo.o(.text)` → `rom_after_a.s` → …
 3. **Remove** per-function `0x08……` assignments from `rom_layout.ld`.
 4. **Audit** hardcoded ROM pointers in C/asm/data → replace with symbols / linker labels.
-5. **Add** `scripts/decomp/check_shiftable.py`:
+5. **Add** `tools/decomp/check_shiftable.py`:
    - No `ORG`/` . = 0x08` in generated layout (except head/tail incbin bounds)
    - `make compare` OK
    - Optional: rebuild at `ROM_BASE + 0x1000` test (future)
@@ -209,7 +209,7 @@ These stay **outside** the shiftable C pool forever (unless rewritten deliberate
 - `check_shiftable.py` passes
 - `make compare` OK
 - New matched code added by editing `src/` + shrinking one incbin, not adding ld VMA lines
-- Documentation updated in this file + `ARCHITECTURE.md`
+- Documentation updated in this file + `docs/architecture.md`
 
 ---
 
@@ -239,7 +239,7 @@ make compare: OK
 - `build/matched.json`
 - `src/*.c`, `include/*.h` (when C lands)
 - `beyblade_g_revolution.toml` (renames)
-- `documentation/decomp-status.md`, `documentation/ram-map.md`
+- `docs/decomp-status.md`, `docs/ram-map.md`
 
 ### When NOT to commit
 
@@ -251,8 +251,8 @@ make compare: OK
 ## Agent session checklist (no user approval)
 
 ```
-1. python3 scripts/decomp/report_status.py
-2. scripts/decomp/match_batch.sh 10
+1. python3 tools/decomp/report_status.py
+2. tools/decomp/match_batch.sh 10
 3. [every 3rd batch] python3 tools/scan_ram_literals.py --emit-asm && update ram-map.md
 4. [when MATCH] convert 1–3 functions to C + match_function.py
 5. [when role known] add rename to beyblade_g_revolution.toml
@@ -279,4 +279,4 @@ make compare: OK
 - [decomp-agent.md](decomp-agent.md) — command cheat sheet
 - [decomp-status.md](decomp-status.md) — live log
 - [ram-map.md](ram-map.md) — IWRAM/EWRAM occupancy
-- [ARCHITECTURE.md](../ARCHITECTURE.md) — matching vs hacking
+- [docs/architecture.md](../docs/architecture.md) — matching vs hacking

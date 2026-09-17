@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, str(ROOT / "scripts" / "decomp"))
 from progress import collect, format_human, write_artifacts  # noqa: E402
 
-STATUS = ROOT / "documentation" / "decomp-status.md"
+STATUS = ROOT / "docs" / "decomp-status.md"
 STATUS_START = "<!-- decomp-progress:start -->"
 STATUS_END = "<!-- decomp-progress:end -->"
 

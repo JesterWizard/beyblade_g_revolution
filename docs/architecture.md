@@ -13,7 +13,7 @@ before touching build output, hook wiring, or the runtime toggle system.
 3. `src_custom/*.c` holds **new** functionality that has no vanilla
    equivalent. These call into vanilla ROM addresses as opaque function
    pointers/hooks — there's no compiler-checked struct backing them, just
-   raw offsets (see `include/ram_map.h` and `documentation/ram-map.md`).
+   raw offsets (see `include/ram_map.h` and `docs/ram-map.md`).
 4. `tools/apply_lynjump.py` is the final build step: it patches compiled
    veneers/hooks into the ELF/ROM at specific byte offsets, guarded by
    `RuntimeConfig` flags in `configs/runtime.c`.
@@ -32,8 +32,10 @@ before touching build output, hook wiring, or the runtime toggle system.
 | `src_custom/LynJump.event` | Declarative full-function replacements in `ygodm8` LynJump format. |
 | `tools/apply_lynjump.py` | Post-link patcher for LynJump stubs and runtime-gated veneers. |
 | `configs/runtime.c` | Build-time toggles (`gRuntimeConfigRom`). |
-| `data/`, `graphics/`, `sound/` | Extracted assets and generated table inputs. |
-| `documentation/*.md` | Deep-dive docs per subsystem. |
+| `data/`, `graphics/`, `sound/`, `constants/` | Extracted assets / asm constants (pret layout; mostly reserved). |
+| `docs/` | Decomp notes, RAM map, progress counter. |
+| `tools/decomp/` | Matching pipeline (was `scripts/decomp/`). |
+| `build_tools.sh` | pret-style bootstrap (`agbcc`, Luvdis, permuter). |
 
 ## Matching vs. hacking
 

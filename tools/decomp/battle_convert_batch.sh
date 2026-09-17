@@ -46,7 +46,7 @@ for name, body, note in CANDIDATES:
         scratch = Path(tmp) / "scratch.c"
         write_single_function_c(name, body, scratch)
         result = subprocess.run(
-            ["python3", "scripts/decomp/match_function.py", name, str(scratch)],
+            ["python3", "tools/decomp/match_function.py", name, str(scratch)],
             capture_output=True,
             text=True,
         )
@@ -56,7 +56,7 @@ for name, body, note in CANDIDATES:
     subprocess.run(
         [
             "python3",
-            "scripts/decomp/integrate_c.py",
+            "tools/decomp/integrate_c.py",
             name,
             body,
             "--note",
@@ -75,6 +75,6 @@ PY
 if [ "${CONVERTED:-0}" -gt 0 ]; then
   make compare
 fi
-python3 scripts/decomp/progress.py --write
+python3 tools/decomp/progress.py --write
 
 echo "==> battle_convert_batch: ${CONVERTED:-0} integrated"

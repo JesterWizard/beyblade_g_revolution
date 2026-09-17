@@ -5,16 +5,16 @@
 ```text
 Autonomous decomp mission — do not stop for approval between batches.
 
-Read documentation/decomp-mission.md, AGENTS.md, and documentation/decomp-roadmap.md first.
+Read docs/decomp-mission.md, AGENTS.md, and docs/decomp-roadmap.md first.
 
 Goal: byte-matching C for all 633 functions, self-documenting names, make compare always OK.
 
 Each session until done:
-1. python3 scripts/decomp/report_status.py && make compare
+1. python3 tools/decomp/report_status.py && make compare
 2. At every fork: follow the Fork policy below; verify with match_function.py / make compare
 3. Work one subsystem batch (battle first: battle_scan.py), then the next subsystem
-4. Every 3–5 batches: scripts/decomp/ram_map_pass.sh
-5. Update documentation/decomp-status.md (+ subsystem docs, e.g. battle.md)
+4. Every 3–5 batches: tools/decomp/ram_map_pass.sh
+5. Update docs/decomp-status.md (+ subsystem docs, e.g. battle.md)
 6. Commit after each green batch (see Commit policy)
 
 Escalate only: baserom missing, agbcc broken, make compare fails after 3 fix attempts.
@@ -35,7 +35,7 @@ and beyblade_g_revolution.toml [renames] covers all functions with self-document
 | **Names** | `[renames]` in `beyblade_g_revolution.toml`; C/asm use readable names | Phase 4 + `generate_asm.py --force` |
 | **Shiftable** | No fixed-VMA per-function sections (Phase 5) | `check_shiftable.py` |
 
-**Asm-only is acceptable** for functions that cannot byte-match in agbcc (literal-pool PC-relative loads, permuter-hard stubs). List them in `documentation/decomp-status.md` under **Asm-only (documented)** with the blocker reason.
+**Asm-only is acceptable** for functions that cannot byte-match in agbcc (literal-pool PC-relative loads, permuter-hard stubs). List them in `docs/decomp-status.md` under **Asm-only (documented)** with the blocker reason.
 
 ---
 
@@ -47,39 +47,39 @@ Default loop:
 
 ```bash
 # 1. Status gate
-python3 scripts/decomp/report_status.py
+python3 tools/decomp/report_status.py
 make compare
 
 # 2. Pick subsystem / triage
-python3 scripts/decomp/battle_scan.py -n 20    # battle first
-scripts/decomp/battle_convert_batch.sh 10
-scripts/decomp/battle_cursor_batch.sh 5      # m2c seeds for hard battle fns
-python3 scripts/decomp/triage_functions.py -n 10
+python3 tools/decomp/battle_scan.py -n 20    # battle first
+tools/decomp/battle_convert_batch.sh 10
+tools/decomp/battle_cursor_batch.sh 5      # m2c seeds for hard battle fns
+python3 tools/decomp/triage_functions.py -n 10
 
 # 3. Semantic C (replace opcode stubs — priority)
-scripts/decomp/semantic_convert_batch.sh 30 --pool-free-only
-python3 scripts/decomp/m2c_asm.py sub_XXXXXXXX          # m2c seed
-python3 scripts/decomp/match_function.py sub_XXXXXXXX … # refine until MATCH
-python3 scripts/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --kind semantic
+tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
+python3 tools/decomp/m2c_asm.py sub_XXXXXXXX          # m2c seed
+python3 tools/decomp/match_function.py sub_XXXXXXXX … # refine until MATCH
+python3 tools/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --kind semantic
 
 # 3b. Trivial patterns only (no opcode embed fallback)
-scripts/decomp/c_convert_batch.sh 30
-python3 scripts/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
-python3 scripts/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --note <subsystem>/<role>
+tools/decomp/c_convert_batch.sh 30
+python3 tools/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
+python3 tools/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --note <subsystem>/<role>
 
 # 4. Hard functions (literal-pool / agbcc ordering)
-scripts/decomp/cursor_batch.sh 10              # m2c seeds, no API key
-scripts/decomp/permuter/permute.sh import sub_XXXXXXXX
-scripts/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 4 --stop-on-zero
+tools/decomp/cursor_batch.sh 10              # m2c seeds, no API key
+tools/decomp/permuter/permute.sh import sub_XXXXXXXX
+tools/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 4 --stop-on-zero
 
 # 5. RAM map (every 3–5 conversion batches)
-scripts/decomp/ram_map_pass.sh
+tools/decomp/ram_map_pass.sh
 
 # 6. Phase 5 preflight (informational until migration)
-python3 scripts/decomp/check_shiftable.py
+python3 tools/decomp/check_shiftable.py
 
 # 7. Report + commit
-python3 scripts/decomp/report_status.py
+python3 tools/decomp/report_status.py
 ```
 
 ---
@@ -107,7 +107,7 @@ When multiple approaches exist, try in this order. **Never break `make compare`.
 
 ### Subsystem order (suggested)
 
-1. **Battle** — `battle_scan.py`, `documentation/battle.md`, `include/battle.h`
+1. **Battle** — `battle_scan.py`, `docs/battle.md`, `include/battle.h`
 2. **Menu / UI** — functions heavy on `gBattleWork`, `gMainWorkPtr`
 3. **Save / SRAM** — after RAM map stable
 4. **Audio (Gax)** — if distinct cluster appears in scans
@@ -135,7 +135,7 @@ Follow the [aw2bhr](https://github.com/Mad-Man-Dan/aw2bhr) matching style. New s
 - `include/unknown-functions.h` gets prototypes when one `sub_*` needs to call another.
 - Keep per-function `src/matched/*.c` until Phase 5 (do not pack consecutive functions into one file yet).
 
-`c_patterns.py` emits member stores against `struct Unk*` names from `scripts/decomp/unknown_types.py`. If a new offset appears, add the field (split a `filler_`) in `unknown-types.h` before integrating.
+`c_patterns.py` emits member stores against `struct Unk*` names from `tools/decomp/unknown_types.py`. If a new offset appears, add the field (split a `filler_`) in `unknown-types.h` before integrating.
 
 ---
 
@@ -177,7 +177,7 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 ## Escalation (ask the user)
 
 - `baserom.gba` missing or wrong SHA1
-- `scripts/setup.sh` / agbcc build fails after retry
+- `build_tools.sh` / agbcc build fails after retry
 - `make compare` still fails after **3** distinct fix attempts (attach log + diff)
 - Need `ANTHROPIC_API_KEY` for Mizuchi and Cursor batch is insufficient
 
@@ -187,11 +187,11 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 
 | What | Where |
 |------|-------|
-| Mission (this file) | `documentation/decomp-mission.md` |
-| Master plan | `documentation/decomp-roadmap.md` |
-| Live log | `documentation/decomp-status.md` |
-| C-vs-original counter | `documentation/decomp-progress.json` / `decomp-progress.svg` |
-| Battle notes | `documentation/battle.md` |
+| Mission (this file) | `docs/decomp-mission.md` |
+| Master plan | `docs/decomp-roadmap.md` |
+| Live log | `docs/decomp-status.md` |
+| C-vs-original counter | `docs/decomp-progress.json` / `decomp-progress.svg` |
+| Battle notes | `docs/battle.md` |
 | Matched C | `src/matched/*.c` |
 | Types | `include/unknown-types.h`, `include/unknown-functions.h` |
 | Manifest | `build/matched.json` |
@@ -201,7 +201,7 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 
 ## Progress snapshot (update in decomp-status.md)
 
-See `python3 scripts/decomp/progress.py` (or `report_status.py`) for live counts:
+See `python3 tools/decomp/progress.py` (or `report_status.py`) for live counts:
 
 - Linked in ROM: 633/633
 - **Decompiled C:** semantic `src/matched/` vs original function bytes (opcode embeds do not count)

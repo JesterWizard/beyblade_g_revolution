@@ -48,7 +48,7 @@ def main() -> int:
     args = parser.parse_args()
 
     if not ASM_DIR.is_dir():
-        print(f"error: {ASM_DIR} missing — run scripts/setup.sh", file=sys.stderr)
+        print(f"error: {ASM_DIR} missing — run build_tools.sh", file=sys.stderr)
         return 1
 
     converted: set[str] = set()

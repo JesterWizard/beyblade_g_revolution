@@ -41,7 +41,7 @@ for asm_path in sorted(MATCH.glob("sub_*.s")):
         scratch = Path(tmp) / "scratch.c"
         write_single_function_c(name, cand.body, scratch)
         result = subprocess.run(
-            ["python3", "scripts/decomp/match_function.py", name, str(scratch)],
+            ["python3", "tools/decomp/match_function.py", name, str(scratch)],
             capture_output=True,
             text=True,
         )
@@ -51,7 +51,7 @@ for asm_path in sorted(MATCH.glob("sub_*.s")):
     subprocess.run(
         [
             "python3",
-            "scripts/decomp/integrate_c.py",
+            "tools/decomp/integrate_c.py",
             name,
             cand.body,
             "--note",
@@ -72,4 +72,4 @@ PY
 if [ "${CONVERTED:-0}" -gt 0 ]; then
   make compare
 fi
-python3 scripts/decomp/progress.py --write
+python3 tools/decomp/progress.py --write

@@ -78,9 +78,9 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 
 ```bash
 # Rank battle functions by RAM refs + size
-python3 scripts/decomp/battle_scan.py -n 30
+python3 tools/decomp/battle_scan.py -n 30
 
 # Verify + integrate hand-written battle C
-python3 scripts/decomp/match_function.py sub_080628E4 src/matched/sub_080628E4.c
-python3 scripts/decomp/integrate_c.py sub_080628E4 @src/matched/sub_080628E4.c --note battle/main-work
+python3 tools/decomp/match_function.py sub_080628E4 src/matched/sub_080628E4.c
+python3 tools/decomp/integrate_c.py sub_080628E4 @src/matched/sub_080628E4.c --note battle/main-work
 ```
