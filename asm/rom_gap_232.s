@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x0807348A..0x08073567
+@ Unmatched ROM 0x0807309A..0x08073183
 	.section .rodata
 	.global gRomGap232
 gRomGap232:
-	.incbin "baserom.gba", 0x7348A, 0xDE
+	.incbin "baserom.gba", 0x7309A, 0xEA
