@@ -1,5 +1,5 @@
-@ Unmatched ROM 0x08034FDA..0x08034FDB
+@ Unmatched ROM 0x080348E8..0x08034A67
 	.section .rodata
 	.global gRomGap059
 gRomGap059:
-	.incbin "baserom.gba", 0x34FDA, 0x2
+	.incbin "baserom.gba", 0x348E8, 0x180
