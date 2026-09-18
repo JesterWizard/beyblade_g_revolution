@@ -2,18 +2,18 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-18T22:06:28Z_
+_Updated: 2026-09-18T22:08:41Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 195 |
-| Still need semantic C | **438** |
+| Semantic C done | 197 |
+| Still need semantic C | **436** |
 | Readable Thumb remaining | 436 |
-| Opcode embeds remaining | 2 |
+| Opcode embeds remaining | 0 |
 | Battle pending | 127 (23 already semantic) |
-| Blocked (documented) | 19 |
+| Blocked (documented) | 20 |
 
 Ranking: **battle** · showing top **40**
 
@@ -79,6 +79,7 @@ Ranking: **battle** · showing top **40**
 | `sub_08061E40` | `0x08061E40` | 20 | agbcc extra push {lr} on null-check leaf |
 | `sub_08062634` | `0x08062634` | 12 | agbcc extra push {lr} on null-check leaf |
 | `sub_08062728` | `0x08062728` | 18 | u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen |
+| `sub_08062C80` | `0x08062C80` | 72 | calls _08073C4C(0, dst, size, src) at raw address 0x08073C4C twice (VRAM/PLTT clear via CpuFastSet-style primitive) — that callee has no C symbol/prototype anywhere in the codebase yet (only referenced via bl _08073C4C from naked asm in many other unconverted functions); needs the callee named/prototyped first |
 | `sub_08062CF4` | `0x08062CF4` | 48 | BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] -> u16 @ PLTT 0x05000200+idx*2 — logic reconstructed correctly (same-size DIFF, ~1 instruction reordered) across many register-pinned variants; retail keeps r6 live (push {r4,r5,r6,lr}) but my C never needed r6 pressure, changing push set; needs permuter |
 | `sub_0806A6F8` | `0x0806A6F8` | 436 | docs/battle.md: readable Thumb — large input hub (436B, 6 IWRAM refs) |
 | `sub_0806FEFC` | `0x0806FEFC` | 44 | BtlObjNode move-to-tail (gBtlObjListHead/Tail) — agbcc inserts extra push {lr}/pop{r1}+bx r1 frame on this null-check leaf like sub_0802D8C4/sub_08061BDC; same-size DIFF on direct-return form, +12B with early-return form; needs permuter |
@@ -98,6 +99,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (419 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (416 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

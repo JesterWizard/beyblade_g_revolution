@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-18T22:06:28Z",
+  "generated": "2026-09-18T22:08:41Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 438,
-    "semantic_done": 195,
+    "pending": 436,
+    "semantic_done": 197,
     "readable_asm": 436,
-    "opcode": 2,
+    "opcode": 0,
     "battle_pending": 127,
     "battle_semantic": 23,
-    "blocked": 19
+    "blocked": 20
   },
   "pinned": [],
   "recommended": [
@@ -688,6 +688,13 @@
       "reason": "u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) \u2014 retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen",
       "kind": "asm",
       "bytes": 18
+    },
+    {
+      "name": "sub_08062C80",
+      "addr": "0x08062C80",
+      "reason": "calls _08073C4C(0, dst, size, src) at raw address 0x08073C4C twice (VRAM/PLTT clear via CpuFastSet-style primitive) \u2014 that callee has no C symbol/prototype anywhere in the codebase yet (only referenced via bl _08073C4C from naked asm in many other unconverted functions); needs the callee named/prototyped first",
+      "kind": "asm",
+      "bytes": 72
     },
     {
       "name": "sub_08062CF4",
@@ -3061,18 +3068,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08033F48",
-      "addr": "0x08033F48",
-      "kind": "opcode",
-      "bytes": 54,
-      "score": 29,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08042B78",
       "addr": "0x08042B78",
       "kind": "asm",
@@ -3349,18 +3344,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803413C",
-      "addr": "0x0803413C",
-      "kind": "opcode",
-      "bytes": 64,
-      "score": 44,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080618A8",
       "addr": "0x080618A8",
       "kind": "asm",
@@ -3510,18 +3493,6 @@
       "kind": "asm",
       "bytes": 72,
       "score": 36,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08062C80",
-      "addr": "0x08062C80",
-      "kind": "asm",
-      "bytes": 72,
-      "score": 38,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
