@@ -1,62 +1,15 @@
 #include "global.h"
 
 // @ 0x08048168
-__attribute__((naked))
-void sub_08048168(void)
+void sub_08048168(struct Unk2F520 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "movs r0, #0x05\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x12\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x06\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x12\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x07\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x12\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x08\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x12\n"
-        "bl sub_08061D68\n"
-        "ldr r0, _080481D8 @ =0x000002D5\n"
-        "adds r4, r4, r0\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r4, r0]\n"
-        "lsls r0, r0, #0x11\n"
-        "movs r1, #0xA0\n"
-        "lsls r1, r1, #0x0B\n"
-        "adds r0, r0, r1\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x12\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r4, r0]\n"
-        "lsls r0, r0, #0x11\n"
-        "movs r1, #0xC0\n"
-        "lsls r1, r1, #0x0B\n"
-        "adds r0, r0, r1\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x12\n"
-        "bl sub_08061D68\n"
-        "pop {r4}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_080481D8: .4byte 0x000002D5\n"
-    );
-}
+    s8 *fieldPtr;
 
+    sub_08061D68(5, 0xF, 0xB, 0x12);
+    sub_08061D68(6, 0xF, 0xB, 0x12);
+    sub_08061D68(7, 0xF, 0xB, 0x12);
+    sub_08061D68(8, 0xF, 0xB, 0x12);
+    fieldPtr = &a->unk2D5;
+    sub_08061D68((u16)((((s32)*fieldPtr << 17) + 0x50000) >> 16), 0xE, 0xB, 0x12);
+    sub_08061D68((u16)((((s32)*fieldPtr << 17) + 0x60000) >> 16), 0xE, 0xB, 0x12);
+}

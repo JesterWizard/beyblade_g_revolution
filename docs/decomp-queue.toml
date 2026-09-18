@@ -102,3 +102,11 @@ reason = "calls sub_08067B98(0x0833BE48, 0x0833BE50) then zeroes gMainWorkPtr->u
 [[block]]
 name = "sub_08030938"
 reason = "computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter"
+
+[[block]]
+name = "sub_080523A4"
+reason = "calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->unk28C->unk0C = (a->unk2D5<<12)+0x2C00 — logic correct (same-size DIFF, ~15/112 bytes) across several pointer/base-register orderings; needs permuter"
+
+[[block]]
+name = "sub_08070604"
+reason = "struct Unk70604 initializer (7 params, 3 via stack) — logic reconstructed correctly (m2c-verified, same overall shape) but agbcc's final two byte-field writes (unk29=0, unk2A=src->unk05+4) either share one address computation (too small, -4B) or use two fully separate ones (too big, +4B); retail shares the unk29 address computation only for unk2A, not unk28; needs permuter"

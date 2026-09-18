@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-18T22:38:25Z",
+  "generated": "2026-09-18T22:44:43Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 422,
-    "semantic_done": 211,
-    "readable_asm": 422,
+    "pending": 420,
+    "semantic_done": 213,
+    "readable_asm": 420,
     "opcode": 0,
     "battle_pending": 123,
     "battle_semantic": 25,
-    "blocked": 23
+    "blocked": 25
   },
   "pinned": [],
   "recommended": [
@@ -669,6 +669,13 @@
       "bytes": 48
     },
     {
+      "name": "sub_080523A4",
+      "addr": "0x080523A4",
+      "reason": "calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->unk28C->unk0C = (a->unk2D5<<12)+0x2C00 \u2014 logic correct (same-size DIFF, ~15/112 bytes) across several pointer/base-register orderings; needs permuter",
+      "kind": "asm",
+      "bytes": 112
+    },
+    {
       "name": "sub_080601C4",
       "addr": "0x080601C4",
       "reason": "r8 pool pin \u2014 permuter best score ~100",
@@ -744,6 +751,13 @@
       "reason": "BtlObj unlink+push-to-head (obj->unk19 early return) \u2014 same agbcc extra push{lr} frame quirk as sub_0806FEFC; +4B DIFF; needs permuter",
       "kind": "asm",
       "bytes": 48
+    },
+    {
+      "name": "sub_08070604",
+      "addr": "0x08070604",
+      "reason": "struct Unk70604 initializer (7 params, 3 via stack) \u2014 logic reconstructed correctly (m2c-verified, same overall shape) but agbcc's final two byte-field writes (unk29=0, unk2A=src->unk05+4) either share one address computation (too small, -4B) or use two fully separate ones (too big, +4B); retail shares the unk29 address computation only for unk2A, not unk28; needs permuter",
+      "kind": "asm",
+      "bytes": 92
     },
     {
       "name": "sub_08073114",
@@ -3705,18 +3719,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08070604",
-      "addr": "0x08070604",
-      "kind": "asm",
-      "bytes": 92,
-      "score": 46,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08067F3C",
       "addr": "0x08067F3C",
       "kind": "asm",
@@ -4101,18 +4103,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_080523A4",
-      "addr": "0x080523A4",
-      "kind": "asm",
-      "bytes": 112,
-      "score": 67,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08041E14",
       "addr": "0x08041E14",
       "kind": "asm",
@@ -4154,30 +4144,6 @@
       "kind": "asm",
       "bytes": 116,
       "score": 59,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08048168",
-      "addr": "0x08048168",
-      "kind": "asm",
-      "bytes": 116,
-      "score": 67,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08051504",
-      "addr": "0x08051504",
-      "kind": "asm",
-      "bytes": 116,
-      "score": 67,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,

@@ -1236,12 +1236,52 @@ struct Unk41348 /* >= 0x323 */
 };
 
 /* sub_0802F520 */
+struct Unk2F520Inner /* >= 0x10 */
+{
+    /* 00 */ u8 filler_00[0xC];
+    /* 0c */ s32 unk0C;
+};
+
 struct Unk2F520 /* >= 0x2fd */
 {
-    /* 000 */ u8 filler_000[0x2D5];
+    /* 000 */ u8 filler_000[0x288];
+    /* 288 */ struct Unk2F520Inner *unk288;
+    /* 28c */ struct Unk2F520Inner *unk28C;
+    /* 290 */ u8 filler_290[0x45];
     /* 2d5 */ s8 unk2D5;
     /* 2d6 */ u8 filler_2D6[0x26];
     /* 2fc */ s8 unk2FC;
+};
+
+/* Source object read by sub_08070604 (unk5 at +5). */
+struct Unk70604Src /* >= 0x06 */
+{
+    /* 00 */ u8 filler_00[5];
+    /* 05 */ u8 unk05;
+};
+
+/* sub_08070604 */
+struct Unk70604 /* >= 0x2d */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s16 unk08;
+    /* 0a */ s16 unk0A;
+    /* 0c */ s16 unk0C;
+    /* 0e */ u8 unk0E;
+    /* 0f */ u8 unk0F;
+    /* 10 */ u16 unk10;
+    /* 12 */ u16 unk12;
+    /* 14 */ s32 unk14;
+    /* 18 */ s32 unk18;
+    /* 1c */ s32 unk1C;
+    /* 20 */ s32 unk20;
+    /* 24 */ struct Unk70604Src *unk24;
+    /* 28 */ u8 unk28;
+    /* 29 */ u8 unk29;
+    /* 2a */ s8 unk2A;
+    /* 2b */ u8 unk2B;
+    /* 2c */ s32 unk2C;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
