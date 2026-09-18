@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **157/633 (24.8%)** |
-| **Decompiled C (bytes)** | **5,322/90,272 (5.9%)** |
-| Not opcode (C + readable Thumb) | 307/633 (48.5% fn, 47.3% bytes) |
+| **Decompiled C (functions)** | **163/633 (25.8%)** |
+| **Decompiled C (bytes)** | **5,748/90,272 (6.4%)** |
+| Not opcode (C + readable Thumb) | 313/633 (49.4% fn, 47.8% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 326/633 (51.5%) |
+| Opcode `.byte` embeds | 320/633 (50.6%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+6)
+
+- Semantic C: `sub_080611A4` (alloc `0xAC` into 790/798/794 slots + CpuFill via `*0x080BB8BC`), `sub_08059C98` (first empty stride-`0x3C` slot + optional `6A3A4`), `sub_0806F8C4` (list integrity checks via `67B98`), `sub_080680CC` (key walk then `68180`), `sub_080408C4` (`2C314` then `3DD88`), `sub_0802B95C` (stride-12 search via `2B994`/`73440`)
+- Grew `Unk0798` (`unk5C`/`unk88`), `Unk59C6C` (full 0x3C), `Unk0770` (`unk04`/`unk06`), `Unk346C0Inner` (`unk00`); added `Unk59C98Src`/`Unk59C98Owner`/`Unk680CC`/`Unk2B95C`; `sub_0803DD88` now returns `s32`
+- Near-miss: `sub_08062BF0`/`62C38` (ble/bge skip 0 vs 1), `sub_08059B74` (bne skip 3 vs 6), `sub_08062A74` (p in r2 vs r1), `sub_08061308`/`60D28` (ldrb r1 vs r0), `sub_080615EC` (extra `lr` on leaf)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+3)
 

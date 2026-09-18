@@ -154,6 +154,14 @@ struct Unk7709C /* 0x08 */
     /* 04 */ u32 unk04;
 };
 
+/* Stride-12 list from sub_0802B994. sub_0802B95C. */
+struct Unk2B95C /* 0x0c */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ void *unk04;
+    /* 08 */ u8 filler_08[4];
+};
+
 /* {ptr, word} records. sub_08043B90, sub_08043BDC. */
 struct Unk16E0 /* 0x08 */
 {
@@ -253,9 +261,11 @@ struct Unk71F84 /* >= 0x17 */
 /* *gUnk_03000798. sub_08061784 family, sub_080615EC. */
 struct Unk0798 /* >= 0xa2 */
 {
-    /* 00 */ u8 filler_00[0x5D];
+    /* 00 */ u8 filler_00[0x5C];
+    /* 5c */ u8 unk5C;
     /* 5d */ u8 unk5D;
-    /* 5e */ u8 filler_5E[0x2E];
+    /* 5e */ u8 filler_5E[0x2A];
+    /* 88 */ void *unk88;
     /* 8c */ u32 unk8C;
     /* 90 */ u16 unk90;
     /* 92 */ u16 unk92;
@@ -511,10 +521,33 @@ struct Unk68014 /* >= 0x28 */
     /* 20 */ struct Unk68014Rec unk20[1];
 };
 
+/* Walk key table at inner+unk18. sub_080680CC. */
+struct Unk680CCRec /* >= 0x0a */
+{
+    /* 00 */ u16 unk00;
+    /* 02 */ u16 unk02;
+    /* 04 */ u8 filler_04[4];
+    /* 08 */ u16 unk08;
+};
+
+struct Unk680CC /* >= 0x30 */
+{
+    /* 00 */ struct Unk68014 *unk00;
+    /* 04 */ u8 filler_04[0x16];
+    /* 1a */ u16 unk1A;
+    /* 1c */ u16 unk1C;
+    /* 1e */ u16 unk1E;
+    /* 20 */ u8 filler_20[8];
+    /* 28 */ u16 unk28;
+    /* 2a */ u8 filler_2A[4];
+    /* 2e */ u16 unk2E;
+};
+
 /* Pointer + fields at +0x30..+0x4C. sub_080346C0. */
 struct Unk346C0Inner /* >= 0x50 */
 {
-    /* 00 */ u8 filler_00[0xC];
+    /* 00 */ struct Unk705DC *unk00;
+    /* 04 */ u8 filler_04[8];
     /* 0c */ u32 unk0C;
     /* 10 */ u8 filler_10[0x20];
     /* 30 */ u32 unk30;
@@ -531,7 +564,7 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 008 */ struct Unk35878 unk08;
     /* 018 */ u8 filler_18[0x2B4];
     /* 2cc */ u32 unk2CC;
-    /* 2d0 */ u8 filler_2D0[4];
+    /* 2d0 */ u32 unk2D0;
     /* 2d4 */ u32 unk2D4;
     /* 2d8 */ u32 unk2D8;
     /* 2dc */ u32 unk2DC;
@@ -755,7 +788,8 @@ struct Unk05F0 /* 0x10 */
 struct Unk0770 /* 0x08 */
 {
     /* 00 */ void *unk00;
-    /* 04 */ u32 unk04;
+    /* 04 */ u16 unk04;
+    /* 06 */ u16 unk06;
 };
 
 
@@ -890,9 +924,38 @@ struct Unk59C6C /* 0x3c */
     /* 00 */ void *unk00;
     /* 04 */ void *unk04;
     /* 08 */ void *unk08;
-    /* 0c */ u8 filler_0C[8];
+    /* 0c */ void *unk0C;
+    /* 10 */ void *unk10;
     /* 14 */ u32 unk14;
-    /* 18 */ u8 filler_18[0x24];
+    /* 18 */ void *unk18;
+    /* 1c */ void *unk1C;
+    /* 20 */ void *unk20;
+    /* 24 */ void *unk24;
+    /* 28 */ void *unk28;
+    /* 2c */ void *unk2C;
+    /* 30 */ void *unk30;
+    /* 34 */ void *unk34;
+    /* 38 */ void *unk38;
+};
+
+/* Source blob + owner link for sub_08059C98. */
+struct Unk59C98Src /* >= 0x24 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ void *unk04;
+    /* 08 */ void *unk08;
+    /* 0c */ u32 unk0C;
+    /* 10 */ void *unk10;
+    /* 14 */ void *unk14;
+    /* 18 */ void *unk18;
+    /* 1c */ void *unk1C;
+    /* 20 */ void *unk20;
+};
+
+struct Unk59C98Owner /* >= 0xcc */
+{
+    /* 00 */ u8 filler_00[0xC8];
+    /* c8 */ struct Unk59C6C *unkC8;
 };
 
 /* Signed bytes + u8 into ROM tables. sub_0803E328 / 3E374 / 3E3C0. */
