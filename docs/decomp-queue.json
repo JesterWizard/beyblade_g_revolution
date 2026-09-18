@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-18T22:26:19Z",
+  "generated": "2026-09-18T22:30:14Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 428,
-    "semantic_done": 205,
-    "readable_asm": 428,
+    "pending": 427,
+    "semantic_done": 206,
+    "readable_asm": 427,
     "opcode": 0,
-    "battle_pending": 125,
-    "battle_semantic": 24,
-    "blocked": 21
+    "battle_pending": 123,
+    "battle_semantic": 25,
+    "blocked": 22
   },
   "pinned": [],
   "recommended": [
@@ -569,20 +569,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802C6AC",
-      "addr": "0x0802C6AC",
-      "kind": "asm",
-      "bytes": 96,
-      "score": 38,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803E1F4",
       "addr": "0x0803E1F4",
       "kind": "asm",
@@ -595,9 +581,30 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08042390",
+      "addr": "0x08042390",
+      "kind": "asm",
+      "bytes": 98,
+      "score": 46,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
+    {
+      "name": "sub_0802C6AC",
+      "addr": "0x0802C6AC",
+      "reason": "calls sub_08067B98(0x0833BE48, 0x0833BE50) then zeroes gMainWorkPtr->unk15C8-unk15CC/unk15D0/unk15D2 \u2014 logic correct but agbcc picks r2 for the gMainWorkPtr-location pointer where retail uses r1 (4 extra bytes from the pool-load register choice); tried plain field access, named locals, and register pins, all land on r2 not r1; needs permuter",
+      "kind": "asm",
+      "bytes": 96
+    },
     {
       "name": "sub_0802D8C4",
       "addr": "0x0802D8C4",
@@ -1301,20 +1308,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802C6AC",
-      "addr": "0x0802C6AC",
-      "kind": "asm",
-      "bytes": 96,
-      "score": 38,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803E1F4",
       "addr": "0x0803E1F4",
       "kind": "asm",
@@ -1390,20 +1383,6 @@
       "kind": "asm",
       "bytes": 100,
       "score": 45,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804737C",
-      "addr": "0x0804737C",
-      "kind": "asm",
-      "bytes": 104,
-      "score": 55,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
