@@ -98,3 +98,7 @@ reason = "reads gMainWorkPtr->unk1688[idx].unk08 into unk1788, computes base = g
 [[block]]
 name = "sub_0802C6AC"
 reason = "calls sub_08067B98(0x0833BE48, 0x0833BE50) then zeroes gMainWorkPtr->unk15C8-unk15CC/unk15D0/unk15D2 — logic correct but agbcc picks r2 for the gMainWorkPtr-location pointer where retail uses r1 (4 extra bytes from the pool-load register choice); tried plain field access, named locals, and register pins, all land on r2 not r1; needs permuter"
+
+[[block]]
+name = "sub_08030938"
+reason = "computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter"

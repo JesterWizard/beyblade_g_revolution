@@ -2,18 +2,18 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-18T22:30:14Z_
+_Updated: 2026-09-18T22:35:19Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 206 |
-| Still need semantic C | **427** |
-| Readable Thumb remaining | 427 |
+| Semantic C done | 207 |
+| Still need semantic C | **426** |
+| Readable Thumb remaining | 426 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 123 (25 already semantic) |
-| Blocked (documented) | 22 |
+| Blocked (documented) | 23 |
 
 Ranking: **battle** · showing top **40**
 
@@ -68,6 +68,7 @@ Ranking: **battle** · showing top **40**
 |----------|---------|------:|--------|
 | `sub_0802C6AC` | `0x0802C6AC` | 96 | calls sub_08067B98(0x0833BE48, 0x0833BE50) then zeroes gMainWorkPtr->unk15C8-unk15CC/unk15D0/unk15D2 — logic correct but agbcc picks r2 for the gMainWorkPtr-location pointer where retail uses r1 (4 extra bytes from the pool-load register choice); tried plain field access, named locals, and register pins, all land on r2 not r1; needs permuter |
 | `sub_0802D8C4` | `0x0802D8C4` | 24 | agbcc extra push {lr} on branch leaves |
+| `sub_08030938` | `0x08030938` | 78 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
 | `sub_08033530` | `0x08033530` | 68 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
 | `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
@@ -101,6 +102,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (405 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (403 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

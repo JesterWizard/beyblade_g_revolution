@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-18T22:30:14Z",
+  "generated": "2026-09-18T22:35:19Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 427,
-    "semantic_done": 206,
-    "readable_asm": 427,
+    "pending": 426,
+    "semantic_done": 207,
+    "readable_asm": 426,
     "opcode": 0,
     "battle_pending": 123,
     "battle_semantic": 25,
-    "blocked": 22
+    "blocked": 23
   },
   "pinned": [],
   "recommended": [
@@ -611,6 +611,13 @@
       "reason": "agbcc extra push {lr} on branch leaves",
       "kind": "asm",
       "bytes": 24
+    },
+    {
+      "name": "sub_08030938",
+      "addr": "0x08030938",
+      "reason": "computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack \u2014 logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter",
+      "kind": "asm",
+      "bytes": 78
     },
     {
       "name": "sub_08033530",
@@ -3530,18 +3537,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08030938",
-      "addr": "0x08030938",
-      "kind": "asm",
-      "bytes": 78,
-      "score": 45,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080699C8",
       "addr": "0x080699C8",
       "kind": "asm",
@@ -3730,18 +3725,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802F520",
-      "addr": "0x0802F520",
-      "kind": "asm",
-      "bytes": 92,
-      "score": 51,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },

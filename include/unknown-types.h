@@ -1235,4 +1235,13 @@ struct Unk41348 /* >= 0x323 */
     /* 322 */ u16 unk322;
 };
 
+/* sub_0802F520 */
+struct Unk2F520 /* >= 0x2fd */
+{
+    /* 000 */ u8 filler_000[0x2D5];
+    /* 2d5 */ s8 unk2D5;
+    /* 2d6 */ u8 filler_2D6[0x26];
+    /* 2fc */ s8 unk2FC;
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */
