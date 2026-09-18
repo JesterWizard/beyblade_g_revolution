@@ -35,6 +35,10 @@ def main() -> None:
     if excerpt:
         print()
         print(excerpt)
+    queue_md = ROOT / "docs" / "decomp-queue.md"
+    if queue_md.is_file():
+        print()
+        print(f"  Queue: {queue_md.relative_to(ROOT)}  (make queue to refresh)")
 
 
 if __name__ == "__main__":

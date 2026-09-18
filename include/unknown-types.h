@@ -605,6 +605,15 @@ struct Unk680CC /* >= 0x30 */
     /* 2e */ u16 unk2E;
 };
 
+/* Halfword delta @ +0x1C, words @ +0x14/+0x18. sub_080361A8. */
+struct Unk361A8 /* >= 0x1e */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ u32 unk14;
+    /* 18 */ s32 unk18;
+    /* 1c */ u16 unk1C;
+};
+
 /* Pointer + fields at +0x30..+0x4C. sub_080346C0. */
 struct Unk346C0Inner /* >= 0x50 */
 {

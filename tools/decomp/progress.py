@@ -613,6 +613,12 @@ def write_artifacts(data: dict[str, Any]) -> None:
     PROGRESS_SVG.write_text(render_svg(data))
     patch_status_md(data)
     patch_readme(data)
+    try:
+        from next_queue import collect as queue_collect, write_artifacts as queue_write
+
+        queue_write(queue_collect())
+    except Exception:
+        pass
 
 
 def refresh(top: int = 15) -> dict[str, Any]:

@@ -22,8 +22,12 @@
 #undef gUnk_0300026C
 #undef gUnk_0300047C
 #undef gUnk_03000798
+#define gMainWorkPtrLoc ((struct MainWork **)0x03000198)
+#define gBattleWorkPtrLoc ((struct BattleWork **)0x03000290)
 #define gMainWorkPtr (*(struct MainWork **)0x03000198)
 #define gBattleWork (*(struct BattleWork **)0x03000290)
+#define gBtlObjListHeadLoc ((struct BtlObjNode **)0x030040A8)
+#define gBtlObjListTailLoc ((struct BtlObjNode **)0x030040B8)
 #define gUnk_03000180 (*(struct Unk0180 *)0x03000180)
 #define gUnk_0300026C (*(struct Unk026C **)0x0300026C)
 #define gUnk_0300047C (*(struct Unk047C **)0x0300047C)

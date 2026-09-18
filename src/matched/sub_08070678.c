@@ -10,7 +10,7 @@ void sub_08070678(struct Unk7069C *a)
     if (p != 0)
     {
         sub_080705D4(p);
-        sub_0806FF28(a->unk2C);
+        sub_0806FF28((struct BtlObj *)a->unk2C);
         a->unk2C = 0;
     }
 }

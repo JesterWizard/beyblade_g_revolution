@@ -55,3 +55,14 @@ After each batch, post a short summary:
 | m2ctx | `tools/m2ctx.py` |
 | Luvdis | `tools/luvdis/` |
 | Progress | `tools/decomp/progress.py` |
+
+## Cursor skills (self-improvement loop)
+
+Agent skills in [`.cursor/skills/`](../.cursor/skills/README.md) — copy into new decomp repos when using this scaffold:
+
+| Skill | Role |
+|-------|------|
+| `gba-decomp-session` | Session loop, triage, fork policy |
+| `gba-decomp-matching` | Near-miss fixes, register/pool/permuter |
+| `gba-decomp-improve` | Capture wins → seeds/patterns/queue/status |
+| `gba-decomp-ecosystem` | pret/m2c/permuter guides; bootstrap checklist |

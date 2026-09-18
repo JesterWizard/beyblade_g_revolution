@@ -1,6 +1,6 @@
 #include "global.h"
 
-// @ 0x08042b28
+// @ 0x08042B28
 __attribute__((naked))
 void *sub_08042B28(u32 i)
 {
@@ -26,4 +26,3 @@ void *sub_08042B28(u32 i)
         "_08042B4C: .4byte 0x083A2CD0\n"
     );
 }
-

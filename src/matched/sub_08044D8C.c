@@ -1,6 +1,6 @@
 #include "global.h"
 
-// @ 0x08044d8c
+// @ 0x08044D8C
 __attribute__((naked))
 void sub_08044D8C(void)
 {
@@ -24,4 +24,3 @@ void sub_08044D8C(void)
         "bx r1\n"
     );
 }
-

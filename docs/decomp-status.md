@@ -8,18 +8,38 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **186/633 (29.4%)** |
-| **Decompiled C (bytes)** | **6,958/90,272 (7.7%)** |
-| Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 447/633 (70.6%) |
-| Opcode `.byte` embeds | 0/633 (0.0%) |
+| **Decompiled C (functions)** | **182/633 (28.8%)** |
+| **Decompiled C (bytes)** | **6,716/90,272 (7.4%)** |
+| Not opcode (C + readable Thumb) | 630/633 (99.5% fn, 99.8% bytes) |
+| Readable Thumb | 448/633 (70.8%) |
+| Opcode `.byte` embeds | 3/633 (0.5%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 16/160 (10.0% fn, 2.4% bytes) |
+| Battle semantic C | 15/160 (9.4% fn, 2.2% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Semantic audit fix (+15 prototypes) + near-miss batch
+
+- **Prototype fixes:** added `sub_08061BE8`; fixed `sub_08033F24` (`sub_08072CC0(a)`), `sub_080400D4` (cast), `sub_08070678` (`BtlObj` cast)
+- **Semantic audit:** **0/182 broken** (was 15 compile failures + 4 same-size DIFF reverted earlier)
+- `near_miss_batch.py`: `--no-m2c` for faster runs; blocked `sub_080473E4` (dual IWRAM CSE, permuter best score ~5)
+- Near-miss still open: `sub_0803DD60` family (pool order), `sub_0806FEFC` (leaf `push {lr}`), `sub_0802C62C` (loop regs)
+- `make compare`: **OK**
+
+### 2026-09-18 — Near-miss triage + semantic audit
+
+- Added `tools/decomp/near_miss_batch.py` / `.sh` — seeds + c_patterns on readable Thumb; `--list-broken` audits semantic C
+- Added IWRAM pointer-slot macros in `ram_map.h` (`gBattleWorkPtrLoc`, `gMainWorkPtrLoc`, …) for pool-pin matching
+- **Semantic audit:** 4 integrated files failed `match_function.py` (same-size DIFF) — reverted to verified asm:
+  - `sub_08033530` → readable Thumb (`subs r2, #0x6C` offset reuse; blocked in queue)
+  - `sub_08033F48` / `sub_0803403C` / `sub_0803413C` → opcode embed (semantic store order/reg alloc)
+- Removed broken `sub_08033530` from `BATTLE_SEEDS`
+- Near-miss attempts (same-size DIFF, permuter): `sub_0803DD60` family (pool order), `sub_080473E4` (dual IWRAM CSE), `sub_0806FEFC` (extra `push {lr}`), `sub_0802C62C` (loop reg alloc)
+- 15 semantic files still fail agbcc (missing/wrong prototypes) — run `python3 tools/decomp/near_miss_batch.py --list-broken`
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+2)
 

@@ -145,6 +145,12 @@ compare: all
 progress:
 	python3 tools/decomp/progress.py --write --top 15
 
+queue:
+	python3 tools/decomp/next_queue.py --write
+
+patterns:
+	python3 tools/decomp/c_patterns.py --list
+
 rom: check-baserom $(ROM)
 ifeq ($(COMPARE),1)
 	@$(SHA1) rom.sha1

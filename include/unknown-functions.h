@@ -284,6 +284,7 @@ void sub_0805DA70(void);
 void sub_08059D08(struct Unk59D08 *a);
 void sub_0806D958(struct Unk6D958 *a);
 
+void sub_08061BE8(void);
 void sub_08061BDC(struct Unk61BDC *a);
 void sub_08062634(struct Unk62634 *a, u32 b, u32 c, u32 d);
 u8 sub_08066434(void);

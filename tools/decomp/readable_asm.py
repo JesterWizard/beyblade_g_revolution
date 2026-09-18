@@ -10,6 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 NON = ROOT / "asm" / "nonmatchings"
+MATCH_ASM = ROOT / "asm" / "matchings"
 MATCHED = ROOT / "src" / "matched"
 HDR = ROOT / "include" / "unknown-functions.h"
 
@@ -77,10 +78,14 @@ def _function_slice(function: str, asm_lines: list[str]) -> list[str]:
 
 def guess_readable_asm(function: str, asm_lines: list[str] | None = None) -> CCandidate | None:
     if asm_lines is None:
-        path = NON / f"{function}.s"
-        if not path.is_file():
+        asm_lines = None
+        for base in (NON, MATCH_ASM):
+            path = base / f"{function}.s"
+            if path.is_file():
+                asm_lines = path.read_text().splitlines()
+                break
+        if asm_lines is None:
             return None
-        asm_lines = path.read_text().splitlines()
     body_lines = []
     for line in _function_slice(function, asm_lines):
         stripped = line.strip()

@@ -46,21 +46,47 @@ BATTLE_SEEDS: list[tuple[str, str, str]] = [
         "init-312EC-flags",
     ),
     (
-        "sub_08033530",
-        """void sub_08033530(void)
+        "sub_08033C1C",
+        """void sub_08033C1C(void)
 {
-    if (gBattleWork->unk2088 == 1)
+    register struct Unk0380 *r1 asm("r1");
+    u32 tmp[1];
+
+    tmp[0] = gUnk_03000380;
+    r1 = (struct Unk0380 *)tmp[0];
+    if (r1->unk09 == 1)
     {
-        if (gBattleWork->unk201C == 0)
-            sub_08033574();
-        else
-        {
-            sub_080686D8(&gBattleWork->unk1FAC);
-            sub_08068418(&gBattleWork->unk1FAC);
-        }
+        r1->unk09 = 0;
+        r1->unk0A = 0;
+        sub_080358CC(&r1->unk0C);
     }
 }""",
-        "battle/state-2088-branch",
+        "iwram-0380-flag-clear",
+    ),
+    (
+        "sub_0806F430",
+        """u32 sub_0806F430(void)
+{
+    register u32 r0 asm("r0");
+    register u32 r1 asm("r1");
+    struct Unk4084 *p;
+    u32 tmp[1];
+
+    tmp[0] = gUnk_03004084;
+    p = *(struct Unk4084 **)tmp[0];
+    r1 = p->unk14;
+    r0 = 8;
+    r0 &= r1;
+    if (r0 != 0)
+        return 1;
+    r0 = 0x10;
+    r1 &= r0;
+    if (r1 != 0)
+        return 0;
+    sub_08067B98((void *)0x083D2030);
+    return 0;
+}""",
+        "unk4084-flag-check",
     ),
 ]
 

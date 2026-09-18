@@ -52,6 +52,118 @@ class CCandidate:
     note: str
 
 
+# Human-readable catalog — keep in sync with guess_c() branches.
+# Printed by: python3 tools/decomp/c_patterns.py --list
+#             python3 tools/decomp/try_convert.py --list-patterns
+PATTERN_CATALOG: list[dict[str, str]] = [
+    {
+        "id": "empty-return",
+        "note": "empty return",
+        "summary": "bx lr only → void fn with empty body",
+    },
+    {
+        "id": "naked-return",
+        "note": "naked return",
+        "summary": "mov pc, lr → naked asm (rare tail)",
+    },
+    {
+        "id": "member-load-u8",
+        "note": "load u8 / load u8 +off",
+        "summary": "ldrb r0,[r0,#off]; bx lr → return a->unkXX or *a",
+    },
+    {
+        "id": "member-load-u32",
+        "note": "load u32 +off",
+        "summary": "ldr r0,[r0,#off]; bx lr → return a->unkXX",
+    },
+    {
+        "id": "return-imm",
+        "note": "return imm",
+        "summary": "movs r0,#N; bx lr → return constant",
+    },
+    {
+        "id": "store-byte-imm",
+        "note": "store byte @+off",
+        "summary": "movs r1,#V; strb r1,[r0,#off]; bx lr",
+    },
+    {
+        "id": "swi",
+        "note": "swi N / swi N prep r2",
+        "summary": "BIOS call; r2=0 uses register asm local before swi",
+    },
+    {
+        "id": "iwram-pool-load",
+        "note": "return/load iwram ptr",
+        "summary": "ldr r0,=0x03……; [optional ldr/ldrh [r0]]; bx lr",
+    },
+    {
+        "id": "iwram-pool-store",
+        "note": "store u8 to iwram",
+        "summary": "ldr r1,=0x03……; strb r0,[r1]; bx lr",
+    },
+    {
+        "id": "member-store-u8",
+        "note": "store r1 @+off",
+        "summary": "strb r1,[r0,#off]; bx lr with arg v",
+    },
+    {
+        "id": "stack-shim",
+        "note": "stack shim",
+        "summary": "push {r0-r3}; add sp,#0x10; bx lr (naked)",
+    },
+    {
+        "id": "store-two-u16",
+        "note": "store two u16",
+        "summary": "strh r1,[r3]; strh r2,[r0] at two struct offsets",
+    },
+    {
+        "id": "init-u16-u32",
+        "note": "init u16/u32 fields",
+        "summary": "zero halfword, store word, zero halfword @+0/+4/+2",
+    },
+    {
+        "id": "store-u32-scaled",
+        "note": "store u32 @+off",
+        "summary": "index = imm<<2 then str r1,[r0,r2]",
+    },
+    {
+        "id": "zero-three-u32",
+        "note": "zero three u32 fields",
+        "summary": "str r1,[r0,off×3] with r1=0",
+    },
+    {
+        "id": "store-three-u32",
+        "note": "store three u32 + clear base",
+        "summary": "str r2/r3/r1 then clear a->unk00",
+    },
+    {
+        "id": "store-three-u16",
+        "note": "store three u16",
+        "summary": "strh r1/r2/r3 at consecutive halfword offsets",
+    },
+    {
+        "id": "init-six-word",
+        "note": "init six-word struct",
+        "summary": "stores 0x7800, 0x5000, zeros — common init blob",
+    },
+    {
+        "id": "indexed-struct-offset",
+        "note": "indexed struct offset",
+        "summary": "return (u8*)a + (idx << unk06) + unk10",
+    },
+    {
+        "id": "iwram-addend-ldrb",
+        "note": "iwram ptr + addend ldrb",
+        "summary": "*(u8*)(addend + *gUnk_03……) — battle lookup style",
+    },
+    {
+        "id": "main-work-table",
+        "note": "main-work table lookup",
+        "summary": "ROM table indexed by gMainWorkPtr->unk1818 then arg",
+    },
+]
+
+
 def _norm_line(line: str) -> str | None:
     s = line.split("@")[0].strip().lower()
     if not s or s.startswith(".byte"):
@@ -475,3 +587,66 @@ def _naked_retail(function: str) -> CCandidate | None:
         f"__attribute__((naked))\nvoid {function}(void)\n{{\n    asm(\".byte {byte_str}\");\n}}",
         f"naked retail bytes ({size}B)",
     )
+
+
+def _load_asm(function: str) -> list[str] | None:
+    for base in (ROOT / "asm" / "nonmatchings", ROOT / "asm" / "matchings"):
+        path = base / f"{function}.s"
+        if path.is_file():
+            return path.read_text().splitlines()
+    return None
+
+
+def main() -> int:
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("function", nargs="?", help="try guess_c on one function")
+    parser.add_argument("--list", action="store_true", help="print PATTERN_CATALOG")
+    parser.add_argument("--verify", action="store_true", help="run match_function on candidate")
+    args = parser.parse_args()
+
+    if args.list:
+        for row in PATTERN_CATALOG:
+            print(f"{row['id']:24s}  {row['note']}")
+            print(f"  {row['summary']}")
+        return 0
+
+    if not args.function:
+        parser.print_help()
+        return 1
+
+    asm = _load_asm(args.function)
+    if asm is None:
+        print(f"error: no asm for {args.function}", file=sys.stderr)
+        return 1
+
+    cand = guess_c(args.function, asm)
+    if cand is None:
+        print(f"no c_patterns match for {args.function}", file=sys.stderr)
+        return 2
+
+    print(f"# {cand.note}")
+    print(cand.body)
+
+    if args.verify:
+        sys.path.insert(0, str(ROOT / "tools" / "decomp"))
+        import subprocess
+        import tempfile
+        from match_function import write_single_function_c  # noqa: E402
+
+        with tempfile.TemporaryDirectory() as tmp:
+            scratch = Path(tmp) / "scratch.c"
+            write_single_function_c(args.function, cand.body, scratch)
+            result = subprocess.run(
+                [sys.executable, str(ROOT / "tools" / "decomp" / "match_function.py"),
+                 args.function, str(scratch)],
+                cwd=str(ROOT),
+            )
+        return result.returncode
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
