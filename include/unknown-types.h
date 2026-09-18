@@ -117,10 +117,12 @@ struct Unk62098 /* >= 0x1c */
     /* 18 */ u32 unk18;
 };
 
-/* 0xC-stride records pointed to by gUnk_0300046C. sub_0803EDC8. */
+/* 0xC-stride records pointed to by gUnk_0300046C. sub_0803EDC8, sub_0803EDF0. */
 struct Unk0C /* 0x0c */
 {
-    /* 00 */ u8 filler_00[0x0c];
+    /* 00 */ u8 filler_00[3];
+    /* 03 */ u8 unk03;
+    /* 04 */ u8 filler_04[8];
 };
 
 /* Battle work block (*gBattleWork). sub_080314FC, sub_08033530. */
@@ -297,16 +299,18 @@ struct Unk7069C /* >= 0x30 */
     /* 2c */ struct Unk705CC *unk2C;
 };
 
+struct Unk705DC; /* word at +0x14. sub_08031300. */
+
 /* Bytes + words + pointer. sub_08031294, sub_080312EC. */
 struct Unk312EC /* >= 0x10 */
 {
-    /* 00 */ u8 unk00;
-    /* 01 */ u8 unk01;
+    /* 00 */ s8 unk00;
+    /* 01 */ s8 unk01;
     /* 02 */ u8 filler_02[2];
     /* 04 */ s32 unk04;
     /* 08 */ u8 unk08;
     /* 09 */ u8 filler_09[3];
-    /* 0c */ void *unk0C;
+    /* 0c */ struct Unk705DC *unk0C;
 };
 
 /* Word count + dest. sub_08062728. */
@@ -499,14 +503,28 @@ struct Unk346C0 /* >= 0x2f8 */
 {
     /* 000 */ struct Unk346C0Inner *unk00;
     /* 004 */ struct Unk346C0Inner *unk04;
-    /* 008 */ u8 filler_08[0x2CC];
+    /* 008 */ struct Unk35878 unk08;
+    /* 018 */ u8 filler_18[0x2B4];
+    /* 2cc */ u32 unk2CC;
+    /* 2d0 */ u8 filler_2D0[4];
     /* 2d4 */ u32 unk2D4;
     /* 2d8 */ u32 unk2D8;
-    /* 2dc */ u8 filler_2DC[8];
+    /* 2dc */ u32 unk2DC;
+    /* 2e0 */ u32 unk2E0;
     /* 2e4 */ u32 unk2E4;
     /* 2e8 */ u32 unk2E8;
     /* 2ec */ u8 filler_2EC[8];
     /* 2f4 */ u32 unk2F4;
+    /* 2f8 */ u32 unk2F8;
+    /* 2fc */ u32 unk2FC;
+    /* 300 */ u8 filler_300[0xC];
+    /* 30c */ u8 unk30C;
+    /* 30d */ u8 filler_30D[2];
+    /* 30f */ u8 unk30F;
+    /* 310 */ u8 unk310;
+    /* 311 */ u8 unk311;
+    /* 312 */ u8 filler_312[2];
+    /* 314 */ u8 unk314;
 };
 
 /* Position + scaled velocity. sub_080360BC. */
@@ -737,6 +755,20 @@ struct Unk67F3C /* >= 0x99 */
     /* 00 */ struct Unk68014 *unk00;
     /* 04 */ u8 filler_04[0x94];
     /* 98 */ u8 unk98;
+};
+
+struct Unk705DC /* >= 0x16 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ u16 unk14;
+};
+
+/* Midpoint + scaled distance. sub_08036264. */
+struct Unk36264 /* >= 0x0c */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

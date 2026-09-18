@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **130/633 (20.5%)** |
-| **Decompiled C (bytes)** | **3,832/90,272 (4.2%)** |
-| Not opcode (C + readable Thumb) | 280/633 (44.2% fn, 45.7% bytes) |
+| **Decompiled C (functions)** | **136/633 (21.5%)** |
+| **Decompiled C (bytes)** | **4,252/90,272 (4.7%)** |
+| Not opcode (C + readable Thumb) | 286/633 (45.2% fn, 46.2% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 353/633 (55.8%) |
+| Opcode `.byte` embeds | 347/633 (54.8%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+6)
+
+- Semantic C: `sub_08035884` (Unk35878 range walk + optional `_08073C4C`), `sub_08036264` (midpoint + scaled distance via `674B0`), `sub_0806306C` (palette CpuSet + free IWRAM slots), `sub_0803EDF0` (byte at +3 on `Unk0C` stride-12), `sub_08072CC0` (free `unk10`), `sub_080720F0` (indexed `71EE4`)
+- Grew `Unk346C0` (`unk08`/`unk2CC`/`unk2DC`/`unk2E0`/`unk2F8`/`unk2FC`/`unk30C`–`unk314`), `Unk0C` (`unk03`), `Unk312EC` (`s8 unk00/unk01`, `Unk705DC *unk0C`); added `Unk705DC`/`Unk36264`
+- Near-miss: extra-`lr` leaves (`61BDC`/`62634`/`62728`/`33958`/`61E40`/`62684`/`6DEF4`/`6AC68`/`2D8C4`/`69F00`/`6BE08`/`35908`/`347E4`), pool-fold (`66434`/`66440`/`6644C`/`62A1C`/`473E4`), same-size (`44F64` muls vs shift-add, `42B28`/`42B50` index regs, `34A68` `0x314-0x1C` reuse, `31300` ldrsb else)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+1)
 
