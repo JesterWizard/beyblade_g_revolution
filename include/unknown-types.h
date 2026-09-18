@@ -262,7 +262,7 @@ struct Unk0798 /* >= 0xa2 */
     /* 94 */ u16 unk94;
     /* 96 */ u8 filler_96[2];
     /* 98 */ u16 unk98;
-    /* 9a */ u8 filler_9A[2];
+    /* 9a */ u16 unk9A;
     /* 9c */ u16 unk9C;
     /* 9e */ u8 filler_9E[2];
     /* a0 */ u16 unkA0;
@@ -659,9 +659,11 @@ struct Unk0380 /* >= 0x1c */
 };
 
 /* Table row returned by sub_08042E78. */
-struct Unk42E78 /* >= 0x02 */
+struct Unk42E78 /* >= 0x04 */
 {
     /* 00 */ s16 unk00;
+    /* 02 */ u8 filler_02;
+    /* 03 */ u8 unk03;
 };
 
 /* Lookup result. sub_080447CC. */
@@ -818,10 +820,61 @@ struct Unk67F3C /* >= 0x99 */
     /* 98 */ u8 unk98;
 };
 
-struct Unk705DC /* >= 0x16 */
+struct Unk705DC /* >= 0x18 */
 {
     /* 00 */ u8 filler_00[0x14];
     /* 14 */ u16 unk14;
+    /* 16 */ u16 unk16;
+};
+
+/* sub_080302A8 */
+struct Unk302A8Inner /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+};
+
+struct Unk302A8 /* >= 0x18 */
+{
+    /* 00 */ struct Unk302A8Inner *unk00;
+    /* 04 */ u8 filler_04[4];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ u8 filler_10[4];
+    /* 14 */ s32 unk14;
+};
+
+struct Unk302A8Src /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+};
+
+/* sub_08030F00 */
+struct Unk30F00Inner /* >= 0x34 */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ u8 filler_10[0x20];
+    /* 30 */ struct Unk705DC *unk30;
+};
+
+struct Unk30F00Mid /* >= 0x04 */
+{
+    /* 00 */ struct Unk30F00Inner *unk00;
+};
+
+struct Unk30F00Src /* >= 0x04 */
+{
+    /* 00 */ struct Unk30F00Mid *unk00;
+};
+
+struct Unk30F00 /* >= 0x10 */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
 };
 
 /* Midpoint + scaled distance. sub_08036264. */
@@ -834,9 +887,45 @@ struct Unk36264 /* >= 0x0c */
 
 struct Unk59C6C /* 0x3c */
 {
-    /* 00 */ u8 filler_00[4];
+    /* 00 */ void *unk00;
     /* 04 */ void *unk04;
-    /* 08 */ u8 filler_08[0x34];
+    /* 08 */ void *unk08;
+    /* 0c */ u8 filler_0C[8];
+    /* 14 */ u32 unk14;
+    /* 18 */ u8 filler_18[0x24];
+};
+
+/* Signed bytes + u8 into ROM tables. sub_0803E328 / 3E374 / 3E3C0. */
+struct Unk3E328 /* >= 0x21 */
+{
+    /* 00 */ u8 filler_00[0x1D];
+    /* 1d */ s8 unk1D;
+    /* 1e */ s8 unk1E;
+    /* 1f */ u8 filler_1F;
+    /* 20 */ u8 unk20;
+};
+
+/* Callback at inner+8. sub_0806D748. */
+struct Unk6D748Inner /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ void *unk08;
+};
+
+struct Unk6D748 /* >= 0x98 */
+{
+    /* 00 */ u8 filler_00[0x94];
+    /* 94 */ struct Unk6D748Inner *unk94;
+};
+
+/* Stride-0x28 slot. sub_08071E84 / sub_08071EE4. */
+struct Unk71E84 /* 0x28 */
+{
+    /* 00 */ u8 filler_00[0x16];
+    /* 16 */ u8 unk16;
+    /* 17 */ u8 filler_17;
+    /* 18 */ u32 unk18;
+    /* 1c */ u8 filler_1C[0xC];
 };
 
 /* Flag + two Unk346C0 slots. sub_08033A5C. */
@@ -861,6 +950,12 @@ struct Unk0758 /* >= 0x07 */
 {
     /* 00 */ u8 filler_00[6];
     /* 06 */ u8 unk06;
+};
+
+struct Unk6F8C4 /* >= 0x08 */
+{
+    /* 00 */ struct Unk6F8C4 *unk00;
+    /* 04 */ struct Unk6F8C4 *unk04;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
