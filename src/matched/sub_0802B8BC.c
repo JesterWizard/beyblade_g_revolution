@@ -1,8 +1,19 @@
 #include "global.h"
 
 // @ 0x0802b8bc
-__attribute__((naked))
+#include "global.h"
+
+// @ 0x0802b8bc
 u16 sub_0802B8BC(s32 a)
 {
-    asm(".byte 0x00, 0x04, 0x03, 0x49, 0x09, 0x68, 0x80, 0x13, 0x40, 0x18, 0x40, 0x88, 0x70, 0x47, 0x00, 0x00, 0x64, 0x02, 0x00, 0x03");
+    register s32 r0 asm("r0");
+    register u8 *r1 asm("r1");
+
+    r0 = a;
+    r0 <<= 16;
+    r1 = *(u8 **)gUnk_03000264;
+    r0 >>= 14;
+    r0 += (u32)r1;
+    return *(u16 *)(r0 + 2);
 }
+

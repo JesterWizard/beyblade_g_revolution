@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **180/633 (28.4%)** |
-| **Decompiled C (bytes)** | **6,690/90,272 (7.4%)** |
-| Not opcode (C + readable Thumb) | 327/633 (51.7% fn, 48.5% bytes) |
+| **Decompiled C (functions)** | **182/633 (28.8%)** |
+| **Decompiled C (bytes)** | **6,782/90,272 (7.5%)** |
+| Not opcode (C + readable Thumb) | 329/633 (52.0% fn, 48.6% bytes) |
 | Readable Thumb | 147/633 (23.2%) |
-| Opcode `.byte` embeds | 306/633 (48.3%) |
+| Opcode `.byte` embeds | 304/633 (48.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 15/160 (9.4% fn, 2.2% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+1)
+
+- Semantic C: `sub_0802B8BC` (halfword table lookup via `gUnk_03000264`, `register asm` for `r0`/`r1` dest reg)
+- Permuter on `sub_0803DD60`: best score **100** (~32k iters) — stays readable Thumb
+- Leaf null-check stubs (`61BDC`/`62634`/`61E40`) still blocked by agbcc extra `push {lr}` on any branch
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+7)
 
