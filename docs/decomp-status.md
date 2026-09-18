@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **148/633 (23.4%)** |
-| **Decompiled C (bytes)** | **4,826/90,272 (5.3%)** |
-| Not opcode (C + readable Thumb) | 298/633 (47.1% fn, 46.8% bytes) |
+| **Decompiled C (functions)** | **152/633 (24.0%)** |
+| **Decompiled C (bytes)** | **5,048/90,272 (5.6%)** |
+| Not opcode (C + readable Thumb) | 302/633 (47.7% fn, 47.0% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 335/633 (52.9%) |
+| Opcode `.byte` embeds | 331/633 (52.3%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,12 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+4)
+
+- Semantic C: `sub_08062AC0` (CpuFill `*08D0` + OBJ pal via `*0x080BB8BC`), `sub_0805DA70` (CpuSet `unk164` to `0x05000340`), `sub_08059D08` (optional `_08073C44` then free `unk0C`), `sub_0806D958` (optional `_08073C4C` then clear `unk80`/`unk84`/`unk88`)
+- Added `Unk59D08`/`Unk6D958`; `_08073C44` prototype
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+7)
 

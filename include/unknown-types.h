@@ -597,6 +597,34 @@ struct Unk0748 /* >= 0x168 */
     /* 164 */ void *unk164;
 };
 
+/* Callback + heap slot. sub_08059D08. */
+struct Unk59D08 /* >= 0x18 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ void *unk04;
+    /* 08 */ void *unk08;
+    /* 0c */ void *unk0C;
+    /* 10 */ u8 filler_10[4];
+    /* 14 */ void *unk14;
+};
+
+/* CpuSet args at +0x80. sub_0806D958. */
+struct Unk6D958Inner /* >= 0x08 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ void *unk04;
+};
+
+struct Unk6D958 /* >= 0x94 */
+{
+    /* 00 */ u8 filler_00[0x80];
+    /* 80 */ void *unk80;
+    /* 84 */ s32 unk84;
+    /* 88 */ s32 unk88;
+    /* 8c */ u8 filler_8C[4];
+    /* 90 */ struct Unk6D958Inner *unk90;
+};
+
 /* IWRAM object at 0x03000380. sub_08033C1C. */
 struct Unk0380 /* >= 0x1c */
 {

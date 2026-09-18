@@ -123,6 +123,7 @@ void sub_0804BD38(void *a);
 void sub_0804C8BC(void *a);
 void sub_0804D420(void *a);
 void _08073C40(void *a);
+void _08073C44(void *a, void *b);
 void _08073C4C(void *a, void *b, u32 c, void *d);
 void sub_0804BE80(void *a);
 void sub_0804CA30(void *a);
@@ -204,6 +205,9 @@ void sub_08061C48(void);
 void sub_08060468(void);
 void sub_08060758(void);
 void sub_08062AC0(void);
+void sub_0805DA70(void);
+void sub_08059D08(struct Unk59D08 *a);
+void sub_0806D958(struct Unk6D958 *a);
 
 void sub_08061BDC(struct Unk61BDC *a);
 void sub_08062634(struct Unk62634 *a, u32 b, u32 c, u32 d);
