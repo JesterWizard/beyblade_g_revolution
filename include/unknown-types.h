@@ -199,9 +199,18 @@ struct Unk1688Entry /* 0x18 */
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
-    /* 0000 */ u8 filler_0000[0x424];
+    /* 0000 */ u8 filler_0000[0x370];
+    /* 0370 */ u32 unk0370;
+    /* 0374 */ u32 unk0374;
+    /* 0378 */ u8 filler_0378[0x34];
+    /* 03AC */ u32 unk03AC;
+    /* 03B0 */ u32 unk03B0;
+    /* 03B4 */ u8 filler_03B4[0x70];
     /* 0424 */ struct Unk705DC *unk0424;
-    /* 0428 */ u8 filler_0428[0x44C];
+    /* 0428 */ u8 filler_0428[0x440];
+    /* 0868 */ u32 unk0868;
+    /* 086C */ u32 unk086C;
+    /* 0870 */ u8 filler_0870[4];
     /* 0874 */ s16 unk0874;
     /* 0876 */ u8 filler_0876[2];
     /* 0878 */ s8 unk0878;
@@ -237,7 +246,8 @@ struct MainWork /* >= 0x18B4 */
     /* 1800 */ u32 unk1800;
     /* 1804 */ u8 filler_1804[4];
     /* 1808 */ u32 unk1808;
-    /* 180C */ u8 filler_180C[0xC];
+    /* 180C */ u32 unk180C;
+    /* 1810 */ u8 filler_1810[8];
     /* 1818 */ u8 unk1818;
     /* 1819 */ u8 unk1819;
     /* 181A */ u8 unk181A;
@@ -1175,6 +1185,53 @@ struct Unk726A4 /* >= 0x14 */
     /* 0a */ u8 filler_0A[2];
     /* 0c */ s32 unk0C;
     /* 10 */ s32 *unk10;
+};
+
+/* sub_0803593C */
+struct Unk3593C /* >= 0x50 */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 unk10;
+    /* 14 */ s32 unk14;
+    /* 18 */ s32 unk18;
+    /* 1c */ s32 unk1C;
+    /* 20 */ s32 unk20;
+    /* 24 */ s32 unk24;
+    /* 28 */ s32 unk28;
+    /* 2c */ s32 unk2C;
+    /* 30 */ s32 unk30;
+    /* 34 */ s32 unk34;
+    /* 38 */ s32 unk38;
+    /* 3c */ s32 unk3C;
+    /* 40 */ s32 unk40;
+    /* 44 */ s32 unk44;
+    /* 48 */ s32 unk48;
+    /* 4c */ s32 unk4C;
+};
+
+/* Pointed to by Unk41348.unk248. sub_08041348. */
+struct Unk41348Inner /* >= 0x4e */
+{
+    /* 00 */ u8 filler_00[0x4A];
+    /* 4a */ u16 unk4A;
+    /* 4c */ u16 unk4C;
+};
+
+/* sub_08041348 */
+struct Unk41348 /* >= 0x323 */
+{
+    /* 000 */ u8 filler_000[0x248];
+    /* 248 */ struct Unk41348Inner *unk248;
+    /* 24c */ u8 filler_24C[0x8B];
+    /* 2d7 */ u8 unk2D7;
+    /* 2d8 */ u8 filler_2D8[0x44];
+    /* 31c */ u16 unk31C;
+    /* 31e */ u16 unk31E;
+    /* 320 */ u16 unk320;
+    /* 322 */ u16 unk322;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

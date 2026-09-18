@@ -127,6 +127,7 @@ void sub_08048DB8(void *a);
 void sub_0804FFCC(void *a);
 void sub_08053690(void *a);
 void sub_08054120(void *a);
+void sub_08057274(void);
 void sub_08056250(void *a);
 void sub_08056BA4(void *a);
 void sub_08048D0C(void *a);
