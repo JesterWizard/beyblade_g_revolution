@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **91/633 (14.4%)** |
-| **Decompiled C (bytes)** | **2,152/90,272 (2.4%)** |
-| Not opcode (C + readable Thumb) | 241/633 (38.1% fn, 43.8% bytes) |
+| **Decompiled C (functions)** | **107/633 (16.9%)** |
+| **Decompiled C (bytes)** | **2,684/90,272 (3.0%)** |
+| Not opcode (C + readable Thumb) | 257/633 (40.6% fn, 44.4% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 392/633 (61.9%) |
+| Opcode `.byte` embeds | 376/633 (59.4%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+16)
+
+- Semantic C: `sub_08033F48`/`3403C`/`34360`/`33E3C` (Unk33F30 init/tick), `sub_0803484C`, `sub_08040530`, `sub_0802EECC`/`2FD80` (VBlank + `_08073C40`), `sub_080312EC`, `sub_08034FBC`, `sub_08045AA8`, `sub_08060254`, `sub_080608D4`, `sub_08067634`, `sub_08070C98`, `sub_08031124`
+- Grew `Unk33F30`/`Unk68574`/`Unk0798`/`Unk047C`/`Unk026C`/`Unk0748`; promoted `gUnk_0300026C`; `sub_080674A0` now takes dividend/divisor
+- Near-miss: `sub_080447CC` (ld r1 vs r0), `sub_08033C1C`/`615EC` (pool fold / extra lr), `sub_080679A4`/`679C0`/`5DA70` (pool order)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+3)
 
