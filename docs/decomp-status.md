@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **116/633 (18.3%)** |
-| **Decompiled C (bytes)** | **3,074/90,272 (3.4%)** |
-| Not opcode (C + readable Thumb) | 266/633 (42.0% fn, 44.9% bytes) |
+| **Decompiled C (functions)** | **127/633 (20.1%)** |
+| **Decompiled C (bytes)** | **3,594/90,272 (4.0%)** |
+| Not opcode (C + readable Thumb) | 277/633 (43.8% fn, 45.4% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 367/633 (58.0%) |
+| Opcode `.byte` embeds | 356/633 (56.2%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+11)
+
+- Semantic C: `sub_0802E18C` (div/mod tens), `sub_08070AD4`/`70DF4` (`7069C` then draw), `sub_08041980` (free 32 `Unk68574` slots), `sub_080686B4` (callback or copy 3 words), `sub_0806F174` (store + optional `6F05C`/`73C4C`), `sub_080310F0` (clamp via `31124`), `sub_08043ADC` (stride-`0xDC` free + `6A434`), `sub_08033D90` (rng index + `35878`), `sub_0802E210` (`42E78`/`42BE8`), `sub_0803413C` (Unk33F30 setup)
+- Grew `Unk33F30` (front fields, `unk1C` inner), `Unk070C` (`unk00[13]`), `Unk0798` (`unk5D`/`unk94`), `Unk312EC` (`unk08` as byte); `sub_080674A4` now takes dividend/divisor
+- Near-miss: `sub_08033C1C` (pool-fold `&unk0C` → `0x0300038C`), `sub_08062C80` (extra 4B), `sub_080408C4` (epilogue / extra sxt), `sub_08060D28`/`61308` (pool order)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+1)
 

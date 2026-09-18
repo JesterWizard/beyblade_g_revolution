@@ -74,7 +74,7 @@ struct Unk68574 /* >= 0xb4 */
     /* aa */ u16 unkAA;
     /* ac */ u16 unkAC;
     /* ae */ u16 unkAE;
-    /* b0 */ u32 unkB0;
+    /* b0 */ void *unkB0;
     /* b4 */ u8 filler_B4[4];
     /* b8 */ void *unkB8;
 };
@@ -247,11 +247,14 @@ struct Unk71F84 /* >= 0x17 */
 /* *gUnk_03000798. sub_08061784 family, sub_080615EC. */
 struct Unk0798 /* >= 0xa2 */
 {
-    /* 00 */ u8 filler_00[0x8C];
+    /* 00 */ u8 filler_00[0x5D];
+    /* 5d */ u8 unk5D;
+    /* 5e */ u8 filler_5E[0x2E];
     /* 8c */ u32 unk8C;
     /* 90 */ u16 unk90;
     /* 92 */ u16 unk92;
-    /* 94 */ u8 filler_94[4];
+    /* 94 */ u16 unk94;
+    /* 96 */ u8 filler_96[2];
     /* 98 */ u16 unk98;
     /* 9a */ u8 filler_9A[2];
     /* 9c */ u16 unk9C;
@@ -297,7 +300,8 @@ struct Unk312EC /* >= 0x10 */
     /* 01 */ u8 unk01;
     /* 02 */ u8 filler_02[2];
     /* 04 */ s32 unk04;
-    /* 08 */ u32 unk08;
+    /* 08 */ u8 unk08;
+    /* 09 */ u8 filler_09[3];
     /* 0c */ void *unk0C;
 };
 
@@ -345,19 +349,34 @@ struct Unk62044 /* >= 0x10 */
     /* 0c */ u32 unk0C;
 };
 
+/* Byte at +0x2C, pointer table at +0x30. sub_08033D90. */
+struct Unk33F30Inner /* >= 0x34 */
+{
+    /* 00 */ u8 filler_00[0x2C];
+    /* 2c */ u8 unk2C;
+    /* 2d */ u8 filler_2D[3];
+    /* 30 */ void **unk30;
+};
+
 /* Signed store + flag. sub_08033F30, sub_08033F48, sub_08034360, sub_0803403C. */
 struct Unk33F30 /* >= 0x68 */
 {
-    /* 00 */ u8 filler_00[0x14];
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u8 unk08;
+    /* 09 */ u8 unk09;
+    /* 0a */ u8 unk0A;
+    /* 0b */ u8 filler_0B;
+    /* 0c */ u32 unk0C;
+    /* 10 */ u8 filler_10[4];
     /* 14 */ s32 unk14;
     /* 18 */ u32 unk18;
-    /* 1c */ u8 unk1C;
-    /* 1d */ u8 filler_1D[3];
+    /* 1c */ struct Unk33F30Inner *unk1C;
     /* 20 */ u32 unk20;
     /* 24 */ u8 unk24;
     /* 25 */ u8 unk25;
     /* 26 */ u8 filler_26[2];
-    /* 28 */ u32 unk28;
+    /* 28 */ struct Unk33F30Inner *unk28;
     /* 2c */ u32 unk2C;
     /* 30 */ u8 unk30;
     /* 31 */ u8 unk31;
@@ -382,7 +401,7 @@ struct Unk026C /* >= 0x50 */
     /* 00 */ u8 filler_00[8];
     /* 08 */ struct Unk026CInner *unk08;
     /* 0c */ u8 filler_0C[0x42];
-    /* 4e */ u16 unk4E;
+    /* 4e */ s16 unk4E;
 };
 
 /* Free pointer at +0x10. sub_08072CC0. */
@@ -606,10 +625,10 @@ struct Unk40D4 /* >= 0x10 */
     /* 0c */ void **unk0C;
 };
 
-/* Nested Unk7069C at +0x34. sub_08054558. */
+/* Nested Unk7069C at +0x34. sub_08054558, sub_08054454. */
 struct Unk070C /* >= 0x44 */
 {
-    /* 00 */ u8 filler_00[0x34];
+    /* 00 */ void *unk00[13];
     /* 34 */ struct Unk7069C unk34;
 };
 
@@ -669,6 +688,17 @@ struct Unk41394 /* >= 0x240 */
 {
     /* 000 */ u8 filler_00[0x220];
     /* 220 */ void *unk220[8];
+};
+
+/* Halfword stride blit. sub_080726E0. */
+struct Unk726E0 /* >= 0x10 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u16 unk04;
+    /* 06 */ u16 unk06;
+    /* 08 */ s16 unk08;
+    /* 0a */ u8 filler_0A[2];
+    /* 0c */ void *unk0C;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
