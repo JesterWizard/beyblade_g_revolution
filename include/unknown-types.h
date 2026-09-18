@@ -1122,4 +1122,19 @@ struct Unk6F8C4 /* >= 0x08 */
     /* 04 */ struct Unk6F8C4 *unk04;
 };
 
+/* Destination of sub_080361CC's field copy/negate. */
+struct Unk361CCDst /* >= 0x54 */
+{
+    /* 00 */ u8 filler_00[0x28];
+    /* 28 */ s32 unk28;
+    /* 2c */ u8 filler_2C[4];
+    /* 30 */ s32 unk30;
+    /* 34 */ s32 unk34;
+    /* 38 */ u8 filler_38[0x10];
+    /* 48 */ s16 unk48;
+    /* 4a */ s16 unk4A;
+    /* 4c */ s32 unk4C;
+    /* 50 */ s32 unk50;
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */

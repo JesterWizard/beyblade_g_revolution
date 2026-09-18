@@ -2,18 +2,18 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-18T21:47:22Z_
+_Updated: 2026-09-18T22:02:22Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 183 |
-| Still need semantic C | **450** |
-| Readable Thumb remaining | 447 |
+| Semantic C done | 194 |
+| Still need semantic C | **439** |
+| Readable Thumb remaining | 436 |
 | Opcode embeds remaining | 3 |
-| Battle pending | 130 (15 already semantic) |
-| Blocked (documented) | 23 |
+| Battle pending | 127 (23 already semantic) |
+| Blocked (documented) | 19 |
 
 Ranking: **battle** · showing top **40**
 
@@ -37,9 +37,6 @@ Ranking: **battle** · showing top **40**
 | `sub_08037508` | `0x08037508` | 452 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_08032DC4` | `0x08032DC4` | 660 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
-| `sub_0803DD88` | `0x0803DD88` | 40 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803DDB0` | `0x0803DDB0` | 40 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803DDD8` | `0x0803DDD8` | 40 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802B994` | `0x0802B994` | 58 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804495C` | `0x0804495C` | 60 | 1 | pool | asm | (gMainWorkPtr) |
@@ -61,6 +58,9 @@ Ranking: **battle** · showing top **40**
 | `sub_080424E8` | `0x080424E8` | 88 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08040EF4` | `0x08040EF4` | 88 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803D4C4` | `0x0803D4C4` | 88 | 1 | pool | asm | (gBattleWork) |
+| `sub_080449C4` | `0x080449C4` | 92 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08046278` | `0x08046278` | 92 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_080435D8` | `0x080435D8` | 96 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -69,12 +69,7 @@ Ranking: **battle** · showing top **40**
 | `sub_0802D8C4` | `0x0802D8C4` | 24 | agbcc extra push {lr} on branch leaves |
 | `sub_08033530` | `0x08033530` | 68 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
-| `sub_0803DD60` | `0x0803DD60` | 40 | main-work table lookup (row[gMainWorkPtr->unk1818][idx] @ 0x0807B0C4) — agbcc picks different literal-pool load order (r1/r2/r3) than retail on every source rewrite tried; same-size DIFF, needs permuter |
-| `sub_0803EBB0` | `0x0803EBB0` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807B6DC) — same agbcc pool-order quirk; needs permuter |
-| `sub_0803EC34` | `0x0803EC34` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BB6C) — same agbcc pool-order quirk; needs permuter |
-| `sub_0803ECB8` | `0x0803ECB8` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BDA4) — same agbcc pool-order quirk; needs permuter |
 | `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
-| `sub_08042B00` | `0x08042B00` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x08090FF0) — same agbcc pool-order quirk; needs permuter |
 | `sub_080473E4` | `0x080473E4` | 20 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
 | `sub_080475C4` | `0x080475C4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_080475F4` | `0x080475F4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
@@ -84,6 +79,7 @@ Ranking: **battle** · showing top **40**
 | `sub_08061E40` | `0x08061E40` | 20 | agbcc extra push {lr} on null-check leaf |
 | `sub_08062634` | `0x08062634` | 12 | agbcc extra push {lr} on null-check leaf |
 | `sub_08062728` | `0x08062728` | 18 | u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen |
+| `sub_08062CF4` | `0x08062CF4` | 48 | BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] -> u16 @ PLTT 0x05000200+idx*2 — logic reconstructed correctly (same-size DIFF, ~1 instruction reordered) across many register-pinned variants; retail keeps r6 live (push {r4,r5,r6,lr}) but my C never needed r6 pressure, changing push set; needs permuter |
 | `sub_0806A6F8` | `0x0806A6F8` | 436 | docs/battle.md: readable Thumb — large input hub (436B, 6 IWRAM refs) |
 | `sub_0806FEFC` | `0x0806FEFC` | 44 | BtlObjNode move-to-tail (gBtlObjListHead/Tail) — agbcc inserts extra push {lr}/pop{r1}+bx r1 frame on this null-check leaf like sub_0802D8C4/sub_08061BDC; same-size DIFF on direct-return form, +12B with early-return form; needs permuter |
 | `sub_0806FF28` | `0x0806FF28` | 48 | BtlObj unlink+push-to-head (obj->unk19 early return) — same agbcc extra push{lr} frame quirk as sub_0806FEFC; +4B DIFF; needs permuter |
@@ -102,6 +98,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (427 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (420 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

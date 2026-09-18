@@ -44,32 +44,12 @@ name = "sub_080473E4"
 reason = "dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5)"
 
 [[block]]
-name = "sub_0803DD60"
-reason = "main-work table lookup (row[gMainWorkPtr->unk1818][idx] @ 0x0807B0C4) — agbcc picks different literal-pool load order (r1/r2/r3) than retail on every source rewrite tried; same-size DIFF, needs permuter"
-
-[[block]]
 name = "sub_0806FEFC"
 reason = "BtlObjNode move-to-tail (gBtlObjListHead/Tail) — agbcc inserts extra push {lr}/pop{r1}+bx r1 frame on this null-check leaf like sub_0802D8C4/sub_08061BDC; same-size DIFF on direct-return form, +12B with early-return form; needs permuter"
 
 [[block]]
 name = "sub_0806FF28"
 reason = "BtlObj unlink+push-to-head (obj->unk19 early return) — same agbcc extra push{lr} frame quirk as sub_0806FEFC; +4B DIFF; needs permuter"
-
-[[block]]
-name = "sub_0803EBB0"
-reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807B6DC) — same agbcc pool-order quirk; needs permuter"
-
-[[block]]
-name = "sub_0803EC34"
-reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BB6C) — same agbcc pool-order quirk; needs permuter"
-
-[[block]]
-name = "sub_0803ECB8"
-reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BDA4) — same agbcc pool-order quirk; needs permuter"
-
-[[block]]
-name = "sub_08042B00"
-reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x08090FF0) — same agbcc pool-order quirk; needs permuter"
 
 [[block]]
 name = "sub_08034894"
@@ -102,3 +82,7 @@ reason = "u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm 
 [[block]]
 name = "sub_08074144"
 reason = "single instruction 'mov pc, lr' (2B) — semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm"
+
+[[block]]
+name = "sub_08062CF4"
+reason = "BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] -> u16 @ PLTT 0x05000200+idx*2 — logic reconstructed correctly (same-size DIFF, ~1 instruction reordered) across many register-pinned variants; retail keeps r6 live (push {r4,r5,r6,lr}) but my C never needed r6 pressure, changing push set; needs permuter"
