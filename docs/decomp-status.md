@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **136/633 (21.5%)** |
-| **Decompiled C (bytes)** | **4,252/90,272 (4.7%)** |
-| Not opcode (C + readable Thumb) | 286/633 (45.2% fn, 46.2% bytes) |
+| **Decompiled C (functions)** | **141/633 (22.3%)** |
+| **Decompiled C (bytes)** | **4,434/90,272 (4.9%)** |
+| Not opcode (C + readable Thumb) | 291/633 (46.0% fn, 46.4% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 347/633 (54.8%) |
+| Opcode `.byte` embeds | 342/633 (54.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+5)
+
+- Semantic C: `sub_080679A4`/`679C0` (CpuSet to BG/OBJ palettes), `sub_080733BC` (append byte + NUL), `sub_080735B0` (walk pointer list via `73114`), `sub_08059C6C` (20 stride-`0x3C` slots)
+- Grew `Unk047C` (`unk810[9]`); added `Unk59C6C`
+- Near-miss: `sub_080447CC` (unk18 in r1 vs r0), `sub_0803DCFC` (index in r2 vs r1), `sub_0806105C` (counter vs string regs), `sub_08068884` (extra `lr`)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+6)
 

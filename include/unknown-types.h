@@ -435,14 +435,14 @@ struct Unk69C14 /* >= 0x5f */
 };
 
 /* Word at +0x800, count at +0x80C, pointer table at +0. sub_080400C0, sub_080405E8, sub_08040530. */
-struct Unk047C /* >= 0x814 */
+struct Unk047C /* >= 0x834 */
 {
     /* 000 */ void *unk00[0x200];
     /* 800 */ u32 unk800;
     /* 804 */ u8 filler_804[4];
     /* 808 */ u32 unk808;
     /* 80c */ u32 unk80C;
-    /* 810 */ u32 unk810;
+    /* 810 */ void *unk810[9];
 };
 
 /* Stride-4 u16 table. sub_0802B8BC. */
@@ -769,6 +769,13 @@ struct Unk36264 /* >= 0x0c */
     /* 00 */ s32 unk00;
     /* 04 */ s32 unk04;
     /* 08 */ s32 unk08;
+};
+
+struct Unk59C6C /* 0x3c */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ void *unk04;
+    /* 08 */ u8 filler_08[0x34];
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
