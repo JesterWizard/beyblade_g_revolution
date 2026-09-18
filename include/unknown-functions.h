@@ -161,7 +161,7 @@ void sub_0804BE80(void *a);
 void sub_0804CA30(void *a);
 void sub_0804D58C(void *a);
 void sub_08062960(void);
-void sub_0806FF28(void *a);
+void sub_0806FF28(struct BtlObj *a);
 void sub_08070678(struct Unk7069C *a);
 void sub_0806209C(struct Unk62044 *a);
 void sub_08062044(struct Unk62044 *a);
