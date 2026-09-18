@@ -6,12 +6,12 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **28.8%** of functions (182/633) and **7.4%** of original function bytes (6,716/90,272).
+Decompiled C is **28.9%** of functions (183/633) and **7.5%** of original function bytes (6,752/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `█████████░░░░░░░░░░░░░░░░░░░░░░░` | **28.8%** | 182/633 |
-| Decompiled C (bytes) | `██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **7.4%** | 6,716/90,272 |
+| Decompiled C (functions) | `█████████░░░░░░░░░░░░░░░░░░░░░░░` | **28.9%** | 183/633 |
+| Decompiled C (bytes) | `██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **7.5%** | 6,752/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **99.5%** | 630/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **99.8%** | 90,098/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -21,15 +21,15 @@ xychart-beta
     title "Decompiled C vs original (%)"
     x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
     y-axis "Percent" 0 --> 100
-    bar [28.8, 7.4, 99.5, 99.8]
+    bar [28.9, 7.5, 99.5, 99.8]
 ```
 
 ![Decompiled C vs original](docs/decomp-progress.svg)
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 182 (28.8%) | 6,716 (7.4%) |
-| Readable Thumb | 448 (70.8%) | 83,382 (92.4%) |
+| Semantic C | 183 (28.9%) | 6,752 (7.5%) |
+| Readable Thumb | 447 (70.6%) | 83,346 (92.3%) |
 | Opcode embed | 3 (0.5%) | 174 (0.2%) |
 
 Battle: **9.4%** functions / **2.2%** bytes in semantic C (15/160; 0 opcode left).

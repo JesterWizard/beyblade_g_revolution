@@ -2,18 +2,18 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-18T20:41:50Z_
+_Updated: 2026-09-18T21:47:22Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 182 |
-| Still need semantic C | **451** |
-| Readable Thumb remaining | 448 |
+| Semantic C done | 183 |
+| Still need semantic C | **450** |
+| Readable Thumb remaining | 447 |
 | Opcode embeds remaining | 3 |
-| Battle pending | 143 (15 already semantic) |
-| Blocked (documented) | 8 |
+| Battle pending | 130 (15 already semantic) |
+| Blocked (documented) | 23 |
 
 Ranking: **battle** · showing top **40**
 
@@ -21,15 +21,10 @@ Ranking: **battle** · showing top **40**
 
 | Function | Address | Bytes | Battle refs | Pool | Kind | Notes |
 |----------|---------|------:|------------:|:----:|------|-------|
-| `sub_0806A6F8` | `0x0806A6F8` | 436 | 6 | pool | asm | (gBtlInputMask, gBtlState, gBattlerArena/gBtlKeys) — Battle input / key queue (6 IWRAM refs, large) |
-| `sub_08034894` | `0x08034894` | 84 | 3 | pool | asm | (gBtlInputMask, gBattlerArena/gBtlKeysHeld, gBtlK) — Small battle input helper (3 refs, 32B score) |
 | `sub_08033188` | `0x08033188` | 604 | 5 | pool | asm | (gMainWorkPtr, gBattleWork, gBtlInputMask, gBattl) |
-| `sub_08073114` | `0x08073114` | 112 | 3 | pool | asm | (gBtlObjTable, gBtlObjTableCount, gBtlObjLiveCoun) |
 | `sub_0807309C` | `0x0807309C` | 120 | 3 | pool | asm | (gBtlObjTable, gBtlObjTableCount, gBtlObjLiveCoun) |
 | `sub_080436B0` | `0x080436B0` | 658 | 3 | pool | asm | (gMainWorkPtr, gBtlInputMask, gBattlerArena/gBtlK) |
 | `sub_08046E7C` | `0x08046E7C` | 872 | 3 | pool | asm | (gMainWorkPtr, gBtlInputMask, gBattlerArena/gBtlK) |
-| `sub_0806FEFC` | `0x0806FEFC` | 44 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
-| `sub_0806FF28` | `0x0806FF28` | 48 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_08038314` | `0x08038314` | 108 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
 | `sub_08045C5C` | `0x08045C5C` | 136 | 2 | pool | asm | (gMainWorkPtr, gBtlInputMask) |
 | `sub_08037430` | `0x08037430` | 216 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
@@ -42,17 +37,9 @@ Ranking: **battle** · showing top **40**
 | `sub_08037508` | `0x08037508` | 452 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_08032DC4` | `0x08032DC4` | 660 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
-| `sub_0803DD60` | `0x0803DD60` | 40 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803EBB0` | `0x0803EBB0` | 40 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803EC34` | `0x0803EC34` | 40 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803ECB8` | `0x0803ECB8` | 40 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08042B00` | `0x08042B00` | 40 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DD88` | `0x0803DD88` | 40 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DDB0` | `0x0803DDB0` | 40 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DDD8` | `0x0803DDD8` | 40 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080428C4` | `0x080428C4` | 44 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080475C4` | `0x080475C4` | 48 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080475F4` | `0x080475F4` | 48 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802B994` | `0x0802B994` | 58 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804495C` | `0x0804495C` | 60 | 1 | pool | asm | (gMainWorkPtr) |
@@ -61,13 +48,19 @@ Ranking: **battle** · showing top **40**
 | `sub_080330F4` | `0x080330F4` | 72 | 1 | pool | asm | (gBattleWork) |
 | `sub_08046230` | `0x08046230` | 72 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08052FC8` | `0x08052FC8` | 72 | 1 | pool | asm | (gMainWorkPtr) |
-
-## Pinned (manual)
-
-| Function | Address | Bytes | Battle refs | Pool | Kind | Notes |
-|----------|---------|------:|------------:|:----:|------|-------|
-| `sub_0806A6F8` | `0x0806A6F8` | 436 | 6 | pool | asm | (gBtlInputMask, gBtlState, gBattlerArena/gBtlKeys) — Battle input / key queue (6 IWRAM refs, large) |
-| `sub_08034894` | `0x08034894` | 84 | 3 | pool | asm | (gBtlInputMask, gBattlerArena/gBtlKeysHeld, gBtlK) — Small battle input helper (3 refs, 32B score) |
+| `sub_08043B90` | `0x08043B90` | 76 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0802C5DC` | `0x0802C5DC` | 78 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0803DBD0` | `0x0803DBD0` | 80 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08045128` | `0x08045128` | 80 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08033574` | `0x08033574` | 80 | 1 | pool | asm | (gBattleWork) |
+| `sub_0803E258` | `0x0803E258` | 82 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08041F88` | `0x08041F88` | 84 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08052934` | `0x08052934` | 84 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0805D99C` | `0x0805D99C` | 84 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08038D10` | `0x08038D10` | 86 | 1 | pool | asm | (gBattleWork) |
+| `sub_080424E8` | `0x080424E8` | 88 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08040EF4` | `0x08040EF4` | 88 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0803D4C4` | `0x0803D4C4` | 88 | 1 | pool | asm | (gBattleWork) |
 
 ## Blocked
 
@@ -75,12 +68,27 @@ Ranking: **battle** · showing top **40**
 |----------|---------|------:|--------|
 | `sub_0802D8C4` | `0x0802D8C4` | 24 | agbcc extra push {lr} on branch leaves |
 | `sub_08033530` | `0x08033530` | 68 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
+| `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
+| `sub_0803DD60` | `0x0803DD60` | 40 | main-work table lookup (row[gMainWorkPtr->unk1818][idx] @ 0x0807B0C4) — agbcc picks different literal-pool load order (r1/r2/r3) than retail on every source rewrite tried; same-size DIFF, needs permuter |
+| `sub_0803EBB0` | `0x0803EBB0` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807B6DC) — same agbcc pool-order quirk; needs permuter |
+| `sub_0803EC34` | `0x0803EC34` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BB6C) — same agbcc pool-order quirk; needs permuter |
+| `sub_0803ECB8` | `0x0803ECB8` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BDA4) — same agbcc pool-order quirk; needs permuter |
+| `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
+| `sub_08042B00` | `0x08042B00` | 40 | main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x08090FF0) — same agbcc pool-order quirk; needs permuter |
 | `sub_080473E4` | `0x080473E4` | 20 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
+| `sub_080475C4` | `0x080475C4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
+| `sub_080475F4` | `0x080475F4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_080601C4` | `0x080601C4` | 92 | r8 pool pin — permuter best score ~100 |
 | `sub_080615EC` | `0x080615EC` | 36 | branchy asm — agbcc compile fail |
 | `sub_08061BDC` | `0x08061BDC` | 12 | agbcc extra push {lr} on null-check leaf |
 | `sub_08061E40` | `0x08061E40` | 20 | agbcc extra push {lr} on null-check leaf |
 | `sub_08062634` | `0x08062634` | 12 | agbcc extra push {lr} on null-check leaf |
+| `sub_08062728` | `0x08062728` | 18 | u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen |
+| `sub_0806A6F8` | `0x0806A6F8` | 436 | docs/battle.md: readable Thumb — large input hub (436B, 6 IWRAM refs) |
+| `sub_0806FEFC` | `0x0806FEFC` | 44 | BtlObjNode move-to-tail (gBtlObjListHead/Tail) — agbcc inserts extra push {lr}/pop{r1}+bx r1 frame on this null-check leaf like sub_0802D8C4/sub_08061BDC; same-size DIFF on direct-return form, +12B with early-return form; needs permuter |
+| `sub_0806FF28` | `0x0806FF28` | 48 | BtlObj unlink+push-to-head (obj->unk19 early return) — same agbcc extra push{lr} frame quirk as sub_0806FEFC; +4B DIFF; needs permuter |
+| `sub_08073114` | `0x08073114` | 112 | BtlObjTable scan+remove (loop over gBtlObjTable[0..gBtlObjTableCount) matching entry->key==obj, calls sub_0806A434/sub_08067B98) — logic reconstructed correctly (same-size DIFF on every variant tried) but agbcc compiles the do-while as pre-test loop + different table-pointer register placement than retail; needs permuter or deeper agbcc loop-codegen trick |
+| `sub_08074144` | `0x08074144` | 2 | single instruction 'mov pc, lr' (2B) — semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm |
 
 ## Commands
 
@@ -94,6 +102,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (443 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (427 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

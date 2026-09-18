@@ -8,13 +8,7 @@ top = 40
 prefer = "battle"
 
 # Hand-picked targets — shown first, in file order.
-[[pin]]
-name = "sub_0806A6F8"
-note = "Battle input / key queue (6 IWRAM refs, large)"
-
-[[pin]]
-name = "sub_08034894"
-note = "Small battle input helper (3 refs, 32B score)"
+# (sub_0806A6F8 / sub_08034894 unpinned — both confirmed agbcc-hard, see [[block]] below)
 
 # Known hard cases — excluded from "recommended next", listed under Blocked.
 [[block]]
@@ -48,3 +42,63 @@ reason = "battle state branch — subs r2 #0x6C vs direct unk201C pool (same-siz
 [[block]]
 name = "sub_080473E4"
 reason = "dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5)"
+
+[[block]]
+name = "sub_0803DD60"
+reason = "main-work table lookup (row[gMainWorkPtr->unk1818][idx] @ 0x0807B0C4) — agbcc picks different literal-pool load order (r1/r2/r3) than retail on every source rewrite tried; same-size DIFF, needs permuter"
+
+[[block]]
+name = "sub_0806FEFC"
+reason = "BtlObjNode move-to-tail (gBtlObjListHead/Tail) — agbcc inserts extra push {lr}/pop{r1}+bx r1 frame on this null-check leaf like sub_0802D8C4/sub_08061BDC; same-size DIFF on direct-return form, +12B with early-return form; needs permuter"
+
+[[block]]
+name = "sub_0806FF28"
+reason = "BtlObj unlink+push-to-head (obj->unk19 early return) — same agbcc extra push{lr} frame quirk as sub_0806FEFC; +4B DIFF; needs permuter"
+
+[[block]]
+name = "sub_0803EBB0"
+reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807B6DC) — same agbcc pool-order quirk; needs permuter"
+
+[[block]]
+name = "sub_0803EC34"
+reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BB6C) — same agbcc pool-order quirk; needs permuter"
+
+[[block]]
+name = "sub_0803ECB8"
+reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x0807BDA4) — same agbcc pool-order quirk; needs permuter"
+
+[[block]]
+name = "sub_08042B00"
+reason = "main-work table lookup, byte-identical shape to sub_0803DD60 (table @ 0x08090FF0) — same agbcc pool-order quirk; needs permuter"
+
+[[block]]
+name = "sub_08034894"
+reason = "docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields)"
+
+[[block]]
+name = "sub_0806A6F8"
+reason = "docs/battle.md: readable Thumb — large input hub (436B, 6 IWRAM refs)"
+
+[[block]]
+name = "sub_080428C4"
+reason = "docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)"
+
+[[block]]
+name = "sub_080475C4"
+reason = "docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)"
+
+[[block]]
+name = "sub_080475F4"
+reason = "docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)"
+
+[[block]]
+name = "sub_08073114"
+reason = "BtlObjTable scan+remove (loop over gBtlObjTable[0..gBtlObjTableCount) matching entry->key==obj, calls sub_0806A434/sub_08067B98) — logic reconstructed correctly (same-size DIFF on every variant tried) but agbcc compiles the do-while as pre-test loop + different table-pointer register placement than retail; needs permuter or deeper agbcc loop-codegen trick"
+
+[[block]]
+name = "sub_08062728"
+reason = "u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen"
+
+[[block]]
+name = "sub_08074144"
+reason = "single instruction 'mov pc, lr' (2B) — semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm"
