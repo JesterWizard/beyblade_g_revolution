@@ -209,7 +209,7 @@ struct Unk447CC *sub_08043B58(void);
 void sub_08059DC8(u32 a);
 u8 sub_08035908(struct Unk35878 *a);
 void sub_08033EA4(struct Unk33F30 *a);
-void sub_080726A4(void *a, u32 b, u32 c, u32 d, u32 e);
+void sub_080726A4(struct Unk726A4 *a, s32 b, s32 c, s32 d, s32 e);
 void sub_08072A38(void *a, u32 b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h, u32 i);
 s32 sub_0803C6B8(s32 a, s32 b);
 s32 sub_08074B40(s32 a);

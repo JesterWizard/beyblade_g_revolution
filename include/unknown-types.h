@@ -1165,4 +1165,16 @@ struct Unk66AD4 /* >= 0x30c */
     /* 308 */ s32 unk308;
 };
 
+/* sub_080726A4 */
+struct Unk726A4 /* >= 0x14 */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s16 unk04;
+    /* 06 */ s16 unk06;
+    /* 08 */ s16 unk08;
+    /* 0a */ u8 filler_0A[2];
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 *unk10;
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */
