@@ -4,5 +4,36 @@
 __attribute__((naked))
 void sub_08062068(void)
 {
-    asm(".byte 0x10, 0xB5, 0x0C, 0x1C, 0x01, 0x2A, 0x0C, 0xD0, 0x01, 0x2A, 0x02, 0xD3, 0x02, 0x2A, 0x05, 0xD0, 0x0A, 0xE0, 0x1E, 0x22, 0x81, 0x5E, 0x60, 0x08, 0x0B, 0x1A, 0x05, 0xE0, 0x1E, 0x21, 0x43, 0x5E, 0x02, 0xE0, 0x1E, 0x22, 0x80, 0x5E, 0x03, 0x1B, 0x18, 0x1C, 0x10, 0xBC, 0x02, 0xBC, 0x08, 0x47");
+    asm(
+        ".syntax unified\n"
+        "push {r4, lr}\n"
+        "adds r4, r1, #0x0\n"
+        "cmp r2, #0x01\n"
+        "beq _0806208A\n"
+        "cmp r2, #0x01\n"
+        "bcc _0806207A\n"
+        "cmp r2, #0x02\n"
+        "beq _08062084\n"
+        "b _08062090\n"
+        "_0806207A:\n"
+        "movs r2, #0x1E\n"
+        "ldsh r1, [r0, r2]\n"
+        "lsrs r0, r4, #0x01\n"
+        "subs r3, r1, r0\n"
+        "b _08062090\n"
+        "_08062084:\n"
+        "movs r1, #0x1E\n"
+        "ldsh r3, [r0, r1]\n"
+        "b _08062090\n"
+        "_0806208A:\n"
+        "movs r2, #0x1E\n"
+        "ldsh r0, [r0, r2]\n"
+        "subs r3, r0, r4\n"
+        "_08062090:\n"
+        "adds r0, r3, #0x0\n"
+        "pop {r4}\n"
+        "pop {r1}\n"
+        "bx r1\n"
+    );
 }
+

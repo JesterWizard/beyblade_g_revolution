@@ -2,7 +2,31 @@
 
 // @ 0x08073078
 __attribute__((naked))
-void sub_08073078(void)
+s32 sub_08073078(u8 *s)
 {
-    asm(".byte 0x02, 0x1C, 0x00, 0x21, 0x00, 0x2A, 0x02, 0xD1, 0x01, 0x20, 0x40, 0x42, 0x08, 0xE0, 0x10, 0x78, 0x00, 0x28, 0x04, 0xD0, 0x01, 0x31, 0x50, 0x18, 0x00, 0x78, 0x00, 0x28, 0xFA, 0xD1, 0x08, 0x1C, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "adds r2, r0, #0x0\n"
+        "movs r1, #0x00\n"
+        "cmp r2, #0x00\n"
+        "bne _08073086\n"
+        "movs r0, #0x01\n"
+        "negs r0, r0\n"
+        "b _08073098\n"
+        "_08073086:\n"
+        "ldrb r0, [r2, #0x00]\n"
+        "cmp r0, #0x00\n"
+        "beq _08073096\n"
+        "_0807308C:\n"
+        "adds r1, #0x01\n"
+        "adds r0, r2, r1\n"
+        "ldrb r0, [r0, #0x00]\n"
+        "cmp r0, #0x00\n"
+        "bne _0807308C\n"
+        "_08073096:\n"
+        "adds r0, r1, #0x0\n"
+        "_08073098:\n"
+        "bx lr\n"
+    );
 }
+

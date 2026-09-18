@@ -4,5 +4,24 @@
 __attribute__((naked))
 void sub_08044D8C(void)
 {
-    asm(".byte 0x10, 0xB5, 0x00, 0x22, 0xFB, 0x24, 0xE4, 0x00, 0x03, 0x1D, 0x01, 0x21, 0x01, 0xCB, 0x12, 0x18, 0x01, 0x31, 0xA1, 0x42, 0xFA, 0xD3, 0x10, 0x1C, 0x10, 0xBC, 0x02, 0xBC, 0x08, 0x47");
+    asm(
+        ".syntax unified\n"
+        "push {r4, lr}\n"
+        "movs r2, #0x00\n"
+        "movs r4, #0xFB\n"
+        "lsls r4, r4, #0x03\n"
+        "adds r3, r0, #0x4\n"
+        "movs r1, #0x01\n"
+        "_08044D98:\n"
+        "ldm r3!, {r0}\n"
+        "adds r2, r2, r0\n"
+        "adds r1, #0x01\n"
+        "cmp r1, r4\n"
+        "bcc _08044D98\n"
+        "adds r0, r2, #0x0\n"
+        "pop {r4}\n"
+        "pop {r1}\n"
+        "bx r1\n"
+    );
 }
+

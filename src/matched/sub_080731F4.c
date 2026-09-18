@@ -2,7 +2,32 @@
 
 // @ 0x080731f4
 __attribute__((naked))
-void sub_080731F4(void)
+s32 sub_080731F4(u8 *s)
 {
-    asm(".byte 0x01, 0x1C, 0x00, 0x22, 0x00, 0x29, 0x01, 0xD1, 0x00, 0x20, 0x0A, 0xE0, 0x08, 0x78, 0x00, 0x28, 0x06, 0xD0, 0x00, 0x23, 0x0B, 0x70, 0x01, 0x31, 0x01, 0x32, 0x08, 0x78, 0x00, 0x28, 0xF9, 0xD1, 0x10, 0x1C, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "adds r1, r0, #0x0\n"
+        "movs r2, #0x00\n"
+        "cmp r1, #0x00\n"
+        "bne _08073200\n"
+        "movs r0, #0x00\n"
+        "b _08073216\n"
+        "_08073200:\n"
+        "ldrb r0, [r1, #0x00]\n"
+        "cmp r0, #0x00\n"
+        "beq _08073214\n"
+        "movs r3, #0x00\n"
+        "_08073208:\n"
+        "strb r3, [r1, #0x00]\n"
+        "adds r1, #0x01\n"
+        "adds r2, #0x01\n"
+        "ldrb r0, [r1, #0x00]\n"
+        "cmp r0, #0x00\n"
+        "bne _08073208\n"
+        "_08073214:\n"
+        "adds r0, r2, #0x0\n"
+        "_08073216:\n"
+        "bx lr\n"
+    );
 }
+

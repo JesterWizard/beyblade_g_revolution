@@ -4,5 +4,23 @@
 __attribute__((naked))
 void *sub_0806BDA8(struct Unk6BDA8 *a, u32 i)
 {
-    asm(".byte 0x0A, 0x1C, 0x8A, 0x21, 0x49, 0x00, 0x40, 0x18, 0x01, 0x68, 0x00, 0x29, 0x03, 0xD0, 0x90, 0x00, 0x40, 0x18, 0x00, 0x68, 0x00, 0xE0, 0x00, 0x20, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "adds r2, r1, #0x0\n"
+        "movs r1, #0x8A\n"
+        "lsls r1, r1, #0x01\n"
+        "adds r0, r0, r1\n"
+        "ldr r1, [r0, #0x00]\n"
+        "cmp r1, #0x00\n"
+        "beq _0806BDBE\n"
+        "lsls r0, r2, #0x02\n"
+        "adds r0, r0, r1\n"
+        "ldr r0, [r0, #0x00]\n"
+        "b _0806BDC0\n"
+        "_0806BDBE:\n"
+        "movs r0, #0x00\n"
+        "_0806BDC0:\n"
+        "bx lr\n"
+    );
 }
+

@@ -10,9 +10,9 @@ _Agent-maintained log. Updated after each batch run._
 | Linked in ROM | **633/633** (100% peeled) |
 | **Decompiled C (functions)** | **182/633 (28.8%)** |
 | **Decompiled C (bytes)** | **6,782/90,272 (7.5%)** |
-| Not opcode (C + readable Thumb) | 369/633 (58.3% fn, 52.8% bytes) |
-| Readable Thumb | 187/633 (29.5%) |
-| Opcode `.byte` embeds | 264/633 (41.7%) |
+| Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
+| Readable Thumb | 451/633 (71.2%) |
+| Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 15/160 (9.4% fn, 2.2% bytes) |
@@ -20,6 +20,14 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b readable Thumb sweep (100% not opcode)
+
+- Fixed `readable_asm.py`: prototypes from `unknown-functions.h` (pointer return types), multi-line `asm()`
+- `readable_asm_batch.py --all`: converted remaining **227** opcode `.byte` stubs → readable unified Thumb
+- Final fix: `sub_08069988` / `sub_08071E84` / `sub_08071F44` (header `void *` / `struct *` names)
+- **0 opcode embeds remain** — not opcode **100%** (451 readable + 182 semantic)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b readable Thumb leaf batch (+20)
 

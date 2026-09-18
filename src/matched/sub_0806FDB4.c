@@ -4,5 +4,24 @@
 __attribute__((naked))
 struct Unk6FDB4 *sub_0806FDB4(struct Unk6FDB4 *p, u16 key)
 {
-    asm(".byte 0x09, 0x04, 0x09, 0x0C, 0x00, 0x22, 0x00, 0x28, 0x06, 0xD0, 0x43, 0x8C, 0x8B, 0x42, 0x03, 0xD2, 0x02, 0x1C, 0x50, 0x68, 0x00, 0x28, 0xF8, 0xD1, 0x10, 0x1C, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "lsls r1, r1, #0x10\n"
+        "lsrs r1, r1, #0x10\n"
+        "movs r2, #0x00\n"
+        "cmp r0, #0x00\n"
+        "beq _0806FDCC\n"
+        "_0806FDBE:\n"
+        "ldrh r3, [r0, #0x22]\n"
+        "cmp r3, r1\n"
+        "bcs _0806FDCC\n"
+        "adds r2, r0, #0x0\n"
+        "ldr r0, [r2, #0x04]\n"
+        "cmp r0, #0x00\n"
+        "bne _0806FDBE\n"
+        "_0806FDCC:\n"
+        "adds r0, r2, #0x0\n"
+        "bx lr\n"
+    );
 }
+

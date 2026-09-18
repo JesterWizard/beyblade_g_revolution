@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -10,8 +11,27 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 NON = ROOT / "asm" / "nonmatchings"
 MATCHED = ROOT / "src" / "matched"
+HDR = ROOT / "include" / "unknown-functions.h"
 
 from c_patterns import CCandidate  # noqa: E402
+
+def _decl_name(decl: str) -> str | None:
+    m = re.search(r"\b(sub_[0-9A-Fa-f]+)\s*\(", decl)
+    return m.group(1) if m else None
+
+
+def _signature_from_header(function: str) -> str | None:
+    if not HDR.is_file():
+        return None
+    for line in HDR.read_text().splitlines():
+        stripped = line.strip()
+        if not stripped.endswith(";") or function not in stripped or "(" not in stripped:
+            continue
+        decl = stripped[:-1]
+        if _decl_name(decl) != function:
+            continue
+        return f"__attribute__((naked))\n{decl}"
+    return None
 
 
 def _signature_from_matched(function: str) -> str | None:
@@ -71,7 +91,7 @@ def guess_readable_asm(function: str, asm_lines: list[str] | None = None) -> CCa
         body_lines.append(line.rstrip())
     if not body_lines:
         return None
-    sig = _signature_from_matched(function)
+    sig = _signature_from_header(function) or _signature_from_matched(function)
     if sig is None:
         sig = f"__attribute__((naked))\nvoid {function}(void)"
     insns = _asm_insn_lines(body_lines)

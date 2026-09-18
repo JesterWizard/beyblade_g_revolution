@@ -55,7 +55,7 @@ def main() -> int:
                 name,
                 cand.body,
                 "--note",
-                "battle/readable-thumb",
+                "readable-thumb",
                 "--kind",
                 "asm",
                 "--skip-compare",

@@ -12,8 +12,8 @@ Decompiled C is **28.8%** of functions (182/633) and **7.5%** of original functi
 | :--- | :--- | ---: | ---: |
 | Decompiled C (functions) | `█████████░░░░░░░░░░░░░░░░░░░░░░░` | **28.8%** | 182/633 |
 | Decompiled C (bytes) | `██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **7.5%** | 6,782/90,272 |
-| Not opcode (functions) | `███████████████████░░░░░░░░░░░░░` | **58.3%** | 369/633 |
-| Not opcode (bytes) | `█████████████████░░░░░░░░░░░░░░░` | **52.8%** | 47,660/90,272 |
+| Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
+| Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
 ```mermaid
@@ -21,7 +21,7 @@ xychart-beta
     title "Decompiled C vs original (%)"
     x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
     y-axis "Percent" 0 --> 100
-    bar [28.8, 7.5, 58.3, 52.8]
+    bar [28.8, 7.5, 100.0, 100.0]
 ```
 
 ![Decompiled C vs original](docs/decomp-progress.svg)
@@ -29,8 +29,8 @@ xychart-beta
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
 | Semantic C | 182 (28.8%) | 6,782 (7.5%) |
-| Readable Thumb | 187 (29.5%) | 40,878 (45.3%) |
-| Opcode embed | 264 (41.7%) | 42,612 (47.2%) |
+| Readable Thumb | 451 (71.2%) | 83,490 (92.5%) |
+| Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **9.4%** functions / **2.2%** bytes in semantic C (15/160; 0 opcode left).
 
