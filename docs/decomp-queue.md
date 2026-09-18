@@ -2,18 +2,18 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-18T22:14:11Z_
+_Updated: 2026-09-18T22:18:53Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 199 |
-| Still need semantic C | **434** |
-| Readable Thumb remaining | 434 |
+| Semantic C done | 200 |
+| Still need semantic C | **433** |
+| Readable Thumb remaining | 433 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 127 (23 already semantic) |
-| Blocked (documented) | 20 |
+| Battle pending | 126 (23 already semantic) |
+| Blocked (documented) | 21 |
 
 Ranking: **battle** · showing top **40**
 
@@ -48,7 +48,6 @@ Ranking: **battle** · showing top **40**
 | `sub_08043B90` | `0x08043B90` | 76 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C5DC` | `0x0802C5DC` | 78 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DBD0` | `0x0803DBD0` | 80 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08045128` | `0x08045128` | 80 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08033574` | `0x08033574` | 80 | 1 | pool | asm | (gBattleWork) |
 | `sub_0803E258` | `0x0803E258` | 82 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08041F88` | `0x08041F88` | 84 | 1 | pool | asm | (gMainWorkPtr) |
@@ -61,6 +60,7 @@ Ranking: **battle** · showing top **40**
 | `sub_080449C4` | `0x080449C4` | 92 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08046278` | `0x08046278` | 92 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080435D8` | `0x080435D8` | 96 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0802C6AC` | `0x0802C6AC` | 96 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -70,6 +70,7 @@ Ranking: **battle** · showing top **40**
 | `sub_08033530` | `0x08033530` | 68 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
 | `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
+| `sub_08045128` | `0x08045128` | 80 | reads gMainWorkPtr->unk1688[idx].unk08 into unk1788, computes base = gMainWorkPtr->unk168C + idx*8032 (retail's literal shift/sub chain), calls sub_08045590(base,0) — logic correct (same-size DIFF, ~14/80 bytes differ) across many pointer-arithmetic orderings tried; needs permuter for the base-pointer scheduling |
 | `sub_080473E4` | `0x080473E4` | 20 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
 | `sub_080475C4` | `0x080475C4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_080475F4` | `0x080475F4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
@@ -99,6 +100,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (414 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (412 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

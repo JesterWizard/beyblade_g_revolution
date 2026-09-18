@@ -90,3 +90,7 @@ reason = "BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] ->
 [[block]]
 name = "sub_08062C80"
 reason = "calls _08073C4C(0, dst, size, src) at raw address 0x08073C4C twice (VRAM/PLTT clear via CpuFastSet-style primitive) — that callee has no C symbol/prototype anywhere in the codebase yet (only referenced via bl _08073C4C from naked asm in many other unconverted functions); needs the callee named/prototyped first"
+
+[[block]]
+name = "sub_08045128"
+reason = "reads gMainWorkPtr->unk1688[idx].unk08 into unk1788, computes base = gMainWorkPtr->unk168C + idx*8032 (retail's literal shift/sub chain), calls sub_08045590(base,0) — logic correct (same-size DIFF, ~14/80 bytes differ) across many pointer-arithmetic orderings tried; needs permuter for the base-pointer scheduling"

@@ -228,7 +228,9 @@ struct MainWork /* >= 0x18B4 */
     /* 1710 */ s32 unk1710[27];
     /* 177C */ s32 unk177C;
     /* 1780 */ s32 unk1780;
-    /* 1784 */ u8 filler_1784[0x14];
+    /* 1784 */ u8 filler_1784[4];
+    /* 1788 */ u32 unk1788;
+    /* 178C */ u8 filler_178C[0xC];
     /* 1798 */ u32 unk1798;
     /* 179C */ u32 unk179C;
     /* 17A0 */ u8 filler_17A0[0x60];
@@ -1143,6 +1145,24 @@ struct Unk361CCDst /* >= 0x54 */
     /* 4a */ s16 unk4A;
     /* 4c */ s32 unk4C;
     /* 50 */ s32 unk50;
+};
+
+/* Sub-entry written by sub_08066AD4. */
+struct Unk66AD4Entry
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+};
+
+/* sub_08066AD4 */
+struct Unk66AD4 /* >= 0x30c */
+{
+    /* 000 */ u8 filler_000[0x28C];
+    /* 28c */ struct Unk66AD4Entry *unk28C;
+    /* 290 */ u8 filler_290[0x74];
+    /* 304 */ s32 unk304;
+    /* 308 */ s32 unk308;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

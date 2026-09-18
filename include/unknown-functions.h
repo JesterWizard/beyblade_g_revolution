@@ -198,6 +198,7 @@ void sub_0805D1AC(void);
 void sub_08045A84(struct Unk45A84 *a);
 void *sub_0806A3A4(u32 size);
 void sub_08045198(void *a, u32 b);
+void sub_08045590(void *a, u8 b);
 void sub_08045AA8(struct Unk45A84 *a);
 void sub_0806FE84(void *a);
 void sub_08062684(struct Unk62634 *a);

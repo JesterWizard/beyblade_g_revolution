@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-18T22:14:11Z",
+  "generated": "2026-09-18T22:18:53Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 434,
-    "semantic_done": 199,
-    "readable_asm": 434,
+    "pending": 433,
+    "semantic_done": 200,
+    "readable_asm": 433,
     "opcode": 0,
-    "battle_pending": 127,
+    "battle_pending": 126,
     "battle_semantic": 23,
-    "blocked": 20
+    "blocked": 21
   },
   "pinned": [],
   "recommended": [
@@ -415,20 +415,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08045128",
-      "addr": "0x08045128",
-      "kind": "asm",
-      "bytes": 80,
-      "score": 33,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08033574",
       "addr": "0x08033574",
       "kind": "asm",
@@ -595,6 +581,20 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_0802C6AC",
+      "addr": "0x0802C6AC",
+      "kind": "asm",
+      "bytes": 96,
+      "score": 38,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -625,6 +625,13 @@
       "reason": "docs/battle.md: readable Thumb \u2014 C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)",
       "kind": "asm",
       "bytes": 44
+    },
+    {
+      "name": "sub_08045128",
+      "addr": "0x08045128",
+      "reason": "reads gMainWorkPtr->unk1688[idx].unk08 into unk1788, computes base = gMainWorkPtr->unk168C + idx*8032 (retail's literal shift/sub chain), calls sub_08045590(base,0) \u2014 logic correct (same-size DIFF, ~14/80 bytes differ) across many pointer-arithmetic orderings tried; needs permuter for the base-pointer scheduling",
+      "kind": "asm",
+      "bytes": 80
     },
     {
       "name": "sub_080473E4",
@@ -1131,20 +1138,6 @@
       "kind": "asm",
       "bytes": 80,
       "score": 27,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08045128",
-      "addr": "0x08045128",
-      "kind": "asm",
-      "bytes": 80,
-      "score": 33,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -3172,18 +3165,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08066AD4",
-      "addr": "0x08066AD4",
-      "kind": "asm",
-      "bytes": 60,
-      "score": 30,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },
