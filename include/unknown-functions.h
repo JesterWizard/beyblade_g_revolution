@@ -99,6 +99,7 @@ void sub_080346C0(struct Unk346C0 *a, u32 b, u32 c, u32 d, u32 e);
 void sub_080400C0(u32 v);
 void sub_08067890(void);
 u16 sub_08061784(void);
+void sub_0806171C(void *a, u16 b, u32 c);
 u16 sub_080617B4(void);
 u32 sub_08061A98(void);
 u16 sub_08061AA8(void);

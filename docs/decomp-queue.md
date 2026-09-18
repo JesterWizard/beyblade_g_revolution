@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-18T22:44:43Z_
+_Updated: 2026-09-18T22:49:46Z_
 
 ## Summary
 
@@ -13,7 +13,7 @@ _Updated: 2026-09-18T22:44:43Z_
 | Readable Thumb remaining | 420 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 123 (25 already semantic) |
-| Blocked (documented) | 25 |
+| Blocked (documented) | 30 |
 
 Ranking: **battle** · showing top **40**
 
@@ -76,8 +76,13 @@ Ranking: **battle** · showing top **40**
 | `sub_080473E4` | `0x080473E4` | 20 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
 | `sub_080475C4` | `0x080475C4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_080475F4` | `0x080475F4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
+| `sub_08049F98` | `0x08049F98` | 144 | sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter |
+| `sub_0804E17C` | `0x0804E17C` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker |
+| `sub_08051578` | `0x08051578` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker |
 | `sub_080523A4` | `0x080523A4` | 112 | calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->unk28C->unk0C = (a->unk2D5<<12)+0x2C00 — logic correct (same-size DIFF, ~15/112 bytes) across several pointer/base-register orderings; needs permuter |
+| `sub_08053218` | `0x08053218` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker |
 | `sub_080601C4` | `0x080601C4` | 92 | r8 pool pin — permuter best score ~100 |
+| `sub_080604C8` | `0x080604C8` | 112 | byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct (same-size DIFF) but agbcc picks r2 for the struct-pointer local where retail uses r1; register pin and plain-variable forms both tried; needs permuter |
 | `sub_080615EC` | `0x080615EC` | 36 | branchy asm — agbcc compile fail |
 | `sub_08061BDC` | `0x08061BDC` | 12 | agbcc extra push {lr} on null-check leaf |
 | `sub_08061E40` | `0x08061E40` | 20 | agbcc extra push {lr} on null-check leaf |
@@ -104,6 +109,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (395 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (390 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

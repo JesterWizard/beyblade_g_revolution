@@ -110,3 +110,23 @@ reason = "calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->u
 [[block]]
 name = "sub_08070604"
 reason = "struct Unk70604 initializer (7 params, 3 via stack) — logic reconstructed correctly (m2c-verified, same overall shape) but agbcc's final two byte-field writes (unk29=0, unk2A=src->unk05+4) either share one address computation (too small, -4B) or use two fully separate ones (too big, +4B); retail shares the unk29 address computation only for unk2A, not unk28; needs permuter"
+
+[[block]]
+name = "sub_080604C8"
+reason = "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct (same-size DIFF) but agbcc picks r2 for the struct-pointer local where retail uses r1; register pin and plain-variable forms both tried; needs permuter"
+
+[[block]]
+name = "sub_08049F98"
+reason = "sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter"
+
+[[block]]
+name = "sub_0804E17C"
+reason = "byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker"
+
+[[block]]
+name = "sub_08051578"
+reason = "byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker"
+
+[[block]]
+name = "sub_08053218"
+reason = "byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker"

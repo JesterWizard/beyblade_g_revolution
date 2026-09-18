@@ -1284,4 +1284,27 @@ struct Unk70604 /* >= 0x2d */
     /* 2c */ s32 unk2C;
 };
 
+/* *gUnk_03000750. sub_080604C8. */
+struct Unk604C8 /* >= 0x18 */
+{
+    /* 00 */ u8 unk00;
+    /* 01 */ u8 unk01;
+    /* 02 */ u8 unk02;
+    /* 03 */ u8 unk03;
+    /* 04 */ u8 unk04;
+    /* 05 */ u8 unk05;
+    /* 06 */ u8 unk06;
+    /* 07 */ u8 unk07;
+    /* 08 */ u16 unk08;
+    /* 0a */ u16 unk0A;
+    /* 0c */ u16 unk0C;
+    /* 0e */ u16 unk0E;
+    /* 10 */ u8 unk10;
+    /* 11 */ u8 unk11;
+    /* 12 */ u8 unk12;
+    /* 13 */ u8 unk13;
+    /* 14 */ u16 unk14;
+    /* 16 */ u16 unk16;
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */
