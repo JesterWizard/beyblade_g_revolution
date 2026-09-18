@@ -350,11 +350,13 @@ struct Unk6DEF4 /* >= 0x08 */
 };
 
 /* Pointer at +0, word at +0xC. sub_08062044. */
-struct Unk62044 /* >= 0x10 */
+struct Unk62044 /* >= 0x26 */
 {
     /* 00 */ void *unk00;
     /* 04 */ u8 filler_04[8];
     /* 0c */ u32 unk0C;
+    /* 10 */ u8 filler_10[0x14];
+    /* 24 */ u16 unk24;
 };
 
 /* Byte at +0x2C, pointer table at +0x30. sub_08033D90. */
@@ -391,7 +393,7 @@ struct Unk33F30 /* >= 0x68 */
     /* 32 */ u8 unk32;
     /* 33 */ u8 unk33;
     /* 34 */ struct Unk62044 unk34;
-    /* 44 */ u8 filler_44[0x18];
+    /* 5a */ u8 filler_5A[2];
     /* 5c */ u32 unk5C;
     /* 60 */ u32 unk60;
     /* 64 */ u32 unk64;
@@ -738,6 +740,14 @@ struct Unk41394 /* >= 0x240 */
     /* 220 */ void *unk220[8];
 };
 
+/* Fields at +0xCC / +0xD0. sub_08062758. */
+struct Unk62790Obj /* >= 0xd4 */
+{
+    /* 00 */ u8 filler_00[0xCC];
+    /* CC */ u32 unkCC;
+    /* D0 */ u32 unkD0;
+};
+
 /* Halfword stride blit. sub_080726E0. */
 struct Unk726E0 /* >= 0x10 */
 {
@@ -776,6 +786,30 @@ struct Unk59C6C /* 0x3c */
     /* 00 */ u8 filler_00[4];
     /* 04 */ void *unk04;
     /* 08 */ u8 filler_08[0x34];
+};
+
+/* Flag + two Unk346C0 slots. sub_08033A5C. */
+struct Unk33A5C /* >= 0x0c */
+{
+    /* 00 */ u8 unk00;
+    /* 01 */ u8 filler_01[3];
+    /* 04 */ struct Unk346C0 *unk04;
+    /* 08 */ struct Unk346C0 *unk08;
+};
+
+/* 16-byte slot. sub_0806A580. */
+struct Unk6A580 /* 0x10 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ void *unk04;
+    /* 08 */ u8 filler_08[8];
+};
+
+/* Byte at +6. sub_08060758. */
+struct Unk0758 /* >= 0x07 */
+{
+    /* 00 */ u8 filler_00[6];
+    /* 06 */ u8 unk06;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **141/633 (22.3%)** |
-| **Decompiled C (bytes)** | **4,434/90,272 (4.9%)** |
-| Not opcode (C + readable Thumb) | 291/633 (46.0% fn, 46.4% bytes) |
+| **Decompiled C (functions)** | **148/633 (23.4%)** |
+| **Decompiled C (bytes)** | **4,826/90,272 (5.3%)** |
+| Not opcode (C + readable Thumb) | 298/633 (47.1% fn, 46.8% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 342/633 (54.0%) |
+| Opcode `.byte` embeds | 335/633 (52.9%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+7)
+
+- Semantic C: `sub_08063104` (CpuSet `*08DC` to BG pal + free `*08E0`), `sub_08033A5C` (swap `34A68` slots then `35020`/`330F4`), `sub_08060468`/`60758` (alloc via `6A3A4` then CpuFill via `*0x080BB8BC`), `sub_0806A580` (first empty 16-byte slot), `sub_08062758` (walk `unk04` table into `62790`), `sub_08041394` (free 8 pointers at +0x220)
+- Grew `Unk62044` (`unk24`), `Unk33F30` nested layout; added `Unk33A5C`/`Unk6A580`/`Unk0758`/`Unk62790Obj`; `sub_080330F4`/`6A3A4`/`62790` signatures aligned
+- Near-miss: `sub_08061C48` (770 rematerialized vs r5), `sub_0806209C` (store 0 in r0 vs r1), `sub_0804745C` (630 in r6 vs r1 then copy)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+5)
 
