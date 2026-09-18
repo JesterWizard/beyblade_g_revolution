@@ -502,7 +502,10 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 008 */ u8 filler_08[0x2CC];
     /* 2d4 */ u32 unk2D4;
     /* 2d8 */ u32 unk2D8;
-    /* 2dc */ u8 filler_2DC[0x18];
+    /* 2dc */ u8 filler_2DC[8];
+    /* 2e4 */ u32 unk2E4;
+    /* 2e8 */ u32 unk2E8;
+    /* 2ec */ u8 filler_2EC[8];
     /* 2f4 */ u32 unk2F4;
 };
 

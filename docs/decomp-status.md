@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **129/633 (20.4%)** |
-| **Decompiled C (bytes)** | **3,742/90,272 (4.1%)** |
-| Not opcode (C + readable Thumb) | 279/633 (44.1% fn, 45.6% bytes) |
+| **Decompiled C (functions)** | **130/633 (20.5%)** |
+| **Decompiled C (bytes)** | **3,832/90,272 (4.2%)** |
+| Not opcode (C + readable Thumb) | 280/633 (44.2% fn, 45.7% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 354/633 (55.9%) |
+| Opcode `.byte` embeds | 353/633 (55.8%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,11 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+1)
+
+- Semantic C: `sub_08032D5C` (stack pair into `unk2E4`/`unk2E8`, then `35054`/`628B4`/`3559C`/`60254`)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+2)
 
