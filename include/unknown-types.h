@@ -279,6 +279,29 @@ struct Unk62634 /* >= 0x24 */
     /* 20 */ u32 unk20;
 };
 
+/* Double-indirect table at +0x230, word at +0x310. sub_08066BC4. */
+struct Unk66BC4 /* >= 0x314 */
+{
+    /* 000 */ u8 filler_00[0x230];
+    /* 230 */ void ***unk230;
+    /* 234 */ u8 filler_234[0xDC];
+    /* 310 */ u32 unk310;
+};
+
+/* Flags at +0x14. sub_0806F430. */
+struct Unk4084 /* >= 0x18 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ u32 unk14;
+};
+
+/* Halfword table at +0x22. sub_08038638. */
+struct Unk03CC /* >= 0x24 */
+{
+    /* 00 */ u8 filler_00[0x22];
+    /* 22 */ s16 unk22[1];
+};
+
 /* Byte at +0x14. sub_08061BDC. */
 struct Unk61BDC /* >= 0x15 */
 {

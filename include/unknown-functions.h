@@ -149,6 +149,8 @@ void sub_08045198(void *a, u32 b);
 void sub_08045AA8(struct Unk45A84 *a);
 void sub_0806FE84(void *a);
 void sub_08062684(struct Unk62634 *a);
+void sub_08062640(struct Unk62634 *a);
+void sub_08066BC4(struct Unk66BC4 *a, u32 i);
 void sub_08062238(struct Unk62634 *a);
 struct Unk447CC *sub_08043B58(void);
 void sub_08059DC8(u32 a);

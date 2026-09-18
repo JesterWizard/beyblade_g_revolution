@@ -8,11 +8,11 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **152/633 (24.0%)** |
-| **Decompiled C (bytes)** | **5,048/90,272 (5.6%)** |
-| Not opcode (C + readable Thumb) | 302/633 (47.7% fn, 47.0% bytes) |
+| **Decompiled C (functions)** | **154/633 (24.3%)** |
+| **Decompiled C (bytes)** | **5,160/90,272 (5.7%)** |
+| Not opcode (C + readable Thumb) | 304/633 (48.0% fn, 47.2% bytes) |
 | Readable Thumb | 150/633 (23.7%) |
-| Opcode `.byte` embeds | 331/633 (52.3%) |
+| Opcode `.byte` embeds | 329/633 (52.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 12/160 (7.5% fn, 1.5% bytes) |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+2)
+
+- Semantic C: `sub_08062640` (tick `unk20`/`unk1C`, optional `_08073C44` + `62684`), `sub_08066BC4` (indexed `705DC` then store 8 at +0x310)
+- Added `Unk66BC4`
+- Near-miss: `sub_0806F430` (dead `flags & 0x10` vs `cmp r1, #0`), `sub_08073A28` (string shift extra regs), `sub_08038638` (03CC reload vs rematerialize)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+4)
 
