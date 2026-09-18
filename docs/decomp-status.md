@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **184/633 (29.1%)** |
-| **Decompiled C (bytes)** | **6,878/90,272 (7.6%)** |
+| **Decompiled C (functions)** | **185/633 (29.2%)** |
+| **Decompiled C (bytes)** | **6,910/90,272 (7.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 449/633 (70.9%) |
+| Readable Thumb | 448/633 (70.8%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,11 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+1)
+
+- Semantic C: `sub_08033C1C` (`Unk0380` @ `gUnk_03000380` — clear `unk09`/`unk0A`, call `sub_080358CC`; `r1` + `tmp[]` pool pin)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+1)
 
