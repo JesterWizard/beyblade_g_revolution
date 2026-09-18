@@ -7,10 +7,13 @@
  * Named replacements belong in [renames] (Phase 4), then this entry drops.
  */
 
-s8 sub_08042BE8(s16 a);
+s32 sub_08042BE8(s32 a);
 void *sub_08042E78(s16 i);
+s16 sub_08031124(s32 a, s32 b, s32 c);
 void sub_080310F0(struct Unk310F0a *a, struct Unk310F0b *b);
 void sub_0802E18C(struct Unk310F0b *a, struct Unk310F0b *b, s32 c);
+s8 sub_0802E1B4(s32 a);
+void sub_08031094(struct Unk346A8 *a, s32 b, s32 c, struct Unk310F0b *d);
 void sub_0806A434(void *a);
 void sub_08071F84(s32 a);
 void sub_08071FC8(s32 a, u32 b);
@@ -36,6 +39,10 @@ void sub_08035258(u32 a, u32 b);
 void sub_08035878(struct Unk35878 *a, u32 v1, u32 v2, u32 v3);
 void sub_080358CC(struct Unk35878 *a);
 s32 sub_080674A0(s32 a, s32 b);
+s32 sub_080674B0(s32 a);
+s32 sub_08042BB0(s32 a);
+s32 sub_08042B78(s32 a);
+void sub_080346A8(struct Unk346A8 *a, u32 v);
 void sub_080674B4(void);
 void sub_08066390(u8 v);
 u32 sub_0806639C(void);

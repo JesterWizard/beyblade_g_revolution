@@ -28,6 +28,8 @@
 #define STRUCT_PAD(from, to)
 #endif
 
+struct Unk310F0Inner1;
+
 /* 6-byte header: u16, u16, u32. sub_080338E4. */
 struct Unk338E4 /* 0x08 */
 {
@@ -48,7 +50,9 @@ struct Unk35878 /* 0x10 */
 /* Store at +0x2f0. sub_080346A8. */
 struct Unk346A8 /* >= 0x2f4 */
 {
-    /* 00 */ u8 filler_00[0x2f0];
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ struct Unk310F0Inner1 *unk04;
+    /* 08 */ u8 filler_08[0x2E8];
     /* 2f0 */ u32 unk2F0;
 };
 
@@ -462,8 +466,10 @@ struct Unk07B0 /* >= 0x118 */
 /* Header + 8-byte records. sub_08068014. */
 struct Unk68014Rec /* 0x08 */
 {
-    /* 00 */ u32 unk00;
-    /* 04 */ u32 unk04;
+    /* 00 */ u16 unk00;
+    /* 02 */ u16 unk02;
+    /* 04 */ u16 unk04;
+    /* 06 */ u8 filler_06[2];
 };
 
 struct Unk68014 /* >= 0x28 */
@@ -479,7 +485,9 @@ struct Unk68014 /* >= 0x28 */
 /* Pointer + fields at +0x30..+0x4C. sub_080346C0. */
 struct Unk346C0Inner /* >= 0x50 */
 {
-    /* 00 */ u8 filler_00[0x30];
+    /* 00 */ u8 filler_00[0xC];
+    /* 0c */ u32 unk0C;
+    /* 10 */ u8 filler_10[0x20];
     /* 30 */ u32 unk30;
     /* 34 */ u32 unk34;
     /* 38 */ u8 filler_38[0x10];
@@ -487,9 +495,26 @@ struct Unk346C0Inner /* >= 0x50 */
     /* 4c */ u32 unk4C;
 };
 
-struct Unk346C0 /* >= 0x04 */
+struct Unk346C0 /* >= 0x2f8 */
 {
-    /* 00 */ struct Unk346C0Inner *unk00;
+    /* 000 */ struct Unk346C0Inner *unk00;
+    /* 004 */ struct Unk346C0Inner *unk04;
+    /* 008 */ u8 filler_08[0x2CC];
+    /* 2d4 */ u32 unk2D4;
+    /* 2d8 */ u32 unk2D8;
+    /* 2dc */ u8 filler_2DC[0x18];
+    /* 2f4 */ u32 unk2F4;
+};
+
+/* Position + scaled velocity. sub_080360BC. */
+struct Unk360BC /* >= 0x20 */
+{
+    /* 00 */ u8 filler_00[0xC];
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 unk10;
+    /* 14 */ u8 filler_14[4];
+    /* 18 */ s32 unk18;
+    /* 1c */ s32 unk1C;
 };
 
 /* Word at +0xC, then *a +8. sub_0806BE08. */
@@ -658,10 +683,12 @@ struct Unk0770 /* 0x08 */
 };
 
 
-/* Nested byte at inner+0x24. sub_080310F0. */
+/* Nested byte at inner+0x21 / +0x24. sub_080310F0, sub_08031094. */
 struct Unk310F0Inner2 /* >= 0x25 */
 {
-    /* 00 */ u8 filler_00[0x24];
+    /* 00 */ u8 filler_00[0x21];
+    /* 21 */ s8 unk21;
+    /* 22 */ u8 filler_22[2];
     /* 24 */ s8 unk24;
 };
 
@@ -699,6 +726,14 @@ struct Unk726E0 /* >= 0x10 */
     /* 08 */ s16 unk08;
     /* 0a */ u8 filler_0A[2];
     /* 0c */ void *unk0C;
+};
+
+/* Header + flag at +0x98. sub_08067F3C. */
+struct Unk67F3C /* >= 0x99 */
+{
+    /* 00 */ struct Unk68014 *unk00;
+    /* 04 */ u8 filler_04[0x94];
+    /* 98 */ u8 unk98;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
