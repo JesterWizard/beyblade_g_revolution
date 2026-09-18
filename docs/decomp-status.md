@@ -21,6 +21,13 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-18 — Phase 3b semantic C (+2)
+
+- Semantic C: `sub_08031094` (clamp via `31124` then `346A8`), `sub_0802E1B4` (`42BE8`/`42BB0`/`42B78` then `31124`)
+- Grew `Unk346A8` (`unk04`), `Unk310F0Inner2` (`unk21`); `sub_080674B0` now returns the SWI 8 result; `sub_08042BE8`/`42BB0`/`42B78` take/return word-width values
+- Near-miss: `sub_08041858` (pool-fold `0x504`), `sub_08054454` (zero vs addr regs), `sub_080360BC` (r8/r9), `sub_08067F3C` (extra r8)
+- `make compare`: **OK**
+
 ### 2026-09-18 — Phase 3b semantic C (+11)
 
 - Semantic C: `sub_0802E18C` (div/mod tens), `sub_08070AD4`/`70DF4` (`7069C` then draw), `sub_08041980` (free 32 `Unk68574` slots), `sub_080686B4` (callback or copy 3 words), `sub_0806F174` (store + optional `6F05C`/`73C4C`), `sub_080310F0` (clamp via `31124`), `sub_08043ADC` (stride-`0xDC` free + `6A434`), `sub_08033D90` (rng index + `35878`), `sub_0802E210` (`42E78`/`42BE8`), `sub_0803413C` (Unk33F30 setup)
