@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-18T22:35:19Z",
+  "generated": "2026-09-18T22:38:25Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 426,
-    "semantic_done": 207,
-    "readable_asm": 426,
+    "pending": 422,
+    "semantic_done": 211,
+    "readable_asm": 422,
     "opcode": 0,
     "battle_pending": 123,
     "battle_semantic": 25,
@@ -3945,42 +3945,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0804B4B4",
-      "addr": "0x0804B4B4",
-      "kind": "asm",
-      "bytes": 104,
-      "score": 57,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804C324",
-      "addr": "0x0804C324",
-      "kind": "asm",
-      "bytes": 104,
-      "score": 57,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804CED4",
-      "addr": "0x0804CED4",
-      "kind": "asm",
-      "bytes": 104,
-      "score": 57,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080360BC",
       "addr": "0x080360BC",
       "kind": "asm",
@@ -4049,18 +4013,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804A4E0",
-      "addr": "0x0804A4E0",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 61,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
