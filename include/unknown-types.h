@@ -276,7 +276,9 @@ struct Unk7069C /* >= 0x30 */
 {
     /* 00 */ u32 unk00;
     /* 04 */ u16 unk04;
-    /* 06 */ u8 filler_06[0xE];
+    /* 06 */ u8 filler_06[4];
+    /* 0a */ u16 unk0A;
+    /* 0c */ u8 filler_0C[8];
     /* 14 */ u8 unk14;
     /* 15 */ u8 filler_15[0x17];
     /* 2c */ struct Unk705CC *unk2C;
@@ -404,7 +406,8 @@ struct Unk047C /* >= 0x814 */
 {
     /* 000 */ void *unk00[0x200];
     /* 800 */ u32 unk800;
-    /* 804 */ u8 filler_804[8];
+    /* 804 */ u8 filler_804[4];
+    /* 808 */ u32 unk808;
     /* 80c */ u32 unk80C;
     /* 810 */ u32 unk810;
 };
@@ -573,6 +576,44 @@ struct Unk6FDB4 /* >= 0x22 */
     /* 04 */ struct Unk6FDB4 *unk04;
     /* 08 */ u8 filler_08[0x18];
     /* 20 */ u16 unk20;
+};
+
+/* Byte at +0x18. sub_080703FC. */
+struct Unk703FCInner /* >= 0x19 */
+{
+    /* 00 */ u8 filler_00[0x18];
+    /* 18 */ u8 unk18;
+};
+
+struct Unk703FC /* >= 0x34 */
+{
+    /* 00 */ u8 filler_00[0x30];
+    /* 30 */ struct Unk703FCInner *unk30;
+};
+
+/* Pointer table + count. sub_080720F0. */
+struct Unk40D4 /* >= 0x10 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u32 unk04;
+    /* 08 */ u8 filler_08[4];
+    /* 0c */ void **unk0C;
+};
+
+/* Nested Unk7069C at +0x34. sub_08054558. */
+struct Unk070C /* >= 0x44 */
+{
+    /* 00 */ u8 filler_00[0x34];
+    /* 34 */ struct Unk7069C unk34;
+};
+
+/* Fields at +0x224 / +0x348. sub_0806F174. */
+struct Unk6F174 /* >= 0x34c */
+{
+    /* 000 */ u8 filler_00[0x224];
+    /* 224 */ void *unk224;
+    /* 228 */ u8 filler_228[0x120];
+    /* 348 */ void *unk348;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

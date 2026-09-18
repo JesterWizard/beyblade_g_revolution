@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T00:11:31Z",
+  "generated": "2026-09-18T00:15:09Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "src_matched": 633,
@@ -8,10 +8,10 @@
   "missing_size": 0,
   "kinds": {
     "semantic": {
-      "functions": 107,
-      "bytes": 2684,
-      "pct_functions": 16.9,
-      "pct_bytes": 3.0
+      "functions": 113,
+      "bytes": 2904,
+      "pct_functions": 17.9,
+      "pct_bytes": 3.2
     },
     "readable_asm": {
       "functions": 150,
@@ -20,33 +20,33 @@
       "pct_bytes": 41.4
     },
     "opcode": {
-      "functions": 376,
-      "bytes": 50174,
-      "pct_functions": 59.4,
-      "pct_bytes": 55.6
+      "functions": 370,
+      "bytes": 49954,
+      "pct_functions": 58.5,
+      "pct_bytes": 55.3
     }
   },
   "decomp": {
     "headline": "semantic C vs original function code",
-    "functions": 107,
-    "bytes": 2684,
-    "pct_functions": 16.9,
-    "pct_bytes": 3.0
+    "functions": 113,
+    "bytes": 2904,
+    "pct_functions": 17.9,
+    "pct_bytes": 3.2
   },
   "non_blob": {
     "note": "semantic C + readable Thumb (no .byte retail paste)",
-    "functions": 257,
-    "bytes": 40098,
-    "pct_functions": 40.6,
-    "pct_bytes": 44.4
+    "functions": 263,
+    "bytes": 40318,
+    "pct_functions": 41.5,
+    "pct_bytes": 44.7
   },
   "readable_asm": {
     "functions": 150,
     "bytes": 37414
   },
   "opcode": {
-    "functions": 376,
-    "bytes": 50174
+    "functions": 370,
+    "bytes": 49954
   },
   "battle": {
     "functions": 160,
@@ -250,6 +250,16 @@
       "total_bytes": 90272,
       "pct_functions": 16.9,
       "pct_bytes": 3.0
+    },
+    {
+      "generated": "2026-09-18T00:15:09Z",
+      "semantic": 113,
+      "readable_asm": 150,
+      "opcode": 370,
+      "semantic_bytes": 2904,
+      "total_bytes": 90272,
+      "pct_functions": 17.9,
+      "pct_bytes": 3.2
     }
   ]
 }

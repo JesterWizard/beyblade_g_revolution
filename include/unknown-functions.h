@@ -148,6 +148,19 @@ void sub_08070C98(struct Unk70C98 *a, s32 b, s32 c);
 u8 sub_08034FBC(struct Unk34FF8 *a);
 s8 sub_0802E210(void);
 void sub_080447CC(void);
-struct Unk6FDB4 *sub_0806FDB4(struct Unk6FDB4 *a, u16 b);
+void sub_08070AD4(void *a, void *b, u32 c);
+void sub_08070354(void *a, u16 b, u16 c, u8 d);
+s32 sub_08040EF4(void *a);
+void sub_08071EE4(void *a, u32 b);
+void sub_0806F05C(void *a);
+void sub_0806EC20(void *a, u32 b, u16 c, void *d);
+void sub_0807069C(struct Unk7069C *a);
+void sub_080703FC(struct Unk703FC *a, u16 b, u16 c);
+s32 sub_08040618(void);
+void *sub_0803DCFC(u32 i);
+void sub_080720F0(u32 i, u32 b);
+void sub_0806F174(struct Unk6F174 *a, void *b, u32 c, void *d);
+void sub_0806EBF8(void *a, u32 b, u16 c, u32 d, u32 e);
+void sub_08054558(void *a);
 
 #endif /* GUARD_UNKNOWN_FUNCTIONS_H */
