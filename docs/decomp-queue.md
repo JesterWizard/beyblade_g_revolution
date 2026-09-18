@@ -2,18 +2,18 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-18T22:49:46Z_
+_Updated: 2026-09-18T23:12:26Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 213 |
-| Still need semantic C | **420** |
-| Readable Thumb remaining | 420 |
+| Semantic C done | 214 |
+| Still need semantic C | **419** |
+| Readable Thumb remaining | 419 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 123 (25 already semantic) |
-| Blocked (documented) | 30 |
+| Battle pending | 123 (26 already semantic) |
+| Blocked (documented) | 29 |
 
 Ranking: **battle** · showing top **40**
 
@@ -66,7 +66,6 @@ Ranking: **battle** · showing top **40**
 
 | Function | Address | Bytes | Reason |
 |----------|---------|------:|--------|
-| `sub_0802C6AC` | `0x0802C6AC` | 96 | calls sub_08067B98(0x0833BE48, 0x0833BE50) then zeroes gMainWorkPtr->unk15C8-unk15CC/unk15D0/unk15D2 — logic correct but agbcc picks r2 for the gMainWorkPtr-location pointer where retail uses r1 (4 extra bytes from the pool-load register choice); tried plain field access, named locals, and register pins, all land on r2 not r1; needs permuter |
 | `sub_0802D8C4` | `0x0802D8C4` | 24 | agbcc extra push {lr} on branch leaves |
 | `sub_08030938` | `0x08030938` | 78 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
 | `sub_08033530` | `0x08033530` | 68 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
@@ -82,7 +81,7 @@ Ranking: **battle** · showing top **40**
 | `sub_080523A4` | `0x080523A4` | 112 | calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->unk28C->unk0C = (a->unk2D5<<12)+0x2C00 — logic correct (same-size DIFF, ~15/112 bytes) across several pointer/base-register orderings; needs permuter |
 | `sub_08053218` | `0x08053218` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker |
 | `sub_080601C4` | `0x080601C4` | 92 | r8 pool pin — permuter best score ~100 |
-| `sub_080604C8` | `0x080604C8` | 112 | byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct (same-size DIFF) but agbcc picks r2 for the struct-pointer local where retail uses r1; register pin and plain-variable forms both tried; needs permuter |
+| `sub_080604C8` | `0x080604C8` | 112 | byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter |
 | `sub_080615EC` | `0x080615EC` | 36 | branchy asm — agbcc compile fail |
 | `sub_08061BDC` | `0x08061BDC` | 12 | agbcc extra push {lr} on null-check leaf |
 | `sub_08061E40` | `0x08061E40` | 20 | agbcc extra push {lr} on null-check leaf |

@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-18T22:49:46Z",
+  "generated": "2026-09-18T23:12:26Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 420,
-    "semantic_done": 213,
-    "readable_asm": 420,
+    "pending": 419,
+    "semantic_done": 214,
+    "readable_asm": 419,
     "opcode": 0,
     "battle_pending": 123,
-    "battle_semantic": 25,
-    "blocked": 30
+    "battle_semantic": 26,
+    "blocked": 29
   },
   "pinned": [],
   "recommended": [
@@ -599,13 +599,6 @@
   ],
   "blocked": [
     {
-      "name": "sub_0802C6AC",
-      "addr": "0x0802C6AC",
-      "reason": "calls sub_08067B98(0x0833BE48, 0x0833BE50) then zeroes gMainWorkPtr->unk15C8-unk15CC/unk15D0/unk15D2 \u2014 logic correct but agbcc picks r2 for the gMainWorkPtr-location pointer where retail uses r1 (4 extra bytes from the pool-load register choice); tried plain field access, named locals, and register pins, all land on r2 not r1; needs permuter",
-      "kind": "asm",
-      "bytes": 96
-    },
-    {
       "name": "sub_0802D8C4",
       "addr": "0x0802D8C4",
       "reason": "agbcc extra push {lr} on branch leaves",
@@ -713,7 +706,7 @@
     {
       "name": "sub_080604C8",
       "addr": "0x080604C8",
-      "reason": "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A \u2014 logic correct (same-size DIFF) but agbcc picks r2 for the struct-pointer local where retail uses r1; register pin and plain-variable forms both tried; needs permuter",
+      "reason": "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A \u2014 logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter",
       "kind": "asm",
       "bytes": 112
     },
