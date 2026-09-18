@@ -147,6 +147,17 @@ struct Unk1694 /* 0x04 */
     /* 03 */ s8 unk03;
 };
 
+/* Out-param for Unk1694 lookup. sub_0802C314 / 2C3DC / 2C4A4. */
+struct Unk2C314 /* 0x0c */
+{
+    /* 00 */ s8 unk00;
+    /* 01 */ u8 unk01;
+    /* 02 */ u8 unk02;
+    /* 03 */ s8 unk03;
+    /* 04 */ s32 unk04;
+    /* 08 */ struct Unk1694 *unk08;
+};
+
 /* {u32, u32} ROM table. sub_0802B994. */
 struct Unk7709C /* 0x08 */
 {
@@ -187,7 +198,16 @@ struct MainWork /* >= 0x18B4 */
 {
     /* 0000 */ u8 filler_0000[0x874];
     /* 0874 */ s16 unk0874;
-    /* 0876 */ u8 filler_0876[0xE12];
+    /* 0876 */ u8 filler_0876[0xD52];
+    /* 15C8 */ s8 unk15C8;
+    /* 15C9 */ s8 unk15C9;
+    /* 15CA */ s8 unk15CA;
+    /* 15CB */ s8 unk15CB;
+    /* 15CC */ s8 unk15CC;
+    /* 15CD */ u8 filler_15CD[3];
+    /* 15D0 */ s16 unk15D0;
+    /* 15D2 */ s16 unk15D2;
+    /* 15D4 */ u8 filler_15D4[0xB4];
     /* 1688 */ struct Unk1688Entry *unk1688;
     /* 168C */ void *unk168C;
     /* 1690 */ void *unk1690;
@@ -270,7 +290,7 @@ struct Unk0798 /* >= 0xa2 */
     /* 90 */ u16 unk90;
     /* 92 */ u16 unk92;
     /* 94 */ u16 unk94;
-    /* 96 */ u8 filler_96[2];
+    /* 96 */ u16 unk96;
     /* 98 */ u16 unk98;
     /* 9a */ u16 unk9A;
     /* 9c */ u16 unk9C;
@@ -435,13 +455,17 @@ struct Unk33F30 /* >= 0x68 */
 /* *gUnk_0300026C then +8, halfword at +0x18. sub_0802D8C4. */
 struct Unk026CInner /* >= 0x1a */
 {
-    /* 00 */ u8 filler_00[0x18];
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ u32 unk08;
+    /* 0c */ u32 unk0C;
+    /* 10 */ u8 filler_10[8];
     /* 18 */ u16 unk18;
 };
 
 struct Unk026C /* >= 0x50 */
 {
-    /* 00 */ u8 filler_00[8];
+    /* 00 */ u32 unk00;
+    /* 04 */ u8 filler_04[4];
     /* 08 */ struct Unk026CInner *unk08;
     /* 0c */ u8 filler_0C[0x42];
     /* 4e */ s16 unk4E;
@@ -702,7 +726,8 @@ struct Unk42E78 /* >= 0x04 */
 /* Lookup result. sub_080447CC. */
 struct Unk447CC /* >= 0x1c */
 {
-    /* 00 */ u8 filler_00[0x18];
+    /* 00 */ void *unk00;
+    /* 04 */ u8 filler_04[0x14];
     /* 18 */ void *unk18;
 };
 
@@ -735,6 +760,7 @@ struct Unk6FDB4 /* >= 0x22 */
     /* 04 */ struct Unk6FDB4 *unk04;
     /* 08 */ u8 filler_08[0x18];
     /* 20 */ u16 unk20;
+    /* 22 */ u16 unk22;
 };
 
 /* Byte at +0x18. sub_080703FC. */
@@ -856,7 +882,8 @@ struct Unk67F3C /* >= 0x99 */
 
 struct Unk705DC /* >= 0x18 */
 {
-    /* 00 */ u8 filler_00[0x14];
+    /* 00 */ u8 filler_00[0x10];
+    /* 10 */ u32 unk10;
     /* 14 */ u16 unk14;
     /* 16 */ u16 unk16;
 };

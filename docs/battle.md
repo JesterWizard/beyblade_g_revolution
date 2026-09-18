@@ -40,12 +40,14 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | Offset | Member | Role |
 |--------|--------|------|
 | `+0x0874` | `unk0874` | `s16` thunk arg (`sub_0802E1EC`) |
+| `+0x15C8`–`+0x15D2` | `unk15C8`–`unk15D2` | `s8` flags / `s16` pair (`sub_0802C6AC`) |
 | `+0x1688` | `unk1688` | `Unk1688Entry *` (24-byte records) |
 | `+0x1694` | `unk1694` | `Unk1694 *` (4-byte records) |
 | `+0x16C8` | `unk16C8` | compare cookie for `sub_08073440` |
 | `+0x16E0` / `+0x16E4` | `unk16E0` / `unk16E4` | `{ptr, word}` lists |
 | `+0x1710` | `unk1710[27]` | `s32` handles (`-1` = empty) |
 | `+0x177C` / `+0x1780` | `unk177C` / `unk1780` | `s32` handles |
+| `+0x1819` | `unk1819` | last `sub_080603A4` arg |
 | `+0x1798` / `+0x179C` | `unk1798` / `unk179C` | copied to/from `*gUnk_03000630` |
 | `+0x1800` | `unk1800` | LCG seed / arena word |
 | `+0x1808` | `unk1808` | flags (`0x200` / `0x2000`) |
@@ -71,6 +73,8 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_08071FAC` | **semantic C** — `unk16==2` → `1` via `sub_08071F44` |
 | `sub_08071FC8` | **semantic C** — clamp `b` to `0x100`, store `unk10` |
 | `sub_080603E0` | **semantic C** — `sub_08071FC8` on `unk1710[0..0x18]`, set `unk181A` |
+| `sub_080603A4` | **semantic C** — optional `71FC8` on `unk177C`, set `unk1819` |
+| `sub_0802D598` | **semantic C** — clear `gUnk_0300026C`, write `0xFFFFC000` into inner +8/+0xC |
 | `sub_08043BDC` | **semantic C** — walk `unk16E4` vs `unk16C8` |
 | `sub_08060428` family | **semantic C** — thunks to `sub_080601C4` |
 | `sub_08072F94` | readable Thumb — agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
@@ -80,7 +84,7 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | readable Thumb — C adds `push {lr}` |
 | `sub_0806A6F8` | readable Thumb — large input hub |
 
-12 / 160 battle functions are semantic C (progress.py); more thunks are semantic C but lack battle IWRAM pools. Remainder is readable Thumb (0 opcode `.byte`).
+13 / 160 battle functions are semantic C (progress.py); more thunks are semantic C but lack battle IWRAM pools. Remainder is readable Thumb (0 opcode `.byte`).
 
 ## Tools
 
