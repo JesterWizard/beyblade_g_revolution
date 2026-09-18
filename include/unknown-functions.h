@@ -107,6 +107,7 @@ void sub_08034788(void *a, u32 b, u32 *c, u32 *d);
 void sub_08035054(void *a, u32 b, u32 c, s32 d);
 void sub_0803559C(void *a, u32 b, u32 c);
 void sub_08035238(u32 a);
+void sub_08035204(void *a, u32 b, u32 c, u32 d);
 void sub_08060254(u32 a, u32 b, u32 c);
 void sub_08068558(struct Unk68574 *a, u16 v1, u16 v2, u16 v3, u16 v4);
 void sub_08034FF8(struct Unk34FF8 *a, u32 b, u32 c);
