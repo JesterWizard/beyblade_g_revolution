@@ -125,17 +125,20 @@ struct Unk0C /* 0x0c */
     /* 04 */ u8 filler_04[8];
 };
 
-/* Battle work block (*gBattleWork). sub_080314FC, sub_08033530. */
-struct BattleWork /* >= 0x2089 */
+/* Battle work block (*gBattleWork). sub_080314FC, sub_08033530, sub_08033574. */
+struct BattleWork /* >= 0x208A */
 {
     /* 0000 */ u8 filler_00[0x118];
     /* 0118 */ u32 unk118;
     /* 011C */ u8 filler_011C[0x1E90];
     /* 1FAC */ u8 unk1FAC;
-    /* 1FAD */ u8 filler_1FAD[0x6F];
+    /* 1FAD */ u8 filler_1FAD[0x3A];
+    /* 1FE6 */ u8 unk1FE6;
+    /* 1FE7 */ u8 filler_1FE7[0x35];
     /* 201C */ u32 unk201C;
     /* 2020 */ u8 filler_2020[0x68];
     /* 2088 */ u8 unk2088;
+    /* 2089 */ u8 unk2089;
 };
 
 /* 4-byte records pointed to by MainWork.unk1694. sub_0802C62C. */

@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **183/633 (28.9%)** |
-| **Decompiled C (bytes)** | **6,850/90,272 (7.6%)** |
+| **Decompiled C (functions)** | **184/633 (29.1%)** |
+| **Decompiled C (bytes)** | **6,878/90,272 (7.6%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 450/633 (71.1%) |
+| Readable Thumb | 449/633 (70.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,12 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+1)
+
+- Semantic C: `sub_08031294` (`Unk312EC` init — OR flags on `unk00`/`unk01`, `unk04 = -1`, clear `unk0C`/`unk08`; register-pinned `r1`/`r2`)
+- Prep (next): `BattleWork` `unk1FE6`/`unk2089`, `sub_08038638` proto, permuter seeds for `33574`/`473E4`
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b battle semantic C (+1)
 

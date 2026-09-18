@@ -55,6 +55,7 @@ u16 sub_08071808(void);
 s32 sub_08073440(void *a, void *b);
 void sub_08033530(void);
 void sub_08033574(void);
+void sub_08038638(u16 a);
 void sub_080686D8(void *a);
 void sub_08068418(void *a);
 void sub_08072CC0(struct Unk72CC0 *a);

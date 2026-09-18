@@ -189,15 +189,20 @@ void *sub_0806639C(void)
 
 void sub_08031294(struct Unk312EC *a)
 {
-    register u8 m asm("r1");
-    m = 0xFF;
-    a->unk00 = (s8)((u8)a->unk00 | m);
-    a->unk01 = (s8)((u8)a->unk01 | m);
-    m = 1;
-    m = (u8)-m;
-    a->unk04 = (s32)m;
+    register u8 r1 asm("r1");
+    register u8 r2 asm("r2");
+
+    r1 = 0xFF;
+    r2 = *(u8 *)&a->unk00;
+    r2 |= r1;
+    *(u8 *)&a->unk00 = r2;
+    r2 = *(u8 *)&a->unk01;
+    r1 |= r2;
+    *(u8 *)&a->unk01 = r1;
+    a->unk04 = -1;
+    r1 = 0;
     a->unk0C = 0;
-    a->unk08 = 0;
+    a->unk08 = r1;
 }
 """,
     "sub_0803DD60": """#include "global.h"
@@ -374,6 +379,74 @@ void sub_0806FF28(struct BtlObj *a)
     old = gBtlObjListHead;
     a->prev = old;
     gBtlObjListHead = (struct BtlObjNode *)a;
+}
+""",
+    "sub_08031294": """#include "global.h"
+
+void sub_08031294(struct Unk312EC *a)
+{
+    register u8 r1 asm("r1");
+    register u8 r2 asm("r2");
+
+    r1 = 0xFF;
+    r2 = (u8)a->unk00;
+    r2 = (u8)(r2 | r1);
+    a->unk00 = (s8)r2;
+    r2 = (u8)a->unk01;
+    r1 = (u8)(r1 | r2);
+    a->unk01 = (s8)r1;
+    r1 = 1;
+    r1 = (u8)(-((s8)r1));
+    a->unk04 = (s32)(s8)r1;
+    r1 = 0;
+    a->unk0C = 0;
+    a->unk08 = r1;
+}
+""",
+    "sub_080473E4": """#include "global.h"
+
+void sub_080473E4(void)
+{
+    u32 *p634;
+    u32 *p63c;
+
+    p634 = (u32 *)gUnk_03000634;
+    p63c = (u32 *)gUnk_0300063C;
+    *p634 = 0;
+    *p63c = 0;
+}
+""",
+    "sub_08033958": """#include "global.h"
+
+s32 sub_08033958(struct Unk33958 *a)
+{
+    register s32 r2 asm("r2");
+    register u32 r3 asm("r3");
+    register s32 r1 asm("r1");
+
+    r2 = 0;
+    r3 = 0;
+    r1 = a->unk00;
+    if (r1 == *a->unk04)
+        r2 = 1;
+    return r2;
+}
+""",
+    "sub_08033574": """#include "global.h"
+
+void sub_08033574(void)
+{
+    u32 v;
+
+    if (gBattleWork->unk2088 == 1)
+    {
+        v = gBattleWork->unk1FE6;
+        v >>= 1;
+        sub_08068808((struct Unk68574 *)&gBattleWork->unk1FAC);
+        sub_08038638((u16)v);
+    }
+    gBattleWork->unk2089 = 0xFF;
+    gBattleWork->unk2088 = 0;
 }
 """,
     "sub_0806FEFC": """#include "global.h"
