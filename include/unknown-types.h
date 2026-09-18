@@ -962,10 +962,11 @@ struct Unk6EE24 /* >= 0x35a */
 };
 
 /* sub_080302A8 */
-struct Unk302A8Inner /* >= 0x0c */
+struct Unk302A8Inner /* >= 0x10 */
 {
     /* 00 */ u8 filler_00[8];
     /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
 };
 
 struct Unk302A8 /* >= 0x18 */
@@ -1081,14 +1082,22 @@ struct Unk6D748 /* >= 0x98 */
     /* 94 */ struct Unk6D748Inner *unk94;
 };
 
-/* Stride-0x28 slot. sub_08071E84 / sub_08071EE4. */
+/* Stride-0x28 slot. sub_08071E84 / sub_08071EE4 / sub_08071E44. */
 struct Unk71E84 /* 0x28 */
 {
-    /* 00 */ u8 filler_00[0x16];
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ u16 unk10;
+    /* 12 */ u8 filler_12[2];
+    /* 14 */ u16 unk14;
     /* 16 */ u8 unk16;
-    /* 17 */ u8 filler_17;
+    /* 17 */ u8 unk17;
     /* 18 */ u32 unk18;
-    /* 1c */ u8 filler_1C[0xC];
+    /* 1c */ void *unk1C;
+    /* 20 */ void *unk20;
+    /* 24 */ u16 unk24;
 };
 
 /* Flag + two Unk346C0 slots. sub_08033A5C. */
