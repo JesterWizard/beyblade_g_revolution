@@ -9,6 +9,7 @@
 
 s8 sub_08042BE8(s16 a);
 void *sub_08042E78(u32 i);
+s16 sub_08031124(s32 a, s32 b, s32 c);
 void sub_0806A434(void *a);
 void sub_08071F84(s32 a);
 void sub_08071FC8(s32 a, u32 b);
@@ -161,6 +162,12 @@ void *sub_0803DCFC(u32 i);
 void sub_080720F0(u32 i, u32 b);
 void sub_0806F174(struct Unk6F174 *a, void *b, u32 c, void *d);
 void sub_0806EBF8(void *a, u32 b, u16 c, u32 d, u32 e);
-void sub_08054558(void *a);
+void sub_08041980(void);
+void sub_08068808(struct Unk68574 *a);
+void sub_08043C28(void);
+void sub_08041858(void);
+void sub_08061C48(void);
+void sub_08060468(void);
+void sub_08062AC0(void);
 
 #endif /* GUARD_UNKNOWN_FUNCTIONS_H */

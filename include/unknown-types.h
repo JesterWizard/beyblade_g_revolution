@@ -59,7 +59,11 @@ struct Unk68574 /* >= 0xb4 */
     /* 04 */ u32 unk04;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;
-    /* 10 */ u8 filler_10[0x8A];
+    /* 10 */ u8 filler_10[0x64];
+    /* 74 */ s32 unk74;
+    /* 78 */ u32 unk78;
+    /* 7c */ void *unk7C;
+    /* 80 */ u8 filler_80[0x1A];
     /* 9a */ u16 unk9A;
     /* 9c */ u16 unk9C;
     /* 9e */ u16 unk9E;
@@ -71,6 +75,8 @@ struct Unk68574 /* >= 0xb4 */
     /* ac */ u16 unkAC;
     /* ae */ u16 unkAE;
     /* b0 */ u32 unkB0;
+    /* b4 */ u8 filler_B4[4];
+    /* b8 */ void *unkB8;
 };
 
 /* Byte at +0x19. sub_080705CC, sub_080705D4. */
@@ -614,6 +620,22 @@ struct Unk6F174 /* >= 0x34c */
     /* 224 */ void *unk224;
     /* 228 */ u8 filler_228[0x120];
     /* 348 */ void *unk348;
+};
+
+/* Four pointers at 0x030005F0. sub_08043C28. */
+struct Unk05F0 /* 0x10 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ void *unk04;
+    /* 08 */ void *unk08;
+    /* 0c */ void *unk0C;
+};
+
+/* Stride-8 slot table at 0x03000770. sub_08061C48. */
+struct Unk0770 /* 0x08 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ u32 unk04;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
