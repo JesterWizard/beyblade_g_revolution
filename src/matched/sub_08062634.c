@@ -4,5 +4,15 @@
 __attribute__((naked))
 void sub_08062634(struct Unk62634 *a, u32 b, u32 c, u32 d)
 {
-    asm(".byte 0x00, 0x28, 0x02, 0xD0, 0xC1, 0x61, 0x02, 0x62, 0x83, 0x61, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "cmp r0, #0x00\n"
+        "beq _0806263E\n"
+        "str r1, [r0, #0x1C]\n"
+        "str r2, [r0, #0x20]\n"
+        "str r3, [r0, #0x18]\n"
+        "_0806263E:\n"
+        "bx lr\n"
+    );
 }
+

@@ -4,5 +4,22 @@
 __attribute__((naked))
 void sub_08033F30(struct Unk33F30 *a, s32 b)
 {
-    asm(".byte 0x02, 0x1C, 0x51, 0x61, 0x01, 0x20, 0x10, 0x77, 0x00, 0x29, 0x01, 0xDB, 0x00, 0x20, 0x01, 0xE0, 0x80, 0x20, 0x00, 0x01, 0x90, 0x61, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "adds r2, r0, #0x0\n"
+        "str r1, [r2, #0x14]\n"
+        "movs r0, #0x01\n"
+        "strb r0, [r2, #0x1C]\n"
+        "cmp r1, #0x00\n"
+        "blt _08033F40\n"
+        "movs r0, #0x00\n"
+        "b _08033F44\n"
+        "_08033F40:\n"
+        "movs r0, #0x80\n"
+        "lsls r0, r0, #0x04\n"
+        "_08033F44:\n"
+        "str r0, [r2, #0x18]\n"
+        "bx lr\n"
+    );
 }
+

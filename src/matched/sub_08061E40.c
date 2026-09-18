@@ -4,5 +4,19 @@
 __attribute__((naked))
 void sub_08061E40(struct Unk61E40 *a)
 {
-    asm(".byte 0x02, 0x1C, 0x00, 0x2A, 0x05, 0xD0, 0x00, 0x21, 0x00, 0x20, 0x10, 0x82, 0x50, 0x81, 0x51, 0x75, 0x50, 0x60, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "adds r2, r0, #0x0\n"
+        "cmp r2, #0x00\n"
+        "beq _08061E52\n"
+        "movs r1, #0x00\n"
+        "movs r0, #0x00\n"
+        "strh r0, [r2, #0x10]\n"
+        "strh r0, [r2, #0x0A]\n"
+        "strb r1, [r2, #0x15]\n"
+        "str r0, [r2, #0x04]\n"
+        "_08061E52:\n"
+        "bx lr\n"
+    );
 }
+

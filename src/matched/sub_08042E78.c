@@ -4,5 +4,23 @@
 __attribute__((naked))
 void *sub_08042E78(s16 i)
 {
-    asm(".byte 0x02, 0x1C, 0x36, 0x2A, 0x08, 0xD8, 0x03, 0x48, 0x51, 0x00, 0x89, 0x18, 0x09, 0x01, 0x00, 0x68, 0x40, 0x18, 0x02, 0xE0, 0x40, 0x05, 0x00, 0x03, 0x00, 0x20, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "adds r2, r0, #0x0\n"
+        "cmp r2, #0x36\n"
+        "bhi _08042E90\n"
+        "ldr r0, _08042E8C @ =0x03000540\n"
+        "lsls r1, r2, #0x01\n"
+        "adds r1, r1, r2\n"
+        "lsls r1, r1, #0x04\n"
+        "ldr r0, [r0, #0x00]\n"
+        "adds r0, r0, r1\n"
+        "b _08042E92\n"
+        "_08042E8C: .4byte 0x03000540\n"
+        "_08042E90:\n"
+        "movs r0, #0x00\n"
+        "_08042E92:\n"
+        "bx lr\n"
+    );
 }
+

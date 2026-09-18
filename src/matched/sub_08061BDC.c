@@ -4,5 +4,15 @@
 __attribute__((naked))
 void sub_08061BDC(struct Unk61BDC *a)
 {
-    asm(".byte 0x01, 0x1C, 0x00, 0x29, 0x01, 0xD0, 0x01, 0x20, 0x08, 0x75, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "adds r1, r0, #0x0\n"
+        "cmp r1, #0x00\n"
+        "beq _08061BE6\n"
+        "movs r0, #0x01\n"
+        "strb r0, [r1, #0x14]\n"
+        "_08061BE6:\n"
+        "bx lr\n"
+    );
 }
+

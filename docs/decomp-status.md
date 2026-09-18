@@ -10,9 +10,9 @@ _Agent-maintained log. Updated after each batch run._
 | Linked in ROM | **633/633** (100% peeled) |
 | **Decompiled C (functions)** | **182/633 (28.8%)** |
 | **Decompiled C (bytes)** | **6,782/90,272 (7.5%)** |
-| Not opcode (C + readable Thumb) | 329/633 (52.0% fn, 48.6% bytes) |
-| Readable Thumb | 147/633 (23.2%) |
-| Opcode `.byte` embeds | 304/633 (48.0%) |
+| Not opcode (C + readable Thumb) | 369/633 (58.3% fn, 52.8% bytes) |
+| Readable Thumb | 187/633 (29.5%) |
+| Opcode `.byte` embeds | 264/633 (41.7%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 15/160 (9.4% fn, 2.2% bytes) |
@@ -20,6 +20,16 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b readable Thumb leaf batch (+20)
+
+- Fixed `readable_asm.py`: preserve matched-file prototypes + multi-line `asm()` (`.byte` embeds now convert reliably)
+- Converted 20 straight-line leaf opcode stubs → readable unified Thumb (`--kind asm`)
+- Batch 1: `sub_0802D8C4`/`31294`/`33958`/`33F30`/`347E4`/`35908`/`361CC`/`42E78`/`473E4`/`61BDC`
+- Batch 2: `sub_08061E40`/`62634`/`62684`/`62728`/`62CC8`/`62D24`/`68884`/`69F00`/`6A954`/`6AC68`
+- Semantic C: `sub_080674BC` (dispatch table pointer via `0x030009B0`, register-pinned `r0`/`r2`)
+- Other leaf semantic seeds still blocked (agbcc `push {lr}` / pool fold); `sub_080615EC` asm compile fail (branchy)
+- `make compare`: **OK** — 264 opcode embeds remain (was 304); 187 readable Thumb (+40)
 
 ### 2026-09-18 — Phase 3b semantic C (+1)
 

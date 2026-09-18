@@ -4,5 +4,22 @@
 __attribute__((naked))
 void *sub_08068884(struct Unk68014 *a)
 {
-    asm(".byte 0x81, 0x68, 0xC9, 0x00, 0x20, 0x31, 0x42, 0x18, 0x81, 0x69, 0x40, 0x18, 0x82, 0x42, 0x01, 0xD0, 0x10, 0x1C, 0x00, 0xE0, 0x00, 0x20, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "ldr r1, [r0, #0x08]\n"
+        "lsls r1, r1, #0x03\n"
+        "adds r1, #0x20\n"
+        "adds r2, r0, r1\n"
+        "ldr r1, [r0, #0x18]\n"
+        "adds r0, r0, r1\n"
+        "cmp r2, r0\n"
+        "beq _08068898\n"
+        "adds r0, r2, #0x0\n"
+        "b _0806889A\n"
+        "_08068898:\n"
+        "movs r0, #0x00\n"
+        "_0806889A:\n"
+        "bx lr\n"
+    );
 }
+

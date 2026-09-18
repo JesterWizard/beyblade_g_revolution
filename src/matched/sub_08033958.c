@@ -4,5 +4,19 @@
 __attribute__((naked))
 s32 sub_08033958(struct Unk33958 *a)
 {
-    asm(".byte 0x00, 0x22, 0x00, 0x23, 0xC1, 0x5E, 0x40, 0x68, 0x00, 0x68, 0x81, 0x42, 0x00, 0xD1, 0x01, 0x22, 0x10, 0x1C, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "movs r2, #0x00\n"
+        "movs r3, #0x00\n"
+        "ldsh r1, [r0, r3]\n"
+        "ldr r0, [r0, #0x04]\n"
+        "ldr r0, [r0, #0x00]\n"
+        "cmp r1, r0\n"
+        "bne _08033968\n"
+        "movs r2, #0x01\n"
+        "_08033968:\n"
+        "adds r0, r2, #0x0\n"
+        "bx lr\n"
+    );
 }
+

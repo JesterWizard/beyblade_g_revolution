@@ -4,5 +4,21 @@
 __attribute__((naked))
 u32 sub_0806AC68(u8 *s)
 {
-    asm(".byte 0x00, 0x22, 0x03, 0xE0, 0x01, 0x30, 0x20, 0x29, 0x00, 0xD0, 0x01, 0x32, 0x01, 0x78, 0x00, 0x29, 0xF8, 0xD1, 0x10, 0x1C, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "movs r2, #0x00\n"
+        "b _0806AC74\n"
+        "_0806AC6C:\n"
+        "adds r0, #0x01\n"
+        "cmp r1, #0x20\n"
+        "beq _0806AC74\n"
+        "adds r2, #0x01\n"
+        "_0806AC74:\n"
+        "ldrb r1, [r0, #0x00]\n"
+        "cmp r1, #0x00\n"
+        "bne _0806AC6C\n"
+        "adds r0, r2, #0x0\n"
+        "bx lr\n"
+    );
 }
+

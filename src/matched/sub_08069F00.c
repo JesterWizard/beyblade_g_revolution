@@ -4,5 +4,21 @@
 __attribute__((naked))
 s32 sub_08069F00(s16 a, s16 b)
 {
-    asm(".byte 0x00, 0x04, 0x00, 0x14, 0x09, 0x04, 0x09, 0x14, 0x48, 0x43, 0x01, 0x1C, 0x00, 0x28, 0x00, 0xDA, 0xFF, 0x31, 0x08, 0x02, 0x00, 0x14, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "lsls r0, r0, #0x10\n"
+        "asrs r0, r0, #0x10\n"
+        "lsls r1, r1, #0x10\n"
+        "asrs r1, r1, #0x10\n"
+        "muls r0, r1\n"
+        "adds r1, r0, #0x0\n"
+        "cmp r0, #0x00\n"
+        "bge _08069F12\n"
+        "adds r1, #0xFF\n"
+        "_08069F12:\n"
+        "lsls r0, r1, #0x08\n"
+        "asrs r0, r0, #0x10\n"
+        "bx lr\n"
+    );
 }
+

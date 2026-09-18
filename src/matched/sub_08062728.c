@@ -4,5 +4,18 @@
 __attribute__((naked))
 void sub_08062728(struct Unk62728 *a)
 {
-    asm(".byte 0x00, 0x21, 0x00, 0x23, 0x82, 0x68, 0x40, 0x68, 0x08, 0xC0, 0x01, 0x31, 0x91, 0x42, 0xFB, 0xD3, 0x70, 0x47");
+    asm(
+        ".syntax unified\n"
+        "movs r1, #0x00\n"
+        "movs r3, #0x00\n"
+        "ldr r2, [r0, #0x08]\n"
+        "ldr r0, [r0, #0x04]\n"
+        "_08062730:\n"
+        "stm r0!, {r3}\n"
+        "adds r1, #0x01\n"
+        "cmp r1, r2\n"
+        "bcc _08062730\n"
+        "bx lr\n"
+    );
 }
+

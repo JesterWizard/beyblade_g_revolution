@@ -9,8 +9,33 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 NON = ROOT / "asm" / "nonmatchings"
+MATCHED = ROOT / "src" / "matched"
 
 from c_patterns import CCandidate  # noqa: E402
+
+
+def _signature_from_matched(function: str) -> str | None:
+    """Reuse prototype from an existing opcode stub (naked + params)."""
+    path = MATCHED / f"{function}.c"
+    if not path.is_file():
+        return None
+    text = path.read_text()
+    marker = "__attribute__((naked))"
+    if marker not in text:
+        return None
+    start = text.index(marker)
+    brace = text.index("{", start)
+    return text[start:brace].rstrip()
+
+
+def _asm_insn_lines(body_lines: list[str]) -> list[str]:
+    out: list[str] = []
+    for line in body_lines:
+        s = line.rstrip()
+        if s.startswith("\t"):
+            s = s[1:]
+        out.append(s)
+    return out
 
 
 def _function_slice(function: str, asm_lines: list[str]) -> list[str]:
@@ -46,15 +71,13 @@ def guess_readable_asm(function: str, asm_lines: list[str] | None = None) -> CCa
         body_lines.append(line.rstrip())
     if not body_lines:
         return None
-    # Keep Thumb as written (unified syntax + pools).
-    escaped = []
-    for ln in body_lines:
-        ln = ln.replace("\\", "\\\\").replace('"', '\\"')
-        escaped.append(ln)
-    inner = "\\n".join(s.strip() if not s.startswith("\t") else s[1:] for s in escaped)
-    body = (
-        f"__attribute__((naked))\n"
-        f"void {function}(void)\n{{\n"
-        f'    asm(".syntax unified\\n{inner}");\n}}'
-    )
+    sig = _signature_from_matched(function)
+    if sig is None:
+        sig = f"__attribute__((naked))\nvoid {function}(void)"
+    insns = _asm_insn_lines(body_lines)
+    asm_lines = ['        ".syntax unified\\n"']
+    for insn in insns:
+        asm_lines.append(f'        "{insn}\\n"')
+    asm_block = "\n".join(asm_lines)
+    body = f"{sig}\n{{\n    asm(\n{asm_block}\n    );\n}}\n"
     return CCandidate(body, "readable thumb")
