@@ -8,18 +8,26 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **182/633 (28.8%)** |
-| **Decompiled C (bytes)** | **6,782/90,272 (7.5%)** |
+| **Decompiled C (functions)** | **183/633 (28.9%)** |
+| **Decompiled C (bytes)** | **6,850/90,272 (7.6%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 451/633 (71.2%) |
+| Readable Thumb | 450/633 (71.1%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 15/160 (9.4% fn, 2.2% bytes) |
+| Battle semantic C | 16/160 (10.0% fn, 2.4% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b battle semantic C (+1)
+
+- Added `tools/decomp/battle_semantic_batch.py` / `.sh` — hand seeds + m2c/heuristics for battle readable Thumb
+- Semantic C: `sub_08033530` (`gBattleWork->unk2088` branch → `33574` or `686D8`/`68418` on `unk1FAC`)
+- Proto: `sub_08033530(void)` in `unknown-functions.h`
+- Near-miss: `sub_080601C4` (r8 pool pin, 92B→84B), table-lookup family still pool-blocked
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b readable Thumb sweep (100% not opcode)
 

@@ -52,6 +52,7 @@ make compare
 
 # 2. Pick subsystem / triage
 python3 tools/decomp/battle_scan.py -n 20    # battle first
+tools/decomp/battle_semantic_batch.sh 10 --seeds-only  # hand-verified battle C
 tools/decomp/battle_convert_batch.sh 10
 tools/decomp/battle_cursor_batch.sh 5      # m2c seeds for hard battle fns
 python3 tools/decomp/triage_functions.py -n 10

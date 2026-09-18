@@ -19,18 +19,8 @@ manifest = json.loads(MANIFEST.read_text()) if MANIFEST.is_file() else {"functio
 have = {f["src"] for f in manifest["functions"] if f.get("src")}
 
 # Hand-maintained battle C candidates: function -> (body, note)
-CANDIDATES: list[tuple[str, str, str]] = [
-    (
-        "sub_080314FC",
-        """void sub_080314FC(void)
-{
-    u8 *base;
-    base = *(u8 **)0x03000290;
-    *(u32 *)(base + 0x118) = 0x3C;
-}""",
-        "battle/work-init-field-118",
-    ),
-]
+# Prefer tools/decomp/battle_semantic_batch.py (BATTLE_SEEDS) for new entries.
+CANDIDATES: list[tuple[str, str, str]] = []
 
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from match_function import write_single_function_c
