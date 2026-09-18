@@ -39,7 +39,9 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 
 | Offset | Member | Role |
 |--------|--------|------|
-| `+0x0874` | `unk0874` | `s16` thunk arg (`sub_0802E1EC`) |
+| `+0x0424` | `unk0424` | `Unk705DC *` overlay source (`sub_0802D52C`) |
+| `+0x0874` | `unk0874` | `s16` thunk arg (`sub_0802E1EC` / `sub_0802D8DC`) |
+| `+0x0878` | `unk0878` | `s8` overlay index (`sub_0802D8DC`) |
 | `+0x15C8`–`+0x15D2` | `unk15C8`–`unk15D2` | `s8` flags / `s16` pair (`sub_0802C6AC`) |
 | `+0x1688` | `unk1688` | `Unk1688Entry *` (24-byte records) |
 | `+0x1694` | `unk1694` | `Unk1694 *` (4-byte records) |
@@ -54,6 +56,7 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `+0x1818` | `unk1818` | table-row index |
 | `+0x181A` | `unk181A` | last `sub_080603E0` arg |
 | `+0x1834` | `unk1834` | flag byte |
+| `+0x1838` / `+0x183A` | `unk1838` / `unk183A` | `u16` pair (`sub_0802DEA0`) |
 | `+0x1861` | `unk1861[0x53]` | signed occupancy bytes |
 
 ## C conversion status
@@ -75,6 +78,10 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_080603E0` | **semantic C** — `sub_08071FC8` on `unk1710[0..0x18]`, set `unk181A` |
 | `sub_080603A4` | **semantic C** — optional `71FC8` on `unk177C`, set `unk1819` |
 | `sub_0802D598` | **semantic C** — clear `gUnk_0300026C`, write `0xFFFFC000` into inner +8/+0xC |
+| `sub_0802D898` | **semantic C** — `unk08` coords `arg + 0xFFFFF800` |
+| `sub_0802D3F0` | **semantic C** — free `unk08`–`unk40`, then `*0x03000270` |
+| `sub_0802D8DC` | **semantic C** — overlay sync via `2E18C`/`2E1B4`/`2E210` |
+| `sub_0806EE24` | **semantic C** — DISPCNT copy from `unk358` |
 | `sub_08043BDC` | **semantic C** — walk `unk16E4` vs `unk16C8` |
 | `sub_08060428` family | **semantic C** — thunks to `sub_080601C4` |
 | `sub_08072F94` | readable Thumb — agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |

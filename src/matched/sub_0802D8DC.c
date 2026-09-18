@@ -1,8 +1,44 @@
 #include "global.h"
 
 // @ 0x0802d8dc
-__attribute__((naked))
 void sub_0802D8DC(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nbl _0802D9A8\nldr r6, _0802D998 @ =0x0300026C\nldr r1, [r6, #0x00]\nldr r0, [r1, #0x0C]\ncmp r0, #0x00\nbeq _0802D93A\nldr r0, [r1, #0x1C]\nldr r1, [r1, #0x20]\nldr r7, _0802D99C @ =0x03000198\nldr r2, [r7, #0x00]\nldr r3, _0802D9A0 @ =0x00000878\nadds r2, r2, r3\nldrb r2, [r2, #0x00]\nlsls r2, r2, #0x18\nasrs r2, r2, #0x18\nbl sub_0802E18C\nldr r0, [r6, #0x00]\nldr r4, [r0, #0x14]\nldr r5, [r0, #0x18]\nbl sub_0802E1EC\nadds r2, r0, #0x0\nlsls r2, r2, #0x18\nasrs r2, r2, #0x18\nadds r0, r4, #0x0\nadds r1, r5, #0x0\nbl sub_0802E18C\nldr r0, [r6, #0x00]\nldr r0, [r0, #0x24]\ncmp r0, #0x00\nbeq _0802D93A\nldr r0, [r7, #0x00]\nldr r1, _0802D9A4 @ =0x00000874\nadds r0, r0, r1\nmovs r3, #0x00\nldsh r0, [r0, r3]\nbl sub_0802E1B4\nldr r1, [r6, #0x00]\nldr r1, [r1, #0x24]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nstrh r0, [r1, #0x18]\n_0802D93A:\nldr r6, _0802D998 @ =0x0300026C\nldr r1, [r6, #0x00]\nldr r0, [r1, #0x28]\ncmp r0, #0x00\nbeq _0802D992\nadds r0, r1, #0x0\nadds r0, #0x4E\nmovs r1, #0x00\nldsh r0, [r0, r1]\nbl sub_08042E78\nadds r7, r0, #0x0\nldr r1, [r6, #0x00]\nldr r0, [r1, #0x38]\nldr r1, [r1, #0x3C]\nmovs r2, #0x03\nldsb r2, [r7, r2]\nbl sub_0802E18C\nldr r0, [r6, #0x00]\nldr r4, [r0, #0x30]\nldr r5, [r0, #0x34]\nbl sub_0802E210\nadds r2, r0, #0x0\nlsls r2, r2, #0x18\nasrs r2, r2, #0x18\nadds r0, r4, #0x0\nadds r1, r5, #0x0\nbl sub_0802E18C\nldr r0, [r6, #0x00]\nldr r0, [r0, #0x40]\ncmp r0, #0x00\nbeq _0802D992\nmovs r3, #0x00\nldsh r0, [r7, r3]\nbl sub_0802E1B4\nldr r1, [r6, #0x00]\nldr r1, [r1, #0x40]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nstrh r0, [r1, #0x18]\n_0802D992:\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_0802D998: .4byte 0x0300026C\n_0802D99C: .4byte 0x03000198\n_0802D9A0: .4byte 0x00000878\n_0802D9A4: .4byte 0x00000874");
+    struct Unk026C *p;
+    struct Unk310F0b *a;
+    struct Unk310F0b *b;
+    struct Unk42E78 *row;
+    s8 t;
+
+    _0802D9A8();
+    p = gUnk_0300026C;
+    if (p->unk0C != 0)
+    {
+        sub_0802E18C((struct Unk310F0b *)p->unk1C, (struct Unk310F0b *)p->unk20, gMainWorkPtr->unk0878);
+        a = (struct Unk310F0b *)gUnk_0300026C->unk14;
+        b = (struct Unk310F0b *)gUnk_0300026C->unk18;
+        t = sub_0802E1EC();
+        sub_0802E18C(a, b, t);
+        if (gUnk_0300026C->unk24 != 0)
+        {
+            t = sub_0802E1B4(gMainWorkPtr->unk0874);
+            gUnk_0300026C->unk24->unk18 = t;
+        }
+    }
+    p = gUnk_0300026C;
+    if (p->unk28 != 0)
+    {
+        row = (struct Unk42E78 *)sub_08042E78(p->unk4E);
+        p = gUnk_0300026C;
+        sub_0802E18C((struct Unk310F0b *)p->unk38, (struct Unk310F0b *)p->unk3C, (s8)row->unk03);
+        a = (struct Unk310F0b *)gUnk_0300026C->unk30;
+        b = (struct Unk310F0b *)gUnk_0300026C->unk34;
+        t = sub_0802E210();
+        sub_0802E18C(a, b, t);
+        if (gUnk_0300026C->unk40 != 0)
+        {
+            t = sub_0802E1B4(row->unk00);
+            gUnk_0300026C->unk40->unk18 = t;
+        }
+    }
 }
+

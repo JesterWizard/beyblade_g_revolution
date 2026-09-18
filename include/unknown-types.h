@@ -196,9 +196,13 @@ struct Unk1688Entry /* 0x18 */
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
-    /* 0000 */ u8 filler_0000[0x874];
+    /* 0000 */ u8 filler_0000[0x424];
+    /* 0424 */ struct Unk705DC *unk0424;
+    /* 0428 */ u8 filler_0428[0x44C];
     /* 0874 */ s16 unk0874;
-    /* 0876 */ u8 filler_0876[0xD52];
+    /* 0876 */ u8 filler_0876[2];
+    /* 0878 */ s8 unk0878;
+    /* 0879 */ u8 filler_0879[0xD4F];
     /* 15C8 */ s8 unk15C8;
     /* 15C9 */ s8 unk15C9;
     /* 15CA */ s8 unk15CA;
@@ -236,7 +240,10 @@ struct MainWork /* >= 0x18B4 */
     /* 181F */ s8 unk181F;
     /* 1820 */ u8 filler_1820[0x14];
     /* 1834 */ u8 unk1834;
-    /* 1835 */ u8 filler_1835[0x2C];
+    /* 1835 */ u8 filler_1835[3];
+    /* 1838 */ u16 unk1838;
+    /* 183A */ u16 unk183A;
+    /* 183C */ u8 filler_183C[0x25];
     /* 1861 */ s8 unk1861[0x53];
 };
 
@@ -296,6 +303,17 @@ struct Unk0798 /* >= 0xa2 */
     /* 9c */ u16 unk9C;
     /* 9e */ u8 filler_9E[2];
     /* a0 */ u16 unkA0;
+    /* a2 */ u16 unkA2;
+};
+
+/* Source object for sub_080617C4. */
+struct Unk617C4 /* >= 0x0d */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u8 unk04;
+    /* 05 */ u8 unk05;
+    /* 06 */ u8 filler_06[6];
+    /* 0c */ u8 unk0C;
 };
 
 /* Stores at +0x18/+0x1c/+0x20, pointer at +8. sub_08062634, sub_08062238. */
@@ -465,9 +483,26 @@ struct Unk026CInner /* >= 0x1a */
 struct Unk026C /* >= 0x50 */
 {
     /* 00 */ u32 unk00;
-    /* 04 */ u8 filler_04[4];
-    /* 08 */ struct Unk026CInner *unk08;
-    /* 0c */ u8 filler_0C[0x42];
+    /* 04 */ u32 unk04;
+    /* 08 */ struct Unk705DC *unk08;
+    /* 0c */ struct Unk705DC *unk0C;
+    /* 10 */ struct Unk705DC *unk10;
+    /* 14 */ struct Unk705DC *unk14;
+    /* 18 */ struct Unk705DC *unk18;
+    /* 1c */ struct Unk705DC *unk1C;
+    /* 20 */ struct Unk705DC *unk20;
+    /* 24 */ struct Unk705DC *unk24;
+    /* 28 */ struct Unk705DC *unk28;
+    /* 2c */ struct Unk705DC *unk2C;
+    /* 30 */ struct Unk705DC *unk30;
+    /* 34 */ struct Unk705DC *unk34;
+    /* 38 */ struct Unk705DC *unk38;
+    /* 3c */ struct Unk705DC *unk3C;
+    /* 40 */ struct Unk705DC *unk40;
+    /* 44 */ u8 filler_44[4];
+    /* 48 */ u8 unk48;
+    /* 49 */ u8 filler_49[3];
+    /* 4c */ u16 unk4C;
     /* 4e */ s16 unk4E;
 };
 
@@ -880,12 +915,25 @@ struct Unk67F3C /* >= 0x99 */
     /* 98 */ u8 unk98;
 };
 
-struct Unk705DC /* >= 0x18 */
+struct Unk705DC /* >= 0x1a */
 {
-    /* 00 */ u8 filler_00[0x10];
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ u32 unk08;
+    /* 0c */ u32 unk0C;
     /* 10 */ u32 unk10;
     /* 14 */ u16 unk14;
     /* 16 */ u16 unk16;
+    /* 18 */ u16 unk18;
+};
+
+/* DISPCNT copy + flags. sub_0806EE24. */
+struct Unk6EE24 /* >= 0x35a */
+{
+    /* 000 */ u8 filler_00[0x355];
+    /* 355 */ u8 unk355;
+    /* 356 */ u8 unk356;
+    /* 357 */ u8 filler_357;
+    /* 358 */ u16 unk358;
 };
 
 /* sub_080302A8 */

@@ -8,18 +8,25 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **168/633 (26.5%)** |
-| **Decompiled C (bytes)** | **5,916/90,272 (6.6%)** |
-| Not opcode (C + readable Thumb) | 317/633 (50.1% fn, 47.9% bytes) |
-| Readable Thumb | 149/633 (23.5%) |
-| Opcode `.byte` embeds | 316/633 (49.9%) |
+| **Decompiled C (functions)** | **172/633 (27.2%)** |
+| **Decompiled C (bytes)** | **6,516/90,272 (7.2%)** |
+| Not opcode (C + readable Thumb) | 320/633 (50.6% fn, 48.4% bytes) |
+| Readable Thumb | 148/633 (23.4%) |
+| Opcode `.byte` embeds | 313/633 (49.4%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 13/160 (8.1% fn, 1.7% bytes) |
+| Battle semantic C | 14/160 (8.8% fn, 2.2% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+4)
+
+- Semantic C: `sub_0802D898` (write `0xFFFFF800` into `Unk026C->unk08` coords), `sub_0806EE24` (copy `unk358` to DISPCNT, set `unk356`/`unk355`), `sub_0802D3F0` (free `unk08`–`unk40` via `6FE84`, then `6A434` on `*0x03000270`), `sub_0802D8DC` (sync `Unk705DC` overlays via `2E18C`/`2E1B4`/`2E210`)
+- Grew `Unk026C` (`unk08`–`unk40` as `Unk705DC *`, `unk48`/`unk4C`), `Unk705DC` (`unk08`/`unk0C`/`unk18`), `MainWork` (`unk0424`, `unk0878`, `unk1838`/`unk183A`), `Unk0798` (`unkA2`); added `Unk6EE24`/`Unk617C4`
+- Near-miss: `sub_0802D52C`/`2E048`/`312B0`/`61800` (same-size dest regs), `sub_0802D6D4` (pool order C000 vs 63CC), `sub_0802DEA0` (CSE of `0xFFFFC000`), extra-`lr` leaves (`2D8C4`/`615EC`/`61BDC`/`617C4`)
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+5)
 
