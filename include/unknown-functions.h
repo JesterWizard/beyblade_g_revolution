@@ -170,4 +170,6 @@ void sub_08061C48(void);
 void sub_08060468(void);
 void sub_08062AC0(void);
 
+void sub_08062C80(void);
+
 #endif /* GUARD_UNKNOWN_FUNCTIONS_H */

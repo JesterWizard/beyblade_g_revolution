@@ -638,4 +638,37 @@ struct Unk0770 /* 0x08 */
     /* 04 */ u32 unk04;
 };
 
+
+/* Nested byte at inner+0x24. sub_080310F0. */
+struct Unk310F0Inner2 /* >= 0x25 */
+{
+    /* 00 */ u8 filler_00[0x24];
+    /* 24 */ s8 unk24;
+};
+
+struct Unk310F0Inner1 /* >= 0x2c */
+{
+    /* 00 */ u8 filler_00[0x28];
+    /* 28 */ struct Unk310F0Inner2 *unk28;
+};
+
+struct Unk310F0a /* >= 0x08 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ struct Unk310F0Inner1 *unk04;
+};
+
+struct Unk310F0b /* >= 0x1a */
+{
+    /* 00 */ u8 filler_00[0x18];
+    /* 18 */ s16 unk18;
+};
+
+/* Pointer array at +0x220. sub_08041394. */
+struct Unk41394 /* >= 0x240 */
+{
+    /* 000 */ u8 filler_00[0x220];
+    /* 220 */ void *unk220[8];
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */
