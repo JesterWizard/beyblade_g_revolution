@@ -424,7 +424,7 @@ struct Unk6DEF4 /* >= 0x08 */
 };
 
 /* Pointer at +0, word at +0xC. sub_08062044. */
-struct Unk62044 /* >= 0x26 */
+struct Unk62044 /* 0x28 (padded from >= 0x26) */
 {
     /* 00 */ void *unk00;
     /* 04 */ u8 filler_04[8];
@@ -467,7 +467,6 @@ struct Unk33F30 /* >= 0x68 */
     /* 32 */ u8 unk32;
     /* 33 */ u8 unk33;
     /* 34 */ struct Unk62044 unk34;
-    /* 5a */ u8 filler_5A[2];
     /* 5c */ u32 unk5C;
     /* 60 */ u32 unk60;
     /* 64 */ u32 unk64;
