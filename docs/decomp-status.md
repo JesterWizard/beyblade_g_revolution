@@ -8,18 +8,25 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **172/633 (27.2%)** |
-| **Decompiled C (bytes)** | **6,516/90,272 (7.2%)** |
-| Not opcode (C + readable Thumb) | 320/633 (50.6% fn, 48.4% bytes) |
-| Readable Thumb | 148/633 (23.4%) |
-| Opcode `.byte` embeds | 313/633 (49.4%) |
+| **Decompiled C (functions)** | **180/633 (28.4%)** |
+| **Decompiled C (bytes)** | **6,690/90,272 (7.4%)** |
+| Not opcode (C + readable Thumb) | 327/633 (51.7% fn, 48.5% bytes) |
+| Readable Thumb | 147/633 (23.2%) |
+| Opcode `.byte` embeds | 306/633 (48.3%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 14/160 (8.8% fn, 2.2% bytes) |
+| Battle semantic C | 15/160 (9.4% fn, 2.2% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-18 — Phase 3b semantic C (+7)
+
+- Semantic C: `sub_08072F94` (battle lookup byte via `gBtlLookupBase`/`Ptr` stack pool), `sub_0806DEC8` (indexed byte-chain walk), `sub_08066434`/`66440`/`6644C` (IWRAM `0x970` bytes @+0x34/+0x35), `sub_08062A1C` (store word @ `0x7B0+0x114`), `sub_0806639C` (ROM table `0x80BA1A8` indexed by `gUnk_03000964`)
+- Types: `UnkDEC8`/`UnkDEC8Head`; protos fixed (`66434`/`66440` as `u8`, `615EC` as `u16`, `62A1C` as `u32`, `6639C` as `void *`)
+- Permuter seeds added in `import_function.py` for pool-order leaves
+- `make compare`: **OK**
 
 ### 2026-09-18 — Phase 3b semantic C (+4)
 

@@ -6,14 +6,14 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **27.2%** of functions (172/633) and **7.2%** of original function bytes (6,516/90,272).
+Decompiled C is **28.4%** of functions (180/633) and **7.4%** of original function bytes (6,690/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `█████████░░░░░░░░░░░░░░░░░░░░░░░` | **27.2%** | 172/633 |
-| Decompiled C (bytes) | `██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **7.2%** | 6,516/90,272 |
-| Not opcode (functions) | `████████████████░░░░░░░░░░░░░░░░` | **50.6%** | 320/633 |
-| Not opcode (bytes) | `███████████████░░░░░░░░░░░░░░░░░` | **48.4%** | 43,666/90,272 |
+| Decompiled C (functions) | `█████████░░░░░░░░░░░░░░░░░░░░░░░` | **28.4%** | 180/633 |
+| Decompiled C (bytes) | `██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **7.4%** | 6,690/90,272 |
+| Not opcode (functions) | `█████████████████░░░░░░░░░░░░░░░` | **51.7%** | 327/633 |
+| Not opcode (bytes) | `████████████████░░░░░░░░░░░░░░░░` | **48.5%** | 43,820/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
 ```mermaid
@@ -21,18 +21,18 @@ xychart-beta
     title "Decompiled C vs original (%)"
     x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
     y-axis "Percent" 0 --> 100
-    bar [27.2, 7.2, 50.6, 48.4]
+    bar [28.4, 7.4, 51.7, 48.5]
 ```
 
 ![Decompiled C vs original](docs/decomp-progress.svg)
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 172 (27.2%) | 6,516 (7.2%) |
-| Readable Thumb | 148 (23.4%) | 37,150 (41.2%) |
-| Opcode embed | 313 (49.4%) | 46,606 (51.6%) |
+| Semantic C | 180 (28.4%) | 6,690 (7.4%) |
+| Readable Thumb | 147 (23.2%) | 37,130 (41.1%) |
+| Opcode embed | 306 (48.3%) | 46,452 (51.5%) |
 
-Battle: **8.8%** functions / **2.2%** bytes in semantic C (14/160; 0 opcode left).
+Battle: **9.4%** functions / **2.2%** bytes in semantic C (15/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`.
 

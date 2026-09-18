@@ -65,7 +65,139 @@ KNOWN_SEEDS = {
 
 u8 sub_08072F94(void)
 {
-    return *(u8 *)(gBtlLookupBase + *(u32 *)gBtlLookupPtr);
+    u32 tmp[2];
+    u32 *ptr;
+
+    tmp[0] = gBtlLookupBase;
+    ptr = (u32 *)gBtlLookupPtr;
+    tmp[0] = tmp[0] + *ptr;
+    return *(u8 *)tmp[0];
+}
+""",
+    "sub_0806DEC8": """#include "global.h"
+
+struct UnkDEC8Head
+{
+    u32 unk00;
+    s32 unk04;
+};
+
+struct UnkDEC8
+{
+    struct UnkDEC8Head *unk00;
+    u8 filler04[4];
+    u8 *unk08;
+};
+
+u8 *sub_0806DEC8(struct UnkDEC8 *a, s32 index)
+{
+    u8 *node;
+    s32 count;
+    s32 i;
+
+    node = a->unk08;
+    count = a->unk00->unk04;
+    for (i = 0; i < count; i++)
+    {
+        if (i == index)
+            return node;
+        node += *(u32 *)(node + 4);
+    }
+    return 0;
+}
+""",
+    "sub_08061BDC": """#include "global.h"
+
+void sub_08061BDC(struct Unk61BDC *a)
+{
+    if (a == 0)
+        return;
+    a->unk14 = 1;
+}
+""",
+    "sub_08062634": """#include "global.h"
+
+void sub_08062634(struct Unk62634 *a, u32 b, u32 c, u32 d)
+{
+    if (a == 0)
+        return;
+    a->unk1C = b;
+    a->unk20 = c;
+    a->unk18 = d;
+}
+""",
+    "sub_08066434": """#include "global.h"
+
+u8 sub_08066434(void)
+{
+    u32 tmp[2];
+    tmp[0] = (u32)gUnk_03000970;
+    tmp[0] += 0x34;
+    return *(u8 *)tmp[0];
+}
+""",
+    "sub_08066440": """#include "global.h"
+
+void sub_08066440(u8 v)
+{
+    u32 tmp[2];
+    tmp[0] = (u32)gUnk_03000970;
+    tmp[0] += 0x35;
+    *(u8 *)tmp[0] = v;
+}
+""",
+    "sub_0806644C": """#include "global.h"
+
+s8 sub_0806644C(void)
+{
+    u32 tmp[2];
+    s32 val;
+    tmp[0] = (u32)gUnk_03000970;
+    tmp[0] += 0x35;
+    val = *(u8 *)tmp[0];
+    val <<= 24;
+    val >>= 24;
+    return (s8)val;
+}
+""",
+    "sub_08062A1C": """#include "global.h"
+
+void sub_08062A1C(u32 v)
+{
+    u32 tmp[2];
+    tmp[0] = gUnk_030007B0;
+    tmp[0] += 0x114;
+    *(u32 *)tmp[0] = v;
+}
+""",
+    "sub_0806639C": """#include "global.h"
+
+void *sub_0806639C(void)
+{
+    u32 tmp[2];
+    void **base;
+    s32 idx;
+
+    tmp[0] = 0x080BA1A8;
+    base = (void **)tmp[0];
+    idx = (s8)*(u8 *)gUnk_03000964;
+    idx <<= 2;
+    return *(void **)((u8 *)base + idx);
+}
+""",
+    "sub_08031294": """#include "global.h"
+
+void sub_08031294(struct Unk312EC *a)
+{
+    register u8 m asm("r1");
+    m = 0xFF;
+    a->unk00 = (s8)((u8)a->unk00 | m);
+    a->unk01 = (s8)((u8)a->unk01 | m);
+    m = 1;
+    m = (u8)-m;
+    a->unk04 = (s32)m;
+    a->unk0C = 0;
+    a->unk08 = 0;
 }
 """,
     "sub_0803DD60": """#include "global.h"

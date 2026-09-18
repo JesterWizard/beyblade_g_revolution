@@ -1,8 +1,16 @@
 #include "global.h"
 
 // @ 0x0806644c
-__attribute__((naked))
 s8 sub_0806644C(void)
 {
-    asm(".byte 0x02, 0x48, 0x35, 0x30, 0x00, 0x78, 0x00, 0x06, 0x00, 0x16, 0x70, 0x47, 0x70, 0x09, 0x00, 0x03");
+    u32 tmp[2];
+    s32 val;
+
+    tmp[0] = (u32)gUnk_03000970;
+    tmp[0] += 0x35;
+    val = *(u8 *)tmp[0];
+    val <<= 24;
+    val >>= 24;
+    return (s8)val;
 }
+

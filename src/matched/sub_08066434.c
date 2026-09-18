@@ -1,8 +1,12 @@
 #include "global.h"
 
 // @ 0x08066434
-__attribute__((naked))
-u32 sub_08066434(void)
+u8 sub_08066434(void)
 {
-    asm(".byte 0x01, 0x48, 0x34, 0x30, 0x00, 0x78, 0x70, 0x47, 0x70, 0x09, 0x00, 0x03");
+    u32 tmp[2];
+
+    tmp[0] = (u32)gUnk_03000970;
+    tmp[0] += 0x34;
+    return *(u8 *)tmp[0];
 }
+

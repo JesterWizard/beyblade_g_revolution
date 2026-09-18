@@ -1,8 +1,15 @@
 #include "global.h"
 
 // @ 0x08062a1c
-__attribute__((naked))
-void sub_08062A1C(u32 a)
+void sub_08062A1C(u32 v)
 {
-    asm(".byte 0x02, 0x49, 0x8A, 0x22, 0x52, 0x00, 0x89, 0x18, 0x08, 0x60, 0x70, 0x47, 0xB0, 0x07, 0x00, 0x03");
+    u32 tmp[2];
+    u32 base;
+
+    tmp[0] = gUnk_030007B0;
+    base = tmp[0];
+    tmp[0] = 0x114;
+    tmp[0] = base + tmp[0];
+    *(u32 *)tmp[0] = v;
 }
+

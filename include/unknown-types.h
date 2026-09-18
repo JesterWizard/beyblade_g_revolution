@@ -788,6 +788,20 @@ struct Unk6BDA8 /* >= 0x118 */
     /* 114 */ void **unk114;
 };
 
+/* Indexed byte-chain walk. sub_0806DEC8. */
+struct UnkDEC8Head /* >= 0x08 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ s32 unk04;
+};
+
+struct UnkDEC8 /* >= 0x0c */
+{
+    /* 00 */ struct UnkDEC8Head *unk00;
+    /* 04 */ u8 filler04[4];
+    /* 08 */ u8 *unk08;
+};
+
 /* Linked list, halfword at +0x20. sub_0806FDB4. */
 struct Unk6FDB4 /* >= 0x22 */
 {
