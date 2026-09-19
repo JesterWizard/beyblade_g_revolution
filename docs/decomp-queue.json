@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-19T11:35:33Z",
+  "generated": "2026-09-19T11:44:05Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 411,
-    "semantic_done": 222,
-    "readable_asm": 411,
+    "pending": 410,
+    "semantic_done": 223,
+    "readable_asm": 410,
     "opcode": 0,
     "battle_pending": 112,
     "battle_semantic": 31,
@@ -2703,18 +2703,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08034788",
-      "addr": "0x08034788",
-      "kind": "asm",
-      "bytes": 44,
-      "score": 22,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },
