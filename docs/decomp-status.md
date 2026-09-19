@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **223/633 (35.2%)** |
-| **Decompiled C (bytes)** | **9,472/90,272 (10.5%)** |
+| **Decompiled C (functions)** | **224/633 (35.4%)** |
+| **Decompiled C (bytes)** | **9,522/90,272 (10.5%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 410/633 (64.8%) |
+| Readable Thumb | 409/633 (64.6%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — semantic C sub_08031368 (+1, 223→224/633); pace note for the 40% ask
+- Matched `sub_08031368` (reverse array-of-pointers search skipping index 0, returns two fields via out-params) — matched on the first real attempt once the loop bounds were traced precisely (`for i = n-1 downto 1`, index 0 never checked — a real, deliberate asymmetry, not a bug).
+- Extensive near-miss work, all reverted (no partial/broken state left): `sub_08062068` (48B=48B; a `switch`/if-chain 3-way branch where retail's second comparison is a genuine `bcc` unsigned-less-than against 1 that no phrasing — `c<1`, `(u32)c<1`, `(s32)c<1`, `switch` case order — stopped agbcc from folding to `beq ,#0`; likely needs the exact original variable rather than a derived comparison), `sub_08067F98` (56B vs 48B; a variable-stride "linked record" walk needs real byte-pointer arithmetic for the next-offset, which added register pressure beyond retail's shape), `sub_08042BB0` (48B vs 56B; a ROM-table search where retail tracks the loop pointer in *two* registers rather than one — same "independent per-access addressing beats a cached pointer" lesson as `sub_08046230`, got the register set to match but 8 bytes still differ).
+- **Honest pace check against the 40% target (253/633):** today's realized rate across ~15 attempted functions is roughly 1 landed match per 3-5 real attempts, several needing multiple disassembly-diff rounds each. A large fraction of what remains in the small/easy tier is gated by one of: the confirmed-unfixable agbcc-extra-push-on-leaf quirk, still-fully-naked large callees (`sub_0804109C`, `sub_08060E48`, the `sub_08061E8C` particle-effect group), or raw unnamed ROM/RAM addresses shared with not-yet-understood structs. Getting from 224 to 253 at this rate is a lot of ground; flagging this now rather than after stalling silently.
+- `make compare`: OK
+- Decompiled C: 223 → 224/633 (35.2% → 35.4%)
 
 ### 2026-09-19 — semantic C sub_08034788 (+1, 222→223/633)
 - Matched `sub_08034788` (midpoint of two `Unk705DC*`'s `unk0C`/`unk10` fields) — needed an explicit `(s32)` cast on the sum before the `>>1`, since retail used `asrs` (arithmetic/signed shift) on what the shared struct currently types as `u32`. Cast locally rather than changing `Unk705DC.unk0C`/`unk10` to `s32` globally, since 5 other matched functions already depend on the current (unsigned) field type and re-typing them wasn't verified safe this session.
