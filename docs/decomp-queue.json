@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T23:12:26Z",
+  "generated": "2026-09-19T06:55:13Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -9,9 +9,9 @@
     "semantic_done": 214,
     "readable_asm": 419,
     "opcode": 0,
-    "battle_pending": 123,
+    "battle_pending": 121,
     "battle_semantic": 26,
-    "blocked": 29
+    "blocked": 31
   },
   "pinned": [],
   "recommended": [
@@ -75,36 +75,6 @@
         "gMainWorkPtr",
         "gBtlInputMask",
         "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08038314",
-      "addr": "0x08038314",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 57,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gBattleWork",
-        "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08045C5C",
-      "addr": "0x08045C5C",
-      "kind": "asm",
-      "bytes": 136,
-      "score": 51,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gMainWorkPtr",
-        "gBtlInputMask"
       ],
       "has_pool": true,
       "blocked": false,
@@ -595,6 +565,34 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08044A20",
+      "addr": "0x08044A20",
+      "kind": "asm",
+      "bytes": 100,
+      "score": 37,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08033084",
+      "addr": "0x08033084",
+      "kind": "asm",
+      "bytes": 100,
+      "score": 43,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gBattleWork"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -627,6 +625,13 @@
       "bytes": 84
     },
     {
+      "name": "sub_08038314",
+      "addr": "0x08038314",
+      "reason": "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] \u2014 logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)",
+      "kind": "asm",
+      "bytes": 108
+    },
+    {
       "name": "sub_080428C4",
       "addr": "0x080428C4",
       "reason": "docs/battle.md: readable Thumb \u2014 C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)",
@@ -639,6 +644,13 @@
       "reason": "reads gMainWorkPtr->unk1688[idx].unk08 into unk1788, computes base = gMainWorkPtr->unk168C + idx*8032 (retail's literal shift/sub chain), calls sub_08045590(base,0) \u2014 logic correct (same-size DIFF, ~14/80 bytes differ) across many pointer-arithmetic orderings tried; needs permuter for the base-pointer scheduling",
       "kind": "asm",
       "bytes": 80
+    },
+    {
+      "name": "sub_08045C5C",
+      "addr": "0x08045C5C",
+      "reason": "gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 \u2014 logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter",
+      "kind": "asm",
+      "bytes": 136
     },
     {
       "name": "sub_080473E4",
@@ -863,36 +875,6 @@
         "gMainWorkPtr",
         "gBtlInputMask",
         "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08038314",
-      "addr": "0x08038314",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 57,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gBattleWork",
-        "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08045C5C",
-      "addr": "0x08045C5C",
-      "kind": "asm",
-      "bytes": 136,
-      "score": 51,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gMainWorkPtr",
-        "gBtlInputMask"
       ],
       "has_pool": true,
       "blocked": false,

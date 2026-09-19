@@ -21,6 +21,15 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-19 — struct scaffolding + 2 new blocks (214/633 unchanged)
+- Split `struct BattleWork` filler to name `unk19C[4]` (`struct Unk62044`, 0x19C/0x1C4/0x1EC/0x214 — confirmed via agbcc offsetof cross-check); moved `struct Unk62044` earlier in `unknown-types.h` so it can be nested by value. Added new `struct Unk38314` (countdown @0x2FC, flag @0x304).
+- Attempted hand-conversion of `sub_08038314` and `sub_08045C5C` (both top-of-queue battle candidates). Both reconstruct the correct logic (verified via `match_function.py` DIFF — same/near-same size, only instruction-order/register-alloc differences) but agbcc lands on a different register choice than retail in each case. 20k+ permuter iterations on `sub_08038314` never found a zero (floor stuck at score 70). Documented both in `decomp-queue.toml` as blocked (needs permuter); see reasons there.
+- `sub_08062D50` heads-up from previous session confirmed correct: it's the same BGR555-pack register-swap shape as blocked `sub_08062CF4` and is already parked as a naked-asm placeholder, not a fresh candidate — no action needed.
+- `make compare`: OK (no functional changes, only header/type scaffolding)
+- Blocked (documented): 29 → 31
+
+
+
 ### 2026-09-18 — Semantic audit fix (+15 prototypes) + near-miss batch
 
 - **Prototype fixes:** added `sub_08061BE8`; fixed `sub_08033F24` (`sub_08072CC0(a)`), `sub_080400D4` (cast), `sub_08070678` (`BtlObj` cast)

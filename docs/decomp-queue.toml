@@ -126,3 +126,11 @@ reason = "byte-identical to sub_08049F98 (different embedded const 0x083A85A4); 
 [[block]]
 name = "sub_08053218"
 reason = "byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker"
+
+[[block]]
+name = "sub_08038314"
+reason = "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)"
+
+[[block]]
+name = "sub_08045C5C"
+reason = "gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter"

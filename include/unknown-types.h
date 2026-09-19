@@ -125,12 +125,24 @@ struct Unk0C /* 0x0c */
     /* 04 */ u8 filler_04[8];
 };
 
+/* Pointer at +0, word at +0xC. sub_08062044. */
+struct Unk62044 /* 0x28 (padded from >= 0x26) */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ u8 filler_04[8];
+    /* 0c */ u32 unk0C;
+    /* 10 */ u8 filler_10[0x14];
+    /* 24 */ u16 unk24;
+};
+
 /* Battle work block (*gBattleWork). sub_080314FC, sub_08033530, sub_08033574. */
 struct BattleWork /* >= 0x208A */
 {
     /* 0000 */ u8 filler_00[0x118];
     /* 0118 */ u32 unk118;
-    /* 011C */ u8 filler_011C[0x1E90];
+    /* 011C */ u8 filler_011C[0x80];
+    /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
+    /* 023C */ u8 filler_023C[0x1D70];
     /* 1FAC */ u8 unk1FAC;
     /* 1FAD */ u8 filler_1FAD[0x3A];
     /* 1FE6 */ u8 unk1FE6;
@@ -434,16 +446,6 @@ struct Unk6DEF4 /* >= 0x08 */
 {
     /* 00 */ s32 *unk00;
     /* 04 */ s32 unk04;
-};
-
-/* Pointer at +0, word at +0xC. sub_08062044. */
-struct Unk62044 /* 0x28 (padded from >= 0x26) */
-{
-    /* 00 */ void *unk00;
-    /* 04 */ u8 filler_04[8];
-    /* 0c */ u32 unk0C;
-    /* 10 */ u8 filler_10[0x14];
-    /* 24 */ u16 unk24;
 };
 
 /* Byte at +0x2C, pointer table at +0x30. sub_08033D90. */
@@ -1305,6 +1307,15 @@ struct Unk604C8 /* >= 0x18 */
     /* 13 */ u8 unk13;
     /* 14 */ u16 unk14;
     /* 16 */ u16 unk16;
+};
+
+/* Countdown word at +0x2FC, flag word at +0x304. sub_08038314. */
+struct Unk38314 /* >= 0x308 */
+{
+    /* 000 */ u8 filler_000[0x2FC];
+    /* 2FC */ u32 unk2FC;
+    /* 300 */ u8 filler_300[4];
+    /* 304 */ s32 unk304;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
