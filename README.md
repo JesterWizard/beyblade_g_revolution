@@ -6,12 +6,12 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **39.0%** of functions (247/633) and **12.2%** of original function bytes (11,030/90,272).
+Decompiled C is **39.2%** of functions (248/633) and **12.3%** of original function bytes (11,118/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `████████████░░░░░░░░░░░░░░░░░░░░` | **39.0%** | 247/633 |
-| Decompiled C (bytes) | `████░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **12.2%** | 11,030/90,272 |
+| Decompiled C (functions) | `█████████████░░░░░░░░░░░░░░░░░░░` | **39.2%** | 248/633 |
+| Decompiled C (bytes) | `████░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **12.3%** | 11,118/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -21,18 +21,18 @@ xychart-beta
     title "Decompiled C vs original (%)"
     x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
     y-axis "Percent" 0 --> 100
-    bar [39.0, 12.2, 100.0, 100.0]
+    bar [39.2, 12.3, 100.0, 100.0]
 ```
 
 ![Decompiled C vs original](docs/decomp-progress.svg)
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 247 (39.0%) | 11,030 (12.2%) |
-| Readable Thumb | 386 (61.0%) | 79,242 (87.8%) |
+| Semantic C | 248 (39.2%) | 11,118 (12.3%) |
+| Readable Thumb | 385 (60.8%) | 79,154 (87.7%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
-Battle: **23.8%** functions / **6.5%** bytes in semantic C (38/160; 0 opcode left).
+Battle: **24.4%** functions / **6.8%** bytes in semantic C (39/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
 
