@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-19T18:07:05Z",
+  "generated": "2026-09-19T20:21:55Z",
   "counts": {
-    "matched": 237,
+    "matched": 238,
     "blocked": 33,
-    "not_started": 338,
+    "not_started": 337,
     "size_mismatch": 20,
     "same_size": 5
   },
@@ -9580,17 +9580,17 @@
     {
       "name": "sub_08071E04",
       "addr": "0x08071E04",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "not_started",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "block_reason": "",
       "retail_bytes": 64,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/64",
-      "source": "none",
+      "matched_bytes": 64,
+      "compiled_bytes": 64,
+      "pct": 100.0,
+      "score": "64/64",
+      "source": "integrated",
       "note": ""
     },
     {

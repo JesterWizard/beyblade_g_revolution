@@ -206,7 +206,7 @@ void *sub_0806FDD0(u32 a);
 void sub_0806FF58(void *a, void *b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h);
 void *sub_0807309C(u32 size);
 void sub_08071E44(struct Unk71E84 *p, void *a, s16 *idx);
-void sub_08071E04(struct Unk71E84 *p, void *a);
+void sub_08071E04(struct Unk71E84 *p, void *a, u32 n);
 void *sub_08071E84(void *a, u32 b);
 s32 sub_0803E328(struct Unk3E328 *a);
 s32 sub_0803E374(struct Unk3E328 *a);
