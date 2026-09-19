@@ -6,7 +6,7 @@ to run commands unless a hard blocker requires credentials they alone control
 (e.g. baserom missing). **Cursor is the agent** — Mizuchi/Claude API is optional.
 
 Read **[docs/decomp-mission.md](docs/decomp-mission.md)** (standing goal + fork policy),
-**[architecture.md](docs/architecture.md)**, **[docs/decomp-roadmap.md](docs/decomp-roadmap.md)** (master plan), and **[docs/decomp-agent.md](docs/decomp-agent.md)** first.
+**[architecture.md](docs/architecture.md)**, and **[docs/decomp-roadmap.md](docs/decomp-roadmap.md)** (master plan) first.
 
 ## Mission
 
@@ -127,7 +127,6 @@ bash build_tools.sh
 | Shiftable check | `tools/decomp/check_shiftable.py` | Phase 5 gate |
 | Cursor batch | `tools/decomp/cursor_batch.sh` | m2c seeds for hard functions |
 | decomp-permuter | `tools/decomp/permuter/` | agbcc pool/ordering search |
-| Mizuchi batch | `tools/decomp/run_batch.sh` | Optional Mizuchi runner |
 | Status | `tools/decomp/report_status.py` | Progress summary + refresh counter |
 | Progress bar | `tools/decomp/progress.py` | Semantic C % vs original (JSON + SVG) |
 
@@ -157,7 +156,6 @@ Post this after every batch (fill in values):
 |----------|-----------|
 | **Standing mission / fork policy** | [docs/decomp-mission.md](docs/decomp-mission.md) |
 | Pipeline / directories | [architecture.md](docs/architecture.md) |
-| Hands-off commands | [docs/decomp-agent.md](docs/decomp-agent.md) |
 | Master plan | [docs/decomp-roadmap.md](docs/decomp-roadmap.md) |
 | **Which function to convert next** | [docs/decomp-semantic-plan.md](docs/decomp-semantic-plan.md) — run `tools/decomp/classify_semantic_targets.py` |
 | Battle subsystem | [docs/battle.md](docs/battle.md) |

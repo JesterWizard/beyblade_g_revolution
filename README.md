@@ -6,12 +6,12 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **37.3%** of functions (236/633) and **11.4%** of original function bytes (10,324/90,272).
+Decompiled C is **37.8%** of functions (239/633) and **11.6%** of original function bytes (10,496/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `████████████░░░░░░░░░░░░░░░░░░░░` | **37.3%** | 236/633 |
-| Decompiled C (bytes) | `████░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **11.4%** | 10,324/90,272 |
+| Decompiled C (functions) | `████████████░░░░░░░░░░░░░░░░░░░░` | **37.8%** | 239/633 |
+| Decompiled C (bytes) | `████░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **11.6%** | 10,496/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -21,18 +21,18 @@ xychart-beta
     title "Decompiled C vs original (%)"
     x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
     y-axis "Percent" 0 --> 100
-    bar [37.3, 11.4, 100.0, 100.0]
+    bar [37.8, 11.6, 100.0, 100.0]
 ```
 
 ![Decompiled C vs original](docs/decomp-progress.svg)
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 236 (37.3%) | 10,324 (11.4%) |
-| Readable Thumb | 397 (62.7%) | 79,948 (88.6%) |
+| Semantic C | 239 (37.8%) | 10,496 (11.6%) |
+| Readable Thumb | 394 (62.2%) | 79,776 (88.4%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
-Battle: **21.9%** functions / **5.8%** bytes in semantic C (35/160; 0 opcode left).
+Battle: **22.5%** functions / **6.0%** bytes in semantic C (36/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
 
@@ -53,9 +53,8 @@ make HACKS=1 modern   # link append ROM (runtime + src_custom)
 See [AGENTS.md](AGENTS.md). One-time setup, then batch runs:
 
 ```bash
-bash build_tools.sh              # agbcc, Luvdis, Mizuchi
-export ANTHROPIC_API_KEY=...       # for Mizuchi Claude phase
-tools/decomp/run_batch.sh 10     # decompile 10 easy functions
+bash build_tools.sh              # agbcc, Luvdis, m2c (no API key needed)
+tools/decomp/match_batch.sh 10   # integrate + compare + commit
 python3 tools/decomp/report_status.py
 ```
 

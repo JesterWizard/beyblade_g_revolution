@@ -29,7 +29,7 @@ and beyblade_g_revolution.toml [renames] covers all functions with self-document
 
 | Layer | Criterion | Current tooling |
 |-------|-----------|-----------------|
-| **ROM linked** | 633/633 functions in peel; `make compare` OK | `match_loop.sh`, `integrate_match.py` |
+| **ROM linked** | 633/633 functions in peel; `make compare` OK | `match_batch.sh`, `integrate_match.py` |
 | **C decomp** | Every *convertible* function has verified C in `src/matched/` | `match_function.py`, `integrate_c.py`, `c_convert_batch.sh` |
 | **RAM map** | Battle/menu IWRAM named; pool rescanned periodically | `ram_map_pass.sh`, `battle_scan.py` |
 | **Names** | `[renames]` in `beyblade_g_revolution.toml`; C/asm use readable names | Phase 4 + `generate_asm.py --force` |
@@ -200,11 +200,7 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 
 ---
 
-## Progress snapshot (update in decomp-status.md)
+## Progress snapshot
 
-See `python3 tools/decomp/progress.py` (or `report_status.py`) for live counts:
-
-- Linked in ROM: 633/633
-- **Decompiled C:** semantic `src/matched/` vs original function bytes (opcode embeds do not count)
-- Renames: Phase 4 not started
-- Shiftable: Phase 5 gated
+Live counts: `python3 tools/decomp/report_status.py` (or `progress.py`).
+Update `decomp-status.md` after each batch; don't hand-copy numbers here.

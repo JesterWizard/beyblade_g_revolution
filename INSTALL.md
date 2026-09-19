@@ -59,12 +59,11 @@ make HACKS=1 modern   # append ROM with runtime + src_custom
 ## AI decompilation toolchain
 
 ```bash
-bash build_tools.sh
-export ANTHROPIC_API_KEY=sk-...   # required for Mizuchi Claude Runner
-tools/decomp/run_batch.sh 10
+bash build_tools.sh               # agbcc, Luvdis, m2c — no API key needed
+tools/decomp/match_batch.sh 10
 ```
 
-See [AGENTS.md](AGENTS.md) and [docs/decomp-agent.md](docs/decomp-agent.md).
+See [AGENTS.md](AGENTS.md).
 
 ## decomp-permuter (agbcc matching)
 

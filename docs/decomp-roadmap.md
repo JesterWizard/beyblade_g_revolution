@@ -9,12 +9,13 @@ blockers (see [AGENTS.md](../AGENTS.md)).
 
 ## Current baseline
 
-| Metric | Value (2026-09-17) |
-|--------|-------------------|
-| Luvdis functions | 633 (`asm/nonmatchings/`) |
-| Linked in ROM | **633** (`asm/matchings/`, `build/matched.json`) |
-| C in `src/` | 4 stubs in `stubs.c` |
-| IWRAM pool symbols | 247 auto + 3 named (`ram_map_iwram_pool.inc`) |
+Run `python3 tools/decomp/report_status.py` for live counts (functions,
+bytes, phase). Phase 1 (link all 633 asm) and initial Phase 3 (byte-matched
+peel, incl. opcode embeds) are **complete**; current work is Phase 3b
+(semantic C conversion — see [decomp-semantic-plan.md](decomp-semantic-plan.md)).
+
+| Metric | Rule |
+|--------|------|
 | `make compare` | Must stay **OK** every batch |
 | ROM layout | Fixed-VMA peel (`asm/rom_layout.ld`) |
 
@@ -276,7 +277,6 @@ make compare: OK
 
 ## References
 
-- [decomp-agent.md](decomp-agent.md) — command cheat sheet
 - [decomp-status.md](decomp-status.md) — live log
 - [ram-map.md](ram-map.md) — IWRAM/EWRAM occupancy
 - [docs/architecture.md](../docs/architecture.md) — matching vs hacking
