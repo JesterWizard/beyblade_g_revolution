@@ -8,18 +8,25 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **224/633 (35.4%)** |
-| **Decompiled C (bytes)** | **9,522/90,272 (10.5%)** |
+| **Decompiled C (functions)** | **226/633 (35.7%)** |
+| **Decompiled C (bytes)** | **9,706/90,272 (10.8%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 409/633 (64.6%) |
+| Readable Thumb | 407/633 (64.3%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 31/160 (19.4% fn, 4.9% bytes) |
+| Battle semantic C | 33/160 (20.6% fn, 5.4% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — semantic C sub_08038D10 + sub_0803E1F4 (+2, 224→226/633); 8 near-misses handed to the permuter
+- Matched `sub_08038D10` (dispatches `BattleWork.unk023C[4]` slots to `sub_08070AD4`/`sub_08070678` based on a shared ROM/RAM table `gUnk_030003E0[a->unk2FC+i]`) — new `struct Unk7069C unk023C[4]` field carved into `BattleWork` right where the earlier `Unk38314.unk2FC` boundary sits (0x23C–0x2FC), moved `struct Unk7069C`'s definition earlier in the header so it can be nested by value. Took a few iterations to realize the "array" field on the caller's struct is actually an `s32` *index* added to a separate global table, not an array of pointers on the struct itself.
+- Matched `sub_0803E1F4` (search `MainWork.unk08D0[]` by two new fields — `unk23`/`unk1C` — plus the existing `unk087C` flag) — same-size DIFF on the first real attempt; the only bug was the two `s16` parameters being compared against the wrong struct fields (swapped `a`/`b`). New `unk23` field added to the existing `struct Unk8D0`; re-verified `sub_0803E258` (which also uses this struct) still matches.
+- **Near-miss batch handed to decomp-permuter**, running in the background (`-j1` each, `--stop-on-zero`, imported via `tools/decomp/permuter/import_function.py`): `sub_08062068`, `sub_08042C3C`, `sub_08067F98`, `sub_08034810`, `sub_08040088`, `sub_08042BB0`, `sub_080312B0`, `sub_0803DCFC`. All 8 are same-or-near byte count as retail with correct logic (verified via `match_function.py` DIFF), blocked only on a specific register-allocation choice or branch-fold agbcc makes that no C rephrasing tried could steer — exactly the class the permuter's random search is built for. `src/matched/*.c` reverted to naked-asm for all 8 while permuting (the permuter works from its own `nonmatchings/<fn>/base.c` copy); whichever ones land should be integrated from the permuter's zero-score output, not re-derived by hand.
+- `make compare`: OK
+- Decompiled C: 224 → 226/633 (35.4% → 35.7%)
 
 ### 2026-09-19 — semantic C sub_08031368 (+1, 223→224/633); pace note for the 40% ask
 - Matched `sub_08031368` (reverse array-of-pointers search skipping index 0, returns two fields via out-params) — matched on the first real attempt once the loop bounds were traced precisely (`for i = n-1 downto 1`, index 0 never checked — a real, deliberate asymmetry, not a bug).

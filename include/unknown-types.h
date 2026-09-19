@@ -135,6 +135,19 @@ struct Unk62044 /* 0x28 (padded from >= 0x26) */
     /* 24 */ u16 unk24;
 };
 
+/* Halfword at +4, object at +0x14, pointer at +0x2C. sub_0807069C, sub_08070678. */
+struct Unk7069C /* >= 0x30 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u16 unk04;
+    /* 06 */ u8 filler_06[4];
+    /* 0a */ u16 unk0A;
+    /* 0c */ u8 filler_0C[8];
+    /* 14 */ u8 unk14;
+    /* 15 */ u8 filler_15[0x17];
+    /* 2c */ struct Unk705CC *unk2C;
+};
+
 /* Battle work block (*gBattleWork). sub_080314FC, sub_08033530, sub_08033574. */
 struct BattleWork /* >= 0x208A */
 {
@@ -142,7 +155,8 @@ struct BattleWork /* >= 0x208A */
     /* 0118 */ u32 unk118;
     /* 011C */ u8 filler_011C[0x80];
     /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
-    /* 023C */ u8 filler_023C[0x1D54];
+    /* 023C */ struct Unk7069C unk023C[4]; /* sub_08038D10 */
+    /* 02FC */ u8 filler_02FC[0x1CB0];
     /* 1F90 */ s32 unk1F90; /* sub_080330F4 */
     /* 1F94 */ s32 unk1F94; /* sub_080330F4 */
     /* 1F98 */ u8 unk1F98; /* sub_080330F4 */
@@ -225,7 +239,9 @@ struct Unk8D0 /* 0x28 */
 {
     /* 00 */ u8 filler_00[0x1C];
     /* 1C */ s8 unk1C;
-    /* 1D */ u8 filler_1D[0xB];
+    /* 1D */ u8 filler_1D[6];
+    /* 23 */ u8 unk23; /* sub_0803e1f4 */
+    /* 24 */ u8 filler_24[4];
 };
 
 /* Root main-work arena (*gMainWorkPtr). */
@@ -425,19 +441,6 @@ struct Unk61BDC /* >= 0x15 */
 {
     /* 00 */ u8 filler_00[0x14];
     /* 14 */ u8 unk14;
-};
-
-/* Halfword at +4, object at +0x14, pointer at +0x2C. sub_0807069C, sub_08070678. */
-struct Unk7069C /* >= 0x30 */
-{
-    /* 00 */ u32 unk00;
-    /* 04 */ u16 unk04;
-    /* 06 */ u8 filler_06[4];
-    /* 0a */ u16 unk0A;
-    /* 0c */ u8 filler_0C[8];
-    /* 14 */ u8 unk14;
-    /* 15 */ u8 filler_15[0x17];
-    /* 2c */ struct Unk705CC *unk2C;
 };
 
 struct Unk705DC; /* word at +0x14. sub_08031300. */

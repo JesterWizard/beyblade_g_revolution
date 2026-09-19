@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-19T11:54:46Z",
+  "generated": "2026-09-19T12:24:52Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 409,
-    "semantic_done": 224,
-    "readable_asm": 409,
+    "pending": 407,
+    "semantic_done": 226,
+    "readable_asm": 407,
     "opcode": 0,
-    "battle_pending": 112,
-    "battle_semantic": 31,
+    "battle_pending": 110,
+    "battle_semantic": 33,
     "blocked": 35
   },
   "pinned": [],
@@ -343,20 +343,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08038D10",
-      "addr": "0x08038D10",
-      "kind": "asm",
-      "bytes": 86,
-      "score": 43,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080424E8",
       "addr": "0x080424E8",
       "kind": "asm",
@@ -418,20 +404,6 @@
       "kind": "asm",
       "bytes": 92,
       "score": 38,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803E1F4",
-      "addr": "0x0803E1F4",
-      "kind": "asm",
-      "bytes": 98,
-      "score": 43,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -586,6 +558,34 @@
       "kind": "asm",
       "bytes": 116,
       "score": 50,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_080392D0",
+      "addr": "0x080392D0",
+      "kind": "asm",
+      "bytes": 116,
+      "score": 53,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gBattleWork"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08042540",
+      "addr": "0x08042540",
+      "kind": "asm",
+      "bytes": 120,
+      "score": 51,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -1171,20 +1171,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08038D10",
-      "addr": "0x08038D10",
-      "kind": "asm",
-      "bytes": 86,
-      "score": 43,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080424E8",
       "addr": "0x080424E8",
       "kind": "asm",
@@ -1246,20 +1232,6 @@
       "kind": "asm",
       "bytes": 92,
       "score": 38,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803E1F4",
-      "addr": "0x0803E1F4",
-      "kind": "asm",
-      "bytes": 98,
-      "score": 43,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
