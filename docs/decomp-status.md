@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **221/633 (34.9%)** |
-| **Decompiled C (bytes)** | **9,398/90,272 (10.4%)** |
+| **Decompiled C (functions)** | **222/633 (35.1%)** |
+| **Decompiled C (bytes)** | **9,428/90,272 (10.4%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 412/633 (65.1%) |
+| Readable Thumb | 411/633 (64.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,12 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — correction to the ROM-symbol note below, +1 more match (221→222/633)
+- **Correction:** the "ROM-symbol tooling gap fix" logged in the entry below was based on a misdiagnosis. `integrate_c.py` doesn't actually link `src/matched/*.c` into the final ROM at all — once a function verifies byte-perfect, `write_matching_bytes()` freezes the *verified retail bytes* directly as `.short` literals in `asm/matchings/<fn>.s`, and that frozen file (not the C source) is what gets linked. So `sub_080435D8` matched and integrated correctly regardless of whether `gUnk_08094BB4` ever resolves as a real symbol — the `rom_tail.s` incbin split was unnecessary, and it silently got wiped by the next `gen_rom_layout.py` regeneration anyway (confirmed: reverted the split, `make compare` still OK). Not reapplying it. The underlying limitation is real for *re-verifying* a match with `match_function.py` standalone (it'll always show that pool word as a placeholder) but has no effect on `make compare` / actual integration once `write_matching_bytes` has run once. No tooling change needed after all.
+- Matched `sub_08044D8C` (sums `a[1..0x7D7]` as `u32`) — needed retail's exact loop shape: `u32 *p = a + 1;` declared *after* the sum/bound locals (not `a++` inside the loop), post-increment `*p++` (not pre-increment), and critically **unsigned** loop counter/bound (`u32 i`, `u32 bound`) — a signed `s32 i < bound` compiles to `blt`, but retail used `bcc` (unsigned), 1 byte different despite otherwise-identical codegen. Took 4 iterations narrowing from "right idea, wrong pointer-arithmetic shape" to exact match.
+- `make compare`: OK
+- Decompiled C: 221 → 222/633 (34.9% → 35.1%)
 
 ### 2026-09-19 — root-caused the agbcc-extra-push-on-leaf quirk (no fix found, no change to counters)
 - Directly tested the recurring "agbcc extra push {lr} on leaf" blocker (already hit 10+ times across sessions: `sub_0802D8C4`, `sub_08061BDC`, `sub_0802B994`, `sub_0802C62C`, `sub_08043B58`, `sub_08062684`, etc.) rather than rediscovering it per-function. Compiled a minimal true-leaf function (`if (a) { 3 field writes }`, no calls, `bx lr` in retail) directly with `tools/agbcc/bin/agbcc` under every combination of `-fomit-frame-pointer`, `-fprologue-bugfix`, and with/without `-mthumb-interwork` — **agbcc emits `push {lr}` / `pop {pc}`-equivalent framing in every case**, with no flag that suppresses it for a leaf with a conditional branch.
