@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-19T22:36:23Z",
+  "generated": "2026-09-19T22:39:39Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 390,
-    "semantic_done": 243,
-    "readable_asm": 390,
+    "pending": 388,
+    "semantic_done": 245,
+    "readable_asm": 388,
     "opcode": 0,
-    "battle_pending": 109,
-    "battle_semantic": 36,
+    "battle_pending": 108,
+    "battle_semantic": 37,
     "blocked": 35
   },
   "pinned": [],
@@ -27,22 +27,6 @@
         "gBattleWork",
         "gBtlInputMask",
         "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0807309C",
-      "addr": "0x0807309C",
-      "kind": "asm",
-      "bytes": 120,
-      "score": 57,
-      "battle_refs": 3,
-      "battle_syms": [
-        "gBtlObjTable",
-        "gBtlObjTableCount",
-        "gBtlObjLiveCount"
       ],
       "has_pool": true,
       "blocked": false,
@@ -593,6 +577,20 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08043638",
+      "addr": "0x08043638",
+      "kind": "asm",
+      "bytes": 120,
+      "score": 54,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -789,8 +787,8 @@
       "name": "sub_08062C80",
       "addr": "0x08062C80",
       "reason": "calls _08073C4C(0, dst, size, src) at raw address 0x08073C4C twice (VRAM/PLTT clear via CpuFastSet-style primitive) \u2014 that callee has no C symbol/prototype anywhere in the codebase yet (only referenced via bl _08073C4C from naked asm in many other unconverted functions); needs the callee named/prototyped first",
-      "kind": "asm",
-      "bytes": 72
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_08062CF4",
@@ -855,22 +853,6 @@
         "gBattleWork",
         "gBtlInputMask",
         "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0807309C",
-      "addr": "0x0807309C",
-      "kind": "asm",
-      "bytes": 120,
-      "score": 57,
-      "battle_refs": 3,
-      "battle_syms": [
-        "gBtlObjTable",
-        "gBtlObjTableCount",
-        "gBtlObjLiveCount"
       ],
       "has_pool": true,
       "blocked": false,
