@@ -359,6 +359,7 @@ def render_md(data: dict[str, Any]) -> str:
             "make queue                              # refresh this file",
             "python3 tools/decomp/next_queue.py -n 10",
             "python3 tools/decomp/try_convert.py sub_XXXXXXXX --integrate",
+            "python3 tools/decomp/function_scores.py --close",
             "python3 tools/decomp/c_patterns.py --list",
             "python3 tools/decomp/battle_scan.py -n 20",
             "tools/decomp/battle_semantic_batch.sh 10",

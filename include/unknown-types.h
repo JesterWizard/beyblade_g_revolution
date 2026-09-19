@@ -130,7 +130,7 @@ struct Unk62044 /* 0x28 (padded from >= 0x26) */
 {
     /* 00 */ void *unk00;
     /* 04 */ u8 filler_04[8];
-    /* 0c */ u32 unk0C;
+    /* 0c */ void **unk0C;
     /* 10 */ u8 filler_10[0x14];
     /* 24 */ u16 unk24;
 };
@@ -936,6 +936,21 @@ struct Unk0770 /* 0x08 */
     /* 00 */ void *unk00;
     /* 04 */ u16 unk04;
     /* 06 */ u16 unk06;
+};
+
+/* Sprite/obj init. sub_080618A8. */
+struct Unk618A8 /* >= 0x16 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u16 unk08;
+    /* 0a */ u16 unk0A;
+    /* 0c */ u16 unk0C;
+    /* 0e */ u16 unk0E;
+    /* 10 */ u16 unk10;
+    /* 12 */ u16 unk12;
+    /* 14 */ u8 unk14;
+    /* 15 */ u8 unk15;
 };
 
 

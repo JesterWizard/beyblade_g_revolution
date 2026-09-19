@@ -6,12 +6,12 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **35.9%** of functions (227/633) and **10.8%** of original function bytes (9,772/90,272).
+Decompiled C is **36.5%** of functions (231/633) and **11.1%** of original function bytes (10,016/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `███████████░░░░░░░░░░░░░░░░░░░░░` | **35.9%** | 227/633 |
-| Decompiled C (bytes) | `███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **10.8%** | 9,772/90,272 |
+| Decompiled C (functions) | `████████████░░░░░░░░░░░░░░░░░░░░` | **36.5%** | 231/633 |
+| Decompiled C (bytes) | `████░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **11.1%** | 10,016/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -21,20 +21,20 @@ xychart-beta
     title "Decompiled C vs original (%)"
     x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
     y-axis "Percent" 0 --> 100
-    bar [35.9, 10.8, 100.0, 100.0]
+    bar [36.5, 11.1, 100.0, 100.0]
 ```
 
 ![Decompiled C vs original](docs/decomp-progress.svg)
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 227 (35.9%) | 9,772 (10.8%) |
-| Readable Thumb | 406 (64.1%) | 80,500 (89.2%) |
+| Semantic C | 231 (36.5%) | 10,016 (11.1%) |
+| Readable Thumb | 402 (63.5%) | 80,256 (88.9%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **20.6%** functions / **5.4%** bytes in semantic C (33/160; 0 opcode left).
 
-Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`.
+Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
 
 <!-- decomp-progress:end -->
 

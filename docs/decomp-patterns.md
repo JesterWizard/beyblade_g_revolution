@@ -115,7 +115,18 @@ If semantic C is blocked but asm already matches:
 - Document blocker in queue TOML + batch log
 - Revisit when types/RAM map clarifies the function
 
-### 5. Hand seeds (battle)
+### 5. Framed vs leaf-branch
+
+Retail `push {r4, lr}` (or more) → worth hand C. True leaves (`bx lr`, no push) with an `if` hit the agbcc extra-`push {lr}` wall — skip.
+
+`match_function.py` prints `N/M bytes matched` and a status:
+- **matched** — integrate
+- **identical_diff** — same size, only pool/reloc words differ (not counted as decompiled)
+- **same_size** / **size_mismatch** — near miss; `--record` saves to `docs/decomp-function-scores.json`
+
+Full ledger: [`decomp-functions.md`](decomp-functions.md).
+
+### 6. Hand seeds (battle)
 
 Verified battle C templates go in `BATTLE_SEEDS` in
 [`battle_semantic_batch.py`](../tools/decomp/battle_semantic_batch.py):
@@ -125,6 +136,17 @@ tools/decomp/battle_semantic_batch.sh 1 --seeds-only
 ```
 
 Add a seed when you've manually matched a function that m2c/heuristics miss repeatedly.
+
+---
+
+## Function score ledger
+
+Every function is listed in [`decomp-functions.md`](decomp-functions.md) with completion % and `N/M` bytes. Refresh with `make progress` or `make scores`.
+
+```bash
+python3 tools/decomp/match_function.py sub_XXXXXXXX scratch.c --record
+python3 tools/decomp/function_scores.py --close
+```
 
 ---
 

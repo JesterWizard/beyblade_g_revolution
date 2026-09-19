@@ -429,7 +429,8 @@ def status_table(data: dict[str, Any]) -> str:
         )
     rows.append(
         f"| Counter | [`decomp-progress.svg`](decomp-progress.svg) · "
-        f"[`decomp-progress.json`](decomp-progress.json) |"
+        f"[`decomp-progress.json`](decomp-progress.json) · "
+        f"[`decomp-functions.md`](decomp-functions.md) |"
     )
     body = "\n".join(rows)
     return f"{STATUS_START}\n{body}\n{STATUS_END}\n"
@@ -521,7 +522,8 @@ def readme_section(data: dict[str, Any]) -> str:
         + "\nOpcode `.byte` embeds are the retail machine code and do not count as "
         "decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay "
         "`.incbin`'d from `baserom.gba` so `make compare` can stay green. "
-        "Refresh with `python3 tools/decomp/progress.py --write` or `make progress`.\n"
+        "Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. "
+        "Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).\n"
         + f"\n{STATUS_END}\n"
     )
 
@@ -617,6 +619,12 @@ def write_artifacts(data: dict[str, Any]) -> None:
         from next_queue import collect as queue_collect, write_artifacts as queue_write
 
         queue_write(queue_collect())
+    except Exception:
+        pass
+    try:
+        from function_scores import collect as scores_collect, write_artifacts as scores_write
+
+        scores_write(scores_collect())
     except Exception:
         pass
 

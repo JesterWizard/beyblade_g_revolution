@@ -1,0 +1,225 @@
+{
+  "attempts": {
+    "sub_08033958": {
+      "matched_bytes": 3,
+      "retail_bytes": 20,
+      "compiled_bytes": 24,
+      "pct": 12.5,
+      "diff_bytes": 21,
+      "status": "size_mismatch",
+      "score": "3/20",
+      "updated": "2026-09-19T12:57:28Z"
+    },
+    "sub_0806DEF4": {
+      "matched_bytes": 3,
+      "retail_bytes": 20,
+      "compiled_bytes": 24,
+      "pct": 12.5,
+      "diff_bytes": 21,
+      "status": "size_mismatch",
+      "score": "3/20",
+      "updated": "2026-09-19T12:57:28Z"
+    },
+    "sub_0806AC68": {
+      "matched_bytes": 2,
+      "retail_bytes": 22,
+      "compiled_bytes": 28,
+      "pct": 7.1,
+      "diff_bytes": 26,
+      "status": "size_mismatch",
+      "score": "2/22",
+      "updated": "2026-09-19T12:57:29Z"
+    },
+    "sub_08033F30": {
+      "matched_bytes": 1,
+      "retail_bytes": 24,
+      "compiled_bytes": 28,
+      "pct": 3.6,
+      "diff_bytes": 27,
+      "status": "size_mismatch",
+      "score": "1/24",
+      "updated": "2026-09-19T12:57:29Z"
+    },
+    "sub_080717F0": {
+      "matched_bytes": 4,
+      "retail_bytes": 24,
+      "compiled_bytes": 28,
+      "pct": 14.3,
+      "diff_bytes": 24,
+      "status": "size_mismatch",
+      "score": "4/24",
+      "updated": "2026-09-19T12:57:30Z"
+    },
+    "sub_08068884": {
+      "matched_bytes": 1,
+      "retail_bytes": 24,
+      "compiled_bytes": 28,
+      "pct": 3.6,
+      "diff_bytes": 27,
+      "status": "size_mismatch",
+      "score": "1/24",
+      "updated": "2026-09-19T12:57:30Z"
+    },
+    "sub_08069F00": {
+      "matched_bytes": 9,
+      "retail_bytes": 24,
+      "compiled_bytes": 24,
+      "pct": 37.5,
+      "diff_bytes": 15,
+      "status": "same_size",
+      "score": "9/24",
+      "updated": "2026-09-19T12:57:31Z"
+    },
+    "sub_0806BE08": {
+      "matched_bytes": 3,
+      "retail_bytes": 24,
+      "compiled_bytes": 28,
+      "pct": 10.7,
+      "diff_bytes": 25,
+      "status": "size_mismatch",
+      "score": "3/24",
+      "updated": "2026-09-19T12:57:31Z"
+    },
+    "sub_0806BDA8": {
+      "matched_bytes": 2,
+      "retail_bytes": 26,
+      "compiled_bytes": 32,
+      "pct": 6.2,
+      "diff_bytes": 30,
+      "status": "size_mismatch",
+      "score": "2/26",
+      "updated": "2026-09-19T12:57:32Z"
+    },
+    "sub_08073078": {
+      "matched_bytes": 2,
+      "retail_bytes": 34,
+      "compiled_bytes": 40,
+      "pct": 5.0,
+      "diff_bytes": 38,
+      "status": "size_mismatch",
+      "score": "2/34",
+      "updated": "2026-09-19T12:57:33Z"
+    },
+    "sub_080731F4": {
+      "matched_bytes": 2,
+      "retail_bytes": 36,
+      "compiled_bytes": 40,
+      "pct": 5.0,
+      "diff_bytes": 38,
+      "status": "size_mismatch",
+      "score": "2/36",
+      "updated": "2026-09-19T12:57:34Z"
+    },
+    "sub_080739E8": {
+      "matched_bytes": 5,
+      "retail_bytes": 36,
+      "compiled_bytes": 40,
+      "pct": 12.5,
+      "diff_bytes": 35,
+      "status": "size_mismatch",
+      "score": "5/36",
+      "updated": "2026-09-19T12:57:35Z"
+    },
+    "sub_0806FDB4": {
+      "matched_bytes": 3,
+      "retail_bytes": 28,
+      "compiled_bytes": 40,
+      "pct": 7.5,
+      "diff_bytes": 37,
+      "status": "size_mismatch",
+      "score": "3/28",
+      "updated": "2026-09-19T12:57:36Z"
+    },
+    "sub_08042E78": {
+      "matched_bytes": 4,
+      "retail_bytes": 28,
+      "compiled_bytes": 40,
+      "pct": 10.0,
+      "diff_bytes": 36,
+      "status": "size_mismatch",
+      "score": "4/28",
+      "updated": "2026-09-19T12:57:37Z"
+    },
+    "sub_0806A954": {
+      "matched_bytes": 3,
+      "retail_bytes": 28,
+      "compiled_bytes": 36,
+      "pct": 8.3,
+      "diff_bytes": 33,
+      "status": "size_mismatch",
+      "score": "3/28",
+      "updated": "2026-09-19T12:57:38Z"
+    },
+    "sub_08061C48": {
+      "matched_bytes": 56,
+      "retail_bytes": 56,
+      "compiled_bytes": 56,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "56/56",
+      "updated": "2026-09-19T13:00:16Z"
+    },
+    "sub_0806209C": {
+      "matched_bytes": 56,
+      "retail_bytes": 56,
+      "compiled_bytes": 56,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "56/56",
+      "updated": "2026-09-19T13:00:16Z"
+    },
+    "sub_08047594": {
+      "matched_bytes": 21,
+      "retail_bytes": 48,
+      "compiled_bytes": 48,
+      "pct": 43.8,
+      "diff_bytes": 27,
+      "status": "same_size",
+      "score": "21/48",
+      "updated": "2026-09-19T12:59:49Z"
+    },
+    "sub_08043944": {
+      "matched_bytes": 22,
+      "retail_bytes": 48,
+      "compiled_bytes": 44,
+      "pct": 45.8,
+      "diff_bytes": 26,
+      "status": "size_mismatch",
+      "score": "22/48",
+      "updated": "2026-09-19T12:59:07Z",
+      "note": "sub_08043944"
+    },
+    "sub_08073A28": {
+      "matched_bytes": 66,
+      "retail_bytes": 66,
+      "compiled_bytes": 66,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "66/66",
+      "updated": "2026-09-19T13:00:17Z"
+    },
+    "sub_08062044": {
+      "matched_bytes": 36,
+      "retail_bytes": 36,
+      "compiled_bytes": 36,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "36/36",
+      "updated": "2026-09-19T13:00:15Z"
+    },
+    "sub_080618A8": {
+      "matched_bytes": 66,
+      "retail_bytes": 66,
+      "compiled_bytes": 66,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "66/66",
+      "updated": "2026-09-19T13:01:57Z"
+    }
+  }
+}

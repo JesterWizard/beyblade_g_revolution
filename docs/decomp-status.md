@@ -8,18 +8,28 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **227/633 (35.9%)** |
-| **Decompiled C (bytes)** | **9,772/90,272 (10.8%)** |
+| **Decompiled C (functions)** | **231/633 (36.5%)** |
+| **Decompiled C (bytes)** | **10,016/90,272 (11.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 406/633 (64.1%) |
+| Readable Thumb | 402/633 (63.5%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
 | Battle semantic C | 33/160 (20.6% fn, 5.4% bytes) |
-| Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
+| Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — semantic C +4 (227→231/633); per-function score ledger
+- Matched `sub_08061C48` (pop one `Unk0770` slot at `gUnk_03000794`/`gUnk_03000770`, free via `sub_0806A434`) — needed `tmp[]` + `r4`/`r5` pool pin, same trick as `sub_08033C1C`.
+- Matched `sub_0806209C` (walk `Unk62044.unk0C[0..0x7F]`, `sub_0806FE84` each non-NULL then clear; typed `unk0C` as `void **`; re-verified `sub_08062044` still MATCH).
+- Matched `sub_08073A28` (insert a byte into a string, shifting the tail) — first shape was 60/66 same-size; matching retail's `do { s[i+1]=s[i]; } while (i >= n)` plus the `(u16)(n-1)` truncation landed 66/66.
+- Matched `sub_080618A8` (`Unk618A8` init, 6 halfwords + flags, two stack `u16` args) on the first real attempt once store order followed the disasm.
+- Easy-win miss: smallest no-`push` helpers (`sub_08033958`, `sub_0806DEF4`, `sub_0806AC68`, …) are the documented agbcc-extra-`push {lr}` leaf-branch class (+4B). Prefer already-framed functions next.
+- New ledger: [`decomp-functions.md`](decomp-functions.md) lists all 633 with completion % and `N/M` bytes. Status **matched** vs **byte-identical DIFF** (same size, only pool/reloc words differ — not counted as decompiled). `match_function.py --record` updates scores.
+- `make compare`: OK
+- Decompiled C: 227 → 231/633 (35.9% → 36.5%)
 
 ### 2026-09-19 — semantic C sub_08073218 (+1, 226→227/633); permuter batch running
 - Matched `sub_08073218` (bounded string copy `src`→`dst` up to `n` bytes, zero-pads `dst[n-1]` on overflow, returns copied length) — took 4 iterations: first attempt had `src`/`dst` params swapped (re-read the disasm's `strb`/`ldrb` operand order to fix), second needed the branch *and* condition-polarity both flipped to match retail's physical block order, third needed `n`/`i` retyped `u32` (not `s32`) since retail's bounds check is `bcs`/unsigned, not `bge`/signed.

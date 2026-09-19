@@ -5,17 +5,21 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import json
 import re
 import subprocess
 import sys
 import tempfile
+from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 NONMATCH = ROOT / "asm" / "nonmatchings"
 MATCH = ROOT / "asm" / "matchings"
 BASEROM = ROOT / "baserom.gba"
 AGBCC = ROOT / "tools/agbcc/bin/agbcc"
+SCORES_JSON = ROOT / "docs" / "decomp-function-scores.json"
 ROM_BASE = 0x08000000
 CPPFLAGS = [
     "-iquote",
@@ -175,6 +179,82 @@ def normalize_compiled(data: bytes, retail_size: int) -> bytes:
     return data
 
 
+def _is_addr_word(raw: bytes) -> bool:
+    if len(raw) < 4:
+        return False
+    value = int.from_bytes(raw[:4], "little")
+    if value == 0:
+        return True
+    return 0x02000000 <= value <= 0x0EFFFFFF
+
+
+def score_bytes(got: bytes, want: bytes) -> dict[str, Any]:
+    """Byte-match score for compiled .text vs retail.
+
+    Status:
+      matched       — every byte identical (after normalize)
+      identical_diff — same size; remaining diffs are only pool/reloc words
+      same_size     — same size, instruction bytes differ
+      size_mismatch — compiled length != retail
+    """
+    retail_n = len(want)
+    compiled_n = len(got)
+    n = max(retail_n, compiled_n)
+    padded_got = got + b"\x00" * (n - compiled_n)
+    padded_want = want + b"\x00" * (n - retail_n)
+    matched = sum(a == b for a, b in zip(padded_got, padded_want))
+    diff_offs = [i for i, (a, b) in enumerate(zip(padded_got, padded_want)) if a != b]
+    pct = round(100.0 * matched / n, 1) if n else 0.0
+
+    if compiled_n == retail_n and matched == retail_n:
+        kind = "matched"
+    elif compiled_n != retail_n:
+        kind = "size_mismatch"
+    else:
+        words = {off & ~3 for off in diff_offs}
+        pool_only = bool(words) and all(
+            _is_addr_word(padded_want[word : word + 4])
+            and _is_addr_word(padded_got[word : word + 4])
+            and all((off & ~3) in words for off in diff_offs)
+            for word in words
+        )
+        kind = "identical_diff" if pool_only else "same_size"
+
+    return {
+        "matched_bytes": matched,
+        "retail_bytes": retail_n,
+        "compiled_bytes": compiled_n,
+        "pct": pct,
+        "diff_bytes": len(diff_offs),
+        "status": kind,
+        "score": f"{matched}/{retail_n}",
+    }
+
+
+def format_score(info: dict[str, Any]) -> str:
+    return (
+        f"{info['matched_bytes']}/{info['retail_bytes']} bytes matched "
+        f"({info['pct']:.1f}%)  [{info['status']}]"
+    )
+
+
+def record_score(function: str, info: dict[str, Any], *, note: str = "") -> None:
+    data: dict[str, Any] = {"attempts": {}}
+    if SCORES_JSON.is_file():
+        try:
+            data = json.loads(SCORES_JSON.read_text())
+        except json.JSONDecodeError:
+            data = {"attempts": {}}
+    attempts = data.setdefault("attempts", {})
+    row = dict(info)
+    row["updated"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    if note:
+        row["note"] = note
+    attempts[function] = row
+    SCORES_JSON.parent.mkdir(parents=True, exist_ok=True)
+    SCORES_JSON.write_text(json.dumps(data, indent=2) + "\n")
+
+
 def write_single_function_c(function: str, body: str, out: Path) -> None:
     out.write_text(f'#include "global.h"\n\n// @ {addr_from_name(function):#010x}\n{body}\n')
 
@@ -188,6 +268,12 @@ def main() -> int:
         action="store_true",
         help="Compile only the named function (temp single-function translation unit)",
     )
+    parser.add_argument(
+        "--record",
+        action="store_true",
+        help="save byte-match score to docs/decomp-function-scores.json",
+    )
+    parser.add_argument("--note", default="", help="optional note stored with --record")
     args = parser.parse_args()
 
     if not BASEROM.is_file():
@@ -219,12 +305,18 @@ def main() -> int:
         obj = Path(tmp) / "scratch.o"
         compile_c(compile_path, obj)
         got = normalize_compiled(obj_text_bytes(obj, args.function), size)
+        info = score_bytes(got, want)
+
+        if args.record:
+            record_score(args.function, info, note=args.note)
 
         if got == want:
             print("MATCH")
+            print(format_score(info))
             return 0
 
         print("DIFF")
+        print(format_score(info))
         print(f"retail size {size}, compiled size {len(got)}")
         for line in difflib.unified_diff(
             [want.hex()],

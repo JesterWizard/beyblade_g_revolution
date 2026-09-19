@@ -40,6 +40,7 @@ python3 tools/decomp/try_convert.py sub_XXXXXXXX --integrate --note "role-hint"
 # Or manual:
 python3 tools/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
 python3 tools/decomp/integrate_c.py sub_XXXXXXXX @file.c --kind semantic --note "…"
+python3 tools/decomp/function_scores.py --write   # N/M bytes + status per function
 make compare
 ```
 

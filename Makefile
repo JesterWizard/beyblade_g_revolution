@@ -148,6 +148,9 @@ progress:
 queue:
 	python3 tools/decomp/next_queue.py --write
 
+scores:
+	python3 tools/decomp/function_scores.py --write
+
 patterns:
 	python3 tools/decomp/c_patterns.py --list
 
