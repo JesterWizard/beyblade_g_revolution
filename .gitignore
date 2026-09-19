@@ -28,6 +28,8 @@ tools/gbagfx/
 tools/src/
 tools/bin/
 tools/decomp-permuter/
+tools/node-local/
+tools/bun-local/
 nonmatchings/
 
 .DS_Store

@@ -1,0 +1,32 @@
+# Evaluation-only config for two external matching tools:
+#   asmlift    (https://github.com/macabeus/asmlift)
+#   transmuter (https://github.com/macabeus/transmuter, tools/transmuter/)
+# Neither is wired into the CLAUDE.md workflow yet. Both compiler commands
+# mirror the exact pipeline tools/decomp/match_function.py and
+# permuter_settings.toml already use, so a byte-exact result from either
+# should be trustworthy without re-verification — but always confirm through
+# match_function.py before integrating (see docs/decomp-semantic-plan.md).
+platform: gba
+tools:
+  asmlift:
+    target: agbcc
+    elf: beyblade_g_revolution.elf
+    compiler: |
+      arm-none-eabi-gcc -E -P {{cflags}} {{inputPath}} -o {{outputPath}}.i
+      tools/agbcc/bin/agbcc {{outputPath}}.i -o {{outputPath}}.s -Wimplicit -Wparentheses
+      arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork {{outputPath}}.s -o {{outputPath}}
+  transmuter:
+    compiler: |
+      ASM_DIR="$(dirname "{{outputPath}}")"
+      ASM_FILE="$ASM_DIR/$(basename "{{outputPath}}" .o).s"
+
+      arm-none-eabi-gcc -E -P -iquote include -Wno-trigraphs -DMODERN=0 \
+        -I tools/agbcc/include -I tools/agbcc -nostdinc -undef -std=gnu89 \
+        "{{inputPath}}" -o "{{inputPath}}.i"
+
+      tools/agbcc/bin/agbcc \
+        "{{inputPath}}.i" -o "$ASM_FILE" \
+        -mthumb-interwork -Wimplicit -Wparentheses -O2 -g -fhex-asm
+
+      arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork "$ASM_FILE" -o "{{outputPath}}"
+    # concurrency: default min(CPU count, 4)
