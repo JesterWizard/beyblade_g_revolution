@@ -16,16 +16,6 @@ Decompiled C is **40.0%** of functions (253/633) and **12.7%** of original funct
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
-```mermaid
-xychart-beta
-    title "Decompiled C vs original (%)"
-    x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
-    y-axis "Percent" 0 --> 100
-    bar [40.0, 12.7, 100.0, 100.0]
-```
-
-![Decompiled C vs original](docs/decomp-progress.svg)
-
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
 | Semantic C | 253 (40.0%) | 11,446 (12.7%) |
