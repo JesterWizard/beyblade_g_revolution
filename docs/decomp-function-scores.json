@@ -319,6 +319,17 @@
       "score": "17/64",
       "updated": "2026-09-19T13:08:51Z",
       "note": "sub_08071F44"
+    },
+    "sub_0802C62C": {
+      "matched_bytes": 64,
+      "retail_bytes": 64,
+      "compiled_bytes": 64,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "64/64",
+      "updated": "2026-09-19T17:11:31Z",
+      "note": "test"
     }
   }
 }

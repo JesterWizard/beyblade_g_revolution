@@ -8,14 +8,14 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **233/633 (36.8%)** |
-| **Decompiled C (bytes)** | **10,136/90,272 (11.2%)** |
+| **Decompiled C (functions)** | **234/633 (37.0%)** |
+| **Decompiled C (bytes)** | **10,214/90,272 (11.3%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 400/633 (63.2%) |
+| Readable Thumb | 399/633 (63.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 33/160 (20.6% fn, 5.4% bytes) |
+| Battle semantic C | 34/160 (21.2% fn, 5.6% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
@@ -720,4 +720,8 @@ First 4 functions + `src/stubs.c`.
 
 ### 2026-09-17 — match_batch (+2, 633/633 linked)
 - Functions: `sub_0804FFCC`, `sub_08039BD4`
+- make compare: OK
+
+### 2026-09-19 — hand C convert (+1, 234/633 semantic)
+- Function: `sub_0802C5DC` (battle Unk1694 find-and-mark lookup)
 - make compare: OK
