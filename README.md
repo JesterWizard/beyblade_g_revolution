@@ -6,12 +6,12 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **33.8%** of functions (214/633) and **9.8%** of original function bytes (8,838/90,272).
+Decompiled C is **34.6%** of functions (219/633) and **10.2%** of original function bytes (9,202/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `███████████░░░░░░░░░░░░░░░░░░░░░` | **33.8%** | 214/633 |
-| Decompiled C (bytes) | `███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **9.8%** | 8,838/90,272 |
+| Decompiled C (functions) | `███████████░░░░░░░░░░░░░░░░░░░░░` | **34.6%** | 219/633 |
+| Decompiled C (bytes) | `███░░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **10.2%** | 9,202/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -21,18 +21,18 @@ xychart-beta
     title "Decompiled C vs original (%)"
     x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
     y-axis "Percent" 0 --> 100
-    bar [33.8, 9.8, 100.0, 100.0]
+    bar [34.6, 10.2, 100.0, 100.0]
 ```
 
 ![Decompiled C vs original](docs/decomp-progress.svg)
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 214 (33.8%) | 8,838 (9.8%) |
-| Readable Thumb | 419 (66.2%) | 81,434 (90.2%) |
+| Semantic C | 219 (34.6%) | 9,202 (10.2%) |
+| Readable Thumb | 414 (65.4%) | 81,070 (89.8%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
-Battle: **16.2%** functions / **3.8%** bytes in semantic C (26/160; 0 opcode left).
+Battle: **18.1%** functions / **4.4%** bytes in semantic C (29/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`.
 

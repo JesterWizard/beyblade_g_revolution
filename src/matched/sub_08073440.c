@@ -1,54 +1,27 @@
 #include "global.h"
 
 // @ 0x08073440
-__attribute__((naked))
 s32 sub_08073440(void *a, void *b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "adds r3, r1, #0x0\n"
-        "movs r2, #0x00\n"
-        "movs r5, #0x00\n"
-        "cmp r4, #0x00\n"
-        "beq _08073452\n"
-        "cmp r3, #0x00\n"
-        "bne _08073462\n"
-        "_08073452:\n"
-        "movs r0, #0x02\n"
-        "negs r0, r0\n"
-        "b _08073484\n"
-        "_08073458:\n"
-        "movs r0, #0x01\n"
-        "b _08073484\n"
-        "_0807345C:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "b _08073484\n"
-        "_08073462:\n"
-        "adds r0, r4, r2\n"
-        "adds r1, r3, r2\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "cmp r0, r1\n"
-        "bhi _08073458\n"
-        "cmp r0, r1\n"
-        "bcc _0807345C\n"
-        "cmp r0, #0x00\n"
-        "bne _0807347C\n"
-        "cmp r1, #0x00\n"
-        "bne _0807347C\n"
-        "movs r5, #0x01\n"
-        "_0807347C:\n"
-        "adds r2, #0x01\n"
-        "cmp r5, #0x00\n"
-        "beq _08073462\n"
-        "movs r0, #0x00\n"
-        "_08073484:\n"
-        "pop {r4, r5}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u8 *pa = a;
+    u8 *pb = b;
+    s32 i = 0;
+    bool8 done = FALSE;
+
+    if (a == 0 || b == 0)
+        return -2;
+
+    while (!done)
+    {
+        if (pa[i] > pb[i])
+            return 1;
+        if (pa[i] < pb[i])
+            return -1;
+        if (pa[i] == 0 && pb[i] == 0)
+            done = TRUE;
+        i++;
+    }
+
+    return 0;
 }
 

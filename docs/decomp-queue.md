@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-19T07:07:42Z_
+_Updated: 2026-09-19T07:36:25Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 214 |
-| Still need semantic C | **419** |
-| Readable Thumb remaining | 419 |
+| Semantic C done | 219 |
+| Still need semantic C | **414** |
+| Readable Thumb remaining | 414 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 117 (26 already semantic) |
+| Battle pending | 114 (29 already semantic) |
 | Blocked (documented) | 35 |
 
 Ranking: **battle** · showing top **40**
@@ -37,13 +37,10 @@ Ranking: **battle** · showing top **40**
 | `sub_08032DC4` | `0x08032DC4` | 660 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803FDD0` | `0x0803FDD0` | 64 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080330F4` | `0x080330F4` | 72 | 1 | pool | asm | (gBattleWork) |
-| `sub_08046230` | `0x08046230` | 72 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08052FC8` | `0x08052FC8` | 72 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043B90` | `0x08043B90` | 76 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C5DC` | `0x0802C5DC` | 78 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08033574` | `0x08033574` | 80 | 1 | pool | asm | (gBattleWork) |
-| `sub_0803E258` | `0x0803E258` | 82 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08052934` | `0x08052934` | 84 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0805D99C` | `0x0805D99C` | 84 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08038D10` | `0x08038D10` | 86 | 1 | pool | asm | (gBattleWork) |
@@ -61,6 +58,9 @@ Ranking: **battle** · showing top **40**
 | `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802D52C` | `0x0802D52C` | 108 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08033878` | `0x08033878` | 108 | 1 | pool | asm | (gBattleWork) |
+| `sub_08042718` | `0x08042718` | 108 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0802D2C0` | `0x0802D2C0` | 108 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0802BC14` | `0x0802BC14` | 112 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -114,6 +114,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (384 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (379 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

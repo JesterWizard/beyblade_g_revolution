@@ -142,7 +142,11 @@ struct BattleWork /* >= 0x208A */
     /* 0118 */ u32 unk118;
     /* 011C */ u8 filler_011C[0x80];
     /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
-    /* 023C */ u8 filler_023C[0x1D70];
+    /* 023C */ u8 filler_023C[0x1D54];
+    /* 1F90 */ s32 unk1F90; /* sub_080330F4 */
+    /* 1F94 */ s32 unk1F94; /* sub_080330F4 */
+    /* 1F98 */ u8 unk1F98; /* sub_080330F4 */
+    /* 1F99 */ u8 filler_1F99[0x13];
     /* 1FAC */ u8 unk1FAC;
     /* 1FAD */ u8 filler_1FAD[0x3A];
     /* 1FE6 */ u8 unk1FE6;
@@ -208,6 +212,22 @@ struct Unk1688Entry /* 0x18 */
     /* 16 */ u16 unk16;
 };
 
+/* Per-slot record, 2 slots. sub_08046230. */
+struct Unk16B0 /* 0x0c */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+};
+
+/* Per-slot record, 0x53 slots at MainWork+0x8D0. sub_0803E258. */
+struct Unk8D0 /* 0x28 */
+{
+    /* 00 */ u8 filler_00[0x1C];
+    /* 1C */ s8 unk1C;
+    /* 1D */ u8 filler_1D[0xB];
+};
+
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
@@ -226,7 +246,10 @@ struct MainWork /* >= 0x18B4 */
     /* 0874 */ s16 unk0874;
     /* 0876 */ u8 filler_0876[2];
     /* 0878 */ s8 unk0878;
-    /* 0879 */ u8 filler_0879[0xD4F];
+    /* 0879 */ u8 filler_0879[3];
+    /* 087C */ u8 unk087C[0x53]; /* sub_0803E258 */
+    /* 08CF */ u8 filler_08CF[1];
+    /* 08D0 */ struct Unk8D0 unk08D0[0x53]; /* sub_0803E258 */
     /* 15C8 */ s8 unk15C8;
     /* 15C9 */ s8 unk15C9;
     /* 15CA */ s8 unk15CA;
@@ -240,7 +263,8 @@ struct MainWork /* >= 0x18B4 */
     /* 168C */ void *unk168C;
     /* 1690 */ void *unk1690;
     /* 1694 */ struct Unk1694 *unk1694;
-    /* 1698 */ u8 filler_1698[0x30];
+    /* 1698 */ u8 filler_1698[0x18];
+    /* 16B0 */ struct Unk16B0 unk16B0[2]; /* sub_08046230 */
     /* 16C8 */ void *unk16C8;
     /* 16CC */ u8 filler_16CC[0x14];
     /* 16E0 */ struct Unk16E0 *unk16E0;
@@ -1316,6 +1340,14 @@ struct Unk38314 /* >= 0x308 */
     /* 2FC */ u32 unk2FC;
     /* 300 */ u8 filler_300[4];
     /* 304 */ s32 unk304;
+};
+
+/* Palette-slot bookkeeping (*gUnk_030003CC). sub_08038438, sub_08038580, sub_080385DC, sub_08038638. */
+struct Unk3CC /* >= 0x32 */
+{
+    /* 00 */ u16 unk00[16];
+    /* 20 */ u16 unk20;
+    /* 22 */ s16 unk22[16];
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

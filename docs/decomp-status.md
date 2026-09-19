@@ -8,18 +8,28 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **214/633 (33.8%)** |
-| **Decompiled C (bytes)** | **8,838/90,272 (9.8%)** |
+| **Decompiled C (functions)** | **219/633 (34.6%)** |
+| **Decompiled C (bytes)** | **9,202/90,272 (10.2%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 419/633 (66.2%) |
+| Readable Thumb | 414/633 (65.4%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 26/160 (16.2% fn, 3.8% bytes) |
+| Battle semantic C | 29/160 (18.1% fn, 4.4% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — semantic C (+5, 214→219/633)
+- Matched `sub_08046230` (2-slot `MainWork.unk16B0[]` reset — retail addresses each of the 3 fields as its own independent computation rather than one struct-member access; using explicit `gMainWorkPtr->unk16B0[a].unkNN` per field, not a cached pointer, produced the byte-identical shape).
+- Matched `sub_080330F4` (`BattleWork.unk1F90`/`unk1F94`/`unk1F98` trio; the `if(a>=0)` branch had to be written as the *positive* case first — agbcc mapped my initial `if(a<0){...}else{...}` to the opposite fallthrough retail used — and the else-branch literal was `0x800`, not `0x800000` as first guessed from the raw `movs #0x80; lsls #4` bytes).
+- Matched `sub_08073440` (byte-array 3-way compare, `-2`/`-1`/`0`/`1`, strcmp-shaped) — matched first try once the existing `s32 sub_08073440(void*, void*)` prototype was reused verbatim.
+- Matched `sub_0803E258` (0x53-slot `MainWork.unk08D0[]` search by `unk1C` key + `unk087C[]` flag byte, returns `&unk08D0[i]`) — new `struct Unk8D0` (0x28-stride) and `unk087C[0x53]`/`unk08D0[0x53]` fields added, offsets cross-checked with `arm-none-eabi-gcc offsetof`.
+- Matched `sub_08038638` (`Unk3CC.unk22[]` countdown + `sub_080385DC` retrigger) — new `struct Unk3CC` (`*gUnk_030003CC`, `unk00[16]`/`unk20`/`unk22[16]`) plus the `gUnk_030003CC` pointer macro in `ram_map.h`. Needed retail's exact dual-read shape: an unsigned `u16 raw` copy of the field used only for the decrement math, kept separate from the `s16`-typed field read used for the `>0`/`==0` comparisons — collapsing them into one read landed 4-8 bytes short every time.
+- Near misses parked (reverted to naked-asm, not committed): `sub_08043B90` (76B, 1 redundant instruction — final return re-reads `entry->unk00` instead of reusing the register from the loop-exit test), `sub_08052934` (84B, 2 instructions swapped — `ldr`+`ldrb` order differs after adding a `Unk995AC`/pointer-indirection struct for the `0x080995AC` table), `sub_08033574` (80B, 1-byte pool-constant offset differs — `unk1FE6`-relative addend came out `0x3B` instead of `0x3A`, points 1 byte before `unk1FAC`; likely fixable with a different statement order but not found this session).
+- `make compare`: OK
+- Decompiled C: 214 → 219/633 (33.8% → 34.6%)
 
 ### 2026-09-19 — struct scaffolding + 2 new blocks (214/633 unchanged)
 - Split `struct BattleWork` filler to name `unk19C[4]` (`struct Unk62044`, 0x19C/0x1C4/0x1EC/0x214 — confirmed via agbcc offsetof cross-check); moved `struct Unk62044` earlier in `unknown-types.h` so it can be nested by value. Added new `struct Unk38314` (countdown @0x2FC, flag @0x304).
