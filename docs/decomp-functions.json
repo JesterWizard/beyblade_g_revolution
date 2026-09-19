@@ -1,8 +1,8 @@
 {
-  "generated": "2026-09-19T22:39:39Z",
+  "generated": "2026-09-19T22:43:51Z",
   "counts": {
-    "matched": 245,
-    "blocked": 32,
+    "matched": 246,
+    "blocked": 31,
     "not_started": 331,
     "size_mismatch": 20,
     "same_size": 5
@@ -5644,17 +5644,17 @@
     {
       "name": "sub_080601C4",
       "addr": "0x080601C4",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "blocked",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": true,
       "block_reason": "r8 pool pin \u2014 permuter best score ~100",
       "retail_bytes": 92,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/92",
-      "source": "none",
+      "matched_bytes": 92,
+      "compiled_bytes": 92,
+      "pct": 100.0,
+      "score": "92/92",
+      "source": "integrated",
       "note": ""
     },
     {

@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-19T22:39:39Z_
+_Updated: 2026-09-19T22:43:51Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 245 |
-| Still need semantic C | **388** |
-| Readable Thumb remaining | 388 |
+| Semantic C done | 246 |
+| Still need semantic C | **387** |
+| Readable Thumb remaining | 387 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 108 (37 already semantic) |
+| Battle pending | 108 (38 already semantic) |
 | Blocked (documented) | 35 |
 
 Ranking: **battle** · showing top **40**
@@ -86,7 +86,7 @@ Ranking: **battle** · showing top **40**
 | `sub_08051578` | `0x08051578` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker |
 | `sub_080523A4` | `0x080523A4` | 112 | calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->unk28C->unk0C = (a->unk2D5<<12)+0x2C00 — logic correct (same-size DIFF, ~15/112 bytes) across several pointer/base-register orderings; needs permuter |
 | `sub_08053218` | `0x08053218` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker |
-| `sub_080601C4` | `0x080601C4` | 92 | r8 pool pin — permuter best score ~100 |
+| `sub_080601C4` | `0x080601C4` | 0 | r8 pool pin — permuter best score ~100 |
 | `sub_080604C8` | `0x080604C8` | 112 | byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter |
 | `sub_080615EC` | `0x080615EC` | 36 | branchy asm — agbcc compile fail |
 | `sub_08061BDC` | `0x08061BDC` | 12 | agbcc extra push {lr} on null-check leaf |

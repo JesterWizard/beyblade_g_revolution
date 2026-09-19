@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-19T22:39:39Z",
+  "generated": "2026-09-19T22:43:51Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 388,
-    "semantic_done": 245,
-    "readable_asm": 388,
+    "pending": 387,
+    "semantic_done": 246,
+    "readable_asm": 387,
     "opcode": 0,
     "battle_pending": 108,
-    "battle_semantic": 37,
+    "battle_semantic": 38,
     "blocked": 35
   },
   "pinned": [],
@@ -738,8 +738,8 @@
       "name": "sub_080601C4",
       "addr": "0x080601C4",
       "reason": "r8 pool pin \u2014 permuter best score ~100",
-      "kind": "asm",
-      "bytes": 92
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_080604C8",
