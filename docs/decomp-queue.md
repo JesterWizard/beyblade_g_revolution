@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-19T20:21:55Z_
+_Updated: 2026-09-19T20:53:30Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 237 |
-| Still need semantic C | **396** |
-| Readable Thumb remaining | 396 |
+| Semantic C done | 239 |
+| Still need semantic C | **394** |
+| Readable Thumb remaining | 394 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 109 (35 already semantic) |
+| Battle pending | 109 (36 already semantic) |
 | Blocked (documented) | 35 |
 
 Ranking: **battle** · showing top **40**
@@ -67,7 +67,7 @@ Ranking: **battle** · showing top **40**
 | Function | Address | Bytes | Reason |
 |----------|---------|------:|--------|
 | `sub_0802B994` | `0x0802B994` | 58 | Unk7709C ROM table lookup keyed on *gMainWorkPtr->unk1690 — logic reconstructed correctly (same-size DIFF, 2/58 bytes short from a missing 2B) but every do/while/goto shape tried lands agbcc on push{lr}...pop{r1};bx r1 leaf framing that retail doesn't have (bx lr direct); same agbcc-extra-push-on-leaf class as sub_0802D8C4/sub_08061BDC; needs permuter |
-| `sub_0802C62C` | `0x0802C62C` | 64 | counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a — same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter |
+| `sub_0802C62C` | `0x0802C62C` | 0 | counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a — same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter |
 | `sub_0802D8C4` | `0x0802D8C4` | 24 | agbcc extra push {lr} on branch leaves |
 | `sub_08030938` | `0x08030938` | 78 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
 | `sub_08033530` | `0x08033530` | 0 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
@@ -115,6 +115,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (362 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (361 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

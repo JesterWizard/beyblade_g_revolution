@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-19T20:21:55Z",
+  "generated": "2026-09-19T20:53:30Z",
   "counts": {
-    "matched": 238,
+    "matched": 239,
     "blocked": 33,
-    "not_started": 337,
+    "not_started": 336,
     "size_mismatch": 20,
     "same_size": 5
   },
@@ -252,7 +252,7 @@
     {
       "name": "sub_0802C62C",
       "addr": "0x0802C62C",
-      "kind": "asm",
+      "kind": "semantic",
       "status": "matched",
       "display": "matched",
       "blocked": true,
@@ -262,8 +262,8 @@
       "compiled_bytes": 64,
       "pct": 100.0,
       "score": "64/64",
-      "source": "attempt",
-      "note": "test"
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_0802C6AC",
@@ -5996,17 +5996,17 @@
     {
       "name": "sub_0806105C",
       "addr": "0x0806105C",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "not_started",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "block_reason": "",
       "retail_bytes": 44,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/44",
-      "source": "none",
+      "matched_bytes": 44,
+      "compiled_bytes": 44,
+      "pct": 100.0,
+      "score": "44/44",
+      "source": "integrated",
       "note": ""
     },
     {
