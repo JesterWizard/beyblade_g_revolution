@@ -680,11 +680,19 @@ struct Unk346C0Inner /* >= 0x50 */
 {
     /* 00 */ struct Unk705DC *unk00;
     /* 04 */ u8 filler_04[8];
-    /* 0c */ u32 unk0C;
-    /* 10 */ u8 filler_10[0x20];
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 unk10;
+    /* 14 */ s32 unk14;
+    /* 18 */ s32 unk18;
+    /* 1c */ s32 unk1C;
+    /* 20 */ s32 unk20;
+    /* 24 */ u8 filler_24[0xC];
     /* 30 */ u32 unk30;
     /* 34 */ u32 unk34;
-    /* 38 */ u8 filler_38[0x10];
+    /* 38 */ u8 filler_38[4];
+    /* 3c */ s32 unk3C;
+    /* 40 */ s32 unk40;
+    /* 44 */ u8 filler_44[4];
     /* 48 */ u32 unk48;
     /* 4c */ u32 unk4C;
 };

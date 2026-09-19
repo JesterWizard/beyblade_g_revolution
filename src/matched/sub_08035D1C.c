@@ -1,52 +1,38 @@
 #include "global.h"
 
 // @ 0x08035d1c
-__attribute__((naked))
-void sub_08035D1C(void)
+#include "global.h"
+
+// @ 0x08035d1c
+s32 sub_08035D1C(struct Unk346C0Inner *a, s32 b, s32 c)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "adds r5, r2, #0x0\n"
-        "ldr r2, [r4, #0x14]\n"
-        "cmp r2, #0x00\n"
-        "ble _08035D34\n"
-        "ldr r0, [r4, #0x20]\n"
-        "adds r0, r2, r0\n"
-        "cmp r0, #0x00\n"
-        "bge _08035D60\n"
-        "movs r0, #0x01\n"
-        "b _08035D62\n"
-        "_08035D34:\n"
-        "ldr r0, [r4, #0x20]\n"
-        "cmp r0, #0x00\n"
-        "bgt _08035D60\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x14]\n"
-        "str r0, [r4, #0x20]\n"
-        "ldr r2, [r4, #0x18]\n"
-        "ldr r0, [r4, #0x3C]\n"
-        "adds r2, r2, r0\n"
-        "ldr r3, [r4, #0x1C]\n"
-        "ldr r0, [r4, #0x40]\n"
-        "adds r3, r3, r0\n"
-        "ldr r0, [r4, #0x0C]\n"
-        "subs r0, r1, r0\n"
-        "ldr r1, [r4, #0x10]\n"
-        "subs r1, r5, r1\n"
-        "asrs r0, r0, #0x0B\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r4, #0x18]\n"
-        "asrs r1, r1, #0x0B\n"
-        "adds r3, r3, r1\n"
-        "str r3, [r4, #0x1C]\n"
-        "_08035D60:\n"
-        "movs r0, #0x00\n"
-        "_08035D62:\n"
-        "pop {r4, r5}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s32 v18;
+    s32 v1C;
+    s32 d0;
+    s32 d1;
+
+    if (a->unk14 > 0)
+    {
+        if (a->unk14 + a->unk20 < 0)
+            return 1;
+    }
+    else if (a->unk20 <= 0)
+    {
+        a->unk14 = 0;
+        a->unk20 = 0;
+
+        v18 = a->unk18 + a->unk3C;
+        v1C = a->unk1C + a->unk40;
+        d0 = b - a->unk0C;
+        d1 = c - a->unk10;
+        d0 >>= 0xB;
+        v18 += d0;
+        a->unk18 = v18;
+        d1 >>= 0xB;
+        v1C += d1;
+        a->unk1C = v1C;
+    }
+
+    return 0;
 }
 
