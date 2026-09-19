@@ -28,7 +28,7 @@ void sub_080712CC(struct Unk712CC *a, u8 v);
 s32 sub_0806F1A0(struct Unk6F1A0 *a, u16 key, s16 n);
 void sub_0802D52C(u32 a, s32 b);
 void sub_0802D898(s32 a, s32 b);
-void sub_0802D8C4(s32 a);
+void sub_0802D8C4(u16 a);
 void sub_0802DEA0(void);
 void sub_0802E048(void);
 void sub_0802D3F0(void);
