@@ -21,6 +21,18 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-20 — deep permuter search on 6 near-miss candidates (0 landed, 246/633 unchanged)
+- Investigated the 12 flagged near-miss candidates; deprioritized `sub_0802B994` and `sub_0802C2B0` after finding prior/fresh permuter base scores of 2055+ (not simple register-order quirks — real structural mismatches), and `sub_08046278`/`sub_0806F910` after m2c failed and manual C reconstruction couldn't reach the retail register-spill shape (extra live r8/r9 across a leaf with no calls) even with correct logic.
+- Ran full-budget (~15-18 min wall clock, `-j2`–`-j4`, `--stop-on-zero`) decomp-permuter searches on the 4 genuinely clean near-misses (base score exactly 100 or a 78-79% same-size DIFF, correct logic, differing only in agbcc's register/instruction-order choice):
+  - `sub_08062D50` (RGB15 pack → 0xA0<<19 VRAM slot): base 78.3% (36/46 bytes), plateaued at score 120 across ~47,000 iterations across two runs (default + weighted `perm_temp_for_expr`/`perm_reorder_stmts`/`perm_duplicate_assignment` passes). Manual reconstruction (12+ hand variants: mask as separate var, `register asm("r3")` pin, split-statement forms, 3-temp forms) reproduced the 78% shape repeatedly but never the retail `push {r4,r5,r6,lr}` 3-register spill from a 2-register-sufficient algorithm.
+  - `sub_08062CF4` (same pack, fixed `0x05000200` OBJ palette base): base 79.2% (38/48 bytes) via `match_function.py` (real headers), plateaued at score 120 across ~48,000 iterations. Note: an isolated typedef-only test compile (matching the permuter's stripped base.c) misleadingly showed a byte-exact match — real `global.h` headers change codegen enough that only `match_function.py`'s output is trustworthy.
+  - `sub_0802C55C` (Unk1694 slot match-and-flag, single `bl` to `sub_0803E0CC`): base 100, ran 129,548 iterations, never improved.
+  - `sub_0802E2F8` (ROM table `0x08077AC0` linear scan + `_080740B0` tail-call proportional-damage calc): base 100, ran 80,702 iterations, never improved.
+- Also explored adding a `struct Unk08D0Table` type to unlock `sub_08062B9C` (bitmask+word-array clear loop at `*gUnk_030008D0`, base 100) but the macro promotion broke the existing verified match on `sub_08062AC0`; reverted cleanly before touching headers permanently.
+- **Conclusion, consistent with 4 prior sessions' notes in this log**: this batch of near-misses is the documented agbcc leaf-function register-allocation/extra-push quirk, and it is resistant to both hand C rephrasing and decomp-permuter's randomization passes at real (tens-of-thousands-of-iterations) search depth — not just short 3-5 min runs. No functions integrated, no partial/broken state left in `src/matched/` or `include/`.
+- `make compare`: OK (unchanged, verified before and after)
+- Decompiled C: 246/633 (38.9%) — unchanged
+
 ### 2026-09-19 — semantic C +3 (239→242/633); Unk0798 CpuFill helpers + affine register store
 - Matched `sub_08060D28` and `sub_08061308` (both `_08073C4C` CpuFill-style calls building dest from `gUnk_03000798`'s `unk5D`/`unk94` fields, via `*0x080BB8BC`) — needed a `register u32 tmp asm("r0")` pin per field load to steer agbcc's register choice to match retail's `ldrb r0`/`ldrh r0` then shift-into-r1/r2 pattern; a plain local variable picked the wrong register.
 - Matched `sub_08069A18` (write 4 halfwords to one of two affine I/O register blocks selected by an enum-like `u8` arg) — first `if`/`else if` shape 51/72 (retail uses `beq`/`beq`/`b` positive branches, not `bne`-invert-and-skip); switching to an explicit `switch` statement landed 72/72 exactly.
