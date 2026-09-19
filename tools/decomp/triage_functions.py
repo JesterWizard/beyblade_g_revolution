@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Rank functions for C conversion by estimated difficulty (smaller = easier).
 
-Phase 3: triage all Luvdis functions in asm/nonmatchings/ except those already
-converted to C (build/matched.json ``src`` field).
+Phase 3b: triage functions still peeled as readable Thumb (naked asm wrapper
+in src/matched/*.c) — these are the real remaining-work pool. Every function
+in build/matched.json has a ``src`` entry once peeled (readable-Thumb stubs
+count too), so that field alone can't tell "done" from "still asm"; the
+opcode_stubs helpers (naked/asm-body sniffing) can.
 """
 
 from __future__ import annotations
@@ -16,6 +19,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 ASM_DIR = ROOT / "asm" / "nonmatchings"
 MANIFEST = ROOT / "build" / "matched.json"
+
+sys.path.insert(0, str(ROOT / "tools" / "decomp"))
+from opcode_stubs import list_readable_asm, list_opcode_stubs  # noqa: E402
 
 LABEL_RE = re.compile(r"^([A-Za-z0-9_]+):\s*$")
 
@@ -51,13 +57,9 @@ def main() -> int:
         print(f"error: {ASM_DIR} missing — run build_tools.sh", file=sys.stderr)
         return 1
 
-    converted: set[str] = set()
-    if MANIFEST.is_file():
-        data = json.loads(MANIFEST.read_text())
-        converted = {
-            f["name"] for f in data.get("functions", []) if f.get("src")
-        }
-    files = [p for p in ASM_DIR.glob("*.s") if p.stem not in converted]
+    # Candidate pool = still readable-Thumb or opcode-stub (not yet semantic C).
+    pending = set(list_readable_asm()) | set(list_opcode_stubs())
+    files = [p for p in ASM_DIR.glob("*.s") if p.stem in pending]
     if not files:
         print(f"error: no functions left to convert in {ASM_DIR}", file=sys.stderr)
         return 1
