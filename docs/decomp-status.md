@@ -21,6 +21,12 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-19 — root-caused the agbcc-extra-push-on-leaf quirk (no fix found, no change to counters)
+- Directly tested the recurring "agbcc extra push {lr} on leaf" blocker (already hit 10+ times across sessions: `sub_0802D8C4`, `sub_08061BDC`, `sub_0802B994`, `sub_0802C62C`, `sub_08043B58`, `sub_08062684`, etc.) rather than rediscovering it per-function. Compiled a minimal true-leaf function (`if (a) { 3 field writes }`, no calls, `bx lr` in retail) directly with `tools/agbcc/bin/agbcc` under every combination of `-fomit-frame-pointer`, `-fprologue-bugfix`, and with/without `-mthumb-interwork` — **agbcc emits `push {lr}` / `pop {pc}`-equivalent framing in every case**, with no flag that suppresses it for a leaf with a conditional branch.
+- **Conclusion:** this is not a source-shape or flag problem — agbcc (this vendored 2.9-arm-000512 build) appears to always frame any leaf with more than a trivial straight-line body, while retail's binary does not, meaning retail's leaves either used a different/patched compiler build, or (more likely for the null-check-and-store shape specifically) were hand-written in assembly rather than compiled from C. **Stop trying C-shape variations on this class** — every remaining true-leaf candidate (no `bl`, ends in bare `bx lr`, retail push-list shorter than 4 registers) will hit this. Either leave them as naked-asm (current default) or feed them to the permuter in bulk; don't spend more manual-C-iteration time on them individually.
+- `make compare`: OK (no functional changes)
+- Decompiled C: 221/633 unchanged
+
 ### 2026-09-19 — fixed the ROM-symbol tooling gap, landed sub_080435D8 (+1, 220→221/633)
 - **Root-caused and fixed** the "can't reference a raw ROM rodata address from new C" gap flagged last batch: `asm/rom_tail.s`'s single giant `.incbin` (0x08074146..ROM end) has no symbols inside it, so `extern const T x[]` at a ROM address a function needs can never link. RAM globals (`gMainWorkPtr` etc.) dodge this entirely — the C headers `#define` them as raw address literals, never as real `extern` symbols, so they don't depend on `ram_map.s`'s `SET_DATA` for *linking* (that file's symbols are for other assembly, not C).
 - Fix: split `rom_tail.s`'s incbin in two at the needed offset and inserted a `.global gUnk_08094BB4` label at the split point — same total bytes, zero-cost, `make compare` byte-identical before/after the split alone.
