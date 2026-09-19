@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-19T23:35:14Z_
+_Updated: 2026-09-19T23:38:02Z_
 
 ## Legend
 
@@ -21,10 +21,10 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 249 |
+| matched | 250 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 5 |
-| size DIFF | 20 |
+| size DIFF | 19 |
 | not started | 328 |
 | blocked | 31 |
 | **total** | **633** |
@@ -41,7 +41,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080523A4` | blocked | 86.6% | 97/112 | seeded from queue.toml same-size DIFF |
 | `sub_08045128` | blocked | 82.5% | 66/80 | seeded from queue.toml same-size DIFF |
 | `sub_08043944` | size DIFF | 45.8% | 22/48 | sub_08043944 |
-| `sub_0806F1A0` | size DIFF | 45.3% | 29/58 | sub_0806F1A0 |
 | `sub_08047594` | same-size DIFF | 43.8% | 21/48 |  |
 | `sub_08069F00` | same-size DIFF | 37.5% | 9/24 |  |
 | `sub_08071F44` | same-size DIFF | 26.6% | 17/64 | sub_08071F44 |
@@ -74,7 +73,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08071F44` | `0x08071F44` | same-size DIFF | 26.6% | 17/64 | asm |
 | `sub_08041858` | `0x08041858` | size DIFF | 90.4% | 47/52 | asm |
 | `sub_08043944` | `0x08043944` | size DIFF | 45.8% | 22/48 | asm |
-| `sub_0806F1A0` | `0x0806F1A0` | size DIFF | 45.3% | 29/58 | asm |
 | `sub_080620D4` | `0x080620D4` | size DIFF | 15.8% | 12/72 | asm |
 | `sub_080717F0` | `0x080717F0` | size DIFF | 14.3% | 4/24 | asm |
 | `sub_0806D748` | `0x0806D748` | size DIFF | 13.0% | 6/46 | asm |
@@ -636,6 +634,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806209C` | `0x0806209C` | matched | 100.0% | 56/56 | semantic |
 | `sub_08062AC0` | `0x08062AC0` | matched | 100.0% | 56/56 | semantic |
 | `sub_080712CC` | `0x080712CC` | matched | 100.0% | 56/56 | semantic |
+| `sub_0806F1A0` | `0x0806F1A0` | matched | 100.0% | 58/58 | semantic |
 | `sub_080726A4` | `0x080726A4` | matched | 100.0% | 58/58 | semantic |
 | `sub_080603A4` | `0x080603A4` | matched | 100.0% | 60/60 | semantic |
 | `sub_08060468` | `0x08060468` | matched | 100.0% | 60/60 | semantic |

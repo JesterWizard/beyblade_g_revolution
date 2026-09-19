@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-19T23:35:14Z",
+  "generated": "2026-09-19T23:38:02Z",
   "counts": {
-    "matched": 249,
+    "matched": 250,
     "blocked": 31,
     "not_started": 328,
-    "size_mismatch": 20,
+    "size_mismatch": 19,
     "same_size": 5
   },
   "total": 633,
@@ -8972,18 +8972,18 @@
     {
       "name": "sub_0806F1A0",
       "addr": "0x0806F1A0",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "size_mismatch",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "block_reason": "",
       "retail_bytes": 58,
-      "matched_bytes": 29,
-      "compiled_bytes": 64,
-      "pct": 45.3,
-      "score": "29/58",
-      "source": "attempt",
-      "note": "sub_0806F1A0"
+      "matched_bytes": 58,
+      "compiled_bytes": 58,
+      "pct": 100.0,
+      "score": "58/58",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_0806F430",
