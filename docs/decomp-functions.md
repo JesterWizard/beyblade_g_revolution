@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-19T23:43:19Z_
+_Updated: 2026-09-19T23:46:07Z_
 
 ## Legend
 
@@ -21,10 +21,10 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 252 |
+| matched | 253 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 5 |
-| size DIFF | 19 |
+| size DIFF | 18 |
 | not started | 326 |
 | blocked | 31 |
 | **total** | **633** |
@@ -58,7 +58,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806BDA8` | size DIFF | 6.2% | 2/26 |  |
 | `sub_08073078` | size DIFF | 5.0% | 2/34 |  |
 | `sub_080731F4` | size DIFF | 5.0% | 2/36 |  |
-| `sub_08073568` | size DIFF | 3.9% | 3/70 | sub_08073568 |
 | `sub_08033F30` | size DIFF | 3.6% | 1/24 |  |
 | `sub_08068884` | size DIFF | 3.6% | 1/24 |  |
 
@@ -87,7 +86,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806BDA8` | `0x0806BDA8` | size DIFF | 6.2% | 2/26 | asm |
 | `sub_08073078` | `0x08073078` | size DIFF | 5.0% | 2/34 | asm |
 | `sub_080731F4` | `0x080731F4` | size DIFF | 5.0% | 2/36 | asm |
-| `sub_08073568` | `0x08073568` | size DIFF | 3.9% | 3/70 | asm |
 | `sub_08033F30` | `0x08033F30` | size DIFF | 3.6% | 1/24 | asm |
 | `sub_08068884` | `0x08068884` | size DIFF | 3.6% | 1/24 | asm |
 | `sub_08062684` | `0x08062684` | not started | 0.0% | 0/20 | asm |
@@ -655,6 +653,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08033530` | `0x08033530` | matched | 100.0% | 68/68 | semantic |
 | `sub_08043ADC` | `0x08043ADC` | matched | 100.0% | 68/68 | semantic |
 | `sub_08062640` | `0x08062640` | matched | 100.0% | 68/68 | semantic |
+| `sub_08073568` | `0x08073568` | matched | 100.0% | 70/70 | semantic |
 | `sub_080330F4` | `0x080330F4` | matched | 100.0% | 72/72 | semantic |
 | `sub_08035884` | `0x08035884` | matched | 100.0% | 72/72 | semantic |
 | `sub_0803593C` | `0x0803593C` | matched | 100.0% | 72/72 | semantic |

@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-19T23:43:19Z",
+  "generated": "2026-09-19T23:46:07Z",
   "counts": {
-    "matched": 252,
+    "matched": 253,
     "blocked": 31,
     "not_started": 326,
-    "size_mismatch": 19,
+    "size_mismatch": 18,
     "same_size": 5
   },
   "total": 633,
@@ -9980,18 +9980,18 @@
     {
       "name": "sub_08073568",
       "addr": "0x08073568",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "size_mismatch",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "block_reason": "",
       "retail_bytes": 70,
-      "matched_bytes": 3,
-      "compiled_bytes": 76,
-      "pct": 3.9,
-      "score": "3/70",
-      "source": "attempt",
-      "note": "sub_08073568"
+      "matched_bytes": 70,
+      "compiled_bytes": 70,
+      "pct": 100.0,
+      "score": "70/70",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_080735B0",
