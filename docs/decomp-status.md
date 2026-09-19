@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **226/633 (35.7%)** |
-| **Decompiled C (bytes)** | **9,706/90,272 (10.8%)** |
+| **Decompiled C (functions)** | **227/633 (35.9%)** |
+| **Decompiled C (bytes)** | **9,772/90,272 (10.8%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 407/633 (64.3%) |
+| Readable Thumb | 406/633 (64.1%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,14 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — semantic C sub_08073218 (+1, 226→227/633); permuter batch running
+- Matched `sub_08073218` (bounded string copy `src`→`dst` up to `n` bytes, zero-pads `dst[n-1]` on overflow, returns copied length) — took 4 iterations: first attempt had `src`/`dst` params swapped (re-read the disasm's `strb`/`ldrb` operand order to fix), second needed the branch *and* condition-polarity both flipped to match retail's physical block order, third needed `n`/`i` retyped `u32` (not `s32`) since retail's bounds check is `bcs`/unsigned, not `bge`/signed.
+- Tried `sub_08031300` (`Unk312EC` counter/callback dispatch) and `sub_08069988` (4-way hardware-register-address switch) — both reverted; the switch-style one hit the already-documented agbcc-leaf-push wall again, `sub_08031300` got to a 2-byte gap (missing explicit `u8` truncation on a ternary) before running out of shape variations that helped.
+- `sub_08071E04` (struct-init + ROM-table clamp-and-index) also near-missed and was hform-imported into the permuter batch (see below) — left its header prototype exactly as it was (2 params) since the correct 3-param signature isn't verified yet and touches a naked-asm caller.
+- 9 near-miss functions now running through decomp-permuter in the background (added `sub_08071E04` to the 8 from the prior entry).
+- `make compare`: OK
+- Decompiled C: 226 → 227/633 (35.7% → 35.9%)
 
 ### 2026-09-19 — semantic C sub_08038D10 + sub_0803E1F4 (+2, 224→226/633); 8 near-misses handed to the permuter
 - Matched `sub_08038D10` (dispatches `BattleWork.unk023C[4]` slots to `sub_08070AD4`/`sub_08070678` based on a shared ROM/RAM table `gUnk_030003E0[a->unk2FC+i]`) — new `struct Unk7069C unk023C[4]` field carved into `BattleWork` right where the earlier `Unk38314.unk2FC` boundary sits (0x23C–0x2FC), moved `struct Unk7069C`'s definition earlier in the header so it can be nested by value. Took a few iterations to realize the "array" field on the caller's struct is actually an `s32` *index* added to a separate global table, not an array of pointers on the struct itself.

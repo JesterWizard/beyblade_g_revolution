@@ -1,50 +1,28 @@
 #include "global.h"
 
 // @ 0x08073218
-__attribute__((naked))
-void sub_08073218(void)
+s32 sub_08073218(u8 *src, u8 *dst, u32 n)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "adds r5, r1, #0x0\n"
-        "adds r6, r2, #0x0\n"
-        "movs r3, #0x00\n"
-        "cmp r4, #0x00\n"
-        "beq _0807322A\n"
-        "cmp r5, #0x00\n"
-        "bne _0807322E\n"
-        "_0807322A:\n"
-        "movs r0, #0x00\n"
-        "b _08073254\n"
-        "_0807322E:\n"
-        "adds r0, r6, r5\n"
-        "subs r7, r0, #0x1\n"
-        "movs r0, #0x00\n"
-        "mov r12, r0\n"
-        "_08073236:\n"
-        "cmp r3, r6\n"
-        "bcs _08073244\n"
-        "adds r2, r5, r3\n"
-        "adds r1, r4, r3\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "strb r0, [r2, #0x00]\n"
-        "b _0807324A\n"
-        "_08073244:\n"
-        "mov r0, r12\n"
-        "strb r0, [r7, #0x00]\n"
-        "adds r1, r4, r3\n"
-        "_0807324A:\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "adds r3, #0x01\n"
-        "cmp r0, #0x00\n"
-        "bne _08073236\n"
-        "adds r0, r3, #0x0\n"
-        "_08073254:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u32 i = 0;
+
+    if (src == 0 || dst == 0)
+        return 0;
+
+    for (;;)
+    {
+        u8 c;
+
+        if (i < n)
+            dst[i] = src[i];
+        else
+            dst[n - 1] = 0;
+
+        c = src[i];
+        i++;
+        if (c == 0)
+            break;
+    }
+
+    return i;
 }
 
