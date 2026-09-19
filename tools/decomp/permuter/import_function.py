@@ -449,6 +449,56 @@ void sub_08033574(void)
     gBattleWork->unk2088 = 0;
 }
 """,
+    "sub_080312B0": """#include "global.h"
+
+void sub_080312B0(struct Unk312EC *a, struct Unk705DC *b, u8 c, s32 d)
+{
+    u16 raw;
+    u8 shifted;
+
+    if (a->unk08 != 0 || b == NULL)
+        return;
+
+    raw = b->unk14;
+    shifted = raw >> 0xC;
+    a->unk00 = c;
+    a->unk01 = shifted;
+    a->unk04 = d;
+    a->unk0C = b;
+    a->unk08 = 1;
+}
+""",
+    "sub_08031300": """#include "global.h"
+
+void sub_08031300(struct Unk312EC *a)
+{
+    s32 n;
+    struct Unk705DC *node;
+    s8 val;
+
+    if (a->unk08 == 0)
+        return;
+    n = a->unk04;
+    if (n < 0)
+    {
+        sub_080312D8(a);
+        return;
+    }
+    n--;
+    a->unk04 = n;
+    node = a->unk0C;
+    if (node == NULL)
+        return;
+    if ((n & 5) != 0)
+        return;
+
+    if ((node->unk14 >> 0xC) == a->unk01)
+        val = a->unk00;
+    else
+        val = a->unk01;
+    sub_080705DC(node, val);
+}
+""",
     "sub_0806FEFC": """#include "global.h"
 #include "ram_map.h"
 #include "battle.h"

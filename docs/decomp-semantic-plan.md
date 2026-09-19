@@ -138,16 +138,39 @@ bash tools/decomp/permuter/permute.sh bg nonmatchings/<fn> -j 4 --stop-on-zero
 tail -f nonmatchings/<fn>/permute.log
 ```
 
-**Caveat proven this session (`sub_0802C62C`)**: the permuter compiles in
-isolation with its own minimal typedefs, not the project's real
-`include/global.h`. It can report a genuine 0-diff match that then *fails*
-when the same C is compiled through the real headers, because agbcc's
-register allocation is sensitive to unrelated declarations earlier in the
-same translation unit. Treat a permuter zero-score as "probably right,
-verify through `integrate_c.py` before trusting it" — if it doesn't survive
-that, the permuter needs to be re-seeded with real headers in
-`tools/decomp/permuter/compile.sh` (not yet done; would be a good
-infrastructure task for whoever hits this repeatedly).
+**Use `import_function.py`, don't hand-roll `nonmatchings/<fn>/base.c`.**
+An earlier version of this doc claimed the permuter's compile pipeline
+(`tools/decomp/permuter/compile.sh` / `permuter_settings.toml`) needed
+re-seeding with real headers because a permuter 0-diff match on
+`sub_0802C62C` didn't survive `integrate_c.py`. **That diagnosis was wrong.**
+The actual pipeline already compiles through the real project headers
+correctly (`permuter_settings.toml`'s `compiler_command` matches
+`match_function.py`'s flags almost exactly, and `import.py` preprocesses
+whatever seed C you give it through that same command — check
+`nonmatchings/<fn>/base.c` after importing and you'll see your struct types
+fully expanded, e.g. `BattleWork` with all its real fillers). The mismatch
+that session came from bypassing `import_function.py` and writing a
+minimal standalone `base.c` by hand (own typedefs, no `#include
+"global.h"`) directly into the permuter workdir — that skips the real
+preprocessing pass entirely, so of course it doesn't reproduce.
+
+**If you have a hand-written C candidate that's close but not matching**,
+register it in `KNOWN_SEEDS` in `tools/decomp/permuter/import_function.py`
+(there's already a growing list from prior sessions — check it before
+writing a new seed, a function may already have one) and run
+`import_function.py <fn>` normally. It reads your seed, preprocesses it
+through the real headers, and only then hands the fully-expanded C to the
+permuter to mutate. A 0-diff score from that path is trustworthy and should
+survive `integrate_c.py` directly.
+
+**If `import_function.py` has no seed for your function**, it falls back to
+`m2c` output or, failing that, whatever's currently in `src/matched/<fn>.c`
+— which for a not-yet-converted function is the naked-asm wrapper, i.e. one
+opaque `asm("...")` string the permuter can't meaningfully mutate. Check
+`nonmatchings/<fn>/base.c` after import: if it's still one `asm(...)` call,
+add your candidate to `KNOWN_SEEDS` and reimport before running the
+permuter — running it against the asm-wrapper seed just burns CPU for
+nothing.
 
 ## Known trap: CSE risk (register-agnostic, cuts across buckets)
 

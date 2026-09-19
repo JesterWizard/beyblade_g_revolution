@@ -158,13 +158,13 @@ struct BattleWork /* >= 0x208A */
     /* 011C */ u8 filler_011C[0x80];
     /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
     /* 023C */ struct Unk7069C unk023C[4]; /* sub_08038D10 */
-    /* 02FC */ u8 filler_02FC[0x1CB0];
+    /* 02FC */ u8 filler_02FC[0x1C94];
     /* 1F90 */ s32 unk1F90; /* sub_080330F4 */
     /* 1F94 */ s32 unk1F94; /* sub_080330F4 */
     /* 1F98 */ u8 unk1F98; /* sub_080330F4 */
     /* 1F99 */ u8 filler_1F99[0x13];
     /* 1FAC */ u8 unk1FAC;
-    /* 1FAD */ u8 filler_1FAD[0x3A];
+    /* 1FAD */ u8 filler_1FAD[0x39];
     /* 1FE6 */ u8 unk1FE6;
     /* 1FE7 */ u8 filler_1FE7[0x35];
     /* 201C */ u32 unk201C;
@@ -1422,6 +1422,15 @@ struct Unk42390 /* >= 0x0c */
     /* 00 */ u8 filler_00[4];
     /* 04 */ s32 unk04;
     /* 08 */ s32 unk08;
+};
+
+/* 62-entry ROM table @ 0x08075AB8, stride 0x1C. Key at +0x04, payload at +0x00.
+ * sub_0802B930. */
+struct Unk75AB8 /* 0x1c */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s16 unk04;
+    /* 06 */ u8 filler_06[0x16];
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

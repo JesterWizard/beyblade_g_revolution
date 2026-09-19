@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-19T17:17:38Z_
+_Updated: 2026-09-19T18:07:04Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 234 |
-| Still need semantic C | **399** |
-| Readable Thumb remaining | 399 |
+| Semantic C done | 236 |
+| Still need semantic C | **397** |
+| Readable Thumb remaining | 397 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 109 (34 already semantic) |
+| Battle pending | 109 (35 already semantic) |
 | Blocked (documented) | 35 |
 
 Ranking: **battle** · showing top **40**
@@ -70,7 +70,7 @@ Ranking: **battle** · showing top **40**
 | `sub_0802C62C` | `0x0802C62C` | 64 | counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a — same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter |
 | `sub_0802D8C4` | `0x0802D8C4` | 24 | agbcc extra push {lr} on branch leaves |
 | `sub_08030938` | `0x08030938` | 78 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
-| `sub_08033530` | `0x08033530` | 68 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
+| `sub_08033530` | `0x08033530` | 0 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
 | `sub_08038314` | `0x08038314` | 108 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
 | `sub_0803DBD0` | `0x0803DBD0` | 80 | 2D ROM table lookup (gUnk_080796DC[a][gMainWorkPtr->unk1818] / gUnk_08097458[unk1818] fallback) — retail leaf is bx lr with no push at all; every C shape tried (both branch orders) needs push{lr}/pop{r1} for one extra temp register (80B retail vs 84B compiled); same agbcc-extra-push-on-leaf class; needs permuter |
@@ -115,6 +115,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (364 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (363 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

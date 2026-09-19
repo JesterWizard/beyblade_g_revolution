@@ -330,6 +330,17 @@
       "score": "64/64",
       "updated": "2026-09-19T17:11:31Z",
       "note": "test"
+    },
+    "sub_08041858": {
+      "matched_bytes": 47,
+      "retail_bytes": 52,
+      "compiled_bytes": 48,
+      "pct": 90.4,
+      "diff_bytes": 5,
+      "status": "size_mismatch",
+      "score": "47/52",
+      "updated": "2026-09-19T18:06:55Z",
+      "note": "near miss: agbcc folds 0x504 from 0x534 via subs, retail uses separate pool entry"
     }
   }
 }

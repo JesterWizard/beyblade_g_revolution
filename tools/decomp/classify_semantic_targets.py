@@ -10,7 +10,15 @@ This buckets every not-yet-semantic function (src/matched/*.c still naked asm) b
 real risk signals:
 
   - naked_only        : provably can't become plain C (mode-switch / stack-splice
-                        trampolines) — skip, don't spend time here.
+                        trampolines, or the confirmed-unfixable "branchy leaf"
+                        agbcc quirk — see docs/decomp-patterns.md "Framed vs
+                        leaf-branch": this repo's agbcc always spills lr for
+                        ANY conditional branch, so a retail function that is a
+                        true `bx lr` leaf (no push at all) but contains an
+                        `if`/branch can never be reproduced by hand-written C
+                        no matter how it's phrased — confirmed on
+                        sub_0802D8C4, sub_08033958, sub_08035908 this session)
+                        — skip, don't spend time here.
   - unblock_first      : calls a bare-label symbol (bl _XXXXXXXX) with no prototype
                         anywhere yet. Fastest lever: declare the symbol once in
                         include/unknown-functions.h (name + guessed signature from
@@ -53,6 +61,15 @@ NAKED_MARKERS = (
     "mov pc, lr",
     "push {r0, r1, r2, r3}",  # variadic arg spill trampoline
 )
+
+# Retail is a true `bx lr`-only leaf (no push/pop anywhere) but still branches
+# (a conditional bXX, not just the trailing unconditional jump to the shared
+# exit). agbcc in this repo always spills lr the moment ANY conditional
+# branch appears — confirmed with a from-scratch minimal repro this session
+# (see docs/decomp-patterns.md "Framed vs leaf-branch") — so no phrasing of
+# equivalent C can reproduce a push-free leaf here. Permanently blocked, not
+# just "hasn't been tried yet".
+COND_BRANCH_RE = re.compile(r"\bb(eq|ne|lt|le|gt|ge|cc|cs|mi|pl|vs|vc|hi|ls)\b")
 
 # "reload base pointer, then load a field from it" repeated 3+ times = retail
 # deliberately re-reads a cached global/struct pointer across sibling if-blocks
@@ -126,6 +143,10 @@ def classify() -> dict[str, list[str]]:
         body = asm_body(n)
 
         if any(marker in body for marker in NAKED_MARKERS):
+            buckets["naked_only"].append(n)
+            continue
+
+        if "push" not in body and COND_BRANCH_RE.search(body):
             buckets["naked_only"].append(n)
             continue
 

@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-19T17:17:38Z",
+  "generated": "2026-09-19T18:07:04Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 399,
-    "semantic_done": 234,
-    "readable_asm": 399,
+    "pending": 397,
+    "semantic_done": 236,
+    "readable_asm": 397,
     "opcode": 0,
     "battle_pending": 109,
-    "battle_semantic": 34,
+    "battle_semantic": 35,
     "blocked": 35
   },
   "pinned": [],
@@ -628,8 +628,8 @@
       "name": "sub_08033530",
       "addr": "0x08033530",
       "reason": "battle state branch \u2014 subs r2 #0x6C vs direct unk201C pool (same-size DIFF)",
-      "kind": "asm",
-      "bytes": 68
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_08034894",
@@ -2649,18 +2649,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802B930",
-      "addr": "0x0802B930",
-      "kind": "asm",
-      "bytes": 42,
-      "score": 19,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
