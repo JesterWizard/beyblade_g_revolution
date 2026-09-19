@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-19T06:55:13Z",
+  "generated": "2026-09-19T07:07:42Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -9,9 +9,9 @@
     "semantic_done": 214,
     "readable_asm": 419,
     "opcode": 0,
-    "battle_pending": 121,
+    "battle_pending": 117,
     "battle_semantic": 26,
-    "blocked": 31
+    "blocked": 35
   },
   "pinned": [],
   "recommended": [
@@ -245,48 +245,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802B994",
-      "addr": "0x0802B994",
-      "kind": "asm",
-      "bytes": 58,
-      "score": 23,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804495C",
-      "addr": "0x0804495C",
-      "kind": "asm",
-      "bytes": 60,
-      "score": 21,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C62C",
-      "addr": "0x0802C62C",
-      "kind": "asm",
-      "bytes": 64,
-      "score": 27,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803FDD0",
       "addr": "0x0803FDD0",
       "kind": "asm",
@@ -362,20 +320,6 @@
       "kind": "asm",
       "bytes": 78,
       "score": 35,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803DBD0",
-      "addr": "0x0803DBD0",
-      "kind": "asm",
-      "bytes": 80,
-      "score": 27,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -593,9 +537,79 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08042784",
+      "addr": "0x08042784",
+      "kind": "asm",
+      "bytes": 100,
+      "score": 44,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0802C2B0",
+      "addr": "0x0802C2B0",
+      "kind": "asm",
+      "bytes": 100,
+      "score": 45,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0802D52C",
+      "addr": "0x0802D52C",
+      "kind": "asm",
+      "bytes": 108,
+      "score": 44,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08033878",
+      "addr": "0x08033878",
+      "kind": "asm",
+      "bytes": 108,
+      "score": 45,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gBattleWork"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
+    {
+      "name": "sub_0802B994",
+      "addr": "0x0802B994",
+      "reason": "Unk7709C ROM table lookup keyed on *gMainWorkPtr->unk1690 \u2014 logic reconstructed correctly (same-size DIFF, 2/58 bytes short from a missing 2B) but every do/while/goto shape tried lands agbcc on push{lr}...pop{r1};bx r1 leaf framing that retail doesn't have (bx lr direct); same agbcc-extra-push-on-leaf class as sub_0802D8C4/sub_08061BDC; needs permuter",
+      "kind": "asm",
+      "bytes": 58
+    },
+    {
+      "name": "sub_0802C62C",
+      "addr": "0x0802C62C",
+      "reason": "counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a \u2014 same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter",
+      "kind": "asm",
+      "bytes": 64
+    },
     {
       "name": "sub_0802D8C4",
       "addr": "0x0802D8C4",
@@ -632,11 +646,25 @@
       "bytes": 108
     },
     {
+      "name": "sub_0803DBD0",
+      "addr": "0x0803DBD0",
+      "reason": "2D ROM table lookup (gUnk_080796DC[a][gMainWorkPtr->unk1818] / gUnk_08097458[unk1818] fallback) \u2014 retail leaf is bx lr with no push at all; every C shape tried (both branch orders) needs push{lr}/pop{r1} for one extra temp register (80B retail vs 84B compiled); same agbcc-extra-push-on-leaf class; needs permuter",
+      "kind": "asm",
+      "bytes": 80
+    },
+    {
       "name": "sub_080428C4",
       "addr": "0x080428C4",
       "reason": "docs/battle.md: readable Thumb \u2014 C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)",
       "kind": "asm",
       "bytes": 44
+    },
+    {
+      "name": "sub_0804495C",
+      "addr": "0x0804495C",
+      "reason": "32-halfword table copy (gUnk_08094E00[gMainWorkPtr->unk181F] -> PLTT 0x050001C0) \u2014 void(void) leaf, same agbcc-extra-push-on-leaf framing as sub_0802B994 (60B retail vs 64B compiled, same shape every C form tried); needs permuter",
+      "kind": "asm",
+      "bytes": 60
     },
     {
       "name": "sub_08045128",
@@ -1045,48 +1073,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802B994",
-      "addr": "0x0802B994",
-      "kind": "asm",
-      "bytes": 58,
-      "score": 23,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804495C",
-      "addr": "0x0804495C",
-      "kind": "asm",
-      "bytes": 60,
-      "score": 21,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C62C",
-      "addr": "0x0802C62C",
-      "kind": "asm",
-      "bytes": 64,
-      "score": 27,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803FDD0",
       "addr": "0x0803FDD0",
       "kind": "asm",
@@ -1162,20 +1148,6 @@
       "kind": "asm",
       "bytes": 78,
       "score": 35,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803DBD0",
-      "addr": "0x0803DBD0",
-      "kind": "asm",
-      "bytes": 80,
-      "score": 27,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"

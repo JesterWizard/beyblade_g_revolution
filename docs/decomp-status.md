@@ -28,6 +28,13 @@ _Agent-maintained log. Updated after each batch run._
 - `make compare`: OK (no functional changes, only header/type scaffolding)
 - Blocked (documented): 29 → 31
 
+### 2026-09-19 — moved down queue, 4 more agbcc-leaf blocks (214/633 unchanged)
+- Worked down the "battle=2" tier (`sub_08033188`, `sub_0807309C`, `sub_08037430`, `sub_0803C5DC`, `sub_0803C500`, `sub_08036A68`, `sub_0803D51C`, `sub_08038F30`): all depend on a shared cluster of still-naked, multi-arg callees (`sub_08061E8C`, `sub_08073AEC`, `sub_08061EF8`, `sub_080735DC`, `sub_0802C314`, `sub_0806A3A4`/`sub_0806A4D8`) with no established prototypes — hand-converting the callers would mean guessing signatures. Skipped rather than risk wrong prototypes; someone should prototype `sub_0807309C`'s allocator group first to unblock this whole tier at once.
+- Dropped to "battle=1" tier and found a **systemic pattern**: `sub_0802B994`, `sub_0804495C`, `sub_0802C62C`, `sub_0803DBD0` all reconstruct provably-correct logic (verified via `match_function.py`, `sub_0802C62C` even hit byte-identical *size*, 64=64) but agbcc inserts a `push{lr}...pop{r1};bx r1` leaf frame that retail's build doesn't have (`bx lr` direct, or a tighter push set), no matter which C shape/declaration-order is tried. This is the same class as the already-documented `sub_0802D8C4`/`sub_08061BDC`/`sub_08062634`/`sub_08061E40` "agbcc extra push {lr} on leaf" blockers — now confirmed to hit small ROM-table-lookup and counting-loop leaves too, not just null-check leaves. 7000+ permuter iterations on `sub_0802C62C` (the closest, byte-count-identical case) never found a zero, floor stuck at score 95. All 4 documented in `decomp-queue.toml`.
+- **Takeaway for next session:** this agbcc leaf-framing quirk is now confirmed across ≥9 functions in 3+ shapes (null-check leaf, counting loop, table lookup, table copy). Worth investigating directly — e.g. does forcing `-Wl,--no-...`/a different agbcc leaf heuristic, or an explicit `register` hint, suppress the frame — before spending more permuter cycles rediscovering it function-by-function.
+- `make compare`: OK (no functional changes; all attempted `.c` files reverted to naked-asm since none reached a byte-perfect match)
+- Blocked (documented): 31 → 35
+
 
 
 ### 2026-09-18 — Semantic audit fix (+15 prototypes) + near-miss batch
