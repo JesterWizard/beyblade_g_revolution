@@ -8,18 +8,26 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **220/633 (34.8%)** |
-| **Decompiled C (bytes)** | **9,302/90,272 (10.3%)** |
+| **Decompiled C (functions)** | **221/633 (34.9%)** |
+| **Decompiled C (bytes)** | **9,398/90,272 (10.4%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 413/633 (65.2%) |
+| Readable Thumb | 412/633 (65.1%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 30/160 (18.8% fn, 4.7% bytes) |
+| Battle semantic C | 31/160 (19.4% fn, 4.9% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — fixed the ROM-symbol tooling gap, landed sub_080435D8 (+1, 220→221/633)
+- **Root-caused and fixed** the "can't reference a raw ROM rodata address from new C" gap flagged last batch: `asm/rom_tail.s`'s single giant `.incbin` (0x08074146..ROM end) has no symbols inside it, so `extern const T x[]` at a ROM address a function needs can never link. RAM globals (`gMainWorkPtr` etc.) dodge this entirely — the C headers `#define` them as raw address literals, never as real `extern` symbols, so they don't depend on `ram_map.s`'s `SET_DATA` for *linking* (that file's symbols are for other assembly, not C).
+- Fix: split `rom_tail.s`'s incbin in two at the needed offset and inserted a `.global gUnk_08094BB4` label at the split point — same total bytes, zero-cost, `make compare` byte-identical before/after the split alone.
+- With the real symbol in place, `sub_080435D8` (blocked last batch on the pool-word-only diff) links and matches for real: confirmed by a full `make compare` (not just the standalone `match_function.py` check, which still can't link against `rom_tail.o` and will keep showing that word as `00000000` — that's a known, harmless limitation of the standalone checker, not a sign of a real mismatch, *once the ROM symbol actually exists*). Manifest updated by hand (`kind: asm` → `semantic`) since `integrate_c.py`'s internal verify still uses the standalone checker.
+- **Reusable pattern for next session:** any future "known ROM address, no symbol" blocker (there may be others in the `sub_080436B0` family / similar table lookups) can be fixed the same way — find which `rom_gap_*.s`/`rom_tail.s` incbin covers the address, split it, add a `.global` label, confirm `make compare` stays green on the split alone, then the function's `extern` reference will link for real even though `match_function.py` standalone still shows a stale pool word.
+- `make compare`: OK
+- Decompiled C: 220 → 221/633 (34.8% → 34.9%)
 
 ### 2026-09-19 — semantic C (+1, 219→220/633), continued near-misses
 - Matched `sub_08044A20` (`MainWork.unk17B4`/`unk17B8`/`unk17C4`/`unk17C8` swap-then-invalidate, mirrored to `unk044C`/`unk0450`) — matched first try; new fields carved from `filler_0428`/`filler_17A0`, offsets cross-checked with `arm-none-eabi-gcc offsetof`.
