@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **231/633 (36.5%)** |
-| **Decompiled C (bytes)** | **10,016/90,272 (11.1%)** |
+| **Decompiled C (functions)** | **233/633 (36.8%)** |
+| **Decompiled C (bytes)** | **10,136/90,272 (11.2%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 402/633 (63.5%) |
+| Readable Thumb | 400/633 (63.2%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — semantic C +2 (231→233/633); Unk705DC list walk + Unk047C init
+- Matched `sub_080712CC` (walk `Unk712CC.unk14` linked `Unk705DC` list `unk1C-1` times, `sub_080705A4` each node, store flag at `unk0E`). First shape was 53/56 same-size (`ldr r0,[r7,#0x1C]; sub r4,r0,#1`). Split to `n = a->unk1C; n = n - 1;` → 56/56. Added `Unk705DC.unk04` next-pointer; re-verified `sub_080705A4` / `sub_080705DC` / `sub_08034788` still MATCH. Also split `Unk62044.unk10`/`unk14` (re-verified `sub_08062044` / `sub_0806209C`).
+- Matched `sub_080405A8` (zero `Unk047C.unk80C`/`unk808`, fill `unk00[0..0x1FF]` with `-1`, reload `*gUnk_0300047CLoc` each store). Added `gUnk_0300047CLoc`. Pin `r3` as the IWRAM address, copy to `r4` after the head stores; `unk808` is `adds r0, r0, r1` with `r1=0x808` then store through `unk00[0]`.
+- Near-miss (readable Thumb kept): `sub_08042B28`/`sub_08042B50` 36/40 same-size (`lsl` before `ldr` of the ROM table vs retail `ldr` then `lsl`); `sub_080620D4` 64/72 leaf uses `r7` without `push {r7}`; `sub_08071F44` mid-function IWRAM pool; `sub_0806D748` unused `u16` r3 DCE + epilogue `u8` truncate; `sub_0806F1A0` packed `i++` via `+0x10000` in-loop is close; `sub_08073568` true proto is 3-arg (`dest, n, size`).
+- `make compare`: OK
+- Decompiled C: 231 → 233/633 (36.5% → 36.8%)
 
 ### 2026-09-19 — semantic C +4 (227→231/633); per-function score ledger
 - Matched `sub_08061C48` (pop one `Unk0770` slot at `gUnk_03000794`/`gUnk_03000770`, free via `sub_0806A434`) — needed `tmp[]` + `r4`/`r5` pool pin, same trick as `sub_08033C1C`.

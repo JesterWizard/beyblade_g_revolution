@@ -8,8 +8,10 @@ hardcoding `0x03…` / `0x02…`.
 
 Promoted pointer globals (`gMainWorkPtr`, `gBattleWork`, `gUnk_03000798`,
 `gUnk_0300047C`) and the `gUnk_03000180` object are **typed dereference
-macros** so matching C can write `gMainWorkPtr->unk1800`. Layouts
-live in `include/unknown-types.h`. Pool `#define`s stay as raw addresses so
+macros** so matching C can write `gMainWorkPtr->unk1800`. When retail keeps
+the IWRAM *address* in a register and reloads each iteration, use the `Loc`
+pointer (`gUnk_0300047CLoc`, `gMainWorkPtrLoc`). Layouts live in
+`include/unknown-types.h`. Pool `#define`s stay as raw addresses so
 `match_function.py` (unlinked `.text`) still sees the literal.
 
 ## Regeneration

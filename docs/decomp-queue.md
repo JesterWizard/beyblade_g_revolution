@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-19T13:03:24Z_
+_Updated: 2026-09-19T16:55:16Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 231 |
-| Still need semantic C | **402** |
-| Readable Thumb remaining | 402 |
+| Semantic C done | 233 |
+| Still need semantic C | **400** |
+| Readable Thumb remaining | 400 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 110 (33 already semantic) |
 | Blocked (documented) | 35 |
@@ -115,6 +115,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (367 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (365 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

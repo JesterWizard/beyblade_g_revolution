@@ -34,6 +34,7 @@
 #define gBtlObjListTailLoc ((struct BtlObjNode **)0x030040B8)
 #define gUnk_03000180 (*(struct Unk0180 *)0x03000180)
 #define gUnk_0300026C (*(struct Unk026C **)0x0300026C)
+#define gUnk_0300047CLoc ((struct Unk047C **)0x0300047C)
 #define gUnk_0300047C (*(struct Unk047C **)0x0300047C)
 #define gUnk_03000798 (*(struct Unk0798 **)0x03000798)
 #define gUnk_030003CC (*(struct Unk3CC **)0x030003CC)

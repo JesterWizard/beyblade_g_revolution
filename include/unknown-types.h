@@ -131,7 +131,9 @@ struct Unk62044 /* 0x28 (padded from >= 0x26) */
     /* 00 */ void *unk00;
     /* 04 */ u8 filler_04[8];
     /* 0c */ void **unk0C;
-    /* 10 */ u8 filler_10[0x14];
+    /* 10 */ s32 unk10;
+    /* 14 */ s32 unk14;
+    /* 18 */ u8 filler_18[0xC];
     /* 24 */ u16 unk24;
 };
 
@@ -1017,13 +1019,32 @@ struct Unk67F3C /* >= 0x99 */
 
 struct Unk705DC /* >= 0x1a */
 {
-    /* 00 */ u8 filler_00[8];
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ struct Unk705DC *unk04;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;
     /* 10 */ u32 unk10;
     /* 14 */ u16 unk14;
     /* 16 */ u16 unk16;
     /* 18 */ u16 unk18;
+};
+
+/* 0x84-stride records. sub_0806F1A0. */
+struct Unk6F1A0 /* 0x84 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u8 filler_04[0x80];
+};
+
+/* Linked Unk705DC list + flag. sub_080712CC. */
+struct Unk712CC /* >= 0x20 */
+{
+    /* 00 */ u8 filler_00[0xE];
+    /* 0e */ u8 unk0E;
+    /* 0f */ u8 filler_0F[5];
+    /* 14 */ struct Unk705DC *unk14;
+    /* 18 */ u8 filler_18[4];
+    /* 1c */ s32 unk1C;
 };
 
 /* DISPCNT copy + flags. sub_0806EE24. */

@@ -96,6 +96,15 @@ Use for: table walks, halfword loads after shifts, dispatch tables (`sub_080674B
 
 **Do not** use `asm volatile("movs r0, …")` for register forcing — use `register … asm("rN")`.
 
+`n = a->unkXX - 1` often compiles `ldr r0,[…]; sub r4,r0,#1`. Retail wants `ldr r4,[…]; sub r4,#1` — split it:
+
+```c
+n = a->unk1C;
+n = n - 1;
+```
+
+Win: `sub_080712CC`.
+
 ### 3. Literal pool / load order
 
 Symptom: same-size diff, wrong pool slot or extra `push {lr}` on branches.

@@ -220,6 +220,105 @@
       "status": "matched",
       "score": "66/66",
       "updated": "2026-09-19T13:01:57Z"
+    },
+    "sub_08042B28": {
+      "matched_bytes": 36,
+      "retail_bytes": 40,
+      "compiled_bytes": 40,
+      "pct": 90.0,
+      "diff_bytes": 4,
+      "status": "same_size",
+      "score": "36/40",
+      "updated": "2026-09-19T16:55:29Z",
+      "note": "ldr/lsl order 36/40"
+    },
+    "sub_08042B50": {
+      "matched_bytes": 36,
+      "retail_bytes": 40,
+      "compiled_bytes": 40,
+      "pct": 90.0,
+      "diff_bytes": 4,
+      "status": "same_size",
+      "score": "36/40",
+      "updated": "2026-09-19T16:55:30Z",
+      "note": "ldr/lsl order 36/40"
+    },
+    "sub_080405A8": {
+      "matched_bytes": 64,
+      "retail_bytes": 64,
+      "compiled_bytes": 64,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "64/64",
+      "updated": "2026-09-19T16:52:27Z",
+      "note": "zero Unk047C slots"
+    },
+    "sub_0806D748": {
+      "matched_bytes": 6,
+      "retail_bytes": 46,
+      "compiled_bytes": 36,
+      "pct": 13.0,
+      "diff_bytes": 40,
+      "status": "size_mismatch",
+      "score": "6/46",
+      "updated": "2026-09-19T13:08:48Z",
+      "note": "sub_0806D748"
+    },
+    "sub_08073568": {
+      "matched_bytes": 3,
+      "retail_bytes": 70,
+      "compiled_bytes": 76,
+      "pct": 3.9,
+      "diff_bytes": 73,
+      "status": "size_mismatch",
+      "score": "3/70",
+      "updated": "2026-09-19T13:08:48Z",
+      "note": "sub_08073568"
+    },
+    "sub_0806F1A0": {
+      "matched_bytes": 29,
+      "retail_bytes": 58,
+      "compiled_bytes": 64,
+      "pct": 45.3,
+      "diff_bytes": 35,
+      "status": "size_mismatch",
+      "score": "29/58",
+      "updated": "2026-09-19T13:08:49Z",
+      "note": "sub_0806F1A0"
+    },
+    "sub_080712CC": {
+      "matched_bytes": 56,
+      "retail_bytes": 56,
+      "compiled_bytes": 56,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "56/56",
+      "updated": "2026-09-19T16:52:25Z",
+      "note": "walk Unk705DC list; load-then-sub n"
+    },
+    "sub_080620D4": {
+      "matched_bytes": 12,
+      "retail_bytes": 72,
+      "compiled_bytes": 76,
+      "pct": 15.8,
+      "diff_bytes": 64,
+      "status": "size_mismatch",
+      "score": "12/72",
+      "updated": "2026-09-19T13:08:50Z",
+      "note": "sub_080620D4"
+    },
+    "sub_08071F44": {
+      "matched_bytes": 17,
+      "retail_bytes": 64,
+      "compiled_bytes": 64,
+      "pct": 26.6,
+      "diff_bytes": 47,
+      "status": "same_size",
+      "score": "17/64",
+      "updated": "2026-09-19T13:08:51Z",
+      "note": "sub_08071F44"
     }
   }
 }
