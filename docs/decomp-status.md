@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **239/633 (37.8%)** |
-| **Decompiled C (bytes)** | **10,496/90,272 (11.6%)** |
+| **Decompiled C (functions)** | **241/633 (38.1%)** |
+| **Decompiled C (bytes)** | **10,592/90,272 (11.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 394/633 (62.2%) |
+| Readable Thumb | 392/633 (61.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
