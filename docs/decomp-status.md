@@ -21,6 +21,13 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-19 — semantic C +3 (239→242/633); Unk0798 CpuFill helpers + affine register store
+- Matched `sub_08060D28` and `sub_08061308` (both `_08073C4C` CpuFill-style calls building dest from `gUnk_03000798`'s `unk5D`/`unk94` fields, via `*0x080BB8BC`) — needed a `register u32 tmp asm("r0")` pin per field load to steer agbcc's register choice to match retail's `ldrb r0`/`ldrh r0` then shift-into-r1/r2 pattern; a plain local variable picked the wrong register.
+- Matched `sub_08069A18` (write 4 halfwords to one of two affine I/O register blocks selected by an enum-like `u8` arg) — first `if`/`else if` shape 51/72 (retail uses `beq`/`beq`/`b` positive branches, not `bne`-invert-and-skip); switching to an explicit `switch` statement landed 72/72 exactly.
+- Near-miss, reverted (no partial state left): `sub_08061BE8` (74/96, `Unk0770` slot pop + `_08073C4C` — pool-load ordering and a `*(void**)slot->unk00` extra deref close but not exact), `sub_08061DC0`/`sub_08061D68` (BGR pack helpers, same-size DIFF, register-choice only), `sub_08062A74` (88.2%, flag-bitmap set + `_08073C4C` + table store, one register off), `sub_08068020`/`sub_08066BF0` (table-walk helpers, same-size DIFF), `sub_08069894` (90.6%, three back-to-back IWRAM byte stores 0x108/0x1A8/0x1B0 — agbcc folds two via `adds`-from-cached-address when retail doesn't; no C rephrasing tried stopped the fold).
+- `make compare`: OK
+- Decompiled C: 239 → 242/633 (37.8% → 38.2%)
+
 ### 2026-09-19 — semantic C +2 (231→233/633); Unk705DC list walk + Unk047C init
 - Matched `sub_080712CC` (walk `Unk712CC.unk14` linked `Unk705DC` list `unk1C-1` times, `sub_080705A4` each node, store flag at `unk0E`). First shape was 53/56 same-size (`ldr r0,[r7,#0x1C]; sub r4,r0,#1`). Split to `n = a->unk1C; n = n - 1;` → 56/56. Added `Unk705DC.unk04` next-pointer; re-verified `sub_080705A4` / `sub_080705DC` / `sub_08034788` still MATCH. Also split `Unk62044.unk10`/`unk14` (re-verified `sub_08062044` / `sub_0806209C`).
 - Matched `sub_080405A8` (zero `Unk047C.unk80C`/`unk808`, fill `unk00[0..0x1FF]` with `-1`, reload `*gUnk_0300047CLoc` each store). Added `gUnk_0300047CLoc`. Pin `r3` as the IWRAM address, copy to `r4` after the head stores; `unk808` is `adds r0, r0, r1` with `r1=0x808` then store through `unk00[0]`.
