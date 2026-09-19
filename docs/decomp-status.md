@@ -8,18 +8,28 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **219/633 (34.6%)** |
-| **Decompiled C (bytes)** | **9,202/90,272 (10.2%)** |
+| **Decompiled C (functions)** | **220/633 (34.8%)** |
+| **Decompiled C (bytes)** | **9,302/90,272 (10.3%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 414/633 (65.4%) |
+| Readable Thumb | 413/633 (65.2%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 29/160 (18.1% fn, 4.4% bytes) |
+| Battle semantic C | 30/160 (18.8% fn, 4.7% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-19 — semantic C (+1, 219→220/633), continued near-misses
+- Matched `sub_08044A20` (`MainWork.unk17B4`/`unk17B8`/`unk17C4`/`unk17C8` swap-then-invalidate, mirrored to `unk044C`/`unk0450`) — matched first try; new fields carved from `filler_0428`/`filler_17A0`, offsets cross-checked with `arm-none-eabi-gcc offsetof`.
+- Re-attempted `sub_08043B90` with the now-real `sub_08073440` callee — still the same confirmed 1-instruction near-miss from last session (76B, tail re-reads `entry->unk00` instead of reusing the loop-exit register); tried `for`, `while`, `do-while(1)+break`, and a cached-key `for(;;)` form, all landed on the identical extra-`ldr` shape. Genuinely needs a permuter, not more C reshaping — parking it.
+- New near-misses found and reverted: `sub_08043B58` (52B vs 54B — same agbcc-extra-push-on-leaf class as `sub_0802B994`/etc., confirmed again on a linked-list-of-pointers search), `sub_08042390` (96B vs 98B — nested-if reconstruction is 2 bytes *shorter* than retail because agbcc shares a `x-refX` subexpression across two basic blocks that retail's source apparently recomputed independently; tried duplicating the expression via redundant if/else nesting, no effect — CSE happens regardless of source phrasing here), `sub_08042784` (108B vs 100B — ring-buffer struct `Unk0538` extension is very likely right structurally but the compiled shape diverges enough — 8 bytes — that it needs more investigation, not a quick fix).
+- `struct Unk0538` (`*gUnk_03000538`) extended from the existing 2-byte cursor (`sub_080428C4`) to a full 0x144-byte ring buffer (`unk04[32]`/`unk44[32]`/`unkC4[32]`) — verified `sub_080428C4` still matches unchanged.
+- New `struct Unk0554` (`*gUnk_03000554`) and `gUnk_03000538`/`gUnk_03000554` pointer macros added to `ram_map.h`; `sub_08043974` updated to cast the pointer directly (`(u32)gUnk_03000554`) instead of double-dereferencing, to stay consistent with the new typed macro — still matches.
+- `sub_080435D8` reconstructed correctly (96B=96B, only the not-yet-linked `gUnk_08094BB4` ROM-table pool word differs) but **could not be integrated**: referencing a raw ROM rodata address with no linker symbol isn't supported by the current `match_function.py`/`integrate_c.py` flow (no `SET_DATA`-style ROM equivalent exists yet, only IWRAM/EWRAM). Flagged as a tooling gap, not a logic problem — worth adding ROM-address symbol support to `asm/ram_map.s` conventions.
+- `make compare`: OK
+- Decompiled C: 219 → 220/633 (34.6% → 34.8%)
 
 ### 2026-09-19 — semantic C (+5, 214→219/633)
 - Matched `sub_08046230` (2-slot `MainWork.unk16B0[]` reset — retail addresses each of the 3 fields as its own independent computation rather than one struct-member access; using explicit `gMainWorkPtr->unk16B0[a].unkNN` per field, not a cached pointer, produced the byte-identical shape).

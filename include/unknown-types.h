@@ -239,7 +239,10 @@ struct MainWork /* >= 0x18B4 */
     /* 03B0 */ u32 unk03B0;
     /* 03B4 */ u8 filler_03B4[0x70];
     /* 0424 */ struct Unk705DC *unk0424;
-    /* 0428 */ u8 filler_0428[0x440];
+    /* 0428 */ u8 filler_0428[0x24];
+    /* 044C */ u32 unk044C; /* sub_08044A20, sub_08042784 */
+    /* 0450 */ u32 unk0450; /* sub_08042784 */
+    /* 0454 */ u8 filler_0454[0x414];
     /* 0868 */ u32 unk0868;
     /* 086C */ u32 unk086C;
     /* 0870 */ u8 filler_0870[4];
@@ -279,7 +282,16 @@ struct MainWork /* >= 0x18B4 */
     /* 178C */ u8 filler_178C[0xC];
     /* 1798 */ u32 unk1798;
     /* 179C */ u32 unk179C;
-    /* 17A0 */ u8 filler_17A0[0x60];
+    /* 17A0 */ u8 filler_17A0[0x14];
+    /* 17B4 */ u32 unk17B4; /* sub_08044A20 */
+    /* 17B8 */ u32 unk17B8; /* sub_08044A20 */
+    /* 17BC */ u8 filler_17BC[8];
+    /* 17C4 */ u32 unk17C4; /* sub_08044A20 */
+    /* 17C8 */ u32 unk17C8; /* sub_08044A20 */
+    /* 17CC */ u8 filler_17CC[0x2A];
+    /* 17F6 */ s8 unk17F6; /* sub_080435D8 */
+    /* 17F7 */ s8 unk17F7; /* sub_080435D8 */
+    /* 17F8 */ u8 filler_17F8[8];
     /* 1800 */ u32 unk1800;
     /* 1804 */ u8 filler_1804[4];
     /* 1808 */ u32 unk1808;
@@ -290,7 +302,9 @@ struct MainWork /* >= 0x18B4 */
     /* 181A */ u8 unk181A;
     /* 181B */ u8 filler_181B[4];
     /* 181F */ s8 unk181F;
-    /* 1820 */ u8 filler_1820[0x14];
+    /* 1820 */ u8 filler_1820[0xC];
+    /* 182C */ u8 unk182C; /* sub_08042784 */
+    /* 182D */ u8 filler_182D[7];
     /* 1834 */ u8 unk1834;
     /* 1835 */ u8 filler_1835[3];
     /* 1838 */ u16 unk1838;
@@ -314,11 +328,15 @@ struct BtlObj /* >= 0x1a */
     /* 19 */ u8 unk19;
 };
 
-/* Two-byte cursor at *gUnk_03000538. sub_080428C4. */
-struct Unk0538 /* 0x02 */
+/* Ring buffer at *gUnk_03000538 (32 slots). sub_080428C4, sub_08042784. */
+struct Unk0538 /* >= 0x144 */
 {
     /* 00 */ u8 unk00;
     /* 01 */ u8 unk01;
+    /* 02 */ u8 filler_02[2];
+    /* 04 */ u16 unk04[32];
+    /* 44 */ u32 unk44[32];
+    /* C4 */ u32 unkC4[32];
 };
 
 struct Unk0630 /* >= 0x48 */
@@ -1348,6 +1366,23 @@ struct Unk3CC /* >= 0x32 */
     /* 00 */ u16 unk00[16];
     /* 20 */ u16 unk20;
     /* 22 */ s16 unk22[16];
+};
+
+/* *gUnk_03000554 target: byte array at +0x08, u8 field at +0x02. sub_080435D8, sub_080436B0. */
+struct Unk0554 /* >= 0x09 */
+{
+    /* 00 */ u8 filler_00[2];
+    /* 02 */ u8 unk02;
+    /* 03 */ u8 filler_03[5];
+    /* 08 */ u8 unk08[0x7F];
+};
+
+/* Fixed-point (x.8) coordinate pair. sub_08042390. */
+struct Unk42390 /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */
