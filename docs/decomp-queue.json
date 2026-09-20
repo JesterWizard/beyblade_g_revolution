@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-20T09:04:39Z",
+  "generated": "2026-09-20T09:19:02Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 369,
-    "semantic_done": 264,
-    "readable_asm": 369,
+    "pending": 368,
+    "semantic_done": 265,
+    "readable_asm": 368,
     "opcode": 0,
     "battle_pending": 102,
     "battle_semantic": 44,
@@ -118,8 +118,8 @@
     {
       "name": "sub_08034568",
       "addr": "0x08034568",
-      "kind": "asm",
-      "bytes": 176,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08034568.c",
       "notes": "src/wip/sub_08034568.md",
       "status": "size_mismatch 156/176 (88.6%, compiled 168B vs retail 176B); all field init logic correct (Unk346C0 tail-region zero/const init, 8 byte writes + 3 halfword + several u32); agbcc picks r1-chain instead of r4-chain for final unk2C4 store, dropping one add-chain step vs retail",

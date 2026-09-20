@@ -1,8 +1,33 @@
 #include "global.h"
 
 // @ 0x08034568
-__attribute__((naked))
-void sub_08034568(void)
+#include "global.h"
+
+// @ 0x08034568
+void sub_08034568(struct Unk346C0 *a)
 {
-    asm(".syntax unified\npush {r4, lr}\nadds r3, r0, #0x0\nmovs r1, #0x00\nstrb r1, [r3, #0x18]\nmovs r2, #0xB2\nlsls r2, r2, #0x02\nadds r0, r3, r2\nstr r1, [r0, #0x00]\nmovs r4, #0xB3\nlsls r4, r4, #0x02\nadds r0, r3, r4\nstr r1, [r0, #0x00]\nsubs r2, #0x18\nadds r0, r3, r2\nstr r1, [r0, #0x00]\nsubs r4, #0x18\nadds r0, r3, r4\nstr r1, [r0, #0x00]\nadds r2, #0x34\nadds r0, r3, r2\nmovs r2, #0x80\nlsls r2, r2, #0x09\nstr r2, [r0, #0x00]\nadds r4, #0x34\nadds r0, r3, r4\nstr r2, [r0, #0x00]\nmovs r2, #0xBB\nlsls r2, r2, #0x02\nadds r0, r3, r2\nstr r1, [r0, #0x00]\nadds r4, #0x08\nadds r0, r3, r4\nstr r1, [r0, #0x00]\nadds r2, #0x08\nadds r0, r3, r2\nstr r1, [r0, #0x00]\nadds r4, #0x08\nadds r2, r3, r4\nmovs r0, #0x01\nnegs r0, r0\nstr r0, [r2, #0x00]\nmovs r2, #0xC0\nlsls r2, r2, #0x02\nadds r0, r3, r2\nmovs r2, #0x00\nstrh r1, [r0, #0x00]\nadds r4, #0x0A\nadds r0, r3, r4\nstrh r1, [r0, #0x00]\nadds r4, #0x02\nadds r0, r3, r4\nstrh r1, [r0, #0x00]\nldr r0, _08034610 @ =0x0000030E\nadds r1, r3, r0\nmovs r0, #0x01\nstrb r0, [r1, #0x00]\nldr r1, _08034614 @ =0x0000030D\nadds r0, r3, r1\nstrb r2, [r0, #0x00]\nadds r4, #0x0B\nadds r0, r3, r4\nstrb r2, [r0, #0x00]\nadds r1, #0x03\nadds r0, r3, r1\nstrb r2, [r0, #0x00]\nadds r4, #0x02\nadds r0, r3, r4\nstrb r2, [r0, #0x00]\nadds r1, #0x02\nadds r0, r3, r1\nstrb r2, [r0, #0x00]\nadds r4, #0x02\nadds r0, r3, r4\nstrb r2, [r0, #0x00]\nadds r1, #0x02\nadds r0, r3, r1\nstrb r2, [r0, #0x00]\nsubs r4, #0x4F\nadds r0, r3, r4\nstrb r2, [r0, #0x00]\npop {r4}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08034610: .4byte 0x0000030E\n_08034614: .4byte 0x0000030D");
+    a->unk18 = 0;
+    a->unk2C8 = 0;
+    a->unk2CC = 0;
+    a->unk2B0 = 0;
+    a->unk2B4 = 0;
+    a->unk2E4 = 0x10000;
+    a->unk2E8 = 0x10000;
+    a->unk2EC = 0;
+    a->unk2F0 = 0;
+    a->unk2F4 = 0;
+    a->unk2F8 = (u32)-1;
+    a->unk300 = 0;
+    a->unk302 = 0;
+    a->unk304 = 0;
+    a->unk30E = 1;
+    a->unk30D = 0;
+    a->unk30F = 0;
+    a->unk310 = 0;
+    a->unk311 = 0;
+    a->unk312 = 0;
+    a->unk313 = 0;
+    a->unk314 = 0;
+    a->unk2C4 = 0;
 }
+

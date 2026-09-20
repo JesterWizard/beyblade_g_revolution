@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-20T09:04:39Z_
+_Updated: 2026-09-20T09:19:02Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 264 |
+| matched | 265 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 4 |
 | size DIFF | 18 |
-| WIP (parked C) | 16 |
+| WIP (parked C) | 15 |
 | not started | 302 |
 | blocked | 29 |
 | **total** | **633** |
@@ -42,7 +42,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08042B50` | same-size DIFF | 90.0% | 36/40 | ldr/lsl order 36/40 |
 | `sub_08033DD4` | WIP (parked C) | 89.4% | 93/104 | same-size DIFF, 93/104 (89.4%); one lsls #24 off on u8-return truthiness |
 | `sub_08070604` | WIP (parked C) | 89.1% | 82/92 | size_mismatch 82/92 (85.4%), compiled 96B vs retail 92B; all field init logic… |
-| `sub_08034568` | WIP (parked C) | 88.6% | 156/176 | size_mismatch 156/176 (88.6%, compiled 168B vs retail 176B); all field init l… |
 | `sub_080523A4` | blocked | 86.6% | 97/112 | seeded from queue.toml same-size DIFF |
 | `sub_0802D2C0` | WIP (parked C) | 85.2% | 92/108 | DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant… |
 | `sub_08045128` | blocked | 82.5% | 66/80 | seeded from queue.toml same-size DIFF |
@@ -84,7 +83,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 |----------|---------|--------|--:|------:|------|
 | `sub_08033DD4` | `0x08033DD4` | WIP (parked C) | 89.4% | 93/104 | asm |
 | `sub_08070604` | `0x08070604` | WIP (parked C) | 89.1% | 82/92 | asm |
-| `sub_08034568` | `0x08034568` | WIP (parked C) | 88.6% | 156/176 | asm |
 | `sub_0802D2C0` | `0x0802D2C0` | WIP (parked C) | 85.2% | 92/108 | asm |
 | `sub_0802E048` | `0x0802E048` | WIP (parked C) | 82.5% | 188/228 | asm |
 | `sub_08035C64` | `0x08035C64` | WIP (parked C) | 46.7% | 85/182 | asm |
@@ -713,5 +711,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0807309C` | `0x0807309C` | matched | 100.0% | 120/120 | semantic |
 | `sub_08059BD8` | `0x08059BD8` | matched | 100.0% | 148/148 | semantic |
 | `sub_0806306C` | `0x0806306C` | matched | 100.0% | 152/152 | semantic |
+| `sub_08034568` | `0x08034568` | matched | 100.0% | 176/176 | semantic |
 | `sub_0802D8DC` | `0x0802D8DC` | matched | 100.0% | 204/204 | semantic |
 | `sub_0802D3F0` | `0x0802D3F0` | matched | 100.0% | 316/316 | semantic |
