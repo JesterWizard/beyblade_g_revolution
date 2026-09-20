@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T15:30:32Z",
+  "generated": "2026-09-20T15:33:41Z",
   "counts": {
     "matched": 278,
     "blocked": 28,
-    "not_started": 264,
-    "wip": 46,
+    "not_started": 262,
+    "wip": 48,
     "size_mismatch": 15,
     "same_size": 2
   },
@@ -8022,17 +8022,17 @@
       "addr": "0x080677A8",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 86,
-      "matched_bytes": 0,
+      "matched_bytes": 12,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/86",
-      "source": "none",
-      "note": ""
+      "pct": 14.0,
+      "score": "12/86",
+      "source": "wip",
+      "note": "12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field"
     },
     {
       "name": "sub_08067890",
@@ -8175,17 +8175,17 @@
       "addr": "0x08067F98",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 48,
-      "matched_bytes": 0,
+      "matched_bytes": 36,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/48",
-      "source": "none",
-      "note": ""
+      "pct": 75.0,
+      "score": "36/48",
+      "source": "wip",
+      "note": "36/48 bytes (75%), same size; correct algorithm (variable-stride linked entry search: base=arg0->unk00, entry=base+base->unk18, walk arg0->unk28 entries comparing unk00==key, advance by unk02 byte stride) with loop/branch shape matching retail. Added structs Unk67F98/Unk67F98Base/Unk67F98Entry. Only remaining diff: register choice for 'key' (r4 here vs retail's r3) and 'count' (r3 here vs retail's r0)"
     },
     {
       "name": "sub_08067FC8",

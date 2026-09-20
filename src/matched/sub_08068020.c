@@ -1,52 +1,35 @@
 #include "global.h"
 
 // @ 0x08068020
-__attribute__((naked))
-void sub_08068020(void)
+#include "global.h"
+
+void sub_08068020(struct Unk680CC *a, u16 key, u16 arg2)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r3, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r4, r1, #0x10\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r6, r2, #0x10\n"
-        "movs r5, #0x00\n"
-        "ldr r1, [r3, #0x00]\n"
-        "ldr r0, [r1, #0x18]\n"
-        "adds r1, r1, r0\n"
-        "movs r2, #0x00\n"
-        "ldrh r0, [r3, #0x28]\n"
-        "cmp r2, r0\n"
-        "bcs _08068068\n"
-        "movs r7, #0x00\n"
-        "_0806803E:\n"
-        "ldrh r0, [r1, #0x00]\n"
-        "cmp r0, r4\n"
-        "bne _08068056\n"
-        "strh r5, [r3, #0x1C]\n"
-        "strh r7, [r3, #0x1E]\n"
-        "strh r4, [r3, #0x1A]\n"
-        "strh r6, [r3, #0x2E]\n"
-        "ldrh r1, [r1, #0x08]\n"
-        "adds r0, r3, #0x0\n"
-        "bl sub_08068180\n"
-        "b _08068068\n"
-        "_08068056:\n"
-        "ldrh r0, [r1, #0x02]\n"
-        "adds r1, r1, r0\n"
-        "adds r0, r5, r0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r5, r0, #0x10\n"
-        "adds r2, #0x01\n"
-        "ldrh r0, [r3, #0x28]\n"
-        "cmp r2, r0\n"
-        "bcc _0806803E\n"
-        "_08068068:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk68014 *inner;
+    struct Unk680CCRec *rec;
+    u32 i;
+    u32 off;
+    u32 acc;
+
+    acc = 0;
+    inner = a->unk00;
+    rec = (struct Unk680CCRec *)((u8 *)inner + inner->unk18);
+    i = 0;
+    while (i < a->unk28)
+    {
+        if (rec->unk00 == key)
+        {
+            a->unk1C = acc;
+            a->unk1E = 0;
+            a->unk1A = key;
+            a->unk2E = arg2;
+            sub_08068180(a, rec->unk08);
+            return;
+        }
+        off = rec->unk02;
+        rec = (struct Unk680CCRec *)((u8 *)rec + off);
+        acc = (u16)(acc + off);
+        i++;
+    }
 }
 
