@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T19:26:48Z",
+  "generated": "2026-09-20T19:37:22Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 333,
-    "semantic_done": 300,
-    "readable_asm": 333,
+    "pending": 330,
+    "semantic_done": 303,
+    "readable_asm": 330,
     "opcode": 0,
-    "battle_pending": 91,
-    "battle_semantic": 56,
+    "battle_pending": 90,
+    "battle_semantic": 57,
     "blocked": 34,
-    "wip": 147
+    "wip": 149
   },
   "pinned": [],
   "wip": [
@@ -327,8 +327,8 @@
     {
       "name": "sub_08042BB0",
       "addr": "0x08042BB0",
-      "kind": "asm",
-      "bytes": 56,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08042BB0.c",
       "notes": "src/wip/sub_08042BB0.md",
       "status": "53/56 same-size DIFF (94.6%); initial prologue and loop match, but key/value cursors are allocated opposite to retail at the final 4-byte load: retail keeps key cursor in r2 and value cursor in r1",
@@ -503,8 +503,8 @@
     {
       "name": "sub_08062C38",
       "addr": "0x08062C38",
-      "kind": "asm",
-      "bytes": 72,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08062C38.c",
       "notes": "src/wip/sub_08062C38.md",
       "status": "69/72 bytes (95.8%), same size; correct fade-out loop (BLDCNT=0xFF, decrement counter by arg0 each frame clamped at 0, write BLDY, vsync via sub_080674B4/_08073C40(bx-r0 trampoline)/sub_080474AC, loop until counter==0). Only remaining diff: the 'diff' subtraction result register (r1 here vs r0 in retail) -- tried inline expressions, explicit s32 casts, block-scoping; none moved it off r1",
@@ -965,8 +965,8 @@
     {
       "name": "sub_080425B8",
       "addr": "0x080425B8",
-      "kind": "asm",
-      "bytes": 120,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_080425B8.c",
       "notes": "src/wip/sub_080425B8.md",
       "status": "Two attempts: direct sibling seed 108/120 (same-size), then block-scoped r0 main pin worsened to 27/120 (116B). Baseline correctly captures all behavior; retail initial main/offset and mask register ordering need a selective source/permuter search.",
@@ -1632,6 +1632,28 @@
       "status": "Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1.",
       "next": "Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit).",
       "score": "33/120"
+    },
+    {
+      "name": "sub_08070354",
+      "addr": "0x08070354",
+      "kind": "asm",
+      "bytes": 168,
+      "seed": "src/wip/sub_08070354.c",
+      "notes": "src/wip/sub_08070354.md",
+      "status": "Semantic object/flag updater reconstructed. Final verified attempt reached 47/168 (172B); control flow and flag masks match conceptually, but agbcc schedules the arg2 truncation after arg3 truncation (retail copies arg2 to r5 first), and the resulting size differs by 4 bytes.",
+      "next": "Preserve the typed state/object model and force the prologue order: mask b, lsls arg2, lsrs r5, then mask arg3 before loading state->unk30 and state->unk10. Next tune the temporary value register so new-object mode emits object->unk08 mask/shift, 0x100 OR, then the common flags OR.",
+      "score": "47/168"
+    },
+    {
+      "name": "sub_08070468",
+      "addr": "0x08070468",
+      "kind": "asm",
+      "bytes": 114,
+      "seed": "src/wip/sub_08070468.c",
+      "notes": "src/wip/sub_08070468.md",
+      "status": "Two attempts: the semantic sorted-list reposition candidate reached 37/114 (112B); a typed-parameter/register experiment failed to compile because agbcc rejects asm-qualified parameters. Unlink, key update, predecessor search, and reinsertion logic are mapped.",
+      "next": "Keep the first compilable candidate. To close the 2-byte size/prologue gap, make the typed node assignment emit adds r4,r0 before key truncation while retaining key in r2. Then tune head/search_head lifetimes to preserve the retail r6/r5 aliases.",
+      "score": "37/114"
     }
   ],
   "recommended": [
@@ -3554,18 +3576,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08070468",
-      "addr": "0x08070468",
-      "kind": "asm",
-      "bytes": 114,
-      "score": 54,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08073910",
       "addr": "0x08073910",
       "kind": "asm",
@@ -3679,18 +3689,6 @@
       "kind": "asm",
       "bytes": 164,
       "score": 84,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08070354",
-      "addr": "0x08070354",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 80,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
