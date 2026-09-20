@@ -1207,6 +1207,30 @@ struct Unk6F1A0 /* 0x84 */
     /* 04 */ u8 filler_04[0x80];
 };
 
+/* Linked node, swap fields at +8/+c/+18/+24. sub_0807179C. */
+struct Unk7179CNode /* 0x34 */
+{
+    /* 00 */ struct Unk7179CNode *unk00;
+    /* 04 */ struct Unk7179CNode *unk04;
+    /* 08 */ u32 unk08;
+    /* 0c */ u32 unk0C;
+    /* 10 */ u8 filler_10[8];
+    /* 18 */ u16 unk18;
+    /* 1a */ u8 filler_1A[6];
+    /* 20 */ u8 filler_20[4];
+    /* 24 */ u32 unk24;
+    /* 28 */ u8 filler_28[0xC];
+};
+
+/* Node pair + count. sub_0807179C. */
+struct Unk7179C /* >= 0x20 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ struct Unk7179CNode *unk14;
+    /* 18 */ struct Unk7179CNode *unk18;
+    /* 1c */ s32 unk1C;
+};
+
 /* Linked Unk705DC list + flag. sub_080712CC. */
 struct Unk712CC /* >= 0x20 */
 {

@@ -572,3 +572,11 @@ notes = "src/wip/sub_0806D748.md"
 status = "7/46 bytes (15.2%), size mismatch (40 vs 46); correct algorithm (call the bx-r4 trampoline _08073C50 through arg0->unk94->unk08 handler, default result=1) with push-list now matching ({r4,r5,r6}) after register-pinning the handler and re-adding p/b local copies. Retail unconditionally zero-extends arg3 (u16) at function entry even though it's only used inside the conditional branch, and explicitly re-copies arg1 into r6 before the call; agbcc elides both since they're proven redundant"
 next = "try using arg3 in an early no-op expression (e.g. volatile-style dead read) to force the upfront extension, matching retail's apparently-unnecessary eager evaluation"
 score = "7/46"
+
+[[wip]]
+name = "sub_0807179C"
+seed = "src/wip/sub_0807179C.c"
+notes = "src/wip/sub_0807179C.md"
+status = "58/82 bytes (70.7%), size mismatch (80 vs 82); correct algorithm (swap unk08/unk0C/unk18/unk24 between two linked node chains via a stack temp + _08075A58 memcpy, walking a->unk04 and b->unk00) with instruction-level match nearly 1:1. Added local structs Unk7179C/Unk7179CNode (0x34 stride). Retail keeps a genuinely redundant extra loop-index register (r7, incremented but never read except in the loop's own exit compare) alongside the down-counter (r6); collapsing to a single while(count>i) loses that register, but adding a real 'i++' with an if+do-while structure caused agbcc to eliminate it as dead instead"
+next = "try using 'i' in a genuinely dead-but-not-optimizable way (e.g. volatile local, or comparing it against something else) to force agbcc to keep both counters live like retail"
+score = "58/82"
