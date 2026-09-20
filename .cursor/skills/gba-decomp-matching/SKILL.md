@@ -46,7 +46,7 @@ asm("" : "+r"(r0));
 *(u16 *)r0 = (u16)r1;
 ```
 
-Wins: `sub_08041858`, `sub_08069894`, `sub_08071B4C`.
+Wins: `sub_08041858`, `sub_08069894`, `sub_08071B4C`, `sub_0806A3A4`.
 
 Table address before index (empty `+r` barrier, same as `sub_0803DDD8`):
 
@@ -94,6 +94,12 @@ See `sub_08031294`: `register u8 r1 asm("r1");` + `*(u8 *)&a->unk00` when retail
 `if (a >= b) goto label` keeps `cmp; bge`. Nested if/else often inverts to `blt` and moves the pool. Put shared `return N` labels in retail fallthrough order. Win: `sub_08042390`.
 
 Loop that exits with `0` already in `r0`: `while ((r0 = p->unk00) != 0) { call(p->unk00, …); } return (s32)r0`. Plain `return 0` adds `movs r0,#0`. Win: `sub_08043B90`.
+
+Do **not** `register … asm("r7")`. agbcc will use `r7` and omit `push {r7}`. Leave the `r7` local unpinned. Win: `sub_08037430`.
+
+Keep a struct pointer in `r2` with `register T *r2 asm("r2"); r2 = a;`. Win: `sub_08031300`.
+
+Force an addend literal into `r3` before `adds r2, r4, r3`: `r3 = off; asm("" : "+r"(r3), "+r"(r4)); r2 = r4 + r3;`. Win: `sub_080523A4`.
 
 ## Permuter workflow
 

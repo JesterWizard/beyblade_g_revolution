@@ -123,6 +123,8 @@ r0 = stride;              /* or idx << 2 */
 
 Wins: `sub_08037318` (`ldr r1,=0x030002A0` then `movs r0,#0x2C`), `sub_08033978` (`ldr r1,=0x08078158` then `lsls r0,r6,#2`), `sub_08042B28` / `sub_08042B50` (`ldr r0,=table` then `lsls r1,r2,#2`; `r4 = r1 + r0`).
 
+Do **not** `register … asm("r7")`. agbcc will use `r7` and omit `push {r7}`. Leave the `r7` local unpinned. Win: `sub_08037430`.
+
 `-1` as `movs r1,#1; negs r1; mov r8,r1`: `r1 = 1; r1 = -r1; minusOne = r1` with `minusOne` pinned to `r8`. Win: `sub_08033978`.
 
 Add operand order is a real Thumb encoding: `r0 = ch + table` emits `adds r0, r1, r0`; `r0 = table + ch` emits `adds r0, r0, r1`. Win: `sub_08073988`.
@@ -139,7 +141,7 @@ asm("" : "+r"(r0));
 *(u16 *)r0 = (u16)r1;
 ```
 
-Wins: `sub_08041858`, `sub_08069894`, `sub_08071B4C` (`gUnk_030040DC` then `gUnk_0300410C`, 0x30 apart). Same family still parked: `sub_080473F8`, `sub_08052934`, `sub_08071F44`, `sub_08071E84`.
+Wins: `sub_08041858`, `sub_08069894`, `sub_08071B4C`, `sub_0806A3A4` (`0x03000B3C` then `0x03000B38`, 4 apart). Same family still parked: `sub_080473F8`, `sub_08052934`, `sub_08071F44`, `sub_08071E84`, `sub_0806A314`.
 
 `if (a >= b) goto label` emits `cmp; bge` as fallthrough-false. Nested `if/else` often inverts to `blt` and moves the literal pool. Place shared `return N` labels in retail order so the first path is `ble; b` (pool island + padding) rather than `bgt` plus an inlined return. Win: `sub_08042390`.
 

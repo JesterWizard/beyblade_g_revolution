@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T21:17:53Z",
+  "generated": "2026-09-20T21:37:38Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 311,
-    "semantic_done": 322,
-    "readable_asm": 311,
+    "pending": 307,
+    "semantic_done": 326,
+    "readable_asm": 307,
     "opcode": 0,
-    "battle_pending": 85,
-    "battle_semantic": 62,
-    "blocked": 34,
-    "wip": 164
+    "battle_pending": 84,
+    "battle_semantic": 63,
+    "blocked": 33,
+    "wip": 162
   },
   "pinned": [],
   "wip": [
@@ -169,17 +169,6 @@
       "status": "best 77.1% (37/48) same-size DIFF after r3/r4 hints; input-normalization order still differs",
       "next": "leave readable Thumb; revisit with a source shape that forces idx normalization before flags normalization",
       "score": "37/48"
-    },
-    {
-      "name": "sub_08031300",
-      "addr": "0x08031300",
-      "kind": "asm",
-      "bytes": 78,
-      "seed": "src/wip/sub_08031300.c",
-      "notes": "src/wip/sub_08031300.md",
-      "status": "83.3% (65/78) same-size DIFF; logic correct; decomp-permuter ran about 10,000 iterations and reached best score 1295 without zero",
-      "next": "leave readable Thumb; revisit with a new register-allocation technique or a verified compiler/source-shape insight",
-      "score": "65/78"
     },
     {
       "name": "sub_08033084",
@@ -708,17 +697,6 @@
       "status": "two attempts: 232/348 (344B) direct semantic draft; cached velocity locals dropped to 53/348 (336B), so direct seed is retained. Algorithm and all Unk35984 fields are mapped, but register/order and table scheduling differ",
       "next": "Start from 232/348 seed; try a source shape that loads both velocity words before squaring without introducing extra local lifetimes, then tune table/clamp scheduling",
       "score": "232/348"
-    },
-    {
-      "name": "sub_08037430",
-      "addr": "0x08037430",
-      "kind": "asm",
-      "bytes": 216,
-      "seed": "src/wip/sub_08037430.c",
-      "notes": "src/wip/sub_08037430.md",
-      "status": "two attempts: first 84/216 size-mismatch; second 187/216 same-size after preserving the count pointer. Remaining diff is register allocation in the +0x133 count load and ROM table setup; calls and cleanup match",
-      "next": "Use a targeted r0 pointer pin/permuter search for the count pointer and force the 0x08096ECC literal load order; preserve the allocator/call signatures",
-      "score": "187/216"
     },
     {
       "name": "sub_08038D68",
@@ -1443,19 +1421,8 @@
       "seed": "src/wip/sub_0806A314.c",
       "notes": "src/wip/sub_0806A314.md",
       "status": "Two semantic attempts: direct allocator/linked-list wrapper 38/144 (same size), then register-shaped pointer/marker rewrite 40/144 (140B). The allocator and node sentinel semantics are mapped; the remaining prologue issue is loading the 0x03003F40 literal after reading *0x03003F44, while the candidate loads it first, plus counter literal-pool and post-node register order.",
-      "next": "Introduce a current_value local assigned from *0x03003F44 before assigning the 0x03003F40 pool address to r2; branch on current_value, use it to zero 0x03003F48/4C, and preserve separate literals for both counters. Then tune payload r0/next_payload r1/marker r2 around the two sentinel stores.",
+      "next": "Clone the matched sub_0806A3A4 shape: current_value then r2=0x03003F40; IWRAM +r barrier between 0x03003F48 and 0x03003F4C; set r0=work+8, r1=*0x03000B40, r2=0x3400, r3=*current before the stack args",
       "score": "38/144 then 40/144"
-    },
-    {
-      "name": "sub_0806A3A4",
-      "addr": "0x0806A3A4",
-      "kind": "asm",
-      "bytes": 144,
-      "seed": "src/wip/sub_0806A3A4.c",
-      "notes": "src/wip/sub_0806A3A4.md",
-      "status": "Two semantic attempts after isolating the stale one-argument header declaration: direct clone 119/144 (140B), then ordered current_value/r2 pool load reached 123/144 (140B). State initialization and allocator call now match; remaining mismatch is the second counter zero store, where retail loads a separate 0x03000B38 literal but agbcc reuses the 0x03000B3C address with add/sub 4.",
-      "next": "Force distinct typed pointer literals for 0x03000B3C and 0x03000B38 (or use a small helper boundary that prevents adjacent-address folding), retaining current_value in r1 and pool address in r2. Then compare the post-node sentinel pointer arithmetic.",
-      "score": "119/144 then 123/144"
     },
     {
       "name": "sub_0806A434",
@@ -1819,6 +1786,17 @@
       "status": "Rotation/projection helper semantics reconstructed: table sine/cosine lookup, depth-scaled coordinate rotation, perspective correction, output writes, flag extraction, and sub_08070354 dispatch. Natural baseline is 19/196 bytes and size-mismatched at 208 bytes; a second fixed-register attempt reached 50/196 but aliased the source pointer with a pinned delta and was discarded.",
       "next": "Use the natural seed and introduce register constraints only after preserving the source pointer in ip. Target uses sine r8, dx r7, dy r5, dz r4, output x r6, output y r2, and flag r9; do not pin dx to r7 unless source is explicitly pinned to r12.",
       "score": "19/196"
+    },
+    {
+      "name": "sub_0802B994",
+      "addr": "0x0802B994",
+      "kind": "asm",
+      "bytes": 58,
+      "seed": "src/wip/sub_0802B994.c",
+      "notes": "src/wip/sub_0802B994.md",
+      "status": "dual-cursor ROM table is semantically right; agbcc still emits push {lr} (64B vs 58B bx lr leaf)",
+      "next": "stay Thumb; same extra-push-on-leaf class as sub_0802D8C4 / sub_08061BDC",
+      "score": "8/58"
     }
   ],
   "recommended": [
@@ -2497,13 +2475,6 @@
       "reason": "byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker",
       "kind": "asm",
       "bytes": 144
-    },
-    {
-      "name": "sub_080523A4",
-      "addr": "0x080523A4",
-      "reason": "calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->unk28C->unk0C = (a->unk2D5<<12)+0x2C00 \u2014 logic correct (same-size DIFF, ~15/112 bytes) across several pointer/base-register orderings; needs permuter",
-      "kind": "asm",
-      "bytes": 112
     },
     {
       "name": "sub_08053218",

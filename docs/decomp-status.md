@@ -8,18 +8,26 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **322/633 (50.9%)** |
-| **Decompiled C (bytes)** | **20,352/90,272 (22.5%)** |
+| **Decompiled C (functions)** | **326/633 (51.5%)** |
+| **Decompiled C (bytes)** | **20,902/90,272 (23.2%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 311/633 (49.1%) |
+| Readable Thumb | 307/633 (48.5%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 62/160 (38.8% fn, 16.3% bytes) |
+| Battle semantic C | 63/160 (39.4% fn, 16.9% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — semantic C four parked/blocked near-misses (+4, 322→326/633)
+- Matched `sub_08031300` (Unk312EC countdown). Pin `a` to `r2`; `n = n - 1` in `r3`; `ldsb` toggle of `unk00`/`unk01`.
+- Matched `sub_080523A4` (init six `Unk2F520` slots). `r3 = 0x2D5` plus `+r` barrier so `adds r2, r4, r3` precedes `ldsb`; reuse `r3` as `0x2C00`.
+- Matched `sub_08037430` (battle overlay blit). Do **not** `register asm("r7")` — that skips `push {r7}` while still using `r7`. Leave `first` unpinned. `if (count <= 3) goto` keeps `bls`; reload `*count_ptr` on that path; table `0x08096ECC` in `r1` before the index.
+- Matched `sub_0806A3A4` (arena node from `0x03000B30`). Same IWRAM barrier for `0x03000B3C`/`0x03000B38`; evaluate `*current` into `r3` after `r0`/`r1`/`r2` and before stack args. Same shape should unlock `sub_0806A314`.
+- `sub_0802B994` still blocked: dual-cursor ROM table is right, but any C loop adds `push {lr}` on a `bx lr` leaf (64 vs 58).
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C six parked near-misses (+6, 316→322/633)
 - Matched `sub_08042B28` / `sub_08042B50` (lazy ROM pointer tables). `r0 = table; asm("" : "+r"(r0)); r1 = idx << 2; r4 = r1 + r0` loads the base before the shift.

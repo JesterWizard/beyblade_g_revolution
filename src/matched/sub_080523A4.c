@@ -1,59 +1,40 @@
 #include "global.h"
 
 // @ 0x080523a4
-__attribute__((naked))
-void sub_080523A4(void)
+void sub_080523A4(struct Unk2F520 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "bl sub_08061BE8\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x00\n"
-        "bl sub_0805264C\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x01\n"
-        "bl sub_0805264C\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x02\n"
-        "bl sub_0805264C\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x03\n"
-        "bl sub_0805264C\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x04\n"
-        "bl sub_0805264C\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x05\n"
-        "bl sub_0805264C\n"
-        "movs r1, #0xA2\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r4, r1\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r3, _08052410 @ =0x000002D5\n"
-        "adds r2, r4, r3\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r2, r0]\n"
-        "lsls r0, r0, #0x0C\n"
-        "movs r3, #0xB0\n"
-        "lsls r3, r3, #0x06\n"
-        "adds r0, r0, r3\n"
-        "str r0, [r1, #0x0C]\n"
-        "movs r0, #0xA3\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r4, r4, r0\n"
-        "ldr r1, [r4, #0x00]\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r2, r0]\n"
-        "lsls r0, r0, #0x0C\n"
-        "adds r0, r0, r3\n"
-        "str r0, [r1, #0x0C]\n"
-        "pop {r4}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08052410: .4byte 0x000002D5\n"
-    );
+    register struct Unk2F520 *r4 asm("r4");
+    register struct Unk2F520Inner *r1 asm("r1");
+    register u32 r2 asm("r2");
+    register s32 r0 asm("r0");
+    register u32 r3 asm("r3");
+
+    r4 = a;
+    sub_08061BE8();
+    sub_0805264C(r4, 0);
+    sub_0805264C(r4, 1);
+    sub_0805264C(r4, 2);
+    sub_0805264C(r4, 3);
+    sub_0805264C(r4, 4);
+    sub_0805264C(r4, 5);
+
+    r1 = r4->unk288;
+    r3 = 0x2D5;
+    asm("" : "+r"(r3), "+r"(r4), "+r"(r1));
+    r2 = (u32)r4 + r3;
+    r0 = 0;
+    r0 = *(s8 *)(r2 + r0);
+    r0 <<= 12;
+    r3 = 0xB0;
+    r3 <<= 6;
+    r0 += r3;
+    r1->unk0C = r0;
+
+    r1 = r4->unk28C;
+    r0 = 0;
+    r0 = *(s8 *)(r2 + r0);
+    r0 <<= 12;
+    r0 += r3;
+    r1->unk0C = r0;
 }
 
