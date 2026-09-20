@@ -1,51 +1,33 @@
 #include "global.h"
 
 // @ 0x0804745c
-__attribute__((naked))
+#include "global.h"
+
+// @ 0x0804745c
 void sub_0804745C(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "ldr r1, _080474A4 @ =0x03000630\n"
-        "ldr r0, [r1, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08047488\n"
-        "movs r5, #0x00\n"
-        "adds r6, r1, #0x0\n"
-        "_0804746A:\n"
-        "ldr r0, [r6, #0x00]\n"
-        "lsls r4, r5, #0x02\n"
-        "adds r0, r0, r4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08047482\n"
-        "bl sub_0806FE84\n"
-        "ldr r0, [r6, #0x00]\n"
-        "adds r0, r0, r4\n"
-        "movs r1, #0x00\n"
-        "str r1, [r0, #0x00]\n"
-        "_08047482:\n"
-        "adds r5, #0x01\n"
-        "cmp r5, #0x0F\n"
-        "ble _0804746A\n"
-        "_08047488:\n"
-        "ldr r4, _080474A8 @ =0x03000638\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08047498\n"
-        "bl sub_0806A434\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x00]\n"
-        "_08047498:\n"
-        "ldr r1, _080474A4 @ =0x03000630\n"
-        "movs r0, #0x00\n"
-        "str r0, [r1, #0x00]\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_080474A4: .4byte 0x03000630\n"
-        "_080474A8: .4byte 0x03000638\n"
-    );
+    s32 i;
+    u32 base;
+    s32 off;
+
+    if (*(void **)gUnk_03000630 != 0)
+    {
+        for (i = 0; i <= 0xF; i++)
+        {
+            base = *(u32 *)gUnk_03000630;
+            off = i * 4;
+            if (*(void **)(base + off) != 0)
+            {
+                sub_0806FE84(*(void **)(base + off));
+                *(void **)(*(u32 *)gUnk_03000630 + off) = 0;
+            }
+        }
+    }
+    if (*(void **)gUnk_03000638 != 0)
+    {
+        sub_0806A434(*(void **)gUnk_03000638);
+        *(void **)gUnk_03000638 = 0;
+    }
+    *(void **)gUnk_03000630 = 0;
 }
 
