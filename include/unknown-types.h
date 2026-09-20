@@ -65,7 +65,12 @@ struct Unk68574 /* >= 0xdc */
     /* 04 */ u32 unk04;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;
-    /* 10 */ u8 filler_10[0x64];
+    /* 10 */ u8 filler_10[0x2A];
+    /* 3a */ u8 unk3A; /* sub_08035258 */
+    /* 3b */ u8 filler_3B[0x17];
+    /* 52 */ s16 unk52; /* sub_080353A0 */
+    /* 54 */ u8 filler_54[0x1C];
+    /* 70 */ void *unk70; /* sub_0803531C */
     /* 74 */ s32 unk74;
     /* 78 */ u32 unk78;
     /* 7c */ void *unk7C;
@@ -86,6 +91,24 @@ struct Unk68574 /* >= 0xdc */
     /* bc */ u8 filler_BC[0x18];
     /* d4 */ void *unkD4; /* sub_08041DB4 */
     /* d8 */ void *unkD8; /* sub_08041DB4 */
+};
+
+/* Three animation blocks and dispatch state. sub_08035258. */
+struct Unk35258 /* >= 0x2c6 */
+{
+    /* 000 */ struct Unk346C0Inner *unk00;
+    /* 004 */ u8 filler_04[0x18];
+    /* 01c */ struct Unk68574 unk1C;
+    /* 0f8 */ struct Unk68574 unkF8;
+    /* 1d4 */ struct Unk68574 unk1D4;
+    /* 2b0 */ u32 unk2B0;
+    /* 2b4 */ u32 unk2B4;
+    /* 2b8 */ u8 filler_2B8[0xD];
+    /* 2c5 */ u8 unk2C5;
+    /* 2c6 */ u8 filler_2C6[0x1E];
+    /* 2e4 */ s32 unk2E4; /* sub_080353A0 */
+    /* 2e8 */ s32 unk2E8; /* sub_080353A0 */
+    /* 2ec */ s32 unk2EC; /* sub_080353A0 */
 };
 
 /* Byte at +0x19. sub_080705CC, sub_080705D4. */
@@ -854,7 +877,7 @@ struct Unk361A8 /* >= 0x1e */
 };
 
 /* Pointer + fields at +0x30..+0x4C. sub_080346C0. */
-struct Unk346C0Inner /* >= 0x50 */
+struct Unk346C0Inner /* >= 0x54 */
 {
     /* 00 */ struct Unk705DC *unk00;
     /* 04 */ u8 filler_04[8];
@@ -875,6 +898,8 @@ struct Unk346C0Inner /* >= 0x50 */
     /* 44 */ u8 filler_44[4];
     /* 48 */ u32 unk48;
     /* 4c */ u32 unk4C;
+    /* 50 */ u8 filler_50[2];
+    /* 52 */ s16 unk52; /* sub_080353A0 */
 };
 
 struct Unk346C0 /* >= 0x2f8 */
@@ -883,7 +908,11 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 004 */ struct Unk346C0Inner *unk04;
     /* 008 */ struct Unk35878 unk08;
     /* 018 */ u8 unk18; /* sub_08034568 */
-    /* 019 */ u8 filler_19[0x297];
+    /* 019 */ u8 filler_19[3];
+    /* 01c */ u32 unk1C; /* sub_080348E8 */
+    /* 020 */ u8 filler_20[0x6C];
+    /* 08c */ u32 unk08C; /* sub_080348E8 */
+    /* 090 */ u8 filler_90[0x220];
     /* 2b0 */ u32 unk2B0; /* sub_08034568 */
     /* 2b4 */ u32 unk2B4; /* sub_08034568 */
     /* 2b8 */ u32 unk2B8;

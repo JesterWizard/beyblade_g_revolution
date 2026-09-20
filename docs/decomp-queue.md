@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T16:57:03Z_
+_Updated: 2026-09-20T17:03:46Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T16:57:03Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 96 (51 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 63 |
+| WIP (resume these first) | 67 |
 
 Ranking: **battle** · showing top **40**
 
@@ -89,6 +89,10 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080302E0` | 168 | 63/168 | `src/wip/sub_080302E0.c` | two semantic attempts: 66/168 size_mismatch (148B), then 63/168 size_mismatch (176B); logic and field layouts are identified, but register/literal-pool layout still differs | Use the first candidate's cached battle/target locals as the base for a decomp-permuter or targeted register-layout search; do not hand-loop match retries |
 | `sub_08031C98` | 150 | 15/150 | `src/wip/sub_08031C98.c` | two semantic attempts: 43/150 size_mismatch (148B), then 15/150 size_mismatch (136B); control flow and record/counter roles are clear, but retail keeps r4-r7/state pointers and performs a byte-offset word read at IWRAM +0x18 that the current semantic shape does not reproduce | Use a targeted register-layout/permuter search; model the byte-offset word window without leaving raw offset casts in matched semantic C |
 | `sub_08032908` | 384 | 235/384 | `src/wip/sub_08032908.c` | two semantic attempts: 151/384 size_mismatch (388B), then 235/384 size_mismatch (388B); cleanup order and all BattleWork/MainWork fields are reconstructed, but retail keeps the battle global in a different callee-saved register/pointer lifetime | Try a local BattleWork pointer-location variable or targeted register-layout/permuter search; preserve the current field types and cleanup sequence |
+| `sub_080348E8` | 384 | 208/384 | `src/wip/sub_080348E8.c` | two semantic attempts: 208/384 same-size first draft; second fixed-register attempt 222/384 but grew to 392B; control flow and field roles are reconstructed, remaining difference is register/pointer allocation in the state/cleanup tail | Start from the 208/384 seed; try source-shape or permuter work for state pointer r2 and final flag/pointer r7/r6 allocation without fixed 8-bit register pins |
+| `sub_08034A68` | 112 | 111/112 | `src/wip/sub_08034A68.c` | two attempts: 32/112 direct field draft, then 111/112 same-size with status pinned to r1; only the final bne branch displacement differs (retail +0x07 vs candidate +0x03) | Use the 111/112 seed and adjust only the final branch layout (explicit label/goto or permuter); preserve status=r1 and direct struct fields |
+| `sub_08035258` | 196 | 33/196 | `src/wip/sub_08035258.c` | two semantic attempts: 21/196 bytes (192B) with a direct chain, then 33/196 bytes (192B) with explicit nested type>1/type==0 branch ordering; register pinning worsened the prologue | Use the nested seed and force selector r5 without a callee-saved register pin, or use a source shape that retains retail's r5 selector/r6 flag pointer while preserving the 196-byte layout |
+| `sub_0803531C` | 132 | 119/132 | `src/wip/sub_0803531C.c` | two attempts: 114/132 due a temporary Unk68574 padding error, then 119/132 same-size after correcting nested block offsets; remaining diff is retail loads mask 4 before flag byte while candidate loads flag before mask | Swap/source-shape the second mask test or use a tiny permuter search; retain struct Unk35258 nested blocks and direct unk70 checks |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -192,6 +196,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (261 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (257 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

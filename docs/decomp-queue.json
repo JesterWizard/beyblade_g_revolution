@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T16:57:03Z",
+  "generated": "2026-09-20T17:03:46Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 96,
     "battle_semantic": 51,
     "blocked": 34,
-    "wip": 63
+    "wip": 67
   },
   "pinned": [],
   "wip": [
@@ -708,6 +708,50 @@
       "status": "two semantic attempts: 151/384 size_mismatch (388B), then 235/384 size_mismatch (388B); cleanup order and all BattleWork/MainWork fields are reconstructed, but retail keeps the battle global in a different callee-saved register/pointer lifetime",
       "next": "Try a local BattleWork pointer-location variable or targeted register-layout/permuter search; preserve the current field types and cleanup sequence",
       "score": "235/384"
+    },
+    {
+      "name": "sub_080348E8",
+      "addr": "0x080348E8",
+      "kind": "asm",
+      "bytes": 384,
+      "seed": "src/wip/sub_080348E8.c",
+      "notes": "src/wip/sub_080348E8.md",
+      "status": "two semantic attempts: 208/384 same-size first draft; second fixed-register attempt 222/384 but grew to 392B; control flow and field roles are reconstructed, remaining difference is register/pointer allocation in the state/cleanup tail",
+      "next": "Start from the 208/384 seed; try source-shape or permuter work for state pointer r2 and final flag/pointer r7/r6 allocation without fixed 8-bit register pins",
+      "score": "208/384"
+    },
+    {
+      "name": "sub_08034A68",
+      "addr": "0x08034A68",
+      "kind": "asm",
+      "bytes": 112,
+      "seed": "src/wip/sub_08034A68.c",
+      "notes": "src/wip/sub_08034A68.md",
+      "status": "two attempts: 32/112 direct field draft, then 111/112 same-size with status pinned to r1; only the final bne branch displacement differs (retail +0x07 vs candidate +0x03)",
+      "next": "Use the 111/112 seed and adjust only the final branch layout (explicit label/goto or permuter); preserve status=r1 and direct struct fields",
+      "score": "111/112"
+    },
+    {
+      "name": "sub_08035258",
+      "addr": "0x08035258",
+      "kind": "asm",
+      "bytes": 196,
+      "seed": "src/wip/sub_08035258.c",
+      "notes": "src/wip/sub_08035258.md",
+      "status": "two semantic attempts: 21/196 bytes (192B) with a direct chain, then 33/196 bytes (192B) with explicit nested type>1/type==0 branch ordering; register pinning worsened the prologue",
+      "next": "Use the nested seed and force selector r5 without a callee-saved register pin, or use a source shape that retains retail's r5 selector/r6 flag pointer while preserving the 196-byte layout",
+      "score": "33/196"
+    },
+    {
+      "name": "sub_0803531C",
+      "addr": "0x0803531C",
+      "kind": "asm",
+      "bytes": 132,
+      "seed": "src/wip/sub_0803531C.c",
+      "notes": "src/wip/sub_0803531C.md",
+      "status": "two attempts: 114/132 due a temporary Unk68574 padding error, then 119/132 same-size after correcting nested block offsets; remaining diff is retail loads mask 4 before flag byte while candidate loads flag before mask",
+      "next": "Swap/source-shape the second mask test or use a tiny permuter search; retain struct Unk35258 nested blocks and direct unk70 checks",
+      "score": "119/132"
     }
   ],
   "recommended": [
@@ -3256,18 +3300,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08034A68",
-      "addr": "0x08034A68",
-      "kind": "asm",
-      "bytes": 112,
-      "score": 61,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803E934",
       "addr": "0x0803E934",
       "kind": "asm",
@@ -3465,18 +3497,6 @@
       "kind": "asm",
       "bytes": 132,
       "score": 72,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803531C",
-      "addr": "0x0803531C",
-      "kind": "asm",
-      "bytes": 132,
-      "score": 75,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
@@ -4048,18 +4068,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08035258",
-      "addr": "0x08035258",
-      "kind": "asm",
-      "bytes": 196,
-      "score": 100,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08054494",
       "addr": "0x08054494",
       "kind": "asm",
@@ -4581,18 +4589,6 @@
       "kind": "asm",
       "bytes": 372,
       "score": 191,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080348E8",
-      "addr": "0x080348E8",
-      "kind": "asm",
-      "bytes": 384,
-      "score": 214,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
