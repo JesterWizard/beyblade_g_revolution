@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T19:20:38Z",
+  "generated": "2026-09-20T19:26:41Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 334,
-    "semantic_done": 299,
-    "readable_asm": 334,
+    "pending": 333,
+    "semantic_done": 300,
+    "readable_asm": 333,
     "opcode": 0,
     "battle_pending": 91,
     "battle_semantic": 56,
     "blocked": 34,
-    "wip": 144
+    "wip": 147
   },
   "pinned": [],
   "wip": [
@@ -349,8 +349,8 @@
     {
       "name": "sub_08042C3C",
       "addr": "0x08042C3C",
-      "kind": "asm",
-      "bytes": 56,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08042C3C.c",
       "notes": "src/wip/sub_08042C3C.md",
       "status": "54/56 same-size DIFF (96.4%); exact prologue, sentinel handling, cursor registers, and return are matched; only the two cursor increments are reversed (retail value cursor r1 then key cursor r2)",
@@ -1599,6 +1599,39 @@
       "status": "Two semantic attempts: initial wrapper 15/136 (140B), then a six-word output workspace and normal extra parameter produced the exact retail prologue/stack frame (17/136, 140B). Remaining mismatch begins only at the flag test: retail forms state+0x8D in r1 and loads the byte into r1, while the candidate uses r0 for the address.",
       "next": "Pin a u8 pointer flag_ptr to r1 and assign it with &state->unk8D before testing; retain source r5, state r4, input r6, extra r7, and output[6] to preserve f0b5/add sp -0x18.",
       "score": "15/136 then 17/136"
+    },
+    {
+      "name": "sub_0806EE48",
+      "addr": "0x0806EE48",
+      "kind": "asm",
+      "bytes": 124,
+      "seed": "src/wip/sub_0806EE48.c",
+      "notes": "src/wip/sub_0806EE48.md",
+      "status": "Two semantic attempts: direct dispatcher 56/124 (132B), then flag_ptr pinned to r2 reached 120/124 same size. The full loop and handler/callback paths match; only the bit-clear branch differs because retail reuses the already-loaded flag byte in r1, while the candidate reloads it from the r2 pointer before masking.",
+      "next": "Keep the loaded flag in a u8 local for both the test and clear path: flags = *flag_ptr; if ((flags & 1) == 0) ... else *flag_ptr = flags & -2. Preserve flag_ptr r2 and handler r3; avoid a second dereference in the else branch.",
+      "score": "56/124 then 120/124"
+    },
+    {
+      "name": "sub_0806FDD0",
+      "addr": "0x0806FDD0",
+      "kind": "asm",
+      "bytes": 128,
+      "seed": "src/wip/sub_0806FDD0.c",
+      "notes": "src/wip/sub_0806FDD0.md",
+      "status": "Two semantic attempts: sorted-list insertion model 8/128 (120B), then corrected u16 key ABI and literal pointer lifetimes reached 21/128 (120B). The body is structurally exact, but retail saves r7 (f0b5) while agbcc emits 70b5 despite keeping the free-list address in r7 across calls; this shifts literal-pool offsets and leaves the match short.",
+      "next": "Force a normal callee-saved local live across sub_0806FDB4/sub_0806F8C4 so agbcc emits the r7 save/restore, while retaining key as u16, free-list address r7, head address r5, and node r4. Then verify the sorted predecessor/successor insertion and counter decrement.",
+      "score": "8/128 then 21/128"
+    },
+    {
+      "name": "sub_0806FE84",
+      "addr": "0x0806FE84",
+      "kind": "asm",
+      "bytes": 120,
+      "seed": "src/wip/sub_0806FE84.c",
+      "notes": "src/wip/sub_0806FE84.md",
+      "status": "Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1.",
+      "next": "Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit).",
+      "score": "33/120"
     }
   ],
   "recommended": [
@@ -3545,18 +3578,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0806FE84",
-      "addr": "0x0806FE84",
-      "kind": "asm",
-      "bytes": 120,
-      "score": 59,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0806B064",
       "addr": "0x0806B064",
       "kind": "asm",
@@ -3565,30 +3586,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806EE48",
-      "addr": "0x0806EE48",
-      "kind": "asm",
-      "bytes": 124,
-      "score": 68,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806FDD0",
-      "addr": "0x0806FDD0",
-      "kind": "asm",
-      "bytes": 128,
-      "score": 57,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },

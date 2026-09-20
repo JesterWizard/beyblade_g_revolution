@@ -15,12 +15,12 @@ void sub_0804109C(void *a_arg, void *b_arg)
     a->unk258 = (void *)b->unk0C;
     a->unk240 = (void *)b->unk10;
     a->unk244 = (void *)b->unk14;
-    a->unk260 = (void *)b->unk18;
-    a->unk264 = (void *)b->unk1C;
-    a->unk268 = (void *)b->unk20;
-    a->unk26C = (void *)b->unk24;
-    a->unk270 = (void *)b->unk28;
-    a->unk274 = (void *)b->unk2C;
+    a->unk25C = (void *)b->unk18;
+    a->unk260 = (void *)b->unk1C;
+    a->unk264 = (void *)b->unk20;
+    a->unk268 = (void *)b->unk24;
+    a->unk26C = (void *)b->unk28;
+    a->unk270 = (void *)b->unk2C;
     a->unk2D9 = b->unk4E;
 
     if (b->unk48 != 0)

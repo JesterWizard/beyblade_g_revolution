@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T19:20:38Z_
+_Updated: 2026-09-20T19:26:41Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 299 |
-| Still need semantic C | **334** |
-| Readable Thumb remaining | 334 |
+| Semantic C done | 300 |
+| Still need semantic C | **333** |
+| Readable Thumb remaining | 333 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 91 (56 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 144 |
+| WIP (resume these first) | 147 |
 
 Ranking: **battle** · showing top **40**
 
@@ -56,7 +56,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08042B78` | 56 | 45/56 | `src/wip/sub_08042B78.c` | 45/56 same-size DIFF after r1/r2/r3/r4 shaping; loop and sentinel behavior now match, but retail loads the ROM table into r2 before materializing -1 in r1, while agbcc schedules -1 first | force the base assignment to be live before the minus-one assignment, then preserve the r4 copy and r1 table-cursor reuse |
 | `sub_08042BB0` | 56 | 53/56 | `src/wip/sub_08042BB0.c` | 53/56 same-size DIFF (94.6%); initial prologue and loop match, but key/value cursors are allocated opposite to retail at the final 4-byte load: retail keeps key cursor in r2 and value cursor in r1 | pin the key cursor/base to r2 and the value cursor to r1 after the sentinel check; return valueEntry[1] and test the sentinel through valueEntry |
 | `sub_08042BE8` | 82 | 37/82 | `src/wip/sub_08042BE8.c` | best 37/82 size-mismatch; explicit r4/r5/r6/r7/r3/r2 shaping reproduces the loop body, but agbcc emits push r4-r6 while retail saves r7 as well and retains a longer branch layout | force r7 as an ordinary live callee-saved local rather than only a fixed register pointer; then preserve the current byte-offset table cursors |
-| `sub_08042C3C` | 56 | 54/56 | `src/wip/sub_08042C3C.c` | 54/56 same-size DIFF (96.4%); exact prologue, sentinel handling, cursor registers, and return are matched; only the two cursor increments are reversed (retail value cursor r1 then key cursor r2) | swap the source order of  and ; this is a two-byte instruction-order near-match |
+| `sub_08042C3C` | 0 | 54/56 | `src/wip/sub_08042C3C.c` | 54/56 same-size DIFF (96.4%); exact prologue, sentinel handling, cursor registers, and return are matched; only the two cursor increments are reversed (retail value cursor r1 then key cursor r2) | swap the source order of  and ; this is a two-byte instruction-order near-match |
 | `sub_08042F4C` | 80 | 33/80 | `src/wip/sub_08042F4C.c` | 33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization | verify whether sub_08042E78's prototype should accept s32 for this caller (without changing its own matching definition), then retry the same source shape |
 | `sub_08043B90` | 76 | 67/76 | `src/wip/sub_08043B90.c` | 67/76 same-size DIFF; sibling-shaped semantic C matches the loop and bytes, but agbcc keeps a two-byte mov/branch placement difference around the shared return path after the ROM literal pool | use an explicit label/goto layout that preserves r0 from the terminating unk00 load and aligns the return path with the literal-pool gap |
 | `sub_080473F8` | 100 | 50/100 | `src/wip/sub_080473F8.c` | 50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits | try forcing literal reload: maybe split into two functions temporarily, or check if retail was compiled with different codegen version/flags for this TU; alternatively try asm-volatile-free trick of loading address via array indexing gUnk_0300063C-style neighbor to shift pool layout |
@@ -170,6 +170,9 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0806A434` | 164 | 31/164 then 29/164 | `src/wip/sub_0806A434.c` | Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped. | Avoid keeping key live across control-flow/calls: use state->unk00 directly for the initial zero check and reload it into r1 immediately before each pool/counter comparison. Keep state r6, previous r4, next r5 so the prologue remains 70b5. |
 | `sub_0806BC0C` | 116 | 46/116 then 43/116 | `src/wip/sub_0806BC0C.c` | Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit. | Compile the final revision with current/count pinned to r4 and limit pinned to r6. Preserve the source count halfword load, cap callback, and fixed-point loop; verify the post-loop +0x114/+0x10/+0x118 stores. |
 | `sub_0806C704` | 136 | 15/136 then 17/136 | `src/wip/sub_0806C704.c` | Two semantic attempts: initial wrapper 15/136 (140B), then a six-word output workspace and normal extra parameter produced the exact retail prologue/stack frame (17/136, 140B). Remaining mismatch begins only at the flag test: retail forms state+0x8D in r1 and loads the byte into r1, while the candidate uses r0 for the address. | Pin a u8 pointer flag_ptr to r1 and assign it with &state->unk8D before testing; retain source r5, state r4, input r6, extra r7, and output[6] to preserve f0b5/add sp -0x18. |
+| `sub_0806EE48` | 124 | 56/124 then 120/124 | `src/wip/sub_0806EE48.c` | Two semantic attempts: direct dispatcher 56/124 (132B), then flag_ptr pinned to r2 reached 120/124 same size. The full loop and handler/callback paths match; only the bit-clear branch differs because retail reuses the already-loaded flag byte in r1, while the candidate reloads it from the r2 pointer before masking. | Keep the loaded flag in a u8 local for both the test and clear path: flags = *flag_ptr; if ((flags & 1) == 0) ... else *flag_ptr = flags & -2. Preserve flag_ptr r2 and handler r3; avoid a second dereference in the else branch. |
+| `sub_0806FDD0` | 128 | 8/128 then 21/128 | `src/wip/sub_0806FDD0.c` | Two semantic attempts: sorted-list insertion model 8/128 (120B), then corrected u16 key ABI and literal pointer lifetimes reached 21/128 (120B). The body is structurally exact, but retail saves r7 (f0b5) while agbcc emits 70b5 despite keeping the free-list address in r7 across calls; this shifts literal-pool offsets and leaves the match short. | Force a normal callee-saved local live across sub_0806FDB4/sub_0806F8C4 so agbcc emits the r7 save/restore, while retaining key as u16, free-list address r7, head address r5, and node r4. Then verify the sorted predecessor/successor insertion and counter decrement. |
+| `sub_0806FE84` | 120 | 33/120 | `src/wip/sub_0806FE84.c` | Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1. | Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit). |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -273,6 +276,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (164 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (161 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -1359,6 +1359,7 @@ struct Unk68E54 /* >= 0x65 */
     /* 58 */ s32 unk58;
     /* 5c */ u8 filler_5C[8];
     /* 64 */ u16 unk64;
+    /* 66 */ u8 filler_66[0x22];
 };
 
 struct Unk691E4 /* >= 0x61 */
@@ -1441,6 +1442,43 @@ struct Unk6C704 /* >= 0xa0 */
     /* 9a */ s16 unk9A;
     /* 9c */ s16 unk9C;
     /* 9e */ s16 unk9E;
+};
+
+struct Unk6EE48Entry /* 0x18 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ u8 filler_04[0x14];
+};
+
+struct Unk6EE48Table /* >= 0x74 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ struct Unk6EE48Entry entries[4];
+};
+
+struct Unk6EE48 /* >= 0x355 */
+{
+    /* 000 */ struct Unk68E54 motion[4];
+    /* 220 */ struct Unk6EE48Table *unk220;
+    /* 224 */ void *unk224;
+    /* 228 */ u8 filler_228[0x11C];
+    /* 344 */ void *unk344;
+    /* 348 */ u8 filler_348[0x0C];
+    /* 354 */ u8 unk354;
+};
+
+struct Unk6FE84 /* >= 0x34 */
+{
+    /* 00 */ struct Unk6FE84 *unk00;
+    /* 04 */ struct Unk6FE84 *unk04;
+    /* 08 */ u8 filler_08[0x0E];
+    /* 16 */ u16 unk16;
+    /* 18 */ u8 filler_18[8];
+    /* 20 */ u16 unk20;
+    /* 22 */ u8 filler_22[2];
+    /* 24 */ s32 unk24;
+    /* 28 */ u8 filler_28[8];
+    /* 30 */ void *unk30;
 };
 
 /* Halfword delta @ +0x1C, words @ +0x14/+0x18. sub_080361A8. */
@@ -1714,7 +1752,8 @@ struct Unk447CC /* >= 0x1c */
 
 struct Unk1690 /* >= 0x78 */
 {
-    /* 00 */ u8 filler_00[0x74];
+    /* 00 */ u32 unk00;
+    /* 04 */ u8 filler_04[0x70];
     /* 74 */ u8 unk74;
 };
 
@@ -1780,7 +1819,7 @@ struct UnkDEC8 /* >= 0x0c */
 /* Linked list, halfword at +0x20. sub_0806FDB4. */
 struct Unk6FDB4 /* >= 0x22 */
 {
-    /* 00 */ u8 filler_00[4];
+    /* 00 */ struct Unk6FDB4 *unk00;
     /* 04 */ struct Unk6FDB4 *unk04;
     /* 08 */ u8 filler_08[0x18];
     /* 20 */ u16 unk20;

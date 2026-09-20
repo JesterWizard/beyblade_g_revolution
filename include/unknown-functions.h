@@ -102,6 +102,9 @@ void sub_08068118(struct Unk68118 *a);
 void sub_08068A08(void *a, u8 b, void *c, u16 d, u16 e);
 void sub_08069270(void *a, u32 b, u32 c, u32 d, u32 e, u32 f, u32 g);
 void sub_0806960C(struct Unk68E54 *a);
+void sub_08068E54(struct Unk68E54 *a);
+void sub_0806EEC8(void *a);
+void sub_0806FBF8(s32 a, s32 b);
 void *sub_0806A4D8(
     void *a,
     void *b,
@@ -109,7 +112,7 @@ void *sub_0806A4D8(
     void *d,
     void *e,
     void *f);
-void sub_08067A9C(void *a, void *b);
+void sub_08067A9C(void *a, ...);
 void sub_08035878(struct Unk35878 *a, u32 v1, u32 v2, u32 v3);
 void sub_080358CC(struct Unk35878 *a);
 s32 sub_080674A0(s32 a, s32 b);
@@ -297,7 +300,7 @@ void *sub_08042B28(u32 i);
 void *sub_08042B50(u32 i);
 void sub_08038580(void *a, u32 b);
 void sub_08067B98(void *a, ...);
-void *sub_0806FDD0(u32 a);
+void *sub_0806FDD0(u16 a);
 void sub_0806FF58(void *a, void *b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h);
 void *sub_0807309C(u32 size);
 void sub_0804AAF0(void *a);
