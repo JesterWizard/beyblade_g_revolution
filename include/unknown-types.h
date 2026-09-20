@@ -57,7 +57,7 @@ struct Unk346A8 /* >= 0x2f4 */
 };
 
 /* Packed u16s at +0x9a..+0xae. sub_08068574, sub_08068584, sub_08068558. */
-struct Unk68574 /* >= 0xb4 */
+struct Unk68574 /* >= 0xdc */
 {
     /* 00 */ u8 filler_00[4];
     /* 04 */ u32 unk04;
@@ -81,6 +81,9 @@ struct Unk68574 /* >= 0xb4 */
     /* b0 */ void *unkB0;
     /* b4 */ u8 filler_B4[4];
     /* b8 */ void *unkB8;
+    /* bc */ u8 filler_BC[0x18];
+    /* d4 */ void *unkD4; /* sub_08041DB4 */
+    /* d8 */ void *unkD8; /* sub_08041DB4 */
 };
 
 /* Byte at +0x19. sub_080705CC, sub_080705D4. */

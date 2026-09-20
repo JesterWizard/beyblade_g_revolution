@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T09:34:42Z_
+_Updated: 2026-09-20T09:38:19Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 266 |
-| Still need semantic C | **367** |
-| Readable Thumb remaining | 367 |
+| Semantic C done | 267 |
+| Still need semantic C | **366** |
+| Readable Thumb remaining | 366 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 102 (44 already semantic) |
 | Blocked (documented) | 35 |
-| WIP (resume these first) | 20 |
+| WIP (resume these first) | 22 |
 
 Ranking: **battle** · showing top **40**
 
@@ -47,6 +47,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08041858` | 52 | 47/52 | `src/wip/sub_08041858.c` | 90% DIFF size mismatch (48 vs 52); agbcc folds gUnk_03000504 as gUnk_03000534-0x30 (subs r0,#0x30) instead of separate pc-relative ldr like retail; retail interleaves load-then-store for p1 before loading p2 | try forcing p2 load via a function call boundary or different intermediate type (u8* then cast) to break constant folding; or inline asm for just the final two stores |
 | `sub_08043944` | 48 | 34/48 | `src/wip/sub_08043944.c` | best 70.8% (34/48) same-size DIFF; retail keeps idx in r3 and flags in r4 with a single push{r4,lr}, moves flags->r0 before ldrb into r3, orrs r0,r3; my C either produces push{r4,r5,lr} (idx/flags both spilled) or reorders orr operands wrong | try passing idx/flags packed differently, or write as register-hinted asm() for just the two locals; or try u8 val=(u8)(flags|p->unk08[idx]) with idx read via local copy first |
 | `sub_080726E0` | 52 | 50/52 | `src/wip/sub_080726E0.c` | 96.2% (50/52) same-size DIFF; retail clobbers r4 (struct ptr, dead after last field read) to hold a->unk04 before shifting into r1, my C keeps it in a fresh register (r1 directly) | try assigning a = (void*)a->unk04 style reuse, or pass idx*size via a helper var computed via pointer arithmetic that forces reuse of the a-register; close, revisit with register hint (register u32 r4 asm) |
+| `sub_08044F64` | 74 | 69/74 | `src/wip/sub_08044F64.c` | 93.2% (69/74) same-size DIFF; retail computes idx*3 as muls r0,r1 (result stays in r0/param reg) then adds r5,r0,#0 (copy to loop var); my C always emits adds r5,r0,#0 then muls r5,r1 regardless of statement order tried | try idx as the loop variable directly (no separate i), or a macro/inline asm just for the multiply; logic and struct usage confirmed correct |
+| `sub_08031300` | 78 | 65/78 | `src/wip/sub_08031300.c` | 83.3% (65/78) same-size DIFF, logic 100% correct; retail keeps struct ptr 'a' in r2, agbcc always allocates r3 regardless of local var declaration order/reuse tried — pure register-choice artifact, everything else byte-identical | try permuter (decomp-permuter) for this one — classic reg-alloc search target; or reorder params/add dummy first param trick |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -150,6 +152,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (319 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (316 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

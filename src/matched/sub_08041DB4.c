@@ -1,60 +1,26 @@
 #include "global.h"
 
 // @ 0x08041db4
-__attribute__((naked))
-void sub_08041DB4(void)
+void *sub_08041DB4(void *a, void *b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "movs r1, #0x00\n"
-        "ldr r0, _08041DF4 @ =0x03000504\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "cmp r0, #0x00\n"
-        "ble _08041E0A\n"
-        "cmp r1, r0\n"
-        "bge _08041E0A\n"
-        "ldr r6, _08041DF8 @ =0x03000480\n"
-        "adds r3, r0, #0x0\n"
-        "_08041DCE:\n"
-        "lsls r1, r1, #0x10\n"
-        "asrs r0, r1, #0x0E\n"
-        "adds r0, r0, r6\n"
-        "ldr r2, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08041DFC\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xD4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r5\n"
-        "bne _08041DFC\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xD8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r4\n"
-        "bne _08041DFC\n"
-        "adds r0, r2, #0x0\n"
-        "b _08041E0C\n"
-        ".byte 0x00, 0x00\n"
-        "_08041DF4: .4byte 0x03000504\n"
-        "_08041DF8: .4byte 0x03000480\n"
-        "_08041DFC:\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x09\n"
-        "adds r0, r1, r2\n"
-        "lsrs r1, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, r3\n"
-        "blt _08041DCE\n"
-        "_08041E0A:\n"
-        "movs r0, #0x00\n"
-        "_08041E0C:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s16 i;
+    s16 count;
+    struct Unk68574 **pool;
+    struct Unk68574 *p;
+
+    i = 0;
+    count = *(s16 *)gUnk_03000504;
+    if (count > 0 && i < count)
+    {
+        pool = (struct Unk68574 **)gUnk_03000480;
+        do
+        {
+            p = pool[i];
+            if (p != 0 && p->unkD4 == a && p->unkD8 == b)
+                return p;
+            i++;
+        } while (i < count);
+    }
+    return 0;
 }
 
