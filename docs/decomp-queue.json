@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T13:30:57Z",
+  "generated": "2026-09-20T13:33:07Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 36
+    "wip": 37
   },
   "pinned": [],
   "wip": [
@@ -411,6 +411,17 @@
       "status": "27/72 bytes (37.5%); this is a state-machine dispatcher that calls a fixed bx-r4 trampoline (_08073C50 at 0x08073C50: 'bx r4') with the actual handler loaded from a jump table at 0x08099710[list->field0] into r4 right before each bl. agbcc dead-code-eliminates the register(r4)-pinned handler assignment since it's never read in C (only consumed implicitly via the trampoline's bx r4), so the table lookup vanishes from output",
       "next": "may need inline asm (not just register-pinned var) to force the r4 load to survive codegen immediately before the bl _08073C50 call, or split into two statements bridged by a volatile-style barrier; check other _08073C50 callers (sub_08069270, sub_0806C7D4, sub_0806D748) for the same pattern once one is solved",
       "score": "27/72"
+    },
+    {
+      "name": "sub_08061800",
+      "addr": "0x08061800",
+      "kind": "asm",
+      "bytes": 76,
+      "seed": "src/wip/sub_08061800.c",
+      "notes": "src/wip/sub_08061800.md",
+      "status": "41/76 bytes (53.9%), same size; correctly identified _08073C4C as a 'bx r3' trampoline (4th C arg = handler fn ptr, confirmed by precedent in sub_08035884.c) and the 3rd call arg as the reused 'stride' intermediate (not zero, matching retail leaving r2 unset/leftover). Remaining diff is pure register-allocation/instruction-ordering noise around the p->unk5D and p->unk98 field loads (retail resets r0=p fresh before each offset add; agbcc here does incremental adds/reuses r1 directly for the shift)",
+      "next": "try computing p->unk5D and p->unk98 as two separate top-level statements each assigned through a fresh local rather than inline in the lo/h expressions, or check if declaring 'p' as volatile changes agbcc's incremental-offset optimization",
+      "score": "41/76"
     }
   ],
   "recommended": [
@@ -2932,18 +2943,6 @@
       "kind": "asm",
       "bytes": 76,
       "score": 34,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08061800",
-      "addr": "0x08061800",
-      "kind": "asm",
-      "bytes": 76,
-      "score": 36,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
