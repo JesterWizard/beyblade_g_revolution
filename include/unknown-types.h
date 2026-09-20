@@ -1454,4 +1454,38 @@ struct Unk75AB8 /* 0x1c */
     /* 06 */ u8 filler_06[0x16];
 };
 
+/* Source record copied into an Unk59AE0Node. sub_08059AE0. */
+struct Unk59AE0Src /* >= 0x24 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u32 unk08;
+    /* 0c */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+    /* 18 */ u32 unk18;
+    /* 1c */ u32 unk1C;
+    /* 20 */ u32 unk20;
+};
+
+/* Freelist node type pointed to by gUnk_03000730. sub_08059AE0. */
+struct Unk59AE0Node /* 0x3c */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u32 unk08;
+    /* 0c */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+    /* 18 */ u32 unk18;
+    /* 1c */ u32 unk1C;
+    /* 20 */ u32 unk20;
+    /* 24 */ u32 unk24;
+    /* 28 */ u32 unk28;
+    /* 2c */ u32 unk2C;
+    /* 30 */ u32 unk30;
+    /* 34 */ u32 unk34;
+    /* 38 */ u32 unk38;
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */

@@ -1,65 +1,47 @@
 #include "global.h"
 
 // @ 0x08059ae0
-__attribute__((naked))
-void sub_08059AE0(void *a)
+void *sub_08059AE0(struct Unk59AE0Src *src)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "adds r1, r0, #0x0\n"
-        "ldr r0, _08059B34 @ =0x03000730\n"
-        "ldr r4, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "cmp r4, #0x00\n"
-        "beq _08059B42\n"
-        "_08059AEE:\n"
-        "ldr r2, [r4, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "bne _08059B38\n"
-        "ldr r0, [r1, #0x00]\n"
-        "str r0, [r4, #0x00]\n"
-        "ldr r0, [r1, #0x04]\n"
-        "str r0, [r4, #0x04]\n"
-        "ldr r0, [r1, #0x08]\n"
-        "str r0, [r4, #0x08]\n"
-        "ldr r0, [r1, #0x10]\n"
-        "str r0, [r4, #0x18]\n"
-        "ldr r0, [r1, #0x14]\n"
-        "str r0, [r4, #0x1C]\n"
-        "ldr r0, [r1, #0x18]\n"
-        "str r0, [r4, #0x20]\n"
-        "ldr r0, [r1, #0x1C]\n"
-        "str r0, [r4, #0x24]\n"
-        "ldr r0, [r1, #0x20]\n"
-        "str r0, [r4, #0x28]\n"
-        "str r2, [r4, #0x38]\n"
-        "str r2, [r4, #0x34]\n"
-        "str r2, [r4, #0x2C]\n"
-        "str r2, [r4, #0x30]\n"
-        "movs r0, #0x01\n"
-        "str r0, [r4, #0x14]\n"
-        "ldr r0, [r1, #0x0C]\n"
-        "cmp r0, #0x00\n"
-        "beq _08059B30\n"
-        "bl sub_0806A3A4\n"
-        "str r0, [r4, #0x0C]\n"
-        "ldr r0, [r0, #0x00]\n"
-        "str r0, [r4, #0x10]\n"
-        "_08059B30:\n"
-        "adds r0, r4, #0x0\n"
-        "b _08059B42\n"
-        "_08059B34: .4byte 0x03000730\n"
-        "_08059B38:\n"
-        "adds r4, #0x3C\n"
-        "adds r0, #0x01\n"
-        "cmp r0, #0x13\n"
-        "ble _08059AEE\n"
-        "movs r0, #0x00\n"
-        "_08059B42:\n"
-        "pop {r4}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk59AE0Node *node = *(struct Unk59AE0Node **)gUnk_03000730;
+    s32 i = 0;
+
+    if (node == 0)
+        return 0;
+
+    while (1)
+    {
+        if (node->unk00 == 0)
+        {
+            node->unk00 = src->unk00;
+            node->unk04 = src->unk04;
+            node->unk08 = src->unk08;
+            node->unk18 = src->unk10;
+            node->unk1C = src->unk14;
+            node->unk20 = src->unk18;
+            node->unk24 = src->unk1C;
+            node->unk28 = src->unk20;
+            node->unk38 = 0;
+            node->unk34 = 0;
+            node->unk2C = 0;
+            node->unk30 = 0;
+            node->unk14 = 1;
+
+            if (src->unk0C != 0)
+            {
+                node->unk0C = (u32)sub_0806A3A4(src->unk0C);
+                node->unk10 = *(u32 *)node->unk0C;
+            }
+
+            return node;
+        }
+
+        node = (struct Unk59AE0Node *)((u8 *)node + 0x3C);
+        i++;
+        if (i > 0x13)
+            break;
+    }
+
+    return 0;
 }
 
