@@ -75,6 +75,8 @@ Win: `sub_0806F430`. Mirror retail’s register roles, not abstract logic.
 
 Mask-first tests (`movs r0,#N; ldrb r1,[r5]; ands r0,r1`) need `u32` pins. `u8` becomes `ands r1, r0` / `cmp r1, #0`. Last test may `ldrb r5, [r5]`. Win: `sub_0803531C`.
 
+Clone of `sub_080425B8`: `addr = &byte; mask = 2; value = *addr; mask &= value`. Win: `sub_08042540`.
+
 ### 3. Parameter registers (don’t re-assign early)
 
 Thumb args: `r0`, `r1`, `r2`, `r3`. If asm uses `r1` without `mov` from `r1`, declare `register T *r1 asm("r1");` and **do not** assign from the C parameter name before the asm-equivalent point.
@@ -82,6 +84,10 @@ Thumb args: `r0`, `r1`, `r2`, `r3`. If asm uses `r1` without `mov` from `r1`, de
 Do **not** `obj = a` / pin `r5` when retail starts `adds r5, r0; adds r7, r2; adds r6, r3`. Keep using `a` across calls so the save order matches. Pin only extras (`index` in `r4`). Win: `sub_080442FC`.
 
 `u8` args emit `lsls/lsrs` before other copies. If retail copies `r1` first, take `u32` and extend after. Win: `sub_08062A74`.
+
+If retail is `adds r5, r0` then only `lsls r1, #24; cmp r1, #0` (no `lsrs`), take `u32 flag`, `dst = a`, then `flag <<= 24`. Clamp `0x800` is `movs #0x80; lsls #4`. Win: `sub_08033084`.
+
+If retail `bl fn; lsls r0, r0, #2` with no caller zero-extend, change the callee from `u8` to `u32` and re-check that callee still MATCH. Win: `sub_08066224` / `sub_08072F94`.
 
 ### 4. Struct members (required)
 

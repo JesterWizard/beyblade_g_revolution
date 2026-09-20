@@ -8,18 +8,28 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **336/633 (53.1%)** |
-| **Decompiled C (bytes)** | **22,302/90,272 (24.7%)** |
+| **Decompiled C (functions)** | **342/633 (54.0%)** |
+| **Decompiled C (bytes)** | **22,890/90,272 (25.4%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 297/633 (46.9%) |
+| Readable Thumb | 291/633 (46.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 67/160 (41.9% fn, 18.5% bytes) |
+| Battle semantic C | 70/160 (43.8% fn, 19.3% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — semantic C six parked near-misses (+6, 336→342/633)
+- Matched `sub_08042540` (AND ring flag 2, store 0x40, copy ring slots). Clone of `sub_080425B8`: `addr = &unk0479; mask = 2; value = *addr; mask &= value` so `movs r0,#2` precedes `ldrb`.
+- Matched `sub_08033084` (palette fade blit). `u32 flag`, `dst = a`, then `flag <<= 24` (low-byte test, no `lsrs`). Clamp is `0x800` (`movs #0x80; lsls #4`), not `0x8000`. Reload `*loc` on the `<=0` path.
+- Matched `sub_08061BE8` (blit last Unk0770 slot). `+r` so the table literal loads before `lsls #3`; `entry = n + table`; loc in r4 for the post-call reload; VRAM base `0xC0 << 19`.
+- Matched `sub_0803E328` (signed ROM table blend). `ldr table1` plus `+r` before `unk1E`; `entry = index + table`; next table literal immediately; `value = table3[i] + value` for `adds r0, r1, r0`. Same shape should unlock `sub_0803E374` / `sub_0803E3C0`.
+- Matched `sub_08066224` (select Unk66224 entry). `unk04` before `unk28`; `movs #1; ldrh flags; ands`. Changed `sub_08072F94` return from `u8` to `u32` so the caller does `lsls r0, r0, #2` without zero-extend (callee still MATCH).
+- Matched `sub_08052934` (menu table `0x080995AC+0xC`). Copy arg, then `(u8)<<4`; `+r` split `ldr base; adds #0xC`; set up `gMainWorkPtr+0x1818` before `ldr r1, [r4]`.
+- Parked: `sub_08034420` 76/328 (prologue matches); `sub_08032DC4` 418/660; `sub_08035984` 232/348; `sub_08032908` 235/384. `sub_0802B994` still blocked (`bx lr` leaf).
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C ten parked/blocked near-misses (+10, 326→336/633)
 - Matched `sub_08045128` (copy `unk1688[idx].unk08` to `unk1788`, `sub_08045590`). Follow retail’s shift/sub chain for `idx*0x18` and `idx*0x1F60`; keep `gMainWorkPtr` in `r3`.

@@ -110,6 +110,16 @@ Same for a 4-arg function that must start `adds r5, r0; adds r7, r2; adds r6, r3
 
 `u8` args emit `lsls/lsrs` before any other copy. If retail copies `r1` to `r5` first, take `u32` and extend after that copy. Win: `sub_08062A74`.
 
+If retail is `adds r5, r0` then only `lsls r1, #24; cmp r1, #0` (low-byte nonzero, no `lsrs`), take `u32 flag`, copy `dst = a`, then `flag <<= 24`. Clamp `0x800` is `movs #0x80; lsls #4`, not `0x8000`. Reload `*loc` on the `<=0` store. Win: `sub_08033084`.
+
+Mask-first AND (clone of `sub_080425B8`): `addr = &byte; mask = 2; value = *addr; mask &= value` so `movs r0,#2` precedes `ldrb`. Win: `sub_08042540`.
+
+Force `ldr table` before `movs #off; ldsb` with `asm("" : "+r"(table))`. `entry = index + table` not `table + index`. Load the next table literal immediately with another `+r` barrier. Final add `table3[i] + value` for `adds r0, r1, r0`. Win: `sub_0803E328`. Same shape: `sub_0803E374` / `sub_0803E3C0`.
+
+Split `ldr =base; adds #0xC` with `+r`. Copy the arg to `idx` before `(u8)<<4`. After `idx += base+0xC`, form `gMainWorkPtr+off` **before** `ldr r1, [r4]`. Win: `sub_08052934`.
+
+If retail `bl fn; lsls r0, r0, #2` with no caller zero-extend, change the callee prototype from `u8` to `u32` and re-check the callee still MATCH. Win: `sub_08066224` / `sub_08072F94`.
+
 Keep an IWRAM *location* in a callee-saved register (`r6 = (u32)&gUnk_…`) and reload after `bl`. Walking an IO pointer (`str; adds #4; str`) needs `asm("" : "+r"(r1))` between stores or agbcc emits `stmia`. Wins: `sub_08062A74`, `sub_0802E048`, `sub_08071BA0`.
 
 A loop that both `i++` and `count--` then `cmp count, i` is not `while (count > i)` with only `i++`. Win: `sub_0807179C`.

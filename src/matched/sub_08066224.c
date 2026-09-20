@@ -1,65 +1,51 @@
 #include "global.h"
 
 // @ 0x08066224
-__attribute__((naked))
-void sub_08066224(void)
+#include "global.h"
+
+void sub_08066224(struct Unk66224 *a, s32 index)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "adds r2, r1, #0x0\n"
-        "ldr r1, [r6, #0x04]\n"
-        "lsls r0, r1, #0x03\n"
-        "subs r0, r0, r1\n"
-        "lsls r0, r0, #0x02\n"
-        "ldr r1, [r6, #0x28]\n"
-        "adds r3, r1, r0\n"
-        "cmp r2, #0x00\n"
-        "blt _08066288\n"
-        "ldr r0, [r6, #0x00]\n"
-        "cmp r2, r0\n"
-        "bge _08066288\n"
-        "movs r0, #0x01\n"
-        "ldrh r4, [r6, #0x3C]\n"
-        "ands r0, r4\n"
-        "cmp r0, #0x00\n"
-        "bne _08066288\n"
-        "lsls r0, r2, #0x03\n"
-        "subs r0, r0, r2\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r1, r0\n"
-        "ldr r1, [r3, #0x00]\n"
-        "ldr r1, [r1, #0x20]\n"
-        "str r1, [r3, #0x14]\n"
-        "ldr r4, [r0, #0x00]\n"
-        "ldr r1, [r4, #0x24]\n"
-        "str r1, [r0, #0x14]\n"
-        "ldr r0, [r6, #0x0C]\n"
-        "adds r1, r2, #0x0\n"
-        "muls r1, r0\n"
-        "ldr r0, _08066290 @ =0x0000FFFF\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r6, #0x14]\n"
-        "str r2, [r6, #0x04]\n"
-        "adds r5, r6, #0x0\n"
-        "adds r5, #0x40\n"
-        "bl sub_08072F94\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r4, #0x04\n"
-        "adds r4, r4, r0\n"
-        "ldr r1, [r4, #0x00]\n"
-        "ldr r0, [r6, #0x2C]\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrb r2, [r0, #0x0A]\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08070AD4\n"
-        "_08066288:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08066290: .4byte 0x0000FFFF\n"
-    );
+    register struct Unk66224 *r6 asm("r6");
+    register s32 r2 asm("r2");
+    register s32 r1 asm("r1");
+    register s32 r0 asm("r0");
+    register struct Unk66224Entry *current asm("r3");
+    register u32 obj asm("r4");
+    register struct Unk7069C *state asm("r5");
+    struct Unk66224Entry *entry;
+
+    r6 = a;
+    r2 = index;
+    r1 = r6->unk04;
+    r0 = r1 << 3;
+    r0 -= r1;
+    r0 <<= 2;
+    r1 = (s32)r6->unk28;
+    current = (struct Unk66224Entry *)(r1 + r0);
+    if (r2 < 0)
+        return;
+    if (r2 >= r6->unk00)
+        return;
+    r0 = 1;
+    obj = r6->unk3C;
+    r0 &= obj;
+    if (r0 != 0)
+        return;
+    r0 = r2 << 3;
+    r0 -= r2;
+    r0 <<= 2;
+    entry = (struct Unk66224Entry *)(r1 + r0);
+    current->unk14 = current->unk00->unk20;
+    obj = (u32)entry->unk00;
+    entry->unk14 = ((struct Unk66224Object *)obj)->unk24;
+    r6->unk14 = 0xFFFF - r2 * r6->unk0C;
+    r6->unk04 = r2;
+    state = &r6->unk40;
+    r0 = sub_08072F94();
+    r0 <<= 2;
+    obj += 4;
+    obj += r0;
+    r1 = *(s32 *)obj;
+    sub_08070AD4(state, (void *)r1, r6->unk2C->unk00->unk0A);
 }
 

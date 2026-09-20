@@ -32,9 +32,9 @@ void sub_08032DC4(
     struct Unk33958 temp_c;
     u32 i;
 
-    frame = frame_arg;
     state_a = state_a_arg;
     state_b = state_b_arg;
+    frame = frame_arg;
     gBattleWork->unkAC4 = sub_080628B4(0x100) << 8;
     sub_080338E4(&temp_a, (void *)0x0807811C);
     sub_080338E4(&temp_b, (void *)0x08078130);

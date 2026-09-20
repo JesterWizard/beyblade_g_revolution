@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T22:03:33Z",
+  "generated": "2026-09-20T22:24:01Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 297,
-    "semantic_done": 336,
-    "readable_asm": 297,
+    "pending": 291,
+    "semantic_done": 342,
+    "readable_asm": 291,
     "opcode": 0,
-    "battle_pending": 81,
-    "battle_semantic": 67,
+    "battle_pending": 78,
+    "battle_semantic": 70,
     "blocked": 32,
-    "wip": 153
+    "wip": 147
   },
   "pinned": [],
   "wip": [
@@ -160,17 +160,6 @@
       "score": "37/48"
     },
     {
-      "name": "sub_08033084",
-      "addr": "0x08033084",
-      "kind": "asm",
-      "bytes": 100,
-      "seed": "src/wip/sub_08033084.c",
-      "notes": "src/wip/sub_08033084.md",
-      "status": "63/100 same-size DIFF; semantic logic correct, but retail copies the destination into r5 before normalizing the flag while agbcc schedules that copy after lsls",
-      "next": "try a register-parameter or source shape that forces dst=a before flag normalization; keep loc=r4 and the explicit gBattleWork reload in the <=0 branch",
-      "score": "63/100"
-    },
-    {
       "name": "sub_08033574",
       "addr": "0x08033574",
       "kind": "asm",
@@ -202,17 +191,6 @@
       "status": "11/48 same-size DIFF; index pinning and explicit goto preserved size, but retail uses a longer error-path layout and explicit shift/add sequence while agbcc still places the table return block differently",
       "next": "try a source layout that keeps the error call block before the valid table path while forcing  index and separate  offset; use the retail bls target shape",
       "score": "11/48"
-    },
-    {
-      "name": "sub_0803E328",
-      "addr": "0x0803E328",
-      "kind": "asm",
-      "bytes": 76,
-      "seed": "src/wip/sub_0803E328.c",
-      "notes": "src/wip/sub_0803E328.md",
-      "status": "44/76 same-size DIFF; signed table indices and delayed first-table byte now match the retail shape, but agbcc schedules the 0x0807BDB8 literal load after setting up the 0x1E index",
-      "next": "pin the first table base to r0 or assign it in a separate statement before reading unk1E; preserve the current entry1/table2/table3 evaluation order",
-      "score": "44/76"
     },
     {
       "name": "sub_0803E374",
@@ -325,17 +303,6 @@
       "score": "50/100"
     },
     {
-      "name": "sub_08052934",
-      "addr": "0x08052934",
-      "kind": "asm",
-      "bytes": 84,
-      "seed": "src/wip/sub_08052934.c",
-      "notes": "src/wip/sub_08052934.md",
-      "status": "55/84 bytes (65.5%), same size; semantically correct 2-level table lookup (0x080995AC+0xC indexed by arg0*16, then by gMainWorkPtr->unk1818) but agbcc folds the '0x080995AC + 0xC' constant into a single 4-byte literal (0x080995B8) instead of retail's split load+adds (ldr =0x080995AC; adds #0xC), a 2-instruction/0-byte-diff but different encoding order",
-      "next": "try declaring 0x080995AC as an extern rom-data symbol/array so +0xC becomes a real field access (relocation) instead of constant-folded arithmetic, which may force the split load",
-      "score": "55/84"
-    },
-    {
       "name": "sub_08059DC8",
       "addr": "0x08059DC8",
       "kind": "asm",
@@ -356,17 +323,6 @@
       "status": "41/76 bytes (53.9%), same size; correctly identified _08073C4C as a 'bx r3' trampoline (4th C arg = handler fn ptr, confirmed by precedent in sub_08035884.c) and the 3rd call arg as the reused 'stride' intermediate (not zero, matching retail leaving r2 unset/leftover). Remaining diff is pure register-allocation/instruction-ordering noise around the p->unk5D and p->unk98 field loads (retail resets r0=p fresh before each offset add; agbcc here does incremental adds/reuses r1 directly for the shift)",
       "next": "try computing p->unk5D and p->unk98 as two separate top-level statements each assigned through a fresh local rather than inline in the lo/h expressions, or check if declaring 'p' as volatile changes agbcc's incremental-offset optimization",
       "score": "41/76"
-    },
-    {
-      "name": "sub_08061BE8",
-      "addr": "0x08061BE8",
-      "kind": "asm",
-      "bytes": 96,
-      "seed": "src/wip/sub_08061BE8.c",
-      "notes": "src/wip/sub_08061BE8.md",
-      "status": "64/96 bytes (66.7%), same size; correct logic (index gUnk_03000770 by gUnk_03000794-1, deref entry->unk00 twice through _08073C4C bx-r3 trampoline, then copy entry->unk04/unk06 into gUnk_03000798->unk90/unk92) but agbcc uses one fewer callee-saved register (push {r4,r5,lr} vs retail's {r4,r5,r6,lr}) and reorders the trampoline-arg setup slightly",
-      "next": "try forcing an extra live temp across the _08073C4C call (e.g. cache entry->unk00 deref result in its own named var before the call) to nudge agbcc into allocating r6 like retail",
-      "score": "64/96"
     },
     {
       "name": "sub_08061D68",
@@ -562,8 +518,8 @@
       "bytes": 384,
       "seed": "src/wip/sub_08032908.c",
       "notes": "src/wip/sub_08032908.md",
-      "status": "two semantic attempts: 151/384 size_mismatch (388B), then 235/384 size_mismatch (388B); cleanup order and all BattleWork/MainWork fields are reconstructed, but retail keeps the battle global in a different callee-saved register/pointer lifetime",
-      "next": "Try a local BattleWork pointer-location variable or targeted register-layout/permuter search; preserve the current field types and cleanup sequence",
+      "status": "three attempts: 151/384 (388B), 235/384 (388B) retained; loc-pin rewrite 114/384 (428B) worse. Retail keeps gBattleWorkPtrLoc in r5 then copies to r6 and reuses r5 as scaled index",
+      "next": "permuter from 235/384 seed; do not pin loc as r5 across the AC8 loop because retail reuses r5 as i<<2",
       "score": "235/384"
     },
     {
@@ -639,8 +595,8 @@
       "bytes": 348,
       "seed": "src/wip/sub_08035984.c",
       "notes": "src/wip/sub_08035984.md",
-      "status": "two attempts: 232/348 (344B) direct semantic draft; cached velocity locals dropped to 53/348 (336B), so direct seed is retained. Algorithm and all Unk35984 fields are mapped, but register/order and table scheduling differ",
-      "next": "Start from 232/348 seed; try a source shape that loads both velocity words before squaring without introducing extra local lifetimes, then tune table/clamp scheduling",
+      "status": "direct seed 232/348 (344B) retained. Loading both velocities before squaring either dropped score or added an extra adds r6,r0 copy",
+      "next": "keep 232/348 seed; force ldr r5,[r4,#0x1C] immediately after ldr r0,[r4,#0x18] without a second pointer copy",
       "score": "232/348"
     },
     {
@@ -752,17 +708,6 @@
       "status": "Two attempts: baseline combined cursor update 116/140 (136B), then split stores 133/140 (same-size 140B). Dispatch and ring update match; final 7-byte diff is second cursor reload register shape (retail reuses r2 as ring-location pointer and loads ring into r1, seed overwrites r2 with ring).",
       "next": "Use a block-scoped ring-location local pinned to r2 and ring pointer to r1 for the two post-dispatch stores, or a tiny permuter search; preserve split unmasked increment then masked write.",
       "score": "116/140 then 133/140"
-    },
-    {
-      "name": "sub_08042540",
-      "addr": "0x08042540",
-      "kind": "asm",
-      "bytes": 120,
-      "seed": "src/wip/sub_08042540.c",
-      "notes": "src/wip/sub_08042540.md",
-      "status": "Two attempts: baseline 69/120 (112B), then corrected sub_080680CC target (+0x448), repeated signed ring-index loads, and same-size layout 116/120. Remaining four bytes are only initial mask instruction order: retail loads constant 2 before ring flag byte, agbcc loads byte before materializing 2.",
-      "next": "Try a preassigned mask local (u8 mask = 2) or targeted permuter/source-order search to force movs r0,#2 before ldrb; preserve corrected +0x448 callback and repeated ring index loads.",
-      "score": "69/120 then 116/120"
     },
     {
       "name": "sub_080425B8",
@@ -1170,17 +1115,6 @@
       "status": "Two attempts: semantic switch/loop 58/120 (116B), then r2/r1/r3/r4/r5 register anchors 66/120 (same-size). Field selection and three writes match; remaining differences are the loop\u2019s initial for-condition (retail enters directly and checks only after decrement) and the retail cursor copy: after computing table base, retail copies selected ROM pointer into r2 and uses r1 only as the byte scratch.",
       "next": "Change the for loop to do-while with i initialized to 2. Leave selected indices as an ordinary pointer so agbcc can copy it into r2 after table-base calculation; keep data initially r2, table r4, source r3, and counter r5.",
       "score": "58/120 then 66/120"
-    },
-    {
-      "name": "sub_08066224",
-      "addr": "0x08066224",
-      "kind": "asm",
-      "bytes": 112,
-      "seed": "src/wip/sub_08066224.c",
-      "notes": "src/wip/sub_08066224.md",
-      "status": "Two attempts: direct typed semantic C 63/112 (116B), then register anchors 61/112 (same-size). Bounds and state updates are mapped; remaining mismatch is initial current-entry register/source ordering and the callback index return-width shape (retail directly shifts sub_08072F94 result by 2, candidate zero-extends the u8 return).",
-      "next": "Restore  before any base assignment, remove the flags temporary and use the direct bit test, then form . Keep current r3/a r6/state r5/entry r4 as useful anchors. Try a u32 slot temporary or direct pointer arithmetic to avoid the u8 zero-extension before shifting.",
-      "score": "63/112 then 61/112"
     },
     {
       "name": "sub_08066B10",
@@ -1596,9 +1530,9 @@
       "bytes": 660,
       "seed": "src/wip/sub_08032DC4.c",
       "notes": "src/wip/sub_08032DC4.md",
-      "status": "Battle frame-loop semantics reconstructed across asset refresh, per-frame motion/update calls, and three conditional mode handlers; register-pinned candidate reached 413/660 bytes (656-byte output).",
-      "next": "Preserve the r6/r9/r8 argument pinning and tune only the frame initialization/spill plus stack-struct field types; the remaining diff is mostly register/literal scheduling.",
-      "score": "413/660"
+      "status": "418/660 (656B); arg copies now state_a, state_b, frame. Remaining 4-byte shortage plus keys-held mask order",
+      "next": "find the missing 4-byte insn without shrinking the rest; try mask-first movs #8 before ldrh on gBtlKeysHeld via permuter",
+      "score": "418/660"
     },
     {
       "name": "sub_08033188",
@@ -1640,9 +1574,9 @@
       "bytes": 328,
       "seed": "src/wip/sub_08034420.c",
       "notes": "src/wip/sub_08034420.md",
-      "status": "Battle object initialization semantics reconstructed using the existing Unk346C0 layout; candidate is near-size (204/328 bytes, 324-byte output) after correcting the fixed-point defaults.",
-      "next": "Tune the source-byte signed/unsigned load pair before sub_08067B98 and preserve the target's offset-register chain for the final copied fields.",
-      "score": "204/328"
+      "status": "76/328 same-size; prologue matches (r6 out, r7 state_a, r8 unk2D0). Remaining: store 0 through r5 after mov r8,r5 vs reload from r8",
+      "next": "keep r5 live for the unk2D0 zero-store after mov r8,r5; preserve u32 mode and ldsb then ldrb+extend for unk24",
+      "score": "76/328"
     },
     {
       "name": "sub_08035054",
