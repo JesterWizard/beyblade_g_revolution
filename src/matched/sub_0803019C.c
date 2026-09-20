@@ -1,8 +1,84 @@
 #include "global.h"
 
 // @ 0x0803019c
-__attribute__((naked))
+#include "global.h"
+
+void sub_08030F38(void);
+void sub_0803D4C4(void);
+void sub_080302E0(void *a);
+void sub_08035D68(void *a, void *b);
+void sub_0803531C(void *a);
+void sub_080353A0(void *a);
+s32 sub_08035AE0(void *a, void *b);
+void sub_080361A8(void *a);
+
+struct Unk3019CWork
+{
+    u8 filler_00[0x328];
+    u8 unk328[0x20];
+    u8 filler_348[0x34];
+    u8 unk37C[0x20];
+    u8 filler_39C[0xDC];
+    u8 unk478[0x2F8];
+    u8 filler_770[0x19];
+    u8 unk789;
+    u8 filler_78A[6];
+    u8 unk790[0x2F8];
+    u8 filler_A88[0x19];
+    u8 unkAA1;
+    u8 filler_AA2[6];
+    u8 unkAA8[0x18];
+    u8 filler_AC0[8];
+    void *unk0AC8[4];
+    void *unk0AD8[4];
+};
+
 void sub_0803019C(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nmov r6, r10\nmov r5, r9\nmov r4, r8\npush {r4, r5, r6}\nbl sub_08030F38\nbl sub_0803D4C4\nldr r4, _08030290 @ =0x03000290\nldr r0, [r4, #0x00]\nmovs r6, #0x8F\nlsls r6, r6, #0x03\nadds r0, r0, r6\nbl sub_080302E0\nldr r0, [r4, #0x00]\nmovs r5, #0xF2\nlsls r5, r5, #0x03\nadds r0, r0, r5\nbl sub_080302E0\nldr r1, [r4, #0x00]\nmovs r0, #0xCA\nlsls r0, r0, #0x02\nmov r8, r0\nadds r0, r1, r0\nldr r2, _08030294 @ =0x00000AA8\nmov r9, r2\nadd r1, r9\nbl sub_08035D68\nldr r1, [r4, #0x00]\nmovs r3, #0xDF\nlsls r3, r3, #0x02\nmov r10, r3\nadds r0, r1, r3\nadd r1, r9\nbl sub_08035D68\nldr r2, [r4, #0x00]\nmov r1, r8\nadds r0, r2, r1\nmov r3, r9\nadds r1, r2, r3\nldr r3, _08030298 @ =0x00000AD8\nadds r2, r2, r3\nldr r2, [r2, #0x00]\nbl sub_080302A8\nldr r2, [r4, #0x00]\nmov r1, r10\nadds r0, r2, r1\nmov r3, r9\nadds r1, r2, r3\nldr r3, _0803029C @ =0x00000ADC\nadds r2, r2, r3\nldr r2, [r2, #0x00]\nbl sub_080302A8\nldr r1, [r4, #0x00]\nadds r0, r1, r6\nadds r1, r1, r5\nbl sub_080348E8\nldr r1, [r4, #0x00]\nadds r0, r1, r5\nadds r1, r1, r6\nbl sub_080348E8\nldr r0, [r4, #0x00]\nadds r0, r0, r6\nbl sub_0803531C\nldr r0, [r4, #0x00]\nadds r0, r0, r5\nbl sub_0803531C\nldr r0, [r4, #0x00]\nadds r0, r0, r6\nbl sub_080353A0\nldr r0, [r4, #0x00]\nadds r0, r0, r5\nbl sub_080353A0\nldr r1, [r4, #0x00]\nmov r2, r8\nadds r0, r1, r2\nadd r1, r10\nbl sub_08035AE0\nldr r1, [r4, #0x00]\nldr r2, _080302A0 @ =0x00000789\nadds r1, r1, r2\nstrb r0, [r1, #0x00]\nldr r0, [r4, #0x00]\nadds r2, r0, r2\nldrb r1, [r2, #0x00]\nldr r3, _080302A4 @ =0x00000AA1\nadds r0, r0, r3\nstrb r1, [r0, #0x00]\nldr r2, [r4, #0x00]\nmov r1, r9\nadds r0, r2, r1\nadd r8, r2\nadd r2, r10\nmov r1, r8\nmovs r3, #0x66\nbl sub_08036264\nldr r0, [r4, #0x00]\nadd r0, r9\nbl sub_080361A8\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6}\npop {r0}\nbx r0\n_08030290: .4byte 0x03000290\n_08030294: .4byte 0x00000AA8\n_08030298: .4byte 0x00000AD8\n_0803029C: .4byte 0x00000ADC\n_080302A0: .4byte 0x00000789\n_080302A4: .4byte 0x00000AA1");
+    sub_08030F38();
+    sub_0803D4C4();
+    sub_080302E0(
+        ((struct Unk3019CWork *)gBattleWork)->unk478);
+    sub_080302E0(
+        ((struct Unk3019CWork *)gBattleWork)->unk790);
+    sub_08035D68(
+        ((struct Unk3019CWork *)gBattleWork)->unk328,
+        ((struct Unk3019CWork *)gBattleWork)->unkAA8);
+    sub_08035D68(
+        ((struct Unk3019CWork *)gBattleWork)->unk37C,
+        ((struct Unk3019CWork *)gBattleWork)->unkAA8);
+    sub_080302A8(
+        (struct Unk302A8 *)((struct Unk3019CWork *)gBattleWork)->unk328,
+        (struct Unk302A8Src *)((struct Unk3019CWork *)gBattleWork)->unkAA8,
+        (struct Unk302A8 *)((struct Unk3019CWork *)gBattleWork)->unk0AD8[0]);
+    sub_080302A8(
+        (struct Unk302A8 *)((struct Unk3019CWork *)gBattleWork)->unk37C,
+        (struct Unk302A8Src *)((struct Unk3019CWork *)gBattleWork)->unkAA8,
+        (struct Unk302A8 *)((struct Unk3019CWork *)gBattleWork)->unk0AD8[1]);
+    sub_080348E8(
+        (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk478,
+        (u32)((struct Unk3019CWork *)gBattleWork)->unk790);
+    sub_080348E8(
+        (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk790,
+        (u32)((struct Unk3019CWork *)gBattleWork)->unk478);
+    sub_0803531C(
+        ((struct Unk3019CWork *)gBattleWork)->unk478);
+    sub_0803531C(
+        ((struct Unk3019CWork *)gBattleWork)->unk790);
+    sub_080353A0(
+        ((struct Unk3019CWork *)gBattleWork)->unk478);
+    sub_080353A0(
+        ((struct Unk3019CWork *)gBattleWork)->unk790);
+    ((struct Unk3019CWork *)gBattleWork)->unk789 = (u8)sub_08035AE0(
+        ((struct Unk3019CWork *)gBattleWork)->unk328,
+        ((struct Unk3019CWork *)gBattleWork)->unk37C);
+    ((struct Unk3019CWork *)gBattleWork)->unkAA1 =
+        ((struct Unk3019CWork *)gBattleWork)->unk789;
+    sub_08036264(
+        (struct Unk36264 *)((struct Unk3019CWork *)gBattleWork)->unkAA8,
+        (struct Unk360BC *)((struct Unk3019CWork *)gBattleWork)->unk328,
+        (struct Unk360BC *)((struct Unk3019CWork *)gBattleWork)->unk37C, 0x66);
+    sub_080361A8(
+        ((struct Unk3019CWork *)gBattleWork)->unkAA8);
 }
+
