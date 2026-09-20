@@ -17,7 +17,7 @@ void sub_080632F8(void)
         sizeof(work),
         *palettePtr);
     sub_08066390(0x0F);
-    sub_0804109C(&work, sub_0806639C());
+    sub_0804109C((struct Unk40F4C *)&work, sub_0806639C());
     do
     {
         sub_080674B4();

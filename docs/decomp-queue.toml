@@ -252,15 +252,6 @@ notes = "src/wip/sub_0806E7BC.md"
 status = "size_mismatch 42/152 (27.6%), compiled 148B vs retail 152B; attempted as line-segment intersection test (2D cross-product sign comparison, 8 s32 params ax,ay,bx,by,cx,cy,dx,dy) returning 0/1/2; logic direction plausible (first 8 bytes match: prologue) but overall structure/expression grouping doesn't match agbcc's register scheduling - needs more careful param/expr-order derivation from raw asm (subs order matters: check if retail computes abx=ax-bx or bx-ax first, etc)"
 next = "re-derive param roles more carefully from asm (r12=a0 orig, r6=a1, r5=a2, r4=a3; stack args sp0x18/1C/20/24) - do NOT assume signature guessed here is correct; trace each subs/muls instruction to exact source expr before writing C"
 score = "42/152"
-
-[[wip]]
-name = "sub_08041858"
-seed = "src/wip/sub_08041858.c"
-notes = "src/wip/sub_08041858.md"
-status = "47/52 size mismatch; direct typed stores also retained agbcc's pool-address fold"
-next = "leave readable Thumb; revisit with a distinct pool-symbol technique or shape-preserving call boundary"
-score = "47/52"
-
 [[wip]]
 name = "sub_08043944"
 seed = "src/wip/sub_08043944.c"
@@ -418,7 +409,7 @@ name = "sub_080473F8"
 seed = "src/wip/sub_080473F8.c"
 notes = "src/wip/sub_080473F8.md"
 status = "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits"
-next = "try forcing literal reload: maybe split into two functions temporarily, or check if retail was compiled with different codegen version/flags for this TU; alternatively try asm-volatile-free trick of loading address via array indexing gUnk_0300063C-style neighbor to shift pool layout"
+next = "reuse the sub_08041858/sub_08069894 barrier: after storing through the first IWRAM pointer, asm(\"\" : \"+r\"(r0), \"+r\"(r1) : : \"memory\") then reload the second address"
 score = "50/100"
 
 [[wip]]
@@ -540,15 +531,6 @@ notes = "src/wip/sub_08067F98.md"
 status = "36/48 bytes (75%), same size; correct algorithm (variable-stride linked entry search: base=arg0->unk00, entry=base+base->unk18, walk arg0->unk28 entries comparing unk00==key, advance by unk02 byte stride) with loop/branch shape matching retail. Added structs Unk67F98/Unk67F98Base/Unk67F98Entry. Only remaining diff: register choice for 'key' (r4 here vs retail's r3) and 'count' (r3 here vs retail's r0)"
 next = "try declaring 'count' before 'entry'/'base' to see if it shifts to r0, or check if the parameter u16 extension for 'key' needs a different cast form to land in r3"
 score = "36/48"
-
-[[wip]]
-name = "sub_08069894"
-seed = "src/wip/sub_08069894.c"
-notes = "src/wip/sub_08069894.md"
-status = "89/96 bytes (92.7%), size mismatch (92 vs 96); correct algorithm (clear gUnk_03000108/030001B0, set gUnk_030001A8=0x20, zero 4 BG scroll register pairs via sub_08069908/sub_08069948, then two sub_08069A60(2/3, 0, 0x100, 0x100) calls) -- declared the 3 previously-undeclared callee signatures. agbcc folds the 'gUnk_030001B0 = 0' write into an offset-add from the previous literal (0x108+0xA8=0x1B0) instead of retail's separate literal-pool load, an 8-vs-4-byte encoding"
-next = "try writing gUnk_030001B0 via a separate statement block or intervening dead computation to break the literal-pool CSE, matching the pattern seen in sub_080473F8/sub_08052934 from earlier sessions"
-score = "89/96"
-
 [[wip]]
 name = "sub_0806B3E8"
 seed = "src/wip/sub_0806B3E8.c"
@@ -716,15 +698,6 @@ notes = "src/wip/sub_08035984.md"
 status = "two attempts: 232/348 (344B) direct semantic draft; cached velocity locals dropped to 53/348 (336B), so direct seed is retained. Algorithm and all Unk35984 fields are mapped, but register/order and table scheduling differ"
 next = "Start from 232/348 seed; try a source shape that loads both velocity words before squaring without introducing extra local lifetimes, then tune table/clamp scheduling"
 score = "232/348"
-
-[[wip]]
-name = "sub_08037318"
-seed = "src/wip/sub_08037318.c"
-notes = "src/wip/sub_08037318.md"
-status = "two attempts: 91/100 same-size; only the ROM-table literal load is scheduled after the stride multiply instead of before it, with the remaining instructions matching"
-next = "Force the 0x030002A0 base load before the index*0x2C calculation using a targeted permuter/source-order search; preserve the exact 8-argument 6FF58 call"
-score = "91/100"
-
 [[wip]]
 name = "sub_08037430"
 seed = "src/wip/sub_08037430.c"
@@ -780,14 +753,6 @@ notes = "src/wip/sub_08040F4C.md"
 status = "Two semantic attempts captured the full 0x328-byte state machine: direct seed 246/336 (344B), register-pinned seed 255/336 (348B). Remaining differences are agbcc register/literal scheduling plus callee-save shape around the initial _08073C4C handler and branch target pointer; logic and stack fields are modeled by Unk40F4C."
 next = "Use targeted permuter/source-shape work for initial handler order, r2 blend-flag pointer, and r0 switch target while preserving the ordinary r5 completion flag; do not hand-loop retries."
 score = "246/336 then 255/336"
-
-[[wip]]
-name = "sub_0804109C"
-seed = "src/wip/sub_0804109C.c"
-notes = "src/wip/sub_0804109C.md"
-status = "First semantic seed matched 328/336 same-size (97.6%), differing only in the initial r2/r3 copies; fixed r2/r3 pins on retry caused broader register allocation differences (151/336). Struct overlays now model all copied source/state fields."
-next = "Restore the 328/336 seed and use a source-order/permuter search to swap only the initial pointer copies to retail r2=a, r3=b without fixed-register pins."
-score = "328/336 then 151/336"
 
 [[wip]]
 name = "sub_080411EC"
@@ -1348,15 +1313,6 @@ notes = "src/wip/sub_08071BA0.md"
 status = "Two semantic attempts. Direct GBA register/global C reached 109/148 bytes (73.6%, exact size); a base-pointer rewrite preserved size but fell to 58/148. Hardware behavior is mapped: enable sound, configure DMA1 to FIFO A, configure timers, and update audio timing globals."
 next = "Start from the 109/148 direct-register candidate. Reproduce retail's DMA pointer sequencing: after sound control setup, retail keeps 0x04000082 + 0x3A in r1 and emits str [r1], adds r1,#4, str [r1], adds r1,#4. Avoid agbcc's stmia writeback and preserve the retail literal pool order; then match timer/global writes."
 score = "109/148"
-
-[[wip]]
-name = "sub_08073988"
-seed = "src/wip/sub_08073988.c"
-notes = "src/wip/sub_08073988.md"
-status = "Two semantic attempts. Final branch/goto-shaped parser reached 91/96 bytes (94.8%, same size), with all control flow and argument/register setup matching retail. Only the default character lookup differs: agbcc loads the fixed 0x080BB748 table into r7 and reuses it, while retail loads it into r0 and preserves the base argument in r7."
-next = "Retain the goto-shaped control flow. Force the default lookup to emit ldr r0,=0x080BB748; adds r0,r1,r0; ldrb r0; adds r0,r0,r7; ldrb, while preserving local base in r7 and the 5-register prologue. Avoid global register r0 experiments because agbcc rejects call-clobbered global register variables under Werror."
-score = "91/96"
-
 [[wip]]
 name = "sub_0802BAD4"
 seed = "src/wip/sub_0802BAD4.c"
@@ -1404,14 +1360,6 @@ notes = "src/wip/sub_0802C55C.md"
 status = "two attempts did not match; 58/128 bytes, final candidate 124B; semantics mapped, remaining differences are r7/entry lifetime and byte-mask store scheduling"
 next = "preserve target r7 key/flag lifetimes and repeated main-work table reloads; keep same-size 61/128 seed as baseline"
 score = "58/128"
-
-[[wip]]
-name = "sub_0802D6D4"
-seed = "src/wip/sub_0802D6D4.c"
-notes = "src/wip/sub_0802D6D4.md"
-status = "same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction matches size, remaining mismatch begins in late sub_0806FF58/sub_080705DC scheduling"
-next = "use the direct-global seed; tune only the late resource callback/source order around +0x178"
-score = "438/452"
 
 [[wip]]
 name = "sub_0802DCDC"
@@ -1484,3 +1432,74 @@ notes = "src/wip/sub_08032604.md"
 status = "Battle initialization semantics mapped (resource creation, display setup, transform defaults), but compiler output diverged after register pinning: 63/196 bytes matched, 220-byte candidate."
 next = "Keep the natural candidate's compact pointer reloads while separately seeding only table/transfer-size lifetimes; target prologue preserves r8/r9 but does not repeatedly materialize the work pointer for each field store."
 score = "63/196"
+
+[[wip]]
+name = "sub_08032DC4"
+seed = "src/wip/sub_08032DC4.c"
+notes = "src/wip/sub_08032DC4.md"
+status = "Battle frame-loop semantics reconstructed across asset refresh, per-frame motion/update calls, and three conditional mode handlers; register-pinned candidate reached 413/660 bytes (656-byte output)."
+next = "Preserve the r6/r9/r8 argument pinning and tune only the frame initialization/spill plus stack-struct field types; the remaining diff is mostly register/literal scheduling."
+score = "413/660"
+
+[[wip]]
+name = "sub_08033188"
+seed = "src/wip/sub_08033188.c"
+notes = "src/wip/sub_08033188.md"
+status = "Input-transition routine semantics mapped (input snapshot/restore, two-frame asset save/restore, transition loop, and final cleanup), but two compiler candidates diverged substantially; best baseline was 63/604 bytes."
+next = "Use the baseline without fixed r8/r9/r10 locals; model the input snapshots as stack-resident u16s and use a dedicated state object matching the Unk7069C layout before tuning the two asset-copy loops."
+score = "63/604"
+
+[[wip]]
+name = "sub_080333E4"
+seed = "src/wip/sub_080333E4.c"
+notes = "src/wip/sub_080333E4.md"
+status = "Mode resource initializer semantics reconstructed; second candidate reached exact size (272 bytes) but only 84/272 bytes matched, with register scheduling and global-work reload differences."
+next = "Restore natural parameter lifetimes around r10/r8/r9/r4, then use same-size permuter for the mode guard and work-state update sequence."
+score = "84/272"
+
+[[wip]]
+name = "sub_0803370C"
+seed = "src/wip/sub_0803370C.c"
+notes = "src/wip/sub_0803370C.md"
+status = "Battle animation-position update semantics reconstructed (timer/counter, resource digit allocation, position interpolation, and branch-specific endpoint sampling), but candidate remains 21/362 bytes after two attempts."
+next = "Recover the target's duplicated register-driven loops: retain gBattleWork pointer in r3/r6, use direct B54/B74/B7C aliases, and preserve separate B00/B20 sub_08031368 blocks."
+score = "21/362"
+[[wip]]
+name = "sub_08034420"
+seed = "src/wip/sub_08034420.c"
+notes = "src/wip/sub_08034420.md"
+status = "Battle object initialization semantics reconstructed using the existing Unk346C0 layout; candidate is near-size (204/328 bytes, 324-byte output) after correcting the fixed-point defaults."
+next = "Tune the source-byte signed/unsigned load pair before sub_08067B98 and preserve the target's offset-register chain for the final copied fields."
+score = "204/328"
+
+[[wip]]
+name = "sub_08035054"
+seed = "src/wip/sub_08035054.c"
+notes = "src/wip/sub_08035054.md"
+status = "Resource mode dispatcher semantics mapped for kinds 0/1/2 (asset allocation, flags, IDs, and sub_08035624 callbacks), but natural candidate reached 41/432; fixed-register tuning regressed to 47/432 with a larger output."
+next = "Retain natural register allocation and tune branch-specific struct member types/stack arguments; the target shares the Unk346C0 offset layout but keeps r4/r5/r7/r8/r9/r10 lifetimes naturally."
+score = "41/432"
+
+[[wip]]
+name = "sub_08035468"
+seed = "src/wip/sub_08035468.c"
+notes = "src/wip/sub_08035468.md"
+status = "Rotation/projection math reconstructed through both angle frames, depth correction, output coordinates, and sub_08070354; natural candidate reached 41/308 bytes, while fixed-register tuning regressed to 31/308."
+next = "Retain the natural baseline and tune the signed fixed-point expression grouping; target keeps the root in r7/table in r9 only after the null check, with input coordinates reused across both transforms."
+score = "41/308"
+
+[[wip]]
+name = "sub_08035AE0"
+seed = "src/wip/sub_08035AE0.c"
+notes = "src/wip/sub_08035AE0.md"
+status = "Collision/overlap response semantics reconstructed: squared separation threshold, normalized separation vector, midpoint separation, velocity-distance scaling, and weighted velocity updates. Natural candidate reached 75/388 bytes; register-pinned candidate reached 179/388 bytes but remained size-mismatched."
+next = "Start from the pinned seed and tune stack/local lifetimes. Target keeps separation deltas in r8/r9/r10, velocity deltas in r3/r1/r2, velocity length in r0, threshold at sp+4, scale at sp+8, and uses sp+0xc for the first midpoint offset."
+score = "179/388"
+
+[[wip]]
+name = "sub_08035D68"
+seed = "src/wip/sub_08035D68.c"
+notes = "src/wip/sub_08035D68.md"
+status = "Rotation/projection helper semantics reconstructed: table sine/cosine lookup, depth-scaled coordinate rotation, perspective correction, output writes, flag extraction, and sub_08070354 dispatch. Natural baseline is 19/196 bytes and size-mismatched at 208 bytes; a second fixed-register attempt reached 50/196 but aliased the source pointer with a pinned delta and was discarded."
+next = "Use the natural seed and introduce register constraints only after preserving the source pointer in ip. Target uses sine r8, dx r7, dy r5, dz r4, output x r6, output y r2, and flag r9; do not pin dx to r7 unless source is explicitly pinned to r12."
+score = "19/196"

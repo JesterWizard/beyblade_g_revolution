@@ -104,6 +104,43 @@ n = n - 1;
 
 Win: `sub_080712CC`.
 
+Incoming pointer copies: do **not** add `a = a_arg; b = b_arg` locals. Use the parameters as the live pointers so agbcc's `assign_parms` emits `adds r2, r0; adds r3, r1` in order. Extra locals save `r1` first (scratch conflict) and swap those two insns. Win: `sub_0804109C`.
+
+`x &= ~0x20` compiles as `movs rN, #0x21; negs rN` (`-0x21 == ~0x20`). `&= ~0x21` emits `#0x22` instead.
+
+Keep a struct pointer across a store cluster: `gUnk->a = …; gUnk->b = …` reloads from the IWRAM loc after the first add clobbers the pointer. `w = gUnk; w->a = …; w->b = …` matches retail. Win: `sub_0802D6D4` tail.
+
+Force a pool `ldr` before an index shift/mul (agbcc otherwise computes the index first):
+
+```c
+register u32 r1 asm("r1");
+register u32 r0 asm("r0");
+
+r1 = (u32)&gUnk_030002A0; /* or ROM table address */
+asm("" : "+r"(r1));
+r0 = stride;              /* or idx << 2 */
+```
+
+Wins: `sub_08037318` (`ldr r1,=0x030002A0` then `movs r0,#0x2C`), `sub_08033978` (`ldr r1,=0x08078158` then `lsls r0,r6,#2`).
+
+`-1` as `movs r1,#1; negs r1; mov r8,r1`: `r1 = 1; r1 = -r1; minusOne = r1` with `minusOne` pinned to `r8`. Win: `sub_08033978`.
+
+Add operand order is a real Thumb encoding: `r0 = ch + table` emits `adds r0, r1, r0`; `r0 = table + ch` emits `adds r0, r0, r1`. Win: `sub_08073988`.
+
+Nearby IWRAM stores (`0x03000534` then `0x03000504`, or `0x108` then `0x1B0`) fold to `sub/add #imm` unless the first pointer is kept live across a memory barrier, then reloaded:
+
+```c
+r0 = gUnk_03000534;
+r1 = 0;
+*(s32 *)r0 = r1;
+asm("" : "+r"(r0), "+r"(r1) : : "memory");
+r0 = gUnk_03000504;
+asm("" : "+r"(r0));
+*(u16 *)r0 = (u16)r1;
+```
+
+Wins: `sub_08041858`, `sub_08069894`. Same family still parked: `sub_080473F8`, `sub_08052934`.
+
 ### 3. Literal pool / load order
 
 Symptom: same-size diff, wrong pool slot or extra `push {lr}` on branches.

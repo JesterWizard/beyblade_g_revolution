@@ -1,176 +1,51 @@
 #include "global.h"
 
 // @ 0x0804109c
-__attribute__((naked))
-void sub_0804109C(void)
+void sub_0804109C(struct Unk40F4C *a, struct Unk4109CInput *b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r2, r0, #0x0\n"
-        "adds r3, r1, #0x0\n"
-        "movs r1, #0x92\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r2, r1\n"
-        "str r3, [r0, #0x00]\n"
-        "movs r4, #0xB5\n"
-        "lsls r4, r4, #0x02\n"
-        "adds r0, r2, r4\n"
-        "movs r5, #0x00\n"
-        "strb r5, [r0, #0x00]\n"
-        "movs r0, #0x93\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r1, r2, r0\n"
-        "ldr r0, [r3, #0x00]\n"
-        "str r0, [r1, #0x00]\n"
-        "subs r4, #0x84\n"
-        "adds r1, r2, r4\n"
-        "ldr r0, [r3, #0x04]\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x95\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r1, r2, r0\n"
-        "ldr r0, [r3, #0x08]\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r4, #0x08\n"
-        "adds r1, r2, r4\n"
-        "ldr r0, [r3, #0x0C]\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x90\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r1, r2, r0\n"
-        "ldr r0, [r3, #0x10]\n"
-        "str r0, [r1, #0x00]\n"
-        "subs r4, #0x14\n"
-        "adds r1, r2, r4\n"
-        "ldr r0, [r3, #0x14]\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x97\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r1, r2, r0\n"
-        "ldr r0, [r3, #0x18]\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r4, #0x1C\n"
-        "adds r1, r2, r4\n"
-        "ldr r0, [r3, #0x1C]\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x99\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r1, r2, r0\n"
-        "ldr r0, [r3, #0x20]\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r4, #0x08\n"
-        "adds r1, r2, r4\n"
-        "ldr r0, [r3, #0x24]\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x9B\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r1, r2, r0\n"
-        "ldr r0, [r3, #0x28]\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r4, #0x08\n"
-        "adds r1, r2, r4\n"
-        "ldr r0, [r3, #0x2C]\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x4E\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "adds r4, #0x69\n"
-        "adds r0, r2, r4\n"
-        "strb r1, [r0, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x48\n"
-        "ldrh r4, [r0, #0x00]\n"
-        "adds r1, r4, #0x0\n"
-        "cmp r1, #0x00\n"
-        "beq _080411AC\n"
-        "movs r1, #0xC9\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r2, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r1, #0x20\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08041174\n"
-        "ldr r3, _0804116C @ =0x000002D7\n"
-        "adds r0, r2, r3\n"
-        "strb r5, [r0, #0x00]\n"
-        "ldr r4, _08041170 @ =0x00000322\n"
-        "adds r0, r2, r4\n"
-        "strh r5, [r0, #0x00]\n"
-        "movs r1, #0xC8\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r2, r1\n"
-        "strh r5, [r0, #0x00]\n"
-        "adds r3, #0x47\n"
-        "adds r0, r2, r3\n"
-        "strh r5, [r0, #0x00]\n"
-        "subs r4, #0x06\n"
-        "adds r0, r2, r4\n"
-        "strh r5, [r0, #0x00]\n"
-        "b _080411CC\n"
-        ".byte 0x00, 0x00\n"
-        "_0804116C: .4byte 0x000002D7\n"
-        "_08041170: .4byte 0x00000322\n"
-        "_08041174:\n"
-        "ldr r5, _080411A4 @ =0x000002D7\n"
-        "adds r0, r2, r5\n"
-        "movs r1, #0x01\n"
-        "strb r1, [r0, #0x00]\n"
-        "adds r5, #0x4B\n"
-        "adds r0, r2, r5\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x4C\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "subs r5, #0x02\n"
-        "adds r0, r2, r5\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x4A\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "ldr r3, _080411A8 @ =0x0000031E\n"
-        "adds r0, r2, r3\n"
-        "strh r1, [r0, #0x00]\n"
-        "subs r5, #0x04\n"
-        "adds r0, r2, r5\n"
-        "strh r4, [r0, #0x00]\n"
-        "b _080411CC\n"
-        ".byte 0x00, 0x00\n"
-        "_080411A4: .4byte 0x000002D7\n"
-        "_080411A8: .4byte 0x0000031E\n"
-        "_080411AC:\n"
-        "ldr r3, _080411E4 @ =0x000002D7\n"
-        "adds r0, r2, r3\n"
-        "strb r1, [r0, #0x00]\n"
-        "ldr r4, _080411E8 @ =0x00000322\n"
-        "adds r0, r2, r4\n"
-        "strh r1, [r0, #0x00]\n"
-        "movs r5, #0xC8\n"
-        "lsls r5, r5, #0x02\n"
-        "adds r0, r2, r5\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r3, #0x47\n"
-        "adds r0, r2, r3\n"
-        "strh r1, [r0, #0x00]\n"
-        "subs r4, #0x06\n"
-        "adds r0, r2, r4\n"
-        "strh r1, [r0, #0x00]\n"
-        "_080411CC:\n"
-        "movs r5, #0xC9\n"
-        "lsls r5, r5, #0x02\n"
-        "adds r0, r2, r5\n"
-        "ldr r1, [r0, #0x00]\n"
-        "movs r2, #0x21\n"
-        "negs r2, r2\n"
-        "ands r1, r2\n"
-        "str r1, [r0, #0x00]\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_080411E4: .4byte 0x000002D7\n"
-        "_080411E8: .4byte 0x00000322\n"
-    );
+    a->unk248 = b;
+    a->unk2D4 = 0;
+    a->unk24C = (void *)b->unk00;
+    a->unk250 = (void *)b->unk04;
+    a->unk254 = (void *)b->unk08;
+    a->unk258 = (void *)b->unk0C;
+    a->unk240 = (void *)b->unk10;
+    a->unk244 = (void *)b->unk14;
+    a->unk25C = (void *)b->unk18;
+    a->unk260 = (void *)b->unk1C;
+    a->unk264 = (void *)b->unk20;
+    a->unk268 = (void *)b->unk24;
+    a->unk26C = (void *)b->unk28;
+    a->unk270 = (void *)b->unk2C;
+    a->unk2D9 = b->unk4E;
+
+    if (b->unk48 != 0)
+    {
+        if ((a->unk324 & 0x20) != 0)
+        {
+            a->unk2D7 = 0;
+            a->unk322 = 0;
+            a->unk320 = 0;
+            a->unk31E = 0;
+            a->unk31C = 0;
+        }
+        else
+        {
+            a->unk2D7 = 1;
+            a->unk322 = 1;
+            a->unk320 = b->unk4C;
+            a->unk31E = b->unk4A;
+            a->unk31C = b->unk48;
+        }
+    }
+    else
+    {
+        a->unk2D7 = 0;
+        a->unk322 = 0;
+        a->unk320 = 0;
+        a->unk31E = 0;
+        a->unk31C = 0;
+    }
+    a->unk324 &= ~0x20;
 }
 

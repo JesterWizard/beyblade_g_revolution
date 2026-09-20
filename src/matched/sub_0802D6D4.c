@@ -1,8 +1,61 @@
 #include "global.h"
 
 // @ 0x0802d6d4
-__attribute__((naked))
 void sub_0802D6D4(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nmov r6, r9\nmov r5, r8\npush {r5, r6}\nadd sp, #-0x010\nmovs r0, #0x02\nbl sub_0806FDD0\nldr r5, _0802D870 @ =0x0300026C\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x08]\nldr r1, _0802D874 @ =0x080D63CC\nldr r6, _0802D878 @ =0xFFFFC000\nmovs r4, #0x00\nstr r4, [sp, #0x000]\nmovs r2, #0x01\nmov r9, r2\nstr r2, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x08]\nmovs r1, #0x02\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x0C]\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x10]\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x14]\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x18]\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x1C]\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x20]\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [r5, #0x00]\nstr r0, [r1, #0x24]\nldr r0, [r1, #0x0C]\nldr r1, _0802D87C @ =0x08266DAC\nstr r4, [sp, #0x000]\nmov r3, r9\nstr r3, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x10]\nldr r1, _0802D880 @ =0x080D6618\nstr r4, [sp, #0x000]\nmov r2, r9\nstr r2, [sp, #0x004]\nstr r4, [sp, #0x008]\nldr r2, _0802D884 @ =0x03000198\nldr r2, [r2, #0x00]\nldr r3, _0802D888 @ =0x00001818\nadds r2, r2, r3\nldrb r2, [r2, #0x00]\nstr r2, [sp, #0x00C]\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x14]\nldr r1, _0802D88C @ =0x080D6B68\nmov r8, r1\nstr r4, [sp, #0x000]\nmov r2, r9\nstr r2, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x18]\nstr r4, [sp, #0x000]\nmov r3, r9\nstr r3, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nmov r1, r8\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x1C]\nstr r4, [sp, #0x000]\nmov r1, r9\nstr r1, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nmov r1, r8\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x20]\nstr r4, [sp, #0x000]\nmov r2, r9\nstr r2, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nmov r1, r8\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x24]\nldr r1, _0802D890 @ =0x080D6D50\nstr r4, [sp, #0x000]\nmov r3, r9\nstr r3, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nadds r2, r6, #0x0\nadds r3, r6, #0x0\nbl sub_0806FF58\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x0C]\nmovs r1, #0x02\nbl sub_080705DC\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x10]\nmovs r1, #0x02\nbl sub_080705DC\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x14]\nmovs r1, #0x02\nbl sub_080705DC\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x18]\nmovs r1, #0x02\nbl sub_080705DC\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x1C]\nmovs r1, #0x02\nbl sub_080705DC\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x20]\nmovs r1, #0x02\nbl sub_080705DC\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x24]\nmovs r1, #0x02\nbl sub_080705DC\nldr r1, [r5, #0x00]\nstr r4, [r1, #0x00]\nadds r2, r1, #0x0\nadds r2, #0x4C\nldr r0, _0802D894 @ =0x0000FFFF\nstrh r0, [r2, #0x00]\nstr r4, [r1, #0x04]\nadds r1, #0x48\nmovs r0, #0xFF\nstrb r0, [r1, #0x00]\nadd sp, #0x010\npop {r3, r4}\nmov r8, r3\nmov r9, r4\npop {r4, r5, r6}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_0802D870: .4byte 0x0300026C\n_0802D874: .4byte 0x080D63CC\n_0802D878: .4byte 0xFFFFC000\n_0802D87C: .4byte 0x08266DAC\n_0802D880: .4byte 0x080D6618\n_0802D884: .4byte 0x03000198\n_0802D888: .4byte 0x00001818\n_0802D88C: .4byte 0x080D6B68\n_0802D890: .4byte 0x080D6D50\n_0802D894: .4byte 0x0000FFFF");
+    struct Unk705DC *resource;
+    struct Unk026C *w;
+
+    resource = sub_0806FDD0(2);
+    gUnk_0300026C->unk08 = resource;
+    sub_0806FF58(
+        resource, (void *)0x080D63CC,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+    sub_080705DC(gUnk_0300026C->unk08, 2);
+
+    gUnk_0300026C->unk0C = sub_0806FDD0(0);
+    gUnk_0300026C->unk10 = sub_0806FDD0(0);
+    gUnk_0300026C->unk14 = sub_0806FDD0(0);
+    gUnk_0300026C->unk18 = sub_0806FDD0(0);
+    gUnk_0300026C->unk1C = sub_0806FDD0(0);
+    gUnk_0300026C->unk20 = sub_0806FDD0(0);
+    gUnk_0300026C->unk24 = sub_0806FDD0(0);
+
+    sub_0806FF58(
+        gUnk_0300026C->unk0C, (void *)0x08266DAC,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+    sub_0806FF58(
+        gUnk_0300026C->unk10, (void *)0x080D6618,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0,
+        gMainWorkPtr->unk1818);
+    sub_0806FF58(
+        gUnk_0300026C->unk14, (void *)0x080D6B68,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+    sub_0806FF58(
+        gUnk_0300026C->unk18, (void *)0x080D6B68,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+    sub_0806FF58(
+        gUnk_0300026C->unk1C, (void *)0x080D6B68,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+    sub_0806FF58(
+        gUnk_0300026C->unk20, (void *)0x080D6B68,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+    sub_0806FF58(
+        gUnk_0300026C->unk24, (void *)0x080D6D50,
+        0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+
+    sub_080705DC(gUnk_0300026C->unk0C, 2);
+    sub_080705DC(gUnk_0300026C->unk10, 2);
+    sub_080705DC(gUnk_0300026C->unk14, 2);
+    sub_080705DC(gUnk_0300026C->unk18, 2);
+    sub_080705DC(gUnk_0300026C->unk1C, 2);
+    sub_080705DC(gUnk_0300026C->unk20, 2);
+    sub_080705DC(gUnk_0300026C->unk24, 2);
+
+    w = gUnk_0300026C;
+    w->unk00 = 0;
+    w->unk4C = 0xFFFF;
+    w->unk04 = 0;
+    w->unk48 = 0xFF;
 }
+

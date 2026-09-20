@@ -1,54 +1,33 @@
 #include "global.h"
 
 // @ 0x08037318
-__attribute__((naked))
-void sub_08037318(void)
+void sub_08037318(struct Unk346C0 *a, u32 index_arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "add sp, #-0x010\n"
-        "adds r6, r0, #0x0\n"
-        "lsls r4, r1, #0x18\n"
-        "lsrs r4, r4, #0x18\n"
-        "movs r0, #0x00\n"
-        "bl sub_0806FDD0\n"
-        "movs r1, #0xA3\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r6, r6, r1\n"
-        "str r0, [r6, #0x00]\n"
-        "ldr r1, _08037378 @ =0x030002A0\n"
-        "movs r0, #0x2C\n"
-        "adds r5, r4, #0x0\n"
-        "muls r5, r0\n"
-        "adds r5, r5, r1\n"
-        "ldr r0, [r5, #0x00]\n"
-        "bl sub_08042B28\n"
-        "adds r1, r0, #0x0\n"
-        "ldr r0, [r6, #0x00]\n"
-        "movs r2, #0xFC\n"
-        "lsls r2, r2, #0x08\n"
-        "movs r3, #0xB8\n"
-        "lsls r3, r3, #0x06\n"
-        "movs r4, #0x00\n"
-        "str r4, [sp, #0x000]\n"
-        "str r4, [sp, #0x004]\n"
-        "str r4, [sp, #0x008]\n"
-        "str r4, [sp, #0x00C]\n"
-        "bl sub_0806FF58\n"
-        "ldr r0, [r5, #0x00]\n"
-        "bl sub_08042B50\n"
-        "movs r1, #0x0E\n"
-        "bl sub_08038580\n"
-        "ldr r0, [r6, #0x00]\n"
-        "movs r1, #0x0E\n"
-        "bl sub_080705DC\n"
-        "add sp, #0x010\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08037378: .4byte 0x030002A0\n"
-    );
+    u8 index;
+    register u32 r1 asm("r1");
+    register u32 r0 asm("r0");
+    register u32 r5 asm("r5");
+    struct Unk002A0Record *record;
+
+    index = index_arg;
+    a->unk28C = sub_0806FDD0(0);
+    r1 = (u32)&gUnk_030002A0;
+    asm("" : "+r"(r1));
+    r0 = 0x2C;
+    r5 = index;
+    r5 *= r0;
+    r5 += r1;
+    record = (struct Unk002A0Record *)r5;
+    sub_0806FF58(
+        a->unk28C,
+        sub_08042B28(record->unk00),
+        0xFC00,
+        0x2E00,
+        0,
+        0,
+        0,
+        0);
+    sub_08038580(sub_08042B50(record->unk00), 0x0E);
+    sub_080705DC(a->unk28C, 0x0E);
 }
 

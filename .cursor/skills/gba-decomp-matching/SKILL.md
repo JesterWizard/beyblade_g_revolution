@@ -34,6 +34,32 @@ r1 = (struct Unk0380 *)tmp[0];
 
 Wins: `sub_08033C1C`. Use when retail has `ldr rN, =0x03……` before use.
 
+Nearby IWRAM addresses fold (`0x534-0x30`, `0x108+0xA8`). Keep the first pointer live, then reload:
+
+```c
+r0 = gUnk_03000534;
+r1 = 0;
+*(s32 *)r0 = r1;
+asm("" : "+r"(r0), "+r"(r1) : : "memory");
+r0 = gUnk_03000504;
+asm("" : "+r"(r0));
+*(u16 *)r0 = (u16)r1;
+```
+
+Wins: `sub_08041858`, `sub_08069894`.
+
+Table address before index (empty `+r` barrier, same as `sub_0803DDD8`):
+
+```c
+r1 = (u32)&gUnk_030002A0;
+asm("" : "+r"(r1));
+r0 = 0x2C;
+```
+
+Wins: `sub_08037318`, `sub_08033978`.
+
+`r0 = ch + table` → `adds r0, r1, r0`. Swapping operands is a 1-byte DIFF. Win: `sub_08073988`.
+
 ### 2. Register flow for and/cmp
 
 ```c
@@ -102,7 +128,7 @@ Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `sr
 
 - **Leaf + branch:** `sub_0802D8C4`, `sub_08061BDC`, `sub_08034894`
 - **Table lookup + pool order:** `sub_0803DD60` family
-- **Dual IWRAM store CSE:** `sub_080473E4`, `sub_08041858`
+- **Dual IWRAM store CSE:** `sub_080473E4`, `sub_080473F8`, `sub_08052934` (`sub_08041858` / `sub_08069894` matched via `+r` + memory barrier)
 
 ## m2c seeds
 

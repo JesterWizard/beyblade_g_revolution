@@ -201,7 +201,7 @@ several rewrites (including forcing a `volatile` re-read, which overshot to
 accept the permuter-caveat workflow above, or skip it for now and note it in
 your batch report so the next agent doesn't repeat the investigation.
 
-Current flagged list: `sub_0802D52C`, `sub_0802D6D4`, `sub_0802DCDC`,
+Current flagged list: `sub_0802D52C`, `sub_0802DCDC`,
 `sub_0802DEA0`, `sub_0802E048`, `sub_080302E0`, `sub_080353A0`,
 `sub_08038D68`, `sub_08038F30`, `sub_080436B0`, `sub_08056D68`,
 `sub_080593A4`, `sub_08062F90`, `sub_08066224`, `sub_08067CE8`,

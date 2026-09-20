@@ -8,18 +8,32 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **309/633 (48.8%)** |
-| **Decompiled C (bytes)** | **18,570/90,272 (20.6%)** |
+| **Decompiled C (functions)** | **316/633 (49.9%)** |
+| **Decompiled C (bytes)** | **19,882/90,272 (22.0%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 324/633 (51.2%) |
+| Readable Thumb | 317/633 (50.1%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 59/160 (36.9% fn, 14.6% bytes) |
+| Battle semantic C | 60/160 (37.5% fn, 15.8% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — semantic C five parked near-misses (+5, 311→316/633)
+- Matched `sub_08033978` (bind two `Unk346C0` into `Unk33A5C`). `asm("" : "+r"(r1))` after loading `0x08078158` emits `ldr r1` before `lsls r0,r6,#2`; `-1` via `r1 = 1; r1 = -r1` then `r8`.
+- Matched `sub_08073988` (string-width parser). Goto-shaped control flow; `r0 = ch + table` (not `table + ch`) for `adds r0, r1, r0`.
+- Matched `sub_08069894` / `sub_08041858` (IWRAM store pairs). `asm("" : "+r"(r0), "+r"(r1) : : "memory")` then a fresh pool `ldr` stops agbcc folding `0x1B0`/`0x504` as `add/sub #imm`.
+- Matched `sub_08037318` (Unk002A0 record by stride `0x2C`). Same `+r` barrier so `ldr r1,=0x030002A0` precedes `movs r0,#0x2C`.
+- `Unk33A5C` gained `unk0D`. Same pool-fold barrier may unblock `sub_080473F8` / `sub_08052934`.
+- `make compare`: OK
+
+### 2026-09-20 — semantic C sub_0804109C + sub_0802D6D4 (+2, 309→311/633)
+- Matched `sub_0804109C` (copy Unk4109CInput into Unk40F4C, then blend-flag setup). Extra `a = a_arg` locals swapped the `r2`/`r3` copies; typed parameters plus `&= ~0x20` (agbcc `movs #0x21; negs`) matched 336/336.
+- Matched `sub_0802D6D4` (allocate/init Unk026C sprite slots). Direct `gUnk_0300026C->field` stores at the tail reloaded the pointer; one `w = gUnk_0300026C` local kept it across unk00/unk4C/unk04/unk48.
+- Prototype: `void sub_0804109C(struct Unk40F4C *, struct Unk4109CInput *)`. Cast at `sub_080632F8` call site (`Unk632F8` overlay).
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C cleanup: +1 (275→276/633)
 - Matched `sub_08042718` (snapshot and reset the MainWork movement
