@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T15:24:12Z_
+_Updated: 2026-09-20T15:26:37Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T15:24:12Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 44 |
+| WIP (resume these first) | 45 |
 
 Ranking: **battle** · showing top **40**
 
@@ -70,6 +70,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080620D4` | 72 | 10/72 | `src/wip/sub_080620D4.c` | 10/72 bytes (12.5%), size mismatch (80 vs 72); correct algorithm (walk a->unk0C[0..0x7F] entries, shift each entry's unk08/unk0C by dx<<8/dy<<8, and on the first non-null entry snapshot entries[0]->unk08/unk0C into a->unk10/unk14). Discovered/reused existing struct Unk62044 (already matched by sub_08062044.c/sub_0806209C.c) and added struct Unk620D4Entry for the array elements. Retail copies raw dy into r3 immediately after push, before the null checks; agbcc here defers the dy shift and ends up spilling through an 'ip' register (extra mov), needing one more callee-saved register than retail | try computing shiftedDy as the FIRST statement (before the two null checks) so agbcc materializes it early like retail does with raw dy, or split shiftedDx/shiftedDy computation into the loop body itself rather than hoisting both before the null checks |
 | `sub_08062A74` | 76 | 53/76 | `src/wip/sub_08062A74.c` | 53/76 bytes (69.7%), same size; correct algorithm and instruction shape matches retail almost exactly (table-address kept in r6, dereferenced fresh both before the trampoline call and again before the final store) after discovering/adding struct Unk62A74 (16-slot pool + u16 used-bitmask at *gUnk_030008D0, shared with sub_08062AF8/sub_08062B9C). Only remaining diff: agbcc allocates r2 for the dereferenced slot pointer where retail uses r1 | try declaring 'slot' after 'idx' or forcing a compound expression for the null check to see if it shifts register choice from r2 to r1 |
 | `sub_08062B9C` | 76 | 34/76 | `src/wip/sub_08062B9C.c` | 34/76 bytes (44.7%), same size; correct algorithm (clear bitmask bit + slot pointer for idx in [lo,hi] after swap, reusing struct Unk62A74 from sub_08062A74) with the full loop/branch shape matching retail (confirmed via manual disassembly comparison -- only the register chosen for arg1/hi differs: retail keeps it in r4 from function entry, agbcc here picks r5) | try passing arg1 as the first declared local or via a temp assigned before arg0's, or check if reversing argument order in a wrapper affects register choice |
+| `sub_08062C38` | 72 | 69/72 | `src/wip/sub_08062C38.c` | 69/72 bytes (95.8%), same size; correct fade-out loop (BLDCNT=0xFF, decrement counter by arg0 each frame clamped at 0, write BLDY, vsync via sub_080674B4/_08073C40(bx-r0 trampoline)/sub_080474AC, loop until counter==0). Only remaining diff: the 'diff' subtraction result register (r1 here vs r0 in retail) -- tried inline expressions, explicit s32 casts, block-scoping; none moved it off r1 | try assigning 'diff' via a compound statement that also touches r0 first (e.g. reading counter into r0 explicitly before the subtract), or check if arg0 needs to be re-copied to a fresh local at loop top instead of mutated in place |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -173,6 +174,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (284 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (283 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
