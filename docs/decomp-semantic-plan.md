@@ -10,14 +10,15 @@ Current state (2026-09-19): 234/633 functions are semantic C. Of the
 remaining 399 readable-Thumb functions, **all of them are already
 byte-matched at the asm level** (`asm/matchings/*.s` exists for every one) —
 there is no more assembly-matching work left, only semantic-C conversion.
-`match_batch.sh`/`cursor_batch.sh` will correctly report "nothing to do" for
-this reason; that is not a bug (see `tools/decomp/triage_functions.py`'s
-docstring).
+`script_first.py` will correctly report "nothing to do" when every remaining function
+already failed patterns + cleaned m2c — that is not a bug. Use `agent_packet.py --next`.
 
 ## Run this first
 
 ```bash
+python3 tools/decomp/script_first.py
 python3 tools/decomp/classify_semantic_targets.py
+python3 tools/decomp/cluster_shapes.py
 ```
 
 Buckets (all counts as of 2026-09-19; re-run for current numbers — an earlier

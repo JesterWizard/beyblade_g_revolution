@@ -6,21 +6,20 @@ Automatic matchers live in [`tools/decomp/c_patterns.py`](../tools/decomp/c_patt
 ## Fast path (one function)
 
 ```bash
-# 1. Pick target
-python3 tools/decomp/next_queue.py -n 5
+# 0. Session start — no agent
+python3 tools/decomp/script_first.py
 
-# 2. Try patterns → m2c → verify (no integrate)
-python3 tools/decomp/try_convert.py sub_08034894
+# 1. Compact packet (only leftover functions)
+python3 tools/decomp/agent_packet.py --next
+python3 tools/decomp/agent_packet.py sub_08034894
 
-# 3. Land on MATCH
+# 2. If the packet has no MATCH, write C from its seed (max 2 retries)
 python3 tools/decomp/try_convert.py sub_08034894 --integrate --note battle/input
-
-# Or manual steps:
-python3 tools/decomp/c_patterns.py sub_08034894 --verify   # trivial pattern only
-python3 tools/decomp/m2c_asm.py sub_08034894              # m2c seed → edit → verify
-python3 tools/decomp/match_function.py sub_08034894 scratch.c
+python3 tools/decomp/match_function.py sub_08034894 scratch.c   # compact DIFF by default
 python3 tools/decomp/integrate_c.py sub_08034894 @scratch.c --kind semantic --note "…"
-make compare
+
+# Grow patterns from clones instead of converting each by hand:
+python3 tools/decomp/cluster_shapes.py
 ```
 
 List all auto-detected patterns:
@@ -33,7 +32,7 @@ python3 tools/decomp/c_patterns.py --list
 
 ## Automatic patterns (`c_patterns.py`)
 
-These are tried first by `try_convert.py`, `c_convert_batch.sh`, and `semantic_convert_batch.sh`.
+These are tried first by `try_convert.py` and `script_first.py`.
 
 | Pattern | Typical asm | C shape |
 |---------|-------------|---------|
@@ -128,7 +127,7 @@ If semantic C is blocked but asm already matches:
 
 Retail `push {r4, lr}` (or more) → worth hand C. True leaves (`bx lr`, no push) with an `if` hit the agbcc extra-`push {lr}` wall — skip.
 
-`match_function.py` prints `N/M bytes matched` and a status:
+`match_function.py` prints `N/M bytes matched` and a **compact** DIFF (first mismatch). Pass `--full` for a whole-function hex dump.
 - **matched** — integrate
 - **identical_diff** — same size, only pool/reloc words differ (not counted as decompiled)
 - **same_size** / **size_mismatch** — near miss; `--record` saves to `docs/decomp-function-scores.json`
@@ -175,7 +174,7 @@ python3 tools/decomp/function_scores.py --close
 
 From [`decomp-mission.md`](decomp-mission.md):
 
-1. `try_convert.py` / `c_patterns` trivial match
+1. `script_first.py` / `c_patterns` trivial match
 2. m2c + hand refine → `match_function.py` MATCH
 3. Readable Thumb + **park** unmatched C (`docs/decomp-wip.md`) — do not discard the draft
 4. Document blocker / `[[wip]]`
@@ -187,9 +186,9 @@ From [`decomp-mission.md`](decomp-mission.md):
 
 | Command | When |
 |---------|------|
-| `tools/decomp/c_convert_batch.sh 30` | Trivial patterns only |
-| `tools/decomp/semantic_convert_batch.sh 30 --pool-free-only` | Opcode stubs (legacy) |
-| `tools/decomp/battle_semantic_batch.sh 10` | Battle readable Thumb |
-| `tools/decomp/cursor_batch.sh 10` | Hard functions (m2c seeds) |
+| `python3 tools/decomp/script_first.py` | Every session first (patterns + cleaned m2c) |
+| `python3 tools/decomp/agent_packet.py --next` | One leftover function |
+| `python3 tools/decomp/cluster_shapes.py` | Clone families → new `c_patterns.py` matcher |
+| `tools/decomp/battle_semantic_batch.sh 10 --seeds-only` | Hand-verified battle seeds |
 
-After any batch: `make compare` must stay **OK**.
+After any batch: `make compare` must stay **OK**. End-to-end: [README.md](../README.md) § Decompilation.

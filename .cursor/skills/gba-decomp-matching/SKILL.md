@@ -8,7 +8,7 @@ description: >-
 
 # GBA byte-matching techniques
 
-Oracle: `python3 tools/decomp/match_function.py FN path/to.c` → **MATCH** or **DIFF** (with sizes + hex).
+Oracle: `python3 tools/decomp/match_function.py FN path/to.c` → **MATCH** or compact **DIFF** (first mismatch + 16 bytes). Pass `--full` for a whole-function hex dump.
 
 ## Diagnose from DIFF output
 

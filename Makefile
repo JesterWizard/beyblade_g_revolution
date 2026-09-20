@@ -154,6 +154,15 @@ scores:
 patterns:
 	python3 tools/decomp/c_patterns.py --list
 
+packet:
+	python3 tools/decomp/agent_packet.py --next
+
+cluster:
+	python3 tools/decomp/cluster_shapes.py
+
+script-first:
+	python3 tools/decomp/script_first.py
+
 rom: check-baserom $(ROM)
 ifeq ($(COMPARE),1)
 	@$(SHA1) rom.sha1

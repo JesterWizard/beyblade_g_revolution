@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fast single-function pipeline: c_patterns → m2c → match_function.
+"""Fast single-function pipeline: c_patterns → cleaned m2c → match_function.
 
 Use after picking a target from docs/decomp-queue.md.
 
@@ -25,7 +25,12 @@ INTEGRATE = ROOT / "tools" / "decomp" / "integrate_c.py"
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from c_patterns import PATTERN_CATALOG, guess_c  # noqa: E402
 from m2c_asm import m2c_decompile  # noqa: E402
+from m2c_cleanup import cleanup_text  # noqa: E402
 from match_function import write_single_function_c  # noqa: E402
+
+
+def _looks_uncompilable(body: str) -> bool:
+    return any(tok in body for tok in ("?", "M2C_FIELD", "M2C_UNK", "BITCAST", "/* extern */"))
 
 
 def asm_lines(function: str) -> list[str] | None:
@@ -58,8 +63,13 @@ def candidates(function: str, asm: list[str]) -> list[tuple[str, str, str]]:
 
     for valid in (False, True):
         m2c = m2c_decompile(function, valid_syntax=valid)
-        if m2c:
-            tag = "m2c-valid" if valid else "m2c"
+        if not m2c:
+            continue
+        tag = "m2c-valid" if valid else "m2c"
+        cleaned = cleanup_text(m2c, function)
+        if cleaned.strip() and not _looks_uncompilable(cleaned):
+            out.append((f"{tag}-clean", f"{tag}-clean", cleaned))
+        if not _looks_uncompilable(m2c):
             out.append((tag, tag, m2c))
 
     seen: set[str] = set()

@@ -1,8 +1,8 @@
 {
-  "generated": "2026-09-20T09:38:19Z",
+  "generated": "2026-09-20T10:10:24Z",
   "counts": {
-    "matched": 267,
-    "blocked": 29,
+    "matched": 268,
+    "blocked": 28,
     "not_started": 296,
     "wip": 21,
     "size_mismatch": 16,
@@ -2359,19 +2359,19 @@
     {
       "name": "sub_08038314",
       "addr": "0x08038314",
-      "kind": "asm",
-      "status": "same_size",
-      "display": "blocked",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": true,
       "wip": false,
       "block_reason": "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] \u2014 logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)",
       "retail_bytes": 108,
-      "matched_bytes": 103,
+      "matched_bytes": 108,
       "compiled_bytes": 108,
-      "pct": 95.4,
-      "score": "103/108",
-      "source": "seed",
-      "note": "seeded from queue.toml same-size DIFF"
+      "pct": 100.0,
+      "score": "108/108",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08038438",

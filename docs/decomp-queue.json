@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-20T09:38:19Z",
+  "generated": "2026-09-20T10:15:31Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 366,
-    "semantic_done": 267,
-    "readable_asm": 366,
+    "pending": 365,
+    "semantic_done": 268,
+    "readable_asm": 365,
     "opcode": 0,
     "battle_pending": 102,
-    "battle_semantic": 44,
+    "battle_semantic": 45,
     "blocked": 35,
     "wip": 22
   },
@@ -885,8 +885,8 @@
       "name": "sub_08038314",
       "addr": "0x08038314",
       "reason": "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] \u2014 logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)",
-      "kind": "asm",
-      "bytes": 108
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_0803DBD0",

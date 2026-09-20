@@ -39,20 +39,23 @@ sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from asm_bytes import addr_from_name, asm_text_bytes, retail_bytes  # noqa: E402
 
 
-def preprocess(c_path: Path, out_path: Path) -> None:
+def preprocess(c_path: Path, out_path: Path, *, quiet: bool = False) -> None:
+    extra = {"capture_output": True, "text": True} if quiet else {}
     subprocess.run(
         ["arm-none-eabi-gcc", "-E", *CPPFLAGS, str(c_path), "-o", str(out_path)],
         check=True,
         cwd=str(ROOT),
+        **extra,
     )
 
 
-def compile_c(c_path: Path, obj_path: Path) -> None:
+def compile_c(c_path: Path, obj_path: Path, *, quiet: bool = False) -> None:
     asm_path = obj_path.with_suffix(".s")
     with tempfile.NamedTemporaryFile(suffix=".i", delete=False) as tmp:
         i_path = Path(tmp.name)
+    extra = {"capture_output": True, "text": True} if quiet else {}
     try:
-        preprocess(c_path, i_path)
+        preprocess(c_path, i_path, quiet=quiet)
         subprocess.run(
             [
                 str(AGBCC),
@@ -69,6 +72,7 @@ def compile_c(c_path: Path, obj_path: Path) -> None:
             ],
             check=True,
             cwd=str(ROOT),
+            **extra,
         )
     finally:
         i_path.unlink(missing_ok=True)
@@ -82,6 +86,7 @@ def compile_c(c_path: Path, obj_path: Path) -> None:
             str(obj_path),
         ],
         check=True,
+        **extra,
     )
 
 
@@ -238,6 +243,39 @@ def format_score(info: dict[str, Any]) -> str:
     )
 
 
+def first_mismatch(got: bytes, want: bytes) -> int | None:
+    n = min(len(got), len(want))
+    for i in range(n):
+        if got[i] != want[i]:
+            return i
+    if len(got) != len(want):
+        return n
+    return None
+
+
+def format_compact_diff(got: bytes, want: bytes, info: dict[str, Any], context: int = 16) -> str:
+    """Short DIFF for agent packets — no full-function hex dumps."""
+    lines = [
+        "DIFF",
+        format_score(info),
+        f"retail size {len(want)}, compiled size {len(got)}",
+    ]
+    off = first_mismatch(got, want)
+    if off is None:
+        return "\n".join(lines)
+    lines.append(f"first mismatch @ +{off:#x}")
+    start = max(0, off - 4)
+    width = context
+
+    def hx(data: bytes) -> str:
+        chunk = data[start : start + width]
+        return " ".join(f"{b:02x}" for b in chunk)
+
+    lines.append(f"  retail  [{start:#x}]: {hx(want)}")
+    lines.append(f"  compiled[{start:#x}]: {hx(got)}")
+    return "\n".join(lines)
+
+
 def record_score(function: str, info: dict[str, Any], *, note: str = "") -> None:
     data: dict[str, Any] = {"attempts": {}}
     if SCORES_JSON.is_file():
@@ -259,6 +297,28 @@ def write_single_function_c(function: str, body: str, out: Path) -> None:
     out.write_text(f'#include "global.h"\n\n// @ {addr_from_name(function):#010x}\n{body}\n')
 
 
+def compile_and_score(
+    function: str, c_path: Path, *, quiet: bool = True
+) -> tuple[bytes, bytes, dict[str, Any]]:
+    """Compile scratch C and score against retail. Raises on missing asm/tools."""
+    size = reference_size(function)
+    want = retail_bytes(function, size)
+    with tempfile.TemporaryDirectory() as tmp:
+        obj = Path(tmp) / "scratch.o"
+        compile_c(c_path, obj, quiet=quiet)
+        got = normalize_compiled(obj_text_bytes(obj, function), size)
+    return got, want, score_bytes(got, want)
+
+
+def try_compile_and_score(
+    function: str, c_path: Path
+) -> tuple[bytes, bytes, dict[str, Any]] | None:
+    try:
+        return compile_and_score(function, c_path, quiet=True)
+    except (FileNotFoundError, subprocess.CalledProcessError, OSError):
+        return None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("function", help="sub_0802B90C")
@@ -274,6 +334,16 @@ def main() -> int:
         help="save byte-match score to docs/decomp-function-scores.json",
     )
     parser.add_argument("--note", default="", help="optional note stored with --record")
+    parser.add_argument(
+        "--full",
+        action="store_true",
+        help="print full-function hex unified diff (default: compact first-mismatch)",
+    )
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="alias for the default compact DIFF (kept for callers)",
+    )
     args = parser.parse_args()
 
     if not BASEROM.is_file():
@@ -315,17 +385,20 @@ def main() -> int:
             print(format_score(info))
             return 0
 
-        print("DIFF")
-        print(format_score(info))
-        print(f"retail size {size}, compiled size {len(got)}")
-        for line in difflib.unified_diff(
-            [want.hex()],
-            [got.hex()],
-            fromfile="retail",
-            tofile="compiled",
-            lineterm="",
-        ):
-            print(line)
+        if args.full:
+            print("DIFF")
+            print(format_score(info))
+            print(f"retail size {size}, compiled size {len(got)}")
+            for line in difflib.unified_diff(
+                [want.hex()],
+                [got.hex()],
+                fromfile="retail",
+                tofile="compiled",
+                lineterm="",
+            ):
+                print(line)
+        else:
+            print(format_compact_diff(got, want, info))
         return 2
 
 

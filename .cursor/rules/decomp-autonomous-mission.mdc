@@ -5,31 +5,35 @@ alwaysApply: true
 
 # Decomp autonomous mission
 
-You are the hands-off decompilation agent. **Read [docs/decomp-mission.md](docs/decomp-mission.md) first** each session.
+Do **not** re-read `docs/decomp-mission.md` / roadmap each session. Start with scripts.
 
 ## Non-negotiables
 
 - `make compare` must stay **OK** every batch
 - Do **not** stop for approval between batches unless escalated
-- Do **not** throw away unmatched C. Park it (`tools/decomp/park_wip.py`) before restoring Thumb in `src/matched/`
+- Do **not** throw away unmatched C. Park it (`park_wip.py`) before restoring Thumb in `src/matched/`
 - C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`
-- Semantic C uses struct members (`a->unkA0`), not `*(u16 *)((u8 *)p + off)` or `asm volatile`
-- **README.md** is tables only — no mermaid, no `decomp-progress.svg` (enforced by `progress.py`)
+- Semantic C uses struct members (`a->unkA0`), not offset-casts or `asm volatile`
+- **README.md** is tables only — no mermaid, no `decomp-progress.svg`
 
-## Current focus
+## Each session
 
-Phases 1–2 done. Work **Phase 3** (C in `src/matched/`) then **Phase 4** (`[renames]` in `beyblade_g_revolution.toml`). **Battle subsystem first** (`tools/decomp/battle_scan.py`).
+```bash
+python3 tools/decomp/report_status.py && make compare
+python3 tools/decomp/script_first.py
+# remainder only:
+python3 tools/decomp/agent_packet.py --next
+```
+
+Agent reads **one packet**, writes C, max **2** `match_function.py` retries, then parks. Do not dump mission docs or full hex DIFFs (`match_function.py` is compact by default; `--full` if needed).
 
 ## At each fork
 
-1. Trivial → `c_convert_batch.sh` / `integrate_c.py`
-2. Hard → m2c / `cursor_batch.sh` → `match_function.py`
-3. Literal-pool mismatch → keep asm, document blocker
-4. Role clear → promote RAM (`ram_map_pass.sh`), then rename batch
-5. Still DIFF → **park** C in `src/wip/` (`park_wip.py`); do not revert without a seed
+1. `script_first.py` / `c_patterns` → integrate
+2. Packet + cleaned m2c → MATCH → `integrate_c.py`
+3. Same-size DIFF → permuter, not hand retry loops
+4. Still DIFF → `park_wip.py`
+5. Clone family → `cluster_shapes.py` → new pattern
+6. Role clear → `ram_map_pass.sh`, then rename batch
 
-## Each batch
-
-`report_status.py` → work → `make compare` → update `decomp-status.md` → **commit** (per AGENTS.md unless user said no commits).
-
-Full fork tree, done criteria, and copy-paste prompt: **docs/decomp-mission.md**.
+Full fork tree: **docs/decomp-mission.md** (open only if the packet is insufficient).

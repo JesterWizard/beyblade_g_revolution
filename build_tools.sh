@@ -52,7 +52,7 @@ if [ ! -d asm/nonmatchings ] || [ -z "$(ls -A asm/nonmatchings 2>/dev/null || tr
   python3 tools/decomp/generate_asm.py
 fi
 
-# Mizuchi (optional — needs npm; Cursor uses tools/decomp/cursor_batch.sh)
+# Mizuchi (optional — needs npm; Cursor uses script_first.py / agent_packet.py)
 if command -v npm >/dev/null 2>&1 && [ ! -d tools/mizuchi/.git ]; then
   echo "==> Setting up Mizuchi (optional)"
   bash tools/decomp/setup_mizuchi.sh || true

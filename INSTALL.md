@@ -60,10 +60,11 @@ make HACKS=1 modern   # append ROM with runtime + src_custom
 
 ```bash
 bash build_tools.sh               # agbcc, Luvdis, m2c — no API key needed
-tools/decomp/match_batch.sh 10
+python3 tools/decomp/script_first.py
+python3 tools/decomp/agent_packet.py --next
 ```
 
-See [AGENTS.md](AGENTS.md).
+See [README.md](README.md) § Decompilation and [AGENTS.md](AGENTS.md).
 
 ## decomp-permuter (agbcc matching)
 

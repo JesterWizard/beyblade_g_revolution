@@ -1,5 +1,4 @@
-# Mizuchi config for Beyblade G Revolution (GBA / agbcc matching decomp).
-# Run: tools/decomp/run_batch.sh  (after build_tools.sh)
+# Mizuchi config (optional; enable: false). Cursor uses script_first.py / agent_packet.py.
 
 global:
   getContextScript: |
@@ -20,7 +19,8 @@ global:
     sed '/\.size/d' "$ASM_FILE" > "$ASM_FILE.stripped" && mv "$ASM_FILE.stripped" "$ASM_FILE"
     arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork "$ASM_FILE" -o "{{objFilePath}}"
 
-  promptsDir: ./tools/decomp/prompts
+  # Unused while claude-runner.enable is false. Cursor: script_first.py / agent_packet.py
+  promptsDir: ./mizuchi-output
   mapFilePath: beyblade_g_revolution.map
   target: gba
   nonMatchingAsmFolders:

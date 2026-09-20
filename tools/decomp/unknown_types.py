@@ -56,6 +56,33 @@ def struct_from_function(function: str) -> str:
     return "Unk" + hexpart[3:]  # 68584
 
 
+def fields_of_struct(struct_name: str) -> dict[int, str]:
+    """offset → 'ctype field' for a named struct in unknown-types.h."""
+    if not HEADER.is_file():
+        return {}
+    text = HEADER.read_text()
+    m = re.search(
+        rf"struct\s+{re.escape(struct_name)}\b[^{{]*\{{(.*?)\n\}};",
+        text,
+        re.S,
+    )
+    if not m:
+        return {}
+    out: dict[int, str] = {}
+    for fm in _FIELD_RE.finditer(m.group(1)):
+        off = int(fm.group(1), 16)
+        ctype = re.sub(r"\s+", " ", fm.group(2).strip())
+        name = fm.group(3)
+        out[off] = f"{ctype} {name}"
+    return out
+
+
+def struct_exists(struct_name: str) -> bool:
+    if not HEADER.is_file():
+        return False
+    return re.search(rf"struct\s+{re.escape(struct_name)}\b", HEADER.read_text()) is not None
+
+
 def width_of(ctype: str) -> int:
     ctype = re.sub(r"\s+", " ", ctype.strip())
     if ctype in ("u8", "s8"):

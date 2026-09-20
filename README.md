@@ -6,23 +6,23 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **42.2%** of functions (267/633) and **14.2%** of original function bytes (12,806/90,272).
+Decompiled C is **42.3%** of functions (268/633) and **14.3%** of original function bytes (12,914/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `██████████████░░░░░░░░░░░░░░░░░░` | **42.2%** | 267/633 |
-| Decompiled C (bytes) | `█████░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **14.2%** | 12,806/90,272 |
+| Decompiled C (functions) | `██████████████░░░░░░░░░░░░░░░░░░` | **42.3%** | 268/633 |
+| Decompiled C (bytes) | `█████░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **14.3%** | 12,914/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 267 (42.2%) | 12,806 (14.2%) |
-| Readable Thumb | 366 (57.8%) | 77,466 (85.8%) |
+| Semantic C | 268 (42.3%) | 12,914 (14.3%) |
+| Readable Thumb | 365 (57.7%) | 77,358 (85.7%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
-Battle: **27.5%** functions / **8.0%** bytes in semantic C (44/160; 0 opcode left).
+Battle: **28.1%** functions / **8.2%** bytes in semantic C (45/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
 
@@ -38,15 +38,67 @@ make compare          # vanilla rebuild (default HACKS=0)
 make HACKS=1 modern   # link append ROM (runtime + src_custom)
 ```
 
-## Hands-off AI decompilation
+## Decompilation
 
-See [AGENTS.md](AGENTS.md). One-time setup, then batch runs:
+All 633 functions are already in the ROM peel (`make compare` green). Remaining work is **semantic C**: replace readable Thumb in `src/matched/` with C that still byte-matches. Agent notes: [AGENTS.md](AGENTS.md).
+
+### One-time
 
 ```bash
-bash build_tools.sh              # agbcc, Luvdis, m2c (no API key needed)
-tools/decomp/match_batch.sh 10   # integrate + compare + commit
-python3 tools/decomp/report_status.py
+bash build_tools.sh    # agbcc, Luvdis, m2c — no API key
+make compare
 ```
+
+### Every session (scripts first)
+
+```bash
+python3 tools/decomp/report_status.py
+make compare
+python3 tools/decomp/script_first.py     # patterns + cleaned m2c; integrate MATCH
+```
+
+`script_first.py` is the cheap path. Do not re-run pattern/m2c tools by hand for the same functions.
+
+### Leftover function
+
+```bash
+python3 tools/decomp/agent_packet.py --next    # --battle / --wip to retarget
+# Write C from that packet only (cleaned m2c seed, offsets, callees).
+python3 tools/decomp/match_function.py sub_XXXXXXXX scratch.c
+python3 tools/decomp/integrate_c.py sub_XXXXXXXX @scratch.c --kind semantic --note "…"
+make compare
+```
+
+Max two `match_function.py` retries. On DIFF:
+
+```bash
+python3 tools/decomp/park_wip.py sub_XXXXXXXX scratch.c --status "…" --next "…" --score "N/M"
+```
+
+Same-size DIFF → permuter, not a long retry loop. Clone families → one new matcher in `c_patterns.py`:
+
+```bash
+python3 tools/decomp/cluster_shapes.py
+tools/decomp/permuter/permute.sh import sub_XXXXXXXX
+tools/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 4 --stop-on-zero
+```
+
+### Commands
+
+| Command | Role |
+|---------|------|
+| `python3 tools/decomp/script_first.py` | Deterministic convert batch |
+| `python3 tools/decomp/agent_packet.py --next` | Compact context for one leftover function |
+| `python3 tools/decomp/match_function.py FN file.c` | Compile + compact DIFF vs retail |
+| `python3 tools/decomp/integrate_c.py FN @file.c --kind semantic` | Land MATCH into `src/matched/` |
+| `python3 tools/decomp/park_wip.py FN file.c` | Save unmatched C in `src/wip/` |
+| `python3 tools/decomp/cluster_shapes.py` | Find Thumb clones for new patterns |
+| `python3 tools/decomp/unblock_symbols.py` | Draft prototypes for `bl _080…` |
+| `make compare` | Must stay `beyblade_g_revolution.gba: OK` |
+
+Matching C is `src/matched/` (one file per function). Unmatched drafts are `src/wip/` (not linked). Patterns: [docs/decomp-patterns.md](docs/decomp-patterns.md). Queue: `make queue`.
+
+Do not enable `HACKS=1` while matching — that breaks the SHA1 compare.
 
 ## Layout
 
@@ -64,13 +116,6 @@ pret/pokeemerald-style matching tree, plus a small ygodm8 hack overlay:
 | `libagbsyscall/` | BIOS syscall helpers |
 | `ld_script.ld`, `sym_*.txt`, `rom.sha1` | Linker map, RAM symbols, compare checksum |
 | `src_custom/`, `configs/` | ygodm8-style append hacks (not used by `make compare`) |
-
-## Matching workflow
-
-1. Disassemble / analyze `baserom.gba` (Ghidra, etc.).
-2. Replace a range in `asm/rom.s` with a real object in `asm/` or `src/`.
-3. Update `ld_script.ld` and the Makefile source lists.
-4. `make compare` — keep the SHA1 green (vanilla peels only).
 
 ## Adding a hack (ygodm8-style)
 

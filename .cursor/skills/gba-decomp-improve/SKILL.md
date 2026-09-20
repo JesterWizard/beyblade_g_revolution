@@ -70,6 +70,7 @@ Do **not** throw away unmatched C. Reverting `src/matched/` without a `src/wip/`
 
 ```bash
 python3 tools/decomp/next_queue.py --write   # or: make queue
+python3 tools/decomp/cluster_shapes.py       # clone families → new c_patterns.py entry
 ```
 
 Edit [docs/decomp-queue.toml](docs/decomp-queue.toml):
@@ -102,6 +103,7 @@ Bootstrap checklist: [reference.md](reference.md)
 ## Anti-patterns (slow the loop)
 
 - Long blind `m2c` scans on all readable Thumb (low yield here)
+- Re-reading mission/roadmap instead of `agent_packet.py --next`
 - Re-trying blocked leaf-branch functions without new technique
 - Integrating without `match_function.py` MATCH
 - Hand-editing `asm/nonmatchings/*.s`

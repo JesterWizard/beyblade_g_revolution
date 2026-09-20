@@ -10,7 +10,7 @@
 
 - Rename TOML / ld script / game title strings
 - `tools/decomp/gen_rom_layout.py` — regenerate layout after first matches
-- `mizuchi.yaml` — optional; `cursor_batch.sh` works without API key
+- `mizuchi.yaml` — optional; `script_first.py` / `agent_packet.py` work without API key
 
 ## 3. Agent setup
 

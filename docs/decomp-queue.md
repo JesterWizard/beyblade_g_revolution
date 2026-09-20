@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T09:38:19Z_
+_Updated: 2026-09-20T10:15:31Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 267 |
-| Still need semantic C | **366** |
-| Readable Thumb remaining | 366 |
+| Semantic C done | 268 |
+| Still need semantic C | **365** |
+| Readable Thumb remaining | 365 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 102 (44 already semantic) |
+| Battle pending | 102 (45 already semantic) |
 | Blocked (documented) | 35 |
 | WIP (resume these first) | 22 |
 
@@ -107,7 +107,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08030938` | `0x08030938` | 78 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
 | `sub_08033530` | `0x08033530` | 0 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
-| `sub_08038314` | `0x08038314` | 108 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
+| `sub_08038314` | `0x08038314` | 0 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
 | `sub_0803DBD0` | `0x0803DBD0` | 80 | 2D ROM table lookup (gUnk_080796DC[a][gMainWorkPtr->unk1818] / gUnk_08097458[unk1818] fallback) — retail leaf is bx lr with no push at all; every C shape tried (both branch orders) needs push{lr}/pop{r1} for one extra temp register (80B retail vs 84B compiled); same agbcc-extra-push-on-leaf class; needs permuter |
 | `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_0804495C` | `0x0804495C` | 60 | 32-halfword table copy (gUnk_08094E00[gMainWorkPtr->unk181F] -> PLTT 0x050001C0) — void(void) leaf, same agbcc-extra-push-on-leaf framing as sub_0802B994 (60B retail vs 64B compiled, same shape every C form tried); needs permuter |
@@ -146,10 +146,11 @@ python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c --status "�
 python3 tools/decomp/match_function.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c
 python3 tools/decomp/try_convert.py sub_XXXXXXXX --integrate
 python3 tools/decomp/function_scores.py --close
+python3 tools/decomp/script_first.py
+python3 tools/decomp/agent_packet.py --next
+python3 tools/decomp/cluster_shapes.py
 python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
-tools/decomp/battle_semantic_batch.sh 10
-tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
 Full ranked backlog (316 functions): [`decomp-queue.json`](decomp-queue.json)

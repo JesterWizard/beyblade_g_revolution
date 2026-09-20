@@ -5,16 +5,16 @@
 ```text
 Autonomous decomp mission — do not stop for approval between batches.
 
-Read docs/decomp-mission.md, AGENTS.md, and docs/decomp-roadmap.md first.
+Do not re-read decomp-mission.md / roadmap. Start with scripts.
 
 Goal: byte-matching C for all 633 functions, self-documenting names, make compare always OK.
 
 Each session until done:
 1. python3 tools/decomp/report_status.py && make compare
-2. At every fork: follow the Fork policy below; verify with match_function.py / make compare
-3. Work one subsystem batch (battle first: battle_scan.py), then the next subsystem
+2. python3 tools/decomp/script_first.py
+3. python3 tools/decomp/agent_packet.py --next   # one leftover function; max 2 retries then park
 4. Every 3–5 batches: tools/decomp/ram_map_pass.sh
-5. Update docs/decomp-status.md (+ subsystem docs, e.g. battle.md)
+5. Update docs/decomp-status.md
 6. Commit after each green batch (see Commit policy)
 
 Escalate only: baserom missing, agbcc broken, make compare fails after 3 fix attempts.
@@ -30,7 +30,7 @@ and beyblade_g_revolution.toml [renames] covers all functions with self-document
 | Layer | Criterion | Current tooling |
 |-------|-----------|-----------------|
 | **ROM linked** | 633/633 functions in peel; `make compare` OK | `match_batch.sh`, `integrate_match.py` |
-| **C decomp** | Every *convertible* function has verified C in `src/matched/` | `match_function.py`, `integrate_c.py`, `c_convert_batch.sh` |
+| **C decomp** | Every *convertible* function has verified C in `src/matched/` | `script_first.py`, `match_function.py`, `integrate_c.py` |
 | **RAM map** | Battle/menu IWRAM named; pool rescanned periodically | `ram_map_pass.sh`, `battle_scan.py` |
 | **Names** | `[renames]` in `beyblade_g_revolution.toml`; C/asm use readable names | Phase 4 + `generate_asm.py --force` |
 | **Shiftable** | No fixed-VMA per-function sections (Phase 5) | `check_shiftable.py` |
@@ -50,36 +50,20 @@ Default loop:
 python3 tools/decomp/report_status.py
 make compare
 
-# 2. Pick subsystem / triage
-python3 tools/decomp/battle_scan.py -n 20    # battle first
-tools/decomp/battle_semantic_batch.sh 10 --seeds-only  # hand-verified battle C
-tools/decomp/battle_convert_batch.sh 10
-tools/decomp/battle_cursor_batch.sh 5      # m2c seeds for hard battle fns
-python3 tools/decomp/triage_functions.py -n 10
+# 2. Deterministic convert (patterns + cleaned m2c)
+python3 tools/decomp/script_first.py
 
-# 3. Semantic C (replace opcode stubs — priority)
-tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
-python3 tools/decomp/m2c_asm.py sub_XXXXXXXX          # m2c seed
-python3 tools/decomp/match_function.py sub_XXXXXXXX … # refine until MATCH
-python3 tools/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --kind semantic
+# 3. Remainder — one packet, not a doc dump
+python3 tools/decomp/agent_packet.py --next
+# Write C from that packet only. Max 2 match_function.py retries, then park_wip.py.
 
-# 3b. Trivial patterns only (no opcode embed fallback)
-tools/decomp/c_convert_batch.sh 30
-python3 tools/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
-python3 tools/decomp/integrate_c.py sub_XXXXXXXX @src/matched/sub_XXXXXXXX.c --note <subsystem>/<role>
-
-# 4. Hard functions (literal-pool / agbcc ordering)
-tools/decomp/cursor_batch.sh 10              # m2c seeds, no API key
-tools/decomp/permuter/permute.sh import sub_XXXXXXXX
-tools/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 4 --stop-on-zero
+# 4. Grow zero-token path from clones
+python3 tools/decomp/cluster_shapes.py
 
 # 5. RAM map (every 3–5 conversion batches)
 tools/decomp/ram_map_pass.sh
 
-# 6. Phase 5 preflight (informational until migration)
-python3 tools/decomp/check_shiftable.py
-
-# 7. Report + commit
+# 6. Report + commit
 python3 tools/decomp/report_status.py
 ```
 
@@ -90,16 +74,18 @@ python3 tools/decomp/report_status.py
 When multiple approaches exist, try in this order. **Never break `make compare`.**
 
 ```
-┌─ Trivial asm (c_patterns matches)?
-│    YES → c_convert_batch.sh or integrate_c.py
+┌─ script_first.py / c_patterns MATCH?
+│    YES → already integrated (or try_convert.py --integrate)
 │    NO  ↓
-├─ m2c seed + hand-refined C?
+├─ agent_packet.py seed + hand-refined C (max 2 retries)?
 │    match_function.py → MATCH → integrate_c.py
-│    DIFF → try cursor_batch.sh / permuter; still DIFF ↓
+│    DIFF → permuter (same-size); still DIFF ↓
 ├─ Literal-pool / agbcc ordering mismatch?
 │    Keep asm matching in `src/matched/`; **park** unmatched C in `src/wip/`
 │    (see docs/decomp-wip.md). Do not revert a reconstruction without a seed.
 │    Promote RAM symbols if tracing clarified globals
+├─ Clone family in cluster_shapes.py?
+│    Add one matcher to c_patterns.py; re-run script_first.py
 ├─ Role understood while reading asm?
 │    Promote gUnk_* → named SET_DATA in asm/ram_map_*.s; ram_map_pass.sh
 │    Subsystem complete? → batch [renames] in beyblade_g_revolution.toml
@@ -181,7 +167,6 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 - `baserom.gba` missing or wrong SHA1
 - `build_tools.sh` / agbcc build fails after retry
 - `make compare` still fails after **3** distinct fix attempts (attach log + diff)
-- Need `ANTHROPIC_API_KEY` for Mizuchi and Cursor batch is insufficient
 
 ---
 
@@ -189,7 +174,10 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 
 | What | Where |
 |------|-------|
+| End-to-end process | [README.md](../README.md) § Decompilation |
 | Mission (this file) | `docs/decomp-mission.md` |
+| Script-first batch | `tools/decomp/script_first.py` |
+| Function packet | `tools/decomp/agent_packet.py` |
 | Master plan | `docs/decomp-roadmap.md` |
 | Live log | `docs/decomp-status.md` |
 | Parked unmatched C | `docs/decomp-wip.md`, `src/wip/` |

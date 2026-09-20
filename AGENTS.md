@@ -5,13 +5,13 @@ hands-off: you run tools, integrate results, and report summaries. Do not ask th
 to run commands unless a hard blocker requires credentials they alone control
 (e.g. baserom missing). **Cursor is the agent** — Mizuchi/Claude API is optional.
 
-Read **[docs/decomp-mission.md](docs/decomp-mission.md)** (standing goal + fork policy),
-**[architecture.md](docs/architecture.md)**, and **[docs/decomp-roadmap.md](docs/decomp-roadmap.md)** (master plan) first.
+Read **[docs/decomp-mission.md](docs/decomp-mission.md)** only if a packet is insufficient — do **not**
+re-read it every session. Workspace rules already carry the fork policy.
 
 ## Mission
 
 Produce **byte-matching** C (`make compare` → `beyblade_g_revolution.gba: OK`) by
-automating: disassembly → triage → Cursor batch → integrate → verify → report.
+automating: `script_first.py` → packet → integrate → verify → report.
 
 ## One-time bootstrap (run if not done)
 
@@ -22,7 +22,7 @@ bash build_tools.sh
 This installs agbcc, gbafix, Luvdis, m2c, generates `asm/nonmatchings/`, and verifies
 `make compare`. Mizuchi (npm) is optional.
 
-**Primary batch runner:** `tools/decomp/cursor_batch.sh` — no API key required.
+**Primary batch runner:** `python3 tools/decomp/script_first.py` — no API key required.
 
 ## Every work session (repeat until done)
 
@@ -34,31 +34,25 @@ This installs agbcc, gbafix, Luvdis, m2c, generates `asm/nonmatchings/`, and ver
 python3 tools/decomp/report_status.py
 make compare
 
-# 2. Match + integrate + commit (10 functions)
-tools/decomp/match_batch.sh 10
+# 2. Deterministic pass (no model)
+python3 tools/decomp/script_first.py
 
-# 3. Every 3–5 batches: RAM map pass
+# 3. Remainder: one compact packet, then C (max 2 retries → park)
+python3 tools/decomp/agent_packet.py --next
+
+# 4. Every 3–5 batches: RAM map pass
 tools/decomp/ram_map_pass.sh
-# Promote gUnk_* → named SET_DATA in asm/ram_map_*.s as roles become clear
 
-# 4. Phase 3: trivial C batch, or hand-convert + integrate
-tools/decomp/c_convert_batch.sh 30
-python3 tools/decomp/match_function.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
-python3 tools/decomp/integrate_c.py sub_XXXXXXXX src/matched/sub_XXXXXXXX.c
-
-# 5. Phase 5 gate check (shiftable ROM)
-python3 tools/decomp/check_shiftable.py
-
-# 6. Report to user (template below)
+# 5. Report
 python3 tools/decomp/report_status.py
 ```
 
-Optional: `tools/decomp/cursor_batch.sh 10` for m2c seeds when tackling hard functions.
+Optional: `python3 tools/decomp/cluster_shapes.py` to grow `c_patterns.py` from clone families.
 
 ### Commit policy
 
-**Commit after every successful `match_batch.sh`** — do not ask the user. Message:
-`decomp: match batch (+N functions, M/633 total)`. Never commit if `make compare` fails.
+**Commit after every successful semantic batch** (`script_first.py` or `integrate_c.py`) — do not ask the user. Message:
+`decomp: C batch (+N functions, M/633 in src/matched)`. Never commit if `make compare` fails.
 
 If `asm/nonmatchings/` is empty:
 
@@ -108,22 +102,20 @@ bash build_tools.sh
 
 | Tool | Path | Role |
 |------|------|------|
-| Cursor batch | `tools/decomp/cursor_batch.sh` | Triage → m2c seed → agent refine → match |
+| Script-first | `tools/decomp/script_first.py` | Patterns + cleaned m2c; integrate MATCH |
+| Function packet | `tools/decomp/agent_packet.py` | Compact context for one leftover function |
+| m2c cleanup | `tools/decomp/m2c_cleanup.py` | RAM names, struct fields, strip m2c chrome |
+| Shape cluster | `tools/decomp/cluster_shapes.py` | Clone families → new `c_patterns.py` matchers |
+| Unblock symbols | `tools/decomp/unblock_symbols.py` | Draft prototypes for `bl _080…` |
+| Try convert | `tools/decomp/try_convert.py` | One-function patterns + cleaned m2c |
+| Verify C | `tools/decomp/match_function.py` | Compile + compact DIFF vs retail |
+| Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |
+| Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/wip/`) |
 | decomp-permuter | `tools/decomp/permuter/` | agbcc literal-pool / instruction-order search |
-| Mizuchi (opt.) | `tools/mizuchi/` | Full m2c → permuter → Claude pipeline (needs npm) |
-| Config | `mizuchi.yaml` | Mizuchi config (`enable: false` by default) |
 | agbcc | `tools/agbcc/bin/agbcc` | Matching compiler |
-| m2ctx | `tools/m2ctx.py` | Context for decompiler |
 | Luvdis | `tools/luvdis/` | Initial disassembly |
-| Triage | `tools/decomp/triage_functions.py` | Pick easy functions first |
-| Match batch | `tools/decomp/match_batch.sh` | **Primary:** verify asm → integrate → compare → commit |
-| Verify asm | `tools/decomp/verify_asm_bytes.py` | Baserom byte check before integrate |
-| Integrate | `tools/decomp/integrate_match.py` | Land match into ROM peel |
 | ROM layout | `tools/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
 | Shiftable check | `tools/decomp/check_shiftable.py` | Phase 5 gate |
-| Cursor batch | `tools/decomp/cursor_batch.sh` | m2c seeds for hard functions |
-| decomp-permuter | `tools/decomp/permuter/` | agbcc pool/ordering search |
-| Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/wip/`) |
 | Status | `tools/decomp/report_status.py` | Progress summary + refresh counter |
 | Progress bar | `tools/decomp/progress.py` | Semantic C % vs original (JSON + SVG) |
 
@@ -137,20 +129,20 @@ Post this after every batch (fill in values):
 - **Matched this batch:** N / attempted M
 - **Decompiled C:** X% functions / Y% bytes (from `progress.py`)
 - **make compare:** OK / FAILED
-- **Log:** mizuchi-output/batch-*.log
 - **Blockers:** none / <describe>
 
 ### Newly matched
-- `FunctionName` → `src/module.c`
+- `FunctionName` → `src/matched/FunctionName.c`
 
 ### Next
-- Run another batch of 10, or investigate failures in log
+- `python3 tools/decomp/script_first.py` then `agent_packet.py --next`
 ```
 
 ## Where things are documented
 
 | Question | Look here |
 |----------|-----------|
+| **End-to-end process** | [README.md](README.md) § Decompilation |
 | **Standing mission / fork policy** | [docs/decomp-mission.md](docs/decomp-mission.md) |
 | Pipeline / directories | [architecture.md](docs/architecture.md) |
 | Master plan | [docs/decomp-roadmap.md](docs/decomp-roadmap.md) |
@@ -162,7 +154,6 @@ Post this after every batch (fill in values):
 
 ## Escalation (only then ask the user)
 
-- Mizuchi/Claude needed and `ANTHROPIC_API_KEY` not set (use Cursor batch instead)
 - baserom.gba missing or wrong SHA1
 - agbcc build fails on their machine after `build_tools.sh`
 - Persistent `make compare` failure after a claimed match (include log + diff)
