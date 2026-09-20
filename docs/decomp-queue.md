@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T08:05:41Z_
+_Updated: 2026-09-20T08:12:54Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 254 |
-| Still need semantic C | **379** |
-| Readable Thumb remaining | 379 |
+| Semantic C done | 258 |
+| Still need semantic C | **375** |
+| Readable Thumb remaining | 375 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 106 (40 already semantic) |
+| Battle pending | 104 (42 already semantic) |
 | Blocked (documented) | 35 |
 
 Ranking: **battle** · showing top **40**
@@ -35,11 +35,9 @@ Ranking: **battle** · showing top **40**
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_08032DC4` | `0x08032DC4` | 660 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803FDD0` | `0x0803FDD0` | 64 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043B90` | `0x08043B90` | 76 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08033574` | `0x08033574` | 80 | 1 | pool | asm | (gBattleWork) |
 | `sub_08052934` | `0x08052934` | 84 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0805D99C` | `0x0805D99C` | 84 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08040EF4` | `0x08040EF4` | 88 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803D4C4` | `0x0803D4C4` | 88 | 1 | pool | asm | (gBattleWork) |
 | `sub_080449C4` | `0x080449C4` | 92 | 1 | pool | asm | (gMainWorkPtr) |
@@ -61,6 +59,8 @@ Ranking: **battle** · showing top **40**
 | `sub_08043638` | `0x08043638` | 120 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08051BBC` | `0x08051BBC` | 124 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C55C` | `0x0802C55C` | 128 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_080462D4` | `0x080462D4` | 130 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0802BF04` | `0x0802BF04` | 140 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -115,6 +115,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (348 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (344 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T08:05:41Z",
+  "generated": "2026-09-20T08:12:54Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "src_matched": 633,
@@ -8,16 +8,16 @@
   "missing_size": 0,
   "kinds": {
     "semantic": {
-      "functions": 254,
-      "bytes": 11526,
-      "pct_functions": 40.1,
-      "pct_bytes": 12.8
+      "functions": 258,
+      "bytes": 11794,
+      "pct_functions": 40.8,
+      "pct_bytes": 13.1
     },
     "readable_asm": {
-      "functions": 379,
-      "bytes": 78746,
-      "pct_functions": 59.9,
-      "pct_bytes": 87.2
+      "functions": 375,
+      "bytes": 78478,
+      "pct_functions": 59.2,
+      "pct_bytes": 86.9
     },
     "opcode": {
       "functions": 0,
@@ -28,10 +28,10 @@
   },
   "decomp": {
     "headline": "semantic C vs original function code",
-    "functions": 254,
-    "bytes": 11526,
-    "pct_functions": 40.1,
-    "pct_bytes": 12.8
+    "functions": 258,
+    "bytes": 11794,
+    "pct_functions": 40.8,
+    "pct_bytes": 13.1
   },
   "non_blob": {
     "note": "semantic C + readable Thumb (no .byte retail paste)",
@@ -41,8 +41,8 @@
     "pct_bytes": 100.0
   },
   "readable_asm": {
-    "functions": 379,
-    "bytes": 78746
+    "functions": 375,
+    "bytes": 78478
   },
   "opcode": {
     "functions": 0,
@@ -50,13 +50,13 @@
   },
   "battle": {
     "functions": 160,
-    "semantic": 40,
-    "readable_asm": 120,
+    "semantic": 42,
+    "readable_asm": 118,
     "opcode": 0,
     "bytes": 37974,
-    "semantic_bytes": 2644,
-    "pct_functions": 25.0,
-    "pct_bytes": 7.0
+    "semantic_bytes": 2792,
+    "pct_functions": 26.2,
+    "pct_bytes": 7.4
   },
   "largest_opcode": [],
   "history": [
@@ -939,6 +939,16 @@
       "total_bytes": 90272,
       "pct_functions": 40.1,
       "pct_bytes": 12.8
+    },
+    {
+      "generated": "2026-09-20T08:12:54Z",
+      "semantic": 258,
+      "readable_asm": 375,
+      "opcode": 0,
+      "semantic_bytes": 11794,
+      "total_bytes": 90272,
+      "pct_functions": 40.8,
+      "pct_bytes": 13.1
     }
   ]
 }
