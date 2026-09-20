@@ -282,6 +282,7 @@ void sub_0806FF58(void *a, void *b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h);
 void *sub_0807309C(u32 size);
 void sub_0804AAF0(void *a);
 void sub_0804AE94(void);
+void sub_0804EBF0(void *a);
 u32 sub_0803EBB0(u32 a);
 u32 sub_0803ECB8(u32 a);
 u32 sub_0803EC34(u32 a);

@@ -1,128 +1,61 @@
 #include "global.h"
 
 // @ 0x0804ed90
-__attribute__((naked))
-void sub_0804ED90(void)
+#include "global.h"
+
+void sub_0804ED90(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "bl sub_080674B4\n"
-        "movs r4, #0x0A\n"
-        "_0804ED9A:\n"
-        "lsls r0, r4, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x04\n"
-        "bl sub_0806184C\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x19\n"
-        "ble _0804ED9A\n"
-        "movs r4, #0x0A\n"
-        "_0804EDAC:\n"
-        "lsls r0, r4, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x05\n"
-        "bl sub_0806184C\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x19\n"
-        "ble _0804EDAC\n"
-        "movs r4, #0x0A\n"
-        "_0804EDBE:\n"
-        "lsls r0, r4, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x06\n"
-        "bl sub_0806184C\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x19\n"
-        "ble _0804EDBE\n"
-        "movs r4, #0x0A\n"
-        "_0804EDD0:\n"
-        "lsls r0, r4, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x07\n"
-        "bl sub_0806184C\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x19\n"
-        "ble _0804EDD0\n"
-        "movs r4, #0x0A\n"
-        "_0804EDE2:\n"
-        "lsls r0, r4, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x08\n"
-        "bl sub_0806184C\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x19\n"
-        "ble _0804EDE2\n"
-        "movs r4, #0x0A\n"
-        "_0804EDF4:\n"
-        "lsls r0, r4, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x09\n"
-        "bl sub_0806184C\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x19\n"
-        "ble _0804EDF4\n"
-        "ldr r0, _0804EE90 @ =0x080D79CC\n"
-        "ldr r1, _0804EE94 @ =0x080B7429\n"
-        "bl sub_080617C4\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x20\n"
-        "bl sub_080615EC\n"
-        "ldr r4, _0804EE98 @ =0x083A8470\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0xDC\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x28\n"
-        "bl sub_080615EC\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0xDC\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x30\n"
-        "bl sub_080615EC\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0xDC\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x38\n"
-        "bl sub_080615EC\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0xDC\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x40\n"
-        "bl sub_080615EC\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0xDC\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x48\n"
-        "bl sub_080615EC\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0xDC\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _0804EE9C @ =0x082C44A8\n"
-        "ldr r1, _0804EEA0 @ =0x080B7258\n"
-        "bl sub_080617C4\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_0804EBF0\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0804EE90: .4byte 0x080D79CC\n"
-        "_0804EE94: .4byte 0x080B7429\n"
-        "_0804EE98: .4byte 0x083A8470\n"
-        "_0804EE9C: .4byte 0x082C44A8\n"
-        "_0804EEA0: .4byte 0x080B7258\n"
-    );
+    s32 i;
+    u16 value;
+    void *table;
+
+    sub_080674B4();
+    for (i = 0x0A; i <= 0x19; i++)
+    {
+        value = (u16)i;
+        sub_0806184C(value, 4);
+    }
+    for (i = 0x0A; i <= 0x19; i++)
+    {
+        value = (u16)i;
+        sub_0806184C(value, 5);
+    }
+    for (i = 0x0A; i <= 0x19; i++)
+    {
+        value = (u16)i;
+        sub_0806184C(value, 6);
+    }
+    for (i = 0x0A; i <= 0x19; i++)
+    {
+        value = (u16)i;
+        sub_0806184C(value, 7);
+    }
+    for (i = 0x0A; i <= 0x19; i++)
+    {
+        value = (u16)i;
+        sub_0806184C(value, 8);
+    }
+    for (i = 0x0A; i <= 0x19; i++)
+    {
+        value = (u16)i;
+        sub_0806184C(value, 9);
+    }
+
+    sub_080617C4((struct Unk617C4 *)0x080D79CC, 0x080B7429);
+    sub_080615EC(0, 0x20);
+    table = (void *)0x083A8470;
+    sub_0806171C(table, 0xDC, 1);
+    sub_080615EC(0, 0x28);
+    sub_0806171C(table, 0xDC, 1);
+    sub_080615EC(0, 0x30);
+    sub_0806171C(table, 0xDC, 1);
+    sub_080615EC(0, 0x38);
+    sub_0806171C(table, 0xDC, 1);
+    sub_080615EC(0, 0x40);
+    sub_0806171C(table, 0xDC, 1);
+    sub_080615EC(0, 0x48);
+    sub_0806171C(table, 0xDC, 1);
+    sub_080617C4((struct Unk617C4 *)0x082C44A8, 0x080B7258);
+    sub_0804EBF0(arg);
 }
 

@@ -996,3 +996,11 @@ notes = "src/wip/sub_0804CE2C.md"
 status = "Two semantic attempts: family seed 51/168 (176B), then r4/r6 explicit locals 56/168 (176B). Constants and call sequence are correct; agbcc still swaps the desired index/first-coordinate register allocation and retains an 8-byte size delta."
 next = "Use the established UI family permuter/source-order search for ordinary saved r4 input, r6 first coordinate, and saved r7 image; avoid the explicit local asm pins that reverse the prologue."
 score = "51/168 then 56/168"
+
+[[wip]]
+name = "sub_0804E4F4"
+seed = "src/wip/sub_0804E4F4.c"
+notes = "src/wip/sub_0804E4F4.md"
+status = "Two semantic attempts: generic renderer 51/168 (176B), then first-coordinate r6 pin 53/168 (176B). Rendering semantics and constants are correct, but saved-register allocation/prologue and coordinate narrowing remain different from retail."
+next = "Continue the UI family register/permuter search with ordinary r4 index, saved r7 image, and r6 first coordinate; avoid fixed first-coordinate pin if it changes the push order."
+score = "51/168 then 53/168"
