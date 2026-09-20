@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T19:40:11Z",
+  "generated": "2026-09-20T19:54:38Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 330,
-    "semantic_done": 303,
-    "readable_asm": 330,
+    "pending": 329,
+    "semantic_done": 304,
+    "readable_asm": 329,
     "opcode": 0,
-    "battle_pending": 90,
-    "battle_semantic": 57,
+    "battle_pending": 89,
+    "battle_semantic": 58,
     "blocked": 34,
-    "wip": 150
+    "wip": 152
   },
   "pinned": [],
   "wip": [
@@ -943,8 +943,8 @@
     {
       "name": "sub_0804245C",
       "addr": "0x0804245C",
-      "kind": "asm",
-      "bytes": 140,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804245C.c",
       "notes": "src/wip/sub_0804245C.md",
       "status": "Two attempts: baseline combined cursor update 116/140 (136B), then split stores 133/140 (same-size 140B). Dispatch and ring update match; final 7-byte diff is second cursor reload register shape (retail reuses r2 as ring-location pointer and loads ring into r1, seed overwrites r2 with ring).",
@@ -1665,6 +1665,28 @@
       "status": "Two semantic attempts. Direct GBA register/global C reached 109/148 bytes (73.6%, exact size); a base-pointer rewrite preserved size but fell to 58/148. Hardware behavior is mapped: enable sound, configure DMA1 to FIFO A, configure timers, and update audio timing globals.",
       "next": "Start from the 109/148 direct-register candidate. Reproduce retail's DMA pointer sequencing: after sound control setup, retail keeps 0x04000082 + 0x3A in r1 and emits str [r1], adds r1,#4, str [r1], adds r1,#4. Avoid agbcc's stmia writeback and preserve the retail literal pool order; then match timer/global writes.",
       "score": "109/148"
+    },
+    {
+      "name": "sub_08073988",
+      "addr": "0x08073988",
+      "kind": "asm",
+      "bytes": 96,
+      "seed": "src/wip/sub_08073988.c",
+      "notes": "src/wip/sub_08073988.md",
+      "status": "Two semantic attempts. Final branch/goto-shaped parser reached 91/96 bytes (94.8%, same size), with all control flow and argument/register setup matching retail. Only the default character lookup differs: agbcc loads the fixed 0x080BB748 table into r7 and reuses it, while retail loads it into r0 and preserves the base argument in r7.",
+      "next": "Retain the goto-shaped control flow. Force the default lookup to emit ldr r0,=0x080BB748; adds r0,r1,r0; ldrb r0; adds r0,r0,r7; ldrb, while preserving local base in r7 and the 5-register prologue. Avoid global register r0 experiments because agbcc rejects call-clobbered global register variables under Werror.",
+      "score": "91/96"
+    },
+    {
+      "name": "sub_0802BAD4",
+      "addr": "0x0802BAD4",
+      "kind": "asm",
+      "bytes": 320,
+      "seed": "src/wip/sub_0802BAD4.c",
+      "notes": "src/wip/sub_0802BAD4.md",
+      "status": "Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation.",
+      "next": "Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store.",
+      "score": "50/320"
     }
   ],
   "recommended": [
@@ -2085,20 +2107,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802BAD4",
-      "addr": "0x0802BAD4",
-      "kind": "asm",
-      "bytes": 320,
-      "score": 161,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08043C70",
       "addr": "0x08043C70",
       "kind": "asm",
@@ -2230,6 +2238,20 @@
       "kind": "asm",
       "bytes": 452,
       "score": 253,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0803DEC8",
+      "addr": "0x0803DEC8",
+      "kind": "asm",
+      "bytes": 514,
+      "score": 227,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -2897,20 +2919,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802BAD4",
-      "addr": "0x0802BAD4",
-      "kind": "asm",
-      "bytes": 320,
-      "score": 161,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08043C70",
       "addr": "0x08043C70",
       "kind": "asm",
@@ -3547,18 +3555,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08073988",
-      "addr": "0x08073988",
-      "kind": "asm",
-      "bytes": 96,
-      "score": 46,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },

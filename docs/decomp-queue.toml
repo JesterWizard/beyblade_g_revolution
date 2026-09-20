@@ -1348,3 +1348,19 @@ notes = "src/wip/sub_08071BA0.md"
 status = "Two semantic attempts. Direct GBA register/global C reached 109/148 bytes (73.6%, exact size); a base-pointer rewrite preserved size but fell to 58/148. Hardware behavior is mapped: enable sound, configure DMA1 to FIFO A, configure timers, and update audio timing globals."
 next = "Start from the 109/148 direct-register candidate. Reproduce retail's DMA pointer sequencing: after sound control setup, retail keeps 0x04000082 + 0x3A in r1 and emits str [r1], adds r1,#4, str [r1], adds r1,#4. Avoid agbcc's stmia writeback and preserve the retail literal pool order; then match timer/global writes."
 score = "109/148"
+
+[[wip]]
+name = "sub_08073988"
+seed = "src/wip/sub_08073988.c"
+notes = "src/wip/sub_08073988.md"
+status = "Two semantic attempts. Final branch/goto-shaped parser reached 91/96 bytes (94.8%, same size), with all control flow and argument/register setup matching retail. Only the default character lookup differs: agbcc loads the fixed 0x080BB748 table into r7 and reuses it, while retail loads it into r0 and preserves the base argument in r7."
+next = "Retain the goto-shaped control flow. Force the default lookup to emit ldr r0,=0x080BB748; adds r0,r1,r0; ldrb r0; adds r0,r0,r7; ldrb, while preserving local base in r7 and the 5-register prologue. Avoid global register r0 experiments because agbcc rejects call-clobbered global register variables under Werror."
+score = "91/96"
+
+[[wip]]
+name = "sub_0802BAD4"
+seed = "src/wip/sub_0802BAD4.c"
+notes = "src/wip/sub_0802BAD4.md"
+status = "Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation."
+next = "Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store."
+score = "50/320"
