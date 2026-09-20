@@ -519,6 +519,14 @@ struct Unk4AAF0 /* >= 0x28 */
     /* 26 */ s16 unk26;
 };
 
+/* Menu callback table at 0x080995AC. */
+struct Unk995AC /* 0x10 */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ void *unk08;
+    /* 0C */ u8 filler_0C[4];
+};
+
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {

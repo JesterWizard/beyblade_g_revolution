@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T18:16:24Z_
+_Updated: 2026-09-20T18:19:15Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 293 |
-| Still need semantic C | **340** |
-| Readable Thumb remaining | 340 |
+| Semantic C done | 294 |
+| Still need semantic C | **339** |
+| Readable Thumb remaining | 339 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 91 (56 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 107 |
+| WIP (resume these first) | 109 |
 
 Ranking: **battle** · showing top **40**
 
@@ -133,6 +133,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0804C27C` | 168 | compile error then 56/168 | `src/wip/sub_0804C27C.c` | Two attempts consumed: parameter-register syntax was rejected by agbcc; the viable local r4/r6 pin produced 56/168 (176B). Renderer semantics/constants are mapped, but fixed-register declaration order swaps the retail saved-register prologue and coordinate lifetime. | Use ordinary saved-register allocation/permuter work (input r4, image r7, first coordinate r6) rather than parameter asm syntax or the current fixed-register declaration order. |
 | `sub_0804CE2C` | 168 | 51/168 then 56/168 | `src/wip/sub_0804CE2C.c` | Two semantic attempts: family seed 51/168 (176B), then r4/r6 explicit locals 56/168 (176B). Constants and call sequence are correct; agbcc still swaps the desired index/first-coordinate register allocation and retains an 8-byte size delta. | Use the established UI family permuter/source-order search for ordinary saved r4 input, r6 first coordinate, and saved r7 image; avoid the explicit local asm pins that reverse the prologue. |
 | `sub_0804E4F4` | 168 | 51/168 then 53/168 | `src/wip/sub_0804E4F4.c` | Two semantic attempts: generic renderer 51/168 (176B), then first-coordinate r6 pin 53/168 (176B). Rendering semantics and constants are correct, but saved-register allocation/prologue and coordinate narrowing remain different from retail. | Continue the UI family register/permuter search with ordinary r4 index, saved r7 image, and r6 first coordinate; avoid fixed first-coordinate pin if it changes the push order. |
+| `sub_08051BBC` | 124 | 24/124 then 26/124 | `src/wip/sub_08051BBC.c` | Two semantic attempts: direct field/volatile loop 24/124 (144B), then pinned main-location/BLDY anchors 26/124 (156B). Fade counters and register writes are semantically correct, but the retail uses a compact offset-register layout and the typed pointer anchors add code. | Restore direct semantic fields and use targeted source-order/permuter work for retail r5=main-location, r4=0x17F0 offset, r6=BLDY; preserve loop writes and callback order. |
+| `sub_0805264C` | 96 | 29/96 then 9/96 | `src/wip/sub_0805264C.c` | Two semantic attempts after correcting the existing prototype: struct-table lookup 29/96 (same size), then split ROM-table lookup with r5 pointer pin 9/96 (92B). Callback semantics, signed selector, and two position draws are mapped; retail requires the exact split 0x080995AC+8 table address and r5 data/r4 index lifetime without the extra saved register. | Restore the first same-size semantic seed and use a targeted table-address/source-order search; force ldr base, lsl index, adds #8, adds offset, ldr callback, with data in r5 and index in r4. |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -150,7 +152,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08051BBC` | `0x08051BBC` | 124 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C55C` | `0x0802C55C` | 128 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080428F0` | `0x080428F0` | 160 | 1 | pool | asm | (gMainWorkPtr) |
@@ -180,6 +181,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0803370C` | `0x0803370C` | 362 | 1 | pool | asm | (gBattleWork) |
 | `sub_08044648` | `0x08044648` | 364 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080447E8` | `0x080447E8` | 372 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_080618EC` | `0x080618EC` | 428 | 1 | pool | asm | (gBtlInputMask) |
 
 ## Blocked
 
@@ -236,6 +238,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (206 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (203 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

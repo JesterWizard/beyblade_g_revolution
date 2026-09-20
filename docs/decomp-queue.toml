@@ -1004,3 +1004,19 @@ notes = "src/wip/sub_0804E4F4.md"
 status = "Two semantic attempts: generic renderer 51/168 (176B), then first-coordinate r6 pin 53/168 (176B). Rendering semantics and constants are correct, but saved-register allocation/prologue and coordinate narrowing remain different from retail."
 next = "Continue the UI family register/permuter search with ordinary r4 index, saved r7 image, and r6 first coordinate; avoid fixed first-coordinate pin if it changes the push order."
 score = "51/168 then 53/168"
+
+[[wip]]
+name = "sub_08051BBC"
+seed = "src/wip/sub_08051BBC.c"
+notes = "src/wip/sub_08051BBC.md"
+status = "Two semantic attempts: direct field/volatile loop 24/124 (144B), then pinned main-location/BLDY anchors 26/124 (156B). Fade counters and register writes are semantically correct, but the retail uses a compact offset-register layout and the typed pointer anchors add code."
+next = "Restore direct semantic fields and use targeted source-order/permuter work for retail r5=main-location, r4=0x17F0 offset, r6=BLDY; preserve loop writes and callback order."
+score = "24/124 then 26/124"
+
+[[wip]]
+name = "sub_0805264C"
+seed = "src/wip/sub_0805264C.c"
+notes = "src/wip/sub_0805264C.md"
+status = "Two semantic attempts after correcting the existing prototype: struct-table lookup 29/96 (same size), then split ROM-table lookup with r5 pointer pin 9/96 (92B). Callback semantics, signed selector, and two position draws are mapped; retail requires the exact split 0x080995AC+8 table address and r5 data/r4 index lifetime without the extra saved register."
+next = "Restore the first same-size semantic seed and use a targeted table-address/source-order search; force ldr base, lsl index, adds #8, adds offset, ldr callback, with data in r5 and index in r4."
+score = "29/96 then 9/96"
