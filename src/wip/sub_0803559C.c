@@ -2,8 +2,8 @@
 
 void sub_0803559C(void *obj, u32 b, u32 value)
 {
-    register struct Unk35258 *base asm("r3");
-    register struct Unk680CC *target asm("r0");
+    register struct Unk35258 *base;
+    register struct Unk680CC *target;
     u8 type;
 
     base = obj;

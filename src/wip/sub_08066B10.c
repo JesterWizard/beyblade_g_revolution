@@ -2,7 +2,7 @@
 
 u8 sub_08066B10(struct Unk66BC4 *a, u8 index)
 {
-    register struct Unk66BC4 *state asm("r5");
+    register struct Unk66BC4 *state;
     u8 result;
     s32 length;
 

@@ -3,9 +3,9 @@
 void sub_08062988(struct Unk62988 *a)
 {
     u32 flags;
-    register u32 group asm("r3");
-    register u32 mode asm("r1");
-    register u32 variant asm("r2");
+    register u32 group;
+    register u32 mode;
+    register u32 variant;
 
     flags = a->unk00;
     group = flags >> 8;

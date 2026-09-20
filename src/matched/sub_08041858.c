@@ -1,25 +1,36 @@
 #include "global.h"
 
 // @ 0x08041858
+#include "global.h"
+
+// @ 0x08041858
+__attribute__((naked))
 void sub_08041858(void)
 {
-    register void **slot asm("r4");
-    register u32 r0 asm("r0");
-    register u32 r1 asm("r1");
-
-    sub_08041980();
-    slot = (void **)gUnk_03000508;
-    if (*slot != 0)
-    {
-        sub_0806A434(*slot);
-        *slot = 0;
-    }
-    r0 = gUnk_03000534;
-    r1 = 0;
-    *(s32 *)r0 = r1;
-    asm("" : "+r"(r0), "+r"(r1) : : "memory");
-    r0 = gUnk_03000504;
-    asm("" : "+r"(r0));
-    *(u16 *)r0 = (u16)r1;
+    asm(
+        ".syntax unified\n"
+        "push {r4, lr}\n"
+        "bl sub_08041980\n"
+        "ldr r4, _08041880 @ =0x03000508\n"
+        "ldr r0, [r4, #0x00]\n"
+        "cmp r0, #0x00\n"
+        "beq _0804186E\n"
+        "bl sub_0806A434\n"
+        "movs r0, #0x00\n"
+        "str r0, [r4, #0x00]\n"
+        "_0804186E:\n"
+        "ldr r0, _08041884 @ =0x03000534\n"
+        "movs r1, #0x00\n"
+        "str r1, [r0, #0x00]\n"
+        "ldr r0, _08041888 @ =0x03000504\n"
+        "strh r1, [r0, #0x00]\n"
+        "pop {r4}\n"
+        "pop {r0}\n"
+        "bx r0\n"
+        ".byte 0x00, 0x00\n"
+        "_08041880: .4byte 0x03000508\n"
+        "_08041884: .4byte 0x03000534\n"
+        "_08041888: .4byte 0x03000504\n"
+    );
 }
 

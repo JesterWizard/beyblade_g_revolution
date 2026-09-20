@@ -4,22 +4,22 @@
 
 void sub_0802C2B0(u32 a, u32 b)
 {
-    register u32 value asm("r3");
+    register u32 value;
     u32 key;
-    register struct MainWork **loc asm("r12");
-    register struct MainWork **loc_load asm("r1");
-    register u32 index asm("r2");
-    register u32 offset asm("r4");
-    register struct MainWork **loop_loc asm("r6");
-    register u32 loop_offset asm("r5");
-    register u32 shifted_value asm("r0");
-    register u32 scaled_index asm("r0");
-    register u32 shifted_key asm("r1");
-    register struct Unk1694 *final_base asm("r0");
-    register u32 zero asm("r4");
-    register struct Unk1694 *record_reg asm("r1");
+    register struct MainWork **loc;
+    register struct MainWork **loc_load;
+    register u32 index;
+    register u32 offset;
+    register struct MainWork **loop_loc;
+    register u32 loop_offset;
+    register u32 shifted_value;
+    register u32 scaled_index;
+    register u32 shifted_key;
+    register struct Unk1694 *final_base;
+    register u32 zero;
+    register struct Unk1694 *record_reg;
     struct MainWork *work;
-    register struct MainWork *final_work asm("r1");
+    register struct MainWork *final_work;
 
     a = (a << 24) >> 24;
     value = a;

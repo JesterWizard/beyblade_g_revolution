@@ -2,7 +2,7 @@
 
 void sub_080474AC(void)
 {
-    register struct MainWork *main asm("r3");
+    register struct MainWork *main;
     struct Unk473F8 *pool;
     struct Unk474ACSlot *slot;
     s32 i;

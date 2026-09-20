@@ -26,26 +26,6 @@ name = "sub_080601C4"
 reason = "r8 pool pin — permuter best score ~100"
 
 [[block]]
-name = "sub_0802D8C4"
-reason = "agbcc extra push {lr} on branch leaves"
-
-[[block]]
-name = "sub_080615EC"
-reason = "branchy asm — agbcc compile fail"
-
-[[block]]
-name = "sub_08061BDC"
-reason = "agbcc extra push {lr} on null-check leaf"
-
-[[block]]
-name = "sub_08062634"
-reason = "agbcc extra push {lr} on null-check leaf"
-
-[[block]]
-name = "sub_08061E40"
-reason = "agbcc extra push {lr} on null-check leaf"
-
-[[block]]
 name = "sub_0802C62C"
 reason = "counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a — same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter"
 
@@ -56,14 +36,6 @@ reason = "battle state branch — subs r2 #0x6C vs direct unk201C pool (same-siz
 [[block]]
 name = "sub_080473E4"
 reason = "dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5)"
-
-[[block]]
-name = "sub_0806FEFC"
-reason = "BtlObjNode move-to-tail (gBtlObjListHead/Tail) — agbcc inserts extra push {lr}/pop{r1}+bx r1 frame on this null-check leaf like sub_0802D8C4/sub_08061BDC; same-size DIFF on direct-return form, +12B with early-return form; needs permuter"
-
-[[block]]
-name = "sub_0806FF28"
-reason = "BtlObj unlink+push-to-head (obj->unk19 early return) — same agbcc extra push{lr} frame quirk as sub_0806FEFC; +4B DIFF; needs permuter"
 
 [[block]]
 name = "sub_08034894"
@@ -1276,3 +1248,502 @@ notes = "src/wip/sub_08035D68.md"
 status = "Rotation/projection helper semantics reconstructed: table sine/cosine lookup, depth-scaled coordinate rotation, perspective correction, output writes, flag extraction, and sub_08070354 dispatch. Natural baseline is 19/196 bytes and size-mismatched at 208 bytes; a second fixed-register attempt reached 50/196 but aliased the source pointer with a pinned delta and was discarded."
 next = "Use the natural seed and introduce register constraints only after preserving the source pointer in ip. Target uses sine r8, dx r7, dy r5, dz r4, output x r6, output y r2, and flag r9; do not pin dx to r7 unless source is explicitly pinned to r12."
 score = "19/196"
+
+[[wip]]
+name = "sub_0802C62C"
+seed = "src/wip/sub_0802C62C.c"
+notes = "src/wip/sub_0802C62C.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "unscored"
+
+[[wip]]
+name = "sub_0802E048"
+seed = "src/wip/sub_0802E048.c"
+notes = "src/wip/sub_0802E048.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "112/228"
+
+[[wip]]
+name = "sub_08031294"
+seed = "src/wip/sub_08031294.c"
+notes = "src/wip/sub_08031294.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "3/28"
+
+[[wip]]
+name = "sub_080312B0"
+seed = "src/wip/sub_080312B0.c"
+notes = "src/wip/sub_080312B0.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "36/40"
+
+[[wip]]
+name = "sub_08031300"
+seed = "src/wip/sub_08031300.c"
+notes = "src/wip/sub_08031300.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "6/78"
+
+[[wip]]
+name = "sub_08033978"
+seed = "src/wip/sub_08033978.c"
+notes = "src/wip/sub_08033978.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "22/180"
+
+[[wip]]
+name = "sub_08033C1C"
+seed = "src/wip/sub_08033C1C.c"
+notes = "src/wip/sub_08033C1C.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "21/32"
+
+[[wip]]
+name = "sub_0803531C"
+seed = "src/wip/sub_0803531C.c"
+notes = "src/wip/sub_0803531C.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "121/132"
+
+[[wip]]
+name = "sub_080361A8"
+seed = "src/wip/sub_080361A8.c"
+notes = "src/wip/sub_080361A8.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "23/36"
+
+[[wip]]
+name = "sub_08037318"
+seed = "src/wip/sub_08037318.c"
+notes = "src/wip/sub_08037318.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "91/100"
+
+[[wip]]
+name = "sub_08037430"
+seed = "src/wip/sub_08037430.c"
+notes = "src/wip/sub_08037430.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "84/216"
+
+[[wip]]
+name = "sub_0803DD60"
+seed = "src/wip/sub_0803DD60.c"
+notes = "src/wip/sub_0803DD60.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "16/40"
+
+[[wip]]
+name = "sub_0803DD88"
+seed = "src/wip/sub_0803DD88.c"
+notes = "src/wip/sub_0803DD88.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "7/40"
+
+[[wip]]
+name = "sub_0803DDB0"
+seed = "src/wip/sub_0803DDB0.c"
+notes = "src/wip/sub_0803DDB0.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "11/40"
+
+[[wip]]
+name = "sub_0803DDD8"
+seed = "src/wip/sub_0803DDD8.c"
+notes = "src/wip/sub_0803DDD8.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "11/40"
+
+[[wip]]
+name = "sub_0803E328"
+seed = "src/wip/sub_0803E328.c"
+notes = "src/wip/sub_0803E328.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "41/76"
+
+[[wip]]
+name = "sub_0803EBB0"
+seed = "src/wip/sub_0803EBB0.c"
+notes = "src/wip/sub_0803EBB0.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "16/40"
+
+[[wip]]
+name = "sub_0803EC34"
+seed = "src/wip/sub_0803EC34.c"
+notes = "src/wip/sub_0803EC34.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "16/40"
+
+[[wip]]
+name = "sub_0803ECB8"
+seed = "src/wip/sub_0803ECB8.c"
+notes = "src/wip/sub_0803ECB8.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "16/40"
+
+[[wip]]
+name = "sub_080405A8"
+seed = "src/wip/sub_080405A8.c"
+notes = "src/wip/sub_080405A8.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "28/64"
+
+[[wip]]
+name = "sub_08040F4C"
+seed = "src/wip/sub_08040F4C.c"
+notes = "src/wip/sub_08040F4C.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "319/336"
+
+[[wip]]
+name = "sub_08041858"
+seed = "src/wip/sub_08041858.c"
+notes = "src/wip/sub_08041858.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "43/52"
+
+[[wip]]
+name = "sub_08042B00"
+seed = "src/wip/sub_08042B00.c"
+notes = "src/wip/sub_08042B00.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "16/40"
+
+[[wip]]
+name = "sub_08042B28"
+seed = "src/wip/sub_08042B28.c"
+notes = "src/wip/sub_08042B28.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "20/40"
+
+[[wip]]
+name = "sub_08042B50"
+seed = "src/wip/sub_08042B50.c"
+notes = "src/wip/sub_08042B50.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "20/40"
+
+[[wip]]
+name = "sub_08043B90"
+seed = "src/wip/sub_08043B90.c"
+notes = "src/wip/sub_08043B90.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "36/76"
+
+[[wip]]
+name = "sub_080442FC"
+seed = "src/wip/sub_080442FC.c"
+notes = "src/wip/sub_080442FC.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "132/144"
+
+[[wip]]
+name = "sub_08045128"
+seed = "src/wip/sub_08045128.c"
+notes = "src/wip/sub_08045128.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "55/80"
+
+[[wip]]
+name = "sub_08047624"
+seed = "src/wip/sub_08047624.c"
+notes = "src/wip/sub_08047624.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "80/174"
+
+[[wip]]
+name = "sub_080523A4"
+seed = "src/wip/sub_080523A4.c"
+notes = "src/wip/sub_080523A4.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "71/112"
+
+[[wip]]
+name = "sub_08052934"
+seed = "src/wip/sub_08052934.c"
+notes = "src/wip/sub_08052934.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "49/84"
+
+[[wip]]
+name = "sub_0806105C"
+seed = "src/wip/sub_0806105C.c"
+notes = "src/wip/sub_0806105C.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "38/44"
+
+[[wip]]
+name = "sub_08061308"
+seed = "src/wip/sub_08061308.c"
+notes = "src/wip/sub_08061308.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "46/48"
+
+[[wip]]
+name = "sub_080617C4"
+seed = "src/wip/sub_080617C4.c"
+notes = "src/wip/sub_080617C4.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "13/60"
+
+[[wip]]
+name = "sub_08061BE8"
+seed = "src/wip/sub_08061BE8.c"
+notes = "src/wip/sub_08061BE8.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "92/96"
+
+[[wip]]
+name = "sub_08061C48"
+seed = "src/wip/sub_08061C48.c"
+notes = "src/wip/sub_08061C48.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "unscored"
+
+[[wip]]
+name = "sub_08061E40"
+seed = "src/wip/sub_08061E40.c"
+notes = "src/wip/sub_08061E40.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "18/20"
+
+[[wip]]
+name = "sub_08062A74"
+seed = "src/wip/sub_08062A74.c"
+notes = "src/wip/sub_08062A74.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "72/76"
+
+[[wip]]
+name = "sub_08062CC8"
+seed = "src/wip/sub_08062CC8.c"
+notes = "src/wip/sub_08062CC8.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "40/44"
+
+[[wip]]
+name = "sub_08062D24"
+seed = "src/wip/sub_08062D24.c"
+notes = "src/wip/sub_08062D24.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "36/42"
+
+[[wip]]
+name = "sub_08066224"
+seed = "src/wip/sub_08066224.c"
+notes = "src/wip/sub_08066224.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "96/112"
+
+[[wip]]
+name = "sub_080674A4"
+seed = "src/wip/sub_080674A4.c"
+notes = "src/wip/sub_080674A4.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "2/6"
+
+[[wip]]
+name = "sub_080674B4"
+seed = "src/wip/sub_080674B4.c"
+notes = "src/wip/sub_080674B4.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "5/6"
+
+[[wip]]
+name = "sub_08067F98"
+seed = "src/wip/sub_08067F98.c"
+notes = "src/wip/sub_08067F98.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "39/48"
+
+[[wip]]
+name = "sub_08069894"
+seed = "src/wip/sub_08069894.c"
+notes = "src/wip/sub_08069894.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "89/96"
+
+[[wip]]
+name = "sub_08069908"
+seed = "src/wip/sub_08069908.c"
+notes = "src/wip/sub_08069908.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "8/64"
+
+[[wip]]
+name = "sub_08069948"
+seed = "src/wip/sub_08069948.c"
+notes = "src/wip/sub_08069948.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "8/64"
+
+[[wip]]
+name = "sub_08069988"
+seed = "src/wip/sub_08069988.c"
+notes = "src/wip/sub_08069988.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "8/64"
+
+[[wip]]
+name = "sub_0806A3A4"
+seed = "src/wip/sub_0806A3A4.c"
+notes = "src/wip/sub_0806A3A4.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "10/144"
+
+[[wip]]
+name = "sub_0806B3E8"
+seed = "src/wip/sub_0806B3E8.c"
+notes = "src/wip/sub_0806B3E8.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "67/84"
+
+[[wip]]
+name = "sub_0806DEF4"
+seed = "src/wip/sub_0806DEF4.c"
+notes = "src/wip/sub_0806DEF4.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "19/20"
+
+[[wip]]
+name = "sub_0806F430"
+seed = "src/wip/sub_0806F430.c"
+notes = "src/wip/sub_0806F430.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "41/48"
+
+[[wip]]
+name = "sub_0806FEFC"
+seed = "src/wip/sub_0806FEFC.c"
+notes = "src/wip/sub_0806FEFC.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "39/44"
+
+[[wip]]
+name = "sub_0806FF28"
+seed = "src/wip/sub_0806FF28.c"
+notes = "src/wip/sub_0806FF28.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "36/48"
+
+[[wip]]
+name = "sub_08070604"
+seed = "src/wip/sub_08070604.c"
+notes = "src/wip/sub_08070604.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "73/92"
+
+[[wip]]
+name = "sub_08071B4C"
+seed = "src/wip/sub_08071B4C.c"
+notes = "src/wip/sub_08071B4C.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "73/84"
+
+[[wip]]
+name = "sub_08071BA0"
+seed = "src/wip/sub_08071BA0.c"
+notes = "src/wip/sub_08071BA0.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "32/148"
+
+[[wip]]
+name = "sub_080726E0"
+seed = "src/wip/sub_080726E0.c"
+notes = "src/wip/sub_080726E0.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "50/52"
+
+[[wip]]
+name = "sub_08073988"
+seed = "src/wip/sub_08073988.c"
+notes = "src/wip/sub_08073988.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "89/96"
+
+[[wip]]
+score = "47/54"
+
+[[wip]]
+name = "sub_0802B994"
+seed = "src/wip/sub_0802B994.c"
+notes = "src/wip/sub_0802B994.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "42/58"
+
+[[wip]]
+name = "sub_0804495C"
+seed = "src/wip/sub_0804495C.c"
+notes = "src/wip/sub_0804495C.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "34/60"
+
+[[wip]]
+name = "sub_0803DBD0"
+seed = "src/wip/sub_0803DBD0.c"
+notes = "src/wip/sub_0803DBD0.md"
+status = "matched only with GCC asm labels; stripped DIFF"
+next = "rewrite without register asm / empty asm(); permuter if same-size"
+score = "23/80"

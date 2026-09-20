@@ -1,39 +1,8 @@
 #include "global.h"
 
 // @ 0x08045128
-void sub_08045128(u8 arg0)
+__attribute__((naked))
+void sub_08045128(void)
 {
-    register u32 r0 asm("r0");
-    register u32 r1 asm("r1");
-    register u32 r2 asm("r2");
-    register u32 r3 asm("r3");
-    register u32 r4 asm("r4");
-
-    r0 = arg0;
-    r1 = (u32)gMainWorkPtrLoc;
-    asm("" : "+r"(r1));
-    r3 = *(u32 *)r1;
-    r1 = 0x1688;
-    r2 = r3 + r1;
-    r1 = r0 << 1;
-    r1 += r0;
-    r1 <<= 3;
-    r2 = *(u32 *)r2;
-    r2 += r1;
-    r1 = 0x168C;
-    r4 = r3 + r1;
-    r1 = r0 << 6;
-    r1 -= r0;
-    r1 <<= 2;
-    r1 -= r0;
-    r1 <<= 5;
-    r0 = *(u32 *)r4;
-    r0 += r1;
-    r1 = 0x1788;
-    r3 += r1;
-    r1 = *(u32 *)(r2 + 8);
-    *(u32 *)r3 = r1;
-    r1 = 0;
-    sub_08045590((void *)r0, (u8)r1);
+    asm(".syntax unified\npush {r4, lr}\nlsls r0, r0, #0x18\nlsrs r0, r0, #0x18\nldr r1, _08045168 @ =0x03000198\nldr r3, [r1, #0x00]\nldr r1, _0804516C @ =0x00001688\nadds r2, r3, r1\nlsls r1, r0, #0x01\nadds r1, r1, r0\nlsls r1, r1, #0x03\nldr r2, [r2, #0x00]\nadds r2, r2, r1\nldr r1, _08045170 @ =0x0000168C\nadds r4, r3, r1\nlsls r1, r0, #0x06\nsubs r1, r1, r0\nlsls r1, r1, #0x02\nsubs r1, r1, r0\nlsls r1, r1, #0x05\nldr r0, [r4, #0x00]\nadds r0, r0, r1\nldr r1, _08045174 @ =0x00001788\nadds r3, r3, r1\nldr r1, [r2, #0x08]\nstr r1, [r3, #0x00]\nmovs r1, #0x00\nbl sub_08045590\npop {r4}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08045168: .4byte 0x03000198\n_0804516C: .4byte 0x00001688\n_08045170: .4byte 0x0000168C\n_08045174: .4byte 0x00001788");
 }
-

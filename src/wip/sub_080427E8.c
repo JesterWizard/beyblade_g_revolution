@@ -2,7 +2,7 @@
 
 void sub_080427E8(void)
 {
-    register struct MainWork *main asm("r2");
+    register struct MainWork *main;
 
     main = gMainWorkPtr;
     if (main->unk182C == 0)

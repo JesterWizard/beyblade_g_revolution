@@ -2,7 +2,7 @@
 
 void sub_0804B40C(u8 *data, s32 index, void *image)
 {
-    register s32 offset asm("r4");
+    register s32 offset;
     s32 first;
 
     offset = index;

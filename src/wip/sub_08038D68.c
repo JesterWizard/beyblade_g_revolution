@@ -2,8 +2,8 @@
 
 void sub_08038D68(struct Unk38D68 *a)
 {
-    register struct Unk38D68 *base asm("r5");
-    register void **table asm("r2");
+    register struct Unk38D68 *base;
+    register void **table;
     s32 value;
     s32 half;
 

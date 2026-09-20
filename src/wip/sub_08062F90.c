@@ -2,9 +2,9 @@
 
 void sub_08062F90(void)
 {
-    register void **e0_loc asm("r5");
-    register void **buffer_loc asm("r6");
-    register void **palette_loc asm("r4");
+    register void **e0_loc;
+    register void **buffer_loc;
+    register void **palette_loc;
 
     if (gUnk_030008DC != 0
         || gUnk_030008D8 != 0

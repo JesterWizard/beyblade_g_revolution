@@ -2,7 +2,7 @@
 
 void sub_0804E4F4(u8 *data, s32 index, void *image)
 {
-    register s32 first asm("r6");
+    register s32 first;
 
     if (index == (s8)data[0x2D5])
         sub_08061610(0x0E);

@@ -1,31 +1,53 @@
 #include "global.h"
 
 // @ 0x08069894
+__attribute__((naked))
 void sub_08069894(void)
 {
-    register u32 r0 asm("r0");
-    register u32 r1 asm("r1");
-    u8 i;
-
-    r0 = gUnk_03000108;
-    r1 = 0;
-    *(s8 *)r0 = (s8)r1;
-    asm("" : "+r"(r0), "+r"(r1) : : "memory");
-    r0 = gUnk_030001B0;
-    asm("" : "+r"(r0));
-    *(s8 *)r0 = (s8)r1;
-    r1 = gUnk_030001A8;
-    asm("" : "+r"(r1));
-    r0 = 0x20;
-    *(s8 *)r1 = (s8)r0;
-
-    for (i = 0; i <= 3; i++)
-    {
-        *sub_08069908(i) = 0;
-        *sub_08069948(i) = 0;
-    }
-
-    sub_08069A60(2, 0, 0x100, 0x100);
-    sub_08069A60(3, 0, 0x100, 0x100);
+    asm(
+        ".syntax unified\n"
+        "push {r4, r5, lr}\n"
+        "ldr r0, _080698E8 @ =0x03000108\n"
+        "movs r1, #0x00\n"
+        "strb r1, [r0, #0x00]\n"
+        "ldr r0, _080698EC @ =0x030001B0\n"
+        "strb r1, [r0, #0x00]\n"
+        "ldr r1, _080698F0 @ =0x030001A8\n"
+        "movs r0, #0x20\n"
+        "strb r0, [r1, #0x00]\n"
+        "movs r4, #0x00\n"
+        "movs r5, #0x00\n"
+        "_080698AA:\n"
+        "adds r0, r4, #0x0\n"
+        "bl sub_08069908\n"
+        "strh r5, [r0, #0x00]\n"
+        "adds r0, r4, #0x0\n"
+        "bl sub_08069948\n"
+        "strh r5, [r0, #0x00]\n"
+        "adds r0, r4, #0x1\n"
+        "lsls r0, r0, #0x18\n"
+        "lsrs r4, r0, #0x18\n"
+        "cmp r4, #0x03\n"
+        "bls _080698AA\n"
+        "movs r4, #0x80\n"
+        "lsls r4, r4, #0x01\n"
+        "movs r0, #0x02\n"
+        "movs r1, #0x00\n"
+        "adds r2, r4, #0x0\n"
+        "adds r3, r4, #0x0\n"
+        "bl sub_08069A60\n"
+        "movs r0, #0x03\n"
+        "movs r1, #0x00\n"
+        "adds r2, r4, #0x0\n"
+        "adds r3, r4, #0x0\n"
+        "bl sub_08069A60\n"
+        "pop {r4, r5}\n"
+        "pop {r0}\n"
+        "bx r0\n"
+        ".byte 0x00, 0x00\n"
+        "_080698E8: .4byte 0x03000108\n"
+        "_080698EC: .4byte 0x030001B0\n"
+        "_080698F0: .4byte 0x030001A8\n"
+    );
 }
 

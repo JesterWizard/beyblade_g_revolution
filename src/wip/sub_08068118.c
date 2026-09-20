@@ -2,10 +2,10 @@
 
 void sub_08068118(struct Unk68118 *a)
 {
-    register struct Unk68118 *state asm("r4");
-    register struct Unk68118Table *table asm("r3");
-    register u16 next asm("r2");
-    register s16 callback_arg asm("r5");
+    register struct Unk68118 *state;
+    register struct Unk68118Table *table;
+    register u16 next;
+    register s16 callback_arg;
     void *callback;
 
     state = a;

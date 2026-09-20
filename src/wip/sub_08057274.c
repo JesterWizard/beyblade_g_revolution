@@ -2,7 +2,7 @@
 
 void sub_08057274(void)
 {
-    register struct MainWork **main_loc asm("r4");
+    register struct MainWork **main_loc;
     struct MainWork *main;
 
     main_loc = gMainWorkPtrLoc;

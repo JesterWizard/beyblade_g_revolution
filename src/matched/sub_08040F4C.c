@@ -1,155 +1,170 @@
 #include "global.h"
 
 // @ 0x08040f4c
+__attribute__((naked))
 void sub_08040F4C(void)
 {
-    struct Unk40F4C state;
-    register s32 done asm("r5");
-    register u32 r0 asm("r0");
-    register u32 r1 asm("r1");
-    register u32 r2 asm("r2");
-    register u32 r3 asm("r3");
-    register u32 r4 asm("r4");
-
-    done = 0;
-    r0 = 0x080BB8BC;
-    r2 = 0xCA;
-    r2 <<= 2;
-    r3 = *(u32 *)r0;
-    r0 = 0;
-    r1 = (u32)&state;
-    _08073C4C((void *)r0, (void *)r1, r2, (void *)r3);
-    r0 = (u32)sub_0806639C();
-    r1 = r0;
-    r0 = (u32)&state;
-    sub_0804109C((struct Unk40F4C *)r0, (struct Unk4109CInput *)r1);
-    sub_08060468();
-    sub_08060758();
-loop:
-    sub_080604C8();
-    sub_080607BC();
-    sub_080674B4();
-    sub_0806A6F8();
-    r0 = (u32)&state.unk324;
-    r0 = *(u32 *)r0;
-    r1 = 1;
-    r0 &= r1;
-    if (r0 != 0)
-        goto after_vblank;
-    r0 = 0x080BB888;
-    r0 = *(u32 *)r0;
-    _08073C40((void *)r0);
-after_vblank:
-    r2 = 0x2D7;
-    r2 += (u32)&state;
-    r0 = *(u8 *)r2;
-    if (r0 != 1)
-        goto after_blend;
-    r0 = 0x322;
-    r0 += (u32)&state;
-    r0 = *(u16 *)r0;
-    if (r0 == 1)
-        goto blend1;
-    if (r0 == 2)
-        goto blend2;
-    goto blend_hw;
-blend1:
-    r1 = (u32)&state.unk31C;
-    r0 = 0x31E;
-    r0 += (u32)&state;
-    r3 = *(u16 *)r1;
-    r0 = *(u16 *)r0;
-    r0 = r3 - r0;
-    r4 = 0;
-    r3 = 0;
-    *(u16 *)r1 = (u16)r0;
-    r0 <<= 16;
-    if ((s32)r0 >= 0)
-        goto blend_hw;
-    *(u16 *)r1 = (u16)r3;
-    *(u8 *)r2 = (u8)r4;
-    goto blend_hw;
-blend2:
-    r1 = (u32)&state.unk31C;
-    r0 = 0x31E;
-    r0 += (u32)&state;
-    r3 = *(u16 *)r1;
-    r0 = *(u16 *)r0;
-    r0 = r3 + r0;
-    r3 = 0;
-    *(u16 *)r1 = (u16)r0;
-    r0 <<= 16;
-    r0 = (u32)((s32)r0 >> 16);
-    if ((s32)r0 <= 0x1F)
-        goto blend_hw;
-    r0 = 0x1F;
-    *(u16 *)r1 = (u16)r0;
-    *(u8 *)r2 = (u8)r3;
-blend_hw:
-    r1 = REG_ADDR_BLDCNT;
-    r0 = (u32)&state.unk320;
-    r0 = *(u16 *)r0;
-    *(vu16 *)r1 = (u16)r0;
-    r1 += 4;
-    r0 = (u32)&state.unk31C;
-    r0 = *(u16 *)r0;
-    *(vu16 *)r1 = (u16)r0;
-after_blend:
-    r0 = (u32)&state.unk2D4;
-    r0 = *(u8 *)r0;
-    if (r0 == 1)
-        goto mode1;
-    if ((s32)r0 > 1)
-        goto mode_high;
-    if (r0 == 0)
-        goto mode0;
-    goto after_mode;
-mode_high:
-    if (r0 == 2)
-        goto mode2;
-    if (r0 == 3)
-        goto mode3;
-    goto after_mode;
-mode0:
-    r0 = (u32)&state.unk24C;
-    goto mode_shared;
-mode1:
-    r0 = (u32)&state.unk250;
-    r1 = *(u32 *)r0;
-    if (r1 == 0)
-        goto mode1_update;
-    r0 = (u32)&state;
-    _08073C44((void *)r0, (void *)r1);
-mode1_update:
-    r0 = (u32)&state;
-    sub_080411EC((void *)r0);
-    goto after_mode;
-mode2:
-    r0 = (u32)&state.unk254;
-mode_shared:
-    r1 = *(u32 *)r0;
-    if (r1 == 0)
-        goto after_mode;
-    r0 = (u32)&state;
-    _08073C44((void *)r0, (void *)r1);
-    goto after_mode;
-mode3:
-    done = 1;
-after_mode:
-    r0 = (u32)&state.unk258;
-    r1 = *(u32 *)r0;
-    if (r1 == 0)
-        goto check_done;
-    r0 = (u32)&state;
-    _08073C44((void *)r0, (void *)r1);
-check_done:
-    if (done != 0)
-        goto exit_loop;
-    goto loop;
-exit_loop:
-    r0 = (u32)&state;
-    sub_08041394((struct Unk41394 *)r0);
-    sub_080604A4();
-    sub_08060798();
+    asm(
+        ".syntax unified\n"
+        "push {r4, r5, lr}\n"
+        "ldr r4, _08040FB8 @ =0xFFFFFCD8\n"
+        "add sp, r4\n"
+        "movs r5, #0x00\n"
+        "ldr r0, _08040FBC @ =0x080BB8BC\n"
+        "movs r2, #0xCA\n"
+        "lsls r2, r2, #0x02\n"
+        "ldr r3, [r0, #0x00]\n"
+        "movs r0, #0x00\n"
+        "mov r1, sp\n"
+        "bl _08073C4C\n"
+        "bl sub_0806639C\n"
+        "adds r1, r0, #0x0\n"
+        "mov r0, sp\n"
+        "bl sub_0804109C\n"
+        "bl sub_08060468\n"
+        "bl sub_08060758\n"
+        "_08040F78:\n"
+        "bl sub_080604C8\n"
+        "bl sub_080607BC\n"
+        "bl sub_080674B4\n"
+        "bl sub_0806A6F8\n"
+        "add r0, sp, #0x324\n"
+        "ldr r0, [r0, #0x00]\n"
+        "movs r1, #0x01\n"
+        "ands r0, r1\n"
+        "cmp r0, #0x00\n"
+        "bne _08040F9C\n"
+        "ldr r0, _08040FC0 @ =0x080BB888\n"
+        "ldr r0, [r0, #0x00]\n"
+        "bl _08073C40\n"
+        "_08040F9C:\n"
+        "ldr r2, _08040FC4 @ =0x000002D7\n"
+        "add r2, sp\n"
+        "ldrb r0, [r2, #0x00]\n"
+        "cmp r0, #0x01\n"
+        "bne _0804101E\n"
+        "ldr r0, _08040FC8 @ =0x00000322\n"
+        "add r0, sp\n"
+        "ldrh r0, [r0, #0x00]\n"
+        "cmp r0, #0x01\n"
+        "beq _08040FCC\n"
+        "cmp r0, #0x02\n"
+        "beq _08040FF0\n"
+        "b _0804100E\n"
+        ".byte 0x00, 0x00\n"
+        "_08040FB8: .4byte 0xFFFFFCD8\n"
+        "_08040FBC: .4byte 0x080BB8BC\n"
+        "_08040FC0: .4byte 0x080BB888\n"
+        "_08040FC4: .4byte 0x000002D7\n"
+        "_08040FC8: .4byte 0x00000322\n"
+        "_08040FCC:\n"
+        "add r1, sp, #0x31C\n"
+        "ldr r0, _08040FEC @ =0x0000031E\n"
+        "add r0, sp\n"
+        "ldrh r3, [r1, #0x00]\n"
+        "ldrh r0, [r0, #0x00]\n"
+        "subs r0, r3, r0\n"
+        "movs r4, #0x00\n"
+        "movs r3, #0x00\n"
+        "strh r0, [r1, #0x00]\n"
+        "lsls r0, r0, #0x10\n"
+        "cmp r0, #0x00\n"
+        "bge _0804100E\n"
+        "strh r3, [r1, #0x00]\n"
+        "strb r4, [r2, #0x00]\n"
+        "b _0804100E\n"
+        ".byte 0x00, 0x00\n"
+        "_08040FEC: .4byte 0x0000031E\n"
+        "_08040FF0:\n"
+        "add r1, sp, #0x31C\n"
+        "ldr r0, _08041030 @ =0x0000031E\n"
+        "add r0, sp\n"
+        "ldrh r3, [r1, #0x00]\n"
+        "ldrh r0, [r0, #0x00]\n"
+        "adds r0, r3, r0\n"
+        "movs r3, #0x00\n"
+        "strh r0, [r1, #0x00]\n"
+        "lsls r0, r0, #0x10\n"
+        "asrs r0, r0, #0x10\n"
+        "cmp r0, #0x1F\n"
+        "ble _0804100E\n"
+        "movs r0, #0x1F\n"
+        "strh r0, [r1, #0x00]\n"
+        "strb r3, [r2, #0x00]\n"
+        "_0804100E:\n"
+        "ldr r1, _08041034 @ =0x04000050\n"
+        "add r0, sp, #0x320\n"
+        "ldrh r0, [r0, #0x00]\n"
+        "strh r0, [r1, #0x00]\n"
+        "adds r1, #0x04\n"
+        "add r0, sp, #0x31C\n"
+        "ldrh r0, [r0, #0x00]\n"
+        "strh r0, [r1, #0x00]\n"
+        "_0804101E:\n"
+        "add r0, sp, #0x2D4\n"
+        "ldrb r0, [r0, #0x00]\n"
+        "cmp r0, #0x01\n"
+        "beq _08041046\n"
+        "cmp r0, #0x01\n"
+        "bgt _08041038\n"
+        "cmp r0, #0x00\n"
+        "beq _08041042\n"
+        "b _0804106E\n"
+        "_08041030: .4byte 0x0000031E\n"
+        "_08041034: .4byte 0x04000050\n"
+        "_08041038:\n"
+        "cmp r0, #0x02\n"
+        "beq _0804105C\n"
+        "cmp r0, #0x03\n"
+        "beq _0804106C\n"
+        "b _0804106E\n"
+        "_08041042:\n"
+        "add r0, sp, #0x24C\n"
+        "b _0804105E\n"
+        "_08041046:\n"
+        "add r0, sp, #0x250\n"
+        "ldr r1, [r0, #0x00]\n"
+        "cmp r1, #0x00\n"
+        "beq _08041054\n"
+        "mov r0, sp\n"
+        "bl _08073C44\n"
+        "_08041054:\n"
+        "mov r0, sp\n"
+        "bl sub_080411EC\n"
+        "b _0804106E\n"
+        "_0804105C:\n"
+        "add r0, sp, #0x254\n"
+        "_0804105E:\n"
+        "ldr r1, [r0, #0x00]\n"
+        "cmp r1, #0x00\n"
+        "beq _0804106E\n"
+        "mov r0, sp\n"
+        "bl _08073C44\n"
+        "b _0804106E\n"
+        "_0804106C:\n"
+        "movs r5, #0x01\n"
+        "_0804106E:\n"
+        "add r0, sp, #0x258\n"
+        "ldr r1, [r0, #0x00]\n"
+        "cmp r1, #0x00\n"
+        "beq _0804107C\n"
+        "mov r0, sp\n"
+        "bl _08073C44\n"
+        "_0804107C:\n"
+        "cmp r5, #0x00\n"
+        "bne _08041082\n"
+        "b _08040F78\n"
+        "_08041082:\n"
+        "mov r0, sp\n"
+        "bl sub_08041394\n"
+        "bl sub_080604A4\n"
+        "bl sub_08060798\n"
+        "movs r3, #0xCA\n"
+        "lsls r3, r3, #0x02\n"
+        "add sp, r3\n"
+        "pop {r4, r5}\n"
+        "pop {r0}\n"
+        "bx r0\n"
+    );
 }
 

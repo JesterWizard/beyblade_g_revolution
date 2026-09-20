@@ -1,11 +1,8 @@
 #include "global.h"
 
 // @ 0x080674a4
+__attribute__((naked))
 s32 sub_080674A4(s32 a, s32 b)
 {
-    register s32 rem asm("r1");
-
-    asm("swi 6");
-    return rem;
+    asm(".syntax unified\nswi #6\nadds r0, r1, #0x0\nbx lr");
 }
-

@@ -2,8 +2,8 @@
 
 void sub_0804CE2C(u8 *data, s32 index, void *image)
 {
-    register s32 idx asm("r4");
-    register s32 first asm("r6");
+    register s32 idx;
+    register s32 first;
 
     idx = index;
     if (idx == (s8)data[0x2D5])

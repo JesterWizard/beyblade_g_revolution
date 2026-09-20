@@ -4,7 +4,7 @@ void sub_08067504(void *source, void *destination, u16 count)
 {
     u16 ime;
     u16 waitcnt;
-    register u16 busy_mask asm("r1");
+    register u16 busy_mask;
 
     ime = REG_IME;
     REG_IME = 0;

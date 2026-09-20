@@ -2,10 +2,10 @@
 
 s32 sub_08062AF8(void *table, void *key)
 {
-    register void *table_reg asm("r3");
-    register struct Unk62A74 *pool asm("r2");
-    register void *entry asm("r5");
-    register s32 i asm("r4");
+    register void *table_reg;
+    register struct Unk62A74 *pool;
+    register void *entry;
+    register s32 i;
 
     table_reg = table;
     if (table_reg == 0)

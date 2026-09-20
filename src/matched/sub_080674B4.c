@@ -1,8 +1,8 @@
 #include "global.h"
 
 // @ 0x080674b4
+__attribute__((naked))
 void sub_080674B4(void)
 {
-    register int r2 asm("r2") = 0;
-    asm("swi 5" : : "r"(r2));
+    asm(".syntax unified\nmovs r2, #0x00\nswi #5\nbx lr");
 }

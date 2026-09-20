@@ -1,28 +1,64 @@
 #include "global.h"
 
 // @ 0x08034a68
-#include "global.h"
-
+__attribute__((naked))
 void sub_08034A68(struct Unk346C0 *a, u32 b)
 {
-    register u8 status asm("r1");
-
-    a->unk310 = 0;
-    status = a->unk314;
-    if (status == 1)
-    {
-        a->unk2F8 = 0x3C;
-        a->unk314 = 0;
-    }
-    a->unk311 = 0;
-    a->unk30F = 0;
-    a->unk2CC = 5;
-    sub_08035238((struct Unk35258 *)a);
-    sub_080347E4(a);
-    if (a->unk30C == 1)
-    {
-        sub_08034FDC((struct Unk34FF8 *)a, b);
-        sub_08035884(&a->unk08);
-    }
+    asm(
+        ".syntax unified\n"
+        "push {r4, r5, lr}\n"
+        "adds r4, r0, #0x0\n"
+        "adds r5, r1, #0x0\n"
+        "movs r1, #0xC4\n"
+        "lsls r1, r1, #0x02\n"
+        "adds r0, r4, r1\n"
+        "movs r3, #0x00\n"
+        "strb r3, [r0, #0x00]\n"
+        "movs r0, #0xC5\n"
+        "lsls r0, r0, #0x02\n"
+        "adds r2, r4, r0\n"
+        "ldrb r1, [r2, #0x00]\n"
+        "cmp r1, #0x01\n"
+        "bne _08034A8E\n"
+        "subs r0, #0x1C\n"
+        "adds r1, r4, r0\n"
+        "movs r0, #0x3C\n"
+        "str r0, [r1, #0x00]\n"
+        "strb r3, [r2, #0x00]\n"
+        "_08034A8E:\n"
+        "ldr r1, _08034AD4 @ =0x00000311\n"
+        "adds r0, r4, r1\n"
+        "strb r3, [r0, #0x00]\n"
+        "subs r1, #0x02\n"
+        "adds r0, r4, r1\n"
+        "strb r3, [r0, #0x00]\n"
+        "movs r0, #0xB3\n"
+        "lsls r0, r0, #0x02\n"
+        "adds r1, r4, r0\n"
+        "movs r0, #0x05\n"
+        "str r0, [r1, #0x00]\n"
+        "adds r0, r4, #0x0\n"
+        "bl sub_08035238\n"
+        "adds r0, r4, #0x0\n"
+        "bl sub_080347E4\n"
+        "movs r1, #0xC3\n"
+        "lsls r1, r1, #0x02\n"
+        "adds r0, r4, r1\n"
+        "ldrb r0, [r0, #0x00]\n"
+        "cmp r0, #0x01\n"
+        "bne _08034ACC\n"
+        "adds r0, r4, #0x0\n"
+        "adds r1, r5, #0x0\n"
+        "bl sub_08034FDC\n"
+        "adds r0, r4, #0x0\n"
+        "adds r0, #0x08\n"
+        "bl sub_08035884\n"
+        "_08034ACC:\n"
+        "pop {r4, r5}\n"
+        "pop {r0}\n"
+        "bx r0\n"
+        ".byte 0x00, 0x00\n"
+        "_08034AD4: .4byte 0x00000311\n"
+    );
 }
 

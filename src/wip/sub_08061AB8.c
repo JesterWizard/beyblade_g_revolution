@@ -2,10 +2,10 @@
 
 void sub_08061AB8(void)
 {
-    register u32 *count_loc asm("r6");
-    register struct Unk0798 **work_loc asm("r5");
-    register struct Unk0770 *table asm("r7");
-    register void *buffer asm("r4");
+    register u32 *count_loc;
+    register struct Unk0798 **work_loc;
+    register struct Unk0770 *table;
+    register void *buffer;
 
     count_loc = (u32 *)0x03000794;
     if (*count_loc == 4)

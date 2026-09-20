@@ -261,15 +261,6 @@ def guess_c(function: str, asm_lines: list[str]) -> CCandidate | None:
             f"store byte {val} @+{off}",
         )
 
-    m0 = re.fullmatch(rf"movs r2, {IMM}", insns[0])
-    m1 = re.fullmatch(rf"swi {IMM}", insns[1]) if len(insns) > 1 else None
-    if len(insns) == 3 and insns[2] == "bx lr" and m0 and m1 and m0.group(1) == "#0x00":
-        n = m1.group(1)
-        return CCandidate(
-            f"void {function}(void)\n{{\n    register int r2 asm(\"r2\") = 0;\n    asm(\"swi {n}\" : : \"r\"(r2));\n}}",
-            f"swi {n} prep r2",
-        )
-
     m = re.fullmatch(rf"swi {IMM}", insns[0])
     if len(insns) == 2 and insns[1] == "bx lr" and m:
         n = m.group(1)

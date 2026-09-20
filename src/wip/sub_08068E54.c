@@ -2,11 +2,11 @@
 
 void sub_08068E54(struct Unk68E54 *a)
 {
-    register struct Unk68E54 *state asm("r4");
-    register s32 scale asm("r3");
-    register s32 delta_x asm("r5");
-    register s32 x asm("r1");
-    register s32 y asm("r2");
+    register struct Unk68E54 *state;
+    register s32 scale;
+    register s32 delta_x;
+    register s32 x;
+    register s32 y;
 
     state = a;
     x = state->unk14;

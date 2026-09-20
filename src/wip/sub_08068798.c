@@ -2,13 +2,13 @@
 
 void sub_08068798(struct Unk68798 *state)
 {
-    register struct Unk68798 *work asm("r6");
-    register s32 count asm("r7");
-    register s32 i asm("r5");
-    register struct Unk68798Entry *entry asm("r4");
-    register u32 offset asm("r1");
-    register struct Unk68798Entry *entries asm("r0");
-    register s32 value asm("r2");
+    register struct Unk68798 *work;
+    register s32 count;
+    register s32 i;
+    register struct Unk68798Entry *entry;
+    register u32 offset;
+    register struct Unk68798Entry *entries;
+    register s32 value;
     s32 delta;
 
     work = state;

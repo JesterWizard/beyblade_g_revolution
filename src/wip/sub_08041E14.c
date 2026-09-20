@@ -2,11 +2,11 @@
 
 s32 sub_08041E14(void *a, void *b)
 {
-    register void *a_ptr asm("r5");
-    register void *b_ptr asm("r4");
-    register s32 i asm("r1");
-    register s32 count asm("r3");
-    register struct Unk68574 **entries asm("r6");
+    register void *a_ptr;
+    register void *b_ptr;
+    register s32 i;
+    register s32 count;
+    register struct Unk68574 **entries;
     struct Unk68574 *obj;
     struct Unk41E14Node *node;
 

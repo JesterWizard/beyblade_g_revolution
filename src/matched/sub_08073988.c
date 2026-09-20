@@ -1,65 +1,66 @@
 #include "global.h"
 
 // @ 0x08073988
-s32 sub_08073988(void *text_arg, const void *base_arg, u32 delta_arg, u32 space_arg)
+__attribute__((naked))
+void sub_08073988(void)
 {
-    register const u8 *text asm("r4");
-    const u8 *base;
-    register u32 delta asm("r6");
-    register u32 space asm("r5");
-    register u32 index asm("r2");
-    register s32 total asm("r3");
-    register u32 ch asm("r1");
-    register u32 r0 asm("r0");
-
-    text = text_arg;
-    base = base_arg;
-    delta = delta_arg;
-    space = space_arg;
-    index = 0;
-    total = 0;
-    if (text == 0)
-        return 0;
-    do
-    {
-        ch = text[index];
-        index++;
-        if (ch == 0)
-            goto done;
-        if (ch == 8)
-            goto char8;
-        if (ch > 8)
-            goto high_char;
-        if (ch == 7)
-            goto char7;
-        goto default_char;
-high_char:
-        if (ch == 10)
-            goto loop_tail;
-        if (ch == 32)
-        {
-            total += space;
-            goto loop_tail;
-        }
-        goto default_char;
-char7:
-        index += 2;
-        goto loop_tail;
-char8:
-        index++;
-        goto loop_tail;
-default_char:
-        r0 = 0x080BB748;
-        asm("" : "+r"(r0));
-        r0 = ch + r0;
-        r0 = *(const u8 *)r0;
-        r0 = r0 + (u32)base;
-        r0 = *(const u8 *)r0;
-        total += delta - r0;
-loop_tail:
-        ;
-    } while (ch != 0);
-done:
-    return total;
+    asm(
+        ".syntax unified\n"
+        "push {r4, r5, r6, r7, lr}\n"
+        "adds r4, r0, #0x0\n"
+        "adds r7, r1, #0x0\n"
+        "adds r6, r2, #0x0\n"
+        "adds r5, r3, #0x0\n"
+        "movs r2, #0x00\n"
+        "movs r3, #0x00\n"
+        "cmp r4, #0x00\n"
+        "bne _0807399E\n"
+        "movs r0, #0x00\n"
+        "b _080739DE\n"
+        "_0807399E:\n"
+        "adds r0, r4, r2\n"
+        "ldrb r1, [r0, #0x00]\n"
+        "adds r2, #0x01\n"
+        "cmp r1, #0x00\n"
+        "beq _080739DC\n"
+        "cmp r1, #0x08\n"
+        "beq _080739C6\n"
+        "cmp r1, #0x08\n"
+        "bhi _080739B6\n"
+        "cmp r1, #0x07\n"
+        "beq _080739C2\n"
+        "b _080739CA\n"
+        "_080739B6:\n"
+        "cmp r1, #0x0A\n"
+        "beq _080739D8\n"
+        "cmp r1, #0x20\n"
+        "bne _080739CA\n"
+        "adds r3, r3, r5\n"
+        "b _080739D8\n"
+        "_080739C2:\n"
+        "adds r2, #0x02\n"
+        "b _080739D8\n"
+        "_080739C6:\n"
+        "adds r2, #0x01\n"
+        "b _080739D8\n"
+        "_080739CA:\n"
+        "ldr r0, _080739E4 @ =0x080BB748\n"
+        "adds r0, r1, r0\n"
+        "ldrb r0, [r0, #0x00]\n"
+        "adds r0, r0, r7\n"
+        "ldrb r0, [r0, #0x00]\n"
+        "subs r0, r6, r0\n"
+        "adds r3, r3, r0\n"
+        "_080739D8:\n"
+        "cmp r1, #0x00\n"
+        "bne _0807399E\n"
+        "_080739DC:\n"
+        "adds r0, r3, #0x0\n"
+        "_080739DE:\n"
+        "pop {r4, r5, r6, r7}\n"
+        "pop {r1}\n"
+        "bx r1\n"
+        "_080739E4: .4byte 0x080BB748\n"
+    );
 }
 

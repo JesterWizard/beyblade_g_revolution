@@ -30,8 +30,8 @@ BATTLE_SEEDS: list[tuple[str, str, str]] = [
 
 void sub_08033084(struct Unk726E0 *a, u32 flag)
 {
-    register struct Unk726E0 *dst asm("r5");
-    register struct BattleWork **loc asm("r4");
+    struct Unk726E0 *dst;
+    struct BattleWork **loc;
     struct BattleWork *w;
     s32 value;
 
@@ -62,8 +62,8 @@ void sub_08033084(struct Unk726E0 *a, u32 flag)
         "sub_08031294",
         """void sub_08031294(struct Unk312EC *a)
 {
-    register u8 r1 asm("r1");
-    register u8 r2 asm("r2");
+    u8 r1;
+    u8 r2;
 
     r1 = 0xFF;
     r2 = *(u8 *)&a->unk00;
@@ -83,7 +83,7 @@ void sub_08033084(struct Unk726E0 *a, u32 flag)
         "sub_08033C1C",
         """void sub_08033C1C(void)
 {
-    register struct Unk0380 *r1 asm("r1");
+    struct Unk0380 *r1;
     u32 tmp[1];
 
     tmp[0] = gUnk_03000380;
@@ -101,8 +101,8 @@ void sub_08033084(struct Unk726E0 *a, u32 flag)
         "sub_0806F430",
         """u32 sub_0806F430(void)
 {
-    register u32 r0 asm("r0");
-    register u32 r1 asm("r1");
+    u32 r0;
+    u32 r1;
     struct Unk4084 *p;
     u32 tmp[1];
 

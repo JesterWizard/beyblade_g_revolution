@@ -2,8 +2,8 @@
 name: gba-decomp-matching
 description: >-
   Fixes agbcc byte-matching failures for GBA decomp (match_function.py DIFF, near-misses,
-  register pinning, literal pools, decomp-permuter). Use when semantic C compiles but
-  bytes differ, same-size DIFF, pool order issues, or leaf-branch push lr blockers.
+  literal pools, decomp-permuter). Use when semantic C compiles but bytes differ,
+  same-size DIFF, pool order issues, or leaf-branch push lr blockers.
 ---
 
 # GBA byte-matching techniques
@@ -14,80 +14,52 @@ Oracle: `python3 tools/decomp/match_function.py FN path/to.c` → **MATCH** or c
 
 | Symptom | Likely cause | Try first |
 |---------|--------------|-----------|
-| Compiled **larger** (+4–16B), retail has no `push` | C `if` on leaf function | Block; permuter; or readable Thumb |
-| **Same size**, wrong bytes at pool | IWRAM address CSE / wrong `ldr` | `tmp[]` + `register` dest |
-| **Same size**, wrong insn order | agbcc reordered setup | Pin `register … asm("rN")`; match asm evaluation order |
+| Compiled **larger** (+4–16B), retail has no `push` | C `if` on leaf function | `-fprologue-bugfix`; else park |
+| **Same size**, wrong bytes at pool | IWRAM address CSE / wrong `ldr` | `tmp[]` local; statement order |
+| **Same size**, wrong insn order | agbcc reordered setup | Match evaluation order in C; permuter |
 | **muls** mismatch | Compiler multiply vs `muls` | Permuter; or readable Thumb |
-| Extra register in prologue | Missing pinned callee-saved reg | Pin `r4`/`r5` used in asm |
+| Extra register in prologue | Extra live locals | Fewer locals; permuter; else park |
+
+## Banned (not a match)
+
+Do **not** use GCC asm labels or compiler barriers in semantic C:
+
+- `register T x asm("rN");`
+- `asm("" : "+r"(x));` / `asm volatile`
+
+`match_function.py` rejects these. If retail bytes need them, park (`park_wip.py`) and leave Thumb in `src/matched/`.
+
+Allowed `asm()`: BIOS `asm("swi N");`, and `__attribute__((naked))` Thumb wrappers.
 
 ## Proven patterns (this repo)
 
-### 1. IWRAM pool pin (`tmp[]`)
+### 1. IWRAM pool (`tmp[]`)
 
 ```c
-register struct Unk0380 *r1 asm("r1");
+struct Unk0380 *p;
 u32 tmp[1];
 
 tmp[0] = gUnk_03000380;
-r1 = (struct Unk0380 *)tmp[0];
+p = (struct Unk0380 *)tmp[0];
 ```
 
-Wins: `sub_08033C1C`. Use when retail has `ldr rN, =0x03……` before use.
-
-Nearby IWRAM addresses fold (`0x534-0x30`, `0x108+0xA8`). Keep the first pointer live, then reload:
-
-```c
-r0 = gUnk_03000534;
-r1 = 0;
-*(s32 *)r0 = r1;
-asm("" : "+r"(r0), "+r"(r1) : : "memory");
-r0 = gUnk_03000504;
-asm("" : "+r"(r0));
-*(u16 *)r0 = (u16)r1;
-```
-
-Wins: `sub_08041858`, `sub_08069894`, `sub_08071B4C`, `sub_0806A3A4`.
-
-Table address before index (empty `+r` barrier, same as `sub_0803DDD8`):
-
-```c
-r1 = (u32)&gUnk_030002A0;
-asm("" : "+r"(r1));
-r0 = 0x2C;
-```
-
-Wins: `sub_08037318`, `sub_08033978`, `sub_08042B28`, `sub_08042B50`.
+Use when retail has `ldr rN, =0x03……` before use. `register` without an asm label is ordinary C (a hint only).
 
 `r0 = ch + table` → `adds r0, r1, r0`. Swapping operands is a 1-byte DIFF. Win: `sub_08073988`.
 
 ### 2. Register flow for and/cmp
 
-```c
-register u32 r0 asm("r0");
-register u32 r1 asm("r1");
-r1 = p->unk14;
-r0 = 8;
-r0 &= r1;
-if (r0 != 0) return 1;
-```
+Write the operations in retail order (`mask = 8; mask &= flags`). Mirror evaluation order, not hardware register names.
 
-Win: `sub_0806F430`. Mirror retail’s register roles, not abstract logic.
-
-Mask-first tests (`movs r0,#N; ldrb r1,[r5]; ands r0,r1`) need `u32` pins. `u8` becomes `ands r1, r0` / `cmp r1, #0`. Last test may `ldrb r5, [r5]`. Win: `sub_0803531C`.
-
-Clone of `sub_080425B8`: `addr = &byte; mask = 2; value = *addr; mask &= value`. Win: `sub_08042540`.
+Mask-first tests (`movs r0,#N; ldrb r1,[r5]; ands r0,r1`) need `u32` locals. `u8` becomes `ands r1, r0` / `cmp r1, #0`. Clone of `sub_080425B8`: `addr = &byte; mask = 2; value = *addr; mask &= value`.
 
 ### 3. Parameter registers (don’t re-assign early)
 
-Thumb args: `r0`, `r1`, `r2`, `r3`. If asm uses `r1` without `mov` from `r1`, declare `register T *r1 asm("r1");` and **do not** assign from the C parameter name before the asm-equivalent point.
+Thumb args: `r0`, `r1`, `r2`, `r3`. Keep using the C parameter names so `assign_parms` matches. Do **not** `obj = a` when retail starts `adds r5, r0; …`.
 
-Do **not** `obj = a` / pin `r5` when retail starts `adds r5, r0; adds r7, r2; adds r6, r3`. Keep using `a` across calls so the save order matches. Pin only extras (`index` in `r4`). Win: `sub_080442FC`.
+`u8` args emit `lsls/lsrs` before other copies. If retail copies `r1` first, take `u32` and extend after.
 
-`u8` args emit `lsls/lsrs` before other copies. If retail copies `r1` first, take `u32` and extend after. Win: `sub_08062A74`.
-
-If retail is `adds r5, r0` then only `lsls r1, #24; cmp r1, #0` (no `lsrs`), take `u32 flag`, `dst = a`, then `flag <<= 24`. Clamp `0x800` is `movs #0x80; lsls #4`. Win: `sub_08033084`.
-
-If retail `bl fn; lsls r0, r0, #2` with no caller zero-extend, change the callee from `u8` to `u32` and re-check that callee still MATCH. Win: `sub_08066224` / `sub_08072F94`.
+If retail `bl fn; lsls r0, r0, #2` with no caller zero-extend, change the callee from `u8` to `u32` and re-check that callee still MATCH.
 
 ### 4. Struct members (required)
 
@@ -97,27 +69,19 @@ a->unk302 = *(u16 *)gBtlInputMask;   // OK with ram_map.h constants
 
 Not: `*(u16 *)((u8 *)a + 0x302) = …`. Add fields to `include/unknown-types.h` first.
 
-### 5. Register-pinned byte ops
-
-See `sub_08031294`: `register u8 r1 asm("r1");` + `*(u8 *)&a->unk00` when retail does byte-wide OR/AND sequence.
+### 5. Control flow
 
 `if (a >= b) goto label` keeps `cmp; bge`. Nested if/else often inverts to `blt` and moves the pool. Put shared `return N` labels in retail fallthrough order. Win: `sub_08042390`.
 
-Loop that exits with `0` already in `r0`: `while ((r0 = p->unk00) != 0) { call(p->unk00, …); } return (s32)r0`. Plain `return 0` adds `movs r0,#0`. Win: `sub_08043B90`.
-
-Do **not** `register … asm("r7")`. agbcc will use `r7` and omit `push {r7}`. Leave the `r7` local unpinned. Win: `sub_08037430`.
-
-Keep a struct pointer in `r2` with `register T *r2 asm("r2"); r2 = a;`. Win: `sub_08031300`.
-
-Force an addend literal into `r3` before `adds r2, r4, r3`: `r3 = off; asm("" : "+r"(r3), "+r"(r4)); r2 = r4 + r3;`. Win: `sub_080523A4`.
+Loop that exits with `0` already in `r0`: `while ((r0 = p->unk00) != 0) { call(p->unk00, …); } return (s32)r0`. Plain `return 0` adds `movs r0,#0`.
 
 ### 6. Leaf `bx lr` + `-fprologue-bugfix`
 
 Default agbcc frames a branching leaf (`push {lr}` / `pop {r1}; bx r1`). `/* match-flags: -fprologue-bugfix */` in the C file (not global `CFLAGS`) drops that frame for many `bx lr` leaves.
 
-Wins: `sub_0802B994` (dual-cursor `{key,value}`), `sub_08043B58` (`r1 = *cursor++` → `ldm`), `sub_0803DBD0` (`goto done` over fallback pool), `sub_0804495C` (table `+r` then `do/while (n >= 0)`), `sub_080475C4` / `sub_080475F4` (null-check copy, addend in `r0`).
+Wins that stay MATCH without asm labels: null-check stores (`sub_0802D8C4`, `sub_08061BDC`, `sub_08062684`), clamp `u32` args (`sub_080615EC`), `sub_08033958` / `sub_0806AC68`. Table walks and `+r` barriers that needed GCC asm labels were parked.
 
-`match_function.py` reads the comment from the original `.c` (gcc `-E` strips it). If it still extra-pushes after the flag + retail register order, park (`sub_0802D8C4`, `sub_08061BDC`).
+`match_function.py` reads the comment from the original `.c` (gcc `-E` strips it). If it still extra-pushes after the flag + retail register order, park.
 
 ## Permuter workflow
 
@@ -156,9 +120,9 @@ Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `sr
 
 ## Known blocker families (this project)
 
-- **Leaf + branch (still framed with `-fprologue-bugfix`):** `sub_0802D8C4`, `sub_08061BDC`, `sub_08034894`. Try the flag first — table walks and some null-check copies now match.
+- **Leaf + branch (still hard after `-fprologue-bugfix`):** `sub_08034894`, `sub_08062728` (`stm` fill), `sub_080699C8`. Try the flag first.
 - **Table lookup + pool order:** `sub_0803DD60` family
-- **Dual IWRAM store CSE:** `sub_080473E4`, `sub_080473F8`, `sub_08052934` (`sub_08041858` / `sub_08069894` matched via `+r` + memory barrier)
+- **Dual IWRAM store CSE:** `sub_080473E4`, `sub_080473F8` (nearby literals fold unless the first pointer stays live)
 
 ## m2c seeds
 
@@ -166,7 +130,7 @@ Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `sr
 python3 tools/decomp/m2c_asm.py sub_XXXXXXXX
 ```
 
-Fix types → `gMainWorkPtr` / `gBattleWork` → pin registers → `match_function.py`. m2c `--valid-syntax` helps permuter feeds (see ecosystem skill).
+Fix types → `gMainWorkPtr` / `gBattleWork` → evaluation order → `match_function.py`. m2c `--valid-syntax` helps permuter feeds (see ecosystem skill). Do not add `register … asm("rN")`.
 
 ## Reference
 

@@ -2,10 +2,10 @@
 
 void sub_0804188C(void)
 {
-    register s32 i asm("r7");
-    register s32 fixed asm("r4");
-    register struct Unk68574 **entries asm("r6");
-    register struct Unk68574 *obj asm("r5");
+    register s32 i;
+    register s32 fixed;
+    register struct Unk68574 **entries;
+    register struct Unk68574 *obj;
     s32 value;
     s32 shifted;
     u32 normalized;

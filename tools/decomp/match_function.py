@@ -53,6 +53,51 @@ ALLOWED_MATCH_FLAGS = frozenset(
     }
 )
 
+# GCC local-register / asm-label pins and empty compiler barriers are not
+# semantic C. Naked Thumb wrappers and BIOS `swi` are the only allowed asm().
+_COMMENT_BLOCK_RE = re.compile(r"/\*.*?\*/", re.S)
+_COMMENT_LINE_RE = re.compile(r"//.*?$", re.M)
+_NAKED_RE = re.compile(r"__attribute__\s*\(\s*\(\s*naked\s*\)\s*\)")
+_REGISTER_ASM_RE = re.compile(r"\bregister\b[^;]*\basm\s*\(", re.S)
+_ASM_STRING_RE = re.compile(
+    r"\basm(?:\s+volatile)?\s*\(\s*\"((?:[^\"\\]|\\.)*)\"",
+    re.I,
+)
+_SWI_ASM_RE = re.compile(r"^\s*swi\b", re.I)
+
+
+class BannedAsmError(ValueError):
+    """Semantic C used a GCC asm label, barrier, or non-SWI inline asm."""
+
+
+def _c_without_comments(text: str) -> str:
+    text = _COMMENT_BLOCK_RE.sub("", text)
+    return _COMMENT_LINE_RE.sub("", text)
+
+
+def banned_semantic_asm(text: str) -> str | None:
+    """Return a reason if this is semantic C with banned `asm` usage."""
+    if _NAKED_RE.search(text):
+        return None
+    body = _c_without_comments(text)
+    if _REGISTER_ASM_RE.search(body):
+        return 'register … asm("rN") (GCC asm label) is banned in semantic C'
+    for match in _ASM_STRING_RE.finditer(body):
+        inner = bytes(match.group(1), "utf-8").decode("unicode_escape")
+        if _SWI_ASM_RE.match(inner):
+            continue
+        if inner.strip() == "":
+            return 'empty asm("") barrier is banned in semantic C'
+        snippet = inner.replace("\n", "\\n")[:48]
+        return f'inline asm("{snippet}") is banned in semantic C'
+    return None
+
+
+def check_semantic_asm(c_path: Path) -> None:
+    reason = banned_semantic_asm(c_path.read_text())
+    if reason:
+        raise BannedAsmError(f"{c_path}: {reason}")
+
 
 def extra_cflags(c_path: Path) -> list[str]:
     try:
@@ -341,6 +386,7 @@ def compile_and_score(
     function: str, c_path: Path, *, quiet: bool = True
 ) -> tuple[bytes, bytes, dict[str, Any]]:
     """Compile scratch C and score against retail. Raises on missing asm/tools."""
+    check_semantic_asm(c_path)
     size = reference_size(function)
     want = retail_bytes(function, size)
     with tempfile.TemporaryDirectory() as tmp:
@@ -355,7 +401,7 @@ def try_compile_and_score(
 ) -> tuple[bytes, bytes, dict[str, Any]] | None:
     try:
         return compile_and_score(function, c_path, quiet=True)
-    except (FileNotFoundError, subprocess.CalledProcessError, OSError):
+    except (FileNotFoundError, subprocess.CalledProcessError, OSError, BannedAsmError):
         return None
 
 
@@ -411,6 +457,12 @@ def main() -> int:
                 return 1
             compile_path = Path(tmp) / "one.c"
             compile_path.write_text(src)
+
+        try:
+            check_semantic_asm(compile_path)
+        except BannedAsmError as exc:
+            print(f"BANNED ASM: {exc}", file=sys.stderr)
+            return 2
 
         obj = Path(tmp) / "scratch.o"
         compile_c(compile_path, obj)

@@ -12,11 +12,11 @@ struct Unk66BF0Entry
 void sub_08066BF0(struct Unk66BC4 *arg0)
 {
     struct Unk66BF0Entry ***entriesSlot;
-    register struct Unk66BF0Entry **entries asm("r2");
-    register const u16 *defVal asm("r3");
-    register const u16 *altVal asm("r4");
-    register const u8 *flagPtr asm("r6");
-    register const u16 *end asm("r5");
+    register struct Unk66BF0Entry **entries;
+    register const u16 *defVal;
+    register const u16 *altVal;
+    register const u8 *flagPtr;
+    register const u16 *end;
 
     entriesSlot = (struct Unk66BF0Entry ***)arg0->unk230;
     flagPtr = (const u8 *)0x030009A8;

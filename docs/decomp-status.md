@@ -8,18 +8,37 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **348/633 (55.0%)** |
-| **Decompiled C (bytes)** | **23,238/90,272 (25.7%)** |
+| **Decompiled C (functions)** | **296/633 (46.8%)** |
+| **Decompiled C (bytes)** | **18,550/90,272 (20.5%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 285/633 (45.0%) |
+| Readable Thumb | 337/633 (53.2%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 76/160 (47.5% fn, 20.2% bytes) |
+| Battle semantic C | 54/160 (33.8% fn, 15.2% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — ban GCC asm labels (363→296/633 semantic)
+- `register T x asm("rN")` and empty `asm("")` are not a match. `match_function.py` now rejects them in semantic C (BIOS `swi` and naked Thumb still allowed).
+- Honest rematch: `sub_080475C4` / `sub_080475F4` still MATCH as struct copies (`unk40`/`unk44` ↔ `unk1798`/`unk179C`).
+- 19 functions still MATCH after dropping the labels (pins were unused).
+- 67 functions only matched with labels → parked honest C in `src/wip/`, Thumb restored in `src/matched/` (including `sub_08043B58` 47/54 same-size).
+- `make compare`: OK
+
+### 2026-09-20 — semantic C more `bx lr` leaves (+15, 348→363/633)
+- `/* match-flags: -fprologue-bugfix */` on remaining leaf-branch helpers.
+- Matched `sub_080615EC` (clamp x/y, `unk90`/`unk92`; `u32` args so no callee `lsls/lsrs`; callers `sub_08052934` / `sub_0804ED90` still MATCH).
+- Matched `sub_080617C4` (mask-first AND 1 on `unk0C`, fill `Unk0798` slots).
+- Matched `sub_0802D8C4` (`u16` into `unk08->unk18` if non-NULL).
+- Matched null-check stores `sub_08061BDC`, `sub_08061E40` (`*(u16 *)&field` for zeroed `r0`), `sub_08062634`, `sub_08062684`.
+- Matched `sub_08033958`, `sub_0806DEF4`, `sub_0806AC68`.
+- Matched BG I/O switches `sub_08069908` / `sub_08069948` / `sub_08069988` (copy to `r1`, `==1` / `(s32)>1` / `==0` gotos).
+- Matched `sub_0806FEFC` / `sub_0806FF28` (list splice; `+r` so tail is not `head+0x10`; head loc in `r1` on the push-to-head path).
+- `sub_080699C8` still DIFF (76 vs 80).
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C leaf `-fprologue-bugfix` family (+5, 343→348/633)
 - Matched `sub_08043B58` (NULL-terminated `Unk447CC *` table at `0x08096794`). Key in `r2`; `r1 = *table`; cursor `r3`; `r1 = *r3++` is `ldm`. Same `/* match-flags: -fprologue-bugfix */` as `sub_0802B994`.

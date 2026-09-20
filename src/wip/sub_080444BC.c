@@ -3,7 +3,7 @@
 void sub_080444BC(void)
 {
     struct Unk447CC *p;
-    register struct MainWork *main asm("r6");
+    register struct MainWork *main;
     u8 flags;
 
     p = sub_08043B58();

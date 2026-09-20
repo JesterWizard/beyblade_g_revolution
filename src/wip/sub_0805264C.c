@@ -2,7 +2,7 @@
 
 void sub_0805264C(struct Unk2F520 *data, u32 index)
 {
-    register struct Unk2F520 *ptr asm("r5");
+    register struct Unk2F520 *ptr;
     u8 *base;
     u32 offset;
     void *callback;

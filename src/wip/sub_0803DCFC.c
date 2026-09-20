@@ -3,7 +3,7 @@
 // @ 0x0803DCFC
 void *sub_0803DCFC(u32 i)
 {
-    register u32 index asm("r2");
+    register u32 index;
     u32 offset;
 
     index = i;

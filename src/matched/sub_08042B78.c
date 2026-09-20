@@ -6,11 +6,11 @@
 // @ 0x08042B78
 s32 sub_08042B78(s32 a)
 {
-    register s32 key asm("r3");
-    register s32 minusOne asm("r1");
-    register s32 sentinel asm("r4");
-    register const u32 *base asm("r2");
-    register const u32 *entry asm("r1");
+    register s32 key;
+    register s32 minusOne;
+    register s32 sentinel;
+    register const u32 *base;
+    register const u32 *entry;
     s32 first;
 
     key = a;

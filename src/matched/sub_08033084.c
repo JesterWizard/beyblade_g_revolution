@@ -7,8 +7,8 @@ void sub_080726E0(struct Unk726E0 *a, void *dst, s32 idx);
 
 void sub_08033084(struct Unk726E0 *a, u32 flag)
 {
-    register struct Unk726E0 *dst asm("r5");
-    register struct BattleWork **loc asm("r4");
+    register struct Unk726E0 *dst;
+    register struct BattleWork **loc;
     struct BattleWork *w;
     s32 value;
 

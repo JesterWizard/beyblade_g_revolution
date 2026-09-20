@@ -2,9 +2,9 @@
 
 void sub_08038F30(s32 mode)
 {
-    register struct BattleWork **battle_loc asm("r6");
-    register struct Unk002A0 *table asm("r7");
-    register struct MainWork **main_loc asm("r5");
+    register struct BattleWork **battle_loc;
+    register struct Unk002A0 *table;
+    register struct MainWork **main_loc;
     s32 i;
     struct Unk38F30Slot *slot;
 

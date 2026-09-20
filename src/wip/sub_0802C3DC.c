@@ -14,21 +14,21 @@ struct Unk2C314Result
 
 s32 sub_0802C3DC(s8 a, s8 b, struct Unk2C314Result *out)
 {
-    register u32 a_norm asm("r4");
-    register u32 b_norm asm("r12");
-    register s32 match_a asm("r8");
-    register s32 match_b asm("r12");
-    register struct MainWork **main_loc asm("r3");
-    register struct MainWork **loop_loc asm("r6");
-    register u32 loop_offset asm("r7");
-    register u32 index asm("r5");
-    register struct Unk1694 **table_loc asm("r4");
-    register struct Unk1694 *entry asm("r3");
-    register struct MainWork *work_ptr asm("r0");
-    register struct Unk1694 *table_base asm("r0");
-    register u32 scaled_index asm("r1");
-    register u32 mask asm("r0");
-    register u32 temp asm("r0");
+    register u32 a_norm;
+    register u32 b_norm;
+    register s32 match_a;
+    register s32 match_b;
+    register struct MainWork **main_loc;
+    register struct MainWork **loop_loc;
+    register u32 loop_offset;
+    register u32 index;
+    register struct Unk1694 **table_loc;
+    register struct Unk1694 *entry;
+    register struct MainWork *work_ptr;
+    register struct Unk1694 *table_base;
+    register u32 scaled_index;
+    register u32 mask;
+    register u32 temp;
     u32 offset;
 
     a_norm = ((u32)a << 24) >> 24;

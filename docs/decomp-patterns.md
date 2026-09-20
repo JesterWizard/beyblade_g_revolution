@@ -72,28 +72,18 @@ python3 tools/decomp/match_function.py sub_XXXXXXXX scratch.c
 
 Use `--valid-syntax` if m2c output needs extra cleanup.
 
-### 2. Register pinning (`register asm`)
+### 2. Evaluation order (no GCC asm labels)
 
-agbcc picks different registers than retail. Pin the dest reg the asm expects:
+`register T x asm("rN")` and empty `asm("")` are **banned**. If agbcc will not emit retail bytes without them, park the C and leave Thumb in `src/matched/`.
+
+`n = a->unkXX - 1` often compiles `ldr r0,[…]; sub r4,r0,#1`. Retail wants `ldr r4,[…]; sub r4,#1` — split it:
 
 ```c
-u16 sub_0802B8BC(s32 a)
-{
-    register s32 r0 asm("r0");
-    register u8 *r1 asm("r1");
-
-    r0 = a;
-    r0 <<= 16;
-    r1 = *(u8 **)gUnk_03000264;
-    r0 >>= 14;
-    r0 += (u32)r1;
-    return *(u16 *)(r0 + 2);
-}
+n = a->unk1C;
+n = n - 1;
 ```
 
-Use for: table walks, halfword loads after shifts, dispatch tables (`sub_080674BC`).
-
-**Do not** use `asm volatile("movs r0, …")` for register forcing — use `register … asm("rN")`.
+Win: `sub_080712CC`. Split statements and operand order (`ch + table` vs `table + ch`) are still allowed — they are ordinary C.
 
 `n = a->unkXX - 1` often compiles `ldr r0,[…]; sub r4,r0,#1`. Retail wants `ldr r4,[…]; sub r4,#1` — split it:
 
@@ -106,7 +96,7 @@ Win: `sub_080712CC`.
 
 Incoming pointer copies: do **not** add `a = a_arg; b = b_arg` locals. Use the parameters as the live pointers so agbcc's `assign_parms` emits `adds r2, r0; adds r3, r1` in order. Extra locals save `r1` first (scratch conflict) and swap those two insns. Win: `sub_0804109C`.
 
-Same for a 4-arg function that must start `adds r5, r0; adds r7, r2; adds r6, r3; movs r4, #0`: keep using `a` across calls (do not `obj = a` / pin `r5`). Pin only the extra index in `r4`. Pinning `obj` as `r5` saves `r2`/`r3` first. Win: `sub_080442FC`.
+Same for a 4-arg function that must start `adds r5, r0; adds r7, r2; adds r6, r3; movs r4, #0`: keep using `a` across calls (do not `obj = a`). Extra copies change save order. Win: `sub_080442FC`.
 
 `u8` args emit `lsls/lsrs` before any other copy. If retail copies `r1` to `r5` first, take `u32` and extend after that copy. Win: `sub_08062A74`.
 
@@ -114,60 +104,23 @@ If retail is `adds r5, r0` then only `lsls r1, #24; cmp r1, #0` (low-byte nonzer
 
 Mask-first AND (clone of `sub_080425B8`): `addr = &byte; mask = 2; value = *addr; mask &= value` so `movs r0,#2` precedes `ldrb`. Win: `sub_08042540`.
 
-Force `ldr table` before `movs #off; ldsb` with `asm("" : "+r"(table))`. `entry = index + table` not `table + index`. Load the next table literal immediately with another `+r` barrier. Final add `table3[i] + value` for `adds r0, r1, r0`. Win: `sub_0803E328`. Same shape: `sub_0803E374` / `sub_0803E3C0`.
-
-Split `ldr =base; adds #0xC` with `+r`. Copy the arg to `idx` before `(u8)<<4`. After `idx += base+0xC`, form `gMainWorkPtr+off` **before** `ldr r1, [r4]`. Win: `sub_08052934`.
+`entry = index + table` not `table + index`. Final add `table3[i] + value` for `adds r0, r1, r0`.
 
 If retail `bl fn; lsls r0, r0, #2` with no caller zero-extend, change the callee prototype from `u8` to `u32` and re-check the callee still MATCH. Win: `sub_08066224` / `sub_08072F94`.
 
-Keep an IWRAM *location* in a callee-saved register (`r6 = (u32)&gUnk_…`) and reload after `bl`. Walking an IO pointer (`str; adds #4; str`) needs `asm("" : "+r"(r1))` between stores or agbcc emits `stmia`. Wins: `sub_08062A74`, `sub_0802E048`, `sub_08071BA0`.
-
 A loop that both `i++` and `count--` then `cmp count, i` is not `while (count > i)` with only `i++`. Win: `sub_0807179C`.
-
-Cases 0–2 share `r0 = count; b done` that must skip case 3: `r0 = count; asm("" : "+r"(r0)); goto done;` then case 3's own `r0 = count`. Win: `sub_08047624`.
 
 `x &= ~0x20` compiles as `movs rN, #0x21; negs rN` (`-0x21 == ~0x20`). `&= ~0x21` emits `#0x22` instead.
 
 Keep a struct pointer across a store cluster: `gUnk->a = …; gUnk->b = …` reloads from the IWRAM loc after the first add clobbers the pointer. `w = gUnk; w->a = …; w->b = …` matches retail. Win: `sub_0802D6D4` tail.
 
-Force a pool `ldr` before an index shift/mul (agbcc otherwise computes the index first):
-
-```c
-register u32 r1 asm("r1");
-register u32 r0 asm("r0");
-
-r1 = (u32)&gUnk_030002A0; /* or ROM table address */
-asm("" : "+r"(r1));
-r0 = stride;              /* or idx << 2 */
-```
-
-Wins: `sub_08037318` (`ldr r1,=0x030002A0` then `movs r0,#0x2C`), `sub_08033978` (`ldr r1,=0x08078158` then `lsls r0,r6,#2`), `sub_08042B28` / `sub_08042B50` (`ldr r0,=table` then `lsls r1,r2,#2`; `r4 = r1 + r0`).
-
-Do **not** `register … asm("r7")`. agbcc will use `r7` and omit `push {r7}`. Leave the `r7` local unpinned. Win: `sub_08037430`.
-
-`-1` as `movs r1,#1; negs r1; mov r8,r1`: `r1 = 1; r1 = -r1; minusOne = r1` with `minusOne` pinned to `r8`. Win: `sub_08033978`.
-
 Add operand order is a real Thumb encoding: `r0 = ch + table` emits `adds r0, r1, r0`; `r0 = table + ch` emits `adds r0, r0, r1`. Win: `sub_08073988`.
 
-Nearby IWRAM stores (`0x03000534` then `0x03000504`, or `0x108` then `0x1B0`) fold to `sub/add #imm` unless the first pointer is kept live across a memory barrier, then reloaded:
+`if (a >= b) goto label` emits `cmp; bge` as fallthrough-false. Nested `if/else` often inverts to `blt` and moves the literal pool. Place shared `return N` labels in retail order. Win: `sub_08042390`.
 
-```c
-r0 = gUnk_03000534;
-r1 = 0;
-*(s32 *)r0 = r1;
-asm("" : "+r"(r0), "+r"(r1) : : "memory");
-r0 = gUnk_03000504;
-asm("" : "+r"(r0));
-*(u16 *)r0 = (u16)r1;
-```
+Loop exit that already has `0` in `r0` (`ldr; cmp; bne body; pop`) must `return r0`, not `return 0`. `while ((r0 = p->unk00) != 0) { call(p->unk00, …); } return (s32)r0` keeps the load. Plain `return 0` adds `movs r0,#0`. Win: `sub_08043B90`.
 
-Wins: `sub_08041858`, `sub_08069894`, `sub_08071B4C`, `sub_0806A3A4` (`0x03000B3C` then `0x03000B38`, 4 apart). Same family still parked: `sub_080473F8`, `sub_08052934`, `sub_08071F44`, `sub_08071E84`, `sub_0806A314`.
-
-`if (a >= b) goto label` emits `cmp; bge` as fallthrough-false. Nested `if/else` often inverts to `blt` and moves the literal pool. Place shared `return N` labels in retail order so the first path is `ble; b` (pool island + padding) rather than `bgt` plus an inlined return. Win: `sub_08042390`.
-
-Loop exit that already has `0` in `r0` (`ldr; cmp; bne body; pop`) must `return r0`, not `return 0`. `while ((r0 = p->unk00) != 0) { call(p->unk00, …); } return (s32)r0` with `r0` pinned keeps the load and still reloads in the body. Plain `return 0` adds `movs r0,#0` and steals the epilogue padding. Win: `sub_08043B90`.
-
-Mask tests: `r0 = mask; r1 = *flags; r0 &= r1; if (r0 != 0)` with `u32` pins (not `u8`, which becomes `ands r1, r0`). Last test may `ldrb r5, [r5]`. Win: `sub_0803531C`.
+Mask tests: `r0 = mask; r1 = *flags; r0 &= r1; if (r0 != 0)` with `u32` locals (not `u8`, which becomes `ands r1, r0`).
 
 ### 3. Literal pool / load order
 
@@ -194,14 +147,11 @@ Retail `push {r4, lr}` (or more) → worth hand C.
 
 True `bx lr` leaves with a branch: default agbcc emits extra `push {lr}` / `pop {r1}; bx r1` (+4–6B).
 
-**`/* match-flags: -fprologue-bugfix */`:** per-file (parsed by `match_function.py`; not global `CFLAGS`). Wins:
-- Dual-cursor `{key,value}` table — key `r3`, table `r2`, `&unk04` in `r1`. `sub_0802B994`
-- NULL-terminated pointer table — key `r2`, `r1 = *table`, cursor `r3`, `r1 = *r3++` (`ldm`). `sub_08043B58`
-- Signed 2D lookup with `goto done` over the fallback pool (`sub_0803DD88` index math). `sub_0803DBD0`
-- Table pointer `+r` before `unk181F`, `do { … n--; } while (n >= 0)`. `sub_0804495C`
-- Null-check copy with addend in `r0` then `dst = base + r0`. `sub_080475C4` / `sub_080475F4`
+**`/* match-flags: -fprologue-bugfix */`:** per-file (parsed by `match_function.py`; not global `CFLAGS`). Honest wins include null-check stores (`sub_0802D8C4`, `sub_08061BDC`, `sub_08062684`, `sub_080475C4`), clamp `u32` args (`sub_080615EC`), and small helpers (`sub_08033958`, `sub_0806AC68`). Table walks / `+r` barriers that only matched with GCC asm labels were parked.
 
-Some true leaves still extra-push (`sub_0802D8C4`, `sub_08061BDC`). Retry other `bx lr` + branch functions with the comment before parking.
+Clamp helpers take `u32` args so the callee has no `lsls/lsrs` (`sub_080615EC`). Head/tail IWRAM 0x10 apart and BG I/O switch trees still need honest C (parked: `sub_0806FEFC`, `sub_08061E40`, `sub_08069908`).
+
+Retry remaining `bx lr` + branch functions with the comment before parking (`sub_08034894`, `sub_08062728` stm-fill, `sub_080699C8`).
 
 `match_function.py` prints `N/M bytes matched` and a **compact** DIFF (first mismatch). Pass `--full` for a whole-function hex dump.
 - **matched** — integrate

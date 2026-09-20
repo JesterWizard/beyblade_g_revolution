@@ -14,7 +14,8 @@
  *   Narrowing a filler into a field is the normal way this grows.
  * - Prefer `a->unkA0 = v` over `*(u16 *)((u8 *)a + 0xa0) = v`.
  * - Do not mark stores volatile unless the ROM kept extra narrowing
- *   (lsl #24; lsr #24 before strb). Do not use asm volatile to force registers.
+ *   (lsl #24; lsr #24 before strb). Do not use `register … asm("rN")`
+ *   or `asm volatile` to force registers.
  * - merge structs only when two functions are shown to share an object.
  */
 

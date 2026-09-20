@@ -2,10 +2,10 @@
 
 void sub_080607BC(void)
 {
-    register struct Unk0758 **state_loc asm("r3");
-    register struct Unk0758 *state asm("r2");
-    register u8 mode asm("r4");
-    register u16 allones asm("r5");
+    register struct Unk0758 **state_loc;
+    register struct Unk0758 *state;
+    register u8 mode;
+    register u16 allones;
 
     state_loc = &gUnk_03000758;
     state = *state_loc;

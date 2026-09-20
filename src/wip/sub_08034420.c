@@ -4,10 +4,10 @@ void sub_08034420(
     struct Unk346C0 *out_arg, struct Unk346C0Inner *state_a_arg,
     struct Unk346C0Inner *state_b, u32 mode)
 {
-    register struct Unk346C0 *out asm("r6");
+    register struct Unk346C0 *out;
     struct Unk346C0Inner *state_a;
-    register u32 *unk2d0 asm("r8");
-    register u8 *mode_ptr asm("r5");
+    register u32 *unk2d0;
+    register u8 *mode_ptr;
     s8 *bytep;
     s32 value;
 
@@ -15,8 +15,7 @@ void sub_08034420(
     state_a = state_a_arg;
     out->unk04 = state_b;
     out->unk00 = state_a;
-    asm("" : "+r"(out), "+r"(state_a), "+r"(state_b));
-    out->unk19 = 0;
+out->unk19 = 0;
     out->unk18 = 0;
     out->unk2C5 = 0;
     out->unk2C8 = 0;

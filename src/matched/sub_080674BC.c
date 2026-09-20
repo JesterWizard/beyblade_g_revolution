@@ -3,8 +3,8 @@
 // @ 0x080674bc
 u32 sub_080674BC(u32 a)
 {
-    register int v asm("r0");
-    register u32 r2 asm("r2");
+    register int v;
+    register u32 r2;
 
     v = (u16)a;
     r2 = 0;

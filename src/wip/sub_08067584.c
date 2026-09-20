@@ -2,11 +2,11 @@
 
 s32 sub_08067584(u16 value_arg, void *out_arg)
 {
-    register u16 value asm("r3");
-    register u16 *out asm("r5");
-    register struct Unk09B0 **global_loc asm("r6");
-    register u16 *cursor asm("r2");
-    register u8 i asm("r4");
+    register u16 value;
+    register u16 *out;
+    register struct Unk09B0 **global_loc;
+    register u16 *cursor;
+    register u8 i;
     u16 scratch[0x44];
     u8 count;
     u8 j;

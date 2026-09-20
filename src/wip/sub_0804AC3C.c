@@ -2,9 +2,9 @@
 
 void sub_0804AC3C(u8 *data)
 {
-    register u8 *ptr asm("r6");
-    register u8 first asm("r5");
-    register u8 second asm("r4");
+    register u8 *ptr;
+    register u8 first;
+    register u8 second;
     u32 coordinate;
 
     ptr = data;

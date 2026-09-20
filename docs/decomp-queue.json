@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T22:40:21Z",
+  "generated": "2026-09-20T22:59:46Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 285,
-    "semantic_done": 348,
-    "readable_asm": 285,
+    "pending": 337,
+    "semantic_done": 296,
+    "readable_asm": 337,
     "opcode": 0,
-    "battle_pending": 77,
-    "battle_semantic": 76,
-    "blocked": 27,
-    "wip": 146
+    "battle_pending": 100,
+    "battle_semantic": 54,
+    "blocked": 20,
+    "wip": 209
   },
   "pinned": [],
   "wip": [
@@ -217,8 +217,8 @@
     {
       "name": "sub_08040088",
       "addr": "0x08040088",
-      "kind": "missing",
-      "bytes": 0,
+      "kind": "asm",
+      "bytes": 56,
       "seed": "src/wip/sub_08040088.c",
       "notes": "src/wip/sub_08040088.md",
       "status": "41/56 same-size DIFF after pinning target to r3; retail still keeps the target-pointer location in r1 and the timer field address in r2, while agbcc uses r2/r1 oppositely",
@@ -536,8 +536,8 @@
     {
       "name": "sub_08034A68",
       "addr": "0x08034A68",
-      "kind": "missing",
-      "bytes": 0,
+      "kind": "asm",
+      "bytes": 112,
       "seed": "src/wip/sub_08034A68.c",
       "notes": "src/wip/sub_08034A68.md",
       "status": "two attempts: 32/112 direct field draft, then 111/112 same-size with status pinned to r1; only the final bne branch displacement differs (retail +0x07 vs candidate +0x03)",
@@ -701,8 +701,8 @@
     {
       "name": "sub_0804245C",
       "addr": "0x0804245C",
-      "kind": "missing",
-      "bytes": 0,
+      "kind": "asm",
+      "bytes": 140,
       "seed": "src/wip/sub_0804245C.c",
       "notes": "src/wip/sub_0804245C.md",
       "status": "Two attempts: baseline combined cursor update 116/140 (136B), then split stores 133/140 (same-size 140B). Dispatch and ring update match; final 7-byte diff is second cursor reload register shape (retail reuses r2 as ring-location pointer and loads ring into r1, seed overwrites r2 with ring).",
@@ -712,8 +712,8 @@
     {
       "name": "sub_080425B8",
       "addr": "0x080425B8",
-      "kind": "missing",
-      "bytes": 0,
+      "kind": "asm",
+      "bytes": 120,
       "seed": "src/wip/sub_080425B8.c",
       "notes": "src/wip/sub_080425B8.md",
       "status": "Two attempts: direct sibling seed 108/120 (same-size), then block-scoped r0 main pin worsened to 27/120 (116B). Baseline correctly captures all behavior; retail initial main/offset and mask register ordering need a selective source/permuter search.",
@@ -1621,6 +1621,699 @@
       "status": "Rotation/projection helper semantics reconstructed: table sine/cosine lookup, depth-scaled coordinate rotation, perspective correction, output writes, flag extraction, and sub_08070354 dispatch. Natural baseline is 19/196 bytes and size-mismatched at 208 bytes; a second fixed-register attempt reached 50/196 but aliased the source pointer with a pinned delta and was discarded.",
       "next": "Use the natural seed and introduce register constraints only after preserving the source pointer in ip. Target uses sine r8, dx r7, dy r5, dz r4, output x r6, output y r2, and flag r9; do not pin dx to r7 unless source is explicitly pinned to r12.",
       "score": "19/196"
+    },
+    {
+      "name": "sub_0802C62C",
+      "addr": "0x0802C62C",
+      "kind": "asm",
+      "bytes": 64,
+      "seed": "src/wip/sub_0802C62C.c",
+      "notes": "src/wip/sub_0802C62C.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "unscored"
+    },
+    {
+      "name": "sub_0802E048",
+      "addr": "0x0802E048",
+      "kind": "asm",
+      "bytes": 228,
+      "seed": "src/wip/sub_0802E048.c",
+      "notes": "src/wip/sub_0802E048.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "112/228"
+    },
+    {
+      "name": "sub_08031294",
+      "addr": "0x08031294",
+      "kind": "asm",
+      "bytes": 28,
+      "seed": "src/wip/sub_08031294.c",
+      "notes": "src/wip/sub_08031294.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "3/28"
+    },
+    {
+      "name": "sub_080312B0",
+      "addr": "0x080312B0",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_080312B0.c",
+      "notes": "src/wip/sub_080312B0.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "36/40"
+    },
+    {
+      "name": "sub_08031300",
+      "addr": "0x08031300",
+      "kind": "asm",
+      "bytes": 78,
+      "seed": "src/wip/sub_08031300.c",
+      "notes": "src/wip/sub_08031300.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "6/78"
+    },
+    {
+      "name": "sub_08033978",
+      "addr": "0x08033978",
+      "kind": "asm",
+      "bytes": 180,
+      "seed": "src/wip/sub_08033978.c",
+      "notes": "src/wip/sub_08033978.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "22/180"
+    },
+    {
+      "name": "sub_08033C1C",
+      "addr": "0x08033C1C",
+      "kind": "asm",
+      "bytes": 32,
+      "seed": "src/wip/sub_08033C1C.c",
+      "notes": "src/wip/sub_08033C1C.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "21/32"
+    },
+    {
+      "name": "sub_0803531C",
+      "addr": "0x0803531C",
+      "kind": "asm",
+      "bytes": 132,
+      "seed": "src/wip/sub_0803531C.c",
+      "notes": "src/wip/sub_0803531C.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "121/132"
+    },
+    {
+      "name": "sub_080361A8",
+      "addr": "0x080361A8",
+      "kind": "asm",
+      "bytes": 36,
+      "seed": "src/wip/sub_080361A8.c",
+      "notes": "src/wip/sub_080361A8.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "23/36"
+    },
+    {
+      "name": "sub_08037318",
+      "addr": "0x08037318",
+      "kind": "asm",
+      "bytes": 100,
+      "seed": "src/wip/sub_08037318.c",
+      "notes": "src/wip/sub_08037318.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "91/100"
+    },
+    {
+      "name": "sub_08037430",
+      "addr": "0x08037430",
+      "kind": "asm",
+      "bytes": 216,
+      "seed": "src/wip/sub_08037430.c",
+      "notes": "src/wip/sub_08037430.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "84/216"
+    },
+    {
+      "name": "sub_0803DD60",
+      "addr": "0x0803DD60",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_0803DD60.c",
+      "notes": "src/wip/sub_0803DD60.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "16/40"
+    },
+    {
+      "name": "sub_0803DD88",
+      "addr": "0x0803DD88",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_0803DD88.c",
+      "notes": "src/wip/sub_0803DD88.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "7/40"
+    },
+    {
+      "name": "sub_0803DDB0",
+      "addr": "0x0803DDB0",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_0803DDB0.c",
+      "notes": "src/wip/sub_0803DDB0.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "11/40"
+    },
+    {
+      "name": "sub_0803DDD8",
+      "addr": "0x0803DDD8",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_0803DDD8.c",
+      "notes": "src/wip/sub_0803DDD8.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "11/40"
+    },
+    {
+      "name": "sub_0803E328",
+      "addr": "0x0803E328",
+      "kind": "asm",
+      "bytes": 76,
+      "seed": "src/wip/sub_0803E328.c",
+      "notes": "src/wip/sub_0803E328.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "41/76"
+    },
+    {
+      "name": "sub_0803EBB0",
+      "addr": "0x0803EBB0",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_0803EBB0.c",
+      "notes": "src/wip/sub_0803EBB0.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "16/40"
+    },
+    {
+      "name": "sub_0803EC34",
+      "addr": "0x0803EC34",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_0803EC34.c",
+      "notes": "src/wip/sub_0803EC34.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "16/40"
+    },
+    {
+      "name": "sub_0803ECB8",
+      "addr": "0x0803ECB8",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_0803ECB8.c",
+      "notes": "src/wip/sub_0803ECB8.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "16/40"
+    },
+    {
+      "name": "sub_080405A8",
+      "addr": "0x080405A8",
+      "kind": "asm",
+      "bytes": 64,
+      "seed": "src/wip/sub_080405A8.c",
+      "notes": "src/wip/sub_080405A8.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "28/64"
+    },
+    {
+      "name": "sub_08040F4C",
+      "addr": "0x08040F4C",
+      "kind": "asm",
+      "bytes": 336,
+      "seed": "src/wip/sub_08040F4C.c",
+      "notes": "src/wip/sub_08040F4C.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "319/336"
+    },
+    {
+      "name": "sub_08041858",
+      "addr": "0x08041858",
+      "kind": "asm",
+      "bytes": 52,
+      "seed": "src/wip/sub_08041858.c",
+      "notes": "src/wip/sub_08041858.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "43/52"
+    },
+    {
+      "name": "sub_08042B00",
+      "addr": "0x08042B00",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_08042B00.c",
+      "notes": "src/wip/sub_08042B00.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "16/40"
+    },
+    {
+      "name": "sub_08042B28",
+      "addr": "0x08042B28",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_08042B28.c",
+      "notes": "src/wip/sub_08042B28.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "20/40"
+    },
+    {
+      "name": "sub_08042B50",
+      "addr": "0x08042B50",
+      "kind": "asm",
+      "bytes": 40,
+      "seed": "src/wip/sub_08042B50.c",
+      "notes": "src/wip/sub_08042B50.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "20/40"
+    },
+    {
+      "name": "sub_08043B90",
+      "addr": "0x08043B90",
+      "kind": "asm",
+      "bytes": 76,
+      "seed": "src/wip/sub_08043B90.c",
+      "notes": "src/wip/sub_08043B90.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "36/76"
+    },
+    {
+      "name": "sub_080442FC",
+      "addr": "0x080442FC",
+      "kind": "asm",
+      "bytes": 144,
+      "seed": "src/wip/sub_080442FC.c",
+      "notes": "src/wip/sub_080442FC.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "132/144"
+    },
+    {
+      "name": "sub_08045128",
+      "addr": "0x08045128",
+      "kind": "asm",
+      "bytes": 80,
+      "seed": "src/wip/sub_08045128.c",
+      "notes": "src/wip/sub_08045128.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "55/80"
+    },
+    {
+      "name": "sub_08047624",
+      "addr": "0x08047624",
+      "kind": "asm",
+      "bytes": 174,
+      "seed": "src/wip/sub_08047624.c",
+      "notes": "src/wip/sub_08047624.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "80/174"
+    },
+    {
+      "name": "sub_080523A4",
+      "addr": "0x080523A4",
+      "kind": "asm",
+      "bytes": 112,
+      "seed": "src/wip/sub_080523A4.c",
+      "notes": "src/wip/sub_080523A4.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "71/112"
+    },
+    {
+      "name": "sub_08052934",
+      "addr": "0x08052934",
+      "kind": "asm",
+      "bytes": 84,
+      "seed": "src/wip/sub_08052934.c",
+      "notes": "src/wip/sub_08052934.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "49/84"
+    },
+    {
+      "name": "sub_0806105C",
+      "addr": "0x0806105C",
+      "kind": "asm",
+      "bytes": 44,
+      "seed": "src/wip/sub_0806105C.c",
+      "notes": "src/wip/sub_0806105C.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "38/44"
+    },
+    {
+      "name": "sub_08061308",
+      "addr": "0x08061308",
+      "kind": "asm",
+      "bytes": 48,
+      "seed": "src/wip/sub_08061308.c",
+      "notes": "src/wip/sub_08061308.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "46/48"
+    },
+    {
+      "name": "sub_080617C4",
+      "addr": "0x080617C4",
+      "kind": "asm",
+      "bytes": 60,
+      "seed": "src/wip/sub_080617C4.c",
+      "notes": "src/wip/sub_080617C4.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "13/60"
+    },
+    {
+      "name": "sub_08061BE8",
+      "addr": "0x08061BE8",
+      "kind": "asm",
+      "bytes": 96,
+      "seed": "src/wip/sub_08061BE8.c",
+      "notes": "src/wip/sub_08061BE8.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "92/96"
+    },
+    {
+      "name": "sub_08061C48",
+      "addr": "0x08061C48",
+      "kind": "asm",
+      "bytes": 56,
+      "seed": "src/wip/sub_08061C48.c",
+      "notes": "src/wip/sub_08061C48.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "unscored"
+    },
+    {
+      "name": "sub_08061E40",
+      "addr": "0x08061E40",
+      "kind": "asm",
+      "bytes": 20,
+      "seed": "src/wip/sub_08061E40.c",
+      "notes": "src/wip/sub_08061E40.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "18/20"
+    },
+    {
+      "name": "sub_08062A74",
+      "addr": "0x08062A74",
+      "kind": "asm",
+      "bytes": 76,
+      "seed": "src/wip/sub_08062A74.c",
+      "notes": "src/wip/sub_08062A74.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "72/76"
+    },
+    {
+      "name": "sub_08062CC8",
+      "addr": "0x08062CC8",
+      "kind": "asm",
+      "bytes": 44,
+      "seed": "src/wip/sub_08062CC8.c",
+      "notes": "src/wip/sub_08062CC8.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "40/44"
+    },
+    {
+      "name": "sub_08062D24",
+      "addr": "0x08062D24",
+      "kind": "asm",
+      "bytes": 42,
+      "seed": "src/wip/sub_08062D24.c",
+      "notes": "src/wip/sub_08062D24.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "36/42"
+    },
+    {
+      "name": "sub_08066224",
+      "addr": "0x08066224",
+      "kind": "asm",
+      "bytes": 112,
+      "seed": "src/wip/sub_08066224.c",
+      "notes": "src/wip/sub_08066224.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "96/112"
+    },
+    {
+      "name": "sub_080674A4",
+      "addr": "0x080674A4",
+      "kind": "asm",
+      "bytes": 6,
+      "seed": "src/wip/sub_080674A4.c",
+      "notes": "src/wip/sub_080674A4.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "2/6"
+    },
+    {
+      "name": "sub_080674B4",
+      "addr": "0x080674B4",
+      "kind": "asm",
+      "bytes": 6,
+      "seed": "src/wip/sub_080674B4.c",
+      "notes": "src/wip/sub_080674B4.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "5/6"
+    },
+    {
+      "name": "sub_08067F98",
+      "addr": "0x08067F98",
+      "kind": "asm",
+      "bytes": 48,
+      "seed": "src/wip/sub_08067F98.c",
+      "notes": "src/wip/sub_08067F98.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "39/48"
+    },
+    {
+      "name": "sub_08069894",
+      "addr": "0x08069894",
+      "kind": "asm",
+      "bytes": 96,
+      "seed": "src/wip/sub_08069894.c",
+      "notes": "src/wip/sub_08069894.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "89/96"
+    },
+    {
+      "name": "sub_08069908",
+      "addr": "0x08069908",
+      "kind": "asm",
+      "bytes": 64,
+      "seed": "src/wip/sub_08069908.c",
+      "notes": "src/wip/sub_08069908.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "8/64"
+    },
+    {
+      "name": "sub_08069948",
+      "addr": "0x08069948",
+      "kind": "asm",
+      "bytes": 64,
+      "seed": "src/wip/sub_08069948.c",
+      "notes": "src/wip/sub_08069948.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "8/64"
+    },
+    {
+      "name": "sub_08069988",
+      "addr": "0x08069988",
+      "kind": "asm",
+      "bytes": 64,
+      "seed": "src/wip/sub_08069988.c",
+      "notes": "src/wip/sub_08069988.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "8/64"
+    },
+    {
+      "name": "sub_0806A3A4",
+      "addr": "0x0806A3A4",
+      "kind": "asm",
+      "bytes": 144,
+      "seed": "src/wip/sub_0806A3A4.c",
+      "notes": "src/wip/sub_0806A3A4.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "10/144"
+    },
+    {
+      "name": "sub_0806B3E8",
+      "addr": "0x0806B3E8",
+      "kind": "asm",
+      "bytes": 84,
+      "seed": "src/wip/sub_0806B3E8.c",
+      "notes": "src/wip/sub_0806B3E8.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "67/84"
+    },
+    {
+      "name": "sub_0806DEF4",
+      "addr": "0x0806DEF4",
+      "kind": "asm",
+      "bytes": 20,
+      "seed": "src/wip/sub_0806DEF4.c",
+      "notes": "src/wip/sub_0806DEF4.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "19/20"
+    },
+    {
+      "name": "sub_0806F430",
+      "addr": "0x0806F430",
+      "kind": "asm",
+      "bytes": 48,
+      "seed": "src/wip/sub_0806F430.c",
+      "notes": "src/wip/sub_0806F430.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "41/48"
+    },
+    {
+      "name": "sub_0806FEFC",
+      "addr": "0x0806FEFC",
+      "kind": "asm",
+      "bytes": 44,
+      "seed": "src/wip/sub_0806FEFC.c",
+      "notes": "src/wip/sub_0806FEFC.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "39/44"
+    },
+    {
+      "name": "sub_0806FF28",
+      "addr": "0x0806FF28",
+      "kind": "asm",
+      "bytes": 48,
+      "seed": "src/wip/sub_0806FF28.c",
+      "notes": "src/wip/sub_0806FF28.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "36/48"
+    },
+    {
+      "name": "sub_08070604",
+      "addr": "0x08070604",
+      "kind": "asm",
+      "bytes": 92,
+      "seed": "src/wip/sub_08070604.c",
+      "notes": "src/wip/sub_08070604.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "73/92"
+    },
+    {
+      "name": "sub_08071B4C",
+      "addr": "0x08071B4C",
+      "kind": "asm",
+      "bytes": 84,
+      "seed": "src/wip/sub_08071B4C.c",
+      "notes": "src/wip/sub_08071B4C.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "73/84"
+    },
+    {
+      "name": "sub_08071BA0",
+      "addr": "0x08071BA0",
+      "kind": "asm",
+      "bytes": 148,
+      "seed": "src/wip/sub_08071BA0.c",
+      "notes": "src/wip/sub_08071BA0.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "32/148"
+    },
+    {
+      "name": "sub_080726E0",
+      "addr": "0x080726E0",
+      "kind": "asm",
+      "bytes": 52,
+      "seed": "src/wip/sub_080726E0.c",
+      "notes": "src/wip/sub_080726E0.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "50/52"
+    },
+    {
+      "name": "sub_08073988",
+      "addr": "0x08073988",
+      "kind": "asm",
+      "bytes": 96,
+      "seed": "src/wip/sub_08073988.c",
+      "notes": "src/wip/sub_08073988.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "89/96"
+    },
+    {
+      "name": "sub_08043B58",
+      "addr": "0x08043B58",
+      "kind": "asm",
+      "bytes": 54,
+      "seed": "src/wip/sub_08043B58.c",
+      "notes": "src/wip/sub_08043B58.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "41/54"
+    },
+    {
+      "name": "sub_0802B994",
+      "addr": "0x0802B994",
+      "kind": "asm",
+      "bytes": 58,
+      "seed": "src/wip/sub_0802B994.c",
+      "notes": "src/wip/sub_0802B994.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "42/58"
+    },
+    {
+      "name": "sub_0804495C",
+      "addr": "0x0804495C",
+      "kind": "asm",
+      "bytes": 60,
+      "seed": "src/wip/sub_0804495C.c",
+      "notes": "src/wip/sub_0804495C.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "34/60"
+    },
+    {
+      "name": "sub_0803DBD0",
+      "addr": "0x0803DBD0",
+      "kind": "asm",
+      "bytes": 80,
+      "seed": "src/wip/sub_0803DBD0.c",
+      "notes": "src/wip/sub_0803DBD0.md",
+      "status": "matched only with GCC asm labels; stripped DIFF",
+      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "score": "23/80"
     }
   ],
   "recommended": [
@@ -2051,54 +2744,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08033958",
-      "addr": "0x08033958",
-      "kind": "asm",
-      "bytes": 20,
-      "score": 10,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08062684",
-      "addr": "0x08062684",
-      "kind": "asm",
-      "bytes": 20,
-      "score": 10,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806DEF4",
-      "addr": "0x0806DEF4",
-      "kind": "asm",
-      "bytes": 20,
-      "score": 10,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806AC68",
-      "addr": "0x0806AC68",
-      "kind": "asm",
-      "bytes": 22,
-      "score": 11,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080717F0",
       "addr": "0x080717F0",
       "kind": "asm",
@@ -2169,6 +2814,54 @@
       "has_pool": false,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08042E78",
+      "addr": "0x08042E78",
+      "kind": "asm",
+      "bytes": 28,
+      "score": 12,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806A954",
+      "addr": "0x0806A954",
+      "kind": "asm",
+      "bytes": 28,
+      "score": 12,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806FDB4",
+      "addr": "0x0806FDB4",
+      "kind": "asm",
+      "bytes": 28,
+      "score": 14,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08073078",
+      "addr": "0x08073078",
+      "kind": "asm",
+      "bytes": 34,
+      "score": 17,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -2176,15 +2869,8 @@
       "name": "sub_0802C62C",
       "addr": "0x0802C62C",
       "reason": "counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a \u2014 same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter",
-      "kind": "missing",
-      "bytes": 0
-    },
-    {
-      "name": "sub_0802D8C4",
-      "addr": "0x0802D8C4",
-      "reason": "agbcc extra push {lr} on branch leaves",
       "kind": "asm",
-      "bytes": 24
+      "bytes": 64
     },
     {
       "name": "sub_08030938",
@@ -2278,34 +2964,6 @@
       "bytes": 112
     },
     {
-      "name": "sub_080615EC",
-      "addr": "0x080615EC",
-      "reason": "branchy asm \u2014 agbcc compile fail",
-      "kind": "asm",
-      "bytes": 36
-    },
-    {
-      "name": "sub_08061BDC",
-      "addr": "0x08061BDC",
-      "reason": "agbcc extra push {lr} on null-check leaf",
-      "kind": "asm",
-      "bytes": 12
-    },
-    {
-      "name": "sub_08061E40",
-      "addr": "0x08061E40",
-      "reason": "agbcc extra push {lr} on null-check leaf",
-      "kind": "asm",
-      "bytes": 20
-    },
-    {
-      "name": "sub_08062634",
-      "addr": "0x08062634",
-      "reason": "agbcc extra push {lr} on null-check leaf",
-      "kind": "asm",
-      "bytes": 12
-    },
-    {
       "name": "sub_08062728",
       "addr": "0x08062728",
       "reason": "u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) \u2014 retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen",
@@ -2332,20 +2990,6 @@
       "reason": "docs/battle.md: readable Thumb \u2014 large input hub (436B, 6 IWRAM refs)",
       "kind": "asm",
       "bytes": 436
-    },
-    {
-      "name": "sub_0806FEFC",
-      "addr": "0x0806FEFC",
-      "reason": "BtlObjNode move-to-tail (gBtlObjListHead/Tail) \u2014 agbcc inserts extra push {lr}/pop{r1}+bx r1 frame on this null-check leaf like sub_0802D8C4/sub_08061BDC; same-size DIFF on direct-return form, +12B with early-return form; needs permuter",
-      "kind": "asm",
-      "bytes": 44
-    },
-    {
-      "name": "sub_0806FF28",
-      "addr": "0x0806FF28",
-      "reason": "BtlObj unlink+push-to-head (obj->unk19 early return) \u2014 same agbcc extra push{lr} frame quirk as sub_0806FEFC; +4B DIFF; needs permuter",
-      "kind": "asm",
-      "bytes": 48
     },
     {
       "name": "sub_08073114",
@@ -2790,54 +3434,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08033958",
-      "addr": "0x08033958",
-      "kind": "asm",
-      "bytes": 20,
-      "score": 10,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08062684",
-      "addr": "0x08062684",
-      "kind": "asm",
-      "bytes": 20,
-      "score": 10,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806DEF4",
-      "addr": "0x0806DEF4",
-      "kind": "asm",
-      "bytes": 20,
-      "score": 10,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806AC68",
-      "addr": "0x0806AC68",
-      "kind": "asm",
-      "bytes": 22,
-      "score": 11,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080717F0",
       "addr": "0x080717F0",
       "kind": "asm",
@@ -3050,54 +3646,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080617C4",
-      "addr": "0x080617C4",
-      "kind": "asm",
-      "bytes": 60,
-      "score": 27,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069908",
-      "addr": "0x08069908",
-      "kind": "asm",
-      "bytes": 64,
-      "score": 23,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069948",
-      "addr": "0x08069948",
-      "kind": "asm",
-      "bytes": 64,
-      "score": 23,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069988",
-      "addr": "0x08069988",
-      "kind": "asm",
-      "bytes": 64,
-      "score": 23,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },

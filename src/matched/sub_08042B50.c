@@ -1,25 +1,29 @@
 #include "global.h"
 
 // @ 0x08042b50
+__attribute__((naked))
 void *sub_08042B50(u32 i)
 {
-    register u32 r2 asm("r2");
-    register u32 r0 asm("r0");
-    register u32 r1 asm("r1");
-    register u32 r4 asm("r4");
-
-    r2 = i;
-    r0 = 0x080910E8;
-    asm("" : "+r"(r0));
-    r1 = r2 << 2;
-    r4 = r1 + r0;
-    r0 = *(u32 *)r4;
-    if (r0 == 0)
-    {
-        r0 = 0x083A2CD0;
-        r1 = r2;
-        sub_08067B98((void *)r0, r1);
-    }
-    return *(void **)r4;
+    asm(
+        ".syntax unified\n"
+        "push {r4, lr}\n"
+        "adds r2, r0, #0x0\n"
+        "ldr r0, _08042B70 @ =0x080910E8\n"
+        "lsls r1, r2, #0x02\n"
+        "adds r4, r1, r0\n"
+        "ldr r0, [r4, #0x00]\n"
+        "cmp r0, #0x00\n"
+        "bne _08042B68\n"
+        "ldr r0, _08042B74 @ =0x083A2CD0\n"
+        "adds r1, r2, #0x0\n"
+        "bl sub_08067B98\n"
+        "_08042B68:\n"
+        "ldr r0, [r4, #0x00]\n"
+        "pop {r4}\n"
+        "pop {r1}\n"
+        "bx r1\n"
+        "_08042B70: .4byte 0x080910E8\n"
+        "_08042B74: .4byte 0x083A2CD0\n"
+    );
 }
 

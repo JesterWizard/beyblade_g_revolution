@@ -2,13 +2,13 @@
 
 struct Unk6A4D8Node *sub_0806A314(struct Unk6A314 *state)
 {
-    register struct Unk6A4D8Node *node asm("r3");
-    register void *buffer asm("r4");
-    register void **current asm("r5");
-    register struct Unk6A314 *work asm("r6");
-    register s32 *payload asm("r0");
-    register s32 *next_payload asm("r1");
-    register u32 reg2 asm("r2");
+    register struct Unk6A4D8Node *node;
+    register void *buffer;
+    register void **current;
+    register struct Unk6A314 *work;
+    register s32 *payload;
+    register s32 *next_payload;
+    register u32 reg2;
 
     work = state;
     current = &gUnk_03003F44;

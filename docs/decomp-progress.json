@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T22:40:21Z",
+  "generated": "2026-09-20T22:59:44Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "src_matched": 633,
@@ -8,16 +8,16 @@
   "missing_size": 0,
   "kinds": {
     "semantic": {
-      "functions": 348,
-      "bytes": 23238,
-      "pct_functions": 55.0,
-      "pct_bytes": 25.7
+      "functions": 296,
+      "bytes": 18550,
+      "pct_functions": 46.8,
+      "pct_bytes": 20.5
     },
     "readable_asm": {
-      "functions": 285,
-      "bytes": 67034,
-      "pct_functions": 45.0,
-      "pct_bytes": 74.3
+      "functions": 337,
+      "bytes": 71722,
+      "pct_functions": 53.2,
+      "pct_bytes": 79.5
     },
     "opcode": {
       "functions": 0,
@@ -28,10 +28,10 @@
   },
   "decomp": {
     "headline": "semantic C vs original function code",
-    "functions": 348,
-    "bytes": 23238,
-    "pct_functions": 55.0,
-    "pct_bytes": 25.7
+    "functions": 296,
+    "bytes": 18550,
+    "pct_functions": 46.8,
+    "pct_bytes": 20.5
   },
   "non_blob": {
     "note": "semantic C + readable Thumb (no .byte retail paste)",
@@ -41,8 +41,8 @@
     "pct_bytes": 100.0
   },
   "readable_asm": {
-    "functions": 285,
-    "bytes": 67034
+    "functions": 337,
+    "bytes": 71722
   },
   "opcode": {
     "functions": 0,
@@ -50,13 +50,13 @@
   },
   "battle": {
     "functions": 160,
-    "semantic": 76,
-    "readable_asm": 84,
+    "semantic": 54,
+    "readable_asm": 106,
     "opcode": 0,
     "bytes": 37974,
-    "semantic_bytes": 7682,
-    "pct_functions": 47.5,
-    "pct_bytes": 20.2
+    "semantic_bytes": 5784,
+    "pct_functions": 33.8,
+    "pct_bytes": 15.2
   },
   "largest_opcode": [],
   "history": [
@@ -1501,7 +1501,7 @@
       "pct_bytes": 25.4
     },
     {
-      "generated": "2026-09-20T22:40:21Z",
+      "generated": "2026-09-20T22:45:59Z",
       "semantic": 348,
       "readable_asm": 285,
       "opcode": 0,
@@ -1509,6 +1509,26 @@
       "total_bytes": 90272,
       "pct_functions": 55.0,
       "pct_bytes": 25.7
+    },
+    {
+      "generated": "2026-09-20T22:53:48Z",
+      "semantic": 363,
+      "readable_asm": 270,
+      "opcode": 0,
+      "semantic_bytes": 23768,
+      "total_bytes": 90272,
+      "pct_functions": 57.3,
+      "pct_bytes": 26.3
+    },
+    {
+      "generated": "2026-09-20T22:59:44Z",
+      "semantic": 296,
+      "readable_asm": 337,
+      "opcode": 0,
+      "semantic_bytes": 18550,
+      "total_bytes": 90272,
+      "pct_functions": 46.8,
+      "pct_bytes": 20.5
     }
   ]
 }

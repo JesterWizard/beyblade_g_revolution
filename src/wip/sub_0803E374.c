@@ -3,8 +3,8 @@
 // @ 0x0803E374
 s32 sub_0803E374(struct Unk3E328 *a)
 {
-    register const u8 *table1 asm("r0");
-    register s32 index1 asm("r1");
+    register const u8 *table1;
+    register s32 index1;
     const u8 *table2;
     const u8 *table3;
     const u8 *entry1;

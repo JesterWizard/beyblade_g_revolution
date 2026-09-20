@@ -2,8 +2,8 @@
 
 void sub_080429CC(void)
 {
-    register struct Unk0538 *ring asm("r1");
-    register struct MainWork *main asm("r2");
+    register struct Unk0538 *ring;
+    register struct MainWork *main;
 
     ring = gUnk_03000538;
     main = gMainWorkPtr;

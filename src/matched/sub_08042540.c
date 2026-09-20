@@ -5,9 +5,9 @@
 
 void sub_08042540(void)
 {
-    register u8 *addr asm("r1");
-    register u32 mask asm("r0");
-    register u32 value asm("r2");
+    register u8 *addr;
+    register u32 mask;
+    register u32 value;
 
     addr = &gMainWorkPtr->unk0479;
     mask = 2;

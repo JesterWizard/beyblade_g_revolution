@@ -5,15 +5,15 @@ s32 sub_08035AE0(
 {
     s32 result;
     s32 threshold;
-    register s32 dx asm("r8");
-    register s32 dy asm("r9");
-    register s32 dz asm("r10");
-    register s32 distance asm("r5");
+    register s32 dx;
+    register s32 dy;
+    register s32 dz;
+    register s32 distance;
     s32 length;
-    register s32 velocity_x asm("r3");
-    register s32 velocity_y asm("r1");
-    register s32 velocity_z asm("r2");
-    register s32 velocity_distance asm("r0");
+    register s32 velocity_x;
+    register s32 velocity_y;
+    register s32 velocity_z;
+    register s32 velocity_distance;
     s32 midpoint_x;
     s32 midpoint_y;
     s32 offset_x;

@@ -108,4 +108,4 @@ Bootstrap checklist: [reference.md](reference.md)
 - Integrating without `match_function.py` MATCH
 - Hand-editing `asm/nonmatchings/*.s`
 - Skipping status doc updates (lose near-miss knowledge)
-- Reverting unmatched C without parking `src/wip/` + notes (the next session restarts from zero)
+- Using `register T x asm("rN")` or empty `asm("")` to force a match (park instead)

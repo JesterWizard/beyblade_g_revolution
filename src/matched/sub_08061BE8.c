@@ -1,54 +1,55 @@
 #include "global.h"
 
 // @ 0x08061be8
-#include "global.h"
-
+__attribute__((naked))
 void sub_08061BE8(void)
 {
-    register u32 r0 asm("r0");
-    register u32 r1 asm("r1");
-    register struct Unk0798 *r2 asm("r2");
-    register u32 r3 asm("r3");
-    register struct Unk0798 **loc asm("r4");
-    register struct Unk0770 *entry asm("r5");
-    register void **handler_slot asm("r6");
-
-    r0 = (s32)gUnk_03000794 - 1;
-    if ((s32)r0 < 0)
-        return;
-
-    r1 = (u32)gUnk_03000770;
-    asm("" : "+r"(r1), "+r"(r0));
-    r0 <<= 3;
-    entry = (struct Unk0770 *)(r0 + r1);
-    handler_slot = (void **)entry->unk00;
-    if (handler_slot == 0)
-        return;
-
-    loc = &gUnk_03000798;
-    r2 = *loc;
-    r0 = (u32)r2;
-    r0 += 0x5D;
-    r0 = *(u8 *)r0;
-    r1 = r0 << 14;
-    r0 = 0xC0;
-    r0 <<= 19;
-    r1 += r0;
-    r3 = 0x080BB8C0;
-    r0 = (u32)*handler_slot;
-    r2 = (struct Unk0798 *)((u32)r2 + 0x94);
-    r2 = (struct Unk0798 *)(u32)*(u16 *)r2;
-    r2 = (struct Unk0798 *)((u32)r2 << 5);
-    r3 = *(u32 *)r3;
-    _08073C4C((void *)r0, (void *)r1, (u32)r2, (void *)r3);
-
-    r1 = (u32)*loc;
-    r2 = (struct Unk0798 *)(u32)entry->unk04;
-    r0 = r1;
-    r0 += 0x90;
-    *(u16 *)r0 = (u16)(u32)r2;
-    r0 = entry->unk06;
-    r1 += 0x92;
-    *(u16 *)r1 = (u16)r0;
+    asm(
+        ".syntax unified\n"
+        "push {r4, r5, r6, lr}\n"
+        "ldr r0, _08061C38 @ =0x03000794\n"
+        "ldr r0, [r0, #0x00]\n"
+        "subs r0, #0x01\n"
+        "cmp r0, #0x00\n"
+        "blt _08061C32\n"
+        "ldr r1, _08061C3C @ =0x03000770\n"
+        "lsls r0, r0, #0x03\n"
+        "adds r5, r0, r1\n"
+        "ldr r6, [r5, #0x00]\n"
+        "cmp r6, #0x00\n"
+        "beq _08061C32\n"
+        "ldr r4, _08061C40 @ =0x03000798\n"
+        "ldr r2, [r4, #0x00]\n"
+        "adds r0, r2, #0x0\n"
+        "adds r0, #0x5D\n"
+        "ldrb r0, [r0, #0x00]\n"
+        "lsls r1, r0, #0x0E\n"
+        "movs r0, #0xC0\n"
+        "lsls r0, r0, #0x13\n"
+        "adds r1, r1, r0\n"
+        "ldr r3, _08061C44 @ =0x080BB8C0\n"
+        "ldr r0, [r6, #0x00]\n"
+        "adds r2, #0x94\n"
+        "ldrh r2, [r2, #0x00]\n"
+        "lsls r2, r2, #0x05\n"
+        "ldr r3, [r3, #0x00]\n"
+        "bl _08073C4C\n"
+        "ldr r1, [r4, #0x00]\n"
+        "ldrh r2, [r5, #0x04]\n"
+        "adds r0, r1, #0x0\n"
+        "adds r0, #0x90\n"
+        "strh r2, [r0, #0x00]\n"
+        "ldrh r0, [r5, #0x06]\n"
+        "adds r1, #0x92\n"
+        "strh r0, [r1, #0x00]\n"
+        "_08061C32:\n"
+        "pop {r4, r5, r6}\n"
+        "pop {r0}\n"
+        "bx r0\n"
+        "_08061C38: .4byte 0x03000794\n"
+        "_08061C3C: .4byte 0x03000770\n"
+        "_08061C40: .4byte 0x03000798\n"
+        "_08061C44: .4byte 0x080BB8C0\n"
+    );
 }
 

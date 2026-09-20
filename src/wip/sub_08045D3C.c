@@ -5,10 +5,10 @@ void sub_08045D3C(
     u32 operation_arg,
     u32 *out_arg)
 {
-    register u32 operation asm("r3");
-    register u32 group asm("r2");
-    register u32 bit asm("r4");
-    register u32 *out asm("r5");
+    register u32 operation;
+    register u32 group;
+    register u32 bit;
+    register u32 *out;
     u8 low;
     u32 mask;
     struct Unk45D3CEntry *entry;

@@ -2,9 +2,9 @@
 
 void *sub_0806FDD0(u16 key_arg)
 {
-    register u16 key asm("r6");
-    register struct Unk6FDB4 *node asm("r4");
-    register struct Unk6FDB4 **head_loc asm("r5");
+    register u16 key;
+    register struct Unk6FDB4 *node;
+    register struct Unk6FDB4 **head_loc;
     struct Unk6FDB4 **free_loc;
     struct Unk6FDB4 *previous;
     struct Unk6FDB4 *next;

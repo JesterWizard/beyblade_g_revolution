@@ -2,8 +2,8 @@
 
 void sub_0804C27C(u8 *data, s32 index_arg, void *image)
 {
-    register s32 index asm("r4");
-    register s32 first asm("r6");
+    register s32 index;
+    register s32 first;
 
     index = index_arg;
     if (index == (s8)data[0x2D5])

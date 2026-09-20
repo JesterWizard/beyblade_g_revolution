@@ -2,9 +2,9 @@
 
 void sub_08066FB8(void)
 {
-    register u32 *table asm("r5");
-    register u32 *index_loc asm("r6");
-    register void *image asm("r4");
+    register u32 *table;
+    register u32 *index_loc;
+    register void *image;
     u32 value;
     u32 mode;
 

@@ -13,9 +13,9 @@ struct Unk32604Table
 
 void sub_08032604(void)
 {
-    register struct BattleWork **main_loc asm("r8");
-    register struct Unk32604Table *table asm("r6");
-    register u32 transfer_size asm("r9");
+    register struct BattleWork **main_loc;
+    register struct Unk32604Table *table;
+    register u32 transfer_size;
     s8 index;
 
     index = (s8)_08032458();
