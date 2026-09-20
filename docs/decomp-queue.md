@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T20:24:25Z_
+_Updated: 2026-09-20T20:26:27Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T20:24:25Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 88 (59 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 165 |
+| WIP (resume these first) | 166 |
 
 Ranking: **battle** · showing top **40**
 
@@ -191,6 +191,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08030638` | 268 | 31/268 | `src/wip/sub_08030638.c` | Semantic rotation transform reconstructed, but compiler shape is 244/268 after two attempts; target uses natural r7/r2 argument copies while the candidate retains a high-register temporary and differs in literal/load scheduling. | Restore target register shape: remove persistent temporaries/table aliases, seed arguments in r7/r2, and match the angle/table expression order before retrying. |
 | `sub_08030F38` | 348 | 54/348 | `src/wip/sub_08030F38.c` | Resource timer/update semantics reconstructed across the AF0/B00/B20/B40/B48 paths, but two compiler attempts diverged in prologue and pointer scheduling (376-byte candidate versus 348-byte target). | Use the target's callee-save shape: seed gBattleWorkPtrLoc in r7, retain the initial work pointer in r4 only through the AF* updates, then hand-write scoped register aliases for the B00/B20 loop and final B48 delta clamp. |
 | `sub_0803114C` | 184 | 13/184 | `src/wip/sub_0803114C.c` | Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts. | Pin the base argument in r8 and preserve the original duplicated loop setup; target keeps separate mode-zero/nonzero loops, count in r6, remaining in r5, and reloads gBattleWork->unkBB0 per entry. |
+| `sub_0803139C` | 350 | 103/350 | `src/wip/sub_0803139C.c` | Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/350 bytes; remaining mismatch is register/lifetime scheduling around the duplicated allocation paths and cleanup. | Preserve the target's old null entry in r4 for the three stack arguments, pin array/index/table state to the target high registers, and retain the exact duplicated allocation blocks. |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -294,6 +295,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (142 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (141 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -1468,3 +1468,11 @@ notes = "src/wip/sub_0803114C.md"
 status = "Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts."
 next = "Pin the base argument in r8 and preserve the original duplicated loop setup; target keeps separate mode-zero/nonzero loops, count in r6, remaining in r5, and reloads gBattleWork->unkBB0 per entry."
 score = "13/184"
+
+[[wip]]
+name = "sub_0803139C"
+seed = "src/wip/sub_0803139C.c"
+notes = "src/wip/sub_0803139C.md"
+status = "Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/350 bytes; remaining mismatch is register/lifetime scheduling around the duplicated allocation paths and cleanup."
+next = "Preserve the target's old null entry in r4 for the three stack arguments, pin array/index/table state to the target high registers, and retain the exact duplicated allocation blocks."
+score = "103/350"

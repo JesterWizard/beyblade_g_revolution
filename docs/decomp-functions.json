@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T20:24:12Z",
+  "generated": "2026-09-20T20:24:31Z",
   "counts": {
     "matched": 309,
     "blocked": 28,
-    "wip": 153,
-    "not_started": 128,
+    "wip": 154,
+    "not_started": 127,
     "size_mismatch": 14,
     "same_size": 1
   },
@@ -848,17 +848,17 @@
       "addr": "0x0803114C",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 184,
-      "matched_bytes": 0,
+      "matched_bytes": 13,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/184",
-      "source": "none",
-      "note": ""
+      "pct": 7.1,
+      "score": "13/184",
+      "source": "wip",
+      "note": "Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts."
     },
     {
       "name": "sub_08031204",

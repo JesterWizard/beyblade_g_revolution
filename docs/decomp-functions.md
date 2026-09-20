@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-20T20:24:12Z_
+_Updated: 2026-09-20T20:24:31Z_
 
 ## Legend
 
@@ -26,8 +26,8 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | byte-identical DIFF | 0 |
 | same-size DIFF | 1 |
 | size DIFF | 14 |
-| WIP (parked C) | 153 |
-| not started | 128 |
+| WIP (parked C) | 154 |
+| not started | 127 |
 | blocked | 28 |
 | **total** | **633** |
 
@@ -194,6 +194,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0804188C` | WIP (parked C) | 7.8% | 19/244 then 41/244 | Two semantic attempts failed to reproduce the fixed-point table walk: direct … |
 | `sub_0806FDB4` | size DIFF | 7.5% | 3/28 |  |
 | `sub_0806AC68` | size DIFF | 7.1% | 2/22 |  |
+| `sub_0803114C` | WIP (parked C) | 7.1% | 13/184 | Entry-position initialization semantics reconstructed with both direction bra… |
 | `sub_0805E044` | WIP (parked C) | 7.0% | 16/228 then 15/228 | Two semantic attempts: typed table-pointer loop 16/228 (212B), then explicit … |
 | `sub_080436B0` | WIP (parked C) | 7.0% | 46/658 then 85/658 | Two semantic attempts failed: structured local seed 46/658 (616B), then fixed… |
 | `sub_0806BDA8` | size DIFF | 6.2% | 2/26 |  |
@@ -357,6 +358,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0804A028` | `0x0804A028` | WIP (parked C) | 8.6% | 15/174 then 55/174 | asm |
 | `sub_08061564` | `0x08061564` | WIP (parked C) | 8.1% | 11/136 then 9/136 | asm |
 | `sub_0804188C` | `0x0804188C` | WIP (parked C) | 7.8% | 19/244 then 41/244 | asm |
+| `sub_0803114C` | `0x0803114C` | WIP (parked C) | 7.1% | 13/184 | asm |
 | `sub_0805E044` | `0x0805E044` | WIP (parked C) | 7.0% | 16/228 then 15/228 | asm |
 | `sub_080436B0` | `0x080436B0` | WIP (parked C) | 7.0% | 46/658 then 85/658 | asm |
 | `sub_0806FDD0` | `0x0806FDD0` | WIP (parked C) | 6.2% | 8/128 then 21/128 | asm |
@@ -416,7 +418,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806E420` | `0x0806E420` | not started | 0.0% | 0/178 | asm |
 | `sub_08033978` | `0x08033978` | not started | 0.0% | 0/180 | asm |
 | `sub_0806FF58` | `0x0806FF58` | not started | 0.0% | 0/180 | asm |
-| `sub_0803114C` | `0x0803114C` | not started | 0.0% | 0/184 | asm |
 | `sub_080700CC` | `0x080700CC` | not started | 0.0% | 0/188 | asm |
 | `sub_080688C8` | `0x080688C8` | not started | 0.0% | 0/190 | asm |
 | `sub_08051444` | `0x08051444` | not started | 0.0% | 0/192 | asm |

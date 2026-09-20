@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T20:24:25Z",
+  "generated": "2026-09-20T20:26:27Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 88,
     "battle_semantic": 59,
     "blocked": 34,
-    "wip": 165
+    "wip": 166
   },
   "pinned": [],
   "wip": [
@@ -1830,6 +1830,17 @@
       "status": "Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts.",
       "next": "Pin the base argument in r8 and preserve the original duplicated loop setup; target keeps separate mode-zero/nonzero loops, count in r6, remaining in r5, and reloads gBattleWork->unkBB0 per entry.",
       "score": "13/184"
+    },
+    {
+      "name": "sub_0803139C",
+      "addr": "0x0803139C",
+      "kind": "asm",
+      "bytes": 350,
+      "seed": "src/wip/sub_0803139C.c",
+      "notes": "src/wip/sub_0803139C.md",
+      "status": "Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/350 bytes; remaining mismatch is register/lifetime scheduling around the duplicated allocation paths and cleanup.",
+      "next": "Preserve the target's old null entry in r4 for the three stack arguments, pin array/index/table state to the target high registers, and retain the exact duplicated allocation blocks.",
+      "score": "103/350"
     }
   ],
   "recommended": [
@@ -4160,18 +4171,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803139C",
-      "addr": "0x0803139C",
-      "kind": "asm",
-      "bytes": 350,
-      "score": 197,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },
