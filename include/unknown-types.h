@@ -129,6 +129,13 @@ struct Unk0C /* 0x0c */
 };
 
 /* Pointer at +0, word at +0xC. sub_08062044. */
+/* +0x1E: s16 baseline/anchor. sub_08062068. */
+struct Unk62068 /* >= 0x20 */
+{
+    /* 00 */ u8 filler_00[0x1E];
+    /* 1e */ s16 unk1E;
+};
+
 struct Unk62044 /* 0x28 (padded from >= 0x26) */
 {
     /* 00 */ void *unk00;
