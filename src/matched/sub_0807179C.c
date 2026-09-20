@@ -1,53 +1,37 @@
 #include "global.h"
 
 // @ 0x0807179c
-__attribute__((naked))
-void sub_0807179C(void)
+void sub_0807179C(struct Unk7179C *arg0)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "add sp, #-0x034\n"
-        "ldr r1, [r0, #0x1C]\n"
-        "subs r6, r1, #0x1\n"
-        "ldr r5, [r0, #0x14]\n"
-        "ldr r4, [r0, #0x18]\n"
-        "movs r7, #0x00\n"
-        "cmp r6, #0x00\n"
-        "ble _080717E6\n"
-        "_080717AE:\n"
-        "mov r0, sp\n"
-        "adds r1, r5, #0x0\n"
-        "movs r2, #0x34\n"
-        "bl _08075A58\n"
-        "ldr r0, [r4, #0x08]\n"
-        "str r0, [r5, #0x08]\n"
-        "ldr r0, [r4, #0x0C]\n"
-        "str r0, [r5, #0x0C]\n"
-        "ldrh r0, [r4, #0x18]\n"
-        "strh r0, [r5, #0x18]\n"
-        "ldr r0, [r4, #0x24]\n"
-        "str r0, [r5, #0x24]\n"
-        "ldr r0, [sp, #0x008]\n"
-        "str r0, [r4, #0x08]\n"
-        "ldr r0, [sp, #0x00C]\n"
-        "str r0, [r4, #0x0C]\n"
-        "mov r0, sp\n"
-        "ldrh r0, [r0, #0x18]\n"
-        "strh r0, [r4, #0x18]\n"
-        "ldr r0, [sp, #0x024]\n"
-        "str r0, [r4, #0x24]\n"
-        "adds r7, #0x01\n"
-        "subs r6, #0x01\n"
-        "ldr r5, [r5, #0x04]\n"
-        "ldr r4, [r4, #0x00]\n"
-        "cmp r6, r7\n"
-        "bgt _080717AE\n"
-        "_080717E6:\n"
-        "add sp, #0x034\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 count;
+    struct Unk7179CNode *a;
+    struct Unk7179CNode *b;
+    s32 i;
+    struct Unk7179CNode tmp;
+
+    count = arg0->unk1C - 1;
+    a = arg0->unk14;
+    b = arg0->unk18;
+    i = 0;
+    if (count <= 0)
+        goto done;
+loop:
+    _08075A58(&tmp, a, 0x34);
+    a->unk08 = b->unk08;
+    a->unk0C = b->unk0C;
+    a->unk18 = b->unk18;
+    a->unk24 = b->unk24;
+    b->unk08 = tmp.unk08;
+    b->unk0C = tmp.unk0C;
+    b->unk18 = tmp.unk18;
+    b->unk24 = tmp.unk24;
+    i++;
+    count--;
+    a = a->unk04;
+    b = b->unk00;
+    if (count > i)
+        goto loop;
+done:
+    return;
 }
 

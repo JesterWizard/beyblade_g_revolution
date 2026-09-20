@@ -106,6 +106,16 @@ Win: `sub_080712CC`.
 
 Incoming pointer copies: do **not** add `a = a_arg; b = b_arg` locals. Use the parameters as the live pointers so agbcc's `assign_parms` emits `adds r2, r0; adds r3, r1` in order. Extra locals save `r1` first (scratch conflict) and swap those two insns. Win: `sub_0804109C`.
 
+Same for a 4-arg function that must start `adds r5, r0; adds r7, r2; adds r6, r3; movs r4, #0`: keep using `a` across calls (do not `obj = a` / pin `r5`). Pin only the extra index in `r4`. Pinning `obj` as `r5` saves `r2`/`r3` first. Win: `sub_080442FC`.
+
+`u8` args emit `lsls/lsrs` before any other copy. If retail copies `r1` to `r5` first, take `u32` and extend after that copy. Win: `sub_08062A74`.
+
+Keep an IWRAM *location* in a callee-saved register (`r6 = (u32)&gUnk_…`) and reload after `bl`. Walking an IO pointer (`str; adds #4; str`) needs `asm("" : "+r"(r1))` between stores or agbcc emits `stmia`. Wins: `sub_08062A74`, `sub_0802E048`, `sub_08071BA0`.
+
+A loop that both `i++` and `count--` then `cmp count, i` is not `while (count > i)` with only `i++`. Win: `sub_0807179C`.
+
+Cases 0–2 share `r0 = count; b done` that must skip case 3: `r0 = count; asm("" : "+r"(r0)); goto done;` then case 3's own `r0 = count`. Win: `sub_08047624`.
+
 `x &= ~0x20` compiles as `movs rN, #0x21; negs rN` (`-0x21 == ~0x20`). `&= ~0x21` emits `#0x22` instead.
 
 Keep a struct pointer across a store cluster: `gUnk->a = …; gUnk->b = …` reloads from the IWRAM loc after the first add clobbers the pointer. `w = gUnk; w->a = …; w->b = …` matches retail. Win: `sub_0802D6D4` tail.

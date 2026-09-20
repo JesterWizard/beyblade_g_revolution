@@ -79,6 +79,10 @@ Mask-first tests (`movs r0,#N; ldrb r1,[r5]; ands r0,r1`) need `u32` pins. `u8` 
 
 Thumb args: `r0`, `r1`, `r2`, `r3`. If asm uses `r1` without `mov` from `r1`, declare `register T *r1 asm("r1");` and **do not** assign from the C parameter name before the asm-equivalent point.
 
+Do **not** `obj = a` / pin `r5` when retail starts `adds r5, r0; adds r7, r2; adds r6, r3`. Keep using `a` across calls so the save order matches. Pin only extras (`index` in `r4`). Win: `sub_080442FC`.
+
+`u8` args emit `lsls/lsrs` before other copies. If retail copies `r1` first, take `u32` and extend after. Win: `sub_08062A74`.
+
 ### 4. Struct members (required)
 
 ```c

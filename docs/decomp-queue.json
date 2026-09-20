@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T21:37:38Z",
+  "generated": "2026-09-20T22:03:33Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 307,
-    "semantic_done": 326,
-    "readable_asm": 307,
+    "pending": 297,
+    "semantic_done": 336,
+    "readable_asm": 297,
     "opcode": 0,
-    "battle_pending": 84,
-    "battle_semantic": 63,
-    "blocked": 33,
-    "wip": 162
+    "battle_pending": 81,
+    "battle_semantic": 67,
+    "blocked": 32,
+    "wip": 153
   },
   "pinned": [],
   "wip": [
@@ -26,17 +26,6 @@
       "status": "logic OK; 11/92 (56B vs 92B); extra r8/r9 leaf spill",
       "next": "independent per-field addressing like sub_08046230; force r8/r9 live",
       "score": "11/92"
-    },
-    {
-      "name": "sub_0802E048",
-      "addr": "0x0802E048",
-      "kind": "asm",
-      "bytes": 228,
-      "seed": "src/wip/sub_0802E048.c",
-      "notes": "src/wip/sub_0802E048.md",
-      "status": "same-size DIFF, 188/228 bytes (82.5%)",
-      "next": "try decomp-permuter register-order search; likely same agbcc leaf-fn reg-alloc quirk as dead-end list",
-      "score": "188/228"
     },
     {
       "name": "sub_080338F0",
@@ -424,17 +413,6 @@
       "score": "10/72"
     },
     {
-      "name": "sub_08062A74",
-      "addr": "0x08062A74",
-      "kind": "asm",
-      "bytes": 76,
-      "seed": "src/wip/sub_08062A74.c",
-      "notes": "src/wip/sub_08062A74.md",
-      "status": "53/76 bytes (69.7%), same size; correct algorithm and instruction shape matches retail almost exactly (table-address kept in r6, dereferenced fresh both before the trampoline call and again before the final store) after discovering/adding struct Unk62A74 (16-slot pool + u16 used-bitmask at *gUnk_030008D0, shared with sub_08062AF8/sub_08062B9C). Only remaining diff: agbcc allocates r2 for the dereferenced slot pointer where retail uses r1",
-      "next": "try declaring 'slot' after 'idx' or forcing a compound expression for the null check to see if it shifts register choice from r2 to r1",
-      "score": "53/76"
-    },
-    {
       "name": "sub_08062B9C",
       "addr": "0x08062B9C",
       "kind": "asm",
@@ -490,28 +468,6 @@
       "score": "12/86"
     },
     {
-      "name": "sub_08067F98",
-      "addr": "0x08067F98",
-      "kind": "asm",
-      "bytes": 48,
-      "seed": "src/wip/sub_08067F98.c",
-      "notes": "src/wip/sub_08067F98.md",
-      "status": "36/48 bytes (75%), same size; correct algorithm (variable-stride linked entry search: base=arg0->unk00, entry=base+base->unk18, walk arg0->unk28 entries comparing unk00==key, advance by unk02 byte stride) with loop/branch shape matching retail. Added structs Unk67F98/Unk67F98Base/Unk67F98Entry. Only remaining diff: register choice for 'key' (r4 here vs retail's r3) and 'count' (r3 here vs retail's r0)",
-      "next": "try declaring 'count' before 'entry'/'base' to see if it shifts to r0, or check if the parameter u16 extension for 'key' needs a different cast form to land in r3",
-      "score": "36/48"
-    },
-    {
-      "name": "sub_0806B3E8",
-      "addr": "0x0806B3E8",
-      "kind": "asm",
-      "bytes": 84,
-      "seed": "src/wip/sub_0806B3E8.c",
-      "notes": "src/wip/sub_0806B3E8.md",
-      "status": "61/84 bytes (72.6%), same size; correct algorithm (walk arg0->unk10 string char-by-char, for each non-space non-null char look up a byte in table 0x080BB748, call sub_0806833C on the current item, set item->unk70=-1, advance item by 0xDC and decrement count; after the string ends, zero-fill unk70 for any remaining items). Added structs Unk6B3E8/Unk6B3E8Item (0xDC stride). Only remaining diff: register choice for the loop char variable 'c' (r0 vs retail's r1)",
-      "next": "try declaring 'c' as a function parameter-style register variable, or check if the initial 'goto check' idiom (vs a for/while) changes register allocation for the char",
-      "score": "61/84"
-    },
-    {
       "name": "sub_0806C78C",
       "addr": "0x0806C78C",
       "kind": "asm",
@@ -532,17 +488,6 @@
       "status": "7/46 bytes (15.2%), size mismatch (40 vs 46); correct algorithm (call the bx-r4 trampoline _08073C50 through arg0->unk94->unk08 handler, default result=1) with push-list now matching ({r4,r5,r6}) after register-pinning the handler and re-adding p/b local copies. Retail unconditionally zero-extends arg3 (u16) at function entry even though it's only used inside the conditional branch, and explicitly re-copies arg1 into r6 before the call; agbcc elides both since they're proven redundant",
       "next": "try using arg3 in an early no-op expression (e.g. volatile-style dead read) to force the upfront extension, matching retail's apparently-unnecessary eager evaluation",
       "score": "7/46"
-    },
-    {
-      "name": "sub_0807179C",
-      "addr": "0x0807179C",
-      "kind": "asm",
-      "bytes": 82,
-      "seed": "src/wip/sub_0807179C.c",
-      "notes": "src/wip/sub_0807179C.md",
-      "status": "58/82 bytes (70.7%), size mismatch (80 vs 82); correct algorithm (swap unk08/unk0C/unk18/unk24 between two linked node chains via a stack temp + _08075A58 memcpy, walking a->unk04 and b->unk00) with instruction-level match nearly 1:1. Added local structs Unk7179C/Unk7179CNode (0x34 stride). Retail keeps a genuinely redundant extra loop-index register (r7, incremented but never read except in the loop's own exit compare) alongside the down-counter (r6); collapsing to a single while(count>i) loses that register, but adding a real 'i++' with an if+do-while structure caused agbcc to eliminate it as dead instead",
-      "next": "try using 'i' in a genuinely dead-but-not-optimizable way (e.g. volatile local, or comparing it against something else) to force agbcc to keep both counters live like retail",
-      "score": "58/82"
     },
     {
       "name": "sub_08071E84",
@@ -754,17 +699,6 @@
       "score": "58/160 then 56/160"
     },
     {
-      "name": "sub_08040F4C",
-      "addr": "0x08040F4C",
-      "kind": "asm",
-      "bytes": 336,
-      "seed": "src/wip/sub_08040F4C.c",
-      "notes": "src/wip/sub_08040F4C.md",
-      "status": "Two semantic attempts captured the full 0x328-byte state machine: direct seed 246/336 (344B), register-pinned seed 255/336 (348B). Remaining differences are agbcc register/literal scheduling plus callee-save shape around the initial _08073C4C handler and branch target pointer; logic and stack fields are modeled by Unk40F4C.",
-      "next": "Use targeted permuter/source-shape work for initial handler order, r2 blend-flag pointer, and r0 switch target while preserving the ordinary r5 completion flag; do not hand-loop retries.",
-      "score": "246/336 then 255/336"
-    },
-    {
       "name": "sub_080411EC",
       "addr": "0x080411EC",
       "kind": "asm",
@@ -886,17 +820,6 @@
       "score": "46/658 then 85/658"
     },
     {
-      "name": "sub_080442FC",
-      "addr": "0x080442FC",
-      "kind": "asm",
-      "bytes": 144,
-      "seed": "src/wip/sub_080442FC.c",
-      "notes": "src/wip/sub_080442FC.md",
-      "status": "Two attempts: semantic object/lookup seed 111/144 (same-size), then r4/r5 pins to force retail a/index registers degraded to 90/144 (148B). Behavior and signatures are mapped: optional key lookup, +0x84 callback, palette table selection into MainWork+0x1690, sub_08043C70 call, optional sub_0806C78C.",
-      "next": "Restore the 111/144 baseline; use a selective source/permuter search for a in r5 and index in r4 without fixed-register pins, preserving sub_08043C70's fifth stack argument.",
-      "score": "111/144 then 90/144"
-    },
-    {
       "name": "sub_0804438C",
       "addr": "0x0804438C",
       "kind": "asm",
@@ -950,17 +873,6 @@
       "status": "Two semantic attempts: local pool physics seed 24/232 (200B), then r3-pinned MainWork 25/232 (200B). Behavior and pool-slot fields are mapped, but retail retains location/pointer registers and emits ldm-based 16-slot loops that the semantic array indexing does not reproduce.",
       "next": "Restore the baseline; use a targeted register/permuter search for MainWork r3, pool-location r4, pool pointer r2, and ldm/stm slot iteration while preserving 0x1825/0x1827 gates and random updates.",
       "score": "24/232 then 25/232"
-    },
-    {
-      "name": "sub_08047624",
-      "addr": "0x08047624",
-      "kind": "asm",
-      "bytes": 174,
-      "seed": "src/wip/sub_08047624.c",
-      "notes": "src/wip/sub_08047624.md",
-      "status": "Two attempts produced the same 132/174 near-match (172B). Coordinate alignment semantics and signed fixed-point source fields are correct; the only observed size/layout delta is retail's extra common-label branch before the return.",
-      "next": "Restore the semantic loop seed and use a branch-layout/permuter search to preserve the extra _080476AE common label branch; do not alter the alignment arithmetic.",
-      "score": "132/174 then 132/174"
     },
     {
       "name": "sub_08047A94",
@@ -1511,17 +1423,6 @@
       "status": "Two attempts: the semantic sorted-list reposition candidate reached 37/114 (112B); a typed-parameter/register experiment failed to compile because agbcc rejects asm-qualified parameters. Unlink, key update, predecessor search, and reinsertion logic are mapped.",
       "next": "Keep the first compilable candidate. To close the 2-byte size/prologue gap, make the typed node assignment emit adds r4,r0 before key truncation while retaining key in r2. Then tune head/search_head lifetimes to preserve the retail r6/r5 aliases.",
       "score": "37/114"
-    },
-    {
-      "name": "sub_08071BA0",
-      "addr": "0x08071BA0",
-      "kind": "asm",
-      "bytes": 148,
-      "seed": "src/wip/sub_08071BA0.c",
-      "notes": "src/wip/sub_08071BA0.md",
-      "status": "Two semantic attempts. Direct GBA register/global C reached 109/148 bytes (73.6%, exact size); a base-pointer rewrite preserved size but fell to 58/148. Hardware behavior is mapped: enable sound, configure DMA1 to FIFO A, configure timers, and update audio timing globals.",
-      "next": "Start from the 109/148 direct-register candidate. Reproduce retail's DMA pointer sequencing: after sound control setup, retail keeps 0x04000082 + 0x3A in r1 and emits str [r1], adds r1,#4, str [r1], adds r1,#4. Avoid agbcc's stmia writeback and preserve the retail literal pool order; then match timer/global writes.",
-      "score": "109/148"
     },
     {
       "name": "sub_0802BAD4",
@@ -2419,13 +2320,6 @@
       "reason": "32-halfword table copy (gUnk_08094E00[gMainWorkPtr->unk181F] -> PLTT 0x050001C0) \u2014 void(void) leaf, same agbcc-extra-push-on-leaf framing as sub_0802B994 (60B retail vs 64B compiled, same shape every C form tried); needs permuter",
       "kind": "asm",
       "bytes": 60
-    },
-    {
-      "name": "sub_08045128",
-      "addr": "0x08045128",
-      "reason": "reads gMainWorkPtr->unk1688[idx].unk08 into unk1788, computes base = gMainWorkPtr->unk168C + idx*8032 (retail's literal shift/sub chain), calls sub_08045590(base,0) \u2014 logic correct (same-size DIFF, ~14/80 bytes differ) across many pointer-arithmetic orderings tried; needs permuter for the base-pointer scheduling",
-      "kind": "asm",
-      "bytes": 80
     },
     {
       "name": "sub_08045C5C",

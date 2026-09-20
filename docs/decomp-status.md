@@ -8,18 +8,32 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **326/633 (51.5%)** |
-| **Decompiled C (bytes)** | **20,902/90,272 (23.2%)** |
+| **Decompiled C (functions)** | **336/633 (53.1%)** |
+| **Decompiled C (bytes)** | **22,302/90,272 (24.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 307/633 (48.5%) |
+| Readable Thumb | 297/633 (46.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 63/160 (39.4% fn, 16.9% bytes) |
+| Battle semantic C | 67/160 (41.9% fn, 18.5% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — semantic C ten parked/blocked near-misses (+10, 326→336/633)
+- Matched `sub_08045128` (copy `unk1688[idx].unk08` to `unk1788`, `sub_08045590`). Follow retail’s shift/sub chain for `idx*0x18` and `idx*0x1F60`; keep `gMainWorkPtr` in `r3`.
+- Matched `sub_08067F98` (variable-stride key search). `u32` key so `lsls/lsrs` land in `r3`; clobber `a` with `ldrh r0, [r0, #0x28]`; `r2 = r4 + r2` for the stride add.
+- Matched `sub_0806B3E8` (string → `Unk6B3E8Item`). Char lives in `r1`; `r0 = ch + 0x080BB748`; fill tail with `r0 = count; count--; if (r0 == 0)`.
+- Matched `sub_0807179C` (swap two node chains). Both `i++` and `count--` then `cmp count, i`; `unk18` is `u16`.
+- Matched `sub_08062A74` (OBJ palette slot). `u32` arg so `adds r5, r1` precedes the `u8` extend; keep `&gUnk_030008D0` in `r6`.
+- Matched `sub_0802E048` (init `Unk026C` overlay records). Flag is `0x80 << 7` (`0x4000`), not `0x80000000`; keep `&gUnk_0300026C` in `r4`; `movs+lsls` for the 0x3B00/0x4B00/… constants.
+- Matched `sub_08047624` (snap x/y to 8px). Cases 0–2 share `r0 = count; asm("+r"); goto done` so the branch skips case 3.
+- Matched `sub_08071BA0` (sound DMA1 + timers). Walk `0x04000084` with `+r` barriers so stores stay `str; adds #4`, not `stmia`; reuse `r2 = 0x10000` for the last subtract.
+- Matched `sub_08040F4C` (0x328-byte state loop). `done` in `r5`; blend case 1 compares `lsls #16` without `asrs`; modes 0 and 2 share the handler load.
+- Matched `sub_080442FC` (optional key lookup + `sub_08043C70`). Use parameter `a` across calls (no `obj = a` / `r5` pin); `ldrb r3, [r0]` for `unk181B`; `r0 = 0x08091208` then `r1 += r0`.
+- `sub_0802B994` still blocked: `bx lr` leaf, extra `push {lr}`, pool in the middle of the loop.
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C four parked/blocked near-misses (+4, 322→326/633)
 - Matched `sub_08031300` (Unk312EC countdown). Pin `a` to `r2`; `n = n - 1` in `r3`; `ldsb` toggle of `unk00`/`unk01`.

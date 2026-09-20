@@ -1,73 +1,62 @@
 #include "global.h"
 
 // @ 0x08071ba0
-__attribute__((naked))
 void sub_08071BA0(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "ldr r1, _08071C08 @ =0x04000084\n"
-        "movs r0, #0x80\n"
-        "strh r0, [r1, #0x00]\n"
-        "subs r1, #0x02\n"
-        "ldr r2, _08071C0C @ =0x00000B04\n"
-        "adds r0, r2, #0x0\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r1, #0x3A\n"
-        "ldr r0, _08071C10 @ =0x030040DC\n"
-        "ldr r5, [r0, #0x00]\n"
-        "str r5, [r1, #0x00]\n"
-        "adds r1, #0x04\n"
-        "ldr r0, _08071C14 @ =0x040000A0\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r1, #0x04\n"
-        "movs r0, #0xB6\n"
-        "lsls r0, r0, #0x18\n"
-        "str r0, [r1, #0x00]\n"
-        "ldr r2, _08071C18 @ =0x04000104\n"
-        "ldr r0, _08071C1C @ =0x030040D8\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "subs r0, #0x02\n"
-        "movs r1, #0xC4\n"
-        "lsls r1, r1, #0x10\n"
-        "orrs r0, r1\n"
-        "str r0, [r2, #0x00]\n"
-        "ldr r4, _08071C20 @ =0x04000100\n"
-        "ldr r0, _08071C24 @ =0x03004100\n"
-        "ldr r1, [r0, #0x00]\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x11\n"
-        "bl _080741EC\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x09\n"
-        "subs r0, r2, r0\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x10\n"
-        "orrs r0, r1\n"
-        "str r0, [r4, #0x00]\n"
-        "ldr r0, _08071C28 @ =0x030000B8\n"
-        "str r5, [r0, #0x00]\n"
-        "ldr r1, _08071C2C @ =0x030000BC\n"
-        "ldr r0, _08071C30 @ =0x0300410C\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "subs r2, r2, r0\n"
-        "str r2, [r1, #0x00]\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08071C08: .4byte 0x04000084\n"
-        "_08071C0C: .4byte 0x00000B04\n"
-        "_08071C10: .4byte 0x030040DC\n"
-        "_08071C14: .4byte 0x040000A0\n"
-        "_08071C18: .4byte 0x04000104\n"
-        "_08071C1C: .4byte 0x030040D8\n"
-        "_08071C20: .4byte 0x04000100\n"
-        "_08071C24: .4byte 0x03004100\n"
-        "_08071C28: .4byte 0x030000B8\n"
-        "_08071C2C: .4byte 0x030000BC\n"
-        "_08071C30: .4byte 0x0300410C\n"
-    );
+    register u32 r0 asm("r0");
+    register u32 r1 asm("r1");
+    register u32 r2 asm("r2");
+    register u32 r4 asm("r4");
+    register u32 r5 asm("r5");
+
+    r1 = REG_ADDR_SOUNDCNT_X;
+    r0 = 0x80;
+    *(vu16 *)r1 = (u16)r0;
+    r1 -= 2;
+    r2 = 0xB04;
+    r0 = r2;
+    asm("" : "+r"(r0), "+r"(r2), "+r"(r1));
+    *(vu16 *)r1 = (u16)r0;
+    r1 += 0x3A;
+    r0 = gUnk_030040DC;
+    r5 = *(u32 *)r0;
+    *(vu32 *)r1 = r5;
+    asm("" : "+r"(r1), "+r"(r5));
+    r1 += 4;
+    r0 = REG_ADDR_FIFO_A;
+    *(vu32 *)r1 = r0;
+    asm("" : "+r"(r1));
+    r1 += 4;
+    r0 = 0xB6;
+    r0 <<= 24;
+    *(vu32 *)r1 = r0;
+    r2 = REG_ADDR_TM1CNT;
+    r0 = gUnk_030040D8;
+    r0 = *(u16 *)r0;
+    r0 -= 2;
+    r1 = 0xC4;
+    r1 <<= 16;
+    r0 |= r1;
+    *(vu32 *)r2 = r0;
+    r4 = REG_ADDR_TM0CNT;
+    r0 = gUnk_03004100;
+    r1 = *(u32 *)r0;
+    r0 = 0x80;
+    r0 <<= 17;
+    r0 = (u32)_080741EC(r0, r1);
+    r2 = 0x80;
+    r2 <<= 9;
+    r0 = r2 - r0;
+    r1 = 0x80;
+    r1 <<= 16;
+    r0 |= r1;
+    *(vu32 *)r4 = r0;
+    r0 = gUnk_030000B8;
+    *(u32 *)r0 = r5;
+    r1 = gUnk_030000BC;
+    r0 = gUnk_0300410C;
+    r0 = *(u16 *)r0;
+    r2 -= r0;
+    *(u32 *)r1 = r2;
 }
 
