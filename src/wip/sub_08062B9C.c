@@ -10,11 +10,11 @@ void sub_08062B9C(u32 arg0, u32 arg1)
 
     lo = arg0 & 0xF;
     hi = arg1 & 0xF;
+    tmp = hi;
     if (lo > hi)
     {
-        tmp = lo;
-        lo = hi;
-        hi = tmp;
+        hi = lo;
+        lo = tmp;
     }
 
     for (i = lo; i <= hi; i++)
