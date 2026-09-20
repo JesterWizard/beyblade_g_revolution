@@ -1151,26 +1151,7 @@ struct Unk09B0 /* >= 0x06 */
     /* 04 */ u16 unk04;
 };
 
-/* Variable-stride keyed entry. sub_08067F98. */
-struct Unk67F98Entry /* >= 0x04 */
-{
-    /* 00 */ u16 unk00;
-    /* 02 */ u16 unk02;
-};
-
-/* Table base + s32 offset, count at +0x28. sub_08067F98. */
-struct Unk67F98 /* >= 0x2a */
-{
-    /* 00 */ struct Unk67F98Base *unk00;
-    /* 04 */ u8 filler_04[0x24];
-    /* 28 */ u16 unk28;
-};
-
-struct Unk67F98Base /* >= 0x1c */
-{
-    /* 00 */ u8 filler_00[0x18];
-    /* 18 */ s32 unk18;
-};
+/* sub_08067F98 reuses struct Unk680CC / Unk68014 / Unk680CCRec (see sub_080680CC). */
 
 /* Header + flag at +0x98. sub_08067F3C. */
 struct Unk67F3C /* >= 0x99 */
