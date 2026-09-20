@@ -10,6 +10,15 @@ prefer = "battle"
 # Hand-picked targets — shown first, in file order.
 # (sub_0806A6F8 / sub_08034894 unpinned — both confirmed agbcc-hard, see [[block]] below)
 
+# Incomplete C — resume these before picking a new function. See docs/decomp-wip.md
+[[wip]]
+name = "sub_08046278"
+seed = "src/wip/sub_08046278.c"
+notes = "src/wip/sub_08046278.md"
+status = "logic OK (both Unk16B0 slots {0,-1,-1}); extra r8/r9 leaf spill"
+next = "score seed; then independent per-field addressing like sub_08046230"
+score = "unscored"
+
 # Known hard cases — excluded from "recommended next", listed under Blocked.
 [[block]]
 name = "sub_080601C4"
@@ -150,3 +159,27 @@ reason = "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHel
 [[block]]
 name = "sub_08045C5C"
 reason = "gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter"
+
+[[wip]]
+name = "sub_0802E048"
+seed = "src/wip/sub_0802E048.c"
+notes = "src/wip/sub_0802E048.md"
+status = "same-size DIFF, 188/228 bytes (82.5%)"
+next = "try decomp-permuter register-order search; likely same agbcc leaf-fn reg-alloc quirk as dead-end list"
+score = "188/228"
+
+[[wip]]
+name = "sub_080338F0"
+seed = "src/wip/sub_080338F0.c"
+notes = "src/wip/sub_080338F0.md"
+status = "same_size DIFF, 20/104 bytes (19.2%) — structural rewrite needed, indexing bug noted in file"
+next = "fix table indexing to byte-offset (see note), re-add Unk338F0Table struct + Unk33958 retype, then re-run match_function.py"
+score = "20/104"
+
+[[wip]]
+name = "sub_0802D2C0"
+seed = "src/wip/sub_0802D2C0.c"
+notes = "src/wip/sub_0802D2C0.md"
+status = "DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant else-if that retail keeps"
+next = "permuter run targeting dead-code retention / instruction order; table lookup logic itself is verified correct"
+score = "92/108"

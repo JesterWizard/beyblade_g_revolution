@@ -9,6 +9,7 @@ Statuses:
   size_mismatch   — compiled length != retail
   not_started     — readable Thumb / opcode, no recorded C attempt
   blocked         — documented in docs/decomp-queue.toml (score still shown)
+  wip             — unmatched C parked in src/wip/ (resume, do not restart)
 
   python3 tools/decomp/function_scores.py           # summary
   python3 tools/decomp/function_scores.py --write   # docs/decomp-functions.md
@@ -144,6 +145,11 @@ def collect() -> dict[str, Any]:
         name = row.get("name", "")
         if name:
             blocked[name] = row.get("reason", "")
+    wip = {}
+    for row in cfg.get("wip") or []:
+        name = row.get("name", "")
+        if name:
+            wip[name] = row
 
     functions: list[dict[str, Any]] = []
     for path in sorted(MATCHED_SRC.glob("sub_*.c")):
@@ -195,7 +201,11 @@ def collect() -> dict[str, Any]:
                 note = ""
 
         display = status
-        if name in blocked and status != "matched":
+        if name in wip and status != "matched":
+            display = "wip"
+            if not note:
+                note = wip[name].get("status") or wip[name].get("seed", "")
+        elif name in blocked and status != "matched":
             display = "blocked"
 
         functions.append(
@@ -206,6 +216,7 @@ def collect() -> dict[str, Any]:
                 "status": status,
                 "display": display,
                 "blocked": name in blocked,
+                "wip": name in wip,
                 "block_reason": block_reason,
                 "retail_bytes": size,
                 "matched_bytes": matched_n,
@@ -238,17 +249,19 @@ def _status_label(display: str) -> str:
         "size_mismatch": "size DIFF",
         "not_started": "not started",
         "blocked": "blocked",
+        "wip": "WIP (parked C)",
     }.get(display, display)
 
 
 def _sort_key(row: dict[str, Any]) -> tuple:
     order = {
-        "identical_diff": 0,
-        "same_size": 1,
-        "size_mismatch": 2,
-        "not_started": 3,
-        "blocked": 4,
-        "matched": 5,
+        "wip": 0,
+        "identical_diff": 1,
+        "same_size": 2,
+        "size_mismatch": 3,
+        "not_started": 4,
+        "blocked": 5,
+        "matched": 6,
     }
     return (
         order.get(row["display"], 9),
@@ -265,7 +278,7 @@ def render_md(data: dict[str, Any]) -> str:
     close = [
         r
         for r in rows
-        if r["status"] != "matched" and r["matched_bytes"] > 0
+        if r["status"] != "matched" and (r["matched_bytes"] > 0 or r["display"] == "wip")
     ]
     close.sort(key=lambda r: (-r["pct"], r["retail_bytes"], r["name"]))
     lines = [
@@ -286,6 +299,7 @@ def render_md(data: dict[str, Any]) -> str:
         "| **same-size DIFF** | Same size, instruction bytes differ | no |",
         "| **size DIFF** | Compiled length ≠ retail | no |",
         "| **not started** | Readable Thumb, no C attempt recorded | no |",
+        "| **WIP (parked C)** | Unmatched draft in [`src/wip/`](../src/wip/README.md) — resume, do not restart | no |",
         "| **blocked** | Documented in [`decomp-queue.toml`](decomp-queue.toml) | no |",
         "",
         "Score is **matched bytes / retail bytes** (e.g. `68/70`). "
@@ -301,6 +315,7 @@ def render_md(data: dict[str, Any]) -> str:
         f"| byte-identical DIFF | {counts.get('identical_diff', 0)} |",
         f"| same-size DIFF | {counts.get('same_size', 0)} |",
         f"| size DIFF | {counts.get('size_mismatch', 0)} |",
+        f"| WIP (parked C) | {counts.get('wip', 0)} |",
         f"| not started | {counts.get('not_started', 0)} |",
         f"| blocked | {counts.get('blocked', 0)} |",
         f"| **total** | **{total}** |",
@@ -348,6 +363,7 @@ def format_human(data: dict[str, Any], *, close_only: bool = False) -> str:
         f"  byte-identical DIFF  {counts.get('identical_diff', 0):4d}",
         f"  same-size DIFF       {counts.get('same_size', 0):4d}",
         f"  size DIFF            {counts.get('size_mismatch', 0):4d}",
+        f"  WIP (parked C)       {counts.get('wip', 0):4d}",
         f"  not started          {counts.get('not_started', 0):4d}",
         f"  blocked              {counts.get('blocked', 0):4d}",
         f"  total                {data['total']:4d}",
@@ -357,7 +373,7 @@ def format_human(data: dict[str, Any], *, close_only: bool = False) -> str:
     show = [
         r
         for r in rows
-        if r["status"] != "matched" and r["matched_bytes"] > 0
+        if r["status"] != "matched" and (r["matched_bytes"] > 0 or r["display"] == "wip")
     ]
     show.sort(key=lambda r: (-r["pct"], r["retail_bytes"], r["name"]))
     if not close_only:

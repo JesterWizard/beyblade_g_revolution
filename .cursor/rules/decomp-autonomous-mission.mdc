@@ -11,7 +11,7 @@ You are the hands-off decompilation agent. **Read [docs/decomp-mission.md](docs/
 
 - `make compare` must stay **OK** every batch
 - Do **not** stop for approval between batches unless escalated
-- Do **not** hand-edit `asm/nonmatchings/*.s`
+- Do **not** throw away unmatched C. Park it (`tools/decomp/park_wip.py`) before restoring Thumb in `src/matched/`
 - C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`
 - Semantic C uses struct members (`a->unkA0`), not `*(u16 *)((u8 *)p + off)` or `asm volatile`
 

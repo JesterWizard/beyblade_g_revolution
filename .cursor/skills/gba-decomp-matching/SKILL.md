@@ -76,15 +76,27 @@ Run overnight on near-misses; don’t babysit interactive retries.
 
 ## When to stop (document, don’t spin)
 
-Add to [docs/decomp-queue.toml](docs/decomp-queue.toml):
+Park the C, then block auto-queue. See [docs/decomp-wip.md](docs/decomp-wip.md):
 
-```toml
-[[block]]
-name = "sub_080XXXXXXXX"
-reason = "leaf branch adds push {lr} / permuter score N"
+```bash
+python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c \
+    --status "leaf branch adds push {lr}" --next "permuter or stay Thumb" --score "N/M"
 ```
 
-Leave **readable Thumb** in `src/matched/` (`--kind asm`). Log in `docs/decomp-status.md` near-miss line.
+```toml
+[[wip]]
+name = "sub_080XXXXXXXX"
+seed = "src/wip/sub_080XXXXXXXX.c"
+notes = "src/wip/sub_080XXXXXXXX.md"
+status = "…"
+next = "…"
+
+[[block]]
+name = "sub_080XXXXXXXX"
+reason = "leaf branch adds push {lr} / permuter score N; seed in src/wip/"
+```
+
+Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `src/wip/`. Log in `docs/decomp-status.md` with a path to the notes.
 
 ## Known blocker families (this project)
 

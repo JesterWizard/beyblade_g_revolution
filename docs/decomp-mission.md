@@ -97,7 +97,8 @@ When multiple approaches exist, try in this order. **Never break `make compare`.
 │    match_function.py → MATCH → integrate_c.py
 │    DIFF → try cursor_batch.sh / permuter; still DIFF ↓
 ├─ Literal-pool / agbcc ordering mismatch?
-│    Keep asm matching; add to decomp-status.md asm-only list
+│    Keep asm matching in `src/matched/`; **park** unmatched C in `src/wip/`
+│    (see docs/decomp-wip.md). Do not revert a reconstruction without a seed.
 │    Promote RAM symbols if tracing clarified globals
 ├─ Role understood while reading asm?
 │    Promote gUnk_* → named SET_DATA in asm/ram_map_*.s; ram_map_pass.sh

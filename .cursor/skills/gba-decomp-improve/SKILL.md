@@ -50,10 +50,15 @@ Verify with `battle_semantic_batch.sh 1 --seeds-only` before relying on it.
 
 ## On near-miss (DIFF, especially same-size)
 
-- [ ] Record in `docs/decomp-status.md`: function, symptom (pool / reg / muls / extra lr), bytes
-- [ ] If permuter imported: `nonmatchings/sub_XXXXXXXX/` — note best score
-- [ ] After 1–2 hand attempts + short permuter run → **block** in [docs/decomp-queue.toml](docs/decomp-queue.toml)
-- [ ] Do **not** leave broken semantic C in `src/matched/` — restore readable Thumb
+- [ ] **Park the C** — `python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c --status "…" --next "…" --score "N/M"` (see [docs/decomp-wip.md](docs/decomp-wip.md))
+- [ ] Write `src/wip/sub_XXXXXXXX.md`: role, process (what was tried), current state, **one** next step
+- [ ] Restore readable Thumb in `src/matched/` (do not leave a DIFF draft there)
+- [ ] `[[wip]]` in [docs/decomp-queue.toml](docs/decomp-queue.toml); `make queue`
+- [ ] Record in `docs/decomp-status.md`: function, symptom, bytes, pointer to `src/wip/`
+- [ ] If permuter imported: `nonmatchings/sub_XXXXXXXX/` — note best score **and** keep the `src/wip/` seed
+- [ ] After 1–2 hand attempts + short permuter run → also `[[block]]` if auto-queue should skip it
+
+Do **not** throw away unmatched C. Reverting `src/matched/` without a `src/wip/` seed is a process failure.
 
 ## On role discovery (RAM / naming)
 
@@ -101,3 +106,4 @@ Bootstrap checklist: [reference.md](reference.md)
 - Integrating without `match_function.py` MATCH
 - Hand-editing `asm/nonmatchings/*.s`
 - Skipping status doc updates (lose near-miss knowledge)
+- Reverting unmatched C without parking `src/wip/` + notes (the next session restarts from zero)

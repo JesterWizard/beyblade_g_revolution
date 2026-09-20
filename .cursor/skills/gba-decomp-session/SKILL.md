@@ -50,7 +50,7 @@ make compare
 trivial c_patterns?     → integrate
 m2c + hand C → MATCH?   → integrate (--kind semantic)
 same-size DIFF?         → register pin / tmp[] pool (see gba-decomp-matching skill)
-still DIFF?             → permuter, then block + readable Thumb
+still DIFF?             → permuter, then **park** `src/wip/` + notes (decomp-wip.md); restore Thumb in src/matched
 role clear?             → ram_map_pass.sh, then retry
 ```
 

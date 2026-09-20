@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T08:35:14Z_
+_Updated: 2026-09-20T08:36:49Z_
 
 ## Summary
 
@@ -14,8 +14,24 @@ _Updated: 2026-09-20T08:35:14Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 102 (44 already semantic) |
 | Blocked (documented) | 35 |
+| WIP (resume these first) | 4 |
 
 Ranking: **battle** · showing top **40**
+
+Park unmatched C in [`src/wip/`](../src/wip/README.md) — see [`decomp-wip.md`](decomp-wip.md).
+
+## Resume (WIP)
+
+_Parked C — do not start these from disasm. Read `notes`, then `match_function.py` the `seed`._
+
+| Function | Bytes | Score | Seed | Status | Next |
+|----------|------:|-------|------|--------|------|
+| `sub_08046278` | 92 | unscored | `src/wip/sub_08046278.c` | logic OK (both Unk16B0 slots {0,-1,-1}); extra r8/r9 leaf spill | score seed; then independent per-field addressing like sub_08046230 |
+| `sub_0802E048` | 228 | 188/228 | `src/wip/sub_0802E048.c` | same-size DIFF, 188/228 bytes (82.5%) | try decomp-permuter register-order search; likely same agbcc leaf-fn reg-alloc quirk as dead-end list |
+| `sub_080338F0` | 104 | 20/104 | `src/wip/sub_080338F0.c` | same_size DIFF, 20/104 bytes (19.2%) — structural rewrite needed, indexing bug noted in file | fix table indexing to byte-offset (see note), re-add Unk338F0Table struct + Unk33958 retype, then re-run match_function.py |
+| `sub_0802D2C0` | 108 | 92/108 | `src/wip/sub_0802D2C0.c` | DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant else-if that retail keeps | permuter run targeting dead-code retention / instruction order; table lookup logic itself is verified correct |
+
+Notes: see `src/wip/sub_08046278.md` per function.
 
 ## Recommended next
 
@@ -41,14 +57,12 @@ Ranking: **battle** · showing top **40**
 | `sub_08040EF4` | `0x08040EF4` | 88 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803D4C4` | `0x0803D4C4` | 88 | 1 | pool | asm | (gBattleWork) |
 | `sub_080449C4` | `0x080449C4` | 92 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08046278` | `0x08046278` | 92 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042390` | `0x08042390` | 98 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08033084` | `0x08033084` | 100 | 1 | pool | asm | (gBattleWork) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08033878` | `0x08033878` | 108 | 1 | pool | asm | (gBattleWork) |
 | `sub_08042718` | `0x08042718` | 108 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802D2C0` | `0x0802D2C0` | 108 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802BC14` | `0x0802BC14` | 112 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042630` | `0x08042630` | 116 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080426A4` | `0x080426A4` | 116 | 1 | pool | asm | (gMainWorkPtr) |
@@ -61,6 +75,8 @@ Ranking: **battle** · showing top **40**
 | `sub_0802BF04` | `0x0802BF04` | 140 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804245C` | `0x0804245C` | 140 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08031204` | `0x08031204` | 144 | 1 | pool | asm | (gBattleWork) |
+| `sub_080442FC` | `0x080442FC` | 144 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08031C98` | `0x08031C98` | 150 | 1 | pool | asm | (gBattleWork) |
 
 ## Blocked
 
@@ -107,6 +123,8 @@ Ranking: **battle** · showing top **40**
 ```bash
 make queue                              # refresh this file
 python3 tools/decomp/next_queue.py -n 10
+python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c --status "…" --next "…"
+python3 tools/decomp/match_function.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c
 python3 tools/decomp/try_convert.py sub_XXXXXXXX --integrate
 python3 tools/decomp/function_scores.py --close
 python3 tools/decomp/c_patterns.py --list
@@ -115,6 +133,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (339 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (335 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

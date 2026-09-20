@@ -31,14 +31,20 @@ sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from opcode_stubs import file_kind  # noqa: E402
 from progress import function_size  # noqa: E402
 
-_TABLE_ROW = re.compile(r"^\[\[(pin|block)\]\]\s*$", re.M)
+_TABLE_ROW = re.compile(r"^\[\[(pin|block|wip)\]\]\s*$", re.M)
 _KV = re.compile(r'^(\w+)\s*=\s*"([^"]*)"\s*$')
 _KV_BARE = re.compile(r"^(\w+)\s*=\s*(\S+)\s*$")
 
 
 def _load_toml(path: Path) -> dict[str, Any]:
+    empty = {
+        "settings": {"top": 40, "prefer": "battle"},
+        "pin": [],
+        "block": [],
+        "wip": [],
+    }
     if not path.is_file():
-        return {"settings": {"top": 40, "prefer": "battle"}, "pin": [], "block": []}
+        return empty
     try:
         import toml  # type: ignore
 
@@ -53,12 +59,13 @@ def _load_toml(path: Path) -> dict[str, Any]:
         },
         "pin": list(data.get("pin") or []),
         "block": list(data.get("block") or []),
+        "wip": list(data.get("wip") or []),
     }
 
 
 def _parse_minimal_toml(text: str) -> dict[str, Any]:
-    """Subset parser for [[pin]] / [[block]] tables when `toml` is missing."""
-    out: dict[str, Any] = {"settings": {}, "pin": [], "block": []}
+    """Subset parser for [[pin]] / [[block]] / [[wip]] tables when `toml` is missing."""
+    out: dict[str, Any] = {"settings": {}, "pin": [], "block": [], "wip": []}
     section: str | None = None
     table: dict[str, str] = {}
     for raw in text.splitlines():
@@ -152,6 +159,14 @@ def collect() -> dict[str, Any]:
         if name:
             blocked[name] = row.get("reason", "")
 
+    wip_cfg: list[dict[str, Any]] = []
+    wip_names: set[str] = set()
+    for row in cfg.get("wip") or []:
+        name = row.get("name", "")
+        if name:
+            wip_names.add(name)
+            wip_cfg.append(row)
+
     pending: list[dict[str, Any]] = []
     for path in sorted(MATCHED.glob("sub_*.c")):
         kind = file_kind(path)
@@ -189,7 +204,7 @@ def collect() -> dict[str, Any]:
         return (-row["battle_refs"], row["bytes"], row["score"], row["name"])
 
     auto = sorted(
-        (r for r in pending if not r["blocked"]),
+        (r for r in pending if not r["blocked"] and r["name"] not in wip_names),
         key=rank_key,
     )
 
@@ -252,6 +267,24 @@ def collect() -> dict[str, Any]:
             }
         )
 
+    wip_list = []
+    for row in wip_cfg:
+        name = row.get("name", "")
+        base = by_name.get(name)
+        wip_list.append(
+            {
+                "name": name,
+                "addr": _addr(name) if name.startswith("sub_") else "",
+                "kind": base["kind"] if base else "missing",
+                "bytes": base["bytes"] if base else 0,
+                "seed": row.get("seed", f"src/wip/{name}.c"),
+                "notes": row.get("notes", f"src/wip/{name}.md"),
+                "status": row.get("status", ""),
+                "next": row.get("next", ""),
+                "score": row.get("score", ""),
+            }
+        )
+
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     return {
         "generated": generated,
@@ -264,8 +297,10 @@ def collect() -> dict[str, Any]:
             "battle_pending": len(battle_pending),
             "battle_semantic": battle_semantic,
             "blocked": len(block_list),
+            "wip": len(wip_list),
         },
         "pinned": pinned,
+        "wip": wip_list,
         "recommended": recommended[:top_n],
         "blocked": block_list,
         "backlog": auto,
@@ -308,14 +343,40 @@ def render_md(data: dict[str, Any]) -> str:
         f"| Opcode embeds remaining | {s['opcode']} |",
         f"| Battle pending | {s['battle_pending']} ({s['battle_semantic']} already semantic) |",
         f"| Blocked (documented) | {s['blocked']} |",
+        f"| WIP (resume these first) | {s.get('wip', 0)} |",
         "",
         f"Ranking: **{pref}** · showing top **{top}**",
         "",
-        "## Recommended next",
+        "Park unmatched C in [`src/wip/`](../src/wip/README.md) — see [`decomp-wip.md`](decomp-wip.md).",
         "",
-        "| Function | Address | Bytes | Battle refs | Pool | Kind | Notes |",
-        "|----------|---------|------:|------------:|:----:|------|-------|",
     ]
+    wip_rows = data.get("wip") or []
+    if wip_rows:
+        lines.extend(
+            [
+                "## Resume (WIP)",
+                "",
+                "_Parked C — do not start these from disasm. Read `notes`, then `match_function.py` the `seed`._",
+                "",
+                "| Function | Bytes | Score | Seed | Status | Next |",
+                "|----------|------:|-------|------|--------|------|",
+            ]
+        )
+        for row in wip_rows:
+            lines.append(
+                f"| `{row['name']}` | {row.get('bytes', 0)} | {row.get('score', '')} | "
+                f"`{row.get('seed', '')}` | {row.get('status', '')} | {row.get('next', '')} |"
+            )
+        lines.extend(["", f"Notes: see `{wip_rows[0].get('notes', 'src/wip/*.md')}` per function.", ""])
+
+    lines.extend(
+        [
+            "## Recommended next",
+            "",
+            "| Function | Address | Bytes | Battle refs | Pool | Kind | Notes |",
+            "|----------|---------|------:|------------:|:----:|------|-------|",
+        ]
+    )
     if data["recommended"]:
         for row in data["recommended"]:
             lines.append(_fmt_row(row))
@@ -358,6 +419,8 @@ def render_md(data: dict[str, Any]) -> str:
             "```bash",
             "make queue                              # refresh this file",
             "python3 tools/decomp/next_queue.py -n 10",
+            "python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c --status \"…\" --next \"…\"",
+            "python3 tools/decomp/match_function.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c",
             "python3 tools/decomp/try_convert.py sub_XXXXXXXX --integrate",
             "python3 tools/decomp/function_scores.py --close",
             "python3 tools/decomp/c_patterns.py --list",
@@ -379,11 +442,27 @@ def format_human(data: dict[str, Any], n: int) -> str:
     s = data["summary"]
     lines = [
         "=== Decomp queue (needs semantic C) ===",
-        f"  Pending: {s['pending']}  (battle: {s['battle_pending']}, blocked: {s['blocked']})",
+        f"  Pending: {s['pending']}  (battle: {s['battle_pending']}, "
+        f"blocked: {s['blocked']}, wip: {s.get('wip', 0)})",
         f"  Prefer: {data['settings']['prefer']}  top {n}",
         "",
-        "  Recommended next:",
+        "  Resume (WIP):",
     ]
+    wip_rows = data.get("wip") or []
+    if wip_rows:
+        for row in wip_rows:
+            lines.append(
+                f"    {row['name']}  {row.get('score', '')}  {row.get('seed', '')}  "
+                f"next: {row.get('next', '')}"
+            )
+    else:
+        lines.append("    (none)")
+    lines.extend(
+        [
+            "",
+            "  Recommended next:",
+        ]
+    )
     for row in data["recommended"][:n]:
         pin = " [pin]" if row.get("pin_note") else ""
         pool = " pool" if row.get("has_pool") else ""
