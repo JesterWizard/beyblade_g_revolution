@@ -9,8 +9,8 @@ struct Unk680CCRec *sub_08067F98(struct Unk680CC *a, u16 key)
 
     inner = a->unk00;
     rec = (struct Unk680CCRec *)((u8 *)inner + inner->unk18);
-    count = a->unk28;
     i = 0;
+    count = a->unk28;
 
     for (; i < count; i++)
     {

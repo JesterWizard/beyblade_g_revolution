@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T19:58:47Z_
+_Updated: 2026-09-20T20:01:39Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T19:58:47Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 89 (58 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 153 |
+| WIP (resume these first) | 155 |
 
 Ranking: **battle** · showing top **40**
 
@@ -179,6 +179,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08073988` | 96 | 91/96 | `src/wip/sub_08073988.c` | Two semantic attempts. Final branch/goto-shaped parser reached 91/96 bytes (94.8%, same size), with all control flow and argument/register setup matching retail. Only the default character lookup differs: agbcc loads the fixed 0x080BB748 table into r7 and reuses it, while retail loads it into r0 and preserves the base argument in r7. | Retain the goto-shaped control flow. Force the default lookup to emit ldr r0,=0x080BB748; adds r0,r1,r0; ldrb r0; adds r0,r0,r7; ldrb, while preserving local base in r7 and the 5-register prologue. Avoid global register r0 experiments because agbcc rejects call-clobbered global register variables under Werror. |
 | `sub_0802BAD4` | 320 | 50/320 | `src/wip/sub_0802BAD4.c` | Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation. | Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store. |
 | `sub_0802C2B0` | 100 | 26/100 | `src/wip/sub_0802C2B0.c` | size mismatch; 26/100 bytes, compiled 92 vs retail 100; literal-pool/register ordering remains | reconstruct with a preserved r12 global-pointer lifetime, then retry |
+| `sub_0802C314` | 198 | 40/198 | `src/wip/sub_0802C314.c` | size mismatch; 40/198 bytes, compiled 196 vs retail 198; lookup logic is mapped but agbcc register/source shape differs | preserve byte-field initialization loads and reproduce r4 table-address/r1 scaled-index lifetimes |
+| `sub_0802C3DC` | 198 | 46/198 | `src/wip/sub_0802C3DC.c` | size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic and table indexing mapped, initialization/register lifetime still differs | force the ROM's byte-field OR loads and r0/r4/r1 lifetime before trying body permutations |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -202,8 +204,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0803114C` | `0x0803114C` | 184 | 1 | pool | asm | (gBattleWork) |
 | `sub_08051444` | `0x08051444` | 192 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08032604` | `0x08032604` | 196 | 1 | pool | asm | (gBattleWork) |
-| `sub_0802C314` | `0x0802C314` | 198 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802C3DC` | `0x0802C3DC` | 198 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08063D68` | `0x08063D68` | 216 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803FFB0` | `0x0803FFB0` | 216 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08030638` | `0x08030638` | 268 | 1 | pool | asm | (gBattleWork) |
@@ -226,6 +226,8 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0802D6D4` | `0x0802D6D4` | 452 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DEC8` | `0x0803DEC8` | 514 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08044A8C` | `0x08044A8C` | 672 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -282,6 +284,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (155 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (153 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T19:58:47Z",
+  "generated": "2026-09-20T20:01:39Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 89,
     "battle_semantic": 58,
     "blocked": 34,
-    "wip": 153
+    "wip": 155
   },
   "pinned": [],
   "wip": [
@@ -1698,6 +1698,28 @@
       "status": "size mismatch; 26/100 bytes, compiled 92 vs retail 100; literal-pool/register ordering remains",
       "next": "reconstruct with a preserved r12 global-pointer lifetime, then retry",
       "score": "26/100"
+    },
+    {
+      "name": "sub_0802C314",
+      "addr": "0x0802C314",
+      "kind": "asm",
+      "bytes": 198,
+      "seed": "src/wip/sub_0802C314.c",
+      "notes": "src/wip/sub_0802C314.md",
+      "status": "size mismatch; 40/198 bytes, compiled 196 vs retail 198; lookup logic is mapped but agbcc register/source shape differs",
+      "next": "preserve byte-field initialization loads and reproduce r4 table-address/r1 scaled-index lifetimes",
+      "score": "40/198"
+    },
+    {
+      "name": "sub_0802C3DC",
+      "addr": "0x0802C3DC",
+      "kind": "asm",
+      "bytes": 198,
+      "seed": "src/wip/sub_0802C3DC.c",
+      "notes": "src/wip/sub_0802C3DC.md",
+      "status": "size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic and table indexing mapped, initialization/register lifetime still differs",
+      "next": "force the ROM's byte-field OR loads and r0/r4/r1 lifetime before trying body permutations",
+      "score": "46/198"
     }
   ],
   "recommended": [
@@ -1930,34 +1952,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C314",
-      "addr": "0x0802C314",
-      "kind": "asm",
-      "bytes": 198,
-      "score": 94,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C3DC",
-      "addr": "0x0802C3DC",
-      "kind": "asm",
-      "bytes": 198,
-      "score": 95,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
       ],
       "has_pool": true,
       "blocked": false,
@@ -2263,6 +2257,34 @@
       "kind": "asm",
       "bytes": 528,
       "score": 273,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08054120",
+      "addr": "0x08054120",
+      "kind": "asm",
+      "bytes": 594,
+      "score": 307,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08044A8C",
+      "addr": "0x08044A8C",
+      "kind": "asm",
+      "bytes": 672,
+      "score": 343,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -2742,34 +2764,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C314",
-      "addr": "0x0802C314",
-      "kind": "asm",
-      "bytes": 198,
-      "score": 94,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C3DC",
-      "addr": "0x0802C3DC",
-      "kind": "asm",
-      "bytes": 198,
-      "score": 95,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
       ],
       "has_pool": true,
       "blocked": false,
