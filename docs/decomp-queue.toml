@@ -844,3 +844,75 @@ notes = "src/wip/sub_080425B8.md"
 status = "Two attempts: direct sibling seed 108/120 (same-size), then block-scoped r0 main pin worsened to 27/120 (116B). Baseline correctly captures all behavior; retail initial main/offset and mask register ordering need a selective source/permuter search."
 next = "Restore direct baseline; try only an expression/temporary that produces retail r0 main, r1 +0x479 without pinning the whole function, then preserve corrected +0x448 callback and repeated ring index loads."
 score = "108/120 then 27/120"
+
+[[wip]]
+name = "sub_080427E8"
+seed = "src/wip/sub_080427E8.c"
+notes = "src/wip/sub_080427E8.md"
+status = "Two attempts: switch-based semantic seed 119/220 (same-size), then r2-pinned MainWork/direct ring mode 98/220 (216B). Behavior is mapped across ring modes 0x20/0x40/0x80/0x100; remaining differences are register/literal scheduling and duplicated callback/flag block layout."
+next = "Restore the 119/220 switch seed; use targeted source/permuter work for initial main in r2, ring mode in r1, and shared +0x448 callback/flag blocks. Do not retain the broad r2 pin."
+score = "119/220 then 98/220"
+
+[[wip]]
+name = "sub_080429CC"
+seed = "src/wip/sub_080429CC.c"
+notes = "src/wip/sub_080429CC.md"
+status = "Two attempts: local pointer seed 84/308 (288B), then r1/r2 pointer pins 91/308 (320B, wrong prologue). Semantic behavior is mapped: copy MainWork+0x1810 to ring command, dispatch by MainWork+0x1828, update 0x17B4/0x17B8 from 0x036C/0x0370/0x0374, then call sub_080428F0."
+next = "Restore the 84/308 seed; use targeted register/permuter work to keep main in ordinary r2 without forcing callee-saved pins, and preserve retail case-specific constant materialization."
+score = "84/308 then 91/308"
+
+[[wip]]
+name = "sub_08043420"
+seed = "src/wip/sub_08043420.c"
+notes = "src/wip/sub_08043420.md"
+status = "Two semantic attempts both 79/438 (448B): explicit state local and direct switch/state source produced identical codegen. All four transition paths, fixed-point thresholds, mirrored fields, flags, mode values, and sub_080680CC/sub_08043638 fallbacks are identified; mismatch is chiefly global/state pointer register allocation and branch layout."
+next = "Use a targeted register/permuter search to keep gUnk_03000554 in r0 and state in r3 as retail, with ordinary per-case MainWork locals; preserve signed s32 coordinate fields and threshold halfwords."
+score = "79/438 then 79/438"
+
+[[wip]]
+name = "sub_080436B0"
+seed = "src/wip/sub_080436B0.c"
+notes = "src/wip/sub_080436B0.md"
+status = "Two semantic attempts failed: structured local seed 46/658 (616B), then fixed state-location/direct-field layout 85/658 (708B). Transition semantics are mapped across input masks 0x40/0x80/0x10/0x20, keyboard finalization, coordinate lookup, and common input-0x8 setup; source restructuring or permuter work is required."
+next = "Use a compact helper/branch-shape seed from the parked C, then targeted register/permuter search for retail r6 state-location, r2 state pointer, r5 phase, and shared common tail. Preserve Unk0558 entry offsets and signed coordinate fields."
+score = "46/658 then 85/658"
+
+[[wip]]
+name = "sub_080442FC"
+seed = "src/wip/sub_080442FC.c"
+notes = "src/wip/sub_080442FC.md"
+status = "Two attempts: semantic object/lookup seed 111/144 (same-size), then r4/r5 pins to force retail a/index registers degraded to 90/144 (148B). Behavior and signatures are mapped: optional key lookup, +0x84 callback, palette table selection into MainWork+0x1690, sub_08043C70 call, optional sub_0806C78C."
+next = "Restore the 111/144 baseline; use a selective source/permuter search for a in r5 and index in r4 without fixed-register pins, preserving sub_08043C70's fifth stack argument."
+score = "111/144 then 90/144"
+
+[[wip]]
+name = "sub_0804438C"
+seed = "src/wip/sub_0804438C.c"
+notes = "src/wip/sub_0804438C.md"
+status = "Two semantic attempts: baseline 56/304 (292B), then signed value plus r5 DISPCNT base/explicit IO stores 54/304 (288B). Fade behavior is mapped for mode -1 and mode 1, including VRAM clear, brightness loops, blend register resets, DISPCNT writes, and final display setup; register allocation/condition-code scheduling remains."
+next = "Restore baseline; use targeted register/permuter work to keep loop counter r4 and DISPCNT base r5 without introducing r6, and reproduce signed ble/bgt brightness branches."
+score = "56/304 then 54/304"
+
+[[wip]]
+name = "sub_080444BC"
+seed = "src/wip/sub_080444BC.c"
+notes = "src/wip/sub_080444BC.md"
+status = "Two attempts: semantic resource setup seed 98/396 (368B), then r6 MainWork pin 90/396 (372B, wrong prologue). Semantics are mapped: resource selection, optional descriptor callbacks, MainWork pointer transfers/flags, optional 10-argument sub_08060C30 path, and final palette upload."
+next = "Restore the 98/396 baseline; use selective register/source-order work to reproduce retail r4 descriptor, r5 MainWork-location/constant lifetime, r6 mask/stack argument, and shared no-descriptor tail."
+score = "98/396 then 90/396"
+
+[[wip]]
+name = "sub_08045D3C"
+seed = "src/wip/sub_08045D3C.c"
+notes = "src/wip/sub_08045D3C.md"
+status = "Two attempts: readable semantic seed 43/436 (332B), then switch plus r2/r4/r3/r5 register pins 81/436 (364B). Packed low-byte group/bit semantics, global 8-word bit operations, table save/restore cases 0x3EA/0x3EB, and pointer save/restore cases 0x3EC/0x3ED are documented; initial mask temporary and branch/copy layout still differ."
+next = "Restore pinned switch semantics selectively: retain operation r3/output r5/group r2/bit r4, but force the 0xF8 mask through ordinary r1 (not bit's fixed r4); use a permuter for case dispatch and copy branches."
+score = "43/436 then 81/436"
+
+[[wip]]
+name = "sub_08045EF0"
+seed = "src/wip/sub_08045EF0.c"
+notes = "src/wip/sub_08045EF0.md"
+status = "Two attempts: semantic byte-state seed 70/548 (392B), then retail argument register pins 78/548 (404B). Operations are mapped for byte set/clear/increment/decrement/compare and table/pointer transfers at 0x3E8/0x3E9/0x3EE/0x3EF; remaining mismatch is switch branch layout, signed-byte loop generation, and copy expansion."
+next = "Restore the pinned argument layout; use a switch/source shape matching retail case ordering (10, 5-9, 0x3E8..), signed s8 loop counters, and explicit byte-array pointers to reproduce ldm/stm-style copies."
+score = "70/548 then 78/548"

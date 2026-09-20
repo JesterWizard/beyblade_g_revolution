@@ -456,6 +456,38 @@ struct Unk42BE8 /* 0x08 */
     /* 04 */ s32 unk04;
 };
 
+struct Unk442FC /* >= 0x88 */
+{
+    /* 00 */ u8 filler_00[0x84];
+    /* 84 */ s32 unk84;
+};
+
+struct Unk442FCInput /* >= 0x18 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ u16 unk14;
+    /* 16 */ u16 unk16;
+};
+
+struct Unk0610 /* 0x20 */
+{
+    /* 00 */ u32 words[8];
+};
+
+struct Unk0600 /* 0x10 */
+{
+    /* 00 */ u8 bytes[16];
+};
+
+struct Unk45D3CEntry /* 0x1f60 */
+{
+    /* 0000 */ u8 filler_0000[0x0C];
+    /* 000c */ u32 words[8];
+    /* 002c */ u8 filler_002C[0x44];
+    /* 0070 */ u8 bytes_70[16];
+    /* 0080 */ u8 filler_0080[0x1EE0];
+};
+
 /* Per-slot record, 0x53 slots at MainWork+0x8D0. sub_0803E258. */
 struct Unk8D0 /* 0x28 */
 {
@@ -466,6 +498,14 @@ struct Unk8D0 /* 0x28 */
     /* 24 */ u8 filler_24[4];
 };
 
+/* Flag at +8, pointers at +0/+4. sub_08045A84. */
+struct Unk45A84 /* >= 0x0c */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ void *unk04;
+    /* 08 */ u8 unk08;
+};
+
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
@@ -473,11 +513,15 @@ struct MainWork /* >= 0x18B4 */
     /* 0274 */ struct Unk40088Target *unk0274;
     /* 0278 */ u8 filler_0278[0x8C];
     /* 0304 */ s32 unk0304;
-    /* 0308 */ u8 filler_0308[0x64];
-    /* 036C */ u32 unk036C;
-    /* 0370 */ u32 unk0370;
-    /* 0374 */ u32 unk0374;
-    /* 0378 */ u8 filler_0378[0x25];
+    /* 0308 */ u8 filler_0308[0x50];
+    /* 0358 */ u16 unk0358; /* sub_0804438C */
+    /* 035A */ u8 filler_035A[0x12];
+    /* 036C */ s32 unk036C;
+    /* 0370 */ s32 unk0370;
+    /* 0374 */ s32 unk0374;
+    /* 0378 */ u8 filler_0378[0x0E];
+    /* 0386 */ u16 unk0386;
+    /* 0388 */ u8 filler_0388[0x15];
     /* 039D */ u8 unk039D;
     /* 039E */ u8 filler_039E[0xE];
     /* 03AC */ u32 unk03AC;
@@ -526,10 +570,11 @@ struct MainWork /* >= 0x18B4 */
     /* 15CD */ u8 filler_15CD[3];
     /* 15D0 */ s16 unk15D0;
     /* 15D2 */ s16 unk15D2;
-    /* 15D4 */ u8 filler_15D4[0xB4];
+    /* 15D4 */ u8 filler_15D4[8];
+    /* 15DC */ u8 unk15DC[0xAC];
     /* 1688 */ struct Unk1688Entry *unk1688;
-    /* 168C */ void *unk168C;
-    /* 1690 */ void *unk1690;
+    /* 168C */ struct Unk45D3CEntry *unk168C;
+    /* 1690 */ struct Unk1690 *unk1690;
     /* 1694 */ struct Unk1694 *unk1694;
     /* 1698 */ u8 filler_1698[0x18];
     /* 16B0 */ struct Unk16B0 unk16B0[2]; /* sub_08046230 */
@@ -537,7 +582,8 @@ struct MainWork /* >= 0x18B4 */
     /* 16CC */ u8 filler_16CC[0x14];
     /* 16E0 */ struct Unk16E0 *unk16E0;
     /* 16E4 */ struct Unk16E0 *unk16E4;
-    /* 16E8 */ u8 filler_16E8[0x20]; /* sub_0805D99C */
+    /* 16E8 */ void *unk16E8;
+    /* 16EC */ u8 filler_16EC[0x1C]; /* sub_0805D99C */
     /* 1708 */ u32 unk1708; /* sub_0805D99C */
     /* 170C */ s32 unk170C;
     /* 1710 */ s32 unk1710[27];
@@ -575,15 +621,24 @@ struct MainWork /* >= 0x18B4 */
     /* 181F */ s8 unk181F;
     /* 1820 */ u8 filler_1820[4];
     /* 1824 */ u8 unk1824; /* sub_08037508 */
-    /* 1825 */ u8 filler_1825[7];
+    /* 1825 */ u8 unk1825;
+    /* 1826 */ u8 filler_1826[2];
+    /* 1828 */ u8 unk1828; /* sub_080429CC */
+    /* 1829 */ u8 filler_1829[3];
     /* 182C */ u8 unk182C; /* sub_08042784 */
-    /* 182D */ u8 filler_182D[7];
+    /* 182D */ u8 filler_182D[6];
+    /* 1833 */ u8 unk1833;
     /* 1834 */ u8 unk1834;
     /* 1835 */ u8 filler_1835[3];
     /* 1838 */ u16 unk1838;
     /* 183A */ u16 unk183A;
-    /* 183C */ u8 filler_183C[0x25];
+    /* 183C */ u8 filler_183C[0x10];
+    /* 184C */ s8 unk184C; /* sub_080462D4 */
+    /* 184D */ s8 unk184D; /* sub_080462D4 */
+    /* 184E */ u8 filler_184E[0x13];
     /* 1861 */ s8 unk1861[0x53];
+    /* 18B4 */ u8 filler_18B4[4];
+    /* 18B8 */ struct Unk45A84 unk18B8;
 };
 
 struct BtlObjNode /* 0x08 */
@@ -1078,14 +1133,6 @@ struct Unk626B8 /* >= 0x0c */
     /* 08 */ u32 unk08;
 };
 
-/* Flag at +8, pointers at +0/+4. sub_08045A84. */
-struct Unk45A84 /* >= 0x0c */
-{
-    /* 00 */ void *unk00;
-    /* 04 */ void *unk04;
-    /* 08 */ u8 unk08;
-};
-
 /* 16 pointer slots. sub_08047594. */
 struct Unk47594 /* >= 0x10 */
 {
@@ -1176,8 +1223,22 @@ struct Unk42E78 /* >= 0x04 */
 struct Unk447CC /* >= 0x1c */
 {
     /* 00 */ void *unk00;
-    /* 04 */ u8 filler_04[0x14];
+    /* 04 */ void *unk04;
+    /* 08 */ void *unk08;
+    /* 0c */ void *unk0C;
+    /* 10 */ void **unk10;
+    /* 14 */ void *unk14;
     /* 18 */ void *unk18;
+    /* 1c */ void *unk1C;
+    /* 20 */ void *unk20;
+    /* 24 */ void *unk24;
+    /* 28 */ u32 unk28;
+};
+
+struct Unk1690 /* >= 0x78 */
+{
+    /* 00 */ u8 filler_00[0x74];
+    /* 74 */ u8 unk74;
 };
 
 /* Pointer + byte at +0x2D0. sub_0803484C. */
@@ -1877,11 +1938,34 @@ struct Unk3CC /* >= 0x32 */
 /* *gUnk_03000554 target: byte array at +0x08, u8 field at +0x02. sub_080435D8, sub_080436B0. */
 struct Unk0554 /* >= 0x09 */
 {
-    /* 00 */ u8 filler_00;
+    /* 00 */ u8 unk00; /* sub_08043420 */
     /* 01 */ u8 unk01;
     /* 02 */ u8 unk02;
-    /* 03 */ u8 filler_03[5];
+    /* 03 */ u8 filler_03;
+    /* 04 */ s16 unk04; /* sub_08043420 */
+    /* 06 */ s16 unk06; /* sub_08043420 */
     /* 08 */ u8 unk08[0x7F];
+};
+
+/* Runtime records selected by sub_080436B0. */
+struct Unk436B0Entry /* >= 0x3c */
+{
+    /* 00 */ u8 filler_00;
+    /* 01 */ u8 unk01;
+    /* 02 */ u8 filler_02[0x32];
+    /* 34 */ s16 unk34;
+    /* 36 */ s16 unk36;
+    /* 38 */ s16 unk38;
+    /* 3a */ s16 unk3A;
+};
+
+struct Unk0558 /* >= 0x14 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ struct Unk436B0Entry *unk04;
+    /* 08 */ struct Unk436B0Entry *unk08;
+    /* 0c */ struct Unk436B0Entry *unk0C;
+    /* 10 */ struct Unk436B0Entry *unk10;
 };
 
 /* Fixed-point (x.8) coordinate pair. sub_08042390. */

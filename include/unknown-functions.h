@@ -195,6 +195,36 @@ void sub_08042540(void);
 void sub_080425B8(void);
 void sub_08042630(void);
 void sub_080426A4(void);
+void sub_080428F0(u32 a, u32 b, u32 c, u32 d);
+void sub_08043638(void);
+u32 sub_08062A14(void);
+void sub_080435D8(void);
+void sub_080433F4(void);
+void sub_08060428(void);
+void sub_08043C70(void *a, void *b, u32 c, u32 d, u32 e);
+void sub_0806C78C(s32 a, void *b, s32 c);
+u8 sub_08060394(void);
+void sub_080602C0(u8 a);
+void sub_08061D00(u16 a, u16 b);
+void sub_08052FC8(void);
+void sub_08046E7C(void);
+void sub_08042718(void);
+void sub_08061628(u32 a, u32 b, u32 c, u32 d, u32 e);
+void sub_080447E8(void *a);
+void sub_08044648(void *a);
+void sub_08060C30(
+    void *a,
+    void *b,
+    void *c,
+    u32 d,
+    u32 e,
+    u32 f,
+    u32 g,
+    u32 h,
+    u32 i,
+    u32 j);
+void sub_08069B78(u32 a, u32 b, u32 c, u32 d);
+void sub_0804495C(void);
 void sub_080626B8(struct Unk626B8 *a, u32 v);
 void sub_080604A4(void);
 void sub_080604C8(void);

@@ -27,6 +27,8 @@
 #undef gUnk_03000554
 #undef gUnk_03000558
 #undef gUnk_03000538
+#undef gUnk_03000610
+#undef gUnk_03000600
 #define gMainWorkPtrLoc ((struct MainWork **)0x03000198)
 #define gBattleWorkPtrLoc ((struct BattleWork **)0x03000290)
 #define gMainWorkPtr (*(struct MainWork **)0x03000198)
@@ -42,7 +44,10 @@
 #define gUnk_030003CC (*(struct Unk3CC **)0x030003CC)
 #define gUnk_03000554 (*(struct Unk0554 **)0x03000554)
 #define gUnk_03000538 (*(struct Unk0538 **)0x03000538)
+#define gUnk_03000558 (*(struct Unk0558 **)0x03000558)
 #define gUnk_03000558Loc ((u32 *)0x03000558)
+#define gUnk_03000610 (*(struct Unk0610 *)0x03000610)
+#define gUnk_03000600 (*(struct Unk0600 *)0x03000600)
 
 #define gBattlerArena    0x03004060
 #define gBattlerArenaEnd 0x0300416C
