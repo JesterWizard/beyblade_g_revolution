@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T16:03:14Z_
+_Updated: 2026-09-20T16:12:33Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T16:03:14Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 52 |
+| WIP (resume these first) | 53 |
 
 Ranking: **battle** · showing top **40**
 
@@ -78,6 +78,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08069894` | 96 | 89/96 | `src/wip/sub_08069894.c` | 89/96 bytes (92.7%), size mismatch (92 vs 96); correct algorithm (clear gUnk_03000108/030001B0, set gUnk_030001A8=0x20, zero 4 BG scroll register pairs via sub_08069908/sub_08069948, then two sub_08069A60(2/3, 0, 0x100, 0x100) calls) -- declared the 3 previously-undeclared callee signatures. agbcc folds the 'gUnk_030001B0 = 0' write into an offset-add from the previous literal (0x108+0xA8=0x1B0) instead of retail's separate literal-pool load, an 8-vs-4-byte encoding | try writing gUnk_030001B0 via a separate statement block or intervening dead computation to break the literal-pool CSE, matching the pattern seen in sub_080473F8/sub_08052934 from earlier sessions |
 | `sub_0806B3E8` | 84 | 61/84 | `src/wip/sub_0806B3E8.c` | 61/84 bytes (72.6%), same size; correct algorithm (walk arg0->unk10 string char-by-char, for each non-space non-null char look up a byte in table 0x080BB748, call sub_0806833C on the current item, set item->unk70=-1, advance item by 0xDC and decrement count; after the string ends, zero-fill unk70 for any remaining items). Added structs Unk6B3E8/Unk6B3E8Item (0xDC stride). Only remaining diff: register choice for the loop char variable 'c' (r0 vs retail's r1) | try declaring 'c' as a function parameter-style register variable, or check if the initial 'goto check' idiom (vs a for/while) changes register allocation for the char |
 | `sub_0806C78C` | 70 | 12/70 | `src/wip/sub_0806C78C.c` | 12/70 bytes (17.1%), size mismatch (68 vs 70); partial model — calls sub_0806DF38(arg0, &out[1], 0, 1) writing a search-result array (struct UnkDF38Entry, 0x14 stride, added), checks out[0] fields, computes a stride, calls sub_0806C704. Declared both previously-naked callees' signatures from their own bodies. Uncertain: retail writes arg2 to sp+0 before the call but that slot is never read back in this function -- may be an unused stack reservation, a hidden 5th arg to sub_0806DF38, or a struct field I'm misplacing | re-derive sub_0806DF38's full parameter list (it may take 5 args via an implicit stack arg) before retrying this caller; check other call sites of sub_0806DF38 for the sp+0 slot's purpose |
+| `sub_0806D748` | 46 | 7/46 | `src/wip/sub_0806D748.c` | 7/46 bytes (15.2%), size mismatch (40 vs 46); correct algorithm (call the bx-r4 trampoline _08073C50 through arg0->unk94->unk08 handler, default result=1) with push-list now matching ({r4,r5,r6}) after register-pinning the handler and re-adding p/b local copies. Retail unconditionally zero-extends arg3 (u16) at function entry even though it's only used inside the conditional branch, and explicitly re-copies arg1 into r6 before the call; agbcc elides both since they're proven redundant | try using arg3 in an early no-op expression (e.g. volatile-style dead read) to force the upfront extension, matching retail's apparently-unnecessary eager evaluation |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -181,6 +182,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (275 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (274 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

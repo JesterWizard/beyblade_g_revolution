@@ -564,3 +564,11 @@ notes = "src/wip/sub_0806C78C.md"
 status = "12/70 bytes (17.1%), size mismatch (68 vs 70); partial model — calls sub_0806DF38(arg0, &out[1], 0, 1) writing a search-result array (struct UnkDF38Entry, 0x14 stride, added), checks out[0] fields, computes a stride, calls sub_0806C704. Declared both previously-naked callees' signatures from their own bodies. Uncertain: retail writes arg2 to sp+0 before the call but that slot is never read back in this function -- may be an unused stack reservation, a hidden 5th arg to sub_0806DF38, or a struct field I'm misplacing"
 next = "re-derive sub_0806DF38's full parameter list (it may take 5 args via an implicit stack arg) before retrying this caller; check other call sites of sub_0806DF38 for the sp+0 slot's purpose"
 score = "12/70"
+
+[[wip]]
+name = "sub_0806D748"
+seed = "src/wip/sub_0806D748.c"
+notes = "src/wip/sub_0806D748.md"
+status = "7/46 bytes (15.2%), size mismatch (40 vs 46); correct algorithm (call the bx-r4 trampoline _08073C50 through arg0->unk94->unk08 handler, default result=1) with push-list now matching ({r4,r5,r6}) after register-pinning the handler and re-adding p/b local copies. Retail unconditionally zero-extends arg3 (u16) at function entry even though it's only used inside the conditional branch, and explicitly re-copies arg1 into r6 before the call; agbcc elides both since they're proven redundant"
+next = "try using arg3 in an early no-op expression (e.g. volatile-style dead read) to force the upfront extension, matching retail's apparently-unnecessary eager evaluation"
+score = "7/46"

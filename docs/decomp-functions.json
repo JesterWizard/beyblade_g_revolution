@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T15:52:30Z",
+  "generated": "2026-09-20T16:03:26Z",
   "counts": {
     "matched": 279,
     "blocked": 28,
-    "not_started": 260,
-    "wip": 49,
+    "not_started": 258,
+    "wip": 51,
     "size_mismatch": 15,
     "same_size": 2
   },
@@ -9008,17 +9008,17 @@
       "addr": "0x0806B3E8",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 84,
-      "matched_bytes": 0,
+      "matched_bytes": 61,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/84",
-      "source": "none",
-      "note": ""
+      "pct": 72.6,
+      "score": "61/84",
+      "source": "wip",
+      "note": "61/84 bytes (72.6%), same size; correct algorithm (walk arg0->unk10 string char-by-char, for each non-space non-null char look up a byte in table 0x080BB748, call sub_0806833C on the current item, set item->unk70=-1, advance item by 0xDC and decrement count; after the string ends, zero-fill unk70 for any remaining items). Added structs Unk6B3E8/Unk6B3E8Item (0xDC stride). Only remaining diff: register choice for the loop char variable 'c' (r0 vs retail's r1)"
     },
     {
       "name": "sub_0806B5B8",
@@ -9212,17 +9212,17 @@
       "addr": "0x0806C78C",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 70,
-      "matched_bytes": 0,
+      "matched_bytes": 12,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/70",
-      "source": "none",
-      "note": ""
+      "pct": 17.1,
+      "score": "12/70",
+      "source": "wip",
+      "note": "12/70 bytes (17.1%), size mismatch (68 vs 70); partial model \u2014 calls sub_0806DF38(arg0, &out[1], 0, 1) writing a search-result array (struct UnkDF38Entry, 0x14 stride, added), checks out[0] fields, computes a stride, calls sub_0806C704. Declared both previously-naked callees' signatures from their own bodies. Uncertain: retail writes arg2 to sp+0 before the call but that slot is never read back in this function -- may be an unused stack reservation, a hidden 5th arg to sub_0806DF38, or a struct field I'm misplacing"
     },
     {
       "name": "sub_0806C7D4",
