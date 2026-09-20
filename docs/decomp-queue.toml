@@ -508,3 +508,11 @@ notes = "src/wip/sub_08062C38.md"
 status = "69/72 bytes (95.8%), same size; correct fade-out loop (BLDCNT=0xFF, decrement counter by arg0 each frame clamped at 0, write BLDY, vsync via sub_080674B4/_08073C40(bx-r0 trampoline)/sub_080474AC, loop until counter==0). Only remaining diff: the 'diff' subtraction result register (r1 here vs r0 in retail) -- tried inline expressions, explicit s32 casts, block-scoping; none moved it off r1"
 next = "try assigning 'diff' via a compound statement that also touches r0 first (e.g. reading counter into r0 explicitly before the subtract), or check if arg0 needs to be re-copied to a fresh local at loop top instead of mutated in place"
 score = "69/72"
+
+[[wip]]
+name = "sub_08062D50"
+seed = "src/wip/sub_08062D50.c"
+notes = "src/wip/sub_08062D50.md"
+status = "13/46 bytes (28.3%), same size; correct algorithm (write a BGR555 palette entry to VRAM palette RAM at 0x05000000+arg0*2 from arg1's r/g/b byte triplet). Two orderings tried: address-first (13/46, closer overall byte offset) and color-first (12/46, matches retail's per-field mask/shift/orr shape almost exactly but wrong push-list size, r4/r5 vs retail's r4/r5/r6). agbcc schedules the address computation independent of source statement order in both cases"
+next = "try assigning arg1's three fields to named locals up front (r,g,b) before any masking, which may force agbcc to keep an extra live value (matching retail's 3-register need) instead of computing address+color inline"
+score = "13/46"

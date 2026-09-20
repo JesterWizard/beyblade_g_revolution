@@ -176,6 +176,14 @@ struct Unk7069C /* >= 0x30 */
 };
 
 /* Per-entry state at BattleWork +0x0BCC. sub_0803D4C4, sub_08062238. */
+/* RGB555 triplet (r,g,b bytes, top 5 bits used). sub_08062D50. */
+struct Unk62D50 /* >= 0x03 */
+{
+    /* 00 */ u8 unk00;
+    /* 01 */ u8 unk01;
+    /* 02 */ u8 unk02;
+};
+
 struct Unk62634 /* >= 0x64 */
 {
     /* 00 */ u8 filler_00[8];
