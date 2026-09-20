@@ -9,11 +9,13 @@ s32 sub_08042B78(s32 a)
     register const u32 *base asm("r2");
     const u32 *entry;
     const u32 *valueEntry;
+    s32 first;
 
     key = a;
-    minusOne = -1;
     base = (const u32 *)0x080908BC;
-    if (base[0] != (u32)minusOne)
+    first = (s32)base[0];
+    minusOne = -1;
+    if (first != minusOne)
     {
         sentinel = minusOne;
         entry = base;
