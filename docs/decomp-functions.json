@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-20T17:48:29Z",
+  "generated": "2026-09-20T17:49:10Z",
   "counts": {
-    "matched": 288,
+    "matched": 289,
     "blocked": 28,
-    "not_started": 216,
+    "not_started": 215,
     "wip": 86,
     "size_mismatch": 14,
     "same_size": 1
@@ -3634,18 +3634,18 @@
     {
       "name": "sub_080426A4",
       "addr": "0x080426A4",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "not_started",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": false,
       "block_reason": "",
       "retail_bytes": 116,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/116",
-      "source": "none",
+      "matched_bytes": 116,
+      "compiled_bytes": 116,
+      "pct": 100.0,
+      "score": "116/116",
+      "source": "integrated",
       "note": ""
     },
     {
