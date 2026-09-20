@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T15:28:37Z_
+_Updated: 2026-09-20T15:30:22Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T15:28:37Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 46 |
+| WIP (resume these first) | 47 |
 
 Ranking: **battle** · showing top **40**
 
@@ -72,6 +72,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08062B9C` | 76 | 34/76 | `src/wip/sub_08062B9C.c` | 34/76 bytes (44.7%), same size; correct algorithm (clear bitmask bit + slot pointer for idx in [lo,hi] after swap, reusing struct Unk62A74 from sub_08062A74) with the full loop/branch shape matching retail (confirmed via manual disassembly comparison -- only the register chosen for arg1/hi differs: retail keeps it in r4 from function entry, agbcc here picks r5) | try passing arg1 as the first declared local or via a temp assigned before arg0's, or check if reversing argument order in a wrapper affects register choice |
 | `sub_08062C38` | 72 | 69/72 | `src/wip/sub_08062C38.c` | 69/72 bytes (95.8%), same size; correct fade-out loop (BLDCNT=0xFF, decrement counter by arg0 each frame clamped at 0, write BLDY, vsync via sub_080674B4/_08073C40(bx-r0 trampoline)/sub_080474AC, loop until counter==0). Only remaining diff: the 'diff' subtraction result register (r1 here vs r0 in retail) -- tried inline expressions, explicit s32 casts, block-scoping; none moved it off r1 | try assigning 'diff' via a compound statement that also touches r0 first (e.g. reading counter into r0 explicitly before the subtract), or check if arg0 needs to be re-copied to a fresh local at loop top instead of mutated in place |
 | `sub_08062D50` | 46 | 13/46 | `src/wip/sub_08062D50.c` | 13/46 bytes (28.3%), same size; correct algorithm (write a BGR555 palette entry to VRAM palette RAM at 0x05000000+arg0*2 from arg1's r/g/b byte triplet). Two orderings tried: address-first (13/46, closer overall byte offset) and color-first (12/46, matches retail's per-field mask/shift/orr shape almost exactly but wrong push-list size, r4/r5 vs retail's r4/r5/r6). agbcc schedules the address computation independent of source statement order in both cases | try assigning arg1's three fields to named locals up front (r,g,b) before any masking, which may force agbcc to keep an extra live value (matching retail's 3-register need) instead of computing address+color inline |
+| `sub_08066BF0` | 70 | 47/70 | `src/wip/sub_08066BF0.c` | 47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm match (loop over ~29 halfword-stride entries in arg0->unk230, select alt (0x080BAF6A[i]) or default (0x080BAFA6[i]) palette value based on the flag byte at gUnk_030009A8, write to entries[i]->unk18) with end computed via register arithmetic (matching retail's non-folded 'adds r6,r3,#0; adds r6,#0x3A' instead of a literal). Added struct Unk66BF0Entry (local, unk18 at +0x18) and reused struct Unk66BC4 for arg0. Only remaining diff: register swap between 'end' and the flag pointer (r5/r6 vs retail's r6/r5) | try computing the flag-pointer as a named local (not inline gUnk_030009A8 macro use) declared between altVal and end, which may flip which gets r5 vs r6 |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -175,6 +176,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (282 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (281 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
