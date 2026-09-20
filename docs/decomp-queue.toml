@@ -1364,3 +1364,11 @@ notes = "src/wip/sub_0802BAD4.md"
 status = "Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation."
 next = "Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store."
 score = "50/320"
+
+[[wip]]
+name = "sub_0802C2B0"
+seed = "src/wip/sub_0802C2B0.c"
+notes = "src/wip/sub_0802C2B0.md"
+status = "size mismatch; 26/100 bytes, compiled 92 vs retail 100; literal-pool/register ordering remains"
+next = "reconstruct with a preserved r12 global-pointer lifetime, then retry"
+score = "26/100"

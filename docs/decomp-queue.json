@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T19:54:38Z",
+  "generated": "2026-09-20T19:57:02Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 329,
-    "semantic_done": 304,
-    "readable_asm": 329,
+    "pending": 328,
+    "semantic_done": 305,
+    "readable_asm": 328,
     "opcode": 0,
     "battle_pending": 89,
     "battle_semantic": 58,
     "blocked": 34,
-    "wip": 152
+    "wip": 153
   },
   "pinned": [],
   "wip": [
@@ -316,8 +316,8 @@
     {
       "name": "sub_08042B78",
       "addr": "0x08042B78",
-      "kind": "asm",
-      "bytes": 56,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08042B78.c",
       "notes": "src/wip/sub_08042B78.md",
       "status": "45/56 same-size DIFF after r1/r2/r3/r4 shaping; loop and sentinel behavior now match, but retail loads the ROM table into r2 before materializing -1 in r1, while agbcc schedules -1 first",
@@ -1687,6 +1687,17 @@
       "status": "Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation.",
       "next": "Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store.",
       "score": "50/320"
+    },
+    {
+      "name": "sub_0802C2B0",
+      "addr": "0x0802C2B0",
+      "kind": "asm",
+      "bytes": 100,
+      "seed": "src/wip/sub_0802C2B0.c",
+      "notes": "src/wip/sub_0802C2B0.md",
+      "status": "size mismatch; 26/100 bytes, compiled 92 vs retail 100; literal-pool/register ordering remains",
+      "next": "reconstruct with a preserved r12 global-pointer lifetime, then retry",
+      "score": "26/100"
     }
   ],
   "recommended": [
@@ -1818,20 +1829,6 @@
       "kind": "asm",
       "bytes": 100,
       "score": 44,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C2B0",
-      "addr": "0x0802C2B0",
-      "kind": "asm",
-      "bytes": 100,
-      "score": 45,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -2259,6 +2256,20 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08053690",
+      "addr": "0x08053690",
+      "kind": "asm",
+      "bytes": 528,
+      "score": 273,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -2630,20 +2641,6 @@
       "kind": "asm",
       "bytes": 100,
       "score": 44,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802C2B0",
-      "addr": "0x0802C2B0",
-      "kind": "asm",
-      "bytes": 100,
-      "score": 45,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"

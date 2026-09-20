@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T19:54:38Z_
+_Updated: 2026-09-20T19:57:02Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 304 |
-| Still need semantic C | **329** |
-| Readable Thumb remaining | 329 |
+| Semantic C done | 305 |
+| Still need semantic C | **328** |
+| Readable Thumb remaining | 328 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 89 (58 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 152 |
+| WIP (resume these first) | 153 |
 
 Ranking: **battle** · showing top **40**
 
@@ -53,7 +53,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08040EF4` | 88 | 34/88 | `src/wip/sub_08040EF4.c` | best 34/88 size-mismatch after raw offset and full register pins; baseline was 13/88 at 72B, while retail requires r5 key, r4 byte offset, r2/r3 table cursors, and r6 base+4 without the extra saved registers | try only key r5 and offset r4 pins; let agbcc allocate table cursors, while retaining an explicit second-word base to keep the adds r4+r6 shape |
 | `sub_08042B28` | 40 | 35/40 | `src/wip/sub_08042B28.c` | 35/40 same-size DIFF after pinning index to r2; retail loads the ROM table base into r0 before shifting index, while agbcc computes the shift in r0 and loads base into r1 | pin the table base to r0 and retain the index r2 pin; this should reproduce the remaining literal-load register order |
 | `sub_08042B50` | 40 | 35/40 | `src/wip/sub_08042B50.c` | 35/40 same-size DIFF; clone logic and register pins reproduce the exact size, but agbcc still places the table-base literal after the index shift instead of retail's r0-before-r1 sequence | reuse the 42B28 selective base/index shape with a dependency that prevents scheduling the index shift before the ROM literal load |
-| `sub_08042B78` | 56 | 45/56 | `src/wip/sub_08042B78.c` | 45/56 same-size DIFF after r1/r2/r3/r4 shaping; loop and sentinel behavior now match, but retail loads the ROM table into r2 before materializing -1 in r1, while agbcc schedules -1 first | force the base assignment to be live before the minus-one assignment, then preserve the r4 copy and r1 table-cursor reuse |
+| `sub_08042B78` | 0 | 45/56 | `src/wip/sub_08042B78.c` | 45/56 same-size DIFF after r1/r2/r3/r4 shaping; loop and sentinel behavior now match, but retail loads the ROM table into r2 before materializing -1 in r1, while agbcc schedules -1 first | force the base assignment to be live before the minus-one assignment, then preserve the r4 copy and r1 table-cursor reuse |
 | `sub_08042BB0` | 0 | 53/56 | `src/wip/sub_08042BB0.c` | 53/56 same-size DIFF (94.6%); initial prologue and loop match, but key/value cursors are allocated opposite to retail at the final 4-byte load: retail keeps key cursor in r2 and value cursor in r1 | pin the key cursor/base to r2 and the value cursor to r1 after the sentinel check; return valueEntry[1] and test the sentinel through valueEntry |
 | `sub_08042BE8` | 82 | 37/82 | `src/wip/sub_08042BE8.c` | best 37/82 size-mismatch; explicit r4/r5/r6/r7/r3/r2 shaping reproduces the loop body, but agbcc emits push r4-r6 while retail saves r7 as well and retains a longer branch layout | force r7 as an ordinary live callee-saved local rather than only a fixed register pointer; then preserve the current byte-offset table cursors |
 | `sub_08042C3C` | 0 | 54/56 | `src/wip/sub_08042C3C.c` | 54/56 same-size DIFF (96.4%); exact prologue, sentinel handling, cursor registers, and return are matched; only the two cursor increments are reversed (retail value cursor r1 then key cursor r2) | swap the source order of  and ; this is a two-byte instruction-order near-match |
@@ -178,6 +178,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08071BA0` | 148 | 109/148 | `src/wip/sub_08071BA0.c` | Two semantic attempts. Direct GBA register/global C reached 109/148 bytes (73.6%, exact size); a base-pointer rewrite preserved size but fell to 58/148. Hardware behavior is mapped: enable sound, configure DMA1 to FIFO A, configure timers, and update audio timing globals. | Start from the 109/148 direct-register candidate. Reproduce retail's DMA pointer sequencing: after sound control setup, retail keeps 0x04000082 + 0x3A in r1 and emits str [r1], adds r1,#4, str [r1], adds r1,#4. Avoid agbcc's stmia writeback and preserve the retail literal pool order; then match timer/global writes. |
 | `sub_08073988` | 96 | 91/96 | `src/wip/sub_08073988.c` | Two semantic attempts. Final branch/goto-shaped parser reached 91/96 bytes (94.8%, same size), with all control flow and argument/register setup matching retail. Only the default character lookup differs: agbcc loads the fixed 0x080BB748 table into r7 and reuses it, while retail loads it into r0 and preserves the base argument in r7. | Retain the goto-shaped control flow. Force the default lookup to emit ldr r0,=0x080BB748; adds r0,r1,r0; ldrb r0; adds r0,r0,r7; ldrb, while preserving local base in r7 and the 5-register prologue. Avoid global register r0 experiments because agbcc rejects call-clobbered global register variables under Werror. |
 | `sub_0802BAD4` | 320 | 50/320 | `src/wip/sub_0802BAD4.c` | Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation. | Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store. |
+| `sub_0802C2B0` | 100 | 26/100 | `src/wip/sub_0802C2B0.c` | size mismatch; 26/100 bytes, compiled 92 vs retail 100; literal-pool/register ordering remains | reconstruct with a preserved r12 global-pointer lifetime, then retry |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -194,7 +195,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08032DC4` | `0x08032DC4` | 660 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C55C` | `0x0802C55C` | 128 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080428F0` | `0x080428F0` | 160 | 1 | pool | asm | (gMainWorkPtr) |
@@ -225,6 +225,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0802DCDC` | `0x0802DCDC` | 452 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802D6D4` | `0x0802D6D4` | 452 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DEC8` | `0x0803DEC8` | 514 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -281,6 +282,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (156 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (155 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
