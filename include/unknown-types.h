@@ -373,7 +373,9 @@ struct MainWork /* >= 0x18B4 */
     /* 17BC */ u8 filler_17BC[8];
     /* 17C4 */ u32 unk17C4; /* sub_08044A20 */
     /* 17C8 */ u32 unk17C8; /* sub_08044A20 */
-    /* 17CC */ u8 filler_17CC[0x2A];
+    /* 17CC */ u8 filler_17CC[0x24];
+    /* 17F0 */ u16 unk17F0; /* sub_080449C4, sub_08051BBC — BLDY fade counter (down) */
+    /* 17F2 */ u16 unk17F2; /* sub_080449C4, sub_08051BBC — BLDY fade counter (up) */
     /* 17F6 */ s8 unk17F6; /* sub_080435D8 */
     /* 17F7 */ s8 unk17F7; /* sub_080435D8 */
     /* 17F8 */ u8 filler_17F8[8];
@@ -386,7 +388,7 @@ struct MainWork /* >= 0x18B4 */
     /* 1818 */ u8 unk1818;
     /* 1819 */ u8 unk1819;
     /* 181A */ u8 unk181A;
-    /* 181B */ u8 filler_181B[1];
+    /* 181B */ u8 unk181B; /* sub_080449C4 */
     /* 181C */ u8 unk181C; /* sub_0803fdd0, sub_0805d99c */
     /* 181D */ u8 filler_181D[2];
     /* 181F */ s8 unk181F;

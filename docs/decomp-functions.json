@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-20T13:14:47Z",
+  "generated": "2026-09-20T13:19:15Z",
   "counts": {
-    "matched": 276,
+    "matched": 277,
     "blocked": 28,
-    "not_started": 279,
+    "not_started": 278,
     "wip": 32,
     "size_mismatch": 16,
     "same_size": 2
@@ -4297,18 +4297,18 @@
     {
       "name": "sub_080449C4",
       "addr": "0x080449C4",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "not_started",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": false,
       "block_reason": "",
       "retail_bytes": 92,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/92",
-      "source": "none",
+      "matched_bytes": 92,
+      "compiled_bytes": 92,
+      "pct": 100.0,
+      "score": "92/92",
+      "source": "integrated",
       "note": ""
     },
     {
