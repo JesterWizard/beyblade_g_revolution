@@ -1,6 +1,9 @@
 #include "global.h"
 
 // @ 0x08071b4c
+#include "global.h"
+
+// @ 0x08071b4c
 __attribute__((naked))
 void sub_08071B4C(void)
 {
@@ -44,4 +47,5 @@ void sub_08071B4C(void)
         "_08071B9C: .4byte 0x030000C0\n"
     );
 }
+
 

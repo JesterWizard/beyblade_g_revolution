@@ -1,6 +1,9 @@
 #include "global.h"
 
 // @ 0x08041858
+#include "global.h"
+
+// @ 0x08041858
 __attribute__((naked))
 void sub_08041858(void)
 {
@@ -30,3 +33,4 @@ void sub_08041858(void)
         "_08041888: .4byte 0x03000504\n"
     );
 }
+

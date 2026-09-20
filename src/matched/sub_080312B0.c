@@ -1,6 +1,9 @@
 #include "global.h"
 
 // @ 0x080312b0
+#include "global.h"
+
+// @ 0x080312b0
 __attribute__((naked))
 void sub_080312B0(struct Unk312EC *a, struct Unk705DC *b, u8 c, s32 d)
 {
@@ -29,4 +32,5 @@ void sub_080312B0(struct Unk312EC *a, struct Unk705DC *b, u8 c, s32 d)
         "bx r0\n"
     );
 }
+
 
