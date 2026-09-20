@@ -1428,3 +1428,19 @@ notes = "src/wip/sub_0802E2F8.md"
 status = "two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue"
 next = "restore the 20/110 natural seed, then tune only multiplier r5, signed a r2, and table r3 without overlapping fixed variables"
 score = "4/110"
+
+[[wip]]
+name = "sub_0802ECD8"
+seed = "src/wip/sub_0802ECD8.c"
+notes = "src/wip/sub_0802ECD8.md"
+status = "two attempts did not match; 50/498 bytes, final compiled 416B; logic mapped but fixed high-register pins removed the retail callee-save prologue"
+next = "restore natural prologue from first seed, then selectively anchor buffer/index/root location without fixed r8-r10 pins"
+score = "50/498"
+
+[[wip]]
+name = "sub_0802FA94"
+seed = "src/wip/sub_0802FA94.c"
+notes = "src/wip/sub_0802FA94.md"
+status = "two attempts did not match; 65/748 bytes, final compiled 580B; loop semantics mapped but target root/main location and high-register/dispatch shape remain"
+next = "restore natural callee-save prologue and use a root-location direct seed; inline the exact type/subtype switch and table literal order"
+score = "65/748"

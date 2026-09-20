@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T20:11:12Z_
+_Updated: 2026-09-20T20:15:44Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T20:11:12Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 89 (58 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 160 |
+| WIP (resume these first) | 162 |
 
 Ranking: **battle** · showing top **40**
 
@@ -186,6 +186,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802D6D4` | 452 | 438/452 | `src/wip/sub_0802D6D4.c` | same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction matches size, remaining mismatch begins in late sub_0806FF58/sub_080705DC scheduling | use the direct-global seed; tune only the late resource callback/source order around +0x178 |
 | `sub_0802DCDC` | 452 | 100/452 | `src/wip/sub_0802DCDC.c` | size mismatch; 100/452 bytes, compiled 428 vs retail 452; direct semantic control flow mapped, but frame remains 0x1C vs retail 0x18 and high-register lifetimes differ | reduce spills to the retail 0x18 frame, preserve r8/r9/r10 and exact state-location reloads |
 | `sub_0802E2F8` | 110 | 4/110 | `src/wip/sub_0802E2F8.c` | two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue | restore the 20/110 natural seed, then tune only multiplier r5, signed a r2, and table r3 without overlapping fixed variables |
+| `sub_0802ECD8` | 498 | 50/498 | `src/wip/sub_0802ECD8.c` | two attempts did not match; 50/498 bytes, final compiled 416B; logic mapped but fixed high-register pins removed the retail callee-save prologue | restore natural prologue from first seed, then selectively anchor buffer/index/root location without fixed r8-r10 pins |
+| `sub_0802FA94` | 748 | 65/748 | `src/wip/sub_0802FA94.c` | two attempts did not match; 65/748 bytes, final compiled 580B; loop semantics mapped but target root/main location and high-register/dispatch shape remain | restore natural callee-save prologue and use a root-location direct seed; inline the exact type/subtype switch and table literal order |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -229,10 +231,10 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044A8C` | `0x08044A8C` | 672 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802FA94` | `0x0802FA94` | 748 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08045198` | `0x08045198` | 1016 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08045590` | `0x08045590` | 1256 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -289,6 +291,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (148 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (146 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

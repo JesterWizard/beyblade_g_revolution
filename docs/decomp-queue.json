@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T20:11:12Z",
+  "generated": "2026-09-20T20:15:44Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 89,
     "battle_semantic": 58,
     "blocked": 34,
-    "wip": 160
+    "wip": 162
   },
   "pinned": [],
   "wip": [
@@ -1775,6 +1775,28 @@
       "status": "two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue",
       "next": "restore the 20/110 natural seed, then tune only multiplier r5, signed a r2, and table r3 without overlapping fixed variables",
       "score": "4/110"
+    },
+    {
+      "name": "sub_0802ECD8",
+      "addr": "0x0802ECD8",
+      "kind": "asm",
+      "bytes": 498,
+      "seed": "src/wip/sub_0802ECD8.c",
+      "notes": "src/wip/sub_0802ECD8.md",
+      "status": "two attempts did not match; 50/498 bytes, final compiled 416B; logic mapped but fixed high-register pins removed the retail callee-save prologue",
+      "next": "restore natural prologue from first seed, then selectively anchor buffer/index/root location without fixed r8-r10 pins",
+      "score": "50/498"
+    },
+    {
+      "name": "sub_0802FA94",
+      "addr": "0x0802FA94",
+      "kind": "asm",
+      "bytes": 748,
+      "seed": "src/wip/sub_0802FA94.c",
+      "notes": "src/wip/sub_0802FA94.md",
+      "status": "two attempts did not match; 65/748 bytes, final compiled 580B; loop semantics mapped but target root/main location and high-register/dispatch shape remain",
+      "next": "restore natural callee-save prologue and use a root-location direct seed; inline the exact type/subtype switch and table literal order",
+      "score": "65/748"
     }
   ],
   "recommended": [
@@ -2293,20 +2315,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802FA94",
-      "addr": "0x0802FA94",
-      "kind": "asm",
-      "bytes": 748,
-      "score": 385,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08045198",
       "addr": "0x08045198",
       "kind": "asm",
@@ -2340,6 +2348,20 @@
       "kind": "asm",
       "bytes": 1352,
       "score": 678,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0804FFCC",
+      "addr": "0x0804FFCC",
+      "kind": "asm",
+      "bytes": 1504,
+      "score": 778,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -3096,20 +3118,6 @@
       "kind": "asm",
       "bytes": 672,
       "score": 343,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802FA94",
-      "addr": "0x0802FA94",
-      "kind": "asm",
-      "bytes": 748,
-      "score": 385,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -4334,18 +4342,6 @@
       "kind": "asm",
       "bytes": 492,
       "score": 244,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802ECD8",
-      "addr": "0x0802ECD8",
-      "kind": "asm",
-      "bytes": 498,
-      "score": 285,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
