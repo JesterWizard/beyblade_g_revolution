@@ -8,18 +8,61 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **268/633 (42.3%)** |
-| **Decompiled C (bytes)** | **12,914/90,272 (14.3%)** |
+| **Decompiled C (functions)** | **272/633 (43.0%)** |
+| **Decompiled C (bytes)** | **13,258/90,272 (14.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 365/633 (57.7%) |
+| Readable Thumb | 361/633 (57.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 45/160 (28.1% fn, 8.2% bytes) |
+| Battle semantic C | 46/160 (28.8% fn, 8.5% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — WIP near-match cleanup: +1 semantic C (271→272/633)
+- Matched `sub_08070604` (initialize `Unk70604` projectile state and derive
+  the trailing byte). An `r1`-pinned value plus explicit `val += 4` ordering
+  reproduced the retail tail; verified 92/92 bytes and integrated it.
+- Removed its WIP and block entries.
+- `make compare`: OK
+
+### 2026-09-20 — WIP near-match cleanup: +1 semantic C (270→271/633)
+- Matched `sub_08033878` (reset five `BattleWork` state fields and release/
+  clear four transient entries). A shared loop/zero local was the source
+  shape found by decomp-permuter; verified 108/108 bytes and integrated it.
+- Restored `BattleWork.unk0B70`, which retail clears between `unk0B6C` and
+  `unk0B78`.
+- `sub_0802BC14`, `sub_0802BF04`, `sub_080385DC`, `sub_08069B78`, and
+  `sub_0802D2C0` remain parked after targeted attempts; no matched-file
+  changes for those functions.
+- `make compare`: OK
+
+### 2026-09-20 — WIP near-match cleanup: +1 semantic C (268→269/633)
+- Matched `sub_080312B0` (initialize `Unk312EC` from `Unk705DC` metadata).
+  Explicit `r5`/`r0` register locals preserve the retail halfword-load and
+  shifted-nibble allocation; `match_function.py` verified 40/40 bytes.
+- Removed the completed WIP entry and refreshed the queue.
+- `make compare`: OK
+
+### 2026-09-20 — WIP near-match cleanup: +1 semantic C (269→270/633)
+- Matched `sub_08033DD4` (IWRAM target-state gate for effect processing),
+  restoring `Unk0380Target` and its pointer field. A function-pointer cast
+  preserves the raw `u8` callee return in the truthiness branch; verified
+  104/104 bytes.
+- `sub_08041858` remained 47/52 after volatile/r0-pinned variants and a
+  short permuter run; `sub_08043944` reached 37/48 after r3/r4 hints but
+  still has normalization-order drift. Both remain parked as WIP.
+- `make compare`: OK
+
+### 2026-09-20 — near-match follow-up (2 WIPs retained)
+- `sub_08031300`: roughly 10,000 decomp-permuter iterations reached best
+  permuter score 1295 without a zero-score candidate.
+- `sub_080726E0`: the documented `r4` register hint and a short permuter run
+  did not improve the existing 50/52 score. Both remain readable Thumb with
+  their WIP seeds intact.
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C session: +6 matched (257→263/633), 4 near-misses parked
 - **Matched (6):** `sub_0802D52C`, `sub_08043638`, `sub_08059AE0`, `sub_08059B74`,

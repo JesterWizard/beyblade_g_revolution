@@ -1,14 +1,10 @@
 #include "global.h"
 
 /*
- * WIP — not byte-matched (49.1%, 53/108 bytes originally; best clean
- * rewrite compiled to 92/108, i.e. agbcc dead-code-eliminates the
- * `else if (a->unk15D0 < a->unk15D2)` branch since it's unreachable given
- * the preceding `if (<=)`. Retail keeps a genuinely dead
- * `cmp r2,r0; bge end; movs r0,#0; bl _0802D058` block (108 bytes) that no
- * straightforward C source reproduces — agbcc always optimizes the
- * redundant re-check away in this build (92 bytes, correct semantics,
- * but short by exactly the dead block).
+ * WIP — not byte-matched (best clean rewrite was 92/108 bytes).
+ * Retail uses an explicit `>` table-call path followed by a separate
+ * `<` zero-call comparison; straightforward C reproduces the logic but
+ * still produces a different literal-pool/register layout in this build.
  *
  * This function is the asm-wrapper style micro-`if/else-if` idiom seen
  * near the "systemic agbcc leaf-function register-allocation quirk"
@@ -33,7 +29,7 @@ void sub_0802D2C0(void)
     w2 = gMainWorkPtr;
     table += (s32)w2->unk15CA * 16;
 
-    if (gMainWorkPtr->unk15D0 <= gMainWorkPtr->unk15D2)
+    if (gMainWorkPtr->unk15D0 > gMainWorkPtr->unk15D2)
         _0802D058((u16)table[1]);
     else if (gMainWorkPtr->unk15D0 < gMainWorkPtr->unk15D2)
         _0802D058(0);

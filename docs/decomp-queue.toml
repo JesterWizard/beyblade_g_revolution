@@ -130,10 +130,6 @@ name = "sub_080523A4"
 reason = "calls sub_08061BE8, sub_0805264C(a,0..5), then a->unk288->unk0C = a->unk28C->unk0C = (a->unk2D5<<12)+0x2C00 — logic correct (same-size DIFF, ~15/112 bytes) across several pointer/base-register orderings; needs permuter"
 
 [[block]]
-name = "sub_08070604"
-reason = "struct Unk70604 initializer (7 params, 3 via stack) — logic reconstructed correctly (m2c-verified, same overall shape) but agbcc's final two byte-field writes (unk29=0, unk2A=src->unk05+4) either share one address computation (too small, -4B) or use two fully separate ones (too big, +4B); retail shares the unk29 address computation only for unk2A, not unk28; needs permuter"
-
-[[block]]
 name = "sub_080604C8"
 reason = "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter"
 
@@ -181,41 +177,25 @@ score = "20/104"
 name = "sub_0802D2C0"
 seed = "src/wip/sub_0802D2C0.c"
 notes = "src/wip/sub_0802D2C0.md"
-status = "DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant else-if that retail keeps"
-next = "permuter run targeting dead-code retention / instruction order; table lookup logic itself is verified correct"
-score = "92/108"
-
-[[wip]]
-name = "sub_08033878"
-seed = "src/wip/sub_08033878.c"
-notes = "src/wip/sub_08033878.md"
-status = "same_size DIFF, 28/108 bytes (25.9%)"
-next = "permuter run (small function); or try shared 's32 zero=0' local matching retail's persistent r5"
-score = "28/108"
-
-[[wip]]
-name = "sub_08033DD4"
-seed = "src/wip/sub_08033DD4.c"
-notes = "src/wip/sub_08033DD4.md"
-status = "same-size DIFF, 93/104 (89.4%); one lsls #24 off on u8-return truthiness"
-next = "permuter or alt shape; re-add Unk0380Target first"
-score = "93/104"
+status = "DIFF; corrected retail branch semantics, but best current compile is 46/108 and 104 bytes due pool/register layout"
+next = "permuter run targeting corrected branch shape and literal-pool/register order"
+score = "46/108"
 
 [[wip]]
 name = "sub_0802BC14"
 seed = "src/wip/sub_0802BC14.c"
 notes = "src/wip/sub_0802BC14.md"
-status = "same-size DIFF (46/112, 41%); agbcc emits lsrs (u8 truncate) before bl sub_0802C62C where retail reuses sa register directly with plain adds; loop/null-check structure otherwise correct"
-next = "try forcing arg via inline register hint or reordering param types; possibly needs sub_0802C62C sig change to s8"
-score = "46/112"
+status = "same-size DIFF (58/112, 51.8%) after signed-call and r0-pointer hints; remaining pool/register layout differs"
+next = "leave readable Thumb; revisit with a verified signed-argument prototype or targeted pool/register permutation"
+score = "58/112"
 
 [[wip]]
 name = "sub_0802BF04"
 seed = "src/wip/sub_0802BF04.c"
 notes = "src/wip/sub_0802BF04.md"
-status = "size_mismatch 54/140 (38.6%); struct Unk1694 field logic correct (unk00|=0xFF, unk03|=0xFF, unk02=0, unk01=0 on match), but agbcc register alloc (r8 preset outside loop for zero-store dual-use) diverges; compiled 136B vs retail 140B"
-next = "try forcing r8 allocation via explicit register variable for zero, or restructure single ptr recompute pattern to match retail's r5-offset-cached style"
-score = "54/140"
+status = "best 55/140 size-mismatch; s16 comparison and explicit r8 zero-register hints did not recover retail setup/order"
+next = "leave readable Thumb; revisit with targeted constant/pointer reuse or permuter"
+score = "55/140"
 
 [[wip]]
 name = "sub_08035C64"
@@ -245,32 +225,24 @@ score = "unscored"
 name = "sub_080385DC"
 seed = "src/wip/sub_080385DC.c"
 notes = "src/wip/sub_080385DC.md"
-status = "same_size DIFF 18/80 (20.5%), compiled 88B vs retail 80B; logic correct (clears unk20 bit i, ORs 0xFFFF into unk00[i] and unk22[i] for lo..hi); agbcc re-dereferences gUnk_030003CC pointer macro 3x per loop iter instead of caching once like retail (extra ldr r4,[..] each access); caching into local struct ptr var makes it WORSE (100B, forces r12 spill since r4-r7 all in use)"
-next = "try passing pointer as a function-local register-hint or restructure to compute all three offsets from one base read per iteration via a single helper macro/temp; or try reordering field writes (unk22 before unk00) to see if agbcc's scheduler picks different caching"
-score = "unscored"
-
-[[wip]]
-name = "sub_08070604"
-seed = "src/wip/sub_08070604.c"
-notes = "src/wip/sub_08070604.md"
-status = "size_mismatch 82/92 (85.4%), compiled 96B vs retail 92B; all field init logic + s16<<8 fixed-point cast for x/y confirmed correct (struct Unk70604 fully init'd); only remaining diff is tail: retail computes &dst->unk29 into r0 once then reuses r0+1 for &dst->unk2A store, my C recomputes ip+0x2a fresh (4 extra bytes, mov+adds+mov+adds vs adds r0,#1)"
-next = "try forcing pointer reuse via intermediate u8* local assigned once (e.g. u8 *p = (u8*)&dst->unk29; *p = 0; then some non-offset-cast way to hit unk2A) or check if declaring unk29/unk2A as an anonymous union/bitfield-adjacent pair in the struct changes agbcc's addressing; permuter candidate, very close"
-score = "82/92"
+status = "same_size DIFF 18/80; shared masks and r12/r6/r1 pointer/register hints did not improve the baseline"
+next = "leave readable Thumb; revisit with targeted pointer-cache/permuter technique"
+score = "18/80"
 
 [[wip]]
 name = "sub_080733E4"
 seed = "src/wip/sub_080733E4.c"
 notes = "src/wip/sub_080733E4.md"
-status = "size_mismatch 14/90 (15.6%), compiled 88B vs retail 90B; logic likely correct (string copy skipping \n, pads with NUL at end, returns final index-1; early NULL-checks return -1) but overall instruction ordering/branch layout diverges heavily from agbcc -- for(;;i++) with if/else produces different control flow than retail's label-based skip-loop + separate main loop"
-next = "rewrite using explicit goto/labels mirroring retail's exact block structure (skip-loop as do-while entered via initial check, main loop with cmp r2,r5 bcs branch kept as if(i>=c) first check inside loop, not for-loop machinery); or feed to permuter directly given plausible logic match"
-score = "unscored"
+status = "size_mismatch 14/90 baseline; explicit-goto and r2/r5-pinned variants did not reproduce retail loop allocation"
+next = "leave readable Thumb; revisit with permuter over skip/main-loop source shape"
+score = "14/90"
 
 [[wip]]
 name = "sub_08069B78"
 seed = "src/wip/sub_08069B78.c"
 notes = "src/wip/sub_08069B78.md"
-status = "size_mismatch 62/154 (40.3%), compiled 152B vs retail 154B; logic correct (4x sub_08069988(i) calls packing 2-bit field into *(u8*)result via (*p&~3)|(val&3)); first 48 bytes match exactly (prologue + first call), diverges starting 2nd sub_08069988 call - retail keeps mask constant 3 in r10 persistently reused across all 4 iterations, my C recomputes per-call causing different register allocation"
-next = "try extracting shared mask into persistent local var assigned once before all 4 blocks (e.g. u8 mask=3; u8 inv=~3;) or write as loop over array of 4 args to force agbcc register reuse pattern"
+status = "same-size DIFF 62/154 (40.3%); shared mask/inverse and r10/r5 hints did not improve post-call register scheduling"
+next = "leave readable Thumb; revisit with targeted post-call register scheduling or permuter"
 score = "62/154"
 
 [[wip]]
@@ -282,49 +254,41 @@ next = "re-derive param roles more carefully from asm (r12=a0 orig, r6=a1, r5=a2
 score = "42/152"
 
 [[wip]]
-name = "sub_080312B0"
-seed = "src/wip/sub_080312B0.c"
-notes = "src/wip/sub_080312B0.md"
-status = "90% DIFF; retail keeps b->unk14 load in r5 (separate reg from shift result r0), push{r4,r5,lr}; compiled agbcc always reuses r0/collapses r5, push{r4,lr}"
-next = "try forcing volatile u16 val, or restructure as ternary/early-return shape; possibly needs the shift expressed via macro that references b->unk14 twice to force reload"
-score = "36/40"
-
-[[wip]]
 name = "sub_08041858"
 seed = "src/wip/sub_08041858.c"
 notes = "src/wip/sub_08041858.md"
-status = "90% DIFF size mismatch (48 vs 52); agbcc folds gUnk_03000504 as gUnk_03000534-0x30 (subs r0,#0x30) instead of separate pc-relative ldr like retail; retail interleaves load-then-store for p1 before loading p2"
-next = "try forcing p2 load via a function call boundary or different intermediate type (u8* then cast) to break constant folding; or inline asm for just the final two stores"
+status = "90% DIFF size mismatch (48 vs 52); volatile/r0-pinned p2 variants and short permuter run did not break the pool-address fold"
+next = "leave readable Thumb; revisit with a genuine call-boundary or pool-symbol technique"
 score = "47/52"
 
 [[wip]]
 name = "sub_08043944"
 seed = "src/wip/sub_08043944.c"
 notes = "src/wip/sub_08043944.md"
-status = "best 70.8% (34/48) same-size DIFF; retail keeps idx in r3 and flags in r4 with a single push{r4,lr}, moves flags->r0 before ldrb into r3, orrs r0,r3; my C either produces push{r4,r5,lr} (idx/flags both spilled) or reorders orr operands wrong"
-next = "try passing idx/flags packed differently, or write as register-hinted asm() for just the two locals; or try u8 val=(u8)(flags|p->unk08[idx]) with idx read via local copy first"
-score = "34/48"
+status = "best 77.1% (37/48) same-size DIFF after r3/r4 hints; input-normalization order still differs"
+next = "leave readable Thumb; revisit with a source shape that forces idx normalization before flags normalization"
+score = "37/48"
 
 [[wip]]
 name = "sub_080726E0"
 seed = "src/wip/sub_080726E0.c"
 notes = "src/wip/sub_080726E0.md"
-status = "96.2% (50/52) same-size DIFF; retail clobbers r4 (struct ptr, dead after last field read) to hold a->unk04 before shifting into r1, my C keeps it in a fresh register (r1 directly)"
-next = "try assigning a = (void*)a->unk04 style reuse, or pass idx*size via a helper var computed via pointer arithmetic that forces reuse of the a-register; close, revisit with register hint (register u32 r4 asm)"
+status = "96.2% (50/52) same-size DIFF; r4 register hint and short decomp-permuter run did not improve the result"
+next = "leave readable Thumb; revisit with a new way to force r4 reuse for the final halfword offset"
 score = "50/52"
 
 [[wip]]
 name = "sub_08044F64"
 seed = "src/wip/sub_08044F64.c"
 notes = "src/wip/sub_08044F64.md"
-status = "93.2% (69/74) same-size DIFF; retail computes idx*3 as muls r0,r1 (result stays in r0/param reg) then adds r5,r0,#0 (copy to loop var); my C always emits adds r5,r0,#0 then muls r5,r1 regardless of statement order tried"
-next = "try idx as the loop variable directly (no separate i), or a macro/inline asm just for the multiply; logic and struct usage confirmed correct"
+status = "93.2% (69/74) same-size DIFF; idx-as-loop and r1 multiplier hints did not improve the register-order drift"
+next = "leave readable Thumb; revisit with a source shape that preserves the parameter register through the multiply"
 score = "69/74"
 
 [[wip]]
 name = "sub_08031300"
 seed = "src/wip/sub_08031300.c"
 notes = "src/wip/sub_08031300.md"
-status = "83.3% (65/78) same-size DIFF, logic 100% correct; retail keeps struct ptr 'a' in r2, agbcc always allocates r3 regardless of local var declaration order/reuse tried — pure register-choice artifact, everything else byte-identical"
-next = "try permuter (decomp-permuter) for this one — classic reg-alloc search target; or reorder params/add dummy first param trick"
+status = "83.3% (65/78) same-size DIFF; logic correct; decomp-permuter ran about 10,000 iterations and reached best score 1295 without zero"
+next = "leave readable Thumb; revisit with a new register-allocation technique or a verified compiler/source-shape insight"
 score = "65/78"

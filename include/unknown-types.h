@@ -167,7 +167,7 @@ struct BattleWork /* >= 0x208A */
     /* 0B68 */ u32 unk0B68;
     /* 0B6C */ u8 unk0B6C;
     /* 0B6D */ u8 filler_0B6D[3];
-    /* 0B70 */ u8 filler_0B70[4];
+    /* 0B70 */ u32 unk0B70;
     /* 0B74 */ u8 filler_0B74[4];
     /* 0B78 */ u32 unk0B78;
     /* 0B7C */ u8 filler_0B7C[0x1414];
@@ -859,10 +859,22 @@ struct Unk6D958 /* >= 0x94 */
     /* 90 */ struct Unk6D958Inner *unk90;
 };
 
+/* Target object referenced by the IWRAM object at 0x03000380. */
+struct Unk0380Target /* >= 0x313 */
+{
+    /* 000 */ u8 filler_00[0x2CC];
+    /* 2cc */ u32 unk2CC;
+    /* 2d0 */ u8 filler_2D0[0x40];
+    /* 310 */ u8 unk310;
+    /* 311 */ u8 filler_311;
+    /* 312 */ u8 unk312;
+};
+
 /* IWRAM object at 0x03000380. sub_08033C1C. */
 struct Unk0380 /* >= 0x1c */
 {
-    /* 00 */ u8 filler_00[9];
+    /* 00 */ struct Unk0380Target *unk00;
+    /* 04 */ u8 filler_04[5];
     /* 09 */ u8 unk09;
     /* 0a */ u8 unk0A;
     /* 0b */ u8 filler_0B;

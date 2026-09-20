@@ -1,57 +1,34 @@
 #include "global.h"
 
 // @ 0x08070604
-__attribute__((naked))
-void sub_08070604(void)
+void sub_08070604(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 x, s16 y, u16 unk0C, u16 unk08)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "mov r12, r0\n"
-        "ldr r0, [sp, #0x010]\n"
-        "ldr r4, [sp, #0x014]\n"
-        "ldr r5, [sp, #0x018]\n"
-        "lsls r3, r3, #0x10\n"
-        "asrs r3, r3, #0x08\n"
-        "mov r6, r12\n"
-        "str r3, [r6, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "asrs r0, r0, #0x08\n"
-        "str r0, [r6, #0x04]\n"
-        "movs r3, #0x00\n"
-        "movs r0, #0x00\n"
-        "strh r4, [r6, #0x0C]\n"
-        "strh r0, [r6, #0x0A]\n"
-        "str r0, [r6, #0x1C]\n"
-        "str r0, [r6, #0x18]\n"
-        "str r0, [r6, #0x14]\n"
-        "str r2, [r6, #0x20]\n"
-        "str r1, [r6, #0x24]\n"
-        "strh r5, [r6, #0x08]\n"
-        "str r0, [r6, #0x2C]\n"
-        "strb r3, [r6, #0x0E]\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x01\n"
-        "strh r0, [r6, #0x10]\n"
-        "strh r0, [r6, #0x12]\n"
-        "strb r3, [r6, #0x0F]\n"
-        "mov r0, r12\n"
-        "adds r0, #0x2B\n"
-        "strb r3, [r0, #0x00]\n"
-        "mov r2, r12\n"
-        "adds r2, #0x28\n"
-        "movs r0, #0x05\n"
-        "strb r0, [r2, #0x00]\n"
-        "mov r0, r12\n"
-        "adds r0, #0x29\n"
-        "strb r3, [r0, #0x00]\n"
-        "ldrb r1, [r1, #0x05]\n"
-        "adds r1, #0x04\n"
-        "adds r0, #0x01\n"
-        "strb r1, [r0, #0x00]\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    register u32 val asm("r1");
+    u8 *p;
+
+    dst->unk00 = (s32)x << 8;
+    dst->unk04 = (s32)y << 8;
+    dst->unk0C = unk0C;
+    dst->unk0A = 0;
+    dst->unk1C = 0;
+    dst->unk18 = 0;
+    dst->unk14 = 0;
+    dst->unk20 = unk20;
+    dst->unk24 = src;
+    dst->unk08 = unk08;
+    dst->unk2C = 0;
+    dst->unk0E = 0;
+    dst->unk10 = 0x100;
+    dst->unk12 = 0x100;
+    dst->unk0F = 0;
+    dst->unk2B = 0;
+    dst->unk28 = 5;
+
+    p = &dst->unk29;
+    *p = 0;
+    val = src->unk05;
+    val += 4;
+    p += 1;
+    *(s8 *)p = val;
 }
 

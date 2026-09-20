@@ -121,6 +121,8 @@ void sub_08033F30(struct Unk33F30 *a, s32 b);
 void sub_08034A68(struct Unk346C0 *a, u32 b);
 void sub_080347E4(struct Unk346C0 *a);
 void sub_08035884(struct Unk35878 *a);
+void sub_08033C1C(void);
+void sub_08033E3C(struct Unk33F30 *a);
 void sub_08036264(struct Unk36264 *out, struct Unk360BC *a, struct Unk360BC *b, s32 scale);
 void sub_08031300(struct Unk312EC *a);
 void sub_0806306C(void);

@@ -1,8 +1,30 @@
 #include "global.h"
 
 // @ 0x08033dd4
-__attribute__((naked))
+#define sub_08035908(a) ((u32 (*)(struct Unk35878 *))sub_08035908)(a)
+
+// @ 0x08033dd4
 void sub_08033DD4(void)
 {
-    asm(".syntax unified\npush {r4, lr}\nldr r4, _08033E20 @ =0x03000380\nldr r1, [r4, #0x00]\nmovs r2, #0xC4\nlsls r2, r2, #0x02\nadds r0, r1, r2\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbne _08033E2C\nsubs r2, #0x44\nadds r0, r1, r2\nldr r0, [r0, #0x00]\ncmp r0, #0x07\nbeq _08033E2C\nadds r2, #0x46\nadds r0, r1, r2\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbne _08033E2C\nldrb r0, [r4, #0x0A]\ncmp r0, #0x00\nbeq _08033E24\nldrb r0, [r4, #0x09]\ncmp r0, #0x00\nbeq _08033E24\nadds r4, #0x0C\nadds r0, r4, #0x0\nbl sub_08035884\nadds r0, r4, #0x0\nbl sub_08035908\ncmp r0, #0x00\nbeq _08033E36\nbl sub_08033C1C\nb _08033E36\n.byte 0x00, 0x00\n_08033E20: .4byte 0x03000380\n_08033E24:\nadds r0, r4, #0x0\nbl sub_08033E3C\nb _08033E36\n_08033E2C:\nldrb r0, [r4, #0x09]\ncmp r0, #0x00\nbeq _08033E36\nbl sub_08033C1C\n_08033E36:\npop {r4}\npop {r0}\nbx r0");
+    struct Unk0380 *p = (struct Unk0380 *)gUnk_03000380;
+    struct Unk0380Target *t = p->unk00;
+
+    if (t->unk310 == 0 && t->unk2CC != 7 && t->unk312 == 0)
+    {
+        if (p->unk0A != 0 && p->unk09 != 0)
+        {
+            sub_08035884(&p->unk0C);
+            if (sub_08035908(&p->unk0C) != 0)
+                sub_08033C1C();
+        }
+        else
+        {
+            sub_08033E3C((struct Unk33F30 *)p);
+        }
+        return;
+    }
+
+    if (p->unk09 != 0)
+        sub_08033C1C();
 }
+
