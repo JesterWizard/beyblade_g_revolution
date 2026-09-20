@@ -8,18 +8,27 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **316/633 (49.9%)** |
-| **Decompiled C (bytes)** | **19,882/90,272 (22.0%)** |
+| **Decompiled C (functions)** | **322/633 (50.9%)** |
+| **Decompiled C (bytes)** | **20,352/90,272 (22.5%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 317/633 (50.1%) |
+| Readable Thumb | 311/633 (49.1%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 60/160 (37.5% fn, 15.8% bytes) |
+| Battle semantic C | 62/160 (38.8% fn, 16.3% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — semantic C six parked near-misses (+6, 316→322/633)
+- Matched `sub_08042B28` / `sub_08042B50` (lazy ROM pointer tables). `r0 = table; asm("" : "+r"(r0)); r1 = idx << 2; r4 = r1 + r0` loads the base before the shift.
+- Matched `sub_08071B4C` (sound IO reset + `_08073C4C`). Walk `0x04000084` by add/sub, then the `41858` IWRAM barrier so `gUnk_0300410C` is a separate literal from `gUnk_030040DC` (0x30 apart).
+- Matched `sub_0803531C` (dispatch three `Unk68574` blocks from `unk2C5`). `u32` mask in `r0` then flags in `r1`, `r0 &= r1`; last test does `ldrb r5, [r5]`.
+- Matched `sub_08042390` (quadrant 0–3 from `py/y` and `px/x` with a 0xB threshold). `if (py >= y) goto …` plus return labels in retail fallthrough order (`ret3` then `ret1`/`ret2`/`ret0`) keeps `bge`/`ble`.
+- Matched `sub_08043B90` (walk `unk16E0` vs `unk16C8`). `while ((r0 = p->unk00) != 0)` with `r0` pinned, body reloads `p->unk00` for the call, `return (s32)r0` avoids extra `movs r0, #0`.
+- Same IWRAM barrier may unblock `sub_08071F44` / `sub_08071E84` / `sub_080473F8`.
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C five parked near-misses (+5, 311→316/633)
 - Matched `sub_08033978` (bind two `Unk346C0` into `Unk33A5C`). `asm("" : "+r"(r1))` after loading `0x08078158` emits `ldr r1` before `lsls r0,r6,#2`; `-1` via `r1 = 1; r1 = -r1` then `r8`.

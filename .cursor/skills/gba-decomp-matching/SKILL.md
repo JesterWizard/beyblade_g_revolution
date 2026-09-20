@@ -46,7 +46,7 @@ asm("" : "+r"(r0));
 *(u16 *)r0 = (u16)r1;
 ```
 
-Wins: `sub_08041858`, `sub_08069894`.
+Wins: `sub_08041858`, `sub_08069894`, `sub_08071B4C`.
 
 Table address before index (empty `+r` barrier, same as `sub_0803DDD8`):
 
@@ -56,7 +56,7 @@ asm("" : "+r"(r1));
 r0 = 0x2C;
 ```
 
-Wins: `sub_08037318`, `sub_08033978`.
+Wins: `sub_08037318`, `sub_08033978`, `sub_08042B28`, `sub_08042B50`.
 
 `r0 = ch + table` → `adds r0, r1, r0`. Swapping operands is a 1-byte DIFF. Win: `sub_08073988`.
 
@@ -73,6 +73,8 @@ if (r0 != 0) return 1;
 
 Win: `sub_0806F430`. Mirror retail’s register roles, not abstract logic.
 
+Mask-first tests (`movs r0,#N; ldrb r1,[r5]; ands r0,r1`) need `u32` pins. `u8` becomes `ands r1, r0` / `cmp r1, #0`. Last test may `ldrb r5, [r5]`. Win: `sub_0803531C`.
+
 ### 3. Parameter registers (don’t re-assign early)
 
 Thumb args: `r0`, `r1`, `r2`, `r3`. If asm uses `r1` without `mov` from `r1`, declare `register T *r1 asm("r1");` and **do not** assign from the C parameter name before the asm-equivalent point.
@@ -88,6 +90,10 @@ Not: `*(u16 *)((u8 *)a + 0x302) = …`. Add fields to `include/unknown-types.h` 
 ### 5. Register-pinned byte ops
 
 See `sub_08031294`: `register u8 r1 asm("r1");` + `*(u8 *)&a->unk00` when retail does byte-wide OR/AND sequence.
+
+`if (a >= b) goto label` keeps `cmp; bge`. Nested if/else often inverts to `blt` and moves the pool. Put shared `return N` labels in retail fallthrough order. Win: `sub_08042390`.
+
+Loop that exits with `0` already in `r0`: `while ((r0 = p->unk00) != 0) { call(p->unk00, …); } return (s32)r0`. Plain `return 0` adds `movs r0,#0`. Win: `sub_08043B90`.
 
 ## Permuter workflow
 

@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T21:06:25Z",
+  "generated": "2026-09-20T21:17:53Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 317,
-    "semantic_done": 316,
-    "readable_asm": 317,
+    "pending": 311,
+    "semantic_done": 322,
+    "readable_asm": 311,
     "opcode": 0,
-    "battle_pending": 87,
-    "battle_semantic": 60,
+    "battle_pending": 85,
+    "battle_semantic": 62,
     "blocked": 34,
-    "wip": 170
+    "wip": 164
   },
   "pinned": [],
   "wip": [
@@ -281,28 +281,6 @@
       "score": "34/88"
     },
     {
-      "name": "sub_08042B28",
-      "addr": "0x08042B28",
-      "kind": "asm",
-      "bytes": 40,
-      "seed": "src/wip/sub_08042B28.c",
-      "notes": "src/wip/sub_08042B28.md",
-      "status": "35/40 same-size DIFF after pinning index to r2; retail loads the ROM table base into r0 before shifting index, while agbcc computes the shift in r0 and loads base into r1",
-      "next": "pin the table base to r0 and retain the index r2 pin; this should reproduce the remaining literal-load register order",
-      "score": "35/40"
-    },
-    {
-      "name": "sub_08042B50",
-      "addr": "0x08042B50",
-      "kind": "asm",
-      "bytes": 40,
-      "seed": "src/wip/sub_08042B50.c",
-      "notes": "src/wip/sub_08042B50.md",
-      "status": "35/40 same-size DIFF; clone logic and register pins reproduce the exact size, but agbcc still places the table-base literal after the index shift instead of retail's r0-before-r1 sequence",
-      "next": "reuse the 42B28 selective base/index shape with a dependency that prevents scheduling the index shift before the ROM literal load",
-      "score": "35/40"
-    },
-    {
       "name": "sub_08042B78",
       "addr": "0x08042B78",
       "kind": "missing",
@@ -356,17 +334,6 @@
       "status": "33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization",
       "next": "verify whether sub_08042E78's prototype should accept s32 for this caller (without changing its own matching definition), then retry the same source shape",
       "score": "33/80"
-    },
-    {
-      "name": "sub_08043B90",
-      "addr": "0x08043B90",
-      "kind": "asm",
-      "bytes": 76,
-      "seed": "src/wip/sub_08043B90.c",
-      "notes": "src/wip/sub_08043B90.md",
-      "status": "67/76 same-size DIFF; sibling-shaped semantic C matches the loop and bytes, but agbcc keeps a two-byte mov/branch placement difference around the shared return path after the ROM literal pool",
-      "next": "use an explicit label/goto layout that preserves r0 from the terminating unk00 load and aligns the return path with the literal-pool gap",
-      "score": "67/76"
     },
     {
       "name": "sub_080473F8",
@@ -589,17 +556,6 @@
       "score": "58/82"
     },
     {
-      "name": "sub_08071B4C",
-      "addr": "0x08071B4C",
-      "kind": "asm",
-      "bytes": 84,
-      "seed": "src/wip/sub_08071B4C.c",
-      "notes": "src/wip/sub_08071B4C.md",
-      "status": "75/84 bytes (89.3%), size mismatch (80 vs 84); correct algorithm (zero sound hardware regs 0x04000084/0x04000082/0x40000C4/0xD0/0x104/0x100, compute idx-based offset and call the bx-r3 trampoline _08073C4C with gUnk_030040DC's list and the handler at 0x080BB8BC, then zero gUnk_030000C0). Reordering the handler-slot/list loads before idx got the literal-pool order matching retail exactly (89.3%). Remaining diff: agbcc folds the gUnk_0300410C load into an offset-add from gUnk_030040DC (0x30 apart) instead of retail's separate literal, the same class of literal-pool-folding quirk seen in sub_080473F8/sub_08052934/sub_08069894",
-      "next": "try referencing gUnk_0300410C via a non-adjacent intermediate expression, or accept as a known agbcc quirk and move on",
-      "score": "75/84"
-    },
-    {
       "name": "sub_08071E84",
       "addr": "0x08071E84",
       "kind": "asm",
@@ -629,7 +585,7 @@
       "seed": "src/wip/sub_08071F44.c",
       "notes": "src/wip/sub_08071F44.md",
       "status": "35/64 bytes (54.7%), size mismatch (60 vs 64); correct algorithm (reverse lookup: find first Unk71E84 entry with unk16!=0 and unk18==arg0). Push list matches retail exactly ({r4,lr}) and the -1 compare form is preserved correctly here (no simplification, unlike the sub_08071E84 family). Only diff: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart), the recurring literal-pool quirk seen across ~6 functions this session",
-      "next": "same recurring literal-pool-folding issue; no new lever found. Revisit alongside sub_08071E84/sub_08071EE4/sub_080473F8/sub_08052934/sub_08069894/sub_08071B4C if a fix for that pattern is ever found",
+      "next": "retry the sub_08071B4C / sub_08041858 IWRAM barrier: keep the first pointer live with asm(\"\" : \"+r\"(r0) : : \"memory\") then reload gUnk_030040C4 as its own literal (0x20 from gUnk_030040E4)",
       "score": "35/64"
     },
     {
@@ -642,17 +598,6 @@
       "status": "66/424 bytes (15.6%), size mismatch (400 vs 424); correct algorithm fully derived (16 near-identical blocks: for each of struct Unk026C's linked-list fields unk0C..unk40, if non-null set the node's unk08/unk0C to a color constant (0xFFFFC000 for the first 6, 0xF800 for the rest); then free+null 7 of those same fields via sub_0806FE84; finally vsync, set unk48=0xFF, and OR 0xFFFF into gMainWorkPtr's unk1838/unk183A). Reused existing structs Unk026C/Unk705DC. agbcc's CSE merges the repeated 'gUnk_0300026C' pointer dereference across adjacent blocks (r1 cached, reused via a spare register) even when each block is written as a fresh 'p = gUnk_0300026C' assignment, since no intervening write invalidates it -- retail instead reloads fresh every single block",
       "next": "try inserting a genuinely-opaque side effect between blocks (unlikely to be legitimate semantic C), or accept this as CSE the compiler correctly performs and retail's source simply repeated the full expression per block in a way this agbcc snapshot doesn't reproduce; may need per-block dummy calls or accept as permanently DIFF",
       "score": "66/424"
-    },
-    {
-      "name": "sub_08042390",
-      "addr": "0x08042390",
-      "kind": "asm",
-      "bytes": 98,
-      "seed": "src/wip/sub_08042390.c",
-      "notes": "src/wip/sub_08042390.md",
-      "status": "87/98 bytes (88.8%), same size; correct algorithm fully derived and verified (quadrant code from py/y and px/x deltas shifted >>8, comparing gMainWorkPtr's unk0370/unk0374 against arg0->unk04/unk08, returning 0-3 based on relative position with a 0xB threshold). Structure matches retail almost instruction-for-instruction. Only diff: agbcc emits the opposite (but equivalent) branch polarity for the second comparison (px vs x) within the py<y path -- tried both 'if(px>=x)' and 'if(px<x)' phrasings, neither reproduces retail's exact bge/blt choice",
-      "next": "try swapping which branch (if vs else) holds the shorter body, or reorder the outer py>=y / py<y blocks entirely (retail may have wrapped 'py<y' as the true-branch first)",
-      "score": "87/98"
     },
     {
       "name": "sub_080302E0",
@@ -719,17 +664,6 @@
       "status": "two semantic attempts: 21/196 bytes (192B) with a direct chain, then 33/196 bytes (192B) with explicit nested type>1/type==0 branch ordering; register pinning worsened the prologue",
       "next": "Use the nested seed and force selector r5 without a callee-saved register pin, or use a source shape that retains retail's r5 selector/r6 flag pointer while preserving the 196-byte layout",
       "score": "33/196"
-    },
-    {
-      "name": "sub_0803531C",
-      "addr": "0x0803531C",
-      "kind": "asm",
-      "bytes": 132,
-      "seed": "src/wip/sub_0803531C.c",
-      "notes": "src/wip/sub_0803531C.md",
-      "status": "two attempts: 114/132 due a temporary Unk68574 padding error, then 119/132 same-size after correcting nested block offsets; remaining diff is retail loads mask 4 before flag byte while candidate loads flag before mask",
-      "next": "Swap/source-shape the second mask test or use a tiny permuter search; retain struct Unk35258 nested blocks and direct unk70 checks",
-      "score": "119/132"
     },
     {
       "name": "sub_080353A0",

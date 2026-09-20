@@ -82,6 +82,7 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_0802D3F0` | **semantic C** — free `unk08`–`unk40`, then `*0x03000270` |
 | `sub_0802D8DC` | **semantic C** — overlay sync via `2E18C`/`2E1B4`/`2E210` |
 | `sub_0806EE24` | **semantic C** — DISPCNT copy from `unk358` |
+| `sub_08043B90` | **semantic C** — walk `unk16E0` vs `unk16C8`, `-1` if missing |
 | `sub_08043BDC` | **semantic C** — walk `unk16E4` vs `unk16C8` |
 | `sub_08060428` family | **semantic C** — thunks to `sub_080601C4` |
 | `sub_08072F94` | readable Thumb — agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
