@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-20T08:18:42Z",
+  "generated": "2026-09-20T08:25:48Z",
   "counts": {
-    "matched": 258,
+    "matched": 259,
     "blocked": 31,
-    "not_started": 322,
+    "not_started": 321,
     "size_mismatch": 18,
     "same_size": 4
   },
@@ -316,17 +316,17 @@
     {
       "name": "sub_0802D52C",
       "addr": "0x0802D52C",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "not_started",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "block_reason": "",
       "retail_bytes": 108,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/108",
-      "source": "none",
+      "matched_bytes": 108,
+      "compiled_bytes": 108,
+      "pct": 100.0,
+      "score": "108/108",
+      "source": "integrated",
       "note": ""
     },
     {
