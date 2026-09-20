@@ -28,7 +28,7 @@ Manual symbols belong in `asm/ram_map_iwram.s` / `asm/ram_map_ewram.s`
 so duplicates drop out of the pool fragments.
 
 <!-- AUTO-GENERATED: scan_ram_literals.py --begin -->
-_Last scan: 2026-09-18 (`baserom.gba` Thumb LDR literal pools)._
+_Last scan: 2026-09-20 (`baserom.gba` Thumb LDR literal pools)._
 
 ## Scan summary
 
