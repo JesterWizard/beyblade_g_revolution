@@ -1,8 +1,29 @@
 #include "global.h"
 
 // @ 0x080475f4
-__attribute__((naked))
+#include "global.h"
+
+/* match-flags: -fprologue-bugfix */
+
 void sub_080475F4(void)
 {
-    asm(".syntax unified\nldr r0, _08047614 @ =0x03000630\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbeq _08047610\nldr r0, _08047618 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r3, _0804761C @ =0x00001798\nadds r1, r0, r3\nldr r1, [r1, #0x00]\nstr r1, [r2, #0x40]\nldr r1, _08047620 @ =0x0000179C\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nstr r0, [r2, #0x44]\n_08047610:\nbx lr\n.byte 0x00, 0x00\n_08047614: .4byte 0x03000630\n_08047618: .4byte 0x03000198\n_0804761C: .4byte 0x00001798\n_08047620: .4byte 0x0000179C");
+    register struct Unk473F8 *r2 asm("r2");
+    register u32 r0 asm("r0");
+    register u32 r1 asm("r1");
+    register u32 r3 asm("r3");
+
+    r2 = gUnk_03000630;
+    if (r2 != 0)
+    {
+        r0 = (u32)gMainWorkPtr;
+        r3 = 0x1798;
+        r1 = r0 + r3;
+        r1 = *(u32 *)r1;
+        r2->unk40 = r1;
+        r1 = 0x179C;
+        r0 = r0 + r1;
+        r0 = *(u32 *)r0;
+        r2->unk44 = r0;
+    }
 }
+

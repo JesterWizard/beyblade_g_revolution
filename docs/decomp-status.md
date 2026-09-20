@@ -8,18 +8,29 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **342/633 (54.0%)** |
-| **Decompiled C (bytes)** | **22,890/90,272 (25.4%)** |
+| **Decompiled C (functions)** | **348/633 (55.0%)** |
+| **Decompiled C (bytes)** | **23,238/90,272 (25.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 291/633 (46.0%) |
+| Readable Thumb | 285/633 (45.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 70/160 (43.8% fn, 19.3% bytes) |
+| Battle semantic C | 76/160 (47.5% fn, 20.2% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — semantic C leaf `-fprologue-bugfix` family (+5, 343→348/633)
+- Matched `sub_08043B58` (NULL-terminated `Unk447CC *` table at `0x08096794`). Key in `r2`; `r1 = *table`; cursor `r3`; `r1 = *r3++` is `ldm`. Same `/* match-flags: -fprologue-bugfix */` as `sub_0802B994`.
+- Matched `sub_0803DBD0` (ROM table `0x080796DC` with `sub_0803DD88` index math, fallback `0x08097458[unk1818]`). `goto done` over the mid-function pool; `+r` on each table base.
+- Matched `sub_0804495C` (32 halfwords from `0x08094E00[unk181F]` to PLTT `0x050001C0`). Table pointer `+r` before `unk181F`; `do { … n--; } while (n >= 0)`.
+- Matched `sub_080475C4` / `sub_080475F4` (copy `unk40`/`unk44` ↔ `unk1798`/`unk179C`). Addend in `r0`, then `dst = base + r0`.
+- `make compare`: OK
+
+### 2026-09-20 — semantic C sub_0802B994 (+1, 342→343/633)
+- Matched `sub_0802B994` (Unk7709C `{key,value}` ROM table at `0x0807709C`, keyed on `gMainWorkPtr->unk1690->unk00`). Dual-cursor walk (`r2` table, `r1 = &unk04`, `r1 += 2` / `table++`) with a shared `goto done` epilogue. `/* match-flags: -fprologue-bugfix */` drops the extra `push {lr}` / `pop {r1}; bx r1` so the leaf stays `bx lr` (58/58). Do not add that flag globally. Minimal null-check store leaves still extra-push.
+- `make compare`: OK
 
 ### 2026-09-20 — semantic C six parked near-misses (+6, 336→342/633)
 - Matched `sub_08042540` (AND ring flag 2, store 0x40, copy ring slots). Clone of `sub_080425B8`: `addr = &unk0479; mask = 2; value = *addr; mask &= value` so `movs r0,#2` precedes `ldrb`.

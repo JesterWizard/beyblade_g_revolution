@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T22:24:01Z_
+_Updated: 2026-09-20T22:40:21Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 342 |
-| Still need semantic C | **291** |
-| Readable Thumb remaining | 291 |
+| Semantic C done | 348 |
+| Still need semantic C | **285** |
+| Readable Thumb remaining | 285 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 78 (70 already semantic) |
-| Blocked (documented) | 32 |
-| WIP (resume these first) | 147 |
+| Battle pending | 77 (76 already semantic) |
+| Blocked (documented) | 27 |
+| WIP (resume these first) | 146 |
 
 Ranking: **battle** · showing top **40**
 
@@ -172,7 +172,6 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08035468` | 308 | 41/308 | `src/wip/sub_08035468.c` | Rotation/projection math reconstructed through both angle frames, depth correction, output coordinates, and sub_08070354; natural candidate reached 41/308 bytes, while fixed-register tuning regressed to 31/308. | Retain the natural baseline and tune the signed fixed-point expression grouping; target keeps the root in r7/table in r9 only after the null check, with input coordinates reused across both transforms. |
 | `sub_08035AE0` | 388 | 179/388 | `src/wip/sub_08035AE0.c` | Collision/overlap response semantics reconstructed: squared separation threshold, normalized separation vector, midpoint separation, velocity-distance scaling, and weighted velocity updates. Natural candidate reached 75/388 bytes; register-pinned candidate reached 179/388 bytes but remained size-mismatched. | Start from the pinned seed and tune stack/local lifetimes. Target keeps separation deltas in r8/r9/r10, velocity deltas in r3/r1/r2, velocity length in r0, threshold at sp+4, scale at sp+8, and uses sp+0xc for the first midpoint offset. |
 | `sub_08035D68` | 196 | 19/196 | `src/wip/sub_08035D68.c` | Rotation/projection helper semantics reconstructed: table sine/cosine lookup, depth-scaled coordinate rotation, perspective correction, output writes, flag extraction, and sub_08070354 dispatch. Natural baseline is 19/196 bytes and size-mismatched at 208 bytes; a second fixed-register attempt reached 50/196 but aliased the source pointer with a pinned delta and was discarded. | Use the natural seed and introduce register constraints only after preserving the source pointer in ip. Target uses sine r8, dx r7, dy r5, dz r4, output x r6, output y r2, and flag r9; do not pin dx to r7 unless source is explicitly pinned to r12. |
-| `sub_0802B994` | 58 | 8/58 | `src/wip/sub_0802B994.c` | dual-cursor ROM table is semantically right; agbcc still emits push {lr} (64B vs 58B bx lr leaf) | stay Thumb; same extra-push-on-leaf class as sub_0802D8C4 / sub_08061BDC |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -185,7 +184,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0803C500` | `0x0803C500` | 220 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_08036A68` | `0x08036A68` | 240 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
-| `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080428F0` | `0x080428F0` | 160 | 1 | pool | asm | (gMainWorkPtr) |
@@ -220,25 +218,21 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08068884` | `0x08068884` | 24 | 0 |      | asm | |
 | `sub_08069F00` | `0x08069F00` | 24 | 0 |      | asm | |
 | `sub_0806BE08` | `0x0806BE08` | 24 | 0 |      | asm | |
+| `sub_0806BDA8` | `0x0806BDA8` | 26 | 0 |      | asm | |
 
 ## Blocked
 
 | Function | Address | Bytes | Reason |
 |----------|---------|------:|--------|
-| `sub_0802B994` | `0x0802B994` | 58 | Unk7709C ROM table lookup keyed on *gMainWorkPtr->unk1690 — logic reconstructed correctly (same-size DIFF, 2/58 bytes short from a missing 2B) but every do/while/goto shape tried lands agbcc on push{lr}...pop{r1};bx r1 leaf framing that retail doesn't have (bx lr direct); same agbcc-extra-push-on-leaf class as sub_0802D8C4/sub_08061BDC; needs permuter |
 | `sub_0802C62C` | `0x0802C62C` | 0 | counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a — same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter |
 | `sub_0802D8C4` | `0x0802D8C4` | 24 | agbcc extra push {lr} on branch leaves |
 | `sub_08030938` | `0x08030938` | 78 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
 | `sub_08033530` | `0x08033530` | 0 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
 | `sub_08038314` | `0x08038314` | 0 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
-| `sub_0803DBD0` | `0x0803DBD0` | 80 | 2D ROM table lookup (gUnk_080796DC[a][gMainWorkPtr->unk1818] / gUnk_08097458[unk1818] fallback) — retail leaf is bx lr with no push at all; every C shape tried (both branch orders) needs push{lr}/pop{r1} for one extra temp register (80B retail vs 84B compiled); same agbcc-extra-push-on-leaf class; needs permuter |
 | `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
-| `sub_0804495C` | `0x0804495C` | 60 | 32-halfword table copy (gUnk_08094E00[gMainWorkPtr->unk181F] -> PLTT 0x050001C0) — void(void) leaf, same agbcc-extra-push-on-leaf framing as sub_0802B994 (60B retail vs 64B compiled, same shape every C form tried); needs permuter |
 | `sub_08045C5C` | `0x08045C5C` | 136 | gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter |
 | `sub_080473E4` | `0x080473E4` | 20 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
-| `sub_080475C4` | `0x080475C4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
-| `sub_080475F4` | `0x080475F4` | 48 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_08049F98` | `0x08049F98` | 144 | sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter |
 | `sub_0804E17C` | `0x0804E17C` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker |
 | `sub_08051578` | `0x08051578` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker |
@@ -274,6 +268,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (130 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (129 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

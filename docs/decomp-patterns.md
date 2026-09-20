@@ -190,7 +190,18 @@ If semantic C is blocked but asm already matches:
 
 ### 5. Framed vs leaf-branch
 
-Retail `push {r4, lr}` (or more) → worth hand C. True leaves (`bx lr`, no push) with an `if` hit the agbcc extra-`push {lr}` wall — skip.
+Retail `push {r4, lr}` (or more) → worth hand C.
+
+True `bx lr` leaves with a branch: default agbcc emits extra `push {lr}` / `pop {r1}; bx r1` (+4–6B).
+
+**`/* match-flags: -fprologue-bugfix */`:** per-file (parsed by `match_function.py`; not global `CFLAGS`). Wins:
+- Dual-cursor `{key,value}` table — key `r3`, table `r2`, `&unk04` in `r1`. `sub_0802B994`
+- NULL-terminated pointer table — key `r2`, `r1 = *table`, cursor `r3`, `r1 = *r3++` (`ldm`). `sub_08043B58`
+- Signed 2D lookup with `goto done` over the fallback pool (`sub_0803DD88` index math). `sub_0803DBD0`
+- Table pointer `+r` before `unk181F`, `do { … n--; } while (n >= 0)`. `sub_0804495C`
+- Null-check copy with addend in `r0` then `dst = base + r0`. `sub_080475C4` / `sub_080475F4`
+
+Some true leaves still extra-push (`sub_0802D8C4`, `sub_08061BDC`). Retry other `bx lr` + branch functions with the comment before parking.
 
 `match_function.py` prints `N/M bytes matched` and a **compact** DIFF (first mismatch). Pass `--full` for a whole-function hex dump.
 - **matched** — integrate

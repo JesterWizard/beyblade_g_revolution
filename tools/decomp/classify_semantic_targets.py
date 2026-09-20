@@ -10,15 +10,11 @@ This buckets every not-yet-semantic function (src/matched/*.c still naked asm) b
 real risk signals:
 
   - naked_only        : provably can't become plain C (mode-switch / stack-splice
-                        trampolines, or the confirmed-unfixable "branchy leaf"
-                        agbcc quirk — see docs/decomp-patterns.md "Framed vs
-                        leaf-branch": this repo's agbcc always spills lr for
-                        ANY conditional branch, so a retail function that is a
-                        true `bx lr` leaf (no push at all) but contains an
-                        `if`/branch can never be reproduced by hand-written C
-                        no matter how it's phrased — confirmed on
-                        sub_0802D8C4, sub_08033958, sub_08035908 this session)
-                        — skip, don't spend time here.
+                        trampolines). Do not dump every `bx lr` + `if` here.
+  - leaf_branch       : retail is a true `bx lr` leaf with a conditional
+                        branch. Try `/* match-flags: -fprologue-bugfix */` first
+                        (`sub_0802B994`, `sub_08043B58`, `sub_0803DBD0`,
+                        `sub_0804495C`, `sub_080475C4`).
   - unblock_first      : calls a bare-label symbol (bl _XXXXXXXX) with no prototype
                         anywhere yet. Fastest lever: declare the symbol once in
                         include/unknown-functions.h (name + guessed signature from
@@ -62,13 +58,10 @@ NAKED_MARKERS = (
     "push {r0, r1, r2, r3}",  # variadic arg spill trampoline
 )
 
-# Retail is a true `bx lr`-only leaf (no push/pop anywhere) but still branches
-# (a conditional bXX, not just the trailing unconditional jump to the shared
-# exit). agbcc in this repo always spills lr the moment ANY conditional
-# branch appears — confirmed with a from-scratch minimal repro this session
-# (see docs/decomp-patterns.md "Framed vs leaf-branch") — so no phrasing of
-# equivalent C can reproduce a push-free leaf here. Permanently blocked, not
-# just "hasn't been tried yet".
+# Retail is a true `bx lr`-only leaf (no push/pop anywhere) but still branches.
+# Default agbcc spills lr; `/* match-flags: -fprologue-bugfix */` matches many
+# `bx lr` leaves (sub_0802B994, sub_08043B58, sub_0803DBD0, sub_0804495C,
+# sub_080475C4). Bucket as leaf_branch and try the flag before parking.
 COND_BRANCH_RE = re.compile(r"\bb(eq|ne|lt|le|gt|ge|cc|cs|mi|pl|vs|vc|hi|ls)\b")
 
 # "reload base pointer, then load a field from it" repeated 3+ times = retail
@@ -131,6 +124,7 @@ def classify() -> dict[str, list[str]]:
 
     buckets: dict[str, list[str]] = {
         "naked_only": [],
+        "leaf_branch": [],
         "unblock_first": [],
         "high_reg_pressure": [],
         "small_clean": [],
@@ -147,7 +141,7 @@ def classify() -> dict[str, list[str]]:
             continue
 
         if "push" not in body and COND_BRANCH_RE.search(body):
-            buckets["naked_only"].append(n)
+            buckets["leaf_branch"].append(n)
             continue
 
         if len(CSE_RISK_RE.findall(body)) >= 3:
@@ -230,8 +224,8 @@ def main() -> int:
             print(f"  {k:18s} {len(v):4d}")
         print(f"  {'cse_risk (tag)':18s} {len(cse_risk):4d}  (cuts across the buckets above)")
         print()
-        print("Recommended order: unblock_first (symbols) -> small_clean -> large -> high_reg_pressure")
-        print("Never: naked_only (structurally can't become plain C)")
+        print("Recommended order: unblock_first (symbols) -> small_clean -> leaf_branch -> large -> high_reg_pressure")
+        print("Never: naked_only (mode-switch / trampoline). leaf_branch: try match-flags -fprologue-bugfix first")
         print("Before hand-writing anything: check --cse-risk; if flagged, budget permuter time")
     return 0
 

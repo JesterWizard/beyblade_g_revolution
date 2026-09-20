@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Compile scratch C and compare .text to retail baserom bytes."""
+"""Compile scratch C and compare .text to retail baserom bytes.
+
+Per-function extra agbcc flags: `/* match-flags: -fprologue-bugfix */` in the .c
+(see extra_cflags). Needed for some `bx lr` leaves (sub_0802B994).
+"""
 
 from __future__ import annotations
 
@@ -7,6 +11,7 @@ import argparse
 import difflib
 import json
 import re
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -38,6 +43,33 @@ CPPFLAGS = [
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from asm_bytes import addr_from_name, asm_text_bytes, retail_bytes  # noqa: E402
 
+# Per-function agbcc flags, parsed from `/* match-flags: ... */` in the C file.
+# gcc -E strips comments, so these are read from the original .c (not the .i).
+MATCH_FLAGS_RE = re.compile(r"/\*\s*match-flags:\s*(.*?)\s*\*/")
+ALLOWED_MATCH_FLAGS = frozenset(
+    {
+        "-fprologue-bugfix",
+        "-fomit-frame-pointer",
+    }
+)
+
+
+def extra_cflags(c_path: Path) -> list[str]:
+    try:
+        text = c_path.read_text()
+    except OSError:
+        return []
+    flags: list[str] = []
+    for match in MATCH_FLAGS_RE.finditer(text):
+        flags.extend(shlex.split(match.group(1)))
+    unknown = [flag for flag in flags if flag not in ALLOWED_MATCH_FLAGS]
+    if unknown:
+        raise ValueError(
+            f"unsupported match-flags in {c_path}: {unknown}; "
+            f"allowed: {sorted(ALLOWED_MATCH_FLAGS)}"
+        )
+    return flags
+
 
 def preprocess(c_path: Path, out_path: Path, *, quiet: bool = False) -> None:
     extra = {"capture_output": True, "text": True} if quiet else {}
@@ -49,11 +81,18 @@ def preprocess(c_path: Path, out_path: Path, *, quiet: bool = False) -> None:
     )
 
 
-def compile_c(c_path: Path, obj_path: Path, *, quiet: bool = False) -> None:
+def compile_c(
+    c_path: Path,
+    obj_path: Path,
+    *,
+    quiet: bool = False,
+    extra_flags: list[str] | None = None,
+) -> None:
     asm_path = obj_path.with_suffix(".s")
     with tempfile.NamedTemporaryFile(suffix=".i", delete=False) as tmp:
         i_path = Path(tmp.name)
     extra = {"capture_output": True, "text": True} if quiet else {}
+    flags = list(extra_flags) if extra_flags else extra_cflags(c_path)
     try:
         preprocess(c_path, i_path, quiet=quiet)
         subprocess.run(
@@ -69,6 +108,7 @@ def compile_c(c_path: Path, obj_path: Path, *, quiet: bool = False) -> None:
                 "-O2",
                 "-g",
                 "-fhex-asm",
+                *flags,
             ],
             check=True,
             cwd=str(ROOT),

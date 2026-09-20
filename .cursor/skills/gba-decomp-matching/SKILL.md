@@ -111,6 +111,14 @@ Keep a struct pointer in `r2` with `register T *r2 asm("r2"); r2 = a;`. Win: `su
 
 Force an addend literal into `r3` before `adds r2, r4, r3`: `r3 = off; asm("" : "+r"(r3), "+r"(r4)); r2 = r4 + r3;`. Win: `sub_080523A4`.
 
+### 6. Leaf `bx lr` + `-fprologue-bugfix`
+
+Default agbcc frames a branching leaf (`push {lr}` / `pop {r1}; bx r1`). `/* match-flags: -fprologue-bugfix */` in the C file (not global `CFLAGS`) drops that frame for many `bx lr` leaves.
+
+Wins: `sub_0802B994` (dual-cursor `{key,value}`), `sub_08043B58` (`r1 = *cursor++` → `ldm`), `sub_0803DBD0` (`goto done` over fallback pool), `sub_0804495C` (table `+r` then `do/while (n >= 0)`), `sub_080475C4` / `sub_080475F4` (null-check copy, addend in `r0`).
+
+`match_function.py` reads the comment from the original `.c` (gcc `-E` strips it). If it still extra-pushes after the flag + retail register order, park (`sub_0802D8C4`, `sub_08061BDC`).
+
 ## Permuter workflow
 
 ```bash
@@ -148,7 +156,7 @@ Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `sr
 
 ## Known blocker families (this project)
 
-- **Leaf + branch:** `sub_0802D8C4`, `sub_08061BDC`, `sub_08034894`
+- **Leaf + branch (still framed with `-fprologue-bugfix`):** `sub_0802D8C4`, `sub_08061BDC`, `sub_08034894`. Try the flag first — table walks and some null-check copies now match.
 - **Table lookup + pool order:** `sub_0803DD60` family
 - **Dual IWRAM store CSE:** `sub_080473E4`, `sub_080473F8`, `sub_08052934` (`sub_08041858` / `sub_08069894` matched via `+r` + memory barrier)
 
