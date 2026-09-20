@@ -280,3 +280,35 @@ notes = "src/wip/sub_0806E7BC.md"
 status = "size_mismatch 42/152 (27.6%), compiled 148B vs retail 152B; attempted as line-segment intersection test (2D cross-product sign comparison, 8 s32 params ax,ay,bx,by,cx,cy,dx,dy) returning 0/1/2; logic direction plausible (first 8 bytes match: prologue) but overall structure/expression grouping doesn't match agbcc's register scheduling - needs more careful param/expr-order derivation from raw asm (subs order matters: check if retail computes abx=ax-bx or bx-ax first, etc)"
 next = "re-derive param roles more carefully from asm (r12=a0 orig, r6=a1, r5=a2, r4=a3; stack args sp0x18/1C/20/24) - do NOT assume signature guessed here is correct; trace each subs/muls instruction to exact source expr before writing C"
 score = "42/152"
+
+[[wip]]
+name = "sub_080312B0"
+seed = "src/wip/sub_080312B0.c"
+notes = "src/wip/sub_080312B0.md"
+status = "90% DIFF; retail keeps b->unk14 load in r5 (separate reg from shift result r0), push{r4,r5,lr}; compiled agbcc always reuses r0/collapses r5, push{r4,lr}"
+next = "try forcing volatile u16 val, or restructure as ternary/early-return shape; possibly needs the shift expressed via macro that references b->unk14 twice to force reload"
+score = "36/40"
+
+[[wip]]
+name = "sub_08041858"
+seed = "src/wip/sub_08041858.c"
+notes = "src/wip/sub_08041858.md"
+status = "90% DIFF size mismatch (48 vs 52); agbcc folds gUnk_03000504 as gUnk_03000534-0x30 (subs r0,#0x30) instead of separate pc-relative ldr like retail; retail interleaves load-then-store for p1 before loading p2"
+next = "try forcing p2 load via a function call boundary or different intermediate type (u8* then cast) to break constant folding; or inline asm for just the final two stores"
+score = "47/52"
+
+[[wip]]
+name = "sub_08043944"
+seed = "src/wip/sub_08043944.c"
+notes = "src/wip/sub_08043944.md"
+status = "best 70.8% (34/48) same-size DIFF; retail keeps idx in r3 and flags in r4 with a single push{r4,lr}, moves flags->r0 before ldrb into r3, orrs r0,r3; my C either produces push{r4,r5,lr} (idx/flags both spilled) or reorders orr operands wrong"
+next = "try passing idx/flags packed differently, or write as register-hinted asm() for just the two locals; or try u8 val=(u8)(flags|p->unk08[idx]) with idx read via local copy first"
+score = "34/48"
+
+[[wip]]
+name = "sub_080726E0"
+seed = "src/wip/sub_080726E0.c"
+notes = "src/wip/sub_080726E0.md"
+status = "96.2% (50/52) same-size DIFF; retail clobbers r4 (struct ptr, dead after last field read) to hold a->unk04 before shifting into r1, my C keeps it in a fresh register (r1 directly)"
+next = "try assigning a = (void*)a->unk04 style reuse, or pass idx*size via a helper var computed via pointer arithmetic that forces reuse of the a-register; close, revisit with register hint (register u32 r4 asm)"
+score = "50/52"

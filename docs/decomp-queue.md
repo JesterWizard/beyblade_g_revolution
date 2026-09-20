@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T09:27:12Z_
+_Updated: 2026-09-20T09:34:42Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 265 |
-| Still need semantic C | **368** |
-| Readable Thumb remaining | 368 |
+| Semantic C done | 266 |
+| Still need semantic C | **367** |
+| Readable Thumb remaining | 367 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 102 (44 already semantic) |
 | Blocked (documented) | 35 |
-| WIP (resume these first) | 16 |
+| WIP (resume these first) | 20 |
 
 Ranking: **battle** · showing top **40**
 
@@ -43,6 +43,10 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 , pads with NUL at end, returns final index-1; early NULL-checks return -1) but overall instruction ordering/branch layout diverges heavily from agbcc -- for(;;i++) with if/else produces different control flow than retail's label-based skip-loop + separate main loop | rewrite using explicit goto/labels mirroring retail's exact block structure (skip-loop as do-while entered via initial check, main loop with cmp r2,r5 bcs branch kept as if(i>=c) first check inside loop, not for-loop machinery); or feed to permuter directly given plausible logic match |
 | `sub_08069B78` | 154 | 62/154 | `src/wip/sub_08069B78.c` | size_mismatch 62/154 (40.3%), compiled 152B vs retail 154B; logic correct (4x sub_08069988(i) calls packing 2-bit field into *(u8*)result via (*p&~3)|(val&3)); first 48 bytes match exactly (prologue + first call), diverges starting 2nd sub_08069988 call - retail keeps mask constant 3 in r10 persistently reused across all 4 iterations, my C recomputes per-call causing different register allocation | try extracting shared mask into persistent local var assigned once before all 4 blocks (e.g. u8 mask=3; u8 inv=~3;) or write as loop over array of 4 args to force agbcc register reuse pattern |
 | `sub_0806E7BC` | 152 | 42/152 | `src/wip/sub_0806E7BC.c` | size_mismatch 42/152 (27.6%), compiled 148B vs retail 152B; attempted as line-segment intersection test (2D cross-product sign comparison, 8 s32 params ax,ay,bx,by,cx,cy,dx,dy) returning 0/1/2; logic direction plausible (first 8 bytes match: prologue) but overall structure/expression grouping doesn't match agbcc's register scheduling - needs more careful param/expr-order derivation from raw asm (subs order matters: check if retail computes abx=ax-bx or bx-ax first, etc) | re-derive param roles more carefully from asm (r12=a0 orig, r6=a1, r5=a2, r4=a3; stack args sp0x18/1C/20/24) - do NOT assume signature guessed here is correct; trace each subs/muls instruction to exact source expr before writing C |
+| `sub_080312B0` | 40 | 36/40 | `src/wip/sub_080312B0.c` | 90% DIFF; retail keeps b->unk14 load in r5 (separate reg from shift result r0), push{r4,r5,lr}; compiled agbcc always reuses r0/collapses r5, push{r4,lr} | try forcing volatile u16 val, or restructure as ternary/early-return shape; possibly needs the shift expressed via macro that references b->unk14 twice to force reload |
+| `sub_08041858` | 52 | 47/52 | `src/wip/sub_08041858.c` | 90% DIFF size mismatch (48 vs 52); agbcc folds gUnk_03000504 as gUnk_03000534-0x30 (subs r0,#0x30) instead of separate pc-relative ldr like retail; retail interleaves load-then-store for p1 before loading p2 | try forcing p2 load via a function call boundary or different intermediate type (u8* then cast) to break constant folding; or inline asm for just the final two stores |
+| `sub_08043944` | 48 | 34/48 | `src/wip/sub_08043944.c` | best 70.8% (34/48) same-size DIFF; retail keeps idx in r3 and flags in r4 with a single push{r4,lr}, moves flags->r0 before ldrb into r3, orrs r0,r3; my C either produces push{r4,r5,lr} (idx/flags both spilled) or reorders orr operands wrong | try passing idx/flags packed differently, or write as register-hinted asm() for just the two locals; or try u8 val=(u8)(flags|p->unk08[idx]) with idx read via local copy first |
+| `sub_080726E0` | 52 | 50/52 | `src/wip/sub_080726E0.c` | 96.2% (50/52) same-size DIFF; retail clobbers r4 (struct ptr, dead after last field read) to hold a->unk04 before shifting into r1, my C keeps it in a fresh register (r1 directly) | try assigning a = (void*)a->unk04 style reuse, or pass idx*size via a helper var computed via pointer arithmetic that forces reuse of the a-register; close, revisit with register hint (register u32 r4 asm) |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -146,6 +150,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (324 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (319 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
