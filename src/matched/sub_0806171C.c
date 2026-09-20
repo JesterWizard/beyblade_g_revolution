@@ -1,65 +1,31 @@
 #include "global.h"
 
 // @ 0x0806171c
-__attribute__((naked))
-void sub_0806171C(void)
+#include "global.h"
+
+void sub_0806171C(void *data, u32 index, u32 mode)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r7, r0, #0x0\n"
-        "adds r5, r1, #0x0\n"
-        "adds r4, r2, #0x0\n"
-        "ldr r6, _08061758 @ =0x03000798\n"
-        "ldr r3, [r6, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x98\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r5, r0\n"
-        "bcs _0806177E\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x8C\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, #0x14\n"
-        "ldrh r2, [r0, #0x00]\n"
-        "subs r0, #0x04\n"
-        "ldrh r3, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08073988\n"
-        "adds r2, r0, #0x0\n"
-        "cmp r4, #0x01\n"
-        "beq _08061770\n"
-        "cmp r4, #0x01\n"
-        "bcc _0806175C\n"
-        "cmp r4, #0x02\n"
-        "beq _08061768\n"
-        "b _08061778\n"
-        ".byte 0x00, 0x00\n"
-        "_08061758: .4byte 0x03000798\n"
-        "_0806175C:\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsrs r0, r2, #0x01\n"
-        "subs r0, r5, r0\n"
-        "adds r1, #0x90\n"
-        "strh r0, [r1, #0x00]\n"
-        "b _08061778\n"
-        "_08061768:\n"
-        "ldr r0, [r6, #0x00]\n"
-        "adds r0, #0x90\n"
-        "strh r5, [r0, #0x00]\n"
-        "b _08061778\n"
-        "_08061770:\n"
-        "ldr r0, [r6, #0x00]\n"
-        "subs r1, r5, r2\n"
-        "adds r0, #0x90\n"
-        "strh r1, [r0, #0x00]\n"
-        "_08061778:\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08061564\n"
-        "_0806177E:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 value;
+
+    if (index >= gUnk_03000798->unk98)
+        return;
+    value = sub_08073988(
+        data,
+        (void *)gUnk_03000798->unk8C,
+        gUnk_03000798->unkA0,
+        gUnk_03000798->unk9C);
+    switch (mode)
+    {
+    case 0:
+        gUnk_03000798->unk90 = index - ((u32)value >> 1);
+        break;
+    case 2:
+        gUnk_03000798->unk90 = index;
+        break;
+    case 1:
+        gUnk_03000798->unk90 = index - value;
+        break;
+    }
+    sub_08061564(data);
 }
 

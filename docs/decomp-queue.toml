@@ -1020,3 +1020,283 @@ notes = "src/wip/sub_0805264C.md"
 status = "Two semantic attempts after correcting the existing prototype: struct-table lookup 29/96 (same size), then split ROM-table lookup with r5 pointer pin 9/96 (92B). Callback semantics, signed selector, and two position draws are mapped; retail requires the exact split 0x080995AC+8 table address and r5 data/r4 index lifetime without the extra saved register."
 next = "Restore the first same-size semantic seed and use a targeted table-address/source-order search; force ldr base, lsl index, adds #8, adds offset, ldr callback, with data in r5 and index in r4."
 score = "29/96 then 9/96"
+
+[[wip]]
+name = "sub_08056D68"
+seed = "src/wip/sub_08056D68.c"
+notes = "src/wip/sub_08056D68.md"
+status = "Two semantic attempts (first after prototype correction, then after correcting MainWork's missing +0x17F4 padding) both produced 73/540 (548B). Event cases and side effects are mapped, but switch branch layout differs substantially; the header padding correction is retained for the discovered +0x17F6/+0x17F7 fields."
+next = "Use a switch/source-order or permuter search to reproduce the retail comparison tree and long-jump layout; retain struct Unk56D68 fields and MainWork +0x17F4 padding."
+score = "73/540 then 73/540"
+
+[[wip]]
+name = "sub_08056F84"
+seed = "src/wip/sub_08056F84.c"
+notes = "src/wip/sub_08056F84.md"
+status = "Two semantic attempts: direct fields 79/168 (172B), then saved main-location r5 variant 76/168 (172B). MainWork field offsets and result handling are mapped; remaining mismatch is saved r4/r5 allocation and callback branch layout."
+next = "Restore direct semantic seed and target retail r4/r5 lifetimes: r4 main-location in the zero-result path, r5 result/returned entry; preserve stack result, +0x17FC, +0x17E4, and +0x08 callback handling."
+score = "79/168 then 76/168"
+
+[[wip]]
+name = "sub_08057274"
+seed = "src/wip/sub_08057274.c"
+notes = "src/wip/sub_08057274.md"
+status = "Two semantic attempts: direct MainWork switch 80/208 (204B), then r4 main-location pin 81/208 (204B). Case semantics and mode keys match; retail retains location in r4 and main pointer in r2, while agbcc reuses r4 for main, causing the remaining register/size layout delta."
+next = "Use explicit ordinary/register layout search for r4=0x03000198 location and r2=loaded MainWork pointer (pin main to r2 if needed), preserving the switch tree and shared 0x80/0x100 tail."
+score = "80/208 then 81/208"
+
+[[wip]]
+name = "sub_0805E044"
+seed = "src/wip/sub_0805E044.c"
+notes = "src/wip/sub_0805E044.md"
+status = "Two semantic attempts: typed table-pointer loop 16/228 (212B), then explicit ROM-base plus offset loop 15/228 (224B). Direct resource cases and callback payload semantics are mapped; retail loop retains ROM base in r2, byte offset in r4, and index in r6, while semantic C allocation/layout differs."
+next = "Use targeted offset/register search: preserve resource in r5, ROM base 0x080991D0 in r2, byte offset r4, index r6; retain the three direct resource branches and shared sub_0802D8C4 tail."
+score = "16/228 then 15/228"
+
+[[wip]]
+name = "sub_080607BC"
+seed = "src/wip/sub_080607BC.c"
+notes = "src/wip/sub_080607BC.md"
+status = "Two semantic attempts: direct typed state 26/128 (same size), then r2/r3/r4/r5 register anchors 36/128 (136B). State fields and blend behavior are mapped; remaining mismatches are repeated submode/delay loads, temp evaluation order for +0x02/+0x04, and the retail non-optimized 0xFFFF|old-word instruction shape."
+next = "Use local submode/delay/current/amount temporaries: submode=unk07, delay=unk08, current=unk02, amount=unk04; make mode a u32 in r4, state r2, location r3, and let the 0xFFFF OR reuse r5 naturally."
+score = "26/128 then 36/128"
+
+[[wip]]
+name = "sub_080610A8"
+seed = "src/wip/sub_080610A8.c"
+notes = "src/wip/sub_080610A8.md"
+status = "Two semantic attempts: if-chain 46/98 (96B), then switch with unsigned half-shift 73/98 (same size). Guards, fields, call arguments, and comparison tree now match; remaining same-size diff is case body placement/order (retail lays out mode 0, mode 2, mode 1 before the shared sub_0806105C tail)."
+next = "Keep the switch comparison and unsigned shift; reorder source case bodies to case 0, case 2, case 1 (or use gotos) to reproduce retail labels _080610E0/_080610EC/_080610F4 and shared tail."
+score = "46/98 then 73/98"
+
+[[wip]]
+name = "sub_0806114C"
+seed = "src/wip/sub_0806114C.c"
+notes = "src/wip/sub_0806114C.md"
+status = "Two attempts: explicit min/max locals 15/88 (100B), then direct parameter swap/streaming pointer 31/88 (same-size). Semantics are correct; remaining register allocation keeps state in r7 and palette in r6 instead of retail state r6, palette r2, screen pointer r1."
+next = "Move palette masking/shift before the VRAM screen-address calculation and retain direct first/last swap plus streaming *screen loop; this should reproduce retail r6 state, r5 tile, r4 stack end, r1 screen, r2 palette and eliminate r7."
+score = "15/88 then 31/88"
+
+[[wip]]
+name = "sub_08061564"
+seed = "src/wip/sub_08061564.c"
+notes = "src/wip/sub_08061564.md"
+status = "Two semantic attempts: switch-based C 11/136 (144B), then explicit branch/goto form 9/136 (148B). Existing matched file is retained as naked assembly. Semantic body is mapped; remaining codegen requires pinning input/cursor/opcode to retail r0/r4/r2, restoring direct unk92 += unkA2 for load order, and using switch cases 8/7 with default handling opcode 10 via inverted cmp."
+next = "Use a switch on opcode with only cases 8 and 7; in default, if opcode != 10 dispatch unknown, otherwise perform the Unk0798 update then fall through shared x/y draw. Pin input r0, cursor r4, opcode r2 if needed."
+score = "11/136 then 9/136"
+
+[[wip]]
+name = "sub_0806184C"
+seed = "src/wip/sub_0806184C.c"
+notes = "src/wip/sub_0806184C.md"
+status = "Two attempts: initial semantic seed 47/92 (96B), then signed-width and shifted-stride corrections 80/92 (same-size). Bounds, VRAM layout, and copy call now match; remaining diff is only bank-byte/address register order (retail loads bank into r0 then shifts into r1, candidate loads into r1)."
+next = "Pin the bank temporary to r0 (or otherwise force ), retain u16 width and ; this should reproduce the final address instructions."
+score = "47/92 then 80/92"
+
+[[wip]]
+name = "sub_08061AB8"
+seed = "src/wip/sub_08061AB8.c"
+notes = "src/wip/sub_08061AB8.md"
+status = "Two attempts: direct global C 18/120 same-size, then r4/r5/r6/r7 global anchors 50/120 (128B). Allocation is close but the fixed r7 table did not get a saved-register prologue; retail also retains work in r2 for the VRAM copy while the candidate reloads it into r0/r1."
+next = "Make table an ordinary local so agbcc saves normal r7, and introduce a work pointer anchored in r2 after allocation (work=*work_loc) for the bank and +0x94 copy-size expressions. Preserve count_loc r6, work_loc r5, buffer r4."
+score = "18/120 then 50/120"
+
+[[wip]]
+name = "sub_08061D00"
+seed = "src/wip/sub_08061D00.c"
+notes = "src/wip/sub_08061D00.md"
+status = "Two same-size attempts: direct semantic C 49/104, then r2/r4/r5 register anchors 23/104 (100B). The copy semantics are mapped; remaining differences are input-mask ordering and the compiler CSE/retention of the VRAM base in r6, while retail recomputes it in caller-saved r3 between the two copies."
+next = "Compute the u16 arg0 mask and encoded r5 value before loading work_loc r4. Use separate base1/base2 address statements (or a source shape that recomputes VRAM after the first _08073C4C) so the constant stays in r3 and the second destination replaces r4."
+score = "49/104 then 23/104"
+
+[[wip]]
+name = "sub_08062988"
+seed = "src/wip/sub_08062988.c"
+notes = "src/wip/sub_08062988.md"
+status = "Two semantic attempts: unpinned field locals 23/140 (136B), then r1/r2/r3 register anchors 32/140 (136B). Conditions and three buffer operations are mapped; remaining mismatch is initial flags/variant scratch allocation (retail flags in r0 and raw +4 byte in r0, derived group r3/mode r1/variant r2), plus default literal scheduling."
+next = "Pin flags to r0 and introduce a raw +4 byte temporary in r0 before assigning masked variant r2; retain group r3 and mode r1. Then tune default palette/buffer expression order if needed."
+score = "23/140 then 32/140"
+
+[[wip]]
+name = "sub_08062AF8"
+seed = "src/wip/sub_08062AF8.c"
+notes = "src/wip/sub_08062AF8.md"
+status = "Two semantic attempts: indexed loops 76/162 (160B), then r2/r3/r4/r5 anchors 27/162 (168B). Allocation semantics are mapped, but retail uses cursor pointer iteration for the first scan, a pool-location r7 in the allocation scan, and a VRAM cursor r6 that advances only across occupied slots; the candidate still uses indexed/recomputed addresses."
+next = "Use pool_loc=(struct Unk62A74 **)0x030008D0, pool=*pool_loc, slot=pool->unk00 and slot++ for the first scan. In the second loop use dest=(u8 *)0x05000200, test (*pool_loc)->unk40, advance dest by 0x20 only when the bit is occupied, then set the bit/copy/store and return."
+score = "76/162 then 27/162"
+
+[[wip]]
+name = "sub_08062F90"
+seed = "src/wip/sub_08062F90.c"
+notes = "src/wip/sub_08062F90.md"
+status = "Two attempts: direct global C 19/148 (144B), then e0/d4 lifetime anchors 33/148 (152B). Initialization semantics and both palette copies are mapped; remaining codegen is saved-register/lifetime shaping: retail keeps e0 location r5, d4 location r6, size r4, recomputes DC without retaining its address, then loads D8 location into r6; candidate retains DC via r8 and uses r7/r4 temporaries."
+next = "Make the DC guard/store volatile or otherwise recompute its address, pin the 0x200 size to r4, keep e0 r5/d4 r6, and use a separate D8 location variable loaded into r6 after storing the D4-derived pointer. Retain palette-table loading after that."
+score = "19/148 then 33/148"
+
+[[wip]]
+name = "sub_080632F8"
+seed = "src/wip/sub_080632F8.c"
+notes = "src/wip/sub_080632F8.md"
+status = "Two semantic attempts: stack-struct loop 148/184 same-size, then register-pinned initialization 48/184 (188B). The local layout and switch/callback semantics match; remaining differences are loop form (retail is a do-while with the done check only at the bottom) and initial palette load ordering (retail loads the BB8BC literal into r0, sets size, then loads the palette value into r3)."
+next = "Use  and replace the r3 palette value pin with a palette pointer pinned to r0, assigned before the 0x328 size expression; pass  to the initial copy."
+score = "148/184 then 48/184"
+
+[[wip]]
+name = "sub_08065560"
+seed = "src/wip/sub_08065560.c"
+notes = "src/wip/sub_08065560.md"
+status = "Two attempts: semantic switch/loop 58/120 (116B), then r2/r1/r3/r4/r5 register anchors 66/120 (same-size). Field selection and three writes match; remaining differences are the loop’s initial for-condition (retail enters directly and checks only after decrement) and the retail cursor copy: after computing table base, retail copies selected ROM pointer into r2 and uses r1 only as the byte scratch."
+next = "Change the for loop to do-while with i initialized to 2. Leave selected indices as an ordinary pointer so agbcc can copy it into r2 after table-base calculation; keep data initially r2, table r4, source r3, and counter r5."
+score = "58/120 then 66/120"
+
+[[wip]]
+name = "sub_08066224"
+seed = "src/wip/sub_08066224.c"
+notes = "src/wip/sub_08066224.md"
+status = "Two attempts: direct typed semantic C 63/112 (116B), then register anchors 61/112 (same-size). Bounds and state updates are mapped; remaining mismatch is initial current-entry register/source ordering and the callback index return-width shape (retail directly shifts sub_08072F94 result by 2, candidate zero-extends the u8 return)."
+next = "Restore  before any base assignment, remove the flags temporary and use the direct bit test, then form . Keep current r3/a r6/state r5/entry r4 as useful anchors. Try a u32 slot temporary or direct pointer arithmetic to avoid the u8 zero-extension before shifting."
+score = "63/112 then 61/112"
+
+[[wip]]
+name = "sub_08066B10"
+seed = "src/wip/sub_08066B10.c"
+notes = "src/wip/sub_08066B10.md"
+status = "Two attempts: u32 argument plus fixed registers 18/180 (192B), then u8 parameter with ordinary result 91/180 (same-size). Semantic cases, toggle, string handling, and offset calculation are mapped; remaining mismatch is only the entry register/source ordering (retail copies a to r5 before masking index into r4) and the result/r7 allocation shape in the first seed."
+next = "Use a u32 index_arg with a local index pinned to r4 and state pinned to r5; assign state before index. Keep result ordinary so agbcc saves/uses retail r7, with length as the remaining temporary."
+score = "18/180 then 91/180"
+
+[[wip]]
+name = "sub_08066FB8"
+seed = "src/wip/sub_08066FB8.c"
+notes = "src/wip/sub_08066FB8.md"
+status = "Two semantic attempts: direct renderer 101/300 (304B), then r4/r5/r6 register/table anchors 93/300 (292B). Call sequences and mode branches match; remaining same-size scheduling is the table/index literal loads, which retail performs after the first sub_080615EC and represents as 0x080BB110 plus a runtime +0x0C, while the candidate loads 0x080BB11C before the call."
+next = "Move table/index_loc initialization after the first sub_080615EC(0, 8), assign table from 0x080BB110 and perform table += 3 as a separate post-call statement to preserve the retail literal/add sequence. Keep table r5, index_loc r6, image r4."
+score = "101/300 then 93/300"
+
+[[wip]]
+name = "sub_08067504"
+seed = "src/wip/sub_08067504.c"
+notes = "src/wip/sub_08067504.md"
+status = "Two semantic attempts: direct volatile-register C 48/128 (120B), then explicit waitcnt/mask temporaries 60/128 (112B). DMA behavior and register sequence are mapped; remaining issues are waitcnt result register (retail r4 = REG_WAITCNT & 0xF8FF, candidate r3) and DMA-status literal scheduling (retail loads 0x040000DE before constructing the r1 mask)."
+next = "Pin waitcnt to r4 and the F8FF mask to r3, then OR in gUnk_030009B0->unk06. Introduce a DMA-status pointer pinned to r2 before setting busy_mask r1, and loop through that pointer."
+score = "48/128 then 60/128"
+
+[[wip]]
+name = "sub_08067584"
+seed = "src/wip/sub_08067584.c"
+notes = "src/wip/sub_08067584.md"
+status = "Two semantic attempts: stack-array loops 11/176 (168B), then register anchors 41/176 (same-size). The generator semantics are mapped; remaining mismatches are global pointer lifetime (retail checks gUnk_030009B0 through r0, then loads its location into r6 only after the bound check), stack cursor construction, and output packing (retail increments the cursor pointer each inner iteration rather than indexing cursor[j])."
+next = "Move global_loc r6 assignment after the bound check, build the initial cursor through a stack-base temporary so agbcc emits mov r4,sp then add, and rewrite inner packing as ; keep out r5/value r3/counter r4 where useful."
+score = "11/176 then 41/176"
+
+[[wip]]
+name = "sub_08067648"
+seed = "src/wip/sub_08067648.c"
+notes = "src/wip/sub_08067648.md"
+status = "Two semantic attempts: approximate DMA/timing model 50/352 (260B), then enlarged scratch array still 50/352 (260B). The high-level stages are mapped, but the retail function’s fixed 0xB0 stack frame, bit-stream packing, DMA timing loop, and hardware-status branches require a dedicated stack-struct/source-shape match."
+next = "Use an explicit volatile 0xB0-byte workspace or struct to force the retail frame and model the exact scratch regions: stream at sp, VCOUNT fields at +0xA4/+0xA6/+0xA8, elapsed at +0xAC. Then anchor source r5, value r1/r3, mode r7, and cursor r3/r2 as shown by retail."
+score = "50/352 then 50/352"
+
+[[wip]]
+name = "sub_08067BB8"
+seed = "src/wip/sub_08067BB8.c"
+notes = "src/wip/sub_08067BB8.md"
+status = "Two semantic constructor attempts: structured field initialization reached 113/304 (284B), then register-pinned zero/all-ones constants regressed to 44/304 (284B). Retail layout and initialization order are mapped; remaining ABI/register issue is preserving r4/r5/r6 stack arguments before reusing r4/r5 and forcing the literal-mask OR sequence."
+next = "Retry with register locals declared but initialized only after the three shifted stack arguments are stored; pin zero to r4, byte_zero to r5, allones to r2. Compare the exact prologue and the  loads before integrating."
+score = "113/304 then 44/304"
+
+[[wip]]
+name = "sub_08068118"
+seed = "src/wip/sub_08068118.c"
+notes = "src/wip/sub_08068118.md"
+status = "Two semantic attempts: initial table/branch model 22/102 (116B), then corrected early-return behavior and pinned r4/r3/r2 shape 9/102 (112B). Retail reads current before table length, keeps base in r0 and table in r3, and lays the increment branch before the callback branch; the semantic control flow is now mapped."
+next = "Use a base pointer pinned to r0 and a current halfword pinned to r1: load current before table->unk04, then shape the condition so the  increment block is emitted before the callback-return block. Preserve the retail early return when unk2E != -1."
+score = "22/102 then 9/102"
+
+[[wip]]
+name = "sub_08068598"
+seed = "src/wip/sub_08068598.c"
+notes = "src/wip/sub_08068598.md"
+status = "Two semantic attempts: initial playback model 27/284 (288B), then explicit r2/r4/r5 register anchors and corrected record layout 20/284 (316B). Control flow and state fields are mapped, but retail keeps the record pointer in r4 without the extra locals, reads signed position at +0x36, and updates the low-byte record flags with byte stores."
+next = "Use a compact pointer/state formulation: pin work r2 and record r4, avoid persistent lookup/total locals, load the record start and length directly at +0/+2, and model record flags with a byte-addressable struct overlay that preserves the halfword fields. Match the initial record pointer sequence before tuning the boundary branches."
+score = "27/284 then 20/284"
+
+[[wip]]
+name = "sub_08068798"
+seed = "src/wip/sub_08068798.c"
+notes = "src/wip/sub_08068798.md"
+status = "Two semantic attempts: initial queue model 40/110 (116B), then pinned offset/entry/callback registers and matched the body at 70/110 (112B). The remaining mismatch is the missing r7 save/restore in the generated prologue; retail uses f0b5 while agbcc emits 70b5, shifting the early branch and final size by 2 bytes."
+next = "Remove the explicit r7 register pin from count and make count a normal live local across _08073C48; preserve r6 state, r5 index, r4 entry, and r1 offset/r0 table base. This should let agbcc save r7 while retaining the 70/110 body shape."
+score = "40/110 then 70/110"
+
+[[wip]]
+name = "sub_08068988"
+seed = "src/wip/sub_08068988.c"
+notes = "src/wip/sub_08068988.md"
+status = "Two semantic attempts: initial ABI call shape 37/126 (128B), then passed through the original r2/r3/stack arguments to sub_08068A08 and reached 124/126, same size. The only remaining bytes are the two signed bound comparisons: retail emits bge while the candidate uses bcs because width/height were u32."
+next = "Change width and height temporaries to s32 (state unk00/unk04 are signed), retaining the five-argument sub_08068A08 call with unused as its third argument. This should change both bcs instructions to the retail bge and yield an exact match."
+score = "37/126 then 124/126"
+
+[[wip]]
+name = "sub_08068E54"
+seed = "src/wip/sub_08068E54.c"
+notes = "src/wip/sub_08068E54.md"
+status = "Two semantic attempts: direct motion model 17/108 (112B), then pinned state/x/y/scale registers reached 70/108 with exact size. Remaining mismatch is only the flag check register order: retail forms &state->unk64 in r1, loads the halfword into r1, and masks with r0; the candidate uses r0 for the address."
+next = "Use a register u16 pointer flag_ptr pinned to r1 and assign it with &state->unk64 before the bit test. Keep state r4, scale/delta_y r3, x r1, y r2, and delta_x r5; this should reproduce the remaining flag-check bytes."
+score = "17/108 then 70/108"
+
+[[wip]]
+name = "sub_080691E4"
+seed = "src/wip/sub_080691E4.c"
+notes = "src/wip/sub_080691E4.md"
+status = "Two semantic attempts: direct mode switch 15/138 (128B), then exact two-step value shift 20/138 (128B). Retail additionally copies value into r0, uses r0 for the bit-branch shift amount, and lays the non-bit cases as equality/value-greater-than checks (bgt plus explicit zero check); the candidate uses a compact switch and wrong register shape."
+next = "Pin selector to r0 and copy selector = value immediately after the >>30; in the bit path compute selector = (value << 1) + 8, result = one, result <<= selector. Replace switch with if value==1, else if value>1 using selector==2/3, else if value==0, leaving default result untouched."
+score = "15/138 then 20/138"
+
+[[wip]]
+name = "sub_08069DBC"
+seed = "src/wip/sub_08069DBC.c"
+notes = "src/wip/sub_08069DBC.md"
+status = "Two semantic attempts: direct tiled copy 25/96, then deferred shift load and matching size reached 63/96. Source addressing now matches retail; remaining mismatch is destination/loop register shape (retail keeps destination in r2, source in r5, destination increment in r4, and state +0x5F pointer in r3)."
+next = "Pin destination r2, source r5, source stride r1, destination stride r4, and a state +0x5F byte pointer r3. Build the VRAM base in r2 before adding the shifted destination offset, then use pointer increments matching the retail loop."
+score = "25/96 then 63/96"
+
+[[wip]]
+name = "sub_0806A314"
+seed = "src/wip/sub_0806A314.c"
+notes = "src/wip/sub_0806A314.md"
+status = "Two semantic attempts: direct allocator/linked-list wrapper 38/144 (same size), then register-shaped pointer/marker rewrite 40/144 (140B). The allocator and node sentinel semantics are mapped; the remaining prologue issue is loading the 0x03003F40 literal after reading *0x03003F44, while the candidate loads it first, plus counter literal-pool and post-node register order."
+next = "Introduce a current_value local assigned from *0x03003F44 before assigning the 0x03003F40 pool address to r2; branch on current_value, use it to zero 0x03003F48/4C, and preserve separate literals for both counters. Then tune payload r0/next_payload r1/marker r2 around the two sentinel stores."
+score = "38/144 then 40/144"
+
+[[wip]]
+name = "sub_0806A3A4"
+seed = "src/wip/sub_0806A3A4.c"
+notes = "src/wip/sub_0806A3A4.md"
+status = "Two semantic attempts after isolating the stale one-argument header declaration: direct clone 119/144 (140B), then ordered current_value/r2 pool load reached 123/144 (140B). State initialization and allocator call now match; remaining mismatch is the second counter zero store, where retail loads a separate 0x03000B38 literal but agbcc reuses the 0x03000B3C address with add/sub 4."
+next = "Force distinct typed pointer literals for 0x03000B3C and 0x03000B38 (or use a small helper boundary that prevents adjacent-address folding), retaining current_value in r1 and pool address in r2. Then compare the post-node sentinel pointer arithmetic."
+score = "119/144 then 123/144"
+
+[[wip]]
+name = "sub_0806A434"
+seed = "src/wip/sub_0806A434.c"
+notes = "src/wip/sub_0806A434.md"
+status = "Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped."
+next = "Avoid keeping key live across control-flow/calls: use state->unk00 directly for the initial zero check and reload it into r1 immediately before each pool/counter comparison. Keep state r6, previous r4, next r5 so the prologue remains 70b5."
+score = "31/164 then 29/164"
+
+[[wip]]
+name = "sub_0806BC0C"
+seed = "src/wip/sub_0806BC0C.c"
+notes = "src/wip/sub_0806BC0C.md"
+status = "Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit."
+next = "Compile the final revision with current/count pinned to r4 and limit pinned to r6. Preserve the source count halfword load, cap callback, and fixed-point loop; verify the post-loop +0x114/+0x10/+0x118 stores."
+score = "46/116 then 43/116"
+
+[[wip]]
+name = "sub_0806C704"
+seed = "src/wip/sub_0806C704.c"
+notes = "src/wip/sub_0806C704.md"
+status = "Two semantic attempts: initial wrapper 15/136 (140B), then a six-word output workspace and normal extra parameter produced the exact retail prologue/stack frame (17/136, 140B). Remaining mismatch begins only at the flag test: retail forms state+0x8D in r1 and loads the byte into r1, while the candidate uses r0 for the address."
+next = "Pin a u8 pointer flag_ptr to r1 and assign it with &state->unk8D before testing; retain source r5, state r4, input r6, extra r7, and output[6] to preserve f0b5/add sp -0x18."
+score = "15/136 then 17/136"

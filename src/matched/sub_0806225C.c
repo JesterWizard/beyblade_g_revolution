@@ -1,109 +1,55 @@
 #include "global.h"
 
 // @ 0x0806225c
-__attribute__((naked))
-void sub_0806225C(void)
+#include "global.h"
+
+void sub_0806225C(struct Unk62634 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "cmp r4, #0x00\n"
-        "beq _08062312\n"
-        "ldr r0, [r4, #0x24]\n"
-        "ldr r2, [r4, #0x30]\n"
-        "adds r0, r0, r2\n"
-        "str r0, [r4, #0x24]\n"
-        "ldr r0, [r4, #0x28]\n"
-        "ldr r1, [r4, #0x34]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r4, #0x28]\n"
-        "ldr r0, [r4, #0x38]\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r4, #0x30]\n"
-        "ldr r0, [r4, #0x3C]\n"
-        "adds r1, r1, r0\n"
-        "str r1, [r4, #0x34]\n"
-        "cmp r2, #0x00\n"
-        "beq _0806229A\n"
-        "cmp r2, #0x00\n"
-        "ble _0806228E\n"
-        "ldr r0, [r4, #0x40]\n"
-        "subs r0, r2, r0\n"
-        "str r0, [r4, #0x30]\n"
-        "_0806228E:\n"
-        "ldr r1, [r4, #0x30]\n"
-        "cmp r1, #0x00\n"
-        "bge _0806229A\n"
-        "ldr r0, [r4, #0x40]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r4, #0x30]\n"
-        "_0806229A:\n"
-        "ldr r1, [r4, #0x34]\n"
-        "cmp r1, #0x00\n"
-        "beq _080622B6\n"
-        "cmp r1, #0x00\n"
-        "ble _080622AA\n"
-        "ldr r0, [r4, #0x40]\n"
-        "subs r0, r1, r0\n"
-        "str r0, [r4, #0x34]\n"
-        "_080622AA:\n"
-        "ldr r1, [r4, #0x34]\n"
-        "cmp r1, #0x00\n"
-        "bge _080622B6\n"
-        "ldr r0, [r4, #0x40]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r4, #0x34]\n"
-        "_080622B6:\n"
-        "ldr r3, [r4, #0x04]\n"
-        "cmp r3, #0x00\n"
-        "beq _080622E0\n"
-        "ldr r2, [r4, #0x08]\n"
-        "cmp r2, #0x00\n"
-        "beq _080622FA\n"
-        "ldr r0, [r4, #0x24]\n"
-        "ldr r1, [r3, #0x0C]\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r2, #0x08]\n"
-        "ldr r0, [r4, #0x28]\n"
-        "ldr r1, [r3, #0x10]\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r2, #0x0C]\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x60\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "adds r0, r2, #0x0\n"
-        "bl sub_080705DC\n"
-        "b _080622FA\n"
-        "_080622E0:\n"
-        "ldr r2, [r4, #0x08]\n"
-        "cmp r2, #0x00\n"
-        "beq _080622FA\n"
-        "ldr r0, [r4, #0x24]\n"
-        "str r0, [r2, #0x08]\n"
-        "ldr r0, [r4, #0x28]\n"
-        "str r0, [r2, #0x0C]\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x60\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "adds r0, r2, #0x0\n"
-        "bl sub_080705DC\n"
-        "_080622FA:\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08062306\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08062358\n"
-        "_08062306:\n"
-        "ldr r0, [r4, #0x18]\n"
-        "cmp r0, #0x00\n"
-        "beq _08062312\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08062640\n"
-        "_08062312:\n"
-        "pop {r4}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk705DC *target;
+
+    if (a == 0)
+        return;
+    a->unk24 += a->unk30;
+    a->unk28 += a->unk34;
+    a->unk30 += a->unk38;
+    a->unk34 += a->unk3C;
+    if (a->unk30 != 0)
+    {
+        if (a->unk30 > 0)
+            a->unk30 -= a->unk40;
+        if (a->unk30 < 0)
+            a->unk30 += a->unk40;
+    }
+    if (a->unk34 != 0)
+    {
+        if (a->unk34 > 0)
+            a->unk34 -= a->unk40;
+        if (a->unk34 < 0)
+            a->unk34 += a->unk40;
+    }
+    if (a->unk04 != 0)
+    {
+        target = a->unk08;
+        if (target != 0)
+        {
+            target->unk08 = a->unk24 - a->unk04->unk0C;
+            target->unk0C = a->unk28 - a->unk04->unk10;
+            sub_080705DC(target, a->unk60);
+        }
+    }
+    else
+    {
+        target = a->unk08;
+        if (target != 0)
+        {
+            target->unk08 = a->unk24;
+            target->unk0C = a->unk28;
+            sub_080705DC(target, a->unk60);
+        }
+    }
+    if (a->unk00 != 0)
+        sub_08062358(a);
+    if (a->unk18 != 0)
+        sub_08062640((struct Unk62634 *)a);
 }
 

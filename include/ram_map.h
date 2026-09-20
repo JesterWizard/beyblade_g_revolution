@@ -34,6 +34,32 @@
 #undef gUnk_03000658
 #undef gUnk_03000660
 #undef gUnk_030006B8
+#undef gUnk_03000674
+#undef gUnk_03000678
+#undef gUnk_03000758
+#undef gUnk_03000770
+#undef gUnk_03000794
+#undef gUnk_030007A0
+#undef gUnk_030007A4
+#undef gUnk_030007B0
+#undef gUnk_030008D0
+#undef gUnk_030008D4
+#undef gUnk_030008D8
+#undef gUnk_030008DC
+#undef gUnk_030008E0
+#undef gUnk_030009A8
+#undef gUnk_030009AC
+#undef gUnk_030009B0
+#undef gUnk_03000B40
+#undef gUnk_03003F40
+#undef gUnk_03003F44
+#undef gUnk_03003F48
+#undef gUnk_03003F4C
+#undef gUnk_03000B30
+#undef gUnk_03000B34
+#undef gUnk_03000B38
+#undef gUnk_03000B3C
+#undef gUnk_03003F50
 #define gMainWorkPtrLoc ((struct MainWork **)0x03000198)
 #define gBattleWorkPtrLoc ((struct BattleWork **)0x03000290)
 #define gMainWorkPtr (*(struct MainWork **)0x03000198)
@@ -58,6 +84,32 @@
 #define gUnk_03000658 (*(struct Unk4AAF0 ***)0x03000658)
 #define gUnk_03000660 (*(struct Unk4AAF0 **)0x03000660)
 #define gUnk_030006B8 (*(u16 *)0x030006B8)
+#define gUnk_03000674 (*(u32 *)0x03000674)
+#define gUnk_03000678 (*(u32 *)0x03000678)
+#define gUnk_03000758 (*(struct Unk0758 **)0x03000758)
+#define gUnk_03000770 ((struct Unk0770 *)0x03000770)
+#define gUnk_03000794 (*(u32 *)0x03000794)
+#define gUnk_030007A0 (*(u32 *)0x030007A0)
+#define gUnk_030007A4 (*(void **)0x030007A4)
+#define gUnk_030007B0 ((void *)0x030007B0)
+#define gUnk_030008D0 (*(struct Unk62A74 **)0x030008D0)
+#define gUnk_030008D4 (*(void **)0x030008D4)
+#define gUnk_030008D8 (*(void **)0x030008D8)
+#define gUnk_030008DC (*(void **)0x030008DC)
+#define gUnk_030008E0 (*(void **)0x030008E0)
+#define gUnk_030009A8 (*(u8 *)0x030009A8)
+#define gUnk_030009AC (*(u8 **)0x030009AC)
+#define gUnk_030009B0 (*(struct Unk09B0 **)0x030009B0)
+#define gUnk_03000B40 ((void *)0x03000B40)
+#define gUnk_03003F40 (*(void **)0x03003F40)
+#define gUnk_03003F44 (*(void **)0x03003F44)
+#define gUnk_03003F48 (*(u32 *)0x03003F48)
+#define gUnk_03003F4C (*(u32 *)0x03003F4C)
+#define gUnk_03000B30 (*(void **)0x03000B30)
+#define gUnk_03000B34 (*(u32 *)0x03000B34)
+#define gUnk_03000B38 (*(u32 *)0x03000B38)
+#define gUnk_03000B3C (*(u32 *)0x03000B3C)
+#define gUnk_03003F50 (*(void **)0x03003F50)
 
 #define gBattlerArena    0x03004060
 #define gBattlerArenaEnd 0x0300416C
