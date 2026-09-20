@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-20T08:44:38Z_
+_Updated: 2026-09-20T08:52:03Z_
 
 ## Legend
 
@@ -26,8 +26,8 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | byte-identical DIFF | 0 |
 | same-size DIFF | 4 |
 | size DIFF | 18 |
-| WIP (parked C) | 8 |
-| not started | 308 |
+| WIP (parked C) | 10 |
+| not started | 306 |
 | blocked | 31 |
 | **total** | **633** |
 
@@ -41,10 +41,12 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08042B28` | same-size DIFF | 90.0% | 36/40 | ldr/lsl order 36/40 |
 | `sub_08042B50` | same-size DIFF | 90.0% | 36/40 | ldr/lsl order 36/40 |
 | `sub_08033DD4` | WIP (parked C) | 89.4% | 93/104 | same-size DIFF, 93/104 (89.4%); one lsls #24 off on u8-return truthiness |
+| `sub_08034568` | WIP (parked C) | 88.6% | 156/176 | size_mismatch 156/176 (88.6%, compiled 168B vs retail 176B); all field init l… |
 | `sub_080523A4` | blocked | 86.6% | 97/112 | seeded from queue.toml same-size DIFF |
 | `sub_0802D2C0` | WIP (parked C) | 85.2% | 92/108 | DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant… |
 | `sub_08045128` | blocked | 82.5% | 66/80 | seeded from queue.toml same-size DIFF |
 | `sub_0802E048` | WIP (parked C) | 82.5% | 188/228 | same-size DIFF, 188/228 bytes (82.5%) |
+| `sub_08035C64` | WIP (parked C) | 46.7% | 85/182 | same_size DIFF 85/182 (46.7%); logic fully correct (repulsion physics on Unk3… |
 | `sub_08043944` | size DIFF | 45.8% | 22/48 | sub_08043944 |
 | `sub_0802BC14` | WIP (parked C) | 41.1% | 46/112 | same-size DIFF (46/112, 41%); agbcc emits lsrs (u8 truncate) before bl sub_08… |
 | `sub_0802BF04` | WIP (parked C) | 38.6% | 54/140 | size_mismatch 54/140 (38.6%); struct Unk1694 field logic correct (unk00|=0xFF… |
@@ -75,8 +77,10 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
 | `sub_08033DD4` | `0x08033DD4` | WIP (parked C) | 89.4% | 93/104 | asm |
+| `sub_08034568` | `0x08034568` | WIP (parked C) | 88.6% | 156/176 | asm |
 | `sub_0802D2C0` | `0x0802D2C0` | WIP (parked C) | 85.2% | 92/108 | asm |
 | `sub_0802E048` | `0x0802E048` | WIP (parked C) | 82.5% | 188/228 | asm |
+| `sub_08035C64` | `0x08035C64` | WIP (parked C) | 46.7% | 85/182 | asm |
 | `sub_0802BC14` | `0x0802BC14` | WIP (parked C) | 41.1% | 46/112 | asm |
 | `sub_0802BF04` | `0x0802BF04` | WIP (parked C) | 38.6% | 54/140 | asm |
 | `sub_08033878` | `0x08033878` | WIP (parked C) | 25.9% | 28/108 | asm |
@@ -261,7 +265,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08047624` | `0x08047624` | not started | 0.0% | 0/174 | asm |
 | `sub_0804A028` | `0x0804A028` | not started | 0.0% | 0/174 | asm |
 | `sub_08068180` | `0x08068180` | not started | 0.0% | 0/174 | asm |
-| `sub_08034568` | `0x08034568` | not started | 0.0% | 0/176 | asm |
 | `sub_080416C4` | `0x080416C4` | not started | 0.0% | 0/176 | asm |
 | `sub_08067584` | `0x08067584` | not started | 0.0% | 0/176 | asm |
 | `sub_08070D44` | `0x08070D44` | not started | 0.0% | 0/176 | asm |
@@ -272,7 +275,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08066B10` | `0x08066B10` | not started | 0.0% | 0/180 | asm |
 | `sub_0806FF58` | `0x0806FF58` | not started | 0.0% | 0/180 | asm |
 | `sub_0802C4A4` | `0x0802C4A4` | not started | 0.0% | 0/182 | asm |
-| `sub_08035C64` | `0x08035C64` | not started | 0.0% | 0/182 | asm |
 | `sub_0803114C` | `0x0803114C` | not started | 0.0% | 0/184 | asm |
 | `sub_080632F8` | `0x080632F8` | not started | 0.0% | 0/184 | asm |
 | `sub_08052F0C` | `0x08052F0C` | not started | 0.0% | 0/188 | asm |

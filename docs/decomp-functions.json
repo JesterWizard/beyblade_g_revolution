@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T08:44:38Z",
+  "generated": "2026-09-20T08:52:03Z",
   "counts": {
     "matched": 264,
     "blocked": 31,
-    "not_started": 308,
-    "wip": 8,
+    "not_started": 306,
+    "wip": 10,
     "size_mismatch": 18,
     "same_size": 4
   },
@@ -1613,17 +1613,17 @@
       "addr": "0x08034568",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 176,
-      "matched_bytes": 0,
+      "matched_bytes": 156,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/176",
-      "source": "none",
-      "note": ""
+      "pct": 88.6,
+      "score": "156/176",
+      "source": "wip",
+      "note": "size_mismatch 156/176 (88.6%, compiled 168B vs retail 176B); all field init logic correct (Unk346C0 tail-region zero/const init, 8 byte writes + 3 halfword + several u32); agbcc picks r1-chain instead of r4-chain for final unk2C4 store, dropping one add-chain step vs retail"
     },
     {
       "name": "sub_08034618",
@@ -2140,17 +2140,17 @@
       "addr": "0x08035C64",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 182,
-      "matched_bytes": 0,
+      "matched_bytes": 85,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/182",
-      "source": "none",
-      "note": ""
+      "pct": 46.7,
+      "score": "85/182",
+      "source": "wip",
+      "note": "same_size DIFF 85/182 (46.7%); logic fully correct (repulsion physics on Unk346C0Inner, dx/dy/distSq/threshold gate) but agbcc always emits the early-return (zero) block first regardless of if/else source order \u2014 branch layout inverted vs retail which keeps compute as fallthrough and zero-block at function end"
     },
     {
       "name": "sub_08035D1C",

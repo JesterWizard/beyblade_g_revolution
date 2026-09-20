@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T08:44:37Z_
+_Updated: 2026-09-20T08:52:03Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T08:44:37Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 102 (44 already semantic) |
 | Blocked (documented) | 35 |
-| WIP (resume these first) | 8 |
+| WIP (resume these first) | 10 |
 
 Ranking: **battle** · showing top **40**
 
@@ -34,6 +34,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08033DD4` | 104 | 93/104 | `src/wip/sub_08033DD4.c` | same-size DIFF, 93/104 (89.4%); one lsls #24 off on u8-return truthiness | permuter or alt shape; re-add Unk0380Target first |
 | `sub_0802BC14` | 112 | 46/112 | `src/wip/sub_0802BC14.c` | same-size DIFF (46/112, 41%); agbcc emits lsrs (u8 truncate) before bl sub_0802C62C where retail reuses sa register directly with plain adds; loop/null-check structure otherwise correct | try forcing arg via inline register hint or reordering param types; possibly needs sub_0802C62C sig change to s8 |
 | `sub_0802BF04` | 140 | 54/140 | `src/wip/sub_0802BF04.c` | size_mismatch 54/140 (38.6%); struct Unk1694 field logic correct (unk00|=0xFF, unk03|=0xFF, unk02=0, unk01=0 on match), but agbcc register alloc (r8 preset outside loop for zero-store dual-use) diverges; compiled 136B vs retail 140B | try forcing r8 allocation via explicit register variable for zero, or restructure single ptr recompute pattern to match retail's r5-offset-cached style |
+| `sub_08035C64` | 182 | 85/182 | `src/wip/sub_08035C64.c` | same_size DIFF 85/182 (46.7%); logic fully correct (repulsion physics on Unk346C0Inner, dx/dy/distSq/threshold gate) but agbcc always emits the early-return (zero) block first regardless of if/else source order — branch layout inverted vs retail which keeps compute as fallthrough and zero-block at function end | try computing zero-branch via explicit goto label placed after compute code, or split into two functions/permuter branch-order search |
+| `sub_08034568` | 176 | 156/176 | `src/wip/sub_08034568.c` | size_mismatch 156/176 (88.6%, compiled 168B vs retail 176B); all field init logic correct (Unk346C0 tail-region zero/const init, 8 byte writes + 3 halfword + several u32); agbcc picks r1-chain instead of r4-chain for final unk2C4 store, dropping one add-chain step vs retail | try alternate field write order or split into two helper calls matching retail's r1/r4 chain split; permuter candidate (small, near miss) |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -137,6 +139,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (330 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (328 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
