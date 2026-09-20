@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T08:36:49Z",
+  "generated": "2026-09-20T08:38:52Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 102,
     "battle_semantic": 44,
     "blocked": 35,
-    "wip": 4
+    "wip": 5
   },
   "pinned": [],
   "wip": [
@@ -23,9 +23,9 @@
       "bytes": 92,
       "seed": "src/wip/sub_08046278.c",
       "notes": "src/wip/sub_08046278.md",
-      "status": "logic OK (both Unk16B0 slots {0,-1,-1}); extra r8/r9 leaf spill",
-      "next": "score seed; then independent per-field addressing like sub_08046230",
-      "score": "unscored"
+      "status": "logic OK; 11/92 (56B vs 92B); extra r8/r9 leaf spill",
+      "next": "independent per-field addressing like sub_08046230; force r8/r9 live",
+      "score": "11/92"
     },
     {
       "name": "sub_0802E048",
@@ -59,6 +59,17 @@
       "status": "DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant else-if that retail keeps",
       "next": "permuter run targeting dead-code retention / instruction order; table lookup logic itself is verified correct",
       "score": "92/108"
+    },
+    {
+      "name": "sub_08033878",
+      "addr": "0x08033878",
+      "kind": "asm",
+      "bytes": 108,
+      "seed": "src/wip/sub_08033878.c",
+      "notes": "src/wip/sub_08033878.md",
+      "status": "same_size DIFF, 28/108 bytes (25.9%)",
+      "next": "permuter run (small function); or try shared 's32 zero=0' local matching retail's persistent r5",
+      "score": "28/108"
     }
   ],
   "recommended": [
@@ -416,20 +427,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08033878",
-      "addr": "0x08033878",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 45,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08042718",
       "addr": "0x08042718",
       "kind": "asm",
@@ -634,6 +631,20 @@
       "battle_refs": 1,
       "battle_syms": [
         "gBattleWork"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08044FB0",
+      "addr": "0x08044FB0",
+      "kind": "asm",
+      "bytes": 156,
+      "score": 77,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
       ],
       "has_pool": true,
       "blocked": false,
@@ -1236,20 +1247,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08033878",
-      "addr": "0x08033878",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 45,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
       ],
       "has_pool": true,
       "blocked": false,

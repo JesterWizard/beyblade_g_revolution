@@ -158,7 +158,16 @@ struct BattleWork /* >= 0x208A */
     /* 011C */ u8 filler_011C[0x80];
     /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
     /* 023C */ struct Unk7069C unk023C[4]; /* sub_08038D10 */
-    /* 02FC */ u8 filler_02FC[0x1C94];
+    /* 02FC */ u8 filler_02FC[0x858];
+    /* 0B54 */ void *unk0B54[4]; /* sub_08033878 */
+    /* 0B64 */ u32 unk0B64;
+    /* 0B68 */ u32 unk0B68;
+    /* 0B6C */ u8 unk0B6C;
+    /* 0B6D */ u8 filler_0B6D[3];
+    /* 0B70 */ u8 filler_0B70[4];
+    /* 0B74 */ u8 filler_0B74[4];
+    /* 0B78 */ u32 unk0B78;
+    /* 0B7C */ u8 filler_0B7C[0x1414];
     /* 1F90 */ s32 unk1F90; /* sub_080330F4 */
     /* 1F94 */ s32 unk1F94; /* sub_080330F4 */
     /* 1F98 */ u8 unk1F98; /* sub_080330F4 */
@@ -228,7 +237,7 @@ struct Unk1688Entry /* 0x18 */
     /* 16 */ u16 unk16;
 };
 
-/* Per-slot record, 2 slots. sub_08046230. */
+/* Per-slot record, 2 slots. sub_08046230 (per-index), sub_08046278 (both). */
 struct Unk16B0 /* 0x0c */
 {
     /* 00 */ s32 unk00;

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T08:35:14Z",
+  "generated": "2026-09-20T08:38:40Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "src_matched": 633,
@@ -991,7 +991,7 @@
       "pct_bytes": 13.5
     },
     {
-      "generated": "2026-09-20T08:35:14Z",
+      "generated": "2026-09-20T08:38:40Z",
       "semantic": 263,
       "readable_asm": 370,
       "opcode": 0,

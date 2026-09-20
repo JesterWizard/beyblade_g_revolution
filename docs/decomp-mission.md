@@ -192,6 +192,7 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 | Mission (this file) | `docs/decomp-mission.md` |
 | Master plan | `docs/decomp-roadmap.md` |
 | Live log | `docs/decomp-status.md` |
+| Parked unmatched C | `docs/decomp-wip.md`, `src/wip/` |
 | C-vs-original counter | `docs/decomp-progress.json` / `decomp-progress.svg` |
 | Battle notes | `docs/battle.md` |
 | Matched C | `src/matched/*.c` |

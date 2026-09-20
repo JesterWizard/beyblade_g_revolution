@@ -239,8 +239,9 @@ make compare: OK
 - `asm/rom_layout.ld`
 - `build/matched.json`
 - `src/*.c`, `include/*.h` (when C lands)
+- `src/wip/` (when parking unmatched C)
 - `beyblade_g_revolution.toml` (renames)
-- `docs/decomp-status.md`, `docs/ram-map.md`
+- `docs/decomp-status.md`, `docs/ram-map.md`, `docs/decomp-wip.md`
 
 ### When NOT to commit
 
@@ -278,5 +279,6 @@ make compare: OK
 ## References
 
 - [decomp-status.md](decomp-status.md) — live log
+- [decomp-wip.md](decomp-wip.md) — parked unmatched C
 - [ram-map.md](ram-map.md) — IWRAM/EWRAM occupancy
 - [docs/architecture.md](../docs/architecture.md) — matching vs hacking

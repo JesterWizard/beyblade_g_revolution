@@ -25,6 +25,7 @@ Phases 1–2 done. Work **Phase 3** (C in `src/matched/`) then **Phase 4** (`[re
 2. Hard → m2c / `cursor_batch.sh` → `match_function.py`
 3. Literal-pool mismatch → keep asm, document blocker
 4. Role clear → promote RAM (`ram_map_pass.sh`), then rename batch
+5. Still DIFF → **park** C in `src/wip/` (`park_wip.py`); do not revert without a seed
 
 ## Each batch
 

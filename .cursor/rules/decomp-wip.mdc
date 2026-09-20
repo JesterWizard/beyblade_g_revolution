@@ -1,0 +1,18 @@
+---
+description: Park unmatched decomp C in src/wip — never revert without a seed
+globs: src/wip/**,src/matched/**,docs/decomp-queue.toml
+alwaysApply: false
+---
+
+# Incomplete decomp is parked, not discarded
+
+`src/matched/` is MATCH-only (semantic C or readable Thumb). Unmatched drafts live in `src/wip/` with a `.md` process log.
+
+Before leaving a function that does not `match_function.py` MATCH:
+
+1. `python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c --status "…" --next "…" --score "N/M"`
+2. Fill **Role / Process / Current state / Next** in `src/wip/sub_XXXXXXXX.md`
+3. Restore Thumb in `src/matched/` if you replaced it
+4. `make queue` — **Resume (WIP)** must list it
+
+Resume: read the `.md` first; do not re-derive from disasm. Full policy: [docs/decomp-wip.md](docs/decomp-wip.md).

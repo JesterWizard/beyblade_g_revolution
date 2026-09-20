@@ -78,6 +78,7 @@ bash build_tools.sh
 | Area | Rule |
 |------|------|
 | `src/*.c` | Add matched decomp; comment header with ROM address |
+| `src/wip/` | Unmatched C + notes (`park_wip.py`); not linked |
 | `asm/rom.s` | Shrink `.incbin` as matched code replaces baserom peels |
 | `include/*.h` | Types discovered during decomp |
 | `beyblade_g_revolution.toml` | Function renames (`[renames]`) |
@@ -89,6 +90,7 @@ bash build_tools.sh
 ## What you must NOT do
 
 - Hand-edit `asm/nonmatchings/*.s` (regenerate via `tools/decomp/generate_asm.py`)
+- Revert unmatched C without parking `src/wip/` + notes ([docs/decomp-wip.md](docs/decomp-wip.md))
 - Accept a match without objdiff 0-diff (Mizuchi enforces; still re-run `make compare`)
 - Use C99 in matching paths or “fix” UB without `UBFIX`/`BUGFIX` guards
 - Hardcode IWRAM/EWRAM addresses — use `asm/ram_map*.s`
@@ -121,6 +123,7 @@ bash build_tools.sh
 | Shiftable check | `tools/decomp/check_shiftable.py` | Phase 5 gate |
 | Cursor batch | `tools/decomp/cursor_batch.sh` | m2c seeds for hard functions |
 | decomp-permuter | `tools/decomp/permuter/` | agbcc pool/ordering search |
+| Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/wip/`) |
 | Status | `tools/decomp/report_status.py` | Progress summary + refresh counter |
 | Progress bar | `tools/decomp/progress.py` | Semantic C % vs original (JSON + SVG) |
 
@@ -153,6 +156,7 @@ Post this after every batch (fill in values):
 | Master plan | [docs/decomp-roadmap.md](docs/decomp-roadmap.md) |
 | Battle subsystem | [docs/battle.md](docs/battle.md) |
 | Live progress | [docs/decomp-status.md](docs/decomp-status.md), [decomp-progress.svg](docs/decomp-progress.svg) |
+| Parked unmatched C | [docs/decomp-wip.md](docs/decomp-wip.md), `src/wip/` |
 | RAM addresses | [docs/ram-map.md](docs/ram-map.md) |
 | Install / deps | [INSTALL.md](INSTALL.md) |
 

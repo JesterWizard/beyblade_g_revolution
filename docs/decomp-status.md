@@ -21,6 +21,37 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-20 — semantic C session: +6 matched (257→263/633), 4 near-misses parked
+- **Matched (6):** `sub_0802D52C`, `sub_08043638`, `sub_08059AE0`, `sub_08059B74`,
+  `sub_08059BD8` (freelist-node family sharing new `struct Unk59AE0Src` /
+  `struct Unk59AE0Node` types at `gUnk_03000730`), plus earlier session
+  asm-wrapper integrations already committed. All verified MATCH via
+  `match_function.py` and integrated; `make compare` OK after every batch.
+- **New types:** `struct Unk59AE0Src`, `struct Unk59AE0Node` (0x3C freelist
+  node, `unk28` retyped to `struct Unk59AE0Src *`); `struct Unk0380Target`
+  (parked, see below); narrowed several `MainWork`/`BattleWork` filler spans
+  (`unk036C`, `unk039D`, `unk1810`, `BattleWork.unk0B54[4]`/`unk0B64..0B78`);
+  `gUnk_0554.unk01` promoted from filler.
+- **Parked as WIP (`src/wip/`, not reverted — see notes there):**
+  - `sub_0802D2C0` — 92/108 bytes; agbcc DCEs a reachable-but-redundant
+    `else if` branch retail keeps. Table-lookup logic itself is correct.
+  - `sub_0802E048` — 188/228 bytes (82.5%); r4/r5 register role swap vs
+    retail, resistant to declaration-order / caching changes.
+  - `sub_08033DD4` — 93/104 bytes (89.4%); one stray `lsls r0,r0,#24` on a
+    `u8`-return truthiness test. Needs `struct Unk0380Target` type re-added.
+  - `sub_080338F0` — 20/104 bytes (19.2%); real structural bug (table
+    indexing) flagged in the parked draft, needs a rewrite not a tweak.
+  - `sub_08033878` — 28/108 bytes (25.9%); BattleWork field-write CSE
+    ordering doesn't match retail's persistent-register pattern.
+- **Bytes:** 12,372/90,272 (13.7%, +578 from session start).
+- **Next:** resume any of the 5 parked WIPs (`make queue` → Resume (WIP)),
+  or continue `classify_semantic_targets.py --bucket large`.
+
+### 2026-09-20 — park/resume process (`src/wip/`); first seed `sub_08046278`
+- **Process change:** unmatched C is no longer discarded. Drafts go in `src/wip/` with a process log; `src/matched/` stays MATCH-clean. Index via `[[wip]]` in `decomp-queue.toml` (`make queue` → **Resume (WIP)**). Helper: `tools/decomp/park_wip.py`. Policy: `docs/decomp-wip.md`.
+- **Parked `sub_08046278`:** both `MainWork.unk16B0[2]` slots → `{0,-1,-1}`. Sibling `sub_08046230` already MATCH. Seed scores **11/92** (56B vs 92B). Resume from `src/wip/sub_08046278.md`.
+- No ROM change; `make compare` untouched this step.
+
 ### 2026-09-20 — deep permuter search on 6 near-miss candidates (0 landed, 246/633 unchanged)
 - Investigated the 12 flagged near-miss candidates; deprioritized `sub_0802B994` and `sub_0802C2B0` after finding prior/fresh permuter base scores of 2055+ (not simple register-order quirks — real structural mismatches), and `sub_08046278`/`sub_0806F910` after m2c failed and manual C reconstruction couldn't reach the retail register-spill shape (extra live r8/r9 across a leaf with no calls) even with correct logic.
 - Ran full-budget (~15-18 min wall clock, `-j2`–`-j4`, `--stop-on-zero`) decomp-permuter searches on the 4 genuinely clean near-misses (base score exactly 100 or a 78-79% same-size DIFF, correct logic, differing only in agbcc's register/instruction-order choice):

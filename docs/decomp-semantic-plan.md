@@ -117,6 +117,8 @@ Workflow per function (same as `sub_0802C5DC` in `docs/decomp-status.md`):
 5. Append one line to `docs/decomp-status.md`, commit per the repo's commit
    policy (after every successful integration; never if `make compare`
    fails).
+6. If still DIFF after 1–2 serious attempts: **park** (`park_wip.py` +
+   `src/wip/<fn>.md`), restore Thumb in `src/matched/`. Do not discard the C.
 
 ## Step 3 — large
 
@@ -137,6 +139,9 @@ bash tools/decomp/permuter/permute.sh bg nonmatchings/<fn> -j 4 --stop-on-zero
 # check back later:
 tail -f nonmatchings/<fn>/permute.log
 ```
+
+Park the hand seed in `src/wip/` **before** permuting so a failed search
+does not lose the reconstruction. See [decomp-wip.md](decomp-wip.md).
 
 **Use `import_function.py`, don't hand-roll `nonmatchings/<fn>/base.c`.**
 An earlier version of this doc claimed the permuter's compile pipeline

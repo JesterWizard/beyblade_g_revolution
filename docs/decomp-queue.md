@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T08:36:49Z_
+_Updated: 2026-09-20T08:38:52Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T08:36:49Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 102 (44 already semantic) |
 | Blocked (documented) | 35 |
-| WIP (resume these first) | 4 |
+| WIP (resume these first) | 5 |
 
 Ranking: **battle** · showing top **40**
 
@@ -26,10 +26,11 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 
 | Function | Bytes | Score | Seed | Status | Next |
 |----------|------:|-------|------|--------|------|
-| `sub_08046278` | 92 | unscored | `src/wip/sub_08046278.c` | logic OK (both Unk16B0 slots {0,-1,-1}); extra r8/r9 leaf spill | score seed; then independent per-field addressing like sub_08046230 |
+| `sub_08046278` | 92 | 11/92 | `src/wip/sub_08046278.c` | logic OK; 11/92 (56B vs 92B); extra r8/r9 leaf spill | independent per-field addressing like sub_08046230; force r8/r9 live |
 | `sub_0802E048` | 228 | 188/228 | `src/wip/sub_0802E048.c` | same-size DIFF, 188/228 bytes (82.5%) | try decomp-permuter register-order search; likely same agbcc leaf-fn reg-alloc quirk as dead-end list |
 | `sub_080338F0` | 104 | 20/104 | `src/wip/sub_080338F0.c` | same_size DIFF, 20/104 bytes (19.2%) — structural rewrite needed, indexing bug noted in file | fix table indexing to byte-offset (see note), re-add Unk338F0Table struct + Unk33958 retype, then re-run match_function.py |
 | `sub_0802D2C0` | 108 | 92/108 | `src/wip/sub_0802D2C0.c` | DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant else-if that retail keeps | permuter run targeting dead-code retention / instruction order; table lookup logic itself is verified correct |
+| `sub_08033878` | 108 | 28/108 | `src/wip/sub_08033878.c` | same_size DIFF, 28/108 bytes (25.9%) | permuter run (small function); or try shared 's32 zero=0' local matching retail's persistent r5 |
 
 Notes: see `src/wip/sub_08046278.md` per function.
 
@@ -61,7 +62,6 @@ Notes: see `src/wip/sub_08046278.md` per function.
 | `sub_08033084` | `0x08033084` | 100 | 1 | pool | asm | (gBattleWork) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08033878` | `0x08033878` | 108 | 1 | pool | asm | (gBattleWork) |
 | `sub_08042718` | `0x08042718` | 108 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802BC14` | `0x0802BC14` | 112 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042630` | `0x08042630` | 116 | 1 | pool | asm | (gMainWorkPtr) |
@@ -77,6 +77,7 @@ Notes: see `src/wip/sub_08046278.md` per function.
 | `sub_08031204` | `0x08031204` | 144 | 1 | pool | asm | (gBattleWork) |
 | `sub_080442FC` | `0x080442FC` | 144 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08031C98` | `0x08031C98` | 150 | 1 | pool | asm | (gBattleWork) |
+| `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -133,6 +134,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (335 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (334 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

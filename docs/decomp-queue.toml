@@ -15,9 +15,9 @@ prefer = "battle"
 name = "sub_08046278"
 seed = "src/wip/sub_08046278.c"
 notes = "src/wip/sub_08046278.md"
-status = "logic OK (both Unk16B0 slots {0,-1,-1}); extra r8/r9 leaf spill"
-next = "score seed; then independent per-field addressing like sub_08046230"
-score = "unscored"
+status = "logic OK; 11/92 (56B vs 92B); extra r8/r9 leaf spill"
+next = "independent per-field addressing like sub_08046230; force r8/r9 live"
+score = "11/92"
 
 # Known hard cases — excluded from "recommended next", listed under Blocked.
 [[block]]
@@ -183,3 +183,11 @@ notes = "src/wip/sub_0802D2C0.md"
 status = "DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant else-if that retail keeps"
 next = "permuter run targeting dead-code retention / instruction order; table lookup logic itself is verified correct"
 score = "92/108"
+
+[[wip]]
+name = "sub_08033878"
+seed = "src/wip/sub_08033878.c"
+notes = "src/wip/sub_08033878.md"
+status = "same_size DIFF, 28/108 bytes (25.9%)"
+next = "permuter run (small function); or try shared 's32 zero=0' local matching retail's persistent r5"
+score = "28/108"

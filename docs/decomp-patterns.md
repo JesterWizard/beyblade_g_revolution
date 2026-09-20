@@ -177,8 +177,8 @@ From [`decomp-mission.md`](decomp-mission.md):
 
 1. `try_convert.py` / `c_patterns` trivial match
 2. m2c + hand refine → `match_function.py` MATCH
-3. Permuter for pool/order
-4. Readable Thumb + document blocker
+3. Readable Thumb + **park** unmatched C (`docs/decomp-wip.md`) — do not discard the draft
+4. Document blocker / `[[wip]]`
 5. Promote RAM names → retry later
 
 ---
