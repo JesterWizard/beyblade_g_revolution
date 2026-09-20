@@ -692,3 +692,11 @@ notes = "src/wip/sub_080353A0.md"
 status = "two attempts: 105/200 (208B) direct draft, then 105/200 (204B) after correcting the third angle source to parent inner->unk52; register/order and first mask scheduling still differ"
 next = "Use corrected inner->unk52 seed; force retail mask-before-byte and r4/r3/r2 argument register scheduling with a targeted source/permuter search"
 score = "105/200"
+
+[[wip]]
+name = "sub_0803559C"
+seed = "src/wip/sub_0803559C.c"
+notes = "src/wip/sub_0803559C.md"
+status = "two attempts: 21/108 direct nested shape (104B), then 22/108 same-size with explicit retail labels and base/target register pins; remaining mismatch is dispatch branch layout/displacements"
+next = "Retain the same-size label seed; adjust only the type dispatch branch orientation to match beq/bgt/cmp0 offsets, then verify the shared update call"
+score = "22/108"

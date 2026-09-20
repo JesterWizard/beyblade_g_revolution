@@ -65,7 +65,9 @@ struct Unk68574 /* >= 0xdc */
     /* 04 */ u32 unk04;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;
-    /* 10 */ u8 filler_10[0x2A];
+    /* 10 */ u8 filler_10[0x0A];
+    /* 1a */ s16 unk1A; /* sub_0803559C */
+    /* 1c */ u8 filler_1C[0x1E];
     /* 3a */ u8 unk3A; /* sub_08035258 */
     /* 3b */ u8 filler_3B[0x17];
     /* 52 */ s16 unk52; /* sub_080353A0 */

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T17:03:46Z",
+  "generated": "2026-09-20T17:06:59Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 96,
     "battle_semantic": 51,
     "blocked": 34,
-    "wip": 67
+    "wip": 69
   },
   "pinned": [],
   "wip": [
@@ -752,6 +752,28 @@
       "status": "two attempts: 114/132 due a temporary Unk68574 padding error, then 119/132 same-size after correcting nested block offsets; remaining diff is retail loads mask 4 before flag byte while candidate loads flag before mask",
       "next": "Swap/source-shape the second mask test or use a tiny permuter search; retain struct Unk35258 nested blocks and direct unk70 checks",
       "score": "119/132"
+    },
+    {
+      "name": "sub_080353A0",
+      "addr": "0x080353A0",
+      "kind": "asm",
+      "bytes": 200,
+      "seed": "src/wip/sub_080353A0.c",
+      "notes": "src/wip/sub_080353A0.md",
+      "status": "two attempts: 105/200 (208B) direct draft, then 105/200 (204B) after correcting the third angle source to parent inner->unk52; register/order and first mask scheduling still differ",
+      "next": "Use corrected inner->unk52 seed; force retail mask-before-byte and r4/r3/r2 argument register scheduling with a targeted source/permuter search",
+      "score": "105/200"
+    },
+    {
+      "name": "sub_0803559C",
+      "addr": "0x0803559C",
+      "kind": "asm",
+      "bytes": 108,
+      "seed": "src/wip/sub_0803559C.c",
+      "notes": "src/wip/sub_0803559C.md",
+      "status": "two attempts: 21/108 direct nested shape (104B), then 22/108 same-size with explicit retail labels and base/target register pins; remaining mismatch is dispatch branch layout/displacements",
+      "next": "Retain the same-size label seed; adjust only the type dispatch branch orientation to match beq/bgt/cmp0 offsets, then verify the shared update call",
+      "score": "22/108"
     }
   ],
   "recommended": [
@@ -3216,18 +3238,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803559C",
-      "addr": "0x0803559C",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 58,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08061E8C",
       "addr": "0x08061E8C",
       "kind": "asm",
@@ -4073,18 +4083,6 @@
       "kind": "asm",
       "bytes": 196,
       "score": 100,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080353A0",
-      "addr": "0x080353A0",
-      "kind": "asm",
-      "bytes": 200,
-      "score": 110,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,

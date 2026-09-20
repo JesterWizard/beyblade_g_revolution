@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T17:03:46Z_
+_Updated: 2026-09-20T17:06:59Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T17:03:46Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 96 (51 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 67 |
+| WIP (resume these first) | 69 |
 
 Ranking: **battle** · showing top **40**
 
@@ -93,6 +93,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08034A68` | 112 | 111/112 | `src/wip/sub_08034A68.c` | two attempts: 32/112 direct field draft, then 111/112 same-size with status pinned to r1; only the final bne branch displacement differs (retail +0x07 vs candidate +0x03) | Use the 111/112 seed and adjust only the final branch layout (explicit label/goto or permuter); preserve status=r1 and direct struct fields |
 | `sub_08035258` | 196 | 33/196 | `src/wip/sub_08035258.c` | two semantic attempts: 21/196 bytes (192B) with a direct chain, then 33/196 bytes (192B) with explicit nested type>1/type==0 branch ordering; register pinning worsened the prologue | Use the nested seed and force selector r5 without a callee-saved register pin, or use a source shape that retains retail's r5 selector/r6 flag pointer while preserving the 196-byte layout |
 | `sub_0803531C` | 132 | 119/132 | `src/wip/sub_0803531C.c` | two attempts: 114/132 due a temporary Unk68574 padding error, then 119/132 same-size after correcting nested block offsets; remaining diff is retail loads mask 4 before flag byte while candidate loads flag before mask | Swap/source-shape the second mask test or use a tiny permuter search; retain struct Unk35258 nested blocks and direct unk70 checks |
+| `sub_080353A0` | 200 | 105/200 | `src/wip/sub_080353A0.c` | two attempts: 105/200 (208B) direct draft, then 105/200 (204B) after correcting the third angle source to parent inner->unk52; register/order and first mask scheduling still differ | Use corrected inner->unk52 seed; force retail mask-before-byte and r4/r3/r2 argument register scheduling with a targeted source/permuter search |
+| `sub_0803559C` | 108 | 22/108 | `src/wip/sub_0803559C.c` | two attempts: 21/108 direct nested shape (104B), then 22/108 same-size with explicit retail labels and base/target register pins; remaining mismatch is dispatch branch layout/displacements | Retain the same-size label seed; adjust only the type dispatch branch orientation to match beq/bgt/cmp0 offsets, then verify the shared update call |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -196,6 +198,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (257 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (255 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -85,6 +85,7 @@ void sub_08033F24(struct Unk33F30 *a);
 void sub_08034414(struct Unk33F30 *a);
 void sub_08035258(struct Unk35258 *a, u32 b);
 void sub_08035468(void *a, s32 b, s32 c, s32 d, s32 e, s32 f, s32 g);
+void sub_08068020(struct Unk680CC *a, u16 key, u16 arg2);
 void sub_08035878(struct Unk35878 *a, u32 v1, u32 v2, u32 v3);
 void sub_080358CC(struct Unk35878 *a);
 s32 sub_080674A0(s32 a, s32 b);
