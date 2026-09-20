@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T15:07:15Z",
+  "generated": "2026-09-20T15:08:30Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 38
+    "wip": 39
   },
   "pinned": [],
   "wip": [
@@ -433,6 +433,17 @@
       "status": "64/96 bytes (66.7%), same size; correct logic (index gUnk_03000770 by gUnk_03000794-1, deref entry->unk00 twice through _08073C4C bx-r3 trampoline, then copy entry->unk04/unk06 into gUnk_03000798->unk90/unk92) but agbcc uses one fewer callee-saved register (push {r4,r5,lr} vs retail's {r4,r5,r6,lr}) and reorders the trampoline-arg setup slightly",
       "next": "try forcing an extra live temp across the _08073C4C call (e.g. cache entry->unk00 deref result in its own named var before the call) to nudge agbcc into allocating r6 like retail",
       "score": "64/96"
+    },
+    {
+      "name": "sub_08061D68",
+      "addr": "0x08061D68",
+      "kind": "asm",
+      "bytes": 88,
+      "seed": "src/wip/sub_08061D68.c",
+      "notes": "src/wip/sub_08061D68.md",
+      "status": "13/88 bytes (13.5%), size mismatch (96 vs 88); correct overall algorithm (mask args to 0x1F, build 12-bit palette-select field, swap lo/hi if needed, compute VRAM tile address from gUnk_03000798->unk5C, loop-OR the palette bits into each halfword) but agbcc allocates 4 callee-saved regs (r4-r7) vs retail's 3 (r4-r6) -- retail reuses a non-callee-saved scratch reg (r1) for the swap temp instead of a persistent local",
+      "next": "drop the explicit 'tmp' local and do the swap via a compound/ternary expression, or restructure so the swap temp doesn't need to outlive the swap statement (matching retail's transient r1 use)",
+      "score": "13/88"
     }
   ],
   "recommended": [
@@ -3037,18 +3048,6 @@
       "addr": "0x080677A8",
       "kind": "asm",
       "bytes": 86,
-      "score": 40,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08061D68",
-      "addr": "0x08061D68",
-      "kind": "asm",
-      "bytes": 88,
       "score": 40,
       "battle_refs": 0,
       "battle_syms": [],
