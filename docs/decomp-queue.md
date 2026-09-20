@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T15:32:29Z_
+_Updated: 2026-09-20T15:33:32Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T15:32:29Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 48 |
+| WIP (resume these first) | 49 |
 
 Ranking: **battle** · showing top **40**
 
@@ -74,6 +74,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08062D50` | 46 | 13/46 | `src/wip/sub_08062D50.c` | 13/46 bytes (28.3%), same size; correct algorithm (write a BGR555 palette entry to VRAM palette RAM at 0x05000000+arg0*2 from arg1's r/g/b byte triplet). Two orderings tried: address-first (13/46, closer overall byte offset) and color-first (12/46, matches retail's per-field mask/shift/orr shape almost exactly but wrong push-list size, r4/r5 vs retail's r4/r5/r6). agbcc schedules the address computation independent of source statement order in both cases | try assigning arg1's three fields to named locals up front (r,g,b) before any masking, which may force agbcc to keep an extra live value (matching retail's 3-register need) instead of computing address+color inline |
 | `sub_08066BF0` | 70 | 47/70 | `src/wip/sub_08066BF0.c` | 47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm match (loop over ~29 halfword-stride entries in arg0->unk230, select alt (0x080BAF6A[i]) or default (0x080BAFA6[i]) palette value based on the flag byte at gUnk_030009A8, write to entries[i]->unk18) with end computed via register arithmetic (matching retail's non-folded 'adds r6,r3,#0; adds r6,#0x3A' instead of a literal). Added struct Unk66BF0Entry (local, unk18 at +0x18) and reused struct Unk66BC4 for arg0. Only remaining diff: register swap between 'end' and the flag pointer (r5/r6 vs retail's r6/r5) | try computing the flag-pointer as a named local (not inline gUnk_030009A8 macro use) declared between altVal and end, which may flip which gets r5 vs r6 |
 | `sub_080677A8` | 86 | 12/86 | `src/wip/sub_080677A8.c` | 12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field | try keeping 'x' (masked arg0) live past the sub_08067584 call by referencing it again afterward (e.g. in a debug/dead comparison), or check if retail's extra register holds the original 'arg1' start pointer separately from the incrementing cursor |
+| `sub_08067F98` | 48 | 36/48 | `src/wip/sub_08067F98.c` | 36/48 bytes (75%), same size; correct algorithm (variable-stride linked entry search: base=arg0->unk00, entry=base+base->unk18, walk arg0->unk28 entries comparing unk00==key, advance by unk02 byte stride) with loop/branch shape matching retail. Added structs Unk67F98/Unk67F98Base/Unk67F98Entry. Only remaining diff: register choice for 'key' (r4 here vs retail's r3) and 'count' (r3 here vs retail's r0) | try declaring 'count' before 'entry'/'base' to see if it shifts to r0, or check if the parameter u16 extension for 'key' needs a different cast form to land in r3 |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -177,6 +178,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (280 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (279 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

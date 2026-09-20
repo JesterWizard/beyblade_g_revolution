@@ -532,3 +532,11 @@ notes = "src/wip/sub_080677A8.md"
 status = "12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field"
 next = "try keeping 'x' (masked arg0) live past the sub_08067584 call by referencing it again afterward (e.g. in a debug/dead comparison), or check if retail's extra register holds the original 'arg1' start pointer separately from the incrementing cursor"
 score = "12/86"
+
+[[wip]]
+name = "sub_08067F98"
+seed = "src/wip/sub_08067F98.c"
+notes = "src/wip/sub_08067F98.md"
+status = "36/48 bytes (75%), same size; correct algorithm (variable-stride linked entry search: base=arg0->unk00, entry=base+base->unk18, walk arg0->unk28 entries comparing unk00==key, advance by unk02 byte stride) with loop/branch shape matching retail. Added structs Unk67F98/Unk67F98Base/Unk67F98Entry. Only remaining diff: register choice for 'key' (r4 here vs retail's r3) and 'count' (r3 here vs retail's r0)"
+next = "try declaring 'count' before 'entry'/'base' to see if it shifts to r0, or check if the parameter u16 extension for 'key' needs a different cast form to land in r3"
+score = "36/48"
