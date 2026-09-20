@@ -1,87 +1,30 @@
 #include "global.h"
 
 // @ 0x080507b8
-__attribute__((naked))
-void sub_080507B8(void)
+#include "global.h"
+
+void sub_080507B8(u8 *data)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r0, _080507F8 @ =0x030006B8\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08050800\n"
-        "movs r0, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x09\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x11\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x09\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "ldr r1, _080507FC @ =0x000002D5\n"
-        "adds r0, r4, r1\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "adds r0, #0x10\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x09\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "b _0805085A\n"
-        "_080507F8: .4byte 0x030006B8\n"
-        "_080507FC: .4byte 0x000002D5\n"
-        "_08050800:\n"
-        "movs r0, #0x06\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x18\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x08\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x18\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x0A\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x18\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x0C\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x18\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x0E\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x18\n"
-        "bl sub_08061D68\n"
-        "ldr r1, _08050860 @ =0x000002D5\n"
-        "adds r0, r4, r1\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "lsls r0, r0, #0x11\n"
-        "movs r1, #0xC0\n"
-        "lsls r1, r1, #0x0B\n"
-        "adds r0, r0, r1\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x18\n"
-        "bl sub_08061D68\n"
-        "_0805085A:\n"
-        "pop {r4}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08050860: .4byte 0x000002D5\n"
-    );
+    u32 value;
+
+    if (gUnk_030006B8 == 0)
+    {
+        sub_08061D68(0x10, 0x0F, 9, 0x1A);
+        sub_08061D68(0x11, 0x0F, 9, 0x1A);
+        value = (u32)((s8)data[0x2D5] + 0x10);
+        value = (value << 16) >> 16;
+        sub_08061D68(value, 0x0E, 9, 0x1A);
+    }
+    else
+    {
+        sub_08061D68(6, 0x0F, 0x0A, 0x18);
+        sub_08061D68(8, 0x0F, 0x0A, 0x18);
+        sub_08061D68(0x0A, 0x0F, 0x0A, 0x18);
+        sub_08061D68(0x0C, 0x0F, 0x0A, 0x18);
+        sub_08061D68(0x0E, 0x0F, 0x0A, 0x18);
+        value = (u32)((s32)(s8)data[0x2D5] << 17) + 0x60000;
+        value >>= 16;
+        sub_08061D68(value, 0x0E, 0x0A, 0x18);
+    }
 }
 
