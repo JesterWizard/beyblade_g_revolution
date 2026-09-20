@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T08:52:03Z",
+  "generated": "2026-09-20T09:04:39Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 102,
     "battle_semantic": 44,
     "blocked": 35,
-    "wip": 10
+    "wip": 16
   },
   "pinned": [],
   "wip": [
@@ -125,6 +125,72 @@
       "status": "size_mismatch 156/176 (88.6%, compiled 168B vs retail 176B); all field init logic correct (Unk346C0 tail-region zero/const init, 8 byte writes + 3 halfword + several u32); agbcc picks r1-chain instead of r4-chain for final unk2C4 store, dropping one add-chain step vs retail",
       "next": "try alternate field write order or split into two helper calls matching retail's r1/r4 chain split; permuter candidate (small, near miss)",
       "score": "156/176"
+    },
+    {
+      "name": "sub_08049F98",
+      "addr": "0x08049F98",
+      "kind": "asm",
+      "bytes": 144,
+      "seed": "src/wip/sub_08049F98.c",
+      "notes": "src/wip/sub_08049F98.md",
+      "status": "same-size DIFF 36/144 (25%); logic confirmed correct (2x sub_080617C4 header calls, sub_080615EC coord set via idx<<4 chain, sub_08061784 return, sub_0806171C draw); agbcc keeps out-param in r8 across 3 calls in retail (push r8 at entry) but my C only uses out at final call so agbcc doesn't preallocate r8 early \u2014 retail's r8 usage implies out is referenced earlier in source or a dummy read keeps it live",
+      "next": "try touching 'out' earlier (e.g. volatile read) or reorder params so out is 2nd arg; also try casting idx shift result through s16 (retail uses lsrs #17 = arithmetic sign truncate to s15 for the return-value cast, suggesting val type may be s16 not u16 -- already tried, needs recheck combined with r8 fix). Twin clones sub_0804E17C/sub_08051578 share same structure - crack this one first, then just re-run match_function.py with same seed",
+      "score": "unscored"
+    },
+    {
+      "name": "sub_080385DC",
+      "addr": "0x080385DC",
+      "kind": "asm",
+      "bytes": 80,
+      "seed": "src/wip/sub_080385DC.c",
+      "notes": "src/wip/sub_080385DC.md",
+      "status": "same_size DIFF 18/80 (20.5%), compiled 88B vs retail 80B; logic correct (clears unk20 bit i, ORs 0xFFFF into unk00[i] and unk22[i] for lo..hi); agbcc re-dereferences gUnk_030003CC pointer macro 3x per loop iter instead of caching once like retail (extra ldr r4,[..] each access); caching into local struct ptr var makes it WORSE (100B, forces r12 spill since r4-r7 all in use)",
+      "next": "try passing pointer as a function-local register-hint or restructure to compute all three offsets from one base read per iteration via a single helper macro/temp; or try reordering field writes (unk22 before unk00) to see if agbcc's scheduler picks different caching",
+      "score": "unscored"
+    },
+    {
+      "name": "sub_08070604",
+      "addr": "0x08070604",
+      "kind": "asm",
+      "bytes": 92,
+      "seed": "src/wip/sub_08070604.c",
+      "notes": "src/wip/sub_08070604.md",
+      "status": "size_mismatch 82/92 (85.4%), compiled 96B vs retail 92B; all field init logic + s16<<8 fixed-point cast for x/y confirmed correct (struct Unk70604 fully init'd); only remaining diff is tail: retail computes &dst->unk29 into r0 once then reuses r0+1 for &dst->unk2A store, my C recomputes ip+0x2a fresh (4 extra bytes, mov+adds+mov+adds vs adds r0,#1)",
+      "next": "try forcing pointer reuse via intermediate u8* local assigned once (e.g. u8 *p = (u8*)&dst->unk29; *p = 0; then some non-offset-cast way to hit unk2A) or check if declaring unk29/unk2A as an anonymous union/bitfield-adjacent pair in the struct changes agbcc's addressing; permuter candidate, very close",
+      "score": "82/92"
+    },
+    {
+      "name": "sub_080733E4",
+      "addr": "0x080733E4",
+      "kind": "asm",
+      "bytes": 90,
+      "seed": "src/wip/sub_080733E4.c",
+      "notes": "src/wip/sub_080733E4.md",
+      "status": "size_mismatch 14/90 (15.6%), compiled 88B vs retail 90B; logic likely correct (string copy skipping \n, pads with NUL at end, returns final index-1; early NULL-checks return -1) but overall instruction ordering/branch layout diverges heavily from agbcc -- for(;;i++) with if/else produces different control flow than retail's label-based skip-loop + separate main loop",
+      "next": "rewrite using explicit goto/labels mirroring retail's exact block structure (skip-loop as do-while entered via initial check, main loop with cmp r2,r5 bcs branch kept as if(i>=c) first check inside loop, not for-loop machinery); or feed to permuter directly given plausible logic match",
+      "score": "unscored"
+    },
+    {
+      "name": "sub_08069B78",
+      "addr": "0x08069B78",
+      "kind": "asm",
+      "bytes": 154,
+      "seed": "src/wip/sub_08069B78.c",
+      "notes": "src/wip/sub_08069B78.md",
+      "status": "size_mismatch 62/154 (40.3%), compiled 152B vs retail 154B; logic correct (4x sub_08069988(i) calls packing 2-bit field into *(u8*)result via (*p&~3)|(val&3)); first 48 bytes match exactly (prologue + first call), diverges starting 2nd sub_08069988 call - retail keeps mask constant 3 in r10 persistently reused across all 4 iterations, my C recomputes per-call causing different register allocation",
+      "next": "try extracting shared mask into persistent local var assigned once before all 4 blocks (e.g. u8 mask=3; u8 inv=~3;) or write as loop over array of 4 args to force agbcc register reuse pattern",
+      "score": "62/154"
+    },
+    {
+      "name": "sub_0806E7BC",
+      "addr": "0x0806E7BC",
+      "kind": "asm",
+      "bytes": 152,
+      "seed": "src/wip/sub_0806E7BC.c",
+      "notes": "src/wip/sub_0806E7BC.md",
+      "status": "size_mismatch 42/152 (27.6%), compiled 148B vs retail 152B; attempted as line-segment intersection test (2D cross-product sign comparison, 8 s32 params ax,ay,bx,by,cx,cy,dx,dy) returning 0/1/2; logic direction plausible (first 8 bytes match: prologue) but overall structure/expression grouping doesn't match agbcc's register scheduling - needs more careful param/expr-order derivation from raw asm (subs order matters: check if retail computes abx=ax-bx or bx-ax first, etc)",
+      "next": "re-derive param roles more carefully from asm (r12=a0 orig, r6=a1, r5=a2, r4=a3; stack args sp0x18/1C/20/24) - do NOT assume signature guessed here is correct; trace each subs/muls instruction to exact source expr before writing C",
+      "score": "42/152"
     }
   ],
   "recommended": [
@@ -3048,18 +3114,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_080385DC",
-      "addr": "0x080385DC",
-      "kind": "asm",
-      "bytes": 80,
-      "score": 35,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08042F4C",
       "addr": "0x08042F4C",
       "kind": "asm",
@@ -3152,18 +3206,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080733E4",
-      "addr": "0x080733E4",
-      "kind": "asm",
-      "bytes": 90,
-      "score": 45,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },
@@ -3848,30 +3890,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806E7BC",
-      "addr": "0x0806E7BC",
-      "kind": "asm",
-      "bytes": 152,
-      "score": 76,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069B78",
-      "addr": "0x08069B78",
-      "kind": "asm",
-      "bytes": 154,
-      "score": 85,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },
