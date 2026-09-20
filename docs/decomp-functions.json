@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T16:14:30Z",
+  "generated": "2026-09-20T16:26:28Z",
   "counts": {
     "matched": 279,
     "blocked": 28,
-    "not_started": 257,
-    "wip": 53,
+    "not_started": 255,
+    "wip": 55,
     "size_mismatch": 14,
     "same_size": 2
   },
@@ -10147,17 +10147,17 @@
       "addr": "0x08071B4C",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 84,
-      "matched_bytes": 0,
+      "matched_bytes": 75,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/84",
-      "source": "none",
-      "note": ""
+      "pct": 89.3,
+      "score": "75/84",
+      "source": "wip",
+      "note": "75/84 bytes (89.3%), size mismatch (80 vs 84); correct algorithm (zero sound hardware regs 0x04000084/0x04000082/0x40000C4/0xD0/0x104/0x100, compute idx-based offset and call the bx-r3 trampoline _08073C4C with gUnk_030040DC's list and the handler at 0x080BB8BC, then zero gUnk_030000C0). Reordering the handler-slot/list loads before idx got the literal-pool order matching retail exactly (89.3%). Remaining diff: agbcc folds the gUnk_0300410C load into an offset-add from gUnk_030040DC (0x30 apart) instead of retail's separate literal, the same class of literal-pool-folding quirk seen in sub_080473F8/sub_08052934/sub_08069894"
     },
     {
       "name": "sub_08071BA0",
@@ -10215,17 +10215,17 @@
       "addr": "0x08071E84",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 96,
-      "matched_bytes": 0,
+      "matched_bytes": 19,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/96",
-      "source": "none",
-      "note": ""
+      "pct": 19.8,
+      "score": "19/96",
+      "source": "wip",
+      "note": "19/96 bytes (19.8%), size mismatch (92 vs 96); correct algorithm (walk 0x28-stride Unk71E84 array from gUnk_030040E4, find first entry with unk16==0 within gUnk_030040C4 count, call sub_08071E44, stamp a running id from gUnk_030000C8 into entry->unk18 and return it; on exhaustion, call sub_08067B98 with a format string and return -1). Uses the shared struct Unk71E84 and existing sub_08071E44/sub_08071E84 prototypes. Remaining diffs: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart, the recurring literal-pool quirk), and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form"
     },
     {
       "name": "sub_08071EE4",

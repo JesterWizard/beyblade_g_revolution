@@ -596,3 +596,11 @@ notes = "src/wip/sub_08071E84.md"
 status = "19/96 bytes (19.8%), size mismatch (92 vs 96); correct algorithm (walk 0x28-stride Unk71E84 array from gUnk_030040E4, find first entry with unk16==0 within gUnk_030040C4 count, call sub_08071E44, stamp a running id from gUnk_030000C8 into entry->unk18 and return it; on exhaustion, call sub_08067B98 with a format string and return -1). Uses the shared struct Unk71E84 and existing sub_08071E44/sub_08071E84 prototypes. Remaining diffs: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart, the recurring literal-pool quirk), and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form"
 next = "try writing the first bounds check with the same (count != -1) form used in the loop instead of implicit truthiness, to keep the comparison shape consistent"
 score = "19/96"
+
+[[wip]]
+name = "sub_08071EE4"
+seed = "src/wip/sub_08071EE4.c"
+notes = "src/wip/sub_08071EE4.md"
+status = "19/96 bytes (19.8%), size mismatch (92 vs 96); exact clone of sub_08071E84 (same struct/algorithm, calls sub_08071E04 instead of sub_08071E44) and hits the identical diff pattern: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4, and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form. See sub_08071E84's WIP notes for the same analysis"
+next = "same as sub_08071E84 -- try the (count != -1) form for the first check; whatever unlocks that sibling should apply here too"
+score = "19/96"
