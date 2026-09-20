@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T08:25:48Z_
+_Updated: 2026-09-20T08:32:22Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 259 |
-| Still need semantic C | **374** |
-| Readable Thumb remaining | 374 |
+| Semantic C done | 260 |
+| Still need semantic C | **373** |
+| Readable Thumb remaining | 373 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 103 (43 already semantic) |
+| Battle pending | 102 (44 already semantic) |
 | Blocked (documented) | 35 |
 
 Ranking: **battle** · showing top **40**
@@ -55,12 +55,12 @@ Ranking: **battle** · showing top **40**
 | `sub_080392D0` | `0x080392D0` | 116 | 1 | pool | asm | (gBattleWork) |
 | `sub_08042540` | `0x08042540` | 120 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080425B8` | `0x080425B8` | 120 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08043638` | `0x08043638` | 120 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08051BBC` | `0x08051BBC` | 124 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C55C` | `0x0802C55C` | 128 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080462D4` | `0x080462D4` | 130 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802BF04` | `0x0802BF04` | 140 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804245C` | `0x0804245C` | 140 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08031204` | `0x08031204` | 144 | 1 | pool | asm | (gBattleWork) |
 
 ## Blocked
 
@@ -115,6 +115,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (343 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (342 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-20T08:25:48Z",
+  "generated": "2026-09-20T08:32:22Z",
   "counts": {
-    "matched": 259,
+    "matched": 260,
     "blocked": 31,
-    "not_started": 321,
+    "not_started": 320,
     "size_mismatch": 18,
     "same_size": 4
   },
@@ -3740,17 +3740,17 @@
     {
       "name": "sub_08043638",
       "addr": "0x08043638",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "not_started",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "block_reason": "",
       "retail_bytes": 120,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/120",
-      "source": "none",
+      "matched_bytes": 120,
+      "compiled_bytes": 120,
+      "pct": 100.0,
+      "score": "120/120",
+      "source": "integrated",
       "note": ""
     },
     {

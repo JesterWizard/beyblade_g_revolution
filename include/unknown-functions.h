@@ -42,6 +42,8 @@ void sub_080601C4(u32 a, u32 b);
 void sub_0802ECD8(void);
 void sub_0802FA94(void);
 void sub_08033D90(struct Unk33F30 *a);
+void sub_08043420(void);
+void sub_080436B0(void);
 u16 sub_08067648(u16 a, u32 b, u32 c);
 s32 sub_0803DD88(s32 a);
 s32 sub_0802C314(s8 a, u8 b, void *out);

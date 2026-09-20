@@ -249,10 +249,13 @@ struct Unk8D0 /* 0x28 */
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
-    /* 0000 */ u8 filler_0000[0x370];
+    /* 0000 */ u8 filler_0000[0x36C];
+    /* 036C */ u32 unk036C;
     /* 0370 */ u32 unk0370;
     /* 0374 */ u32 unk0374;
-    /* 0378 */ u8 filler_0378[0x34];
+    /* 0378 */ u8 filler_0378[0x25];
+    /* 039D */ u8 unk039D;
+    /* 039E */ u8 filler_039E[0xE];
     /* 03AC */ u32 unk03AC;
     /* 03B0 */ u32 unk03B0;
     /* 03B4 */ u8 filler_03B4[0x70];
@@ -318,7 +321,8 @@ struct MainWork /* >= 0x18B4 */
     /* 1804 */ u8 filler_1804[4];
     /* 1808 */ u32 unk1808;
     /* 180C */ u32 unk180C;
-    /* 1810 */ u8 filler_1810[8];
+    /* 1810 */ u32 unk1810;
+    /* 1814 */ u8 filler_1814[4];
     /* 1818 */ u8 unk1818;
     /* 1819 */ u8 unk1819;
     /* 181A */ u8 unk181A;
@@ -1426,7 +1430,8 @@ struct Unk3CC /* >= 0x32 */
 /* *gUnk_03000554 target: byte array at +0x08, u8 field at +0x02. sub_080435D8, sub_080436B0. */
 struct Unk0554 /* >= 0x09 */
 {
-    /* 00 */ u8 filler_00[2];
+    /* 00 */ u8 filler_00;
+    /* 01 */ u8 unk01;
     /* 02 */ u8 unk02;
     /* 03 */ u8 filler_03[5];
     /* 08 */ u8 unk08[0x7F];
