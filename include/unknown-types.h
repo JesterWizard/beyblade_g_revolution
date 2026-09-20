@@ -1481,6 +1481,26 @@ struct Unk6FE84 /* >= 0x34 */
     /* 30 */ void *unk30;
 };
 
+struct Unk70354Object /* >= 0x1A */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ u32 unk08;
+    /* 0C */ u8 filler_0C[8];
+    /* 14 */ u16 unk14;
+    /* 16 */ u16 unk16;
+    /* 18 */ u8 unk18;
+};
+
+struct Unk70354 /* >= 0x34 */
+{
+    /* 00 */ u8 filler_00[0x10];
+    /* 10 */ u32 unk10;
+    /* 14 */ u8 filler_14[8];
+    /* 1C */ u16 unk1C;
+    /* 1E */ u8 filler_1E[0x12];
+    /* 30 */ struct Unk70354Object *unk30;
+};
+
 /* Halfword delta @ +0x1C, words @ +0x14/+0x18. sub_080361A8. */
 struct Unk361A8 /* >= 0x1e */
 {
