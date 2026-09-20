@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T18:02:58Z",
+  "generated": "2026-09-20T18:14:02Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 343,
-    "semantic_done": 290,
-    "readable_asm": 343,
+    "pending": 342,
+    "semantic_done": 291,
+    "readable_asm": 342,
     "opcode": 0,
     "battle_pending": 91,
     "battle_semantic": 56,
     "blocked": 34,
-    "wip": 96
+    "wip": 106
   },
   "pinned": [],
   "wip": [
@@ -1071,6 +1071,116 @@
       "status": "Two attempts: semantic byte-state seed 70/548 (392B), then retail argument register pins 78/548 (404B). Operations are mapped for byte set/clear/increment/decrement/compare and table/pointer transfers at 0x3E8/0x3E9/0x3EE/0x3EF; remaining mismatch is switch branch layout, signed-byte loop generation, and copy expansion.",
       "next": "Restore the pinned argument layout; use a switch/source shape matching retail case ordering (10, 5-9, 0x3E8..), signed s8 loop counters, and explicit byte-array pointers to reproduce ldm/stm-style copies.",
       "score": "70/548 then 78/548"
+    },
+    {
+      "name": "sub_080474AC",
+      "addr": "0x080474AC",
+      "kind": "asm",
+      "bytes": 232,
+      "seed": "src/wip/sub_080474AC.c",
+      "notes": "src/wip/sub_080474AC.md",
+      "status": "Two semantic attempts: local pool physics seed 24/232 (200B), then r3-pinned MainWork 25/232 (200B). Behavior and pool-slot fields are mapped, but retail retains location/pointer registers and emits ldm-based 16-slot loops that the semantic array indexing does not reproduce.",
+      "next": "Restore the baseline; use a targeted register/permuter search for MainWork r3, pool-location r4, pool pointer r2, and ldm/stm slot iteration while preserving 0x1825/0x1827 gates and random updates.",
+      "score": "24/232 then 25/232"
+    },
+    {
+      "name": "sub_08047624",
+      "addr": "0x08047624",
+      "kind": "asm",
+      "bytes": 174,
+      "seed": "src/wip/sub_08047624.c",
+      "notes": "src/wip/sub_08047624.md",
+      "status": "Two attempts produced the same 132/174 near-match (172B). Coordinate alignment semantics and signed fixed-point source fields are correct; the only observed size/layout delta is retail's extra common-label branch before the return.",
+      "next": "Restore the semantic loop seed and use a branch-layout/permuter search to preserve the extra _080476AE common label branch; do not alter the alignment arithmetic.",
+      "score": "132/174 then 132/174"
+    },
+    {
+      "name": "sub_08047A94",
+      "addr": "0x08047A94",
+      "kind": "asm",
+      "bytes": 168,
+      "seed": "src/wip/sub_08047A94.c",
+      "notes": "src/wip/sub_08047A94.md",
+      "status": "Two semantic attempts: baseline 50/168 (188B) and register-pinned 54/168 (188B). Calls/constants and rendering sequence are mapped, but retail's r4/r7 argument lifetime and saved-r7 prologue differ; second pinning caused an unsaved-r7 prologue.",
+      "next": "Restore baseline and use targeted register/source-order or permuter search for input in r4, image in saved r7, index in r6, and u16 coordinate truncation.",
+      "score": "50/168 then 54/168"
+    },
+    {
+      "name": "sub_0804A028",
+      "addr": "0x0804A028",
+      "kind": "asm",
+      "bytes": 174,
+      "seed": "src/wip/sub_0804A028.c",
+      "notes": "src/wip/sub_0804A028.md",
+      "status": "Two semantic attempts: wrong-offset seed 15/174, corrected-offset render sequence 55/174 (172B). Correct fields are +0x2D5 and +0x2FC, global flag is MainWork +0x1855, and all four draw calls/constants are mapped; remaining differences are register allocation (retail keeps r4/r5 byte values and uses r1 for 0x50000) plus a two-byte branch/layout delta.",
+      "next": "Restore corrected semantic seed and use targeted register/source-order/permuter search; preserve the exact fixed-point forms and seek retail r4/r5 values with the 0x50000 temporary in r1.",
+      "score": "15/174 then 55/174"
+    },
+    {
+      "name": "sub_0804A438",
+      "addr": "0x0804A438",
+      "kind": "asm",
+      "bytes": 168,
+      "seed": "src/wip/sub_0804A438.c",
+      "notes": "src/wip/sub_0804A438.md",
+      "status": "Two attempts: generic renderer 56/168 (180B), cloned direct-shift/register-layout seed 57/168 (176B). Rendering semantics and constants match, but agbcc omits retail's saved-r7 prologue for the persistent third argument and emits extra coordinate narrowing.",
+      "next": "Use the sibling-family permuter/register-layout approach: ordinary live r7 for the third argument, r4 offset, r6 first coordinate, r5 table; preserve direct sub_08061784 shift expression and avoid fixed r7 asm pinning.",
+      "score": "56/168 then 57/168"
+    },
+    {
+      "name": "sub_0804AAF0",
+      "addr": "0x0804AAF0",
+      "kind": "asm",
+      "bytes": 332,
+      "seed": "src/wip/sub_0804AAF0.c",
+      "notes": "src/wip/sub_0804AAF0.md",
+      "status": "Two semantic attempts: initial 145/332 (324B), then early current-global address ordering 151/332 (324B). All menu entry fields, allocator, resource lookups, draw calls, flags, decompression, and cleanup are mapped; remaining mismatch is compiler ordering/literal-pool/register shape around the 0x03000660/0x03000658 setup.",
+      "next": "Restore the semantic seed and use targeted source-order/permuter work to force retail r4=0x03000660 before the signed index lookup, while retaining the resource call sequence and final reload.",
+      "score": "145/332 then 151/332"
+    },
+    {
+      "name": "sub_0804AC3C",
+      "addr": "0x0804AC3C",
+      "kind": "asm",
+      "bytes": 104,
+      "seed": "src/wip/sub_0804AC3C.c",
+      "notes": "src/wip/sub_0804AC3C.md",
+      "status": "Two attempts: semantic seed 32/104 (96B), then r6/r5/r4 register-pinned data/first/second 38/104 (96B). Field offsets, transition calls, fixed-point positions, and cleanup are correct; remaining mismatch is retail's constant/coordinate register layout (r0/r1 and r4/r5) and an 8-byte size delta.",
+      "next": "Use a scoped r6 data pointer so it expires after sub_0804AAF0, make coordinate u16 to force retail lsr-to-r4 then adds r0, and preserve the direct fixed-point expression.",
+      "score": "32/104 then 38/104"
+    },
+    {
+      "name": "sub_0804B40C",
+      "addr": "0x0804B40C",
+      "kind": "asm",
+      "bytes": 168,
+      "seed": "src/wip/sub_0804B40C.c",
+      "notes": "src/wip/sub_0804B40C.md",
+      "status": "Two semantic attempts: direct family seed 51/168 (176B), then fixed-offset r4 variant 49/168 (176B). Call sequence, constants, and signed-index behavior are mapped; register pinning worsened the prologue and retail's offset/first-coordinate lifetime remains unresolved.",
+      "next": "Use the UI-renderer family permuter: ordinary input in saved r4, image in saved r7, first coordinate in r6; avoid fixed asm pins that reorder the prologue, and force direct sub_080615EC expressions to remove coordinate narrowing.",
+      "score": "51/168 then 49/168"
+    },
+    {
+      "name": "sub_0804C27C",
+      "addr": "0x0804C27C",
+      "kind": "asm",
+      "bytes": 168,
+      "seed": "src/wip/sub_0804C27C.c",
+      "notes": "src/wip/sub_0804C27C.md",
+      "status": "Two attempts consumed: parameter-register syntax was rejected by agbcc; the viable local r4/r6 pin produced 56/168 (176B). Renderer semantics/constants are mapped, but fixed-register declaration order swaps the retail saved-register prologue and coordinate lifetime.",
+      "next": "Use ordinary saved-register allocation/permuter work (input r4, image r7, first coordinate r6) rather than parameter asm syntax or the current fixed-register declaration order.",
+      "score": "compile error then 56/168"
+    },
+    {
+      "name": "sub_0804CE2C",
+      "addr": "0x0804CE2C",
+      "kind": "asm",
+      "bytes": 168,
+      "seed": "src/wip/sub_0804CE2C.c",
+      "notes": "src/wip/sub_0804CE2C.md",
+      "status": "Two semantic attempts: family seed 51/168 (176B), then r4/r6 explicit locals 56/168 (176B). Constants and call sequence are correct; agbcc still swaps the desired index/first-coordinate register allocation and retains an 8-byte size delta.",
+      "next": "Use the established UI family permuter/source-order search for ordinary saved r4 input, r6 first coordinate, and saved r7 image; avoid the explicit local asm pins that reverse the prologue.",
+      "score": "51/168 then 56/168"
     }
   ],
   "recommended": [
@@ -1309,34 +1419,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08047624",
-      "addr": "0x08047624",
-      "kind": "asm",
-      "bytes": 174,
-      "score": 85,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804A028",
-      "addr": "0x0804A028",
-      "kind": "asm",
-      "bytes": 174,
-      "score": 93,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0802C4A4",
       "addr": "0x0802C4A4",
       "kind": "asm",
@@ -1468,20 +1550,6 @@
       "kind": "asm",
       "bytes": 228,
       "score": 107,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080474AC",
-      "addr": "0x080474AC",
-      "kind": "asm",
-      "bytes": 232,
-      "score": 111,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -1639,6 +1707,48 @@
       "battle_refs": 1,
       "battle_syms": [
         "gBattleWork"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0803370C",
+      "addr": "0x0803370C",
+      "kind": "asm",
+      "bytes": 362,
+      "score": 165,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gBattleWork"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08044648",
+      "addr": "0x08044648",
+      "kind": "asm",
+      "bytes": 364,
+      "score": 189,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_080447E8",
+      "addr": "0x080447E8",
+      "kind": "asm",
+      "bytes": 372,
+      "score": 195,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
       ],
       "has_pool": true,
       "blocked": false,
@@ -2121,34 +2231,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08047624",
-      "addr": "0x08047624",
-      "kind": "asm",
-      "bytes": 174,
-      "score": 85,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804A028",
-      "addr": "0x0804A028",
-      "kind": "asm",
-      "bytes": 174,
-      "score": 93,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0802C4A4",
       "addr": "0x0802C4A4",
       "kind": "asm",
@@ -2280,20 +2362,6 @@
       "kind": "asm",
       "bytes": 228,
       "score": 107,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080474AC",
-      "addr": "0x080474AC",
-      "kind": "asm",
-      "bytes": 232,
-      "score": 111,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -3191,18 +3259,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0804AC3C",
-      "addr": "0x0804AC3C",
-      "kind": "asm",
-      "bytes": 104,
-      "score": 62,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08061E8C",
       "addr": "0x08061E8C",
       "kind": "asm",
@@ -3599,18 +3655,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0804E20C",
-      "addr": "0x0804E20C",
-      "kind": "asm",
-      "bytes": 164,
-      "score": 99,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08070354",
       "addr": "0x08070354",
       "kind": "asm",
@@ -3631,66 +3675,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08047A94",
-      "addr": "0x08047A94",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 98,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804A438",
-      "addr": "0x0804A438",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 98,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804B40C",
-      "addr": "0x0804B40C",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 98,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804C27C",
-      "addr": "0x0804C27C",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 98,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804CE2C",
-      "addr": "0x0804CE2C",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 98,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
@@ -4336,18 +4320,6 @@
       "kind": "asm",
       "bytes": 332,
       "score": 184,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804AAF0",
-      "addr": "0x0804AAF0",
-      "kind": "asm",
-      "bytes": 332,
-      "score": 198,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,

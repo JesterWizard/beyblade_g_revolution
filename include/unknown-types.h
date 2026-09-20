@@ -506,6 +506,19 @@ struct Unk45A84 /* >= 0x0c */
     /* 08 */ u8 unk08;
 };
 
+/* Current menu entry selected by sub_0804AAF0. */
+struct Unk4AAF0 /* >= 0x28 */
+{
+    /* 00 */ u8 filler_00[0x1D];
+    /* 1D */ s8 unk1D;
+    /* 1E */ s8 unk1E;
+    /* 1F */ u8 unk1F;
+    /* 20 */ u8 unk20;
+    /* 21 */ s8 unk21;
+    /* 22 */ u8 filler_22[4];
+    /* 26 */ s16 unk26;
+};
+
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
@@ -622,7 +635,8 @@ struct MainWork /* >= 0x18B4 */
     /* 1820 */ u8 filler_1820[4];
     /* 1824 */ u8 unk1824; /* sub_08037508 */
     /* 1825 */ u8 unk1825;
-    /* 1826 */ u8 filler_1826[2];
+    /* 1826 */ u8 unk1826;
+    /* 1827 */ u8 unk1827;
     /* 1828 */ u8 unk1828; /* sub_080429CC */
     /* 1829 */ u8 filler_1829[3];
     /* 182C */ u8 unk182C; /* sub_08042784 */
@@ -635,7 +649,9 @@ struct MainWork /* >= 0x18B4 */
     /* 183C */ u8 filler_183C[0x10];
     /* 184C */ s8 unk184C; /* sub_080462D4 */
     /* 184D */ s8 unk184D; /* sub_080462D4 */
-    /* 184E */ u8 filler_184E[0x13];
+    /* 184E */ u8 filler_184E[7];
+    /* 1855 */ s8 unk1855;
+    /* 1856 */ u8 filler_1856[0x0B];
     /* 1861 */ s8 unk1861[0x53];
     /* 18B4 */ u8 filler_18B4[4];
     /* 18B8 */ struct Unk45A84 unk18B8;
@@ -1141,10 +1157,19 @@ struct Unk47594 /* >= 0x10 */
     /* 0c */ u32 unk0C;
 };
 
+struct Unk474ACSlot /* >= 0x1a */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ u8 filler_10[8];
+    /* 18 */ u16 unk18;
+};
+
 /* *gUnk_03000630. 16-slot pool + counters. sub_080473F8, sub_0804745C, sub_080474AC. */
 struct Unk473F8 /* >= 0x48 */
 {
-    /* 00 */ void *unk00[16];
+    /* 00 */ struct Unk474ACSlot *unk00[16];
     /* 40 */ s32 unk40;
     /* 44 */ s32 unk44;
 };
