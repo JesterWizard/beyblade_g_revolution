@@ -858,6 +858,14 @@ struct Unk47594 /* >= 0x10 */
     /* 0c */ u32 unk0C;
 };
 
+/* *gUnk_03000630. 16-slot pool + counters. sub_080473F8, sub_0804745C, sub_080474AC. */
+struct Unk473F8 /* >= 0x48 */
+{
+    /* 00 */ void *unk00[16];
+    /* 40 */ s32 unk40;
+    /* 44 */ s32 unk44;
+};
+
 /* Nested block at +0x80. sub_0805D1AC, sub_0805DA70. */
 struct Unk0748 /* >= 0x168 */
 {

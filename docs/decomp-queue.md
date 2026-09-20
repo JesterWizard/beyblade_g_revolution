@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T13:19:15Z_
+_Updated: 2026-09-20T13:23:20Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T13:19:15Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 33 |
+| WIP (resume these first) | 34 |
 
 Ranking: **battle** · showing top **40**
 
@@ -59,6 +59,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08042C3C` | 56 | 54/56 | `src/wip/sub_08042C3C.c` | 54/56 same-size DIFF (96.4%); exact prologue, sentinel handling, cursor registers, and return are matched; only the two cursor increments are reversed (retail value cursor r1 then key cursor r2) | swap the source order of  and ; this is a two-byte instruction-order near-match |
 | `sub_08042F4C` | 80 | 33/80 | `src/wip/sub_08042F4C.c` | 33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization | verify whether sub_08042E78's prototype should accept s32 for this caller (without changing its own matching definition), then retry the same source shape |
 | `sub_08043B90` | 76 | 67/76 | `src/wip/sub_08043B90.c` | 67/76 same-size DIFF; sibling-shaped semantic C matches the loop and bytes, but agbcc keeps a two-byte mov/branch placement difference around the shared return path after the ROM literal pool | use an explicit label/goto layout that preserves r0 from the terminating unk00 load and aligns the return path with the literal-pool gap |
+| `sub_080473F8` | 100 | 50/100 | `src/wip/sub_080473F8.c` | 50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits | try forcing literal reload: maybe split into two functions temporarily, or check if retail was compiled with different codegen version/flags for this TU; alternatively try asm-volatile-free trick of loading address via array indexing gUnk_0300063C-style neighbor to shift pool layout |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -162,6 +163,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (296 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (295 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

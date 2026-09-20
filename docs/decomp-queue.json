@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T13:19:15Z",
+  "generated": "2026-09-20T13:23:20Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 33
+    "wip": 34
   },
   "pinned": [],
   "wip": [
@@ -378,6 +378,17 @@
       "status": "67/76 same-size DIFF; sibling-shaped semantic C matches the loop and bytes, but agbcc keeps a two-byte mov/branch placement difference around the shared return path after the ROM literal pool",
       "next": "use an explicit label/goto layout that preserves r0 from the terminating unk00 load and aligns the return path with the literal-pool gap",
       "score": "67/76"
+    },
+    {
+      "name": "sub_080473F8",
+      "addr": "0x080473F8",
+      "kind": "asm",
+      "bytes": 100,
+      "seed": "src/wip/sub_080473F8.c",
+      "notes": "src/wip/sub_080473F8.md",
+      "status": "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits",
+      "next": "try forcing literal reload: maybe split into two functions temporarily, or check if retail was compiled with different codegen version/flags for this TU; alternatively try asm-volatile-free trick of loading address via array indexing gUnk_0300063C-style neighbor to shift pool layout",
+      "score": "50/100"
     }
   ],
   "recommended": [
@@ -3192,18 +3203,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080473F8",
-      "addr": "0x080473F8",
-      "kind": "asm",
-      "bytes": 100,
-      "score": 47,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
