@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T20:05:22Z_
+_Updated: 2026-09-20T20:06:13Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T20:05:22Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 89 (58 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 157 |
+| WIP (resume these first) | 158 |
 
 Ranking: **battle** · showing top **40**
 
@@ -183,6 +183,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802C3DC` | 198 | 46/198 | `src/wip/sub_0802C3DC.c` | size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic and table indexing mapped, initialization/register lifetime still differs | force the ROM's byte-field OR loads and r0/r4/r1 lifetime before trying body permutations |
 | `sub_0802C4A4` | 182 | 27/182 | `src/wip/sub_0802C4A4.c` | size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup semantics mapped but callee-saved r7 and repeated output-address shape remain | use an ordinary live signed index local to force r7 save, then restore repeated table-field stores |
 | `sub_0802C55C` | 128 | 58/128 | `src/wip/sub_0802C55C.c` | two attempts did not match; 58/128 bytes, final candidate 124B; semantics mapped, remaining differences are r7/entry lifetime and byte-mask store scheduling | preserve target r7 key/flag lifetimes and repeated main-work table reloads; keep same-size 61/128 seed as baseline |
+| `sub_0802D6D4` | 452 | 438/452 | `src/wip/sub_0802D6D4.c` | same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction matches size, remaining mismatch begins in late sub_0806FF58/sub_080705DC scheduling | use the direct-global seed; tune only the late resource callback/source order around +0x178 |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -223,13 +224,13 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0803715C` | `0x0803715C` | 444 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08056BA4` | `0x08056BA4` | 450 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802DCDC` | `0x0802DCDC` | 452 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802D6D4` | `0x0802D6D4` | 452 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DEC8` | `0x0803DEC8` | 514 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044A8C` | `0x08044A8C` | 672 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802FA94` | `0x0802FA94` | 748 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08045198` | `0x08045198` | 1016 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08045590` | `0x08045590` | 1256 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -286,6 +287,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (151 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (150 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

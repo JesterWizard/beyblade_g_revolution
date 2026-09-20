@@ -15,9 +15,13 @@ void sub_0806B3E8(struct Unk6B3E8 *arg0)
 
     do
     {
-        if (c != 0x20)
+        register u8 cc asm("r1") = c;
+        const u8 *tableEntry;
+
+        if (cc != 0x20)
         {
-            sub_0806833C(item, 0, ((const u8 *)0x080BB748)[c]);
+            tableEntry = (const u8 *)0x080BB748 + cc;
+            sub_0806833C(item, 0, *tableEntry);
             item->unk70 = -1;
             item++;
             count--;

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T20:05:22Z",
+  "generated": "2026-09-20T20:06:13Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 89,
     "battle_semantic": 58,
     "blocked": 34,
-    "wip": 157
+    "wip": 158
   },
   "pinned": [],
   "wip": [
@@ -1742,6 +1742,17 @@
       "status": "two attempts did not match; 58/128 bytes, final candidate 124B; semantics mapped, remaining differences are r7/entry lifetime and byte-mask store scheduling",
       "next": "preserve target r7 key/flag lifetimes and repeated main-work table reloads; keep same-size 61/128 seed as baseline",
       "score": "58/128"
+    },
+    {
+      "name": "sub_0802D6D4",
+      "addr": "0x0802D6D4",
+      "kind": "asm",
+      "bytes": 452,
+      "seed": "src/wip/sub_0802D6D4.c",
+      "notes": "src/wip/sub_0802D6D4.md",
+      "status": "same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction matches size, remaining mismatch begins in late sub_0806FF58/sub_080705DC scheduling",
+      "next": "use the direct-global seed; tune only the late resource callback/source order around +0x178",
+      "score": "438/452"
     }
   ],
   "recommended": [
@@ -2218,20 +2229,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0802D6D4",
-      "addr": "0x0802D6D4",
-      "kind": "asm",
-      "bytes": 452,
-      "score": 253,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803DEC8",
       "addr": "0x0803DEC8",
       "kind": "asm",
@@ -2307,6 +2304,20 @@
       "kind": "asm",
       "bytes": 1016,
       "score": 458,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08045590",
+      "addr": "0x08045590",
+      "kind": "asm",
+      "bytes": 1256,
+      "score": 567,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -3021,20 +3032,6 @@
       "kind": "asm",
       "bytes": 452,
       "score": 232,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0802D6D4",
-      "addr": "0x0802D6D4",
-      "kind": "asm",
-      "bytes": 452,
-      "score": 253,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"

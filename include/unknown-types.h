@@ -1158,10 +1158,10 @@ struct Unk026C /* >= 0x50 */
     /* 38 */ struct Unk705DC *unk38;
     /* 3c */ struct Unk705DC *unk3C;
     /* 40 */ struct Unk705DC *unk40;
-    /* 44 */ u8 filler_44[4];
+    /* 44 */ void *unk44;
     /* 48 */ u8 unk48;
     /* 49 */ u8 filler_49[3];
-    /* 4c */ u16 unk4C;
+    /* 4c */ s16 unk4C;
     /* 4e */ s16 unk4E;
 };
 

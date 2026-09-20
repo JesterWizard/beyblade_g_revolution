@@ -1404,3 +1404,11 @@ notes = "src/wip/sub_0802C55C.md"
 status = "two attempts did not match; 58/128 bytes, final candidate 124B; semantics mapped, remaining differences are r7/entry lifetime and byte-mask store scheduling"
 next = "preserve target r7 key/flag lifetimes and repeated main-work table reloads; keep same-size 61/128 seed as baseline"
 score = "58/128"
+
+[[wip]]
+name = "sub_0802D6D4"
+seed = "src/wip/sub_0802D6D4.c"
+notes = "src/wip/sub_0802D6D4.md"
+status = "same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction matches size, remaining mismatch begins in late sub_0806FF58/sub_080705DC scheduling"
+next = "use the direct-global seed; tune only the late resource callback/source order around +0x178"
+score = "438/452"
