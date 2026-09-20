@@ -557,7 +557,7 @@ struct BattleWork /* >= 0x208A */
     /* 0B7C */ u8 filler_0B7C[0x28];
     /* 0BA4 */ void *unkBA4;
     /* 0BA8 */ void *unkBA8;
-    /* 0BAC */ void *unkBAC;
+    /* 0BAC */ s32 unkBAC;
     /* 0BB0 */ s32 unkBB0;
     /* 0BB4 */ s32 unkBB4;
     /* 0BB8 */ s32 unkBB8;

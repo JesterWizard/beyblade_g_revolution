@@ -5,14 +5,14 @@ void sub_08061BE8(void)
     s32 n;
     struct Unk0770 *entry;
     struct Unk0798 *p;
-    void **handler_slot;
+    register void **handler_slot asm("r6");
     s32 lo;
 
-    n = *(s32 *)gUnk_03000794 - 1;
+    n = (s32)gUnk_03000794 - 1;
     if (n < 0)
         return;
 
-    entry = &((struct Unk0770 *)gUnk_03000770)[n];
+    entry = gUnk_03000770 + n;
     handler_slot = (void **)entry->unk00;
     if (handler_slot == 0)
         return;

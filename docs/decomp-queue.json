@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T20:22:04Z",
+  "generated": "2026-09-20T20:23:11Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 88,
     "battle_semantic": 59,
     "blocked": 34,
-    "wip": 163
+    "wip": 164
   },
   "pinned": [],
   "wip": [
@@ -1808,6 +1808,17 @@
       "status": "Semantic rotation transform reconstructed, but compiler shape is 244/268 after two attempts; target uses natural r7/r2 argument copies while the candidate retains a high-register temporary and differs in literal/load scheduling.",
       "next": "Restore target register shape: remove persistent temporaries/table aliases, seed arguments in r7/r2, and match the angle/table expression order before retrying.",
       "score": "31/268"
+    },
+    {
+      "name": "sub_08030F38",
+      "addr": "0x08030F38",
+      "kind": "asm",
+      "bytes": 348,
+      "seed": "src/wip/sub_08030F38.c",
+      "notes": "src/wip/sub_08030F38.md",
+      "status": "Resource timer/update semantics reconstructed across the AF0/B00/B20/B40/B48 paths, but two compiler attempts diverged in prologue and pointer scheduling (376-byte candidate versus 348-byte target).",
+      "next": "Use the target's callee-save shape: seed gBattleWorkPtrLoc in r7, retain the initial work pointer in r4 only through the AF* updates, then hand-write scoped register aliases for the B00/B20 loop and final B48 delta clamp.",
+      "score": "54/348"
     }
   ],
   "recommended": [
@@ -2144,20 +2155,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08030F38",
-      "addr": "0x08030F38",
-      "kind": "asm",
-      "bytes": 348,
-      "score": 152,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803370C",
       "addr": "0x0803370C",
       "kind": "asm",
@@ -2370,6 +2367,18 @@
     {
       "name": "sub_08033958",
       "addr": "0x08033958",
+      "kind": "asm",
+      "bytes": 20,
+      "score": 10,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08062684",
+      "addr": "0x08062684",
       "kind": "asm",
       "bytes": 20,
       "score": 10,
@@ -2948,20 +2957,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08030F38",
-      "addr": "0x08030F38",
-      "kind": "asm",
-      "bytes": 348,
-      "score": 152,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
       ],
       "has_pool": true,
       "blocked": false,
