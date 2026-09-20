@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T15:50:46Z",
+  "generated": "2026-09-20T15:52:21Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 49
+    "wip": 50
   },
   "pinned": [],
   "wip": [
@@ -554,6 +554,17 @@
       "status": "36/48 bytes (75%), same size; correct algorithm (variable-stride linked entry search: base=arg0->unk00, entry=base+base->unk18, walk arg0->unk28 entries comparing unk00==key, advance by unk02 byte stride) with loop/branch shape matching retail. Added structs Unk67F98/Unk67F98Base/Unk67F98Entry. Only remaining diff: register choice for 'key' (r4 here vs retail's r3) and 'count' (r3 here vs retail's r0)",
       "next": "try declaring 'count' before 'entry'/'base' to see if it shifts to r0, or check if the parameter u16 extension for 'key' needs a different cast form to land in r3",
       "score": "36/48"
+    },
+    {
+      "name": "sub_08069894",
+      "addr": "0x08069894",
+      "kind": "asm",
+      "bytes": 96,
+      "seed": "src/wip/sub_08069894.c",
+      "notes": "src/wip/sub_08069894.md",
+      "status": "89/96 bytes (92.7%), size mismatch (92 vs 96); correct algorithm (clear gUnk_03000108/030001B0, set gUnk_030001A8=0x20, zero 4 BG scroll register pairs via sub_08069908/sub_08069948, then two sub_08069A60(2/3, 0, 0x100, 0x100) calls) -- declared the 3 previously-undeclared callee signatures. agbcc folds the 'gUnk_030001B0 = 0' write into an offset-add from the previous literal (0x108+0xA8=0x1B0) instead of retail's separate literal-pool load, an 8-vs-4-byte encoding",
+      "next": "try writing gUnk_030001B0 via a separate statement block or intervening dead computation to break the literal-pool CSE, matching the pattern seen in sub_080473F8/sub_08052934 from earlier sessions",
+      "score": "89/96"
     }
   ],
   "recommended": [
@@ -3126,18 +3137,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069894",
-      "addr": "0x08069894",
-      "kind": "asm",
-      "bytes": 96,
-      "score": 49,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
