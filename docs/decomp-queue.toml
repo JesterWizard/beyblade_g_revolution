@@ -420,3 +420,11 @@ notes = "src/wip/sub_080473F8.md"
 status = "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits"
 next = "try forcing literal reload: maybe split into two functions temporarily, or check if retail was compiled with different codegen version/flags for this TU; alternatively try asm-volatile-free trick of loading address via array indexing gUnk_0300063C-style neighbor to shift pool layout"
 score = "50/100"
+
+[[wip]]
+name = "sub_08052934"
+seed = "src/wip/sub_08052934.c"
+notes = "src/wip/sub_08052934.md"
+status = "55/84 bytes (65.5%), same size; semantically correct 2-level table lookup (0x080995AC+0xC indexed by arg0*16, then by gMainWorkPtr->unk1818) but agbcc folds the '0x080995AC + 0xC' constant into a single 4-byte literal (0x080995B8) instead of retail's split load+adds (ldr =0x080995AC; adds #0xC), a 2-instruction/0-byte-diff but different encoding order"
+next = "try declaring 0x080995AC as an extern rom-data symbol/array so +0xC becomes a real field access (relocation) instead of constant-folded arithmetic, which may force the split load"
+score = "55/84"

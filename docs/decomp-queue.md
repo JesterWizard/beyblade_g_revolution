@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T13:23:20Z_
+_Updated: 2026-09-20T13:25:00Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T13:23:20Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 34 |
+| WIP (resume these first) | 35 |
 
 Ranking: **battle** · showing top **40**
 
@@ -60,6 +60,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08042F4C` | 80 | 33/80 | `src/wip/sub_08042F4C.c` | 33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization | verify whether sub_08042E78's prototype should accept s32 for this caller (without changing its own matching definition), then retry the same source shape |
 | `sub_08043B90` | 76 | 67/76 | `src/wip/sub_08043B90.c` | 67/76 same-size DIFF; sibling-shaped semantic C matches the loop and bytes, but agbcc keeps a two-byte mov/branch placement difference around the shared return path after the ROM literal pool | use an explicit label/goto layout that preserves r0 from the terminating unk00 load and aligns the return path with the literal-pool gap |
 | `sub_080473F8` | 100 | 50/100 | `src/wip/sub_080473F8.c` | 50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits | try forcing literal reload: maybe split into two functions temporarily, or check if retail was compiled with different codegen version/flags for this TU; alternatively try asm-volatile-free trick of loading address via array indexing gUnk_0300063C-style neighbor to shift pool layout |
+| `sub_08052934` | 84 | 55/84 | `src/wip/sub_08052934.c` | 55/84 bytes (65.5%), same size; semantically correct 2-level table lookup (0x080995AC+0xC indexed by arg0*16, then by gMainWorkPtr->unk1818) but agbcc folds the '0x080995AC + 0xC' constant into a single 4-byte literal (0x080995B8) instead of retail's split load+adds (ldr =0x080995AC; adds #0xC), a 2-instruction/0-byte-diff but different encoding order | try declaring 0x080995AC as an extern rom-data symbol/array so +0xC becomes a real field access (relocation) instead of constant-folded arithmetic, which may force the split load |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -81,7 +82,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_08032DC4` | `0x08032DC4` | 660 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08052934` | `0x08052934` | 84 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042390` | `0x08042390` | 98 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
@@ -107,6 +107,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0802C4A4` | `0x0802C4A4` | 182 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803114C` | `0x0803114C` | 184 | 1 | pool | asm | (gBattleWork) |
 | `sub_08051444` | `0x08051444` | 192 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08032604` | `0x08032604` | 196 | 1 | pool | asm | (gBattleWork) |
 
 ## Blocked
 
@@ -163,6 +164,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (295 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (294 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
