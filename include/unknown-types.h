@@ -29,6 +29,8 @@
 #endif
 
 struct Unk310F0Inner1;
+struct Unk310F0Inner2;
+struct Unk705DC;
 
 /* 6-byte header: u16, u16, u32. sub_080338E4. */
 struct Unk338E4 /* 0x08 */
@@ -175,6 +177,59 @@ struct Unk7069C /* >= 0x30 */
     /* 2c */ struct Unk705CC *unk2C;
 };
 
+struct Unk30D4CResourceFields /* 0x6c */
+{
+    /* 00 */ u32 filler_00[2];
+    /* 08 */ struct Unk705DC *unkAF0;
+    /* 0c */ struct Unk705DC *unkAF4;
+    /* 10 */ struct Unk705DC *unkAF8;
+    /* 14 */ struct Unk705DC *unkAFC;
+    /* 18 */ struct Unk705DC *unkB00[8];
+    /* 38 */ struct Unk705DC *unkB20[8];
+    /* 58 */ struct Unk705DC *unkB40;
+    /* 5c */ struct Unk705DC *unkB44;
+    /* 60 */ struct Unk705DC *unkB48;
+    /* 64 */ struct Unk705DC *unkB4C;
+    /* 68 */ struct Unk705DC *unkB50;
+};
+
+union Unk30D4CResource /* 0x6c */
+{
+    s32 words[0x1B];
+    struct Unk30D4CResourceFields fields;
+};
+
+/* IWRAM state at 0x030002A0. sub_08031204. */
+struct Unk002A0Record /* 0x2c */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ u8 filler_10[8];
+    /* 18 */ u32 unk18;
+    /* 1c */ u8 filler_1C[0x0C];
+    /* 28 */ void *unk28;
+};
+
+struct Unk002A0 /* >= 0xb0 */
+{
+    /* 00 */ struct Unk002A0Record records[4];
+};
+
+struct Unk013CFields /* 0x60 */
+{
+    /* 00 */ s32 values[4];
+    /* 10 */ struct Unk62044 unk14C;
+    /* 38 */ struct Unk62044 unk174;
+};
+
+union Unk013C /* 0x60 */
+{
+    s32 values[0x18];
+    struct Unk013CFields fields;
+};
+
 /* Per-entry state at BattleWork +0x0BCC. sub_0803D4C4, sub_08062238. */
 /* RGB555 triplet (r,g,b bytes, top 5 bits used). sub_08062D50. */
 struct Unk62D50 /* >= 0x03 */
@@ -200,12 +255,20 @@ struct Unk62634 /* >= 0x64 */
 /* Battle work block (*gBattleWork). sub_080314FC, sub_08033530, sub_08033574. */
 struct BattleWork /* >= 0x208A */
 {
-    /* 0000 */ u8 filler_00[0x118];
+    /* 0000 */ void *unk00;
+    /* 0004 */ void *unk04;
+    /* 0008 */ u8 filler_0008[0x110];
     /* 0118 */ u32 unk118;
-    /* 011C */ u8 filler_011C[0x80];
+    /* 011C */ u8 filler_011C[0x20];
+    /* 013C */ union Unk013C unk013C;
     /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
     /* 023C */ struct Unk7069C unk023C[4]; /* sub_08038D10 */
-    /* 02FC */ u8 filler_02FC[0x858];
+    /* 02FC */ struct Unk62044 unk2FC;
+    /* 0324 */ void *unk324;
+    /* 0328 */ u8 filler_0328[0x7A0];
+    /* 0AC8 */ void *unk0AC8[4];
+    /* 0AD8 */ void *unk0AD8[4];
+    /* 0AE8 */ union Unk30D4CResource unk0AE8;
     /* 0B54 */ void *unk0B54[4]; /* sub_08033878 */
     /* 0B64 */ u32 unk0B64;
     /* 0B68 */ u32 unk0B68;
@@ -214,9 +277,19 @@ struct BattleWork /* >= 0x208A */
     /* 0B70 */ u32 unk0B70;
     /* 0B74 */ u8 filler_0B74[4];
     /* 0B78 */ u32 unk0B78;
-    /* 0B7C */ u8 filler_0B7C[0x50];
+    /* 0B7C */ u8 filler_0B7C[0x28];
+    /* 0BA4 */ void *unkBA4;
+    /* 0BA8 */ void *unkBA8;
+    /* 0BAC */ u8 filler_0BAC[8];
+    /* 0BB4 */ s32 unkBB4;
+    /* 0BB8 */ s32 unkBB8;
+    /* 0BBC */ u8 filler_0BBC[0x10];
     /* 0BCC */ struct Unk62634 unk0BCC[48]; /* sub_0803D4C4 */
-    /* 1E8C */ u8 filler_1E8C[0x104];
+    /* 1E8C */ u8 filler_1E8C[0x80];
+    /* 1F0C */ void *unk1F0C;
+    /* 1F10 */ struct Unk62044 unk1F10;
+    /* 1F38 */ struct Unk62044 unk1F38;
+    /* 1F60 */ u8 filler_1F60[0x30];
     /* 1F90 */ s32 unk1F90; /* sub_080330F4 */
     /* 1F94 */ s32 unk1F94; /* sub_080330F4 */
     /* 1F98 */ u8 unk1F98; /* sub_080330F4 */
@@ -229,6 +302,8 @@ struct BattleWork /* >= 0x208A */
     /* 2020 */ u8 filler_2020[0x68];
     /* 2088 */ u8 unk2088;
     /* 2089 */ u8 unk2089;
+    /* 208a */ u8 filler_208A[2];
+    /* 208c */ s32 unk208C[4];
 };
 
 /* 4-byte records pointed to by MainWork.unk1694. sub_0802C62C. */
@@ -356,7 +431,9 @@ struct MainWork /* >= 0x18B4 */
     /* 0454 */ u8 filler_0454[0x34];
     /* 0488 */ u32 unk0488; /* sub_080424E8 */
     /* 048C */ u32 unk048C; /* sub_080424E8 */
-    /* 0490 */ u8 filler_0490[0x3D8];
+    /* 0490 */ u8 filler_0490[0x314];
+    /* 07A4 */ void *unk07A4[0x18];
+    /* 0804 */ u8 filler_0804[0x64];
     /* 0868 */ u32 unk0868;
     /* 086C */ u32 unk086C;
     /* 0870 */ u8 filler_0870[4];
@@ -787,7 +864,8 @@ struct Unk346C0Inner /* >= 0x50 */
     /* 18 */ s32 unk18;
     /* 1c */ s32 unk1C;
     /* 20 */ s32 unk20;
-    /* 24 */ u8 filler_24[8];
+    /* 24 */ u8 filler_24[4];
+    /* 28 */ struct Unk310F0Inner2 *unk28;
     /* 2c */ s32 unk2C;
     /* 30 */ u32 unk30;
     /* 34 */ u32 unk34;
@@ -808,7 +886,9 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 019 */ u8 filler_19[0x297];
     /* 2b0 */ u32 unk2B0; /* sub_08034568 */
     /* 2b4 */ u32 unk2B4; /* sub_08034568 */
-    /* 2b8 */ u8 filler_2B8[0xC];
+    /* 2b8 */ u32 unk2B8;
+    /* 2bc */ u32 unk2BC;
+    /* 2c0 */ s32 unk2C0;
     /* 2c4 */ u8 unk2C4; /* sub_08034568 */
     /* 2c5 */ u8 filler_2C5[3];
     /* 2c8 */ u32 unk2C8; /* sub_08034568 */
@@ -1121,7 +1201,9 @@ struct Unk618A8 /* >= 0x16 */
 /* Nested byte at inner+0x21 / +0x24. sub_080310F0, sub_08031094. */
 struct Unk310F0Inner2 /* >= 0x25 */
 {
-    /* 00 */ u8 filler_00[0x21];
+    /* 00 */ u8 filler_00[0x1F];
+    /* 1f */ u8 unk1F;
+    /* 20 */ u8 filler_20;
     /* 21 */ s8 unk21;
     /* 22 */ u8 filler_22[2];
     /* 24 */ s8 unk24;
@@ -1198,6 +1280,8 @@ struct Unk705DC /* >= 0x1a */
     /* 14 */ u16 unk14;
     /* 16 */ u16 unk16;
     /* 18 */ u16 unk18;
+    /* 1a */ u8 filler_1A[0x16];
+    /* 30 */ struct Unk705DC *unk30;
 };
 
 /* 0x84-stride records. sub_0806F1A0. */

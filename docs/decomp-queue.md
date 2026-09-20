@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T16:38:45Z_
+_Updated: 2026-09-20T16:57:03Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 279 |
-| Still need semantic C | **354** |
-| Readable Thumb remaining | 354 |
+| Semantic C done | 282 |
+| Still need semantic C | **351** |
+| Readable Thumb remaining | 351 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 98 (49 already semantic) |
+| Battle pending | 96 (51 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 59 |
+| WIP (resume these first) | 63 |
 
 Ranking: **battle** · showing top **40**
 
@@ -85,6 +85,10 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08071EE4` | 96 | 19/96 | `src/wip/sub_08071EE4.c` | 19/96 bytes (19.8%), size mismatch (92 vs 96); exact clone of sub_08071E84 (same struct/algorithm, calls sub_08071E04 instead of sub_08071E44) and hits the identical diff pattern: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4, and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form. See sub_08071E84's WIP notes for the same analysis | same as sub_08071E84 -- try the (count != -1) form for the first check; whatever unlocks that sibling should apply here too |
 | `sub_08071F44` | 64 | 35/64 | `src/wip/sub_08071F44.c` | 35/64 bytes (54.7%), size mismatch (60 vs 64); correct algorithm (reverse lookup: find first Unk71E84 entry with unk16!=0 and unk18==arg0). Push list matches retail exactly ({r4,lr}) and the -1 compare form is preserved correctly here (no simplification, unlike the sub_08071E84 family). Only diff: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart), the recurring literal-pool quirk seen across ~6 functions this session | same recurring literal-pool-folding issue; no new lever found. Revisit alongside sub_08071E84/sub_08071EE4/sub_080473F8/sub_08052934/sub_08069894/sub_08071B4C if a fix for that pattern is ever found |
 | `sub_0802DEA0` | 424 | 66/424 | `src/wip/sub_0802DEA0.c` | 66/424 bytes (15.6%), size mismatch (400 vs 424); correct algorithm fully derived (16 near-identical blocks: for each of struct Unk026C's linked-list fields unk0C..unk40, if non-null set the node's unk08/unk0C to a color constant (0xFFFFC000 for the first 6, 0xF800 for the rest); then free+null 7 of those same fields via sub_0806FE84; finally vsync, set unk48=0xFF, and OR 0xFFFF into gMainWorkPtr's unk1838/unk183A). Reused existing structs Unk026C/Unk705DC. agbcc's CSE merges the repeated 'gUnk_0300026C' pointer dereference across adjacent blocks (r1 cached, reused via a spare register) even when each block is written as a fresh 'p = gUnk_0300026C' assignment, since no intervening write invalidates it -- retail instead reloads fresh every single block | try inserting a genuinely-opaque side effect between blocks (unlikely to be legitimate semantic C), or accept this as CSE the compiler correctly performs and retail's source simply repeated the full expression per block in a way this agbcc snapshot doesn't reproduce; may need per-block dummy calls or accept as permanently DIFF |
+| `sub_08042390` | 98 | 87/98 | `src/wip/sub_08042390.c` | 87/98 bytes (88.8%), same size; correct algorithm fully derived and verified (quadrant code from py/y and px/x deltas shifted >>8, comparing gMainWorkPtr's unk0370/unk0374 against arg0->unk04/unk08, returning 0-3 based on relative position with a 0xB threshold). Structure matches retail almost instruction-for-instruction. Only diff: agbcc emits the opposite (but equivalent) branch polarity for the second comparison (px vs x) within the py<y path -- tried both 'if(px>=x)' and 'if(px<x)' phrasings, neither reproduces retail's exact bge/blt choice | try swapping which branch (if vs else) holds the shorter body, or reorder the outer py>=y / py<y blocks entirely (retail may have wrapped 'py<y' as the true-branch first) |
+| `sub_080302E0` | 168 | 63/168 | `src/wip/sub_080302E0.c` | two semantic attempts: 66/168 size_mismatch (148B), then 63/168 size_mismatch (176B); logic and field layouts are identified, but register/literal-pool layout still differs | Use the first candidate's cached battle/target locals as the base for a decomp-permuter or targeted register-layout search; do not hand-loop match retries |
+| `sub_08031C98` | 150 | 15/150 | `src/wip/sub_08031C98.c` | two semantic attempts: 43/150 size_mismatch (148B), then 15/150 size_mismatch (136B); control flow and record/counter roles are clear, but retail keeps r4-r7/state pointers and performs a byte-offset word read at IWRAM +0x18 that the current semantic shape does not reproduce | Use a targeted register-layout/permuter search; model the byte-offset word window without leaving raw offset casts in matched semantic C |
+| `sub_08032908` | 384 | 235/384 | `src/wip/sub_08032908.c` | two semantic attempts: 151/384 size_mismatch (388B), then 235/384 size_mismatch (388B); cleanup order and all BattleWork/MainWork fields are reconstructed, but retail keeps the battle global in a different callee-saved register/pointer lifetime | Try a local BattleWork pointer-location variable or targeted register-layout/permuter search; preserve the current field types and cleanup sequence |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -101,12 +105,10 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08036A68` | `0x08036A68` | 240 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0803D51C` | `0x0803D51C` | 304 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_08038F30` | `0x08038F30` | 316 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
-| `sub_08032908` | `0x08032908` | 384 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_08037508` | `0x08037508` | 452 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_08032DC4` | `0x08032DC4` | 660 | 2 | pool | asm | (gBattleWork, gBattlerArena/gBtlKeysHeld) |
 | `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08042390` | `0x08042390` | 98 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042630` | `0x08042630` | 116 | 1 | pool | asm | (gMainWorkPtr) |
@@ -118,20 +120,22 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0802C55C` | `0x0802C55C` | 128 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080462D4` | `0x080462D4` | 130 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804245C` | `0x0804245C` | 140 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08031204` | `0x08031204` | 144 | 1 | pool | asm | (gBattleWork) |
 | `sub_080442FC` | `0x080442FC` | 144 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08031C98` | `0x08031C98` | 150 | 1 | pool | asm | (gBattleWork) |
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080428F0` | `0x080428F0` | 160 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08062AF8` | `0x08062AF8` | 162 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08056F84` | `0x08056F84` | 168 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080302E0` | `0x080302E0` | 168 | 1 | pool | asm | (gBattleWork) |
 | `sub_08047624` | `0x08047624` | 174 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804A028` | `0x0804A028` | 174 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C4A4` | `0x0802C4A4` | 182 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803114C` | `0x0803114C` | 184 | 1 | pool | asm | (gBattleWork) |
 | `sub_08051444` | `0x08051444` | 192 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08032604` | `0x08032604` | 196 | 1 | pool | asm | (gBattleWork) |
+| `sub_0802C314` | `0x0802C314` | 198 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_0802C3DC` | `0x0802C3DC` | 198 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_080415FC` | `0x080415FC` | 200 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08057274` | `0x08057274` | 208 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08063D68` | `0x08063D68` | 216 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -188,6 +192,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (268 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (261 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

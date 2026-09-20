@@ -1,8 +1,84 @@
 #include "global.h"
 
 // @ 0x08030d4c
-__attribute__((naked))
+#include "global.h"
+
 void sub_08030D4C(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nmovs r6, #0x00\nldr r0, _08030ED4 @ =0x0833C318\nldr r1, _08030ED8 @ =0x0833C334\nbl sub_08067B98\nldr r4, _08030EDC @ =0x03000290\nldr r0, [r4, #0x00]\nmovs r1, #0xAF\nlsls r1, r1, #0x04\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030D76\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nmovs r1, #0xAF\nlsls r1, r1, #0x04\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030D76:\nldr r0, [r4, #0x00]\nldr r1, _08030EE0 @ =0x00000AF4\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030D8E\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EE0 @ =0x00000AF4\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030D8E:\nldr r0, [r4, #0x00]\nldr r1, _08030EE4 @ =0x00000AF8\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030DA6\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EE4 @ =0x00000AF8\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030DA6:\nldr r0, [r4, #0x00]\nldr r1, _08030EE8 @ =0x00000AFC\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030DBE\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EE8 @ =0x00000AFC\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030DBE:\nldr r0, [r4, #0x00]\nldr r1, _08030EEC @ =0x00000BA4\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030DD6\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EEC @ =0x00000BA4\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030DD6:\nldr r0, [r4, #0x00]\nldr r1, _08030EF0 @ =0x00000BA8\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030DEE\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EF0 @ =0x00000BA8\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030DEE:\nldr r0, [r4, #0x00]\nldr r1, _08030EF4 @ =0x00000B48\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030E06\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EF4 @ =0x00000B48\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030E06:\nldr r0, [r4, #0x00]\nldr r1, _08030EF8 @ =0x00000B4C\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030E1E\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EF8 @ =0x00000B4C\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030E1E:\nldr r0, [r4, #0x00]\nmovs r1, #0xB5\nlsls r1, r1, #0x04\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030E3A\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nmovs r1, #0xB5\nlsls r1, r1, #0x04\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030E3A:\nldr r0, [r4, #0x00]\nmovs r1, #0xB4\nlsls r1, r1, #0x04\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030E56\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nmovs r1, #0xB4\nlsls r1, r1, #0x04\nadds r0, r0, r1\nstr r6, [r0, #0x00]\n_08030E56:\nldr r0, [r4, #0x00]\nldr r1, _08030EFC @ =0x00000B44\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030E70\nbl sub_0806FE84\nldr r0, [r4, #0x00]\nldr r1, _08030EFC @ =0x00000B44\nadds r0, r0, r1\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_08030E70:\nmovs r6, #0x00\nldr r5, _08030EDC @ =0x03000290\n_08030E74:\nldr r0, [r5, #0x00]\nlsls r4, r6, #0x02\nmovs r1, #0xB0\nlsls r1, r1, #0x04\nadds r0, r0, r1\nadds r0, r0, r4\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030E98\nbl sub_0806FE84\nldr r0, [r5, #0x00]\nmovs r1, #0xB0\nlsls r1, r1, #0x04\nadds r0, r0, r1\nadds r0, r0, r4\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_08030E98:\nadds r6, #0x01\ncmp r6, #0x07\nble _08030E74\nmovs r6, #0x00\nldr r5, _08030EDC @ =0x03000290\n_08030EA2:\nldr r0, [r5, #0x00]\nlsls r4, r6, #0x02\nmovs r1, #0xB2\nlsls r1, r1, #0x04\nadds r0, r0, r1\nadds r0, r0, r4\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08030EC6\nbl sub_0806FE84\nldr r0, [r5, #0x00]\nmovs r1, #0xB2\nlsls r1, r1, #0x04\nadds r0, r0, r1\nadds r0, r0, r4\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_08030EC6:\nadds r6, #0x01\ncmp r6, #0x07\nble _08030EA2\npop {r4, r5, r6}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08030ED4: .4byte 0x0833C318\n_08030ED8: .4byte 0x0833C334\n_08030EDC: .4byte 0x03000290\n_08030EE0: .4byte 0x00000AF4\n_08030EE4: .4byte 0x00000AF8\n_08030EE8: .4byte 0x00000AFC\n_08030EEC: .4byte 0x00000BA4\n_08030EF0: .4byte 0x00000BA8\n_08030EF4: .4byte 0x00000B48\n_08030EF8: .4byte 0x00000B4C\n_08030EFC: .4byte 0x00000B44");
+    s32 i;
+
+    i = 0;
+    sub_08067B98((void *)0x0833C318, (void *)0x0833C334);
+    if (gBattleWork->unk0AE8.fields.unkAF0 != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkAF0);
+        gBattleWork->unk0AE8.fields.unkAF0 = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkAF4 != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkAF4);
+        gBattleWork->unk0AE8.fields.unkAF4 = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkAF8 != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkAF8);
+        gBattleWork->unk0AE8.fields.unkAF8 = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkAFC != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkAFC);
+        gBattleWork->unk0AE8.fields.unkAFC = 0;
+    }
+    if (gBattleWork->unkBA4 != 0)
+    {
+        sub_0806FE84(gBattleWork->unkBA4);
+        gBattleWork->unkBA4 = 0;
+    }
+    if (gBattleWork->unkBA8 != 0)
+    {
+        sub_0806FE84(gBattleWork->unkBA8);
+        gBattleWork->unkBA8 = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkB48 != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkB48);
+        gBattleWork->unk0AE8.fields.unkB48 = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkB4C != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkB4C);
+        gBattleWork->unk0AE8.fields.unkB4C = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkB50 != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkB50);
+        gBattleWork->unk0AE8.fields.unkB50 = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkB40 != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkB40);
+        gBattleWork->unk0AE8.fields.unkB40 = 0;
+    }
+    if (gBattleWork->unk0AE8.fields.unkB44 != 0)
+    {
+        sub_0806FE84(gBattleWork->unk0AE8.fields.unkB44);
+        gBattleWork->unk0AE8.fields.unkB44 = 0;
+    }
+    for (i = 0; i <= 7; i++)
+    {
+        if (gBattleWork->unk0AE8.fields.unkB00[i] != 0)
+        {
+            sub_0806FE84(gBattleWork->unk0AE8.fields.unkB00[i]);
+            gBattleWork->unk0AE8.fields.unkB00[i] = 0;
+        }
+    }
+    for (i = 0; i <= 7; i++)
+    {
+        if (gBattleWork->unk0AE8.fields.unkB20[i] != 0)
+        {
+            sub_0806FE84(gBattleWork->unk0AE8.fields.unkB20[i]);
+            gBattleWork->unk0AE8.fields.unkB20[i] = 0;
+        }
+    }
 }
+
