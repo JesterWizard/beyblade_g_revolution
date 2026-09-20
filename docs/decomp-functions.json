@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-20T19:57:02Z",
+  "generated": "2026-09-20T19:58:47Z",
   "counts": {
-    "matched": 305,
+    "matched": 306,
     "blocked": 28,
-    "wip": 145,
+    "wip": 144,
     "not_started": 140,
     "size_mismatch": 14,
     "same_size": 1
@@ -7578,19 +7578,19 @@
     {
       "name": "sub_080632F8",
       "addr": "0x080632F8",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 184,
-      "matched_bytes": 148,
-      "compiled_bytes": 0,
-      "pct": 80.4,
-      "score": "148/184 then 48/184",
-      "source": "wip",
-      "note": "Two semantic attempts: stack-struct loop 148/184 same-size, then register-pinned initialization 48/184 (188B). The local layout and switch/callback semantics match; remaining differences are loop form (retail is a do-while with the done check only at the bottom) and initial palette load ordering (retail loads the BB8BC literal into r0, sets size, then loads the palette value into r3)."
+      "matched_bytes": 184,
+      "compiled_bytes": 184,
+      "pct": 100.0,
+      "score": "184/184",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08063D68",

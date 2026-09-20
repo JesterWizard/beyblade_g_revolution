@@ -1,100 +1,50 @@
 #include "global.h"
 
 // @ 0x080632f8
-__attribute__((naked))
+#include "global.h"
+
 void sub_080632F8(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "ldr r4, _08063350 @ =0xFFFFFCD8\n"
-        "add sp, r4\n"
-        "movs r4, #0x00\n"
-        "ldr r0, _08063354 @ =0x080BB8BC\n"
-        "movs r2, #0xCA\n"
-        "lsls r2, r2, #0x02\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "mov r1, sp\n"
-        "bl _08073C4C\n"
-        "movs r0, #0x0F\n"
-        "bl sub_08066390\n"
-        "bl sub_0806639C\n"
-        "adds r1, r0, #0x0\n"
-        "mov r0, sp\n"
-        "bl sub_0804109C\n"
-        "_08063322:\n"
-        "bl sub_080674B4\n"
-        "bl sub_0806A6F8\n"
-        "add r0, sp, #0x324\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r1, #0x01\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _0806333E\n"
-        "ldr r0, _08063358 @ =0x080BB888\n"
-        "ldr r0, [r0, #0x00]\n"
-        "bl _08073C40\n"
-        "_0806333E:\n"
-        "add r0, sp, #0x2D4\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "cmp r0, #0x01\n"
-        "beq _0806336A\n"
-        "cmp r0, #0x01\n"
-        "bgt _0806335C\n"
-        "cmp r0, #0x00\n"
-        "beq _08063366\n"
-        "b _08063392\n"
-        "_08063350: .4byte 0xFFFFFCD8\n"
-        "_08063354: .4byte 0x080BB8BC\n"
-        "_08063358: .4byte 0x080BB888\n"
-        "_0806335C:\n"
-        "cmp r0, #0x02\n"
-        "beq _08063380\n"
-        "cmp r0, #0x03\n"
-        "beq _08063390\n"
-        "b _08063392\n"
-        "_08063366:\n"
-        "add r0, sp, #0x24C\n"
-        "b _08063382\n"
-        "_0806336A:\n"
-        "add r0, sp, #0x250\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _08063378\n"
-        "mov r0, sp\n"
-        "bl _08073C44\n"
-        "_08063378:\n"
-        "mov r0, sp\n"
-        "bl sub_080411EC\n"
-        "b _08063392\n"
-        "_08063380:\n"
-        "add r0, sp, #0x254\n"
-        "_08063382:\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _08063392\n"
-        "mov r0, sp\n"
-        "bl _08073C44\n"
-        "b _08063392\n"
-        "_08063390:\n"
-        "movs r4, #0x01\n"
-        "_08063392:\n"
-        "add r0, sp, #0x258\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _080633A0\n"
-        "mov r0, sp\n"
-        "bl _08073C44\n"
-        "_080633A0:\n"
-        "cmp r4, #0x00\n"
-        "beq _08063322\n"
-        "movs r3, #0xCA\n"
-        "lsls r3, r3, #0x02\n"
-        "add sp, r3\n"
-        "pop {r4}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk632F8 work;
+    void **palettePtr;
+    u32 done;
+
+    done = 0;
+    palettePtr = (void **)0x080BB8BC;
+    _08073C4C(
+        (void *)0,
+        &work,
+        sizeof(work),
+        *palettePtr);
+    sub_08066390(0x0F);
+    sub_0804109C(&work, sub_0806639C());
+    do
+    {
+        sub_080674B4();
+        sub_0806A6F8();
+        if ((work.unk324 & 1) == 0)
+            _08073C40(*(void **)0x080BB888);
+        switch (work.unk2D4)
+        {
+        case 0:
+            if (work.unk24C != 0)
+                _08073C44(&work, work.unk24C);
+            break;
+        case 1:
+            if (work.unk250 != 0)
+                _08073C44(&work, work.unk250);
+            sub_080411EC(&work);
+            break;
+        case 2:
+            if (work.unk254 != 0)
+                _08073C44(&work, work.unk254);
+            break;
+        case 3:
+            done = 1;
+            break;
+        }
+        if (work.unk258 != 0)
+            _08073C44(&work, work.unk258);
+    } while (done == 0);
 }
 
