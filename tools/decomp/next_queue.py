@@ -367,7 +367,7 @@ def render_md(data: dict[str, Any]) -> str:
                 f"| `{row['name']}` | {row.get('bytes', 0)} | {row.get('score', '')} | "
                 f"`{row.get('seed', '')}` | {row.get('status', '')} | {row.get('next', '')} |"
             )
-        lines.extend(["", f"Notes: see `{wip_rows[0].get('notes', 'src/wip/*.md')}` per function.", ""])
+        lines.extend(["", "Per-function notes: `src/wip/<fn>.md`.", ""])
 
     lines.extend(
         [

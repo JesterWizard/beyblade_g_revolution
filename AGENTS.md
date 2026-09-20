@@ -84,7 +84,7 @@ bash build_tools.sh
 | `beyblade_g_revolution.toml` | Function renames (`[renames]`) |
 | `docs/decomp-status.md` | Progress log after each batch |
 | `docs/decomp-progress.json` | Live C-vs-original counters (functions + bytes) |
-| `docs/decomp-progress.svg` | README percentage bar |
+| `docs/decomp-progress.svg` | Optional chart in `docs/` only — **never** README |
 | `ld_script.ld` / `Makefile` | When adding new `src/` objects |
 
 ## What you must NOT do

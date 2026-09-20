@@ -6,30 +6,20 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **41.5%** of functions (263/633) and **13.7%** of original function bytes (12,372/90,272).
+Decompiled C is **41.7%** of functions (264/633) and **13.8%** of original function bytes (12,476/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `█████████████░░░░░░░░░░░░░░░░░░░` | **41.5%** | 263/633 |
-| Decompiled C (bytes) | `████░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **13.7%** | 12,372/90,272 |
+| Decompiled C (functions) | `█████████████░░░░░░░░░░░░░░░░░░░` | **41.7%** | 264/633 |
+| Decompiled C (bytes) | `████░░░░░░░░░░░░░░░░░░░░░░░░░░░░` | **13.8%** | 12,476/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
-```mermaid
-xychart-beta
-    title "Decompiled C vs original (%)"
-    x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]
-    y-axis "Percent" 0 --> 100
-    bar [41.5, 13.7, 100.0, 100.0]
-```
-
-![Decompiled C vs original](docs/decomp-progress.svg)
-
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 263 (41.5%) | 12,372 (13.7%) |
-| Readable Thumb | 370 (58.5%) | 77,900 (86.3%) |
+| Semantic C | 264 (41.7%) | 12,476 (13.8%) |
+| Readable Thumb | 369 (58.3%) | 77,796 (86.2%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **27.5%** functions / **8.0%** bytes in semantic C (44/160; 0 opcode left).
@@ -68,7 +58,7 @@ pret/pokeemerald-style matching tree, plus a small ygodm8 hack overlay:
 | `src/` | Matching C (`src/matched/` until Phase 5 packs by module) |
 | `include/` | Headers (`gba/`, `ram_map.h`, types) |
 | `data/` | Extracted data (`data/event_scripts/` reserved) |
-| `docs/` | Decomp notes, RAM map, progress bar |
+| `docs/` | Decomp notes, RAM map, progress tables |
 | `graphics/`, `sound/`, `constants/` | Extracted assets / asm constants (reserved) |
 | `tools/` | pret tools + `tools/decomp/` matching pipeline |
 | `libagbsyscall/` | BIOS syscall helpers |

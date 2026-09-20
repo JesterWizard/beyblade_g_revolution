@@ -74,7 +74,8 @@ role clear?             → ram_map_pass.sh, then retry
 
 1. Update [docs/decomp-status.md](docs/decomp-status.md)
 2. Run **gba-decomp-improve** checklist (patterns, seeds, queue)
-3. Commit per AGENTS.md unless user forbids
+3. Any unmatched C from the batch must be in `src/wip/` (`park_wip.py`) — never only a status-log sentence
+4. Commit per AGENTS.md unless user forbids
 
 ## Related skills
 

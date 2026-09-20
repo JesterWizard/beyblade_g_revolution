@@ -205,6 +205,14 @@ def collect() -> dict[str, Any]:
             display = "wip"
             if not note:
                 note = wip[name].get("status") or wip[name].get("seed", "")
+            wip_score = str(wip[name].get("score") or "")
+            parsed = re.match(r"(\d+)\s*/\s*(\d+)", wip_score)
+            if parsed and matched_n == 0:
+                matched_n = int(parsed.group(1))
+                score = wip_score
+                pct = _pct(matched_n, int(parsed.group(2)) or size or 1)
+                if source == "none":
+                    source = "wip"
         elif name in blocked and status != "matched":
             display = "blocked"
 

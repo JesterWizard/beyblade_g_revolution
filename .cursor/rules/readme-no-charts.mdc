@@ -1,0 +1,14 @@
+---
+description: Never put mermaid or SVG progress charts in README.md
+globs: README.md,tools/decomp/progress.py
+alwaysApply: false
+---
+
+# README has no charts
+
+`README.md` status is **markdown tables only**. Do not add:
+
+- mermaid fences (`` ```mermaid ``, `xychart-beta`, etc.)
+- `docs/decomp-progress.svg` or any `![…](*.svg)` progress image
+
+`python3 tools/decomp/progress.py --write` regenerates the Status block and **must not** inject those. If you need a chart, keep it in `docs/` (`decomp-status.md` / `decomp-progress.svg`), not the README.

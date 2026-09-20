@@ -1,6 +1,7 @@
-# Decompilation work queue — edit pins and blockers here.
+# Decompilation work queue — edit pins, blockers, and WIP here.
 # Refresh: python3 tools/decomp/next_queue.py --write   (or: make queue)
 # Auto-ranked backlog lands in decomp-queue.md and decomp-queue.json.
+# Unmatched C: [[wip]] + src/wip/  (see docs/decomp-wip.md). Do not discard drafts.
 
 [settings]
 top = 40
@@ -191,3 +192,27 @@ notes = "src/wip/sub_08033878.md"
 status = "same_size DIFF, 28/108 bytes (25.9%)"
 next = "permuter run (small function); or try shared 's32 zero=0' local matching retail's persistent r5"
 score = "28/108"
+
+[[wip]]
+name = "sub_08033DD4"
+seed = "src/wip/sub_08033DD4.c"
+notes = "src/wip/sub_08033DD4.md"
+status = "same-size DIFF, 93/104 (89.4%); one lsls #24 off on u8-return truthiness"
+next = "permuter or alt shape; re-add Unk0380Target first"
+score = "93/104"
+
+[[wip]]
+name = "sub_0802BC14"
+seed = "src/wip/sub_0802BC14.c"
+notes = "src/wip/sub_0802BC14.md"
+status = "same-size DIFF (46/112, 41%); agbcc emits lsrs (u8 truncate) before bl sub_0802C62C where retail reuses sa register directly with plain adds; loop/null-check structure otherwise correct"
+next = "try forcing arg via inline register hint or reordering param types; possibly needs sub_0802C62C sig change to s8"
+score = "46/112"
+
+[[wip]]
+name = "sub_0802BF04"
+seed = "src/wip/sub_0802BF04.c"
+notes = "src/wip/sub_0802BF04.md"
+status = "size_mismatch 54/140 (38.6%); struct Unk1694 field logic correct (unk00|=0xFF, unk03|=0xFF, unk02=0, unk01=0 on match), but agbcc register alloc (r8 preset outside loop for zero-store dual-use) diverges; compiled 136B vs retail 140B"
+next = "try forcing r8 allocation via explicit register variable for zero, or restructure single ptr recompute pattern to match retail's r5-offset-cached style"
+score = "54/140"

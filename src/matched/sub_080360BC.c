@@ -1,60 +1,23 @@
 #include "global.h"
 
 // @ 0x080360bc
-__attribute__((naked))
-void sub_080360BC(void)
+#include "global.h"
+
+// @ 0x080360bc
+void sub_080360BC(struct Unk360BC *a, s32 x, s32 y, s32 scale)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6}\n"
-        "mov r8, r0\n"
-        "adds r4, r1, #0x0\n"
-        "adds r6, r2, #0x0\n"
-        "mov r9, r3\n"
-        "ldr r0, [r0, #0x0C]\n"
-        "subs r4, r4, r0\n"
-        "asrs r4, r4, #0x08\n"
-        "mov r1, r8\n"
-        "ldr r0, [r1, #0x10]\n"
-        "subs r6, r6, r0\n"
-        "asrs r6, r6, #0x08\n"
-        "adds r0, r4, #0x0\n"
-        "muls r0, r4\n"
-        "adds r1, r6, #0x0\n"
-        "muls r1, r6\n"
-        "adds r0, r0, r1\n"
-        "bl sub_080674B0\n"
-        "adds r5, r0, #0x0\n"
-        "lsls r5, r5, #0x10\n"
-        "lsrs r5, r5, #0x10\n"
-        "lsls r4, r4, #0x08\n"
-        "adds r0, r4, #0x0\n"
-        "adds r1, r5, #0x0\n"
-        "bl sub_080674A0\n"
-        "adds r4, r0, #0x0\n"
-        "lsls r6, r6, #0x08\n"
-        "adds r0, r6, #0x0\n"
-        "adds r1, r5, #0x0\n"
-        "bl sub_080674A0\n"
-        "mov r1, r9\n"
-        "muls r1, r4\n"
-        "asrs r1, r1, #0x08\n"
-        "mov r2, r8\n"
-        "str r1, [r2, #0x18]\n"
-        "mov r1, r9\n"
-        "muls r1, r0\n"
-        "adds r0, r1, #0x0\n"
-        "asrs r0, r0, #0x08\n"
-        "str r0, [r2, #0x1C]\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 dx;
+    s32 dy;
+    u16 speed;
+    s32 vx;
+    s32 vy;
+
+    dx = (x - a->unk0C) >> 8;
+    dy = (y - a->unk10) >> 8;
+    speed = sub_080674B0(dx * dx + dy * dy);
+    vx = sub_080674A0(dx << 8, speed);
+    vy = sub_080674A0(dy << 8, speed);
+    a->unk18 = (scale * vx) >> 8;
+    a->unk1C = (scale * vy) >> 8;
 }
 

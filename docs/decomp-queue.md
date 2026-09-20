@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T08:38:52Z_
+_Updated: 2026-09-20T08:44:37Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 263 |
-| Still need semantic C | **370** |
-| Readable Thumb remaining | 370 |
+| Semantic C done | 264 |
+| Still need semantic C | **369** |
+| Readable Thumb remaining | 369 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 102 (44 already semantic) |
 | Blocked (documented) | 35 |
-| WIP (resume these first) | 5 |
+| WIP (resume these first) | 8 |
 
 Ranking: **battle** · showing top **40**
 
@@ -31,8 +31,11 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080338F0` | 104 | 20/104 | `src/wip/sub_080338F0.c` | same_size DIFF, 20/104 bytes (19.2%) — structural rewrite needed, indexing bug noted in file | fix table indexing to byte-offset (see note), re-add Unk338F0Table struct + Unk33958 retype, then re-run match_function.py |
 | `sub_0802D2C0` | 108 | 92/108 | `src/wip/sub_0802D2C0.c` | DIFF, best clean rewrite 92/108 bytes; agbcc DCEs the reachable-but-redundant else-if that retail keeps | permuter run targeting dead-code retention / instruction order; table lookup logic itself is verified correct |
 | `sub_08033878` | 108 | 28/108 | `src/wip/sub_08033878.c` | same_size DIFF, 28/108 bytes (25.9%) | permuter run (small function); or try shared 's32 zero=0' local matching retail's persistent r5 |
+| `sub_08033DD4` | 104 | 93/104 | `src/wip/sub_08033DD4.c` | same-size DIFF, 93/104 (89.4%); one lsls #24 off on u8-return truthiness | permuter or alt shape; re-add Unk0380Target first |
+| `sub_0802BC14` | 112 | 46/112 | `src/wip/sub_0802BC14.c` | same-size DIFF (46/112, 41%); agbcc emits lsrs (u8 truncate) before bl sub_0802C62C where retail reuses sa register directly with plain adds; loop/null-check structure otherwise correct | try forcing arg via inline register hint or reordering param types; possibly needs sub_0802C62C sig change to s8 |
+| `sub_0802BF04` | 140 | 54/140 | `src/wip/sub_0802BF04.c` | size_mismatch 54/140 (38.6%); struct Unk1694 field logic correct (unk00|=0xFF, unk03|=0xFF, unk02=0, unk01=0 on match), but agbcc register alloc (r8 preset outside loop for zero-store dual-use) diverges; compiled 136B vs retail 140B | try forcing r8 allocation via explicit register variable for zero, or restructure single ptr recompute pattern to match retail's r5-offset-cached style |
 
-Notes: see `src/wip/sub_08046278.md` per function.
+Per-function notes: `src/wip/<fn>.md`.
 
 ## Recommended next
 
@@ -63,7 +66,6 @@ Notes: see `src/wip/sub_08046278.md` per function.
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C2B0` | `0x0802C2B0` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042718` | `0x08042718` | 108 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802BC14` | `0x0802BC14` | 112 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042630` | `0x08042630` | 116 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080426A4` | `0x080426A4` | 116 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080392D0` | `0x080392D0` | 116 | 1 | pool | asm | (gBattleWork) |
@@ -72,12 +74,13 @@ Notes: see `src/wip/sub_08046278.md` per function.
 | `sub_08051BBC` | `0x08051BBC` | 124 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0802C55C` | `0x0802C55C` | 128 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080462D4` | `0x080462D4` | 130 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802BF04` | `0x0802BF04` | 140 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804245C` | `0x0804245C` | 140 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08031204` | `0x08031204` | 144 | 1 | pool | asm | (gBattleWork) |
 | `sub_080442FC` | `0x080442FC` | 144 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08031C98` | `0x08031C98` | 150 | 1 | pool | asm | (gBattleWork) |
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_080428F0` | `0x080428F0` | 160 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08062AF8` | `0x08062AF8` | 162 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -134,6 +137,6 @@ tools/decomp/battle_semantic_batch.sh 10
 tools/decomp/semantic_convert_batch.sh 30 --pool-free-only
 ```
 
-Full ranked backlog (334 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (330 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

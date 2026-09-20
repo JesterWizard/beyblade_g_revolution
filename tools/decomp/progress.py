@@ -6,7 +6,7 @@ they do not count as decompiled. Readable Thumb is matching asm, not C.
 
   python3 tools/decomp/progress.py           # human summary
   python3 tools/decomp/progress.py --json
-  python3 tools/decomp/progress.py --write   # JSON + SVG + status table
+  python3 tools/decomp/progress.py --write   # JSON + docs SVG + tables (never mermaid/SVG in README)
   python3 tools/decomp/progress.py --top 15
 """
 
@@ -488,17 +488,6 @@ def readme_section(data: dict[str, Any]) -> str:
         f"| Opcode embed | {k['opcode']['functions']} ({k['opcode']['pct_functions']:.1f}%) | "
         f"{k['opcode']['bytes']:,} ({k['opcode']['pct_bytes']:.1f}%) |",
     ]
-    mermaid = (
-        "```mermaid\n"
-        "xychart-beta\n"
-        '    title "Decompiled C vs original (%)"\n'
-        '    x-axis ["C functions", "C bytes", "Not opcode (fn)", "Not opcode (bytes)"]\n'
-        '    y-axis "Percent" 0 --> 100\n'
-        f"    bar [{d['pct_functions']:.1f}, {d['pct_bytes']:.1f}, "
-        f"{nb['pct_functions']:.1f}, {nb['pct_bytes']:.1f}]\n"
-        "```"
-    )
-
     battle_line = ""
     if battle:
         battle_line = (
@@ -507,6 +496,8 @@ def readme_section(data: dict[str, Any]) -> str:
             f"({battle['semantic']}/{battle['functions']}; "
             f"{battle['opcode']} opcode left).\n"
         )
+    # README: tables only. Never mermaid or SVG — those reappear in GitHub
+    # previews and get re-injected if this concatenates them again.
     return (
         f"{STATUS_START}\n\n"
         f"Decompiled C is **{d['pct_functions']:.1f}%** of functions "
@@ -514,9 +505,6 @@ def readme_section(data: dict[str, Any]) -> str:
         f"function bytes ({d['bytes']:,}/{total_b:,}).\n\n"
         + "\n".join(table)
         + "\n\n"
-        + mermaid
-        + "\n\n"
-        + "![Decompiled C vs original](docs/decomp-progress.svg)\n\n"
         + "\n".join(mix)
         + battle_line
         + "\nOpcode `.byte` embeds are the retail machine code and do not count as "
@@ -568,13 +556,29 @@ def patch_status_md(data: dict[str, Any]) -> None:
     )
 
 
+_README_FORBIDDEN = ("```mermaid", "decomp-progress.svg", "<svg")
+
+
+def _assert_readme_has_no_charts(block: str) -> None:
+    for needle in _README_FORBIDDEN:
+        if needle in block:
+            raise RuntimeError(
+                f"README status block must not contain {needle!r} "
+                "(no mermaid / SVG charts; tables only)"
+            )
+
+
 def patch_readme(data: dict[str, Any]) -> None:
+    block = readme_section(data)
+    _assert_readme_has_no_charts(block)
     _patch_marked(
         README,
-        readme_section(data),
+        block,
         heading="## Status",
         fallback_end="## Quick start",
     )
+    text = README.read_text() if README.is_file() else ""
+    _assert_readme_has_no_charts(text)
 
 
 def _history_point(data: dict[str, Any]) -> dict[str, Any]:
@@ -641,7 +645,7 @@ def main() -> int:
     parser.add_argument(
         "--write",
         action="store_true",
-        help="write JSON + SVG and patch README.md / decomp-status.md",
+        help="write JSON + SVG (docs/) and patch README tables / decomp-status.md (no mermaid/SVG in README)",
     )
     parser.add_argument("--top", type=int, default=15, help="largest remaining opcode stubs")
     args = parser.parse_args()

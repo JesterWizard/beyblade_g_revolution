@@ -15,7 +15,7 @@ Run this **after every successful batch** and **after every documented near-miss
 
 ```bash
 python3 tools/decomp/report_status.py
-python3 tools/decomp/progress.py --write   # updates decomp-progress.json + SVG
+python3 tools/decomp/progress.py --write   # JSON + status tables (no mermaid/SVG in README)
 make compare
 ```
 

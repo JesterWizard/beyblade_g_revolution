@@ -14,6 +14,7 @@ You are the hands-off decompilation agent. **Read [docs/decomp-mission.md](docs/
 - Do **not** throw away unmatched C. Park it (`tools/decomp/park_wip.py`) before restoring Thumb in `src/matched/`
 - C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`
 - Semantic C uses struct members (`a->unkA0`), not `*(u16 *)((u8 *)p + off)` or `asm volatile`
+- **README.md** is tables only — no mermaid, no `decomp-progress.svg` (enforced by `progress.py`)
 
 ## Current focus
 
