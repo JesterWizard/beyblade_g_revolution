@@ -216,3 +216,11 @@ notes = "src/wip/sub_0802BF04.md"
 status = "size_mismatch 54/140 (38.6%); struct Unk1694 field logic correct (unk00|=0xFF, unk03|=0xFF, unk02=0, unk01=0 on match), but agbcc register alloc (r8 preset outside loop for zero-store dual-use) diverges; compiled 136B vs retail 140B"
 next = "try forcing r8 allocation via explicit register variable for zero, or restructure single ptr recompute pattern to match retail's r5-offset-cached style"
 score = "54/140"
+
+[[wip]]
+name = "sub_08035C64"
+seed = "src/wip/sub_08035C64.c"
+notes = "src/wip/sub_08035C64.md"
+status = "same_size DIFF 85/182 (46.7%); logic fully correct (repulsion physics on Unk346C0Inner, dx/dy/distSq/threshold gate) but agbcc always emits the early-return (zero) block first regardless of if/else source order — branch layout inverted vs retail which keeps compute as fallthrough and zero-block at function end"
+next = "try computing zero-branch via explicit goto label placed after compute code, or split into two functions/permuter branch-order search"
+score = "85/182"
