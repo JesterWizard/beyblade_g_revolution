@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T20:06:13Z_
+_Updated: 2026-09-20T20:10:32Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T20:06:13Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 89 (58 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 158 |
+| WIP (resume these first) | 160 |
 
 Ranking: **battle** · showing top **40**
 
@@ -184,6 +184,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802C4A4` | 182 | 27/182 | `src/wip/sub_0802C4A4.c` | size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup semantics mapped but callee-saved r7 and repeated output-address shape remain | use an ordinary live signed index local to force r7 save, then restore repeated table-field stores |
 | `sub_0802C55C` | 128 | 58/128 | `src/wip/sub_0802C55C.c` | two attempts did not match; 58/128 bytes, final candidate 124B; semantics mapped, remaining differences are r7/entry lifetime and byte-mask store scheduling | preserve target r7 key/flag lifetimes and repeated main-work table reloads; keep same-size 61/128 seed as baseline |
 | `sub_0802D6D4` | 452 | 438/452 | `src/wip/sub_0802D6D4.c` | same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction matches size, remaining mismatch begins in late sub_0806FF58/sub_080705DC scheduling | use the direct-global seed; tune only the late resource callback/source order around +0x178 |
+| `sub_0802DCDC` | 452 | 100/452 | `src/wip/sub_0802DCDC.c` | size mismatch; 100/452 bytes, compiled 428 vs retail 452; direct semantic control flow mapped, but frame remains 0x1C vs retail 0x18 and high-register lifetimes differ | reduce spills to the retail 0x18 frame, preserve r8/r9/r10 and exact state-location reloads |
+| `sub_0802E2F8` | 110 | 4/110 | `src/wip/sub_0802E2F8.c` | two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue | restore the 20/110 natural seed, then tune only multiplier r5, signed a r2, and table r3 without overlapping fixed variables |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -223,7 +225,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_080618EC` | `0x080618EC` | 428 | 1 | pool | asm | (gBtlInputMask) |
 | `sub_0803715C` | `0x0803715C` | 444 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08056BA4` | `0x08056BA4` | 450 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0802DCDC` | `0x0802DCDC` | 452 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803DEC8` | `0x0803DEC8` | 514 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
@@ -231,6 +232,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0802FA94` | `0x0802FA94` | 748 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08045198` | `0x08045198` | 1016 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08045590` | `0x08045590` | 1256 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 
 ## Blocked
 
@@ -287,6 +289,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (150 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (148 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

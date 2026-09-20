@@ -853,7 +853,9 @@ struct MainWork /* >= 0x18B4 */
     /* 1698 */ u8 filler_1698[0x18];
     /* 16B0 */ struct Unk16B0 unk16B0[2]; /* sub_08046230 */
     /* 16C8 */ void *unk16C8;
-    /* 16CC */ u8 filler_16CC[0x14];
+    /* 16CC */ u8 filler_16CC[8];
+    /* 16D4 */ void *unk16D4;
+    /* 16D8 */ u8 filler_16D8[8];
     /* 16E0 */ struct Unk16E0 *unk16E0;
     /* 16E4 */ struct Unk16E0 *unk16E4;
     /* 16E8 */ void *unk16E8;

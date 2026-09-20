@@ -1412,3 +1412,19 @@ notes = "src/wip/sub_0802D6D4.md"
 status = "same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction matches size, remaining mismatch begins in late sub_0806FF58/sub_080705DC scheduling"
 next = "use the direct-global seed; tune only the late resource callback/source order around +0x178"
 score = "438/452"
+
+[[wip]]
+name = "sub_0802DCDC"
+seed = "src/wip/sub_0802DCDC.c"
+notes = "src/wip/sub_0802DCDC.md"
+status = "size mismatch; 100/452 bytes, compiled 428 vs retail 452; direct semantic control flow mapped, but frame remains 0x1C vs retail 0x18 and high-register lifetimes differ"
+next = "reduce spills to the retail 0x18 frame, preserve r8/r9/r10 and exact state-location reloads"
+score = "100/452"
+
+[[wip]]
+name = "sub_0802E2F8"
+seed = "src/wip/sub_0802E2F8.c"
+notes = "src/wip/sub_0802E2F8.md"
+status = "two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue"
+next = "restore the 20/110 natural seed, then tune only multiplier r5, signed a r2, and table r3 without overlapping fixed variables"
+score = "4/110"

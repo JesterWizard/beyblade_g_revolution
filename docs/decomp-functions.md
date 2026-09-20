@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-20T20:05:22Z_
+_Updated: 2026-09-20T20:10:33Z_
 
 ## Legend
 
@@ -26,8 +26,8 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | byte-identical DIFF | 0 |
 | same-size DIFF | 1 |
 | size DIFF | 14 |
-| WIP (parked C) | 147 |
-| not started | 136 |
+| WIP (parked C) | 150 |
+| not started | 133 |
 | blocked | 28 |
 | **total** | **633** |
 
@@ -36,6 +36,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
 | `sub_0804109C` | WIP (parked C) | 97.6% | 328/336 then 151/336 | First semantic seed matched 328/336 same-size (97.6%), differing only in the … |
+| `sub_0802D6D4` | WIP (parked C) | 96.9% | 438/452 | same-size DIFF; 438/452 bytes (96.9%); direct-global semantic reconstruction … |
 | `sub_0802B994` | blocked | 96.6% | 56/58 | seeded from queue.toml same-size DIFF |
 | `sub_08073988` | WIP (parked C) | 94.8% | 91/96 | Two semantic attempts. Final branch/goto-shaped parser reached 91/96 bytes (9… |
 | `sub_08069894` | WIP (parked C) | 92.7% | 89/96 | 89/96 bytes (92.7%), size mismatch (92 vs 96); correct algorithm (clear gUnk_… |
@@ -134,6 +135,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0802C3DC` | WIP (parked C) | 23.2% | 46/198 | size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic… |
 | `sub_0803DCFC` | WIP (parked C) | 22.9% | 11/48 | 11/48 same-size DIFF; index pinning and explicit goto preserved size, but ret… |
 | `sub_080385DC` | WIP (parked C) | 22.5% | 18/80 | same_size DIFF 18/80; shared masks and r12/r6/r1 pointer/register hints did n… |
+| `sub_0802DCDC` | WIP (parked C) | 22.1% | 100/452 | size mismatch; 100/452 bytes, compiled 428 vs retail 452; direct semantic con… |
 | `sub_08041E14` | WIP (parked C) | 21.9% | 25/114 then 78/114 | Two semantic attempts: baseline 25/114 (104B), then retail register-pinned ar… |
 | `sub_08068118` | WIP (parked C) | 21.6% | 22/102 then 9/102 | Two semantic attempts: initial table/branch model 22/102 (116B), then correct… |
 | `sub_0803D51C` | WIP (parked C) | 20.7% | 63/304 then 38/304 | Two same-size attempts did not match: direct semantic seed compiled 288/304 w… |
@@ -198,6 +200,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080731F4` | size DIFF | 5.0% | 2/36 |  |
 | `sub_08033F30` | size DIFF | 3.6% | 1/24 |  |
 | `sub_08068884` | size DIFF | 3.6% | 1/24 |  |
+| `sub_0802E2F8` | WIP (parked C) | 3.6% | 4/110 | two attempts did not match; 4/110 bytes, final pinned candidate 116B; table a… |
 | `sub_08049F98` | WIP (parked C) | 0.0% | 0/144 | same-size DIFF 36/144 (25%); logic confirmed correct (2x sub_080617C4 header … |
 | `sub_0804C27C` | WIP (parked C) | 0.0% | 0/168 | Two attempts consumed: parameter-register syntax was rejected by agbcc; the v… |
 
@@ -206,6 +209,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
 | `sub_0804109C` | `0x0804109C` | WIP (parked C) | 97.6% | 328/336 then 151/336 | asm |
+| `sub_0802D6D4` | `0x0802D6D4` | WIP (parked C) | 96.9% | 438/452 | asm |
 | `sub_08073988` | `0x08073988` | WIP (parked C) | 94.8% | 91/96 | asm |
 | `sub_08069894` | `0x08069894` | WIP (parked C) | 92.7% | 89/96 | asm |
 | `sub_08037318` | `0x08037318` | WIP (parked C) | 91.0% | 91/100 | asm |
@@ -300,6 +304,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0802C3DC` | `0x0802C3DC` | WIP (parked C) | 23.2% | 46/198 | asm |
 | `sub_0803DCFC` | `0x0803DCFC` | WIP (parked C) | 22.9% | 11/48 | asm |
 | `sub_080385DC` | `0x080385DC` | WIP (parked C) | 22.5% | 18/80 | asm |
+| `sub_0802DCDC` | `0x0802DCDC` | WIP (parked C) | 22.1% | 100/452 | asm |
 | `sub_08041E14` | `0x08041E14` | WIP (parked C) | 21.9% | 25/114 then 78/114 | asm |
 | `sub_08068118` | `0x08068118` | WIP (parked C) | 21.6% | 22/102 then 9/102 | asm |
 | `sub_0803D51C` | `0x0803D51C` | WIP (parked C) | 20.7% | 63/304 then 38/304 | asm |
@@ -350,6 +355,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080436B0` | `0x080436B0` | WIP (parked C) | 7.0% | 46/658 then 85/658 | asm |
 | `sub_0806FDD0` | `0x0806FDD0` | WIP (parked C) | 6.2% | 8/128 then 21/128 | asm |
 | `sub_08067584` | `0x08067584` | WIP (parked C) | 6.2% | 11/176 then 41/176 | asm |
+| `sub_0802E2F8` | `0x0802E2F8` | WIP (parked C) | 3.6% | 4/110 | asm |
 | `sub_08049F98` | `0x08049F98` | WIP (parked C) | 0.0% | 0/144 | asm |
 | `sub_0804C27C` | `0x0804C27C` | WIP (parked C) | 0.0% | 0/168 | asm |
 | `sub_08069F00` | `0x08069F00` | same-size DIFF | 37.5% | 9/24 | asm |
@@ -385,7 +391,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08067F3C` | `0x08067F3C` | not started | 0.0% | 0/92 | asm |
 | `sub_08042784` | `0x08042784` | not started | 0.0% | 0/100 | asm |
 | `sub_08061E8C` | `0x08061E8C` | not started | 0.0% | 0/108 | asm |
-| `sub_0802E2F8` | `0x0802E2F8` | not started | 0.0% | 0/110 | asm |
 | `sub_08073910` | `0x08073910` | not started | 0.0% | 0/118 | asm |
 | `sub_0806B064` | `0x0806B064` | not started | 0.0% | 0/122 | asm |
 | `sub_080735DC` | `0x080735DC` | not started | 0.0% | 0/132 | asm |
@@ -475,8 +480,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08048DB8` | `0x08048DB8` | not started | 0.0% | 0/440 | asm |
 | `sub_0803715C` | `0x0803715C` | not started | 0.0% | 0/444 | asm |
 | `sub_08056BA4` | `0x08056BA4` | not started | 0.0% | 0/450 | asm |
-| `sub_0802D6D4` | `0x0802D6D4` | not started | 0.0% | 0/452 | asm |
-| `sub_0802DCDC` | `0x0802DCDC` | not started | 0.0% | 0/452 | asm |
 | `sub_08068A08` | `0x08068A08` | not started | 0.0% | 0/460 | asm |
 | `sub_0806E060` | `0x0806E060` | not started | 0.0% | 0/492 | asm |
 | `sub_0802ECD8` | `0x0802ECD8` | not started | 0.0% | 0/498 | asm |
