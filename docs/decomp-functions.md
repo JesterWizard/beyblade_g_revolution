@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-20T20:22:04Z_
+_Updated: 2026-09-20T20:24:12Z_
 
 ## Legend
 
@@ -26,8 +26,8 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | byte-identical DIFF | 0 |
 | same-size DIFF | 1 |
 | size DIFF | 14 |
-| WIP (parked C) | 152 |
-| not started | 129 |
+| WIP (parked C) | 153 |
+| not started | 128 |
 | blocked | 28 |
 | **total** | **633** |
 
@@ -160,6 +160,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080733E4` | WIP (parked C) | 15.6% | 14/90 | size_mismatch 14/90 baseline; explicit-goto and r2/r5-pinned variants did not… |
 | `sub_0802BAD4` | WIP (parked C) | 15.6% | 50/320 | Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B)… |
 | `sub_0802DEA0` | WIP (parked C) | 15.6% | 66/424 | 66/424 bytes (15.6%), size mismatch (400 vs 424); correct algorithm fully der… |
+| `sub_08030F38` | WIP (parked C) | 15.5% | 54/348 | Resource timer/update semantics reconstructed across the AF0/B00/B20/B40/B48 … |
 | `sub_08061AB8` | WIP (parked C) | 15.0% | 18/120 then 50/120 | Two attempts: direct global C 18/120 same-size, then r4/r5/r6/r7 global ancho… |
 | `sub_08061D68` | WIP (parked C) | 14.8% | 13/88 | 13/88 bytes (13.5%), size mismatch (96 vs 88); correct overall algorithm (mas… |
 | `sub_0802C4A4` | WIP (parked C) | 14.8% | 27/182 | size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup seman… |
@@ -331,6 +332,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080733E4` | `0x080733E4` | WIP (parked C) | 15.6% | 14/90 | asm |
 | `sub_0802BAD4` | `0x0802BAD4` | WIP (parked C) | 15.6% | 50/320 | asm |
 | `sub_0802DEA0` | `0x0802DEA0` | WIP (parked C) | 15.6% | 66/424 | asm |
+| `sub_08030F38` | `0x08030F38` | WIP (parked C) | 15.5% | 54/348 | asm |
 | `sub_08061AB8` | `0x08061AB8` | WIP (parked C) | 15.0% | 18/120 then 50/120 | asm |
 | `sub_08061D68` | `0x08061D68` | WIP (parked C) | 14.8% | 13/88 | asm |
 | `sub_0802C4A4` | `0x0802C4A4` | WIP (parked C) | 14.8% | 27/182 | asm |
@@ -464,7 +466,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0804BD38` | `0x0804BD38` | not started | 0.0% | 0/328 | asm |
 | `sub_08061EF8` | `0x08061EF8` | not started | 0.0% | 0/332 | asm |
 | `sub_080737C0` | `0x080737C0` | not started | 0.0% | 0/336 | asm |
-| `sub_08030F38` | `0x08030F38` | not started | 0.0% | 0/348 | asm |
 | `sub_0803139C` | `0x0803139C` | not started | 0.0% | 0/350 | asm |
 | `sub_0803370C` | `0x0803370C` | not started | 0.0% | 0/362 | asm |
 | `sub_0804D420` | `0x0804D420` | not started | 0.0% | 0/362 | asm |

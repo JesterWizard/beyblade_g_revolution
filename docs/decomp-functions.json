@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T20:22:04Z",
+  "generated": "2026-09-20T20:24:12Z",
   "counts": {
     "matched": 309,
     "blocked": 28,
-    "wip": 152,
-    "not_started": 129,
+    "wip": 153,
+    "not_started": 128,
     "size_mismatch": 14,
     "same_size": 1
   },
@@ -780,17 +780,17 @@
       "addr": "0x08030F38",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 348,
-      "matched_bytes": 0,
+      "matched_bytes": 54,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/348",
-      "source": "none",
-      "note": ""
+      "pct": 15.5,
+      "score": "54/348",
+      "source": "wip",
+      "note": "Resource timer/update semantics reconstructed across the AF0/B00/B20/B40/B48 paths, but two compiler attempts diverged in prologue and pointer scheduling (376-byte candidate versus 348-byte target)."
     },
     {
       "name": "sub_08031094",
