@@ -1396,3 +1396,11 @@ notes = "src/wip/sub_0802C4A4.md"
 status = "size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup semantics mapped but callee-saved r7 and repeated output-address shape remain"
 next = "use an ordinary live signed index local to force r7 save, then restore repeated table-field stores"
 score = "27/182"
+
+[[wip]]
+name = "sub_0802C55C"
+seed = "src/wip/sub_0802C55C.c"
+notes = "src/wip/sub_0802C55C.md"
+status = "two attempts did not match; 58/128 bytes, final candidate 124B; semantics mapped, remaining differences are r7/entry lifetime and byte-mask store scheduling"
+next = "preserve target r7 key/flag lifetimes and repeated main-work table reloads; keep same-size 61/128 seed as baseline"
+score = "58/128"
