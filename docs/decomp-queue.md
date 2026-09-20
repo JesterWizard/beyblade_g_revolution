@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T19:37:22Z_
+_Updated: 2026-09-20T19:40:11Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T19:37:22Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 90 (57 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 149 |
+| WIP (resume these first) | 150 |
 
 Ranking: **battle** · showing top **40**
 
@@ -175,6 +175,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0806FE84` | 120 | 33/120 | `src/wip/sub_0806FE84.c` | Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1. | Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit). |
 | `sub_08070354` | 168 | 47/168 | `src/wip/sub_08070354.c` | Semantic object/flag updater reconstructed. Final verified attempt reached 47/168 (172B); control flow and flag masks match conceptually, but agbcc schedules the arg2 truncation after arg3 truncation (retail copies arg2 to r5 first), and the resulting size differs by 4 bytes. | Preserve the typed state/object model and force the prologue order: mask b, lsls arg2, lsrs r5, then mask arg3 before loading state->unk30 and state->unk10. Next tune the temporary value register so new-object mode emits object->unk08 mask/shift, 0x100 OR, then the common flags OR. |
 | `sub_08070468` | 114 | 37/114 | `src/wip/sub_08070468.c` | Two attempts: the semantic sorted-list reposition candidate reached 37/114 (112B); a typed-parameter/register experiment failed to compile because agbcc rejects asm-qualified parameters. Unlink, key update, predecessor search, and reinsertion logic are mapped. | Keep the first compilable candidate. To close the 2-byte size/prologue gap, make the typed node assignment emit adds r4,r0 before key truncation while retaining key in r2. Then tune head/search_head lifetimes to preserve the retail r6/r5 aliases. |
+| `sub_08071BA0` | 148 | 109/148 | `src/wip/sub_08071BA0.c` | Two semantic attempts. Direct GBA register/global C reached 109/148 bytes (73.6%, exact size); a base-pointer rewrite preserved size but fell to 58/148. Hardware behavior is mapped: enable sound, configure DMA1 to FIFO A, configure timers, and update audio timing globals. | Start from the 109/148 direct-register candidate. Reproduce retail's DMA pointer sequencing: after sound control setup, retail keeps 0x04000082 + 0x3A in r1 and emits str [r1], adds r1,#4, str [r1], adds r1,#4. Avoid agbcc's stmia writeback and preserve the retail literal pool order; then match timer/global writes. |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -278,6 +279,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (159 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (158 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

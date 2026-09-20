@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T19:37:22Z",
+  "generated": "2026-09-20T19:40:11Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 90,
     "battle_semantic": 57,
     "blocked": 34,
-    "wip": 149
+    "wip": 150
   },
   "pinned": [],
   "wip": [
@@ -1654,6 +1654,17 @@
       "status": "Two attempts: the semantic sorted-list reposition candidate reached 37/114 (112B); a typed-parameter/register experiment failed to compile because agbcc rejects asm-qualified parameters. Unlink, key update, predecessor search, and reinsertion logic are mapped.",
       "next": "Keep the first compilable candidate. To close the 2-byte size/prologue gap, make the typed node assignment emit adds r4,r0 before key truncation while retaining key in r2. Then tune head/search_head lifetimes to preserve the retail r6/r5 aliases.",
       "score": "37/114"
+    },
+    {
+      "name": "sub_08071BA0",
+      "addr": "0x08071BA0",
+      "kind": "asm",
+      "bytes": 148,
+      "seed": "src/wip/sub_08071BA0.c",
+      "notes": "src/wip/sub_08071BA0.md",
+      "status": "Two semantic attempts. Direct GBA register/global C reached 109/148 bytes (73.6%, exact size); a base-pointer rewrite preserved size but fell to 58/148. Hardware behavior is mapped: enable sound, configure DMA1 to FIFO A, configure timers, and update audio timing globals.",
+      "next": "Start from the 109/148 direct-register candidate. Reproduce retail's DMA pointer sequencing: after sound control setup, retail keeps 0x04000082 + 0x3A in r1 and emits str [r1], adds r1,#4, str [r1], adds r1,#4. Avoid agbcc's stmia writeback and preserve the retail literal pool order; then match timer/global writes.",
+      "score": "109/148"
     }
   ],
   "recommended": [
@@ -3617,18 +3628,6 @@
       "kind": "asm",
       "bytes": 142,
       "score": 67,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08071BA0",
-      "addr": "0x08071BA0",
-      "kind": "asm",
-      "bytes": 148,
-      "score": 53,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
