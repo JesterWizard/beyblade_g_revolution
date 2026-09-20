@@ -744,3 +744,16 @@ First 4 functions + `src/stubs.c`.
 ### 2026-09-19 — hand C convert (+1, 234/633 semantic)
 - Function: `sub_0802C5DC` (battle Unk1694 find-and-mark lookup)
 - make compare: OK
+
+### 2026-09-20 — hand C convert batch (+6, 258/633 semantic C, 40.8%)
+- Functions: `sub_0804745C`, `sub_08047594` (0x03000630/0x638 array cleanup loops),
+  `sub_0805D99C`, `sub_0803FDD0` (Unk0748 slot + MainWork unk181C/unk1708 combo,
+  added those struct fields), `sub_08062BF0` (BLDCNT/BLDALPHA fade loop),
+  `sub_0802D598` (Unk026C reset helper)
+- make compare: OK
+- Skipped near-misses (60–96% byte match, agbcc register-allocation drift,
+  not worth further permuter time this session): `sub_08030938`, `sub_0803DCFC`,
+  `sub_08041858` (90%), `sub_08042C3C`, `sub_08061800`, `sub_0806D748`,
+  `sub_080726E0`, `sub_08071B4C` (81%), `sub_080312B0` (90%), `sub_08031300`,
+  `sub_08034810`, `sub_0802D52C` (72%), `sub_0802D8C4` (push/pop leaf quirk,
+  likely same class as the confirmed dead-end leaf-function list)
