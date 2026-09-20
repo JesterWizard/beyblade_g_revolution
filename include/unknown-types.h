@@ -155,6 +155,13 @@ struct Unk62044 /* 0x28 (padded from >= 0x26) */
     /* 24 */ u16 unk24;
 };
 
+/* *gUnk_030008D0. 16-slot pointer pool + used-bitmask. sub_08062A74, sub_08062AF8, sub_08062B9C. */
+struct Unk62A74 /* >= 0x42 */
+{
+    /* 00 */ void *unk00[16];
+    /* 40 */ u16 unk40;
+};
+
 /* Halfword at +4, object at +0x14, pointer at +0x2C. sub_0807069C, sub_08070678. */
 struct Unk7069C /* >= 0x30 */
 {

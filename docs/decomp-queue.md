@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T15:20:58Z_
+_Updated: 2026-09-20T15:22:54Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T15:20:58Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 42 |
+| WIP (resume these first) | 43 |
 
 Ranking: **battle** · showing top **40**
 
@@ -68,6 +68,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08061DC0` | 72 | 36/72 | `src/wip/sub_08061DC0.c` | 36/72 bytes (50%), same size; correct algorithm (bx-r3 trampoline _08073C4C called with two VRAM addresses computed from gUnk_03000798->unk5D/unk98 and stride, plus the stride itself as 3rd arg) but agbcc allocates 2 callee-saved regs (r4,r5) vs retail's 1 (r4 alone holds the 0x06000000 constant; everything else stays in r0-r3) | retail keeps arg1 in r3 (not promoted to a callee-saved reg) through both multiplies -- try computing the second address expression first (using arg1) before the first (arg0), or avoid a separate 'stride'/'lo' local by inlining the field reads directly into the two address expressions |
 | `sub_08062068` | 48 | 16/48 | `src/wip/sub_08062068.c` | 16/48 bytes (28.6%), size mismatch (56 vs 48); correct algorithm (3-way select on mode: 0=unk1E-(b>>1), 1=unk1E-b, 2=unk1E, default returns garbage matching retail's fallthrough). A switch(mode){0,2,1} gets the first comparison right (beq mode==1, jumping to a case body placed last) but agbcc emits a 5-compare binary-search-style dispatch instead of retail's compact 3-compare chain (beq 1; bcc(<1 unsigned); beq 2) | try an if/else-if chain ordered exactly as retail's comparisons (== 1 first, then unsigned < 1, then == 2) but check whether a ternary or goto-based structure forces agbcc to keep the beq-forward-jump shape from the switch attempt without the extra bgt test |
 | `sub_080620D4` | 72 | 10/72 | `src/wip/sub_080620D4.c` | 10/72 bytes (12.5%), size mismatch (80 vs 72); correct algorithm (walk a->unk0C[0..0x7F] entries, shift each entry's unk08/unk0C by dx<<8/dy<<8, and on the first non-null entry snapshot entries[0]->unk08/unk0C into a->unk10/unk14). Discovered/reused existing struct Unk62044 (already matched by sub_08062044.c/sub_0806209C.c) and added struct Unk620D4Entry for the array elements. Retail copies raw dy into r3 immediately after push, before the null checks; agbcc here defers the dy shift and ends up spilling through an 'ip' register (extra mov), needing one more callee-saved register than retail | try computing shiftedDy as the FIRST statement (before the two null checks) so agbcc materializes it early like retail does with raw dy, or split shiftedDx/shiftedDy computation into the loop body itself rather than hoisting both before the null checks |
+| `sub_08062A74` | 76 | 53/76 | `src/wip/sub_08062A74.c` | 53/76 bytes (69.7%), same size; correct algorithm and instruction shape matches retail almost exactly (table-address kept in r6, dereferenced fresh both before the trampoline call and again before the final store) after discovering/adding struct Unk62A74 (16-slot pool + u16 used-bitmask at *gUnk_030008D0, shared with sub_08062AF8/sub_08062B9C). Only remaining diff: agbcc allocates r2 for the dereferenced slot pointer where retail uses r1 | try declaring 'slot' after 'idx' or forcing a compound expression for the null check to see if it shifts register choice from r2 to r1 |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -171,6 +172,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (286 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (285 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

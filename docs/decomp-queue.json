@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T15:20:58Z",
+  "generated": "2026-09-20T15:22:54Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 42
+    "wip": 43
   },
   "pinned": [],
   "wip": [
@@ -477,6 +477,17 @@
       "status": "10/72 bytes (12.5%), size mismatch (80 vs 72); correct algorithm (walk a->unk0C[0..0x7F] entries, shift each entry's unk08/unk0C by dx<<8/dy<<8, and on the first non-null entry snapshot entries[0]->unk08/unk0C into a->unk10/unk14). Discovered/reused existing struct Unk62044 (already matched by sub_08062044.c/sub_0806209C.c) and added struct Unk620D4Entry for the array elements. Retail copies raw dy into r3 immediately after push, before the null checks; agbcc here defers the dy shift and ends up spilling through an 'ip' register (extra mov), needing one more callee-saved register than retail",
       "next": "try computing shiftedDy as the FIRST statement (before the two null checks) so agbcc materializes it early like retail does with raw dy, or split shiftedDx/shiftedDy computation into the loop body itself rather than hoisting both before the null checks",
       "score": "10/72"
+    },
+    {
+      "name": "sub_08062A74",
+      "addr": "0x08062A74",
+      "kind": "asm",
+      "bytes": 76,
+      "seed": "src/wip/sub_08062A74.c",
+      "notes": "src/wip/sub_08062A74.md",
+      "status": "53/76 bytes (69.7%), same size; correct algorithm and instruction shape matches retail almost exactly (table-address kept in r6, dereferenced fresh both before the trampoline call and again before the final store) after discovering/adding struct Unk62A74 (16-slot pool + u16 used-bitmask at *gUnk_030008D0, shared with sub_08062AF8/sub_08062B9C). Only remaining diff: agbcc allocates r2 for the dereferenced slot pointer where retail uses r1",
+      "next": "try declaring 'slot' after 'idx' or forcing a compound expression for the null check to see if it shifts register choice from r2 to r1",
+      "score": "53/76"
     }
   ],
   "recommended": [
@@ -2953,18 +2964,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08062A74",
-      "addr": "0x08062A74",
-      "kind": "asm",
-      "bytes": 76,
-      "score": 34,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
