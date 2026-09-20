@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T15:19:30Z",
+  "generated": "2026-09-20T15:20:58Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 41
+    "wip": 42
   },
   "pinned": [],
   "wip": [
@@ -466,6 +466,17 @@
       "status": "16/48 bytes (28.6%), size mismatch (56 vs 48); correct algorithm (3-way select on mode: 0=unk1E-(b>>1), 1=unk1E-b, 2=unk1E, default returns garbage matching retail's fallthrough). A switch(mode){0,2,1} gets the first comparison right (beq mode==1, jumping to a case body placed last) but agbcc emits a 5-compare binary-search-style dispatch instead of retail's compact 3-compare chain (beq 1; bcc(<1 unsigned); beq 2)",
       "next": "try an if/else-if chain ordered exactly as retail's comparisons (== 1 first, then unsigned < 1, then == 2) but check whether a ternary or goto-based structure forces agbcc to keep the beq-forward-jump shape from the switch attempt without the extra bgt test",
       "score": "16/48"
+    },
+    {
+      "name": "sub_080620D4",
+      "addr": "0x080620D4",
+      "kind": "asm",
+      "bytes": 72,
+      "seed": "src/wip/sub_080620D4.c",
+      "notes": "src/wip/sub_080620D4.md",
+      "status": "10/72 bytes (12.5%), size mismatch (80 vs 72); correct algorithm (walk a->unk0C[0..0x7F] entries, shift each entry's unk08/unk0C by dx<<8/dy<<8, and on the first non-null entry snapshot entries[0]->unk08/unk0C into a->unk10/unk14). Discovered/reused existing struct Unk62044 (already matched by sub_08062044.c/sub_0806209C.c) and added struct Unk620D4Entry for the array elements. Retail copies raw dy into r3 immediately after push, before the null checks; agbcc here defers the dy shift and ends up spilling through an 'ip' register (extra mov), needing one more callee-saved register than retail",
+      "next": "try computing shiftedDy as the FIRST statement (before the two null checks) so agbcc materializes it early like retail does with raw dy, or split shiftedDx/shiftedDy computation into the loop body itself rather than hoisting both before the null checks",
+      "score": "10/72"
     }
   ],
   "recommended": [
@@ -2930,18 +2941,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080620D4",
-      "addr": "0x080620D4",
-      "kind": "asm",
-      "bytes": 72,
-      "score": 36,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },

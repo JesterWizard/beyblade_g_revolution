@@ -136,11 +136,19 @@ struct Unk62068 /* >= 0x20 */
     /* 1e */ s16 unk1E;
 };
 
+/* Entry referenced by Unk62044.unk0C[i]. sub_080620D4. */
+struct Unk620D4Entry /* >= 0x10 */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+};
+
 struct Unk62044 /* 0x28 (padded from >= 0x26) */
 {
     /* 00 */ void *unk00;
     /* 04 */ u8 filler_04[8];
-    /* 0c */ void **unk0C;
+    /* 0c */ struct Unk620D4Entry **unk0C;
     /* 10 */ s32 unk10;
     /* 14 */ s32 unk14;
     /* 18 */ u8 filler_18[0xC];
