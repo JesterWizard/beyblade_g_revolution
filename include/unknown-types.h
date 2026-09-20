@@ -293,7 +293,8 @@ struct MainWork /* >= 0x18B4 */
     /* 16CC */ u8 filler_16CC[0x14];
     /* 16E0 */ struct Unk16E0 *unk16E0;
     /* 16E4 */ struct Unk16E0 *unk16E4;
-    /* 16E8 */ u8 filler_16E8[0x24];
+    /* 16E8 */ u8 filler_16E8[0x20]; /* sub_0805D99C */
+    /* 1708 */ u32 unk1708; /* sub_0805D99C */
     /* 170C */ s32 unk170C;
     /* 1710 */ s32 unk1710[27];
     /* 177C */ s32 unk177C;
@@ -321,7 +322,9 @@ struct MainWork /* >= 0x18B4 */
     /* 1818 */ u8 unk1818;
     /* 1819 */ u8 unk1819;
     /* 181A */ u8 unk181A;
-    /* 181B */ u8 filler_181B[4];
+    /* 181B */ u8 filler_181B[1];
+    /* 181C */ u8 unk181C; /* sub_0803fdd0, sub_0805d99c */
+    /* 181D */ u8 filler_181D[2];
     /* 181F */ s8 unk181F;
     /* 1820 */ u8 filler_1820[0xC];
     /* 182C */ u8 unk182C; /* sub_08042784 */
@@ -789,7 +792,9 @@ struct Unk47594 /* >= 0x10 */
 /* Nested block at +0x80. sub_0805D1AC, sub_0805DA70. */
 struct Unk0748 /* >= 0x168 */
 {
-    /* 00 */ u8 filler_00[0x80];
+    /* 00 */ u8 filler_00[0xC];
+    /* 0C */ void *unk0C; /* sub_0805d99c */
+    /* 10 */ u8 filler_10[0x74];
     /* 80 */ void *unk80;
     /* 84 */ u8 unk84;
     /* 85 */ u8 filler_85[0xDF];

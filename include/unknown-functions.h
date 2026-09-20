@@ -290,6 +290,7 @@ u8 sub_08070930(struct Unk7069C *a, void *b, u8 c);
 u8 sub_08070D44(struct Unk7069C *a, void *b, u8 c);
 void sub_08070354(void *a, u16 b, u16 c, u8 d);
 s32 sub_08040EF4(void *a);
+void sub_0804109C(void *a, void *b);
 void *sub_08071EE4(void *a, u32 b);
 void sub_0806F05C(void *a);
 void sub_0806EC20(void *a, u32 b, u16 c, void *d);
