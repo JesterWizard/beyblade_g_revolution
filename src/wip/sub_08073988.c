@@ -49,8 +49,8 @@ char8:
         index++;
         goto loop_tail;
 default_char:
-        r0 = 0x080BB748;
-r0 = ch + r0;
+        r0 = (index = 0x080BB748);
+        r0 = ch + r0;
         r0 = *(const u8 *)r0;
         r0 = r0 + (u32)base;
         r0 = *(const u8 *)r0;
@@ -61,4 +61,3 @@ loop_tail:
 done:
     return total;
 }
-

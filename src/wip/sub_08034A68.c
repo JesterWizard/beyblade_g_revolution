@@ -1,28 +1,47 @@
 #include "global.h"
 
 // @ 0x08034a68
-#include "global.h"
-
 void sub_08034A68(struct Unk346C0 *a, u32 b)
 {
+    u32 off;
+    u32 p;
+    u8 zero;
     u8 status;
 
-    a->unk310 = 0;
-    status = a->unk314;
+    p = (u32)a;
+    off = 0xC4;
+    off <<= 2;
+    p += off;
+    zero = 0;
+    *(u8 *)p = zero;
+    off = 0xC5;
+    off <<= 2;
+    p = (u32)a + off;
+    status = *(u8 *)p;
     if (status == 1)
     {
-        a->unk2F8 = 0x3C;
-        a->unk314 = 0;
+        off -= 0x1C;
+        *(u32 *)((u32)a + off) = 0x3C;
+        *(u8 *)p = zero;
     }
-    a->unk311 = 0;
-    a->unk30F = 0;
-    a->unk2CC = 5;
+    off = 0x311;
+    p = (u32)a + off;
+    *(u8 *)p = zero;
+    off -= 2;
+    p = (u32)a + off;
+    *(u8 *)p = zero;
+    off = 0xB3;
+    off <<= 2;
+    p = (u32)a + off;
+    *(u32 *)p = 5;
     sub_08035238((struct Unk35258 *)a);
     sub_080347E4(a);
-    if (a->unk30C == 1)
+    off = 0xC3;
+    off <<= 2;
+    p = (u32)a + off;
+    if (*(u8 *)p == 1)
     {
         sub_08034FDC((struct Unk34FF8 *)a, b);
         sub_08035884(&a->unk08);
     }
 }
-

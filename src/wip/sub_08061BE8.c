@@ -1,8 +1,6 @@
 #include "global.h"
 
 // @ 0x08061be8
-#include "global.h"
-
 void sub_08061BE8(void)
 {
     u32 r0;
@@ -18,7 +16,7 @@ void sub_08061BE8(void)
         return;
 
     r1 = (u32)gUnk_03000770;
-r0 <<= 3;
+    r0 <<= 3;
     entry = (struct Unk0770 *)(r0 + r1);
     handler_slot = (void **)entry->unk00;
     if (handler_slot == 0)
@@ -26,8 +24,7 @@ r0 <<= 3;
 
     loc = &gUnk_03000798;
     r2 = *loc;
-    r0 = (u32)r2;
-    r0 += 0x5D;
+    r0 = (u32)r2 + 0x5D;
     r0 = *(u8 *)r0;
     r1 = r0 << 14;
     r0 = 0xC0;
@@ -43,11 +40,9 @@ r0 <<= 3;
 
     r1 = (u32)*loc;
     r2 = (struct Unk0798 *)(u32)entry->unk04;
-    r0 = r1;
-    r0 += 0x90;
+    r0 = r1 + 0x90;
     *(u16 *)r0 = (u16)(u32)r2;
     r0 = entry->unk06;
     r1 += 0x92;
     *(u16 *)r1 = (u16)r0;
 }
-

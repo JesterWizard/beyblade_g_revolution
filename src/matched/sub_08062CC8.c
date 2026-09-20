@@ -1,32 +1,23 @@
 #include "global.h"
 
 // @ 0x08062cc8
-__attribute__((naked))
-void sub_08062CC8(void)
+void sub_08062CC8(u32 idx, u8 *out)
 {
-    asm(
-        ".syntax unified\n"
-        "lsls r0, r0, #0x18\n"
-        "ldr r2, _08062CF0 @ =0x05000200\n"
-        "lsrs r0, r0, #0x17\n"
-        "adds r0, r0, r2\n"
-        "ldrh r2, [r0, #0x00]\n"
-        "movs r3, #0x1F\n"
-        "adds r0, r2, #0x0\n"
-        "ands r0, r3\n"
-        "strb r0, [r1, #0x00]\n"
-        "movs r0, #0xF8\n"
-        "lsls r0, r0, #0x02\n"
-        "ands r0, r2\n"
-        "lsrs r0, r0, #0x05\n"
-        "strb r0, [r1, #0x01]\n"
-        "movs r0, #0xF8\n"
-        "lsls r0, r0, #0x07\n"
-        "ands r2, r0\n"
-        "lsrs r2, r2, #0x0A\n"
-        "strb r2, [r1, #0x02]\n"
-        "bx lr\n"
-        "_08062CF0: .4byte 0x05000200\n"
-    );
+    u32 shifted;
+    u32 base;
+    u16 color;
+    u32 sh;
+    u32 *p;
+
+    shifted = idx << 24;
+    base = 0x05000200;
+    sh = 23;
+    p = &shifted;
+    shifted = *p >> sh;
+    shifted = shifted + base;
+    color = *(u16 *)shifted;
+    out[0] = (u8)(color & 0x1F);
+    out[1] = (u8)((color & 0x3E0) >> 5);
+    out[2] = (u8)((color & 0x7C00) >> 10);
 }
 

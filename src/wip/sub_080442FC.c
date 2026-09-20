@@ -18,9 +18,9 @@ void sub_080442FC(
     u32 r1;
     u32 r3;
 
+    index = 0;
     flag = c;
     arg4 = d;
-    index = 0;
     if (b != 0)
     {
         index = b->unk16;
@@ -39,7 +39,7 @@ void sub_080442FC(
     r1 += r3;
     r1 <<= 2;
     r0 = 0x08091208;
-r1 += r0;
+    r1 += r0;
     *(u32 *)slot = r1;
     arg2 = 0x82;
     arg2 <<= 5;
@@ -49,4 +49,3 @@ r1 += r0;
     if (flag != 0)
         sub_0806C78C((s32)sub_08062A14(), a, (s32)index >> 16);
 }
-

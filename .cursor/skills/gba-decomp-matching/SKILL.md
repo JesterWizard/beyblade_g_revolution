@@ -83,6 +83,25 @@ Wins that stay MATCH without asm labels: null-check stores (`sub_0802D8C4`, `sub
 
 `match_function.py` reads the comment from the original `.c` (gcc `-E` strips it). If it still extra-pushes after the flag + retail register order, park.
 
+### 7. Schedule a pool load between two ops on one local
+
+Retail `lsls r0,#24; ldr r2,=0x05000200; lsrs r0,#23`. agbcc delays the `ldr` until the add. Win: take the address of the shifted local so the second shift reloads it:
+
+```c
+shifted = idx << 24;
+base = 0x05000200;
+sh = 23;
+p = &shifted;
+shifted = *p >> sh;
+shifted += base;
+```
+
+`sub_08062CC8`. Permuter invented this in 9 iterations; `match_function.py` still has to confirm against retail (permuter `target.o` can warn about pool alignment).
+
+### 8. Dummy reload to pin `ands` operands
+
+Mask-first `movs r0,#N; ldrb r1,[r5]; ands r0,r1` can compile as `movs r1,#N; ldrb r0; ands r1,r0`. An extra `value = *addr` into a different u32 before a later mask test can fix the earlier tests too (`sub_0803531C`).
+
 ## Permuter workflow
 
 ```bash

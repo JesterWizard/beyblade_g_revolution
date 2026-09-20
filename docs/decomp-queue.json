@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-20T22:59:46Z",
+  "generated": "2026-09-20T23:40:44Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 337,
-    "semantic_done": 296,
-    "readable_asm": 337,
+    "pending": 335,
+    "semantic_done": 298,
+    "readable_asm": 335,
     "opcode": 0,
     "battle_pending": 100,
     "battle_semantic": 54,
     "blocked": 20,
-    "wip": 209
+    "wip": 206
   },
   "pinned": [],
   "wip": [
@@ -540,9 +540,9 @@
       "bytes": 112,
       "seed": "src/wip/sub_08034A68.c",
       "notes": "src/wip/sub_08034A68.md",
-      "status": "two attempts: 32/112 direct field draft, then 111/112 same-size with status pinned to r1; only the final bne branch displacement differs (retail +0x07 vs candidate +0x03)",
-      "next": "Use the 111/112 seed and adjust only the final branch layout (explicit label/goto or permuter); preserve status=r1 and direct struct fields",
-      "score": "111/112"
+      "status": "91/112 same-size; off in r0 vs r1",
+      "next": "permuter perm_refer_to_var for first 0xC4 offset",
+      "score": "91/112"
     },
     {
       "name": "sub_08035258",
@@ -1700,17 +1700,6 @@
       "score": "21/32"
     },
     {
-      "name": "sub_0803531C",
-      "addr": "0x0803531C",
-      "kind": "asm",
-      "bytes": 132,
-      "seed": "src/wip/sub_0803531C.c",
-      "notes": "src/wip/sub_0803531C.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "121/132"
-    },
-    {
       "name": "sub_080361A8",
       "addr": "0x080361A8",
       "kind": "asm",
@@ -1728,8 +1717,8 @@
       "bytes": 100,
       "seed": "src/wip/sub_08037318.c",
       "notes": "src/wip/sub_08037318.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "91/100; 0x2C vs table ldr order",
+      "next": "overnight permuter",
       "score": "91/100"
     },
     {
@@ -1849,8 +1838,8 @@
       "bytes": 336,
       "seed": "src/wip/sub_08040F4C.c",
       "notes": "src/wip/sub_08040F4C.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "319/336; done in r4 vs r5",
+      "next": "second live callee-saved across loop",
       "score": "319/336"
     },
     {
@@ -1915,8 +1904,8 @@
       "bytes": 144,
       "seed": "src/wip/sub_080442FC.c",
       "notes": "src/wip/sub_080442FC.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "132/144; a in r4 vs r5",
+      "next": "perm_refer_to_var so index takes r4",
       "score": "132/144"
     },
     {
@@ -1981,8 +1970,8 @@
       "bytes": 48,
       "seed": "src/wip/sub_08061308.c",
       "notes": "src/wip/sub_08061308.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "46/48; ldrb r1 vs r0",
+      "next": "dummy ldrb / overnight permuter",
       "score": "46/48"
     },
     {
@@ -2003,8 +1992,8 @@
       "bytes": 96,
       "seed": "src/wip/sub_08061BE8.c",
       "notes": "src/wip/sub_08061BE8.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "92/96; lsls vs table ldr order",
+      "next": "62CC8-style &local or overnight permuter",
       "score": "92/96"
     },
     {
@@ -2036,20 +2025,9 @@
       "bytes": 76,
       "seed": "src/wip/sub_08062A74.c",
       "notes": "src/wip/sub_08062A74.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "72/76; ldrh/handler r3 vs r2",
+      "next": "overnight permuter",
       "score": "72/76"
-    },
-    {
-      "name": "sub_08062CC8",
-      "addr": "0x08062CC8",
-      "kind": "asm",
-      "bytes": 44,
-      "seed": "src/wip/sub_08062CC8.c",
-      "notes": "src/wip/sub_08062CC8.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "40/44"
     },
     {
       "name": "sub_08062D24",
@@ -2113,9 +2091,9 @@
       "bytes": 96,
       "seed": "src/wip/sub_08069894.c",
       "notes": "src/wip/sub_08069894.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "89/96"
+      "status": "85/96; IWRAM stores preloaded vs sequential",
+      "next": "continue permuter from output-245-1",
+      "score": "85/96"
     },
     {
       "name": "sub_08069908",
@@ -2256,8 +2234,8 @@
       "bytes": 52,
       "seed": "src/wip/sub_080726E0.c",
       "notes": "src/wip/sub_080726E0.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "50/52 same-size; ldrh dest r1 vs r4",
+      "next": "permuter; keep r1 live so unk04 clobbers r4",
       "score": "50/52"
     },
     {
@@ -2267,20 +2245,9 @@
       "bytes": 96,
       "seed": "src/wip/sub_08073988.c",
       "notes": "src/wip/sub_08073988.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "89/96"
-    },
-    {
-      "name": "sub_08043B58",
-      "addr": "0x08043B58",
-      "kind": "asm",
-      "bytes": 54,
-      "seed": "src/wip/sub_08043B58.c",
-      "notes": "src/wip/sub_08043B58.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "41/54"
+      "status": "94/96; table ldr r2 vs r0 (base now r7)",
+      "next": "r7 pressure without assigning table to index",
+      "score": "94/96"
     },
     {
       "name": "sub_0802B994",
@@ -2388,6 +2355,20 @@
       "battle_syms": [
         "gBtlObjListHead",
         "gBtlObjListTail"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08043B58",
+      "addr": "0x08043B58",
+      "kind": "asm",
+      "bytes": 54,
+      "score": 21,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
       ],
       "has_pool": true,
       "blocked": false,
@@ -2850,18 +2831,6 @@
       "has_pool": false,
       "blocked": false,
       "block_reason": ""
-    },
-    {
-      "name": "sub_08073078",
-      "addr": "0x08073078",
-      "kind": "asm",
-      "bytes": 34,
-      "score": 17,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
     }
   ],
   "blocked": [
@@ -3078,6 +3047,20 @@
       "battle_syms": [
         "gBtlObjListHead",
         "gBtlObjListTail"
+      ],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08043B58",
+      "addr": "0x08043B58",
+      "kind": "asm",
+      "bytes": 54,
+      "score": 21,
+      "battle_refs": 1,
+      "battle_syms": [
+        "gMainWorkPtr"
       ],
       "has_pool": true,
       "blocked": false,

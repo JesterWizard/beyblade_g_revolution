@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **296/633 (46.8%)** |
-| **Decompiled C (bytes)** | **18,550/90,272 (20.5%)** |
+| **Decompiled C (functions)** | **298/633 (47.1%)** |
+| **Decompiled C (bytes)** | **18,726/90,272 (20.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 337/633 (53.2%) |
+| Readable Thumb | 335/633 (52.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,13 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — parked near-miss rematch (+2, 296→298/633)
+- Target list from `decomp-functions.md` 38–49 (12 parked same-size DIFF after the GCC-asm ban).
+- Matched `sub_08062CC8` (palette RGB extract): `&shifted` so `ldr =0x05000200` sits between `lsls #24` and `lsrs #23`.
+- Matched `sub_0803531C` (mask-first flags on unk2C5): dummy `ldrb` into another u32 before the last mask pins earlier `ands` operands.
+- Leftovers still same-size DIFF (Thumb left in `src/matched/`): `sub_08073988` 94/96, `sub_080726E0` 50/52, `sub_08061308` 46/48, `sub_08061BE8` 92/96, `sub_08040F4C` 319/336, `sub_08062A74` 72/76, `sub_080442FC` 132/144, `sub_08037318` 91/100, `sub_08034A68` 91/112, `sub_08069894` 85/96.
+- `make compare`: OK
 
 ### 2026-09-21 — ban `register` in semantic C
 - The `register` storage class is banned the same as GCC asm labels. `match_function.py` rejects it.

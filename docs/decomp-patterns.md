@@ -190,7 +190,7 @@ python3 tools/decomp/function_scores.py --close
 |---------|---------|------------|
 | Extra `push {lr}` on branch | `sub_0802D8C4`, null-check leaves | Block; permuter or stay readable Thumb |
 | rN pool pin | `sub_080601C4` | Permuter; may stay asm-only |
-| Dest reg mismatch (same size) | table lookup family | evaluation order; else park |
+| Dest reg mismatch (same size) | table lookup family | evaluation order; `&local` reload (`sub_08062CC8`); dummy `ldrb` (`sub_0803531C`); else park |
 | Pool in middle of fn | `sub_08042B78` | Permuter or readable Thumb |
 | Branchy leaf | `sub_080615EC` | Readable Thumb until types clear |
 
