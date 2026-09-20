@@ -9,6 +9,8 @@
 
 s32 sub_08042BE8(s32 a);
 void sub_08043DB4(s32 a, void *b, s32 c, s32 d, s32 e);
+void sub_08056D68(void *a);
+void *sub_0806BE20(void *a, void *b, s32 c);
 void *sub_0802B994(void);
 void *sub_0802B95C(void *a);
 s32 sub_080408C4(void);
