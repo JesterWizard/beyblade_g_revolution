@@ -1,51 +1,37 @@
 #include "global.h"
 
 // @ 0x08044f64
-__attribute__((naked))
-u32 sub_08044F64(u32 a)
+u32 sub_08044F64(u32 idx)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "movs r1, #0x03\n"
-        "muls r0, r1\n"
-        "adds r7, r0, #0x3\n"
-        "adds r5, r0, #0x0\n"
-        "cmp r5, r7\n"
-        "bcs _08044FA6\n"
-        "ldr r6, _08044F98 @ =0x08096938\n"
-        "_08044F74:\n"
-        "movs r4, #0x00\n"
-        "_08044F76:\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_08067634\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_080677A8\n"
-        "adds r4, #0x01\n"
-        "cmp r0, #0x00\n"
-        "bne _08044F8E\n"
-        "movs r4, #0x00\n"
-        "_08044F8E:\n"
-        "cmp r4, #0x08\n"
-        "bne _08044F9C\n"
-        "movs r0, #0x00\n"
-        "b _08044FA8\n"
-        ".byte 0x00, 0x00\n"
-        "_08044F98: .4byte 0x08096938\n"
-        "_08044F9C:\n"
-        "cmp r4, #0x00\n"
-        "bne _08044F76\n"
-        "adds r5, #0x01\n"
-        "cmp r5, r7\n"
-        "bcc _08044F74\n"
-        "_08044FA6:\n"
-        "movs r0, #0x01\n"
-        "_08044FA8:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    register u32 product asm("r0");
+    u32 i;
+    u32 end;
+    u32 count;
+    u32 table;
+    u32 three = 3;
+
+    product = idx * three;
+    end = product + 3;
+    i = product;
+    if (i < end)
+    {
+        table = 0x08096938;
+        do
+        {
+            count = 0;
+            do
+            {
+                sub_08067634(i, table);
+                if (sub_080677A8(i, (void *)table) != 0)
+                    count++;
+                else
+                    count = 0;
+                if (count == 8)
+                    return 0;
+            } while (count != 0);
+            i++;
+        } while (i < end);
+    }
+    return 1;
 }
 

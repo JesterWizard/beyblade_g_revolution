@@ -153,6 +153,20 @@ struct Unk7069C /* >= 0x30 */
     /* 2c */ struct Unk705CC *unk2C;
 };
 
+/* Per-entry state at BattleWork +0x0BCC. sub_0803D4C4, sub_08062238. */
+struct Unk62634 /* >= 0x64 */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ void *unk08;
+    /* 0c */ u8 filler_0C[0xC];
+    /* 18 */ u32 unk18;
+    /* 1c */ u32 unk1C;
+    /* 20 */ u32 unk20;
+    /* 24 */ u8 filler_24[4];
+    /* 28 */ s32 unk28;
+    /* 2c */ u8 filler_2C[0x38];
+};
+
 /* Battle work block (*gBattleWork). sub_080314FC, sub_08033530, sub_08033574. */
 struct BattleWork /* >= 0x208A */
 {
@@ -170,7 +184,9 @@ struct BattleWork /* >= 0x208A */
     /* 0B70 */ u32 unk0B70;
     /* 0B74 */ u8 filler_0B74[4];
     /* 0B78 */ u32 unk0B78;
-    /* 0B7C */ u8 filler_0B7C[0x1414];
+    /* 0B7C */ u8 filler_0B7C[0x50];
+    /* 0BCC */ struct Unk62634 unk0BCC[48]; /* sub_0803D4C4 */
+    /* 1E8C */ u8 filler_1E8C[0x104];
     /* 1F90 */ s32 unk1F90; /* sub_080330F4 */
     /* 1F94 */ s32 unk1F94; /* sub_080330F4 */
     /* 1F98 */ u8 unk1F98; /* sub_080330F4 */
@@ -248,6 +264,33 @@ struct Unk16B0 /* 0x0c */
     /* 08 */ s32 unk08;
 };
 
+/* Counter at +0x18 of the target owned by MainWork +0x274. */
+struct Unk40088Target /* >= 0x1a */
+{
+    /* 00 */ u8 filler_00[0x18];
+    /* 18 */ u16 unk18;
+};
+
+/* Two-word ROM lookup entries used by sub_08040EF4. */
+struct Unk40EF4 /* 0x08 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ void *unk04;
+};
+
+/* Object anchor at MainWork +0x448. */
+struct Unk42718 /* >= 0x04 */
+{
+    /* 00 */ u8 filler_00[4];
+};
+
+/* Two-word descending range entries at 0x080908BC. */
+struct Unk42BE8 /* 0x08 */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+};
+
 /* Per-slot record, 0x53 slots at MainWork+0x8D0. sub_0803E258. */
 struct Unk8D0 /* 0x28 */
 {
@@ -261,7 +304,11 @@ struct Unk8D0 /* 0x28 */
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
-    /* 0000 */ u8 filler_0000[0x36C];
+    /* 0000 */ u8 filler_0000[0x274];
+    /* 0274 */ struct Unk40088Target *unk0274;
+    /* 0278 */ u8 filler_0278[0x8C];
+    /* 0304 */ s32 unk0304;
+    /* 0308 */ u8 filler_0308[0x64];
     /* 036C */ u32 unk036C;
     /* 0370 */ u32 unk0370;
     /* 0374 */ u32 unk0374;
@@ -272,7 +319,8 @@ struct MainWork /* >= 0x18B4 */
     /* 03B0 */ u32 unk03B0;
     /* 03B4 */ u8 filler_03B4[0x70];
     /* 0424 */ struct Unk705DC *unk0424;
-    /* 0428 */ u8 filler_0428[0x24];
+    /* 0428 */ u8 filler_0428[0x20];
+    /* 0448 */ struct Unk42718 unk0448;
     /* 044C */ u32 unk044C; /* sub_08044A20, sub_08042784 */
     /* 0450 */ u32 unk0450; /* sub_08042784 */
     /* 0454 */ u8 filler_0454[0x34];
@@ -424,17 +472,6 @@ struct Unk617C4 /* >= 0x0d */
     /* 05 */ u8 unk05;
     /* 06 */ u8 filler_06[6];
     /* 0c */ u8 unk0C;
-};
-
-/* Stores at +0x18/+0x1c/+0x20, pointer at +8. sub_08062634, sub_08062238. */
-struct Unk62634 /* >= 0x24 */
-{
-    /* 00 */ u8 filler_00[8];
-    /* 08 */ void *unk08;
-    /* 0c */ u8 filler_0C[0xC];
-    /* 18 */ u32 unk18;
-    /* 1c */ u32 unk1C;
-    /* 20 */ u32 unk20;
 };
 
 /* Double-indirect table at +0x230, word at +0x310. sub_08066BC4. */
@@ -1215,6 +1252,16 @@ struct Unk59C98Owner /* >= 0xcc */
 
 /* Signed bytes + u8 into ROM tables. sub_0803E328 / 3E374 / 3E3C0. */
 struct Unk3E328 /* >= 0x21 */
+{
+    /* 00 */ u8 filler_00[0x1D];
+    /* 1d */ s8 unk1D;
+    /* 1e */ s8 unk1E;
+    /* 1f */ u8 filler_1F;
+    /* 20 */ u8 unk20;
+};
+
+/* Same signed table indices as Unk3E328, with byte-offset table reads. */
+struct Unk3E374 /* >= 0x21 */
 {
     /* 00 */ u8 filler_00[0x1D];
     /* 1d */ s8 unk1D;

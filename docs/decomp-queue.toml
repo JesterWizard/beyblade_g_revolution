@@ -257,8 +257,8 @@ score = "42/152"
 name = "sub_08041858"
 seed = "src/wip/sub_08041858.c"
 notes = "src/wip/sub_08041858.md"
-status = "90% DIFF size mismatch (48 vs 52); volatile/r0-pinned p2 variants and short permuter run did not break the pool-address fold"
-next = "leave readable Thumb; revisit with a genuine call-boundary or pool-symbol technique"
+status = "47/52 size mismatch; direct typed stores also retained agbcc's pool-address fold"
+next = "leave readable Thumb; revisit with a distinct pool-symbol technique or shape-preserving call boundary"
 score = "47/52"
 
 [[wip]]
@@ -270,25 +270,145 @@ next = "leave readable Thumb; revisit with a source shape that forces idx normal
 score = "37/48"
 
 [[wip]]
-name = "sub_080726E0"
-seed = "src/wip/sub_080726E0.c"
-notes = "src/wip/sub_080726E0.md"
-status = "96.2% (50/52) same-size DIFF; r4 register hint and short decomp-permuter run did not improve the result"
-next = "leave readable Thumb; revisit with a new way to force r4 reuse for the final halfword offset"
-score = "50/52"
-
-[[wip]]
-name = "sub_08044F64"
-seed = "src/wip/sub_08044F64.c"
-notes = "src/wip/sub_08044F64.md"
-status = "93.2% (69/74) same-size DIFF; idx-as-loop and r1 multiplier hints did not improve the register-order drift"
-next = "leave readable Thumb; revisit with a source shape that preserves the parameter register through the multiply"
-score = "69/74"
-
-[[wip]]
 name = "sub_08031300"
 seed = "src/wip/sub_08031300.c"
 notes = "src/wip/sub_08031300.md"
 status = "83.3% (65/78) same-size DIFF; logic correct; decomp-permuter ran about 10,000 iterations and reached best score 1295 without zero"
 next = "leave readable Thumb; revisit with a new register-allocation technique or a verified compiler/source-shape insight"
 score = "65/78"
+
+[[wip]]
+name = "sub_08033084"
+seed = "src/wip/sub_08033084.c"
+notes = "src/wip/sub_08033084.md"
+status = "63/100 same-size DIFF; semantic logic correct, but retail copies the destination into r5 before normalizing the flag while agbcc schedules that copy after lsls"
+next = "try a register-parameter or source shape that forces dst=a before flag normalization; keep loc=r4 and the explicit gBattleWork reload in the <=0 branch"
+score = "63/100"
+
+[[wip]]
+name = "sub_08033574"
+seed = "src/wip/sub_08033574.c"
+notes = "src/wip/sub_08033574.md"
+status = "20/80 after embedded-state modeling; semantic field map is plausible, but agbcc uses r4/r5 and omits retail r6 while the retail prologue keeps the global pointer in r5, base in r1, and 0x2088 in r6"
+next = "try explicit r5 global-pointer and r6 offset register pins, while preserving the embedded state at 0x1FAC and byte flag at +0x3A"
+score = "20/80"
+
+[[wip]]
+name = "sub_08038580"
+seed = "src/wip/sub_08038580.c"
+notes = "src/wip/sub_08038580.md"
+status = "best 24/92 same-size DIFF; logic and size are correct, but baseline uses dst in r6, p in r2, and mask in r7 while retail uses dst r2, p r0, mask r6, and preserves original index in r7; direct all-register pinning worsened to 13/92 and 104B"
+next = "try selective pins only: dst r2 and original index r7, leaving global pointer/mask allocation to agbcc; preserve the 92-byte baseline shape"
+score = "24/92"
+
+[[wip]]
+name = "sub_0803DCFC"
+seed = "src/wip/sub_0803DCFC.c"
+notes = "src/wip/sub_0803DCFC.md"
+status = "11/48 same-size DIFF; index pinning and explicit goto preserved size, but retail uses a longer error-path layout and explicit shift/add sequence while agbcc still places the table return block differently"
+next = "try a source layout that keeps the error call block before the valid table path while forcing  index and separate  offset; use the retail bls target shape"
+score = "11/48"
+
+[[wip]]
+name = "sub_0803E328"
+seed = "src/wip/sub_0803E328.c"
+notes = "src/wip/sub_0803E328.md"
+status = "44/76 same-size DIFF; signed table indices and delayed first-table byte now match the retail shape, but agbcc schedules the 0x0807BDB8 literal load after setting up the 0x1E index"
+next = "pin the first table base to r0 or assign it in a separate statement before reading unk1E; preserve the current entry1/table2/table3 evaluation order"
+score = "44/76"
+
+[[wip]]
+name = "sub_0803E374"
+seed = "src/wip/sub_0803E374.c"
+notes = "src/wip/sub_0803E374.md"
+status = "40/76 same-size DIFF; cloned signed table lookup matches size and most arithmetic, but agbcc still schedules the 0x0807BDB8 literal after the 0x1E index setup despite r0/r1 pins"
+next = "try a dependency-preserving table-base load before the first signed index (or reuse the successful 3E328 pattern with a forced r0 table local); the remaining table accesses are offset +1"
+score = "40/76"
+
+[[wip]]
+name = "sub_0803E3C0"
+seed = "src/wip/sub_0803E3C0.c"
+notes = "src/wip/sub_0803E3C0.md"
+status = "40/76 same-size DIFF; clone table offsets +2 are correct, but agbcc retains the same literal-load scheduling difference seen in 3E328/3E374"
+next = "solve the shared three-function table-load ordering pattern once, then apply the byte offset variant to this seed"
+score = "40/76"
+
+[[wip]]
+name = "sub_08040088"
+seed = "src/wip/sub_08040088.c"
+notes = "src/wip/sub_08040088.md"
+status = "41/56 same-size DIFF after pinning target to r3; retail still keeps the target-pointer location in r1 and the timer field address in r2, while agbcc uses r2/r1 oppositely"
+next = "pin  to r1 (and let target remain r3); preserve direct  member access so the initial 0x9D/0xC1 offset setup follows retail"
+score = "41/56"
+
+[[wip]]
+name = "sub_08040EF4"
+seed = "src/wip/sub_08040EF4.c"
+notes = "src/wip/sub_08040EF4.md"
+status = "best 34/88 size-mismatch after raw offset and full register pins; baseline was 13/88 at 72B, while retail requires r5 key, r4 byte offset, r2/r3 table cursors, and r6 base+4 without the extra saved registers"
+next = "try only key r5 and offset r4 pins; let agbcc allocate table cursors, while retaining an explicit second-word base to keep the adds r4+r6 shape"
+score = "34/88"
+
+[[wip]]
+name = "sub_08042B28"
+seed = "src/wip/sub_08042B28.c"
+notes = "src/wip/sub_08042B28.md"
+status = "35/40 same-size DIFF after pinning index to r2; retail loads the ROM table base into r0 before shifting index, while agbcc computes the shift in r0 and loads base into r1"
+next = "pin the table base to r0 and retain the index r2 pin; this should reproduce the remaining literal-load register order"
+score = "35/40"
+
+[[wip]]
+name = "sub_08042B50"
+seed = "src/wip/sub_08042B50.c"
+notes = "src/wip/sub_08042B50.md"
+status = "35/40 same-size DIFF; clone logic and register pins reproduce the exact size, but agbcc still places the table-base literal after the index shift instead of retail's r0-before-r1 sequence"
+next = "reuse the 42B28 selective base/index shape with a dependency that prevents scheduling the index shift before the ROM literal load"
+score = "35/40"
+
+[[wip]]
+name = "sub_08042B78"
+seed = "src/wip/sub_08042B78.c"
+notes = "src/wip/sub_08042B78.md"
+status = "45/56 same-size DIFF after r1/r2/r3/r4 shaping; loop and sentinel behavior now match, but retail loads the ROM table into r2 before materializing -1 in r1, while agbcc schedules -1 first"
+next = "force the base assignment to be live before the minus-one assignment, then preserve the r4 copy and r1 table-cursor reuse"
+score = "45/56"
+
+[[wip]]
+name = "sub_08042BB0"
+seed = "src/wip/sub_08042BB0.c"
+notes = "src/wip/sub_08042BB0.md"
+status = "53/56 same-size DIFF (94.6%); initial prologue and loop match, but key/value cursors are allocated opposite to retail at the final 4-byte load: retail keeps key cursor in r2 and value cursor in r1"
+next = "pin the key cursor/base to r2 and the value cursor to r1 after the sentinel check; return valueEntry[1] and test the sentinel through valueEntry"
+score = "53/56"
+
+[[wip]]
+name = "sub_08042BE8"
+seed = "src/wip/sub_08042BE8.c"
+notes = "src/wip/sub_08042BE8.md"
+status = "best 37/82 size-mismatch; explicit r4/r5/r6/r7/r3/r2 shaping reproduces the loop body, but agbcc emits push r4-r6 while retail saves r7 as well and retains a longer branch layout"
+next = "force r7 as an ordinary live callee-saved local rather than only a fixed register pointer; then preserve the current byte-offset table cursors"
+score = "37/82"
+
+[[wip]]
+name = "sub_08042C3C"
+seed = "src/wip/sub_08042C3C.c"
+notes = "src/wip/sub_08042C3C.md"
+status = "54/56 same-size DIFF (96.4%); exact prologue, sentinel handling, cursor registers, and return are matched; only the two cursor increments are reversed (retail value cursor r1 then key cursor r2)"
+next = "swap the source order of  and ; this is a two-byte instruction-order near-match"
+score = "54/56"
+
+[[wip]]
+name = "sub_08042F4C"
+seed = "src/wip/sub_08042F4C.c"
+notes = "src/wip/sub_08042F4C.md"
+status = "33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization"
+next = "verify whether sub_08042E78's prototype should accept s32 for this caller (without changing its own matching definition), then retry the same source shape"
+score = "33/80"
+
+[[wip]]
+name = "sub_08043B90"
+seed = "src/wip/sub_08043B90.c"
+notes = "src/wip/sub_08043B90.md"
+status = "67/76 same-size DIFF; sibling-shaped semantic C matches the loop and bytes, but agbcc keeps a two-byte mov/branch placement difference around the shared return path after the ROM literal pool"
+next = "use an explicit label/goto layout that preserves r0 from the terminating unk00 load and aligns the return path with the literal-pool gap"
+score = "67/76"

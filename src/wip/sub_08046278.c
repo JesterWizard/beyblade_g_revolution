@@ -1,18 +1,33 @@
 #include "global.h"
 
-/*
- * WIP — not byte-matched. Resume from src/wip/sub_08046278.md
- * Sibling MATCH: sub_08046230 (same Unk16B0[2] slots, per-index + conditional).
- * @ 0x08046278
- */
+// @ 0x08046278
 void sub_08046278(void)
 {
-    s32 i;
+    register struct MainWork **mainPtr asm("r8");
+    register u32 zero asm("r9");
+    register u32 minusOne asm("r4");
+    register u32 offset asm("r2");
+    register u32 slot00 asm("r12");
+    register u32 slot04 asm("r6");
+    register u32 slot08 asm("r5");
+    register s32 count asm("r3");
+    register struct MainWork *w asm("r0");
 
-    for (i = 0; i < 2; i++)
+    mainPtr = gMainWorkPtrLoc;
+    slot00 = 0x16B0;
+    minusOne = (u32)-1;
+    offset = 0;
+    zero = 0;
+    slot04 = 0x16B4;
+    slot08 = 0x16B8;
+    count = 1;
+    do
     {
-        gMainWorkPtr->unk16B0[i].unk00 = 0;
-        gMainWorkPtr->unk16B0[i].unk04 = -1;
-        gMainWorkPtr->unk16B0[i].unk08 = -1;
-    }
+        w = *mainPtr;
+        *(u32 *)((u8 *)w + slot00 + offset) = zero;
+        *(u32 *)((u8 *)w + slot04 + offset) = minusOne;
+        *(u32 *)((u8 *)w + slot08 + offset) = minusOne;
+        offset += 0x0C;
+        count--;
+    } while (count >= 0);
 }

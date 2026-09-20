@@ -8,18 +8,54 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **272/633 (43.0%)** |
-| **Decompiled C (bytes)** | **13,258/90,272 (14.7%)** |
+| **Decompiled C (functions)** | **276/633 (43.6%)** |
+| **Decompiled C (bytes)** | **13,580/90,272 (15.0%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 361/633 (57.0%) |
+| Readable Thumb | 357/633 (56.4%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 46/160 (28.8% fn, 8.5% bytes) |
+| Battle semantic C | 48/160 (30.0% fn, 9.0% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-20 — semantic C cleanup: +1 (275→276/633)
+- Matched `sub_08042718` (snapshot and reset the MainWork movement
+  vectors, then clear the transient object); verified 108/108 bytes and
+  integrated it.
+- Modeled the object anchor at MainWork `+0x448` while preserving the
+  existing neighboring fields and offsets.
+- `sub_0803DCFC`, `sub_0803E328`, `sub_0803E374`, `sub_0803E3C0`, and
+  `sub_08040EF4` remain parked after clone-shape and register-allocation
+  attempts.
+- The follow-on lookup sweep parked `sub_08042B28`, `sub_08042B50`,
+  `sub_08042B78`, `sub_08042BB0`, `sub_08042BE8`, `sub_08042C3C`,
+  `sub_08042F4C`, and `sub_08043B90`; the best near-match is
+  `sub_08042C3C` at 54/56 bytes.
+- `make compare`: OK
+
+### 2026-09-20 — semantic C cleanup: +1 (274→275/633)
+- Matched `sub_0803D4C4` (process the 48 BattleWork entries at
+  `0x0BCC`, reclaiming entries whose signed counter exceeds `0xA000`);
+  verified 88/88 bytes and integrated it.
+- Extended the shared `Unk62634` record to its `+0x28` signed threshold
+  field and modeled the BattleWork record array without changing offsets.
+- `sub_08033574`, `sub_08046278`, and `sub_08038580` remain parked after
+  focused register-allocation attempts.
+- `make compare`: OK
+
+### 2026-09-20 — WIP near-match cleanup: +2 semantic C (272→274/633)
+- Matched `sub_080726E0` (halfword-stride transfer helper). An explicit
+  `r4`-pinned offset reproduces retail's final register reuse; verified
+  52/52 bytes and integrated it.
+- Matched `sub_08044F64` (scan three consecutive table entries). Pinning the
+  multiplied product to `r0` and ordering the end calculation before the loop
+  copy reproduces the retail multiply/copy sequence; verified 74/74 bytes.
+- `sub_08033084` reached 63/100 but remains parked; `sub_08041858` stayed
+  47/52 after a direct-store attempt.
+- `make compare`: OK
 
 ### 2026-09-20 — WIP near-match cleanup: +1 semantic C (271→272/633)
 - Matched `sub_08070604` (initialize `Unk70604` projectile state and derive
