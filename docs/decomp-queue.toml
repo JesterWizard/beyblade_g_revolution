@@ -428,3 +428,11 @@ notes = "src/wip/sub_08052934.md"
 status = "55/84 bytes (65.5%), same size; semantically correct 2-level table lookup (0x080995AC+0xC indexed by arg0*16, then by gMainWorkPtr->unk1818) but agbcc folds the '0x080995AC + 0xC' constant into a single 4-byte literal (0x080995B8) instead of retail's split load+adds (ldr =0x080995AC; adds #0xC), a 2-instruction/0-byte-diff but different encoding order"
 next = "try declaring 0x080995AC as an extern rom-data symbol/array so +0xC becomes a real field access (relocation) instead of constant-folded arithmetic, which may force the split load"
 score = "55/84"
+
+[[wip]]
+name = "sub_08059DC8"
+seed = "src/wip/sub_08059DC8.c"
+notes = "src/wip/sub_08059DC8.md"
+status = "27/72 bytes (37.5%); this is a state-machine dispatcher that calls a fixed bx-r4 trampoline (_08073C50 at 0x08073C50: 'bx r4') with the actual handler loaded from a jump table at 0x08099710[list->field0] into r4 right before each bl. agbcc dead-code-eliminates the register(r4)-pinned handler assignment since it's never read in C (only consumed implicitly via the trampoline's bx r4), so the table lookup vanishes from output"
+next = "may need inline asm (not just register-pinned var) to force the r4 load to survive codegen immediately before the bl _08073C50 call, or split into two statements bridged by a volatile-style barrier; check other _08073C50 callers (sub_08069270, sub_0806C7D4, sub_0806D748) for the same pattern once one is solved"
+score = "27/72"

@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T13:27:35Z_
+_Updated: 2026-09-20T13:30:57Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T13:27:35Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 35 |
+| WIP (resume these first) | 36 |
 
 Ranking: **battle** · showing top **40**
 
@@ -61,6 +61,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08043B90` | 76 | 67/76 | `src/wip/sub_08043B90.c` | 67/76 same-size DIFF; sibling-shaped semantic C matches the loop and bytes, but agbcc keeps a two-byte mov/branch placement difference around the shared return path after the ROM literal pool | use an explicit label/goto layout that preserves r0 from the terminating unk00 load and aligns the return path with the literal-pool gap |
 | `sub_080473F8` | 100 | 50/100 | `src/wip/sub_080473F8.c` | 50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits | try forcing literal reload: maybe split into two functions temporarily, or check if retail was compiled with different codegen version/flags for this TU; alternatively try asm-volatile-free trick of loading address via array indexing gUnk_0300063C-style neighbor to shift pool layout |
 | `sub_08052934` | 84 | 55/84 | `src/wip/sub_08052934.c` | 55/84 bytes (65.5%), same size; semantically correct 2-level table lookup (0x080995AC+0xC indexed by arg0*16, then by gMainWorkPtr->unk1818) but agbcc folds the '0x080995AC + 0xC' constant into a single 4-byte literal (0x080995B8) instead of retail's split load+adds (ldr =0x080995AC; adds #0xC), a 2-instruction/0-byte-diff but different encoding order | try declaring 0x080995AC as an extern rom-data symbol/array so +0xC becomes a real field access (relocation) instead of constant-folded arithmetic, which may force the split load |
+| `sub_08059DC8` | 72 | 27/72 | `src/wip/sub_08059DC8.c` | 27/72 bytes (37.5%); this is a state-machine dispatcher that calls a fixed bx-r4 trampoline (_08073C50 at 0x08073C50: 'bx r4') with the actual handler loaded from a jump table at 0x08099710[list->field0] into r4 right before each bl. agbcc dead-code-eliminates the register(r4)-pinned handler assignment since it's never read in C (only consumed implicitly via the trampoline's bx r4), so the table lookup vanishes from output | may need inline asm (not just register-pinned var) to force the r4 load to survive codegen immediately before the bl _08073C50 call, or split into two statements bridged by a volatile-style barrier; check other _08073C50 callers (sub_08069270, sub_0806C7D4, sub_0806D748) for the same pattern once one is solved |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -164,6 +165,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (293 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (292 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
