@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T20:15:44Z_
+_Updated: 2026-09-20T20:22:04Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 307 |
-| Still need semantic C | **326** |
-| Readable Thumb remaining | 326 |
+| Semantic C done | 309 |
+| Still need semantic C | **324** |
+| Readable Thumb remaining | 324 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 89 (58 already semantic) |
+| Battle pending | 88 (59 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 162 |
+| WIP (resume these first) | 163 |
 
 Ranking: **battle** · showing top **40**
 
@@ -72,7 +72,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08062B9C` | 76 | 34/76 | `src/wip/sub_08062B9C.c` | 34/76 bytes (44.7%), same size; correct algorithm (clear bitmask bit + slot pointer for idx in [lo,hi] after swap, reusing struct Unk62A74 from sub_08062A74) with the full loop/branch shape matching retail (confirmed via manual disassembly comparison -- only the register chosen for arg1/hi differs: retail keeps it in r4 from function entry, agbcc here picks r5) | try passing arg1 as the first declared local or via a temp assigned before arg0's, or check if reversing argument order in a wrapper affects register choice |
 | `sub_08062C38` | 0 | 69/72 | `src/wip/sub_08062C38.c` | 69/72 bytes (95.8%), same size; correct fade-out loop (BLDCNT=0xFF, decrement counter by arg0 each frame clamped at 0, write BLDY, vsync via sub_080674B4/_08073C40(bx-r0 trampoline)/sub_080474AC, loop until counter==0). Only remaining diff: the 'diff' subtraction result register (r1 here vs r0 in retail) -- tried inline expressions, explicit s32 casts, block-scoping; none moved it off r1 | try assigning 'diff' via a compound statement that also touches r0 first (e.g. reading counter into r0 explicitly before the subtract), or check if arg0 needs to be re-copied to a fresh local at loop top instead of mutated in place |
 | `sub_08062D50` | 46 | 13/46 | `src/wip/sub_08062D50.c` | 13/46 bytes (28.3%), same size; correct algorithm (write a BGR555 palette entry to VRAM palette RAM at 0x05000000+arg0*2 from arg1's r/g/b byte triplet). Two orderings tried: address-first (13/46, closer overall byte offset) and color-first (12/46, matches retail's per-field mask/shift/orr shape almost exactly but wrong push-list size, r4/r5 vs retail's r4/r5/r6). agbcc schedules the address computation independent of source statement order in both cases | try assigning arg1's three fields to named locals up front (r,g,b) before any masking, which may force agbcc to keep an extra live value (matching retail's 3-register need) instead of computing address+color inline |
-| `sub_08066BF0` | 70 | 47/70 | `src/wip/sub_08066BF0.c` | 47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm match (loop over ~29 halfword-stride entries in arg0->unk230, select alt (0x080BAF6A[i]) or default (0x080BAFA6[i]) palette value based on the flag byte at gUnk_030009A8, write to entries[i]->unk18) with end computed via register arithmetic (matching retail's non-folded 'adds r6,r3,#0; adds r6,#0x3A' instead of a literal). Added struct Unk66BF0Entry (local, unk18 at +0x18) and reused struct Unk66BC4 for arg0. Only remaining diff: register swap between 'end' and the flag pointer (r5/r6 vs retail's r6/r5) | try computing the flag-pointer as a named local (not inline gUnk_030009A8 macro use) declared between altVal and end, which may flip which gets r5 vs r6 |
+| `sub_08066BF0` | 0 | 47/70 | `src/wip/sub_08066BF0.c` | 47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm match (loop over ~29 halfword-stride entries in arg0->unk230, select alt (0x080BAF6A[i]) or default (0x080BAFA6[i]) palette value based on the flag byte at gUnk_030009A8, write to entries[i]->unk18) with end computed via register arithmetic (matching retail's non-folded 'adds r6,r3,#0; adds r6,#0x3A' instead of a literal). Added struct Unk66BF0Entry (local, unk18 at +0x18) and reused struct Unk66BC4 for arg0. Only remaining diff: register swap between 'end' and the flag pointer (r5/r6 vs retail's r6/r5) | try computing the flag-pointer as a named local (not inline gUnk_030009A8 macro use) declared between altVal and end, which may flip which gets r5 vs r6 |
 | `sub_080677A8` | 86 | 12/86 | `src/wip/sub_080677A8.c` | 12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field | try keeping 'x' (masked arg0) live past the sub_08067584 call by referencing it again afterward (e.g. in a debug/dead comparison), or check if retail's extra register holds the original 'arg1' start pointer separately from the incrementing cursor |
 | `sub_08067F98` | 48 | 36/48 | `src/wip/sub_08067F98.c` | 36/48 bytes (75%), same size; correct algorithm (variable-stride linked entry search: base=arg0->unk00, entry=base+base->unk18, walk arg0->unk28 entries comparing unk00==key, advance by unk02 byte stride) with loop/branch shape matching retail. Added structs Unk67F98/Unk67F98Base/Unk67F98Entry. Only remaining diff: register choice for 'key' (r4 here vs retail's r3) and 'count' (r3 here vs retail's r0) | try declaring 'count' before 'entry'/'base' to see if it shifts to r0, or check if the parameter u16 extension for 'key' needs a different cast form to land in r3 |
 | `sub_08069894` | 96 | 89/96 | `src/wip/sub_08069894.c` | 89/96 bytes (92.7%), size mismatch (92 vs 96); correct algorithm (clear gUnk_03000108/030001B0, set gUnk_030001A8=0x20, zero 4 BG scroll register pairs via sub_08069908/sub_08069948, then two sub_08069A60(2/3, 0, 0x100, 0x100) calls) -- declared the 3 previously-undeclared callee signatures. agbcc folds the 'gUnk_030001B0 = 0' write into an offset-add from the previous literal (0x108+0xA8=0x1B0) instead of retail's separate literal-pool load, an 8-vs-4-byte encoding | try writing gUnk_030001B0 via a separate statement block or intervening dead computation to break the literal-pool CSE, matching the pattern seen in sub_080473F8/sub_08052934 from earlier sessions |
@@ -188,6 +188,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802E2F8` | 110 | 4/110 | `src/wip/sub_0802E2F8.c` | two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue | restore the 20/110 natural seed, then tune only multiplier r5, signed a r2, and table r3 without overlapping fixed variables |
 | `sub_0802ECD8` | 498 | 50/498 | `src/wip/sub_0802ECD8.c` | two attempts did not match; 50/498 bytes, final compiled 416B; logic mapped but fixed high-register pins removed the retail callee-save prologue | restore natural prologue from first seed, then selectively anchor buffer/index/root location without fixed r8-r10 pins |
 | `sub_0802FA94` | 748 | 65/748 | `src/wip/sub_0802FA94.c` | two attempts did not match; 65/748 bytes, final compiled 580B; loop semantics mapped but target root/main location and high-register/dispatch shape remain | restore natural callee-save prologue and use a root-location direct seed; inline the exact type/subtype switch and table literal order |
+| `sub_08030638` | 268 | 31/268 | `src/wip/sub_08030638.c` | Semantic rotation transform reconstructed, but compiler shape is 244/268 after two attempts; target uses natural r7/r2 argument copies while the candidate retains a high-register temporary and differs in literal/load scheduling. | Restore target register shape: remove persistent temporaries/table aliases, seed arguments in r7/r2, and match the angle/table expression order before retrying. |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -211,8 +212,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08032604` | `0x08032604` | 196 | 1 | pool | asm | (gBattleWork) |
 | `sub_08063D68` | `0x08063D68` | 216 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803FFB0` | `0x0803FFB0` | 216 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08030638` | `0x08030638` | 268 | 1 | pool | asm | (gBattleWork) |
-| `sub_0803019C` | `0x0803019C` | 268 | 1 | pool | asm | (gBattleWork) |
 | `sub_080333E4` | `0x080333E4` | 272 | 1 | pool | asm | (gBattleWork) |
 | `sub_0803E0CC` | `0x0803E0CC` | 296 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803D284` | `0x0803D284` | 298 | 1 | pool | asm | (gBattleWork) |
@@ -235,6 +234,8 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08045590` | `0x08045590` | 1256 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08039BD4` | `0x08039BD4` | 1552 | 1 | pool | asm | (gMainWorkPtr) |
+| `sub_08033958` | `0x08033958` | 20 | 0 |      | asm | |
 
 ## Blocked
 
@@ -291,6 +292,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (146 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (144 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

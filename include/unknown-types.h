@@ -508,6 +508,13 @@ struct Unk66FB8Table /* 0x10 */
     /* 0C */ void *unk0C;
 };
 
+/* Rotation angle state at BattleWork +0xAA8. */
+struct Unk30638AA8 /* >= 0x18 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ s32 unk14;
+};
+
 /* Battle work block (*gBattleWork). sub_080314FC, sub_08033530, sub_08033574. */
 struct BattleWork /* >= 0x208A */
 {
@@ -530,7 +537,12 @@ struct BattleWork /* >= 0x208A */
     /* 023C */ struct Unk7069C unk023C[4]; /* sub_08038D10 */
     /* 02FC */ struct Unk62044 unk2FC;
     /* 0324 */ struct Unk38F30Entry *unk324; /* sub_08038F30 */
-    /* 0328 */ u8 filler_0328[0x7A0];
+    /* 0328 */ u8 filler_0328[0x18];
+    /* 0340 */ s32 unk340;
+    /* 0344 */ s32 unk344;
+    /* 0348 */ u8 filler_0348[0x760];
+    /* 0aa8 */ struct Unk30638AA8 unkAA8;
+    /* 0ac0 */ u8 filler_0AC0[8];
     /* 0AC8 */ void *unk0AC8[4];
     /* 0AD8 */ void *unk0AD8[4];
     /* 0AE8 */ union Unk30D4CResource unk0AE8;
@@ -545,7 +557,8 @@ struct BattleWork /* >= 0x208A */
     /* 0B7C */ u8 filler_0B7C[0x28];
     /* 0BA4 */ void *unkBA4;
     /* 0BA8 */ void *unkBA8;
-    /* 0BAC */ u8 filler_0BAC[8];
+    /* 0BAC */ void *unkBAC;
+    /* 0BB0 */ s32 unkBB0;
     /* 0BB4 */ s32 unkBB4;
     /* 0BB8 */ s32 unkBB8;
     /* 0BBC */ u8 filler_0BBC[0x10];
