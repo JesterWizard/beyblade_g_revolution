@@ -1,65 +1,50 @@
 #include "global.h"
 
 // @ 0x08059b74
-__attribute__((naked))
 void sub_08059B74(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "ldr r0, _08059B90 @ =0x03000730\n"
-        "ldr r4, [r0, #0x00]\n"
-        "cmp r4, #0x00\n"
-        "beq _08059BD0\n"
-        "movs r5, #0x13\n"
-        "_08059B80:\n"
-        "ldr r0, [r4, #0x14]\n"
-        "cmp r0, #0x02\n"
-        "beq _08059BA8\n"
-        "cmp r0, #0x02\n"
-        "bhi _08059B94\n"
-        "cmp r0, #0x01\n"
-        "beq _08059B9A\n"
-        "b _08059BC8\n"
-        "_08059B90: .4byte 0x03000730\n"
-        "_08059B94:\n"
-        "cmp r0, #0x03\n"
-        "beq _08059BC0\n"
-        "b _08059BC8\n"
-        "_08059B9A:\n"
-        "ldr r1, [r4, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "bne _08059BAE\n"
-        "movs r0, #0x02\n"
-        "str r0, [r4, #0x14]\n"
-        "ldr r1, [r4, #0x04]\n"
-        "b _08059BAE\n"
-        "_08059BA8:\n"
-        "ldr r1, [r4, #0x04]\n"
-        "cmp r1, #0x00\n"
-        "beq _08059BC8\n"
-        "_08059BAE:\n"
-        "adds r0, r4, #0x0\n"
-        "bl _08073C44\n"
-        "cmp r0, #0x00\n"
-        "beq _08059BC8\n"
-        "ldr r0, [r4, #0x14]\n"
-        "adds r0, #0x01\n"
-        "str r0, [r4, #0x14]\n"
-        "b _08059BC8\n"
-        "_08059BC0:\n"
-        "ldr r0, [r4, #0x04]\n"
-        "movs r1, #0x01\n"
-        "bl sub_08059BD8\n"
-        "_08059BC8:\n"
-        "adds r4, #0x3C\n"
-        "subs r5, #0x01\n"
-        "cmp r5, #0x00\n"
-        "bge _08059B80\n"
-        "_08059BD0:\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk59AE0Node *node = *(struct Unk59AE0Node **)gUnk_03000730;
+    s32 i;
+    u32 arg;
+
+    if (node == 0)
+        return;
+
+    for (i = 0x13; i >= 0; i--)
+    {
+        switch (node->unk14)
+        {
+        case 1:
+            if (node->unk00 != 0)
+            {
+                arg = node->unk00;
+            }
+            else
+            {
+                node->unk14 = 2;
+                arg = node->unk04;
+            }
+            if (_08073C44(node, (void *)arg))
+                node->unk14++;
+            break;
+
+        case 2:
+            arg = node->unk04;
+            if (arg == 0)
+                break;
+            if (_08073C44(node, (void *)arg))
+                node->unk14++;
+            break;
+
+        case 3:
+            sub_08059BD8((void *)node->unk04, 1);
+            break;
+
+        default:
+            break;
+        }
+
+        node = (struct Unk59AE0Node *)((u8 *)node + 0x3C);
+    }
 }
 

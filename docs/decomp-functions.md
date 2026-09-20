@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-20T08:33:42Z_
+_Updated: 2026-09-20T08:34:20Z_
 
 ## Legend
 
@@ -21,11 +21,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 261 |
+| matched | 262 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 4 |
 | size DIFF | 18 |
-| not started | 319 |
+| not started | 318 |
 | blocked | 31 |
 | **total** | **633** |
 
@@ -156,7 +156,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08071EE4` | `0x08071EE4` | not started | 0.0% | 0/96 | asm |
 | `sub_08073988` | `0x08073988` | not started | 0.0% | 0/96 | asm |
 | `sub_08042390` | `0x08042390` | not started | 0.0% | 0/98 | asm |
-| `sub_08059B74` | `0x08059B74` | not started | 0.0% | 0/98 | asm |
 | `sub_080610A8` | `0x080610A8` | not started | 0.0% | 0/98 | asm |
 | `sub_0802C2B0` | `0x0802C2B0` | not started | 0.0% | 0/100 | asm |
 | `sub_08033084` | `0x08033084` | not started | 0.0% | 0/100 | asm |
@@ -680,6 +679,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0802C6AC` | `0x0802C6AC` | matched | 100.0% | 96/96 | semantic |
 | `sub_080435D8` | `0x080435D8` | matched | 100.0% | 96/96 | semantic |
 | `sub_0803E1F4` | `0x0803E1F4` | matched | 100.0% | 98/98 | semantic |
+| `sub_08059B74` | `0x08059B74` | matched | 100.0% | 98/98 | semantic |
 | `sub_08044A20` | `0x08044A20` | matched | 100.0% | 100/100 | semantic |
 | `sub_0804737C` | `0x0804737C` | matched | 100.0% | 104/104 | semantic |
 | `sub_0804B4B4` | `0x0804B4B4` | matched | 100.0% | 104/104 | semantic |
