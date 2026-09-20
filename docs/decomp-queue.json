@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T15:22:54Z",
+  "generated": "2026-09-20T15:24:12Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 43
+    "wip": 44
   },
   "pinned": [],
   "wip": [
@@ -488,6 +488,17 @@
       "status": "53/76 bytes (69.7%), same size; correct algorithm and instruction shape matches retail almost exactly (table-address kept in r6, dereferenced fresh both before the trampoline call and again before the final store) after discovering/adding struct Unk62A74 (16-slot pool + u16 used-bitmask at *gUnk_030008D0, shared with sub_08062AF8/sub_08062B9C). Only remaining diff: agbcc allocates r2 for the dereferenced slot pointer where retail uses r1",
       "next": "try declaring 'slot' after 'idx' or forcing a compound expression for the null check to see if it shifts register choice from r2 to r1",
       "score": "53/76"
+    },
+    {
+      "name": "sub_08062B9C",
+      "addr": "0x08062B9C",
+      "kind": "asm",
+      "bytes": 76,
+      "seed": "src/wip/sub_08062B9C.c",
+      "notes": "src/wip/sub_08062B9C.md",
+      "status": "34/76 bytes (44.7%), same size; correct algorithm (clear bitmask bit + slot pointer for idx in [lo,hi] after swap, reusing struct Unk62A74 from sub_08062A74) with the full loop/branch shape matching retail (confirmed via manual disassembly comparison -- only the register chosen for arg1/hi differs: retail keeps it in r4 from function entry, agbcc here picks r5)",
+      "next": "try passing arg1 as the first declared local or via a temp assigned before arg0's, or check if reversing argument order in a wrapper affects register choice",
+      "score": "34/76"
     }
   ],
   "recommended": [
@@ -2964,18 +2975,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08062B9C",
-      "addr": "0x08062B9C",
-      "kind": "asm",
-      "bytes": 76,
-      "score": 36,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
