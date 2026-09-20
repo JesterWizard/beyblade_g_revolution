@@ -580,6 +580,16 @@ struct Unk61E40 /* >= 0x16 */
 };
 
 /* Compare **a vs b, then base + (b<<4). sub_0806DEF4. */
+/* sub_0806DF38 output entry, 0x14 stride. sub_0806C78C. */
+struct UnkDF38Entry /* >= 0x14 */
+{
+    /* 00 */ s32 *unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ void *unk10;
+};
+
 struct Unk6DEF4 /* >= 0x08 */
 {
     /* 00 */ s32 *unk00;

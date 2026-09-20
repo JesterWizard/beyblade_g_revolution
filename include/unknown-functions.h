@@ -8,6 +8,8 @@
  */
 
 s32 sub_08042BE8(s32 a);
+u16 sub_0806DF38(void *a, struct UnkDF38Entry *out, s32 matchVal, u32 maxCount);
+void sub_0806C704(void *a, void *b, s32 c, s32 d);
 void sub_0806833C(void *a, s32 b, u16 c);
 u16 *sub_08069908(u8 a);
 u16 *sub_08069948(u8 a);
