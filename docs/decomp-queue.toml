@@ -548,3 +548,11 @@ notes = "src/wip/sub_08069894.md"
 status = "89/96 bytes (92.7%), size mismatch (92 vs 96); correct algorithm (clear gUnk_03000108/030001B0, set gUnk_030001A8=0x20, zero 4 BG scroll register pairs via sub_08069908/sub_08069948, then two sub_08069A60(2/3, 0, 0x100, 0x100) calls) -- declared the 3 previously-undeclared callee signatures. agbcc folds the 'gUnk_030001B0 = 0' write into an offset-add from the previous literal (0x108+0xA8=0x1B0) instead of retail's separate literal-pool load, an 8-vs-4-byte encoding"
 next = "try writing gUnk_030001B0 via a separate statement block or intervening dead computation to break the literal-pool CSE, matching the pattern seen in sub_080473F8/sub_08052934 from earlier sessions"
 score = "89/96"
+
+[[wip]]
+name = "sub_0806B3E8"
+seed = "src/wip/sub_0806B3E8.c"
+notes = "src/wip/sub_0806B3E8.md"
+status = "61/84 bytes (72.6%), same size; correct algorithm (walk arg0->unk10 string char-by-char, for each non-space non-null char look up a byte in table 0x080BB748, call sub_0806833C on the current item, set item->unk70=-1, advance item by 0xDC and decrement count; after the string ends, zero-fill unk70 for any remaining items). Added structs Unk6B3E8/Unk6B3E8Item (0xDC stride). Only remaining diff: register choice for the loop char variable 'c' (r0 vs retail's r1)"
+next = "try declaring 'c' as a function parameter-style register variable, or check if the initial 'goto check' idiom (vs a for/while) changes register allocation for the char"
+score = "61/84"

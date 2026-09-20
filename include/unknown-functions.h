@@ -8,6 +8,7 @@
  */
 
 s32 sub_08042BE8(s32 a);
+void sub_0806833C(void *a, s32 b, u16 c);
 u16 *sub_08069908(u8 a);
 u16 *sub_08069948(u8 a);
 void sub_08069A60(s32 a, s32 b, s32 c, s32 d);
