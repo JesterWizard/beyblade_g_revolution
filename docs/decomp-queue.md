@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T16:37:22Z_
+_Updated: 2026-09-20T16:38:45Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T16:37:22Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 98 (49 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 58 |
+| WIP (resume these first) | 59 |
 
 Ranking: **battle** · showing top **40**
 
@@ -84,6 +84,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08071E84` | 96 | 19/96 | `src/wip/sub_08071E84.c` | 19/96 bytes (19.8%), size mismatch (92 vs 96); correct algorithm (walk 0x28-stride Unk71E84 array from gUnk_030040E4, find first entry with unk16==0 within gUnk_030040C4 count, call sub_08071E44, stamp a running id from gUnk_030000C8 into entry->unk18 and return it; on exhaustion, call sub_08067B98 with a format string and return -1). Uses the shared struct Unk71E84 and existing sub_08071E44/sub_08071E84 prototypes. Remaining diffs: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart, the recurring literal-pool quirk), and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form | try writing the first bounds check with the same (count != -1) form used in the loop instead of implicit truthiness, to keep the comparison shape consistent |
 | `sub_08071EE4` | 96 | 19/96 | `src/wip/sub_08071EE4.c` | 19/96 bytes (19.8%), size mismatch (92 vs 96); exact clone of sub_08071E84 (same struct/algorithm, calls sub_08071E04 instead of sub_08071E44) and hits the identical diff pattern: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4, and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form. See sub_08071E84's WIP notes for the same analysis | same as sub_08071E84 -- try the (count != -1) form for the first check; whatever unlocks that sibling should apply here too |
 | `sub_08071F44` | 64 | 35/64 | `src/wip/sub_08071F44.c` | 35/64 bytes (54.7%), size mismatch (60 vs 64); correct algorithm (reverse lookup: find first Unk71E84 entry with unk16!=0 and unk18==arg0). Push list matches retail exactly ({r4,lr}) and the -1 compare form is preserved correctly here (no simplification, unlike the sub_08071E84 family). Only diff: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart), the recurring literal-pool quirk seen across ~6 functions this session | same recurring literal-pool-folding issue; no new lever found. Revisit alongside sub_08071E84/sub_08071EE4/sub_080473F8/sub_08052934/sub_08069894/sub_08071B4C if a fix for that pattern is ever found |
+| `sub_0802DEA0` | 424 | 66/424 | `src/wip/sub_0802DEA0.c` | 66/424 bytes (15.6%), size mismatch (400 vs 424); correct algorithm fully derived (16 near-identical blocks: for each of struct Unk026C's linked-list fields unk0C..unk40, if non-null set the node's unk08/unk0C to a color constant (0xFFFFC000 for the first 6, 0xF800 for the rest); then free+null 7 of those same fields via sub_0806FE84; finally vsync, set unk48=0xFF, and OR 0xFFFF into gMainWorkPtr's unk1838/unk183A). Reused existing structs Unk026C/Unk705DC. agbcc's CSE merges the repeated 'gUnk_0300026C' pointer dereference across adjacent blocks (r1 cached, reused via a spare register) even when each block is written as a fresh 'p = gUnk_0300026C' assignment, since no intervening write invalidates it -- retail instead reloads fresh every single block | try inserting a genuinely-opaque side effect between blocks (unlikely to be legitimate semantic C), or accept this as CSE the compiler correctly performs and retail's source simply repeated the full expression per block in a way this agbcc snapshot doesn't reproduce; may need per-block dummy calls or accept as permanently DIFF |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -187,6 +188,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (269 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (268 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
