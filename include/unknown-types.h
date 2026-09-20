@@ -1144,6 +1144,13 @@ struct Unk726E0 /* >= 0x10 */
     /* 0c */ void *unk0C;
 };
 
+/* *gUnk_030009B0. Count at +0x04. sub_080677A8. */
+struct Unk09B0 /* >= 0x06 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u16 unk04;
+};
+
 /* Header + flag at +0x98. sub_08067F3C. */
 struct Unk67F3C /* >= 0x99 */
 {

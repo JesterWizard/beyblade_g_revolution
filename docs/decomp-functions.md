@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-20T15:28:46Z_
+_Updated: 2026-09-20T15:30:32Z_
 
 ## Legend
 
@@ -26,8 +26,8 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | byte-identical DIFF | 0 |
 | same-size DIFF | 2 |
 | size DIFF | 15 |
-| WIP (parked C) | 45 |
-| not started | 265 |
+| WIP (parked C) | 46 |
+| not started | 264 |
 | blocked | 28 |
 | **total** | **633** |
 
@@ -50,6 +50,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08042B78` | WIP (parked C) | 80.4% | 45/56 | 45/56 same-size DIFF after r1/r2/r3/r4 shaping; loop and sentinel behavior no… |
 | `sub_08040088` | WIP (parked C) | 73.2% | 41/56 | 41/56 same-size DIFF after pinning target to r3; retail still keeps the targe… |
 | `sub_08062A74` | WIP (parked C) | 69.7% | 53/76 | 53/76 bytes (69.7%), same size; correct algorithm and instruction shape match… |
+| `sub_08066BF0` | WIP (parked C) | 67.1% | 47/70 | 47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm… |
 | `sub_08061BE8` | WIP (parked C) | 66.7% | 64/96 | 64/96 bytes (66.7%), same size; correct logic (index gUnk_03000770 by gUnk_03… |
 | `sub_08052934` | WIP (parked C) | 65.5% | 55/84 | 55/84 bytes (65.5%), same size; semantically correct 2-level table lookup (0x… |
 | `sub_08033084` | WIP (parked C) | 63.0% | 63/100 | 63/100 same-size DIFF; semantic logic correct, but retail copies the destinat… |
@@ -117,6 +118,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08042B78` | `0x08042B78` | WIP (parked C) | 80.4% | 45/56 | asm |
 | `sub_08040088` | `0x08040088` | WIP (parked C) | 73.2% | 41/56 | asm |
 | `sub_08062A74` | `0x08062A74` | WIP (parked C) | 69.7% | 53/76 | asm |
+| `sub_08066BF0` | `0x08066BF0` | WIP (parked C) | 67.1% | 47/70 | asm |
 | `sub_08061BE8` | `0x08061BE8` | WIP (parked C) | 66.7% | 64/96 | asm |
 | `sub_08052934` | `0x08052934` | WIP (parked C) | 65.5% | 55/84 | asm |
 | `sub_08033084` | `0x08033084` | WIP (parked C) | 63.0% | 63/100 | asm |
@@ -180,7 +182,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08069908` | `0x08069908` | not started | 0.0% | 0/64 | asm |
 | `sub_08069948` | `0x08069948` | not started | 0.0% | 0/64 | asm |
 | `sub_08069988` | `0x08069988` | not started | 0.0% | 0/64 | asm |
-| `sub_08066BF0` | `0x08066BF0` | not started | 0.0% | 0/70 | asm |
 | `sub_0806C78C` | `0x0806C78C` | not started | 0.0% | 0/70 | asm |
 | `sub_08067FC8` | `0x08067FC8` | not started | 0.0% | 0/74 | asm |
 | `sub_08068020` | `0x08068020` | not started | 0.0% | 0/78 | asm |

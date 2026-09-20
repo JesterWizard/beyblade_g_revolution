@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T15:30:22Z",
+  "generated": "2026-09-20T15:32:29Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 98,
     "battle_semantic": 49,
     "blocked": 34,
-    "wip": 47
+    "wip": 48
   },
   "pinned": [],
   "wip": [
@@ -532,6 +532,17 @@
       "status": "47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm match (loop over ~29 halfword-stride entries in arg0->unk230, select alt (0x080BAF6A[i]) or default (0x080BAFA6[i]) palette value based on the flag byte at gUnk_030009A8, write to entries[i]->unk18) with end computed via register arithmetic (matching retail's non-folded 'adds r6,r3,#0; adds r6,#0x3A' instead of a literal). Added struct Unk66BF0Entry (local, unk18 at +0x18) and reused struct Unk66BC4 for arg0. Only remaining diff: register swap between 'end' and the flag pointer (r5/r6 vs retail's r6/r5)",
       "next": "try computing the flag-pointer as a named local (not inline gUnk_030009A8 macro use) declared between altVal and end, which may flip which gets r5 vs r6",
       "score": "47/70"
+    },
+    {
+      "name": "sub_080677A8",
+      "addr": "0x080677A8",
+      "kind": "asm",
+      "bytes": 86,
+      "seed": "src/wip/sub_080677A8.c",
+      "notes": "src/wip/sub_080677A8.md",
+      "status": "12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field",
+      "next": "try keeping 'x' (masked arg0) live past the sub_08067584 call by referencing it again afterward (e.g. in a debug/dead comparison), or check if retail's extra register holds the original 'arg1' start pointer separately from the incrementing cursor",
+      "score": "12/86"
     }
   ],
   "recommended": [
@@ -3029,18 +3040,6 @@
       "kind": "asm",
       "bytes": 84,
       "score": 41,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080677A8",
-      "addr": "0x080677A8",
-      "kind": "asm",
-      "bytes": 86,
-      "score": 40,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,

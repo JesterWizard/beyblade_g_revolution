@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T15:28:46Z",
+  "generated": "2026-09-20T15:30:32Z",
   "counts": {
     "matched": 278,
     "blocked": 28,
-    "not_started": 265,
-    "wip": 45,
+    "not_started": 264,
+    "wip": 46,
     "size_mismatch": 15,
     "same_size": 2
   },
@@ -7818,17 +7818,17 @@
       "addr": "0x08066BF0",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 70,
-      "matched_bytes": 0,
+      "matched_bytes": 47,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/70",
-      "source": "none",
-      "note": ""
+      "pct": 67.1,
+      "score": "47/70",
+      "source": "wip",
+      "note": "47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm match (loop over ~29 halfword-stride entries in arg0->unk230, select alt (0x080BAF6A[i]) or default (0x080BAFA6[i]) palette value based on the flag byte at gUnk_030009A8, write to entries[i]->unk18) with end computed via register arithmetic (matching retail's non-folded 'adds r6,r3,#0; adds r6,#0x3A' instead of a literal). Added struct Unk66BF0Entry (local, unk18 at +0x18) and reused struct Unk66BC4 for arg0. Only remaining diff: register swap between 'end' and the flag pointer (r5/r6 vs retail's r6/r5)"
     },
     {
       "name": "sub_08066FB8",
