@@ -1,60 +1,22 @@
 #include "global.h"
 
 // @ 0x0803e934
-__attribute__((naked))
-void sub_0803E934(void)
+void sub_0803E934(struct Unk2F520 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "ldr r2, _0803E9A0 @ =0x000002D5\n"
-        "adds r1, r0, r2\n"
-        "ldrb r5, [r1, #0x00]\n"
-        "movs r1, #0xBF\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r0, r1\n"
-        "ldrb r4, [r0, #0x00]\n"
-        "bl sub_08061BE8\n"
-        "bl _0803E9A4\n"
-        "lsls r4, r4, #0x18\n"
-        "asrs r4, r4, #0x17\n"
-        "adds r0, r4, #0x5\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "adds r4, #0x06\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "lsls r5, r5, #0x18\n"
-        "asrs r5, r5, #0x17\n"
-        "adds r0, r5, #0x5\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "adds r5, #0x06\n"
-        "lsls r5, r5, #0x10\n"
-        "lsrs r5, r5, #0x10\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0803E9A0: .4byte 0x000002D5\n"
-    );
+    u8 value1;
+    u8 value2;
+    s32 value1_shifted;
+    s32 value2_shifted;
+
+    value1 = a->unk2D5;
+    value2 = a->unk2FC;
+    sub_08061BE8();
+    _0803E9A4();
+    value2_shifted = ((s32)value2 << 24) >> 23;
+    sub_08061D68((u16)(value2_shifted + 5), 0x0F, 4, 0x1A);
+    sub_08061D68((u16)(value2_shifted + 6), 0x0F, 4, 0x1A);
+    value1_shifted = ((s32)value1 << 24) >> 23;
+    sub_08061D68((u16)(value1_shifted + 5), 0x0E, 4, 0x1A);
+    sub_08061D68((u16)(value1_shifted + 6), 0x0E, 4, 0x1A);
 }
 

@@ -1,84 +1,27 @@
 #include "global.h"
 
 // @ 0x08041774
-__attribute__((naked))
-void sub_08041774(void *a, u32 b, u32 c)
+void sub_08041774(void *a_arg, void *b_arg, s8 c)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "adds r3, r0, #0x0\n"
-        "movs r4, #0x92\n"
-        "lsls r4, r4, #0x02\n"
-        "adds r0, r3, r4\n"
-        "str r1, [r0, #0x00]\n"
-        "adds r4, #0x8C\n"
-        "adds r0, r3, r4\n"
-        "strb r2, [r0, #0x00]\n"
-        "movs r0, #0x93\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r2, r3, r0\n"
-        "ldr r0, [r1, #0x00]\n"
-        "str r0, [r2, #0x00]\n"
-        "subs r4, #0x84\n"
-        "adds r2, r3, r4\n"
-        "ldr r0, [r1, #0x04]\n"
-        "str r0, [r2, #0x00]\n"
-        "movs r0, #0x95\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r2, r3, r0\n"
-        "ldr r0, [r1, #0x08]\n"
-        "str r0, [r2, #0x00]\n"
-        "adds r4, #0x08\n"
-        "adds r2, r3, r4\n"
-        "ldr r0, [r1, #0x0C]\n"
-        "str r0, [r2, #0x00]\n"
-        "movs r0, #0x90\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r2, r3, r0\n"
-        "ldr r0, [r1, #0x10]\n"
-        "str r0, [r2, #0x00]\n"
-        "subs r4, #0x14\n"
-        "adds r2, r3, r4\n"
-        "ldr r0, [r1, #0x14]\n"
-        "str r0, [r2, #0x00]\n"
-        "movs r0, #0x97\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r2, r3, r0\n"
-        "ldr r0, [r1, #0x18]\n"
-        "str r0, [r2, #0x00]\n"
-        "adds r4, #0x1C\n"
-        "adds r2, r3, r4\n"
-        "ldr r0, [r1, #0x1C]\n"
-        "str r0, [r2, #0x00]\n"
-        "movs r0, #0x99\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r2, r3, r0\n"
-        "ldr r0, [r1, #0x20]\n"
-        "str r0, [r2, #0x00]\n"
-        "adds r4, #0x08\n"
-        "adds r2, r3, r4\n"
-        "ldr r0, [r1, #0x24]\n"
-        "str r0, [r2, #0x00]\n"
-        "movs r0, #0x9B\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r2, r3, r0\n"
-        "ldr r0, [r1, #0x28]\n"
-        "str r0, [r2, #0x00]\n"
-        "adds r4, #0x08\n"
-        "adds r2, r3, r4\n"
-        "ldr r0, [r1, #0x2C]\n"
-        "str r0, [r2, #0x00]\n"
-        "adds r1, #0x4E\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ldr r2, _08041804 @ =0x000002D9\n"
-        "adds r0, r3, r2\n"
-        "strb r1, [r0, #0x00]\n"
-        "pop {r4}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08041804: .4byte 0x000002D9\n"
-    );
+    struct Unk40F4C *a;
+    struct Unk4109CInput *b;
+
+    a = a_arg;
+    b = b_arg;
+    a->unk248 = b;
+    a->unk2D4 = c;
+    a->unk24C = (void *)b->unk00;
+    a->unk250 = (void *)b->unk04;
+    a->unk254 = (void *)b->unk08;
+    a->unk258 = (void *)b->unk0C;
+    a->unk240 = (void *)b->unk10;
+    a->unk244 = (void *)b->unk14;
+    a->unk25C = (void *)b->unk18;
+    a->unk260 = (void *)b->unk1C;
+    a->unk264 = (void *)b->unk20;
+    a->unk268 = (void *)b->unk24;
+    a->unk26C = (void *)b->unk28;
+    a->unk270 = (void *)b->unk2C;
+    a->unk2D9 = b->unk4E;
 }
 
