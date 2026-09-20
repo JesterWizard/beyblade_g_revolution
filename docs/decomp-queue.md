@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T20:26:27Z_
+_Updated: 2026-09-20T20:28:06Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-20T20:26:27Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 88 (59 already semantic) |
 | Blocked (documented) | 34 |
-| WIP (resume these first) | 166 |
+| WIP (resume these first) | 167 |
 
 Ranking: **battle** · showing top **40**
 
@@ -192,6 +192,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08030F38` | 348 | 54/348 | `src/wip/sub_08030F38.c` | Resource timer/update semantics reconstructed across the AF0/B00/B20/B40/B48 paths, but two compiler attempts diverged in prologue and pointer scheduling (376-byte candidate versus 348-byte target). | Use the target's callee-save shape: seed gBattleWorkPtrLoc in r7, retain the initial work pointer in r4 only through the AF* updates, then hand-write scoped register aliases for the B00/B20 loop and final B48 delta clamp. |
 | `sub_0803114C` | 184 | 13/184 | `src/wip/sub_0803114C.c` | Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts. | Pin the base argument in r8 and preserve the original duplicated loop setup; target keeps separate mode-zero/nonzero loops, count in r6, remaining in r5, and reloads gBattleWork->unkBB0 per entry. |
 | `sub_0803139C` | 350 | 103/350 | `src/wip/sub_0803139C.c` | Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/350 bytes; remaining mismatch is register/lifetime scheduling around the duplicated allocation paths and cleanup. | Preserve the target's old null entry in r4 for the three stack arguments, pin array/index/table state to the target high registers, and retain the exact duplicated allocation blocks. |
+| `sub_08032604` | 196 | 63/196 | `src/wip/sub_08032604.c` | Battle initialization semantics mapped (resource creation, display setup, transform defaults), but compiler output diverged after register pinning: 63/196 bytes matched, 220-byte candidate. | Keep the natural candidate's compact pointer reloads while separately seeding only table/transfer-size lifetimes; target prologue preserves r8/r9 but does not repeatedly materialize the work pointer for each field store. |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -211,7 +212,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080428F0` | `0x080428F0` | 160 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08051444` | `0x08051444` | 192 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08032604` | `0x08032604` | 196 | 1 | pool | asm | (gBattleWork) |
 | `sub_08063D68` | `0x08063D68` | 216 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803FFB0` | `0x0803FFB0` | 216 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080333E4` | `0x080333E4` | 272 | 1 | pool | asm | (gBattleWork) |
@@ -239,6 +239,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08033958` | `0x08033958` | 20 | 0 |      | asm | |
 | `sub_08062684` | `0x08062684` | 20 | 0 |      | asm | |
 | `sub_0806DEF4` | `0x0806DEF4` | 20 | 0 |      | asm | |
+| `sub_0806AC68` | `0x0806AC68` | 22 | 0 |      | asm | |
 
 ## Blocked
 
@@ -295,6 +296,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (141 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (140 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

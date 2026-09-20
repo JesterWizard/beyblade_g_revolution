@@ -520,7 +520,19 @@ struct BattleWork /* >= 0x208A */
 {
     /* 0000 */ void *unk00;
     /* 0004 */ void *unk04;
-    /* 0008 */ u8 filler_0008[0x110];
+    /* 0008 */ u8 filler_0008[0x48];
+    /* 0050 */ u16 unk050;
+    /* 0052 */ u16 unk052;
+    /* 0054 */ u32 unk054;
+    /* 0058 */ u32 unk058;
+    /* 005c */ u8 filler_005C[0x34];
+    /* 0090 */ u8 unk090[8];
+    /* 0098 */ u8 filler_0098[0x40];
+    /* 00d8 */ u16 unkD8;
+    /* 00da */ u16 unkDA;
+    /* 00dc */ u32 unkDC;
+    /* 00e0 */ u32 unkE0;
+    /* 00e4 */ u8 filler_00E4[0x34];
     /* 0118 */ u32 unk118;
     /* 011C */ u8 filler_011C[0x0C];
     /* 0128 */ s32 unk128; /* sub_08037508 */

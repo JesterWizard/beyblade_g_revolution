@@ -1476,3 +1476,11 @@ notes = "src/wip/sub_0803139C.md"
 status = "Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/350 bytes; remaining mismatch is register/lifetime scheduling around the duplicated allocation paths and cleanup."
 next = "Preserve the target's old null entry in r4 for the three stack arguments, pin array/index/table state to the target high registers, and retain the exact duplicated allocation blocks."
 score = "103/350"
+
+[[wip]]
+name = "sub_08032604"
+seed = "src/wip/sub_08032604.c"
+notes = "src/wip/sub_08032604.md"
+status = "Battle initialization semantics mapped (resource creation, display setup, transform defaults), but compiler output diverged after register pinning: 63/196 bytes matched, 220-byte candidate."
+next = "Keep the natural candidate's compact pointer reloads while separately seeding only table/transfer-size lifetimes; target prologue preserves r8/r9 but does not repeatedly materialize the work pointer for each field store."
+score = "63/196"

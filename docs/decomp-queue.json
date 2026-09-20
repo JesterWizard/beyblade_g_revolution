@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T20:26:27Z",
+  "generated": "2026-09-20T20:28:06Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 88,
     "battle_semantic": 59,
     "blocked": 34,
-    "wip": 166
+    "wip": 167
   },
   "pinned": [],
   "wip": [
@@ -1841,6 +1841,17 @@
       "status": "Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/350 bytes; remaining mismatch is register/lifetime scheduling around the duplicated allocation paths and cleanup.",
       "next": "Preserve the target's old null entry in r4 for the three stack arguments, pin array/index/table state to the target high registers, and retain the exact duplicated allocation blocks.",
       "score": "103/350"
+    },
+    {
+      "name": "sub_08032604",
+      "addr": "0x08032604",
+      "kind": "asm",
+      "bytes": 196,
+      "seed": "src/wip/sub_08032604.c",
+      "notes": "src/wip/sub_08032604.md",
+      "status": "Battle initialization semantics mapped (resource creation, display setup, transform defaults), but compiler output diverged after register pinning: 63/196 bytes matched, 220-byte candidate.",
+      "next": "Keep the natural candidate's compact pointer reloads while separately seeding only table/transfer-size lifetimes; target prologue preserves r8/r9 but does not repeatedly materialize the work pointer for each field store.",
+      "score": "63/196"
     }
   ],
   "recommended": [
@@ -2017,20 +2028,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08032604",
-      "addr": "0x08032604",
-      "kind": "asm",
-      "bytes": 196,
-      "score": 104,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
       ],
       "has_pool": true,
       "blocked": false,
@@ -2402,6 +2399,18 @@
       "kind": "asm",
       "bytes": 20,
       "score": 10,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806AC68",
+      "addr": "0x0806AC68",
+      "kind": "asm",
+      "bytes": 22,
+      "score": 11,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
@@ -2823,20 +2832,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08032604",
-      "addr": "0x08032604",
-      "kind": "asm",
-      "bytes": 196,
-      "score": 104,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
       ],
       "has_pool": true,
       "blocked": false,

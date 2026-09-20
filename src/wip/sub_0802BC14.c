@@ -10,7 +10,7 @@ s32 sub_0802BC14(u16 a)
     s8 sa;
 
     sa = (s8)a;
-    count = sub_0802C62C((u8)sa);
+    count = sub_0802C62C(sa);
     limit = _0802BA7C(sa);
     sub_08067B98((void *)0x0833BE30, (s16)a, count, limit);
     if (count >= limit)

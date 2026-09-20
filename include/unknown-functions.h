@@ -75,7 +75,7 @@ u16 sub_08067648(u16 a, u32 b, u32 c);
 s32 sub_0803DD88(s32 a);
 s32 sub_0802C314(s8 a, u8 b, void *out);
 s32 sub_0802C5DC(u8 a);
-s32 sub_0802C62C(u8 a);
+s32 sub_0802C62C(s8 a);
 s32 sub_0802C3DC(s8 a, s8 b, struct Unk2C314 *out);
 s32 sub_0802C4A4(s8 a, s8 idx, struct Unk2C314 *out);
 void sub_0802C2B0(u8 a, u16 i);
