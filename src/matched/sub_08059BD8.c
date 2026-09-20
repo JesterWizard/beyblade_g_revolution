@@ -1,87 +1,67 @@
 #include "global.h"
 
 // @ 0x08059bd8
-__attribute__((naked))
 void sub_08059BD8(void *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r2, r0, #0x0\n"
-        "adds r6, r1, #0x0\n"
-        "ldr r0, _08059C54 @ =0x03000730\n"
-        "ldr r4, [r0, #0x00]\n"
-        "movs r1, #0x00\n"
-        "cmp r4, #0x00\n"
-        "beq _08059C66\n"
-        "_08059BE8:\n"
-        "ldr r0, [r4, #0x04]\n"
-        "cmp r0, r2\n"
-        "bne _08059C5E\n"
-        "ldr r1, [r4, #0x08]\n"
-        "cmp r1, #0x00\n"
-        "beq _08059BFA\n"
-        "adds r0, r4, #0x0\n"
-        "bl _08073C44\n"
-        "_08059BFA:\n"
-        "movs r5, #0x00\n"
-        "str r5, [r4, #0x00]\n"
-        "str r5, [r4, #0x04]\n"
-        "str r5, [r4, #0x08]\n"
-        "str r5, [r4, #0x14]\n"
-        "ldr r0, [r4, #0x0C]\n"
-        "cmp r0, #0x00\n"
-        "beq _08059C10\n"
-        "bl sub_0806A434\n"
-        "str r5, [r4, #0x0C]\n"
-        "_08059C10:\n"
-        "cmp r6, #0x00\n"
-        "beq _08059C58\n"
-        "ldr r1, [r4, #0x28]\n"
-        "cmp r1, #0x00\n"
-        "beq _08059C58\n"
-        "ldr r0, [r1, #0x00]\n"
-        "str r0, [r4, #0x00]\n"
-        "ldr r0, [r1, #0x04]\n"
-        "str r0, [r4, #0x04]\n"
-        "ldr r0, [r1, #0x08]\n"
-        "str r0, [r4, #0x08]\n"
-        "ldr r0, [r1, #0x10]\n"
-        "str r0, [r4, #0x18]\n"
-        "ldr r0, [r1, #0x14]\n"
-        "str r0, [r4, #0x1C]\n"
-        "ldr r0, [r1, #0x18]\n"
-        "str r0, [r4, #0x20]\n"
-        "ldr r0, [r1, #0x1C]\n"
-        "str r0, [r4, #0x24]\n"
-        "ldr r0, [r1, #0x20]\n"
-        "str r0, [r4, #0x28]\n"
-        "str r5, [r4, #0x38]\n"
-        "str r5, [r4, #0x34]\n"
-        "str r5, [r4, #0x2C]\n"
-        "str r5, [r4, #0x30]\n"
-        "movs r0, #0x01\n"
-        "str r0, [r4, #0x14]\n"
-        "ldr r0, [r1, #0x0C]\n"
-        "cmp r0, #0x00\n"
-        "beq _08059C66\n"
-        "bl sub_0806A3A4\n"
-        "str r0, [r4, #0x0C]\n"
-        "b _08059C66\n"
-        "_08059C54: .4byte 0x03000730\n"
-        "_08059C58:\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x28]\n"
-        "b _08059C66\n"
-        "_08059C5E:\n"
-        "adds r4, #0x3C\n"
-        "adds r1, #0x01\n"
-        "cmp r1, #0x13\n"
-        "ble _08059BE8\n"
-        "_08059C66:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk59AE0Node *node = *(struct Unk59AE0Node **)gUnk_03000730;
+    s32 i = 0;
+    struct Unk59AE0Src *src;
+
+    if (node == 0)
+        return;
+
+    while (1)
+    {
+        if (node->unk04 == (u32)a)
+        {
+            if (node->unk08 != 0)
+                _08073C44(node, (void *)node->unk08);
+
+            node->unk00 = 0;
+            node->unk04 = 0;
+            node->unk08 = 0;
+            node->unk14 = 0;
+
+            if (node->unk0C != 0)
+            {
+                sub_0806A434((void *)node->unk0C);
+                node->unk0C = 0;
+            }
+
+            if (b != 0)
+            {
+                src = (struct Unk59AE0Src *)node->unk28;
+                if (src != 0)
+                {
+                    node->unk00 = src->unk00;
+                    node->unk04 = src->unk04;
+                    node->unk08 = src->unk08;
+                    node->unk18 = src->unk10;
+                    node->unk1C = src->unk14;
+                    node->unk20 = src->unk18;
+                    node->unk24 = src->unk1C;
+                    node->unk28 = (struct Unk59AE0Src *)src->unk20;
+                    node->unk38 = 0;
+                    node->unk34 = 0;
+                    node->unk2C = 0;
+                    node->unk30 = 0;
+                    node->unk14 = 1;
+
+                    if (src->unk0C != 0)
+                        node->unk0C = (u32)sub_0806A3A4(src->unk0C);
+
+                    return;
+                }
+            }
+
+            node->unk28 = 0;
+            return;
+        }
+
+        node = (struct Unk59AE0Node *)((u8 *)node + 0x3C);
+        i++;
+        if (i > 0x13)
+            break;
+    }
 }
 

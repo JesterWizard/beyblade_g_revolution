@@ -1481,7 +1481,7 @@ struct Unk59AE0Node /* 0x3c */
     /* 1c */ u32 unk1C;
     /* 20 */ u32 unk20;
     /* 24 */ u32 unk24;
-    /* 28 */ u32 unk28;
+    /* 28 */ struct Unk59AE0Src *unk28;
     /* 2c */ u32 unk2C;
     /* 30 */ u32 unk30;
     /* 34 */ u32 unk34;

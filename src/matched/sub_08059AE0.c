@@ -20,7 +20,7 @@ void *sub_08059AE0(struct Unk59AE0Src *src)
             node->unk1C = src->unk14;
             node->unk20 = src->unk18;
             node->unk24 = src->unk1C;
-            node->unk28 = src->unk20;
+            node->unk28 = (struct Unk59AE0Src *)src->unk20;
             node->unk38 = 0;
             node->unk34 = 0;
             node->unk2C = 0;
