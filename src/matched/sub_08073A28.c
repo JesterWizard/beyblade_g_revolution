@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x08073a28
-#include "global.h"
 
-// @ 0x08073a28
 void sub_08073A28(u8 *s, u8 c, u16 n)
 {
     s32 len;

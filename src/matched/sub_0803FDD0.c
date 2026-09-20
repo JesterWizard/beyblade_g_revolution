@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x0803fdd0
-#include "global.h"
 
-// @ 0x0803fdd0
 void sub_0803FDD0(s16 a)
 {
     sub_080405E8((void *)(s32)a);

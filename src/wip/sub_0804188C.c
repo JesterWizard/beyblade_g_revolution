@@ -2,10 +2,10 @@
 
 void sub_0804188C(void)
 {
-    register s32 i;
-    register s32 fixed;
-    register struct Unk68574 **entries;
-    register struct Unk68574 *obj;
+    s32 i;
+    s32 fixed;
+    struct Unk68574 **entries;
+    struct Unk68574 *obj;
     s32 value;
     s32 shifted;
     u32 normalized;

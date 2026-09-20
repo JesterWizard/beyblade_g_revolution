@@ -5,10 +5,10 @@
 
 s32 sub_0803E328(struct Unk3E328 *a)
 {
-    register struct Unk3E328 *r2;
-    register u32 r0;
-    register s32 r1;
-    register u32 r3;
+    struct Unk3E328 *r2;
+    u32 r0;
+    s32 r1;
+    u32 r3;
 
     r2 = a;
     r0 = 0x0807BDB8;

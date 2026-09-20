@@ -2,7 +2,7 @@
 
 s32 sub_0803D51C(void)
 {
-    register s32 result;
+    s32 result;
     struct Unk2C314 out;
 
     result = 0;

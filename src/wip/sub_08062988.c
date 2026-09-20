@@ -3,9 +3,9 @@
 void sub_08062988(struct Unk62988 *a)
 {
     u32 flags;
-    register u32 group;
-    register u32 mode;
-    register u32 variant;
+    u32 group;
+    u32 mode;
+    u32 variant;
 
     flags = a->unk00;
     group = flags >> 8;

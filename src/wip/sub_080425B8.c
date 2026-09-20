@@ -5,9 +5,9 @@
 
 void sub_080425B8(void)
 {
-    register u8 *addr;
-    register u8 mask;
-    register u8 value;
+    u8 *addr;
+    u8 mask;
+    u8 value;
 
     addr = &gMainWorkPtr->unk0479;
     mask = 1;

@@ -2,10 +2,10 @@
 
 s32 sub_0803E2AC(struct Unk3E328 *a)
 {
-    register struct Unk3E328 *base;
-    register const u8 *table1;
-    register s32 index1;
-    register const u8 *table2;
+    struct Unk3E328 *base;
+    const u8 *table1;
+    s32 index1;
+    const u8 *table2;
     const u8 *table3;
     const u8 *entry1;
     const u8 *entry2;

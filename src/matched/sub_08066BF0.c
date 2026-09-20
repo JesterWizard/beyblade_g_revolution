@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x08066bf0
-#include "global.h"
 
 struct Unk66BF0Entry
 {
@@ -12,11 +11,11 @@ struct Unk66BF0Entry
 void sub_08066BF0(struct Unk66BC4 *arg0)
 {
     struct Unk66BF0Entry ***entriesSlot;
-    register struct Unk66BF0Entry **entries;
-    register const u16 *defVal;
-    register const u16 *altVal;
-    register const u8 *flagPtr;
-    register const u16 *end;
+    struct Unk66BF0Entry **entries;
+    const u16 *defVal;
+    const u16 *altVal;
+    const u8 *flagPtr;
+    const u16 *end;
 
     entriesSlot = (struct Unk66BF0Entry ***)arg0->unk230;
     flagPtr = (const u8 *)0x030009A8;

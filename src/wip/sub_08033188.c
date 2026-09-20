@@ -37,9 +37,9 @@ void sub_08033188(void)
     u16 held_snapshot;
     u16 current_keys;
     u16 keys_new;
-    register s32 target;
-    register s32 moving;
-    register s32 i;
+    s32 target;
+    s32 moving;
+    s32 i;
     s32 delta;
     s32 step;
 

@@ -3,8 +3,8 @@
 // @ 0x08069894
 void sub_08069894(void)
 {
-    register u32 r0;
-    register u32 r1;
+    u32 r0;
+    u32 r1;
     u8 i;
 
     r0 = gUnk_03000108;

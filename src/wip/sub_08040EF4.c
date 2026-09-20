@@ -3,11 +3,11 @@
 // @ 0x08040EF4
 s32 sub_08040EF4(void *key)
 {
-    register u32 keyReg;
-    register u32 offset;
-    register const u32 *base;
-    register const u32 *current;
-    register const u8 *valueBase;
+    u32 keyReg;
+    u32 offset;
+    const u32 *base;
+    const u32 *current;
+    const u8 *valueBase;
     u32 *list;
     u8 index;
 

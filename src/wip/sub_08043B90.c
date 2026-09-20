@@ -3,7 +3,7 @@
 // @ 0x08043b90
 s32 sub_08043B90(void)
 {
-    register void *r0;
+    void *r0;
     struct Unk16E0 *p;
 
     p = gMainWorkPtr->unk16E0;

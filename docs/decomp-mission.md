@@ -114,7 +114,7 @@ Follow the [aw2bhr](https://github.com/Mad-Man-Dan/aw2bhr) matching style. New s
 | `a->unkA0 = v` on a growing struct in `include/unknown-types.h` | `*(u16 *)((u8 *)a + 0xa0) = v` |
 | `gMainWorkPtr->unk1800 = v` (typed macro in `ram_map.h`) | `*(u32 *)((u8 *)*(u32 **)0x03000198 + 0x1800) = v` |
 | `filler_XX` for unread bytes; `unkXX` for accessed fields | Per-file `void *` + ad-hoc offsets |
-| `asm("swi 5");` for BIOS (only allowed inline asm in semantic C) | `register T x asm("rN")`, empty `asm("")`, or `asm volatile` to force registers |
+| `asm("swi 5");` for BIOS (only allowed inline asm in semantic C) | `register`, empty `asm("")`, or `asm volatile` to force registers |
 | Add a field to a struct (superset) | Move a field or change its type without re-matching every user |
 
 - Structs are a **superset**: adding a field is fine; moving one is not. Offsets and sizeof are load-bearing.

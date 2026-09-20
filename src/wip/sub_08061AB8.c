@@ -2,10 +2,10 @@
 
 void sub_08061AB8(void)
 {
-    register u32 *count_loc;
-    register struct Unk0798 **work_loc;
-    register struct Unk0770 *table;
-    register void *buffer;
+    u32 *count_loc;
+    struct Unk0798 **work_loc;
+    struct Unk0770 *table;
+    void *buffer;
 
     count_loc = (u32 *)0x03000794;
     if (*count_loc == 4)

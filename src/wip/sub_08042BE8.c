@@ -3,12 +3,12 @@
 // @ 0x08042BE8
 s32 sub_08042BE8(s32 a)
 {
-    register s32 key;
-    register u32 i;
-    register const u8 *base;
-    register const u8 *baseCopy;
-    register const u8 *valueBase;
-    register u32 off;
+    s32 key;
+    u32 i;
+    const u8 *base;
+    const u8 *baseCopy;
+    const u8 *valueBase;
+    u32 off;
     u32 next;
 
     key = a;

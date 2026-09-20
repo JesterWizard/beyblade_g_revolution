@@ -3,7 +3,7 @@
 // @ 0x0803E3C0
 s32 sub_0803E3C0(struct Unk3E328 *a)
 {
-    register const u8 *table1;
+    const u8 *table1;
     const u8 *table2;
     const u8 *table3;
     const u8 *entry1;

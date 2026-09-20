@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x08062bf0
-#include "global.h"
 
-// @ 0x08062bf0
 void sub_08062BF0(u16 a)
 {
     s16 b;

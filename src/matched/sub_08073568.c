@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x08073568
-#include "global.h"
 
-// @ 0x08073568
 u8 sub_08073568(void **out, u8 count, u32 size)
 {
     u32 i;

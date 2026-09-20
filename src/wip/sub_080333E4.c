@@ -7,10 +7,10 @@ void sub_08068584(void *a, s32 b, s32 c);
 
 void sub_080333E4(void *arg, s32 x, s32 y, u32 mode)
 {
-    register void *arg_reg;
-    register s32 x_reg;
-    register s32 y_reg;
-    register u32 mode_reg;
+    void *arg_reg;
+    s32 x_reg;
+    s32 y_reg;
+    u32 mode_reg;
     struct BattleWork *work;
     u32 resource_id;
     void *resource;

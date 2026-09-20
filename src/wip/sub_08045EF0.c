@@ -2,10 +2,10 @@
 
 void sub_08045EF0(u32 index_arg, u32 value_arg, u32 operation_arg, u32 *out_arg)
 {
-    register u32 index8;
-    register u32 value8;
-    register u32 operation;
-    register u32 *out;
+    u32 index8;
+    u32 value8;
+    u32 operation;
+    u32 *out;
     u8 *src;
     u8 *dst;
     struct Unk45D3CEntry *entry;

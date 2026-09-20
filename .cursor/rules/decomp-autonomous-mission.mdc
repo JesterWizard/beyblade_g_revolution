@@ -13,7 +13,7 @@ Do **not** re-read `docs/decomp-mission.md` / roadmap each session. Start with s
 - Do **not** stop for approval between batches unless escalated
 - Do **not** throw away unmatched C. Park it (`park_wip.py`) before restoring Thumb in `src/matched/`
 - C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`
-- Semantic C uses struct members (`a->unkA0`), not offset-casts, `asm volatile`, or GCC asm labels (`register T x asm("rN")` / empty `asm("")`)
+- Semantic C uses struct members (`a->unkA0`), not offset-casts, `register`, `asm volatile`, GCC asm labels, or empty `asm("")`
 - **README.md** is tables only — no mermaid, no `decomp-progress.svg`
 
 ## Each session

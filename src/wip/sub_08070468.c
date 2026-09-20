@@ -4,11 +4,11 @@
 
 void sub_08070468(struct Unk6FDB4 *arg, u16 key)
 {
-    register struct Unk6FDB4 *node;
-    register u16 new_key;
-    register struct Unk6FDB4 **head;
-    register struct Unk6FDB4 **search_head;
-    register struct Unk6FDB4 *found;
+    struct Unk6FDB4 *node;
+    u16 new_key;
+    struct Unk6FDB4 **head;
+    struct Unk6FDB4 **search_head;
+    struct Unk6FDB4 *found;
     struct Unk6FDB4 *previous;
     struct Unk6FDB4 *next;
 

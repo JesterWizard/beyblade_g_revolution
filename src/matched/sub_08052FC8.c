@@ -1,14 +1,13 @@
 #include "global.h"
 
 // @ 0x08052fc8
-#include "global.h"
 
 void sub_0806A6F8(void);
 
 // @ 0x08052fc8
 void sub_08052FC8(void)
 {
-    register struct MainWork **wp;
+    struct MainWork **wp;
 
     sub_08067890();
     wp = gMainWorkPtrLoc;

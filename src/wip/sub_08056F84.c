@@ -5,7 +5,7 @@ void sub_08056F84(void)
     s32 index;
     u32 result;
     struct Unk2B95C *entry;
-    register struct MainWork **main_loc;
+    struct MainWork **main_loc;
 
     index = sub_08043B90();
     if (index < 0)

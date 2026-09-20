@@ -2,8 +2,8 @@
 
 void sub_08051BBC(void)
 {
-    register struct MainWork **main_loc;
-    register vu16 *bldy;
+    struct MainWork **main_loc;
+    vu16 *bldy;
 
     main_loc = gMainWorkPtrLoc;
     (*main_loc)->unk17F0 = 0x10;

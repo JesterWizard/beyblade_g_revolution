@@ -2,8 +2,8 @@
 
 void sub_08047A94(u8 *a, s32 index_arg, u32 image)
 {
-    register s32 input;
-    register u32 output;
+    s32 input;
+    u32 output;
     s32 index;
     u16 value;
     u16 y;

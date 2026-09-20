@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x0806225c
-#include "global.h"
 
 void sub_0806225C(struct Unk62634 *a)
 {

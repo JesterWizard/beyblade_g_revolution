@@ -4,12 +4,12 @@
 void sub_08040F4C(void)
 {
     struct Unk40F4C state;
-    register s32 done;
-    register u32 r0;
-    register u32 r1;
-    register u32 r2;
-    register u32 r3;
-    register u32 r4;
+    s32 done;
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    u32 r3;
+    u32 r4;
 
     done = 0;
     r0 = 0x080BB8BC;

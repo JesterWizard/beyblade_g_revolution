@@ -3,8 +3,8 @@
 // @ 0x080312b0
 void sub_080312B0(struct Unk312EC *a, struct Unk705DC *b, u8 c, s32 d)
 {
-    register u16 val;
-    register u32 shifted;
+    u16 val;
+    u32 shifted;
 
     if (a->unk08 == 0 && b != NULL)
     {

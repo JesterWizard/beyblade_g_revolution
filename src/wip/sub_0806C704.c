@@ -2,9 +2,9 @@
 
 void sub_0806C704(void *arg0, void *arg1, s32 arg2, s32 arg3)
 {
-    register void *source;
-    register struct Unk6C704 *state;
-    register void *input;
+    void *source;
+    struct Unk6C704 *state;
+    void *input;
     s32 extra;
     s32 output[6];
     u32 result;

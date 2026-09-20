@@ -74,7 +74,7 @@ Use `--valid-syntax` if m2c output needs extra cleanup.
 
 ### 2. Evaluation order (no GCC asm labels)
 
-`register T x asm("rN")` and empty `asm("")` are **banned**. If agbcc will not emit retail bytes without them, park the C and leave Thumb in `src/matched/`.
+`register` and empty `asm("")` are **banned**. If agbcc will not emit retail bytes without them, park the C and leave Thumb in `src/matched/`.
 
 `n = a->unkXX - 1` often compiles `ldr r0,[…]; sub r4,r0,#1`. Retail wants `ldr r4,[…]; sub r4,#1` — split it:
 
@@ -190,7 +190,7 @@ python3 tools/decomp/function_scores.py --close
 |---------|---------|------------|
 | Extra `push {lr}` on branch | `sub_0802D8C4`, null-check leaves | Block; permuter or stay readable Thumb |
 | rN pool pin | `sub_080601C4` | Permuter; may stay asm-only |
-| Dest reg mismatch (same size) | table lookup family | `register asm` on r0/r1/r2 |
+| Dest reg mismatch (same size) | table lookup family | evaluation order; else park |
 | Pool in middle of fn | `sub_08042B78` | Permuter or readable Thumb |
 | Branchy leaf | `sub_080615EC` | Readable Thumb until types clear |
 

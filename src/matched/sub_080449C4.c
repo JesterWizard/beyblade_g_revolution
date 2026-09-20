@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x080449c4
-#include "global.h"
 
 void sub_080449C4(s8 arg0)
 {

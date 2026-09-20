@@ -6,9 +6,9 @@
 // @ 0x08040088
 void sub_08040088(struct MainWork *a)
 {
-    register struct Unk40088Target **targetSlot;
-    register struct Unk40088Target *target;
-    register s32 *counter;
+    struct Unk40088Target **targetSlot;
+    struct Unk40088Target *target;
+    s32 *counter;
 
     targetSlot = &a->unk0274;
     target = *targetSlot;
@@ -21,9 +21,9 @@ void sub_08040088(struct MainWork *a)
             *counter = 4;
             target->unk18++;
             {
-                register struct Unk40088Target *target2;
-                register u16 mask;
-                register u16 value;
+                struct Unk40088Target *target2;
+                u16 mask;
+                u16 value;
 
                 target2 = *targetSlot;
                 mask = 3;

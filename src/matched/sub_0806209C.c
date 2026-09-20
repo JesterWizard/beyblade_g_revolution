@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x0806209c
-#include "global.h"
 
-// @ 0x0806209c
 void sub_0806209C(struct Unk62044 *a)
 {
     s32 i;

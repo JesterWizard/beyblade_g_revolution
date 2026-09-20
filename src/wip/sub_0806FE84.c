@@ -2,10 +2,10 @@
 
 void sub_0806FE84(void *arg)
 {
-    register struct Unk6FE84 *state;
-    register struct Unk6FE84 *previous;
-    register struct Unk6FE84 *next;
-    register s32 status;
+    struct Unk6FE84 *state;
+    struct Unk6FE84 *previous;
+    struct Unk6FE84 *next;
+    s32 status;
     s32 bit;
 
     state = arg;

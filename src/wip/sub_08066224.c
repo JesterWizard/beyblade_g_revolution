@@ -5,13 +5,13 @@
 
 void sub_08066224(struct Unk66224 *a, s32 index)
 {
-    register struct Unk66224 *r6;
-    register s32 r2;
-    register s32 r1;
-    register s32 r0;
-    register struct Unk66224Entry *current;
-    register u32 obj;
-    register struct Unk7069C *state;
+    struct Unk66224 *r6;
+    s32 r2;
+    s32 r1;
+    s32 r0;
+    struct Unk66224Entry *current;
+    u32 obj;
+    struct Unk7069C *state;
     struct Unk66224Entry *entry;
 
     r6 = a;

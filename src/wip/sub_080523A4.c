@@ -3,11 +3,11 @@
 // @ 0x080523a4
 void sub_080523A4(struct Unk2F520 *a)
 {
-    register struct Unk2F520 *r4;
-    register struct Unk2F520Inner *r1;
-    register u32 r2;
-    register s32 r0;
-    register u32 r3;
+    struct Unk2F520 *r4;
+    struct Unk2F520Inner *r1;
+    u32 r2;
+    s32 r0;
+    u32 r3;
 
     r4 = a;
     sub_08061BE8();

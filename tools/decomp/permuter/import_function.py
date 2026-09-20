@@ -189,8 +189,8 @@ void *sub_0806639C(void)
 
 void sub_08031294(struct Unk312EC *a)
 {
-    register u8 r1;
-    register u8 r2;
+    u8 r1;
+    u8 r2;
 
     r1 = 0xFF;
     r2 = *(u8 *)&a->unk00;
@@ -226,8 +226,8 @@ u32 sub_0803DD60(u32 idx)
 
 u32 sub_080674BC(u32 a)
 {
-    register u16 v;
-    register u32 r2;
+    u16 v;
+    u32 r2;
 
     v = (u16)a;
     r2 = 0;
@@ -247,7 +247,7 @@ u32 sub_080674BC(u32 a)
 
 void sub_080617C4(struct Unk617C4 *a, u32 b)
 {
-    register struct Unk617C4 *r2;
+    struct Unk617C4 *r2;
     struct Unk0798 *mw;
 
     r2 = a;
@@ -266,8 +266,8 @@ void sub_080617C4(struct Unk617C4 *a, u32 b)
 void sub_080615EC(u16 x, u16 y)
 {
     u32 tmp[2];
-    register u16 r2;
-    register u16 r3;
+    u16 r2;
+    u16 r3;
 
     r2 = x;
     r3 = y;
@@ -287,7 +287,7 @@ void sub_080615EC(u16 x, u16 y)
 
 void sub_0802D8C4(s32 a)
 {
-    register u16 v;
+    u16 v;
     struct Unk026C *mw;
     struct Unk705DC *p;
 
@@ -319,9 +319,9 @@ s32 sub_0803DD88(s32 a)
 
 struct Unk6FDB4 *sub_0806FDB4(struct Unk6FDB4 *p, u16 key)
 {
-    register struct Unk6FDB4 *cur;
-    register u16 k;
-    register struct Unk6FDB4 *prev;
+    struct Unk6FDB4 *cur;
+    u16 k;
+    struct Unk6FDB4 *prev;
 
     cur = p;
     k = key;
@@ -360,7 +360,7 @@ void *sub_0806A954(u8 a)
 
 void sub_0806FF28(struct BtlObj *a)
 {
-    register struct BtlObj *r3;
+    struct BtlObj *r3;
     struct BtlObjNode *prev;
     struct BtlObjNode *next;
     struct BtlObjNode *old;
@@ -385,8 +385,8 @@ void sub_0806FF28(struct BtlObj *a)
 
 void sub_08031294(struct Unk312EC *a)
 {
-    register u8 r1;
-    register u8 r2;
+    u8 r1;
+    u8 r2;
 
     r1 = 0xFF;
     r2 = (u8)a->unk00;
@@ -420,9 +420,9 @@ void sub_080473E4(void)
 
 s32 sub_08033958(struct Unk33958 *a)
 {
-    register s32 r2;
-    register u32 r3;
-    register s32 r1;
+    s32 r2;
+    u32 r3;
+    s32 r1;
 
     r2 = 0;
     r3 = 0;

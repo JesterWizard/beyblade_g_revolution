@@ -6,8 +6,8 @@
 void sub_08052934(s32 arg0)
 {
     u32 idx;
-    register u32 r0;
-    register u32 r1;
+    u32 r0;
+    u32 r1;
 
     idx = arg0;
     idx = (u8)idx << 4;

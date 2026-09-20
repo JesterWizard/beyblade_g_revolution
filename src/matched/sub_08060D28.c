@@ -1,15 +1,13 @@
 #include "global.h"
 
 // @ 0x08060d28
-#include "global.h"
 
-// @ 0x08060d28
 void sub_08060D28(struct Unk0798 *a)
 {
     void **fn;
     void *dst;
     u32 n;
-    register u32 tmp;
+    u32 tmp;
 
     if (a != 0)
     {

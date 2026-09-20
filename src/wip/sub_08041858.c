@@ -3,9 +3,9 @@
 // @ 0x08041858
 void sub_08041858(void)
 {
-    register void **slot;
-    register u32 r0;
-    register u32 r1;
+    void **slot;
+    u32 r0;
+    u32 r1;
 
     sub_08041980();
     slot = (void **)gUnk_03000508;

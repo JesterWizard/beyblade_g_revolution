@@ -141,7 +141,7 @@ def main() -> int:
         print("No automatic candidate matched. Next steps:")
         print(f"  python3 tools/decomp/m2c_asm.py {function}          # inspect m2c output")
         print(f"  python3 tools/decomp/match_function.py {function} scratch.c")
-        print("  See docs/decomp-patterns.md — manual fixes (register asm, permuter, block)")
+        print("  See docs/decomp-patterns.md — manual fixes (evaluation order, permuter, park)")
         return 2
 
     src, note, body = matched

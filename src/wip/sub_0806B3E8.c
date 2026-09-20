@@ -3,12 +3,12 @@
 // @ 0x0806b3e8
 void sub_0806B3E8(struct Unk6B3E8 *arg0)
 {
-    register u32 r0;
-    register u32 r1;
-    register u32 r2;
-    register s32 r4;
-    register struct Unk6B3E8Item *r5;
-    register const u8 *r6;
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    s32 r4;
+    struct Unk6B3E8Item *r5;
+    const u8 *r6;
 
     r4 = arg0->unk04;
     r6 = arg0->unk10;

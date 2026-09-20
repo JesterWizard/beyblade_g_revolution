@@ -3,11 +3,11 @@
 // @ 0x08031300
 void sub_08031300(struct Unk312EC *a)
 {
-    register struct Unk312EC *r2;
-    register s32 r3;
-    register struct Unk705DC *r4;
-    register u32 r0;
-    register u32 r1;
+    struct Unk312EC *r2;
+    s32 r3;
+    struct Unk705DC *r4;
+    u32 r0;
+    u32 r1;
 
     r2 = a;
     r0 = r2->unk08;

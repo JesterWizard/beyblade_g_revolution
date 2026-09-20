@@ -1,14 +1,13 @@
 #include "global.h"
 
 // @ 0x08033084
-#include "global.h"
 
 void sub_080726E0(struct Unk726E0 *a, void *dst, s32 idx);
 
 void sub_08033084(struct Unk726E0 *a, u32 flag)
 {
-    register struct Unk726E0 *dst;
-    register struct BattleWork **loc;
+    struct Unk726E0 *dst;
+    struct BattleWork **loc;
     struct BattleWork *w;
     s32 value;
 

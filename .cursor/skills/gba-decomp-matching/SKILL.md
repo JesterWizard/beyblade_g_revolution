@@ -24,7 +24,7 @@ Oracle: `python3 tools/decomp/match_function.py FN path/to.c` → **MATCH** or c
 
 Do **not** use GCC asm labels or compiler barriers in semantic C:
 
-- `register T x asm("rN");`
+- `register` (storage class) and `register T x asm("rN");`
 - `asm("" : "+r"(x));` / `asm volatile`
 
 `match_function.py` rejects these. If retail bytes need them, park (`park_wip.py`) and leave Thumb in `src/matched/`.
@@ -43,7 +43,7 @@ tmp[0] = gUnk_03000380;
 p = (struct Unk0380 *)tmp[0];
 ```
 
-Use when retail has `ldr rN, =0x03……` before use. `register` without an asm label is ordinary C (a hint only).
+Use when retail has `ldr rN, =0x03……` before use. Do not use `register`.
 
 `r0 = ch + table` → `adds r0, r1, r0`. Swapping operands is a 1-byte DIFF. Win: `sub_08073988`.
 
@@ -130,7 +130,7 @@ Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `sr
 python3 tools/decomp/m2c_asm.py sub_XXXXXXXX
 ```
 
-Fix types → `gMainWorkPtr` / `gBattleWork` → evaluation order → `match_function.py`. m2c `--valid-syntax` helps permuter feeds (see ecosystem skill). Do not add `register … asm("rN")`.
+Fix types → `gMainWorkPtr` / `gBattleWork` → evaluation order → `match_function.py`. m2c `--valid-syntax` helps permuter feeds (see ecosystem skill). Do not use `register`.
 
 ## Reference
 

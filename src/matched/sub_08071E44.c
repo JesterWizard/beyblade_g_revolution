@@ -3,7 +3,7 @@
 // @ 0x08071e44
 void sub_08071E44(struct Unk71E84 *p, void *a, s16 *idx)
 {
-    register s32 val;
+    s32 val;
     s32 zero;
     s32 one;
     s32 offset;

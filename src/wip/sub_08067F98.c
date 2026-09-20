@@ -3,11 +3,11 @@
 // @ 0x08067f98
 struct Unk680CCRec *sub_08067F98(struct Unk680CC *a, u32 key)
 {
-    register u32 r1;
-    register u8 *r2;
-    register u32 r3;
-    register u32 r4;
-    register u32 r0;
+    u32 r1;
+    u8 *r2;
+    u32 r3;
+    u32 r4;
+    u32 r0;
 
     r1 = key;
     r1 <<= 16;

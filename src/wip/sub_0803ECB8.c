@@ -3,10 +3,10 @@
 // @ 0x0803ecb8
 u32 sub_0803ECB8(u32 a)
 {
-    register u32 r2 = 0x0807BDA4;
-    register u32 r1;
-    register u32 r3;
-    register u32 r0 = a;
+    u32 r2 = 0x0807BDA4;
+    u32 r1;
+    u32 r3;
+    u32 r0 = a;
 r1 = 0x03000198;
     r1 = *(u32 *)r1;
     r3 = 0x1818;

@@ -70,7 +70,7 @@ def _park(name: str, body: str, info: dict) -> None:
             "--status",
             f"script_first near-miss {info.get('status')} {info.get('score')}",
             "--next",
-            "permuter or one register-pin pass from this seed",
+            "permuter from this seed; do not use register",
             "--score",
             str(info.get("score", "")),
         ],

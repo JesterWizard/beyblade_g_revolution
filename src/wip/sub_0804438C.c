@@ -6,7 +6,7 @@ void sub_0804438C(s8 mode_arg)
     s32 i;
     s32 value;
     s32 level;
-    register u32 dispcnt;
+    u32 dispcnt;
 
     mode = mode_arg;
     sub_080617C4((struct Unk617C4 *)0x08119204, 0x080B7429);

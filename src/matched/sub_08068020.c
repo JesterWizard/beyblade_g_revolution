@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x08068020
-#include "global.h"
 
 void sub_08068020(struct Unk680CC *a, u16 key, u16 arg2)
 {

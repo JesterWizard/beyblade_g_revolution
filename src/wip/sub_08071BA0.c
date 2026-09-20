@@ -3,11 +3,11 @@
 // @ 0x08071ba0
 void sub_08071BA0(void)
 {
-    register u32 r0;
-    register u32 r1;
-    register u32 r2;
-    register u32 r4;
-    register u32 r5;
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    u32 r4;
+    u32 r5;
 
     r1 = REG_ADDR_SOUNDCNT_X;
     r0 = 0x80;

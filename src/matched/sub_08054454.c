@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x08054454
-#include "global.h"
 
-// @ 0x08054454
 void sub_08054454(void)
 {
     s32 i;

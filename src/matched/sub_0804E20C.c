@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x0804e20c
-#include "global.h"
 
 void sub_0804E20C(u8 *data)
 {

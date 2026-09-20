@@ -30,11 +30,11 @@ void sub_0802ECD8(void)
 {
     struct Unk2ECD8Record *record;
     struct Unk2C314 out;
-    register void *buffer;
-    register s32 i;
-    register struct Unk2ECD8Root **root_loc;
-    register u32 x;
-    register u32 y;
+    void *buffer;
+    s32 i;
+    struct Unk2ECD8Root **root_loc;
+    u32 x;
+    u32 y;
     s32 mode;
     s32 result;
     s32 amount;

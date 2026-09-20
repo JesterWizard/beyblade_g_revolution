@@ -5,9 +5,9 @@ void sub_08033978(
     struct Unk33A5C *out, struct Unk346C0 *state_a,
     struct Unk346C0 *state_b, u8 mode)
 {
-    register u32 r1;
-    register u32 r0;
-    register s32 minusOne;
+    u32 r1;
+    u32 r0;
+    s32 minusOne;
     u32 resource_id;
 
     out->unk00 = 1;

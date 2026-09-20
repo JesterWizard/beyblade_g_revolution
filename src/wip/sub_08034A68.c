@@ -5,7 +5,7 @@
 
 void sub_08034A68(struct Unk346C0 *a, u32 b)
 {
-    register u8 status;
+    u8 status;
 
     a->unk310 = 0;
     status = a->unk314;

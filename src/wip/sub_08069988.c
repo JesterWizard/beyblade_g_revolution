@@ -7,8 +7,8 @@
 
 void *sub_08069988(u8 a)
 {
-    register u32 r0;
-    register u32 r1;
+    u32 r0;
+    u32 r1;
 
     r0 = a;
     r1 = r0;

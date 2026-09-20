@@ -2,11 +2,11 @@
 
 void sub_08065560(struct Unk65560 *a)
 {
-    register struct Unk65560 *data;
-    register const u8 *indices;
-    register struct Unk65560Source *source;
-    register struct Unk705DC **table;
-    register s32 i;
+    struct Unk65560 *data;
+    const u8 *indices;
+    struct Unk65560Source *source;
+    struct Unk705DC **table;
+    s32 i;
 
     data = a;
     table = data->unk274;

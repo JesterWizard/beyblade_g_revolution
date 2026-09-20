@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x08034568
-#include "global.h"
 
-// @ 0x08034568
 void sub_08034568(struct Unk346C0 *a)
 {
     a->unk18 = 0;

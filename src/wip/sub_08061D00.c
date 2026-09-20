@@ -2,9 +2,9 @@
 
 void sub_08061D00(u16 arg0, u32 arg1)
 {
-    register struct Unk0798 **work_loc;
-    register u32 encoded;
-    register u16 index;
+    struct Unk0798 **work_loc;
+    u32 encoded;
+    u16 index;
 
     work_loc = (struct Unk0798 **)0x03000798;
     index = arg0;

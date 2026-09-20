@@ -7,11 +7,11 @@
 
 void sub_0806FF28(struct BtlObj *a)
 {
-    register struct BtlObj *r3;
-    register u32 r0;
-    register struct BtlObjNode *r2;
-    register struct BtlObjNode *r1;
-    register u32 loc;
+    struct BtlObj *r3;
+    u32 r0;
+    struct BtlObjNode *r2;
+    struct BtlObjNode *r1;
+    u32 loc;
 
     r3 = a;
     r0 = r3->unk19;

@@ -1,13 +1,11 @@
 #include "global.h"
 
 // @ 0x0802b8bc
-#include "global.h"
 
-// @ 0x0802b8bc
 u16 sub_0802B8BC(s32 a)
 {
-    register s32 r0;
-    register u8 *r1;
+    s32 r0;
+    u8 *r1;
 
     r0 = a;
     r0 <<= 16;

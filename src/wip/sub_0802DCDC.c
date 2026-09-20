@@ -15,15 +15,15 @@ void sub_0802DCDC(void *arg)
     struct Unk705DC *old_resource;
     struct Unk705DC *resource;
     struct Unk42E78Result *result;
-    register struct MainWork **main_loc;
-    register struct MainWork *main;
-    register u32 flags;
-    register u32 mask;
-    register struct Unk026C **state_loc;
-    register s32 current;
+    struct MainWork **main_loc;
+    struct MainWork *main;
+    u32 flags;
+    u32 mask;
+    struct Unk026C **state_loc;
+    s32 current;
     u16 current_raw;
-    register u32 resource_x;
-    register u32 resource_y;
+    u32 resource_x;
+    u32 resource_y;
     s16 next;
     s32 value;
 

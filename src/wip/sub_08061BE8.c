@@ -5,13 +5,13 @@
 
 void sub_08061BE8(void)
 {
-    register u32 r0;
-    register u32 r1;
-    register struct Unk0798 *r2;
-    register u32 r3;
-    register struct Unk0798 **loc;
-    register struct Unk0770 *entry;
-    register void **handler_slot;
+    u32 r0;
+    u32 r1;
+    struct Unk0798 *r2;
+    u32 r3;
+    struct Unk0798 **loc;
+    struct Unk0770 *entry;
+    void **handler_slot;
 
     r0 = (s32)gUnk_03000794 - 1;
     if ((s32)r0 < 0)

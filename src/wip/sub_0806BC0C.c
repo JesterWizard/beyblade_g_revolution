@@ -2,9 +2,9 @@
 
 void sub_0806BC0C(void *arg, void *source_arg)
 {
-    register struct Unk6BC0C *state;
-    register s32 limit;
-    register s32 current;
+    struct Unk6BC0C *state;
+    s32 limit;
+    s32 current;
     struct Unk6BC0CSource *source;
     u16 index;
 

@@ -3,10 +3,10 @@
 // @ 0x080361a8
 void sub_080361A8(struct Unk361A8 *a)
 {
-    register u32 r3 = 12;
-    register u32 r4 = 0xFFFF;
-    register u32 r1;
-    register u32 r2;
+    u32 r3 = 12;
+    u32 r4 = 0xFFFF;
+    u32 r1;
+    u32 r2;
 
     r1 = a->unk1C;
     *(u32 *)&a->unk1C = r1;

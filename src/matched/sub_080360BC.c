@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x080360bc
-#include "global.h"
 
-// @ 0x080360bc
 void sub_080360BC(struct Unk360BC *a, s32 x, s32 y, s32 scale)
 {
     s32 dx;

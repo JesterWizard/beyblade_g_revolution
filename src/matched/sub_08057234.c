@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x08057234
-#include "global.h"
 
 void sub_08057234(struct Unk6BE08 *arg0, u32 arg1)
 {

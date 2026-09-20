@@ -2,8 +2,8 @@
 
 void sub_080429CC(void)
 {
-    register struct Unk0538 *ring;
-    register struct MainWork *main;
+    struct Unk0538 *ring;
+    struct MainWork *main;
 
     ring = gUnk_03000538;
     main = gMainWorkPtr;

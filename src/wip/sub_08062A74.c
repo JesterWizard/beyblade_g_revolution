@@ -3,13 +3,13 @@
 // @ 0x08062a74
 void sub_08062A74(u32 a, void *src)
 {
-    register u32 r0;
-    register u32 r1;
-    register u32 r2;
-    register u32 r3;
-    register u32 r4;
-    register void *r5;
-    register u32 r6;
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    u32 r3;
+    u32 r4;
+    void *r5;
+    u32 r6;
 
     r5 = src;
     r0 = a;

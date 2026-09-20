@@ -9,14 +9,14 @@ void sub_080442FC(
 {
     u32 flag;
     u32 arg4;
-    register u32 index;
+    u32 index;
     u32 mw;
     u32 slot;
     u32 p181b;
     u32 arg2;
-    register u32 r0;
-    register u32 r1;
-    register u32 r3;
+    u32 r0;
+    u32 r1;
+    u32 r3;
 
     flag = c;
     arg4 = d;

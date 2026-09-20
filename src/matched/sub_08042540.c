@@ -1,13 +1,12 @@
 #include "global.h"
 
 // @ 0x08042540
-#include "global.h"
 
 void sub_08042540(void)
 {
-    register u8 *addr;
-    register u32 mask;
-    register u32 value;
+    u8 *addr;
+    u32 mask;
+    u32 value;
 
     addr = &gMainWorkPtr->unk0479;
     mask = 2;

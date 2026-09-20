@@ -7,11 +7,11 @@
 
 void sub_080617C4(struct Unk617C4 *a, u32 b)
 {
-    register struct Unk617C4 *r2;
-    register u32 r0;
-    register u32 r3;
-    register u32 r1;
-    register struct Unk0798 *base;
+    struct Unk617C4 *r2;
+    u32 r0;
+    u32 r3;
+    u32 r1;
+    struct Unk0798 *base;
 
     r2 = a;
     r0 = 1;

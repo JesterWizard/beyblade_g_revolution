@@ -5,8 +5,8 @@
 
 void sub_0806105C(void *a, u8 *s)
 {
-    register u8 *sp;
-    register s32 i;
+    u8 *sp;
+    s32 i;
     u8 c;
 
     sp = s;

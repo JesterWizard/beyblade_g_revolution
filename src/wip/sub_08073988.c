@@ -3,14 +3,14 @@
 // @ 0x08073988
 s32 sub_08073988(void *text_arg, const void *base_arg, u32 delta_arg, u32 space_arg)
 {
-    register const u8 *text;
+    const u8 *text;
     const u8 *base;
-    register u32 delta;
-    register u32 space;
-    register u32 index;
-    register s32 total;
-    register u32 ch;
-    register u32 r0;
+    u32 delta;
+    u32 space;
+    u32 index;
+    s32 total;
+    u32 ch;
+    u32 r0;
 
     text = text_arg;
     base = base_arg;

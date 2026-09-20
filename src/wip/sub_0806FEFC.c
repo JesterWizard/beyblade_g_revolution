@@ -7,9 +7,9 @@
 
 struct BtlObjNode *sub_0806FEFC(void)
 {
-    register u32 r2;
-    register struct BtlObjNode *r1;
-    register struct BtlObjNode *r0;
+    u32 r2;
+    struct BtlObjNode *r1;
+    struct BtlObjNode *r0;
 
     r2 = (u32)gBtlObjListHeadLoc;
 r1 = *(struct BtlObjNode **)r2;

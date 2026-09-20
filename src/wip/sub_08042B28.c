@@ -3,10 +3,10 @@
 // @ 0x08042b28
 void *sub_08042B28(u32 i)
 {
-    register u32 r2;
-    register u32 r0;
-    register u32 r1;
-    register u32 r4;
+    u32 r2;
+    u32 r0;
+    u32 r1;
+    u32 r4;
 
     r2 = i;
     r0 = 0x08091004;

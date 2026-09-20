@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x080618a8
-#include "global.h"
 
-// @ 0x080618a8
 void sub_080618A8(struct Unk618A8 *a, void *b, u16 c, u16 d, u16 e, u16 f)
 {
     if (a == 0)

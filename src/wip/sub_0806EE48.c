@@ -2,9 +2,9 @@
 
 void sub_0806EE48(struct Unk6EE48 *state)
 {
-    register struct Unk6EE48 *work;
-    register void *handler;
-    register u8 *flag_ptr;
+    struct Unk6EE48 *work;
+    void *handler;
+    u8 *flag_ptr;
     void *callback;
     u8 i;
 

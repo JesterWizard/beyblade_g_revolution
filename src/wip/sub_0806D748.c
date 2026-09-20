@@ -2,7 +2,7 @@
 
 u8 sub_0806D748(struct Unk6D748 *arg0, void *arg1, u32 arg2, u32 arg3)
 {
-    register void *handler;
+    void *handler;
     struct Unk6D748 *p;
     void *b;
     u8 result;

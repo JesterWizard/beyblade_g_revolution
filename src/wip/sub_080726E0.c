@@ -5,7 +5,7 @@ void sub_080726E0(struct Unk726E0 *a, void *dst, s32 idx)
 {
     void *src;
     void **cpuSet;
-    register u16 off;
+    u16 off;
 
     if (idx < a->unk08)
     {

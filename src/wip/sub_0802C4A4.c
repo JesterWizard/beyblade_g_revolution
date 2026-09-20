@@ -22,19 +22,19 @@ struct Unk1694Bytes
 
 s32 sub_0802C4A4(s8 a, s8 idx, struct Unk2C314Result *out)
 {
-    register u32 a_norm;
-    register s32 match_a;
-    register struct MainWork **main_loc;
-    register struct MainWork **loop_loc;
-    register u32 loop_offset;
-    register u32 index;
-    register struct Unk1694Bytes *entry;
-    register struct MainWork *work_ptr;
-    register struct Unk1694Bytes **table_loc;
-    register struct Unk1694Bytes *table_base;
-    register u32 scaled_index;
-    register u32 mask;
-    register u32 temp;
+    u32 a_norm;
+    s32 match_a;
+    struct MainWork **main_loc;
+    struct MainWork **loop_loc;
+    u32 loop_offset;
+    u32 index;
+    struct Unk1694Bytes *entry;
+    struct MainWork *work_ptr;
+    struct Unk1694Bytes **table_loc;
+    struct Unk1694Bytes *table_base;
+    u32 scaled_index;
+    u32 mask;
+    u32 temp;
     u32 offset;
 
     a_norm = ((u32)a << 24) >> 24;

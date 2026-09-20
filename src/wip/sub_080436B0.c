@@ -2,8 +2,8 @@
 
 void sub_080436B0(void)
 {
-    register struct Unk0554 **stateLoc;
-    register u8 phase;
+    struct Unk0554 **stateLoc;
+    u8 phase;
     u16 input;
 
     stateLoc = (struct Unk0554 **)0x03000554;

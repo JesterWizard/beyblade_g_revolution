@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x08062c38
-#include "global.h"
 
 void sub_08062C38(u16 arg0)
 {

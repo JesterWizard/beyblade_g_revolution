@@ -5,11 +5,11 @@ u32 sub_080691E4(
     u32 value_arg,
     u32 flags_arg)
 {
-    register struct Unk691E4 *state;
-    register u32 value;
-    register u32 flags;
-    register u32 result;
-    register u32 one;
+    struct Unk691E4 *state;
+    u32 value;
+    u32 flags;
+    u32 result;
+    u32 one;
 
     state = a;
     value = value_arg << 16;

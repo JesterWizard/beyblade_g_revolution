@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x08031204
-#include "global.h"
 
 void sub_08031204(void)
 {

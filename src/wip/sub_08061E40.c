@@ -7,9 +7,9 @@
 
 void sub_08061E40(struct Unk61E40 *a)
 {
-    register struct Unk61E40 *r2;
-    register u32 r1;
-    register u32 r0;
+    struct Unk61E40 *r2;
+    u32 r1;
+    u32 r0;
 
     r2 = a;
     if (r2 != 0)

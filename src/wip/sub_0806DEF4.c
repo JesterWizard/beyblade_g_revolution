@@ -7,9 +7,9 @@
 
 s32 sub_0806DEF4(struct Unk6DEF4 *a, s32 b)
 {
-    register s32 r2;
-    register s32 r0;
-    register s32 r1;
+    s32 r2;
+    s32 r0;
+    s32 r1;
 
     r2 = a->unk04;
     r0 = *a->unk00;

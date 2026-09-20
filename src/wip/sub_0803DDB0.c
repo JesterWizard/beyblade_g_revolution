@@ -3,9 +3,9 @@
 // @ 0x0803ddb0
 s32 sub_0803DDB0(s32 a)
 {
-    register u32 r1 = 0x0807AEEC;
-    register u32 r0 = a;
-    register u32 r2;
+    u32 r1 = 0x0807AEEC;
+    u32 r0 = a;
+    u32 r2;
 r0 = r0 - 1;
     r0 = (r0 << 2) + r1;
     r2 = *(u32 *)r0;

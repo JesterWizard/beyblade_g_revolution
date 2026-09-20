@@ -1,16 +1,14 @@
 #include "global.h"
 
 // @ 0x080615ec
-#include "global.h"
-
 /* match-flags: -fprologue-bugfix */
 
 void sub_080615EC(u32 x, u32 y)
 {
-    register u32 r2;
-    register u32 r3;
-    register struct Unk0798 *r0;
-    register u16 *r1;
+    u32 r2;
+    u32 r3;
+    struct Unk0798 *r0;
+    u16 *r1;
 
     r2 = x;
     r3 = y;

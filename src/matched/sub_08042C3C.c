@@ -1,15 +1,13 @@
 #include "global.h"
 
-// @ 0x08042c3c
-#include "global.h"
-
 // @ 0x08042C3C
+
 s32 sub_08042C3C(s32 a)
 {
-    register s32 key;
-    register s32 minusOne;
-    register s32 sentinel;
-    register const u32 *entry;
+    s32 key;
+    s32 minusOne;
+    s32 sentinel;
+    const u32 *entry;
     const u32 *valueEntry;
     u32 first;
 

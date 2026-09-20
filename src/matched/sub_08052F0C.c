@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x08052f0c
-#include "global.h"
 
 void sub_08052F0C(u8 *data)
 {

@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x0805d99c
-#include "global.h"
 
-// @ 0x0805d99c
 void sub_0805D99C(void *a)
 {
     struct Unk0748 *p;

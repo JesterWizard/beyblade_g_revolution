@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x0804ed90
-#include "global.h"
 
 void sub_0804ED90(void *arg)
 {

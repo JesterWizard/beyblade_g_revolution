@@ -53,12 +53,12 @@ ALLOWED_MATCH_FLAGS = frozenset(
     }
 )
 
-# GCC local-register / asm-label pins and empty compiler barriers are not
-# semantic C. Naked Thumb wrappers and BIOS `swi` are the only allowed asm().
+# `register`, GCC asm labels, and empty compiler barriers are not semantic C.
+# Naked Thumb wrappers and BIOS `swi` are the only allowed asm().
 _COMMENT_BLOCK_RE = re.compile(r"/\*.*?\*/", re.S)
 _COMMENT_LINE_RE = re.compile(r"//.*?$", re.M)
 _NAKED_RE = re.compile(r"__attribute__\s*\(\s*\(\s*naked\s*\)\s*\)")
-_REGISTER_ASM_RE = re.compile(r"\bregister\b[^;]*\basm\s*\(", re.S)
+_REGISTER_KW_RE = re.compile(r"\bregister\b")
 _ASM_STRING_RE = re.compile(
     r"\basm(?:\s+volatile)?\s*\(\s*\"((?:[^\"\\]|\\.)*)\"",
     re.I,
@@ -67,7 +67,7 @@ _SWI_ASM_RE = re.compile(r"^\s*swi\b", re.I)
 
 
 class BannedAsmError(ValueError):
-    """Semantic C used a GCC asm label, barrier, or non-SWI inline asm."""
+    """Semantic C used register, a GCC asm label, or non-SWI inline asm."""
 
 
 def _c_without_comments(text: str) -> str:
@@ -76,12 +76,12 @@ def _c_without_comments(text: str) -> str:
 
 
 def banned_semantic_asm(text: str) -> str | None:
-    """Return a reason if this is semantic C with banned `asm` usage."""
+    """Return a reason if this is semantic C with banned match cheats."""
     if _NAKED_RE.search(text):
         return None
     body = _c_without_comments(text)
-    if _REGISTER_ASM_RE.search(body):
-        return 'register … asm("rN") (GCC asm label) is banned in semantic C'
+    if _REGISTER_KW_RE.search(body):
+        return "`register` is banned in semantic C"
     for match in _ASM_STRING_RE.finditer(body):
         inner = bytes(match.group(1), "utf-8").decode("unicode_escape")
         if _SWI_ASM_RE.match(inner):

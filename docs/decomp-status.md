@@ -21,6 +21,11 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-21 — ban `register` in semantic C
+- The `register` storage class is banned the same as GCC asm labels. `match_function.py` rejects it.
+- All 19 remaining semantic functions that still used `register` MATCH after dropping it (including `sub_08042BB0`).
+- `make compare`: OK
+
 ### 2026-09-20 — ban GCC asm labels (363→296/633 semantic)
 - `register T x asm("rN")` and empty `asm("")` are not a match. `match_function.py` now rejects them in semantic C (BIOS `swi` and naked Thumb still allowed).
 - Honest rematch: `sub_080475C4` / `sub_080475F4` still MATCH as struct copies (`unk40`/`unk44` ↔ `unk1798`/`unk179C`).

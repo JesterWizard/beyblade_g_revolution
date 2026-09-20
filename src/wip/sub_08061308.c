@@ -10,7 +10,7 @@ void sub_08061308(void)
     void **fn;
     void *dst;
     u32 n;
-    register u32 tmp;
+    u32 tmp;
 
     fn = (void **)0x080BB8BC;
     s = gUnk_03000798;

@@ -3,15 +3,15 @@
 // @ 0x08046278
 void sub_08046278(void)
 {
-    register struct MainWork **mainPtr;
-    register u32 zero;
-    register u32 minusOne;
-    register u32 offset;
-    register u32 slot00;
-    register u32 slot04;
-    register u32 slot08;
-    register s32 count;
-    register struct MainWork *w;
+    struct MainWork **mainPtr;
+    u32 zero;
+    u32 minusOne;
+    u32 offset;
+    u32 slot00;
+    u32 slot04;
+    u32 slot08;
+    s32 count;
+    struct MainWork *w;
 
     mainPtr = gMainWorkPtrLoc;
     slot00 = 0x16B0;

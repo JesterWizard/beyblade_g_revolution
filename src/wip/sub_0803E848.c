@@ -2,10 +2,10 @@
 
 void sub_0803E848(struct Unk2F520 *a, s32 b, void *c)
 {
-    register s32 offset;
-    register s32 first_y;
-    register void *table;
-    register void *out;
+    s32 offset;
+    s32 first_y;
+    void *table;
+    void *out;
 
     out = c;
     if (b == (s8)a->unk2D5)

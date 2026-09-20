@@ -4,7 +4,7 @@
  * WIP — not byte-matched (best clean rewrite was 92/108 bytes).
  * Retail uses an explicit `>` table-call path followed by a separate
  * `<` zero-call comparison; straightforward C reproduces the logic but
- * still produces a different literal-pool/register layout in this build.
+ * still produces a different literal-pool/layout in this build.
  *
  * This function is the asm-wrapper style micro-`if/else-if` idiom seen
  * near the "systemic agbcc leaf-function register-allocation quirk"

@@ -3,7 +3,7 @@
 // @ 0x08044f64
 u32 sub_08044F64(u32 idx)
 {
-    register u32 product;
+    u32 product;
     u32 i;
     u32 end;
     u32 count;

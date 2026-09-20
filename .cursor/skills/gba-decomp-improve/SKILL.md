@@ -108,4 +108,4 @@ Bootstrap checklist: [reference.md](reference.md)
 - Integrating without `match_function.py` MATCH
 - Hand-editing `asm/nonmatchings/*.s`
 - Skipping status doc updates (lose near-miss knowledge)
-- Using `register T x asm("rN")` or empty `asm("")` to force a match (park instead)
+- Using `register` or empty `asm("")` to force a match (park instead)

@@ -3,17 +3,17 @@
 // @ 0x0806a3a4
 void *sub_0806A3A4(u32 size)
 {
-    register struct Unk6A4D8Node *node;
-    register void *buffer;
-    register void **current;
-    register u32 work;
-    register u32 current_value;
-    register s32 *payload;
-    register s32 *next_payload;
-    register u32 r0;
-    register u32 r1;
-    register u32 r2;
-    register u32 r3;
+    struct Unk6A4D8Node *node;
+    void *buffer;
+    void **current;
+    u32 work;
+    u32 current_value;
+    s32 *payload;
+    s32 *next_payload;
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    u32 r3;
 
     work = size;
     current = &gUnk_03000B30;

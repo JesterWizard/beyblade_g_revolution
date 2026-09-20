@@ -2,9 +2,9 @@
 
 void sub_0806A434(void *arg)
 {
-    register struct Unk6A434 *state;
-    register struct Unk6A4D8Node *previous;
-    register struct Unk6A4D8Node *next;
+    struct Unk6A434 *state;
+    struct Unk6A4D8Node *previous;
+    struct Unk6A4D8Node *next;
     u32 key;
 
     state = arg;

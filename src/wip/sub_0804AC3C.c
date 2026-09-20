@@ -2,9 +2,9 @@
 
 void sub_0804AC3C(u8 *data)
 {
-    register u8 *ptr;
-    register u8 first;
-    register u8 second;
+    u8 *ptr;
+    u8 first;
+    u8 second;
     u32 coordinate;
 
     ptr = data;

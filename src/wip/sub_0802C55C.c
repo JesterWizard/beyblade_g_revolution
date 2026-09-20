@@ -5,15 +5,15 @@
 void sub_0802C55C(s16 a, s8 b, s16 i)
 {
     u32 key;
-    register u32 b_norm;
-    register s32 index;
-    register struct MainWork **main_loc;
-    register u32 offset;
-    register u32 scaled_index;
-    register struct Unk1694 *entry;
+    u32 b_norm;
+    s32 index;
+    struct MainWork **main_loc;
+    u32 offset;
+    u32 scaled_index;
+    struct Unk1694 *entry;
     s32 old_flag;
-    register u32 mask;
-    register u32 temp;
+    u32 mask;
+    u32 temp;
 
     key = ((u32)a << 16) >> 16;
     b_norm = ((u32)b << 24) >> 24;

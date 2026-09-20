@@ -2,10 +2,10 @@
 
 void sub_0804A438(u8 *data, s32 index_arg, void *image)
 {
-    register s32 offset;
-    register s32 first_y;
-    register void *table;
-    register void *out;
+    s32 offset;
+    s32 first_y;
+    void *table;
+    void *out;
 
     out = image;
     if (index_arg == (s8)data[0x2D5])

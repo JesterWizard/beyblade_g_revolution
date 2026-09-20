@@ -12,11 +12,11 @@ struct Unk70354Object *sub_0807027C(
 
 void sub_08070354(struct Unk70354 *state, u16 b, u16 c, u8 d)
 {
-    register u16 count = (u16)c;
-    register u8 mode = d;
-    register u32 flags;
-    register struct Unk70354Object *object;
-    register u32 value;
+    u16 count = (u16)c;
+    u8 mode = d;
+    u32 flags;
+    struct Unk70354Object *object;
+    u32 value;
 
     object = state->unk30;
     flags = state->unk10;

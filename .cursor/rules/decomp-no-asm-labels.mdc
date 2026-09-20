@@ -1,17 +1,22 @@
 ---
-description: Ban GCC asm labels in semantic decompiled C
+description: Ban register and GCC asm in semantic decompiled C
 globs: src/**/*.c
 alwaysApply: false
 ---
 
-# No GCC asm labels in decompiled C
+# No `register` or GCC asm in decompiled C
 
-`register T x asm("rN")` and empty `asm("")` barriers are banned in semantic C.
-They pin registers / instruction order and are not a real match.
+Banned in semantic C:
+
+- `register` (storage class)
+- `register T x asm("rN")`
+- empty `asm("")` barriers
+
+They steer allocation / instruction order and are not a real match.
 
 Allowed `asm()`:
 
 - BIOS: `asm("swi N");`
 - Naked readable Thumb / opcode stubs (`__attribute__((naked))`)
 
-If agbcc will not emit retail bytes without an asm label, park the C (`park_wip.py`) and leave Thumb in `src/matched/`.
+If agbcc will not emit retail bytes without these, park the C (`park_wip.py`) and leave Thumb in `src/matched/`.

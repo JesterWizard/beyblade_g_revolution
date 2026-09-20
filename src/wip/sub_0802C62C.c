@@ -6,7 +6,7 @@
 s32 sub_0802C62C(u8 a)
 {
     s8 *p;
-    register s32 count;
+    s32 count;
     s32 i;
     s32 val;
     u32 *new_var;

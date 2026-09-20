@@ -2,11 +2,11 @@
 
 s32 sub_08041E14(void *a, void *b)
 {
-    register void *a_ptr;
-    register void *b_ptr;
-    register s32 i;
-    register s32 count;
-    register struct Unk68574 **entries;
+    void *a_ptr;
+    void *b_ptr;
+    s32 i;
+    s32 count;
+    struct Unk68574 **entries;
     struct Unk68574 *obj;
     struct Unk41E14Node *node;
 

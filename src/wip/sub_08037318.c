@@ -4,9 +4,9 @@
 void sub_08037318(struct Unk346C0 *a, u32 index_arg)
 {
     u8 index;
-    register u32 r1;
-    register u32 r0;
-    register u32 r5;
+    u32 r1;
+    u32 r0;
+    u32 r5;
     struct Unk002A0Record *record;
 
     index = index_arg;

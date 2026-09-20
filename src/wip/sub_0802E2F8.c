@@ -11,13 +11,13 @@ struct Unk2E2F8
 
 s32 sub_0802E2F8(u16 a, u16 b, s32 multiplier)
 {
-    register s32 scale;
-    register s32 value_a;
-    register s32 lower_bound;
-    register s32 limit;
-    register struct Unk2E2F8 *table;
-    register struct Unk2E2F8 *reset_table;
-    register struct Unk2E2F8 *entry;
+    s32 scale;
+    s32 value_a;
+    s32 lower_bound;
+    s32 limit;
+    struct Unk2E2F8 *table;
+    struct Unk2E2F8 *reset_table;
+    struct Unk2E2F8 *entry;
     s32 offset;
     s32 value_b;
     s32 amount;

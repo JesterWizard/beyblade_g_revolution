@@ -24,9 +24,9 @@ void sub_08032DC4(
     s32 frame_arg, struct Unk346C0 *state_a_arg,
     struct Unk346C0 *state_b_arg)
 {
-    register s32 frame;
-    register struct Unk346C0 *state_a;
-    register struct Unk346C0 *state_b;
+    s32 frame;
+    struct Unk346C0 *state_a;
+    struct Unk346C0 *state_b;
     struct Unk33958 temp_a;
     struct Unk33958 temp_b;
     struct Unk33958 temp_c;

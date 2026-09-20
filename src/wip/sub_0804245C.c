@@ -35,10 +35,10 @@ void sub_0804245C(void)
     }
     gUnk_03000538->unk00 = gUnk_03000538->unk00 + 1;
     {
-        register u8 *base;
-        register u8 *ring;
-        register u8 mask;
-        register u8 v;
+        u8 *base;
+        u8 *ring;
+        u8 mask;
+        u8 v;
 
         base = &gUnk_03000538->unk00;
         ring = base;

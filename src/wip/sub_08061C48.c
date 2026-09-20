@@ -6,8 +6,8 @@
 // @ 0x08061c48
 void sub_08061C48(void)
 {
-    register s32 *r4;
-    register struct Unk0770 *r5;
+    s32 *r4;
+    struct Unk0770 *r5;
     s32 n;
     void *obj;
     u32 tmp[2];

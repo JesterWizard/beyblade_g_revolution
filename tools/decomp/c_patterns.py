@@ -89,7 +89,7 @@ PATTERN_CATALOG: list[dict[str, str]] = [
     {
         "id": "swi",
         "note": "swi N / swi N prep r2",
-        "summary": "BIOS call; r2=0 uses register asm local before swi",
+        "summary": "BIOS call asm(\"swi N\")",
     },
     {
         "id": "iwram-pool-load",

@@ -3,8 +3,8 @@
 // @ 0x0806f430
 u32 sub_0806F430(void)
 {
-    register u32 r0;
-    register u32 r1;
+    u32 r0;
+    u32 r1;
     struct Unk4084 *p;
     u32 tmp[1];
 

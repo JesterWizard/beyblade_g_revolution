@@ -3,8 +3,8 @@
 // @ 0x08062cc8
 void sub_08062CC8(u32 idx, u8 *out)
 {
-    register u32 shifted = idx << 24;
-    register u32 base = 0x05000200;
+    u32 shifted = idx << 24;
+    u32 base = 0x05000200;
     u16 color;
 shifted = shifted >> 23;
     shifted = shifted + base;

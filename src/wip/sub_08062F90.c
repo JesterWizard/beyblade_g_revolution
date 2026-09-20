@@ -2,9 +2,9 @@
 
 void sub_08062F90(void)
 {
-    register void **e0_loc;
-    register void **buffer_loc;
-    register void **palette_loc;
+    void **e0_loc;
+    void **buffer_loc;
+    void **palette_loc;
 
     if (gUnk_030008DC != 0
         || gUnk_030008D8 != 0

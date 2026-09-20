@@ -3,7 +3,7 @@
 // @ 0x08070604
 void sub_08070604(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 x, s16 y, u16 unk0C, u16 unk08)
 {
-    register u32 val;
+    u32 val;
     u8 *p;
 
     dst->unk00 = (s32)x << 8;

@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x080632f8
-#include "global.h"
 
 void sub_080632F8(void)
 {

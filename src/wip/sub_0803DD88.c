@@ -3,9 +3,9 @@
 // @ 0x0803dd88
 s32 sub_0803DD88(s32 a)
 {
-    register u32 r3 = 0x0807A1F4;
-    register u32 r1;
-    register u32 r2;
+    u32 r3 = 0x0807A1F4;
+    u32 r1;
+    u32 r2;
 r1 = gMainWorkPtr->unk1818;
     r2 = r1 << 2;
     r1 = a << 2;

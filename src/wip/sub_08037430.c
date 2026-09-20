@@ -4,12 +4,12 @@
 void sub_08037430(void)
 {
     void *first;
-    register void *r6;
-    register u32 r0;
-    register u32 r1;
-    register u32 r2;
-    register u32 r4;
-    register u32 r5;
+    void *r6;
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    u32 r4;
+    u32 r5;
 
     first = sub_0807309C(0x40);
     r6 = sub_0807309C(0x40);

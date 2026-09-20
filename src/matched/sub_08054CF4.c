@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x08054cf4
-#include "global.h"
 
 void sub_08054CF4(u8 *data)
 {

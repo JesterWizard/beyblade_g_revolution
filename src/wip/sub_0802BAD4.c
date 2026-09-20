@@ -18,26 +18,26 @@ s32 sub_0802C62C(s8 a);
 
 s32 sub_0802BAD4(u32 a, u32 b, u32 c, u32 d)
 {
-    register u32 arg0;
-    register u32 arg1;
-    register u32 index;
-    register u32 shifted_arg1;
-    register s32 signed_arg1;
-    register s32 limit;
-    register struct MainWork **main_loc;
-    register struct MainWork *work;
-    register u32 temp;
-    register u32 init_offset;
-    register u32 loop_offset;
-    register u32 index_offset;
+    u32 arg0;
+    u32 arg1;
+    u32 index;
+    u32 shifted_arg1;
+    s32 signed_arg1;
+    s32 limit;
+    struct MainWork **main_loc;
+    struct MainWork *work;
+    u32 temp;
+    u32 init_offset;
+    u32 loop_offset;
+    u32 index_offset;
     struct Unk1694Raw *raw_slot;
     struct Unk1694 *table_base;
     struct Unk1694 *record;
     struct Unk2BAD4Args stack_args;
     volatile u32 saved_offset;
-    register s32 scratch0;
-    register s32 signed_arg0;
-    register s32 result;
+    s32 scratch0;
+    s32 signed_arg0;
+    s32 result;
 
     a = (a << 24) >> 24;
     arg0 = a;

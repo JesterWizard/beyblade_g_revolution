@@ -3,12 +3,12 @@
 // @ 0x08047624
 s32 sub_08047624(u32 mode_arg)
 {
-    register u32 r0;
-    register u32 r1;
-    register u32 r2;
-    register u32 r3;
-    register u32 r4;
-    register u32 r5;
+    u32 r0;
+    u32 r1;
+    u32 r2;
+    u32 r3;
+    u32 r4;
+    u32 r5;
 
     r0 = mode_arg;
     r0 <<= 24;

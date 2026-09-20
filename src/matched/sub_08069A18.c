@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x08069a18
-#include "global.h"
 
-// @ 0x08069a18
 void sub_08069A18(u8 a, u16 b, u16 c, u16 d, u16 e)
 {
     volatile u16 *reg;

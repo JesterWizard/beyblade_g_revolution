@@ -3,9 +3,9 @@
 // @ 0x0803531c
 void sub_0803531C(struct Unk35258 *a)
 {
-    register u32 r0;
-    register u32 r1;
-    register u32 r5;
+    u32 r0;
+    u32 r1;
+    u32 r5;
 
     if (a->unk1C.unk70 == 0)
         sub_08035258(a, 0);

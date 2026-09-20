@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x080507b8
-#include "global.h"
 
 void sub_080507B8(u8 *data)
 {

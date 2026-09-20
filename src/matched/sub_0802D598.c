@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x0802d598
-#include "global.h"
 
-// @ 0x0802d598
 void sub_0802D598(void)
 {
     struct Unk705DC *q;

@@ -3,12 +3,12 @@
 // @ 0x080405a8
 void sub_080405A8(void)
 {
-    register struct Unk047C **r3;
-    register struct Unk047C **r4;
-    register s32 r2;
-    register s32 r5;
-    register s32 r1;
-    register struct Unk047C *r0;
+    struct Unk047C **r3;
+    struct Unk047C **r4;
+    s32 r2;
+    s32 r5;
+    s32 r1;
+    struct Unk047C *r0;
     u32 *slot;
     u32 tmp[1];
     s32 i;

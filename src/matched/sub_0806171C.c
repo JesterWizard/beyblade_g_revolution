@@ -1,7 +1,6 @@
 #include "global.h"
 
 // @ 0x0806171c
-#include "global.h"
 
 void sub_0806171C(void *data, u32 index, u32 mode)
 {

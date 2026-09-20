@@ -9,9 +9,9 @@ void sub_08067BB8(
     u32 arg5,
     u32 arg6)
 {
-    register u32 zero;
-    register u32 byte_zero;
-    register u32 allones;
+    u32 zero;
+    u32 byte_zero;
+    u32 allones;
 
     state->unk00 = source;
     state->unk58 = gUnk_03000180.unk00;

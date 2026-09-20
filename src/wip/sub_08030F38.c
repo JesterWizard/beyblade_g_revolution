@@ -2,8 +2,8 @@
 
 void sub_08030F38(void)
 {
-    register struct BattleWork **main_loc;
-    register struct BattleWork *work;
+    struct BattleWork **main_loc;
+    struct BattleWork *work;
     struct Unk705DC *resource;
     s32 i;
     s32 delta;

@@ -1,9 +1,7 @@
 #include "global.h"
 
 // @ 0x08035d1c
-#include "global.h"
 
-// @ 0x08035d1c
 s32 sub_08035D1C(struct Unk346C0Inner *a, s32 b, s32 c)
 {
     s32 v18;

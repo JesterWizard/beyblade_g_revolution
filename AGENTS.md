@@ -88,7 +88,7 @@ bash build_tools.sh
 - Accept a match without objdiff 0-diff (Mizuchi enforces; still re-run `make compare`)
 - Use C99 in matching paths or “fix” UB without `UBFIX`/`BUGFIX` guards
 - Hardcode IWRAM/EWRAM addresses — use `asm/ram_map*.s`
-- Use offset-casts (`*(u16 *)((u8 *)p + off)`), `asm volatile`, GCC asm labels (`register T x asm("rN")`), or empty `asm("")` barriers in semantic C — struct members in `unknown-types.h`. Inline `asm()` is only for BIOS `swi` and naked Thumb wrappers.
+- Use offset-casts (`*(u16 *)((u8 *)p + off)`), `register`, `asm volatile`, GCC asm labels, or empty `asm("")` barriers in semantic C — struct members in `unknown-types.h`. Inline `asm()` is only for BIOS `swi` and naked Thumb wrappers.
 - Enable `HACKS=1` during matching work (`make compare` must stay green)
 
 ## Matching vs hacking

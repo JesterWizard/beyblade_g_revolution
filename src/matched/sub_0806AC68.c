@@ -1,15 +1,13 @@
 #include "global.h"
 
 // @ 0x0806ac68
-#include "global.h"
-
 /* match-flags: -fprologue-bugfix */
 
 u32 sub_0806AC68(u8 *s)
 {
-    register u32 r2;
-    register u32 r1;
-    register u8 *r0;
+    u32 r2;
+    u32 r1;
+    u8 *r0;
 
     r2 = 0;
     goto test;

@@ -4,7 +4,7 @@ void sub_080411EC(void *arg)
 {
     struct Unk40F4C *a;
     u32 flags;
-    register u16 keys;
+    u16 keys;
     u8 mode;
 
     a = arg;

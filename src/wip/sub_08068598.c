@@ -2,10 +2,10 @@
 
 void sub_08068598(struct Unk68598 *state)
 {
-    register struct Unk68598 *work;
-    register struct Unk68598Record *record;
-    register u16 record_start;
-    register u16 record_length;
+    struct Unk68598 *work;
+    struct Unk68598Record *record;
+    u16 record_start;
+    u16 record_length;
     struct Unk68014 *base;
     struct Unk68598Lookup *lookup;
     u16 value;

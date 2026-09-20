@@ -51,7 +51,7 @@ clone family?           → cluster_shapes.py → one new c_patterns.py matcher
 ## Non-negotiables
 
 - Never hand-edit `asm/nonmatchings/*.s` — `tools/decomp/generate_asm.py --force`
-- C89 on matching paths; no offset-casts, `asm volatile`, `register … asm("rN")`, or empty `asm("")` in semantic C
+- C89 on matching paths; no offset-casts, `register`, `asm volatile`, or empty `asm("")` in semantic C
 - RAM via `ram_map.h` / struct members in `unknown-types.h`
 - `make compare` must stay OK every batch
 

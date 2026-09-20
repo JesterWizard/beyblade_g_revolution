@@ -1,15 +1,13 @@
 #include "global.h"
 
 // @ 0x08062684
-#include "global.h"
-
 /* match-flags: -fprologue-bugfix */
 
 void sub_08062684(struct Unk62634 *a)
 {
-    register struct Unk62634 *r2;
-    register s32 r1;
-    register s32 r0;
+    struct Unk62634 *r2;
+    s32 r1;
+    s32 r0;
 
     r2 = a;
     if (r2 != 0)
