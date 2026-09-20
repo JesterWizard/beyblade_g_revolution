@@ -721,7 +721,14 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 000 */ struct Unk346C0Inner *unk00;
     /* 004 */ struct Unk346C0Inner *unk04;
     /* 008 */ struct Unk35878 unk08;
-    /* 018 */ u8 filler_18[0x2B4];
+    /* 018 */ u8 unk18; /* sub_08034568 */
+    /* 019 */ u8 filler_19[0x297];
+    /* 2b0 */ u32 unk2B0; /* sub_08034568 */
+    /* 2b4 */ u32 unk2B4; /* sub_08034568 */
+    /* 2b8 */ u8 filler_2B8[0xC];
+    /* 2c4 */ u8 unk2C4; /* sub_08034568 */
+    /* 2c5 */ u8 filler_2C5[3];
+    /* 2c8 */ u32 unk2C8; /* sub_08034568 */
     /* 2cc */ u32 unk2CC;
     /* 2d0 */ u32 unk2D0;
     /* 2d4 */ u32 unk2D4;
@@ -730,17 +737,23 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 2e0 */ u32 unk2E0;
     /* 2e4 */ u32 unk2E4;
     /* 2e8 */ u32 unk2E8;
-    /* 2ec */ u8 filler_2EC[8];
+    /* 2ec */ u32 unk2EC; /* sub_08034568 */
+    /* 2f0 */ u32 unk2F0; /* sub_08034568 */
     /* 2f4 */ u32 unk2F4;
     /* 2f8 */ u32 unk2F8;
     /* 2fc */ u32 unk2FC;
-    /* 300 */ u8 filler_300[0xC];
+    /* 300 */ u16 unk300; /* sub_08034568 */
+    /* 302 */ u16 unk302; /* sub_08034568 */
+    /* 304 */ u16 unk304; /* sub_08034568 */
+    /* 306 */ u8 filler_306[6];
     /* 30c */ u8 unk30C;
-    /* 30d */ u8 filler_30D[2];
+    /* 30d */ u8 unk30D; /* sub_08034568 */
+    /* 30e */ u8 unk30E; /* sub_08034568 */
     /* 30f */ u8 unk30F;
     /* 310 */ u8 unk310;
     /* 311 */ u8 unk311;
-    /* 312 */ u8 filler_312[2];
+    /* 312 */ u8 unk312; /* sub_08034568 */
+    /* 313 */ u8 unk313; /* sub_08034568 */
     /* 314 */ u8 unk314;
 };
 
