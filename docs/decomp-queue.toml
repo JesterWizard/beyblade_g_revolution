@@ -1690,14 +1690,6 @@ next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "32/148"
 
 [[wip]]
-name = "sub_080726E0"
-seed = "src/wip/sub_080726E0.c"
-notes = "src/wip/sub_080726E0.md"
-status = "50/52 same-size; ldrh dest r1 vs r4"
-next = "permuter; keep r1 live so unk04 clobbers r4"
-score = "50/52"
-
-[[wip]]
 name = "sub_08073988"
 seed = "src/wip/sub_08073988.c"
 notes = "src/wip/sub_08073988.md"

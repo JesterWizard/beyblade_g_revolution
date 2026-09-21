@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-20T23:40:44Z_
+_Updated: 2026-09-21T09:17:36Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 298 |
-| Still need semantic C | **335** |
-| Readable Thumb remaining | 335 |
+| Semantic C done | 299 |
+| Still need semantic C | **334** |
+| Readable Thumb remaining | 334 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 100 (54 already semantic) |
 | Blocked (documented) | 20 |
@@ -227,8 +227,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08070604` | 92 | 73/92 | `src/wip/sub_08070604.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08071B4C` | 84 | 73/84 | `src/wip/sub_08071B4C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08071BA0` | 148 | 32/148 | `src/wip/sub_08071BA0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_080726E0` | 52 | 50/52 | `src/wip/sub_080726E0.c` | 50/52 same-size; ldrh dest r1 vs r4 | permuter; keep r1 live so unk04 clobbers r4 |
 | `sub_08073988` | 96 | 94/96 | `src/wip/sub_08073988.c` | 94/96; table ldr r2 vs r0 (base now r7) | r7 pressure without assigning table to index |
+| `sub_08043B58` | 54 | 47/54 | `src/wip/sub_08043B58.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0802B994` | 58 | 42/58 | `src/wip/sub_0802B994.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0804495C` | 60 | 34/60 | `src/wip/sub_0804495C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DBD0` | 80 | 23/80 | `src/wip/sub_0803DBD0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
@@ -244,7 +244,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0803C500` | `0x0803C500` | 220 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_08036A68` | `0x08036A68` | 240 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
-| `sub_08043B58` | `0x08043B58` | 54 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080428F0` | `0x080428F0` | 160 | 1 | pool | asm | (gMainWorkPtr) |
@@ -279,6 +278,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08042E78` | `0x08042E78` | 28 | 0 | pool | asm | |
 | `sub_0806A954` | `0x0806A954` | 28 | 0 | pool | asm | |
 | `sub_0806FDB4` | `0x0806FDB4` | 28 | 0 |      | asm | |
+| `sub_08073078` | `0x08073078` | 34 | 0 |      | asm | |
 
 ## Blocked
 
@@ -321,6 +321,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (122 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (121 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

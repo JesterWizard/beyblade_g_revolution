@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-20T23:40:44Z",
+  "generated": "2026-09-21T09:17:36Z",
   "counts": {
-    "matched": 301,
+    "matched": 302,
     "wip": 196,
     "blocked": 14,
-    "not_started": 110,
+    "not_started": 109,
     "size_mismatch": 11,
     "same_size": 1
   },
@@ -4061,17 +4061,17 @@
       "addr": "0x08043B58",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 54,
-      "matched_bytes": 0,
+      "matched_bytes": 47,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/54",
-      "source": "none",
-      "note": ""
+      "pct": 87.0,
+      "score": "47/54",
+      "source": "wip",
+      "note": "matched only with GCC asm labels; stripped DIFF"
     },
     {
       "name": "sub_08043B90",
@@ -10366,19 +10366,19 @@
     {
       "name": "sub_080726E0",
       "addr": "0x080726E0",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
-      "wip": true,
+      "wip": false,
       "block_reason": "",
       "retail_bytes": 52,
-      "matched_bytes": 50,
-      "compiled_bytes": 0,
-      "pct": 96.2,
-      "score": "50/52",
-      "source": "wip",
-      "note": "50/52 same-size; ldrh dest r1 vs r4"
+      "matched_bytes": 52,
+      "compiled_bytes": 52,
+      "pct": 100.0,
+      "score": "52/52",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08072A38",
