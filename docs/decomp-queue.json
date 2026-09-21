@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T18:35:14Z",
+  "generated": "2026-09-21T18:49:23Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -188,9 +188,9 @@
       "bytes": 48,
       "seed": "src/wip/sub_0803DCFC.c",
       "notes": "src/wip/sub_0803DCFC.md",
-      "status": "11/48 same-size DIFF; index pinning and explicit goto preserved size, but retail uses a longer error-path layout and explicit shift/add sequence while agbcc still places the table return block differently",
-      "next": "try a source layout that keeps the error call block before the valid table path while forcing  index and separate  offset; use the retail bls target shape",
-      "score": "11/48"
+      "status": "44/48 same-size seed (sweep_seeds); two permuter runs (120s x8 jobs, 300s x3 jobs) best 30, never 0. Delta is the error-path layout: retail keeps the error call block before the valid table path with a `bls` target shape",
+      "next": "park: permuter saturated at 30/48. Revisit only with a hand-restructured error-path layout that keeps `index` and a separate `offset`",
+      "score": "44/48"
     },
     {
       "name": "sub_0803E374",
@@ -299,7 +299,7 @@
       "seed": "src/wip/sub_080473F8.c",
       "notes": "src/wip/sub_080473F8.md",
       "status": "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits",
-      "next": "reuse the sub_08041858/sub_08069894 barrier: after storing through the first IWRAM pointer, asm(\"\" : \"+r\"(r0), \"+r\"(r1) : : \"memory\") then reload the second address",
+      "next": "use distinct gData_* symbols for gUnk_03000630 / gUnk_03000638 (0x20 apart): the data_symbols.s addressing sweep shows that stops agbcc folding the second address into `subs r0,#0x20`. Empty-asm barriers are banned in semantic C and must not be used here",
       "score": "50/100"
     },
     {
@@ -320,9 +320,9 @@
       "bytes": 0,
       "seed": "src/wip/sub_08061800.c",
       "notes": "src/wip/sub_08061800.md",
-      "status": "41/76 bytes (53.9%), same size; correctly identified _08073C4C as a 'bx r3' trampoline (4th C arg = handler fn ptr, confirmed by precedent in sub_08035884.c) and the 3rd call arg as the reused 'stride' intermediate (not zero, matching retail leaving r2 unset/leftover). Remaining diff is pure register-allocation/instruction-ordering noise around the p->unk5D and p->unk98 field loads (retail resets r0=p fresh before each offset add; agbcc here does incremental adds/reuses r1 directly for the shift)",
-      "next": "try computing p->unk5D and p->unk98 as two separate top-level statements each assigned through a fresh local rather than inline in the lo/h expressions, or check if declaring 'p' as volatile changes agbcc's incremental-offset optimization",
-      "score": "41/76"
+      "status": "matched (old_agbcc); separate `off = arg0 * stride + 0x06000000` local forces retail's accumulation order (src/matched/sub_08061800.c)",
+      "next": "done",
+      "score": "0/76"
     },
     {
       "name": "sub_08061D68",
@@ -474,9 +474,9 @@
       "bytes": 0,
       "seed": "src/wip/sub_08071F44.c",
       "notes": "src/wip/sub_08071F44.md",
-      "status": "35/64 bytes (54.7%), size mismatch (60 vs 64); correct algorithm (reverse lookup: find first Unk71E84 entry with unk16!=0 and unk18==arg0). Push list matches retail exactly ({r4,lr}) and the -1 compare form is preserved correctly here (no simplification, unlike the sub_08071E84 family). Only diff: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart), the recurring literal-pool quirk seen across ~6 functions this session",
-      "next": "retry the sub_08071B4C / sub_08041858 IWRAM barrier: keep the first pointer live with asm(\"\" : \"+r\"(r0) : : \"memory\") then reload gUnk_030040C4 as its own literal (0x20 from gUnk_030040E4)",
-      "score": "35/64"
+      "status": "matched (old_agbcc): reverse lookup over *gData_030040E4 records with `i != -1` and BOTH gData_ symbols (they are 0x20 apart; plain literals make agbcc fold the second into `subs r0,#0x20`)",
+      "next": "done",
+      "score": "0/64"
     },
     {
       "name": "sub_0802DEA0",
@@ -1376,9 +1376,9 @@
       "bytes": 100,
       "seed": "src/wip/sub_0802C2B0.c",
       "notes": "src/wip/sub_0802C2B0.md",
-      "status": "size mismatch; 26/100 bytes, compiled 92 vs retail 100; literal-pool/register ordering remains",
-      "next": "reconstruct with a preserved r12 global-pointer lifetime, then retry",
-      "score": "26/100"
+      "status": "92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `adds r0,r0,r4`, retail places it after `ldr r0,[r0]`; (b) final sum encodes `adds r1,r0,r1` where retail has `adds r1,r1,r0` (Rn/Rm swap). This session: 9 clean/wild variants over the tail sum order (`base + off`, `off + base` via u32 addr accumulator, struct-member `&(*loc)->unk1694[i]`) and the prologue pointer plumbing \u2014 best stays 92/100, and the order flip does not change the add encoding (GCC canonicalises the plus operands)",
+      "next": "park at 92/100: remaining deltas are allocator/scheduling choices, not source-order-reachable. Revisit only with a permuter seeded from the compact form (not the current 22-local artifact seed)",
+      "score": "92/100"
     },
     {
       "name": "sub_0802C314",
@@ -1750,9 +1750,9 @@
       "bytes": 0,
       "seed": "src/wip/sub_0803DD88.c",
       "notes": "src/wip/sub_0803DD88.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "7/40"
+      "status": "matched (old_agbcc); separate `off` local + `/* match-compiler: old_agbcc */` in src/matched/sub_0803DD88.c",
+      "next": "done",
+      "score": "0/40"
     },
     {
       "name": "sub_0803DDB0",
@@ -1761,9 +1761,9 @@
       "bytes": 0,
       "seed": "src/wip/sub_0803DDB0.c",
       "notes": "src/wip/sub_0803DDB0.md",
-      "status": "31/40 same-size (old_agbcc); idx_var form",
-      "next": "retail keeps subs r0,#1 then lsls #2 (unfolded) and materialises the table const in r1; agbcc folds to lsls #4",
-      "score": "31/40"
+      "status": "matched (old_agbcc); `tbl` local + inline `*row` in src/matched/sub_0803DDB0.c",
+      "next": "done",
+      "score": "0/40"
     },
     {
       "name": "sub_0803DDD8",
@@ -1772,9 +1772,9 @@
       "bytes": 0,
       "seed": "src/wip/sub_0803DDD8.c",
       "notes": "src/wip/sub_0803DDD8.md",
-      "status": "31/40 same-size (old_agbcc); idx_var form",
-      "next": "same as sub_0803DDB0 (table 0x0807AEFC)",
-      "score": "31/40"
+      "status": "matched (old_agbcc); same shape as sub_0803DDB0, table 0x0807AEFC",
+      "next": "done",
+      "score": "0/40"
     },
     {
       "name": "sub_0803E328",
@@ -1893,9 +1893,9 @@
       "bytes": 76,
       "seed": "src/wip/sub_08043B90.c",
       "notes": "src/wip/sub_08043B90.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "36/76"
+      "status": "67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomization makes it worse \u2014 the hand-tuned seed is already the best shape. Symbols regress it to 14/76, so it must stay symbol-free. Retail's tail returns by reusing r0 == 0 from the loop test",
+      "next": "park: do not re-run a randomising permuter on this seed. Revisit by hand-forcing the r0 == 0 loop-test reuse in the tail return",
+      "score": "67/76"
     },
     {
       "name": "sub_080442FC",
@@ -2003,9 +2003,9 @@
       "bytes": 56,
       "seed": "src/wip/sub_08061C48.c",
       "notes": "src/wip/sub_08061C48.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "unscored"
+      "status": "52/56 seed; symbol form (`gData_03000770`) already applied. Permuter (120s, x8 jobs) best 10, no score 0. Remaining delta is scheduling: `ldr r5,=gData_03000770` must be hoisted before `lsls r0,r0,#3`",
+      "next": "park: permuter saturated. Revisit only via a hand-shaped source that forces the pool load's live range to start before the shift",
+      "score": "52/56"
     },
     {
       "name": "sub_08062A74",
@@ -2223,8 +2223,8 @@
       "bytes": 96,
       "seed": "src/wip/sub_08073988.c",
       "notes": "src/wip/sub_08073988.md",
-      "status": "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) \u2014 all 94/96 or worse.",
-      "next": "bounded permuter run with old_agbcc (seeded from this file); if score 0, integrate. Else leave the readable Thumb wrapper.",
+      "status": "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) \u2014 all 94/96 or worse. This session: 12 more `default_char` shapes (`r0 = (index = C)`, `C + ch`, `index + ch`, split assignments, u32 casts) \u2014 every one 94/96 or size-mismatch; old_agbcc 90/96.",
+      "next": "park: the load-into-destination-register choice is an allocator heuristic agbcc does not reproduce. Leave the readable Thumb wrapper unless a permuter run over old_agbcc finds it",
       "score": "94/96"
     },
     {
@@ -2278,9 +2278,9 @@
       "bytes": 46,
       "seed": "src/wip/sub_08033158.c",
       "notes": "src/wip/sub_08033158.md",
-      "status": "unmatched C parked; see notes",
-      "next": "read notes; match_function.py this seed",
-      "score": "unscored"
+      "status": "45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46",
+      "next": "park: remaining delta is jump-threading (retail threads the `b == 0` exit edge past the dead `r = b` copy), not reachable from source with this agbcc. Revisit only if a newer seed/compiler changes the loop-exit branch shape",
+      "score": "45/46"
     },
     {
       "name": "sub_08036A68",
@@ -2311,8 +2311,8 @@
       "bytes": 24,
       "seed": "src/wip/sub_08069F00.c",
       "notes": "src/wip/sub_08069F00.md",
-      "status": "11/24 same-size, r0/r1 coalescing",
-      "next": "permuter: keep mul result and adjusted value in separate regs",
+      "status": "11/24 same-size, r0/r1 coalescing: retail keeps `adds r1,r0,#0` (copy) and compares r0, agbcc coalesces the copy and emits a trailing nop. This session: 13 more shapes (2- and 3-deep copy chains, u32 copy, operator variants on the sign test, split `r = p;` statement) \u2014 every one byte-identical at 11/24, so agbcc's copy coalescing always wins",
+      "next": "park: the extra copy is a pre-coalescing compiler artifact; not source-reachable with this agbcc. Leave the readable Thumb wrapper",
       "score": "11/24"
     },
     {

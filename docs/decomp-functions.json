@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T18:35:15Z",
+  "generated": "2026-09-21T18:49:23Z",
   "counts": {
     "matched": 380,
     "wip": 149,
@@ -171,12 +171,12 @@
       "wip": true,
       "block_reason": "",
       "retail_bytes": 100,
-      "matched_bytes": 26,
+      "matched_bytes": 92,
       "compiled_bytes": 0,
-      "pct": 26.0,
-      "score": "26/100",
+      "pct": 92.0,
+      "score": "92/100",
       "source": "wip",
-      "note": "size mismatch; 26/100 bytes, compiled 92 vs retail 100; literal-pool/register ordering remains"
+      "note": "92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `adds r0,r0,r4`, retail places it after `ldr r0,[r0]`; (b) final sum encodes `adds r1,r0,r1` where retail has `adds r1,r1,r0` (Rn/Rm swap). This session: 9 clean/wild variants over the tail sum order (`base + off`, `off + base` via u32 addr accumulator, struct-member `&(*loc)->unk1694[i]`) and the prologue pointer plumbing \u2014 best stays 92/100, and the order flip does not change the add encoding (GCC canonicalises the plus operands)"
     },
     {
       "name": "sub_0802C314",
@@ -1174,12 +1174,12 @@
       "wip": true,
       "block_reason": "",
       "retail_bytes": 46,
-      "matched_bytes": 0,
+      "matched_bytes": 45,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/46",
-      "source": "none",
-      "note": "unmatched C parked; see notes"
+      "pct": 97.8,
+      "score": "45/46",
+      "source": "wip",
+      "note": "45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46"
     },
     {
       "name": "sub_08033188",
@@ -2687,12 +2687,12 @@
       "wip": true,
       "block_reason": "",
       "retail_bytes": 48,
-      "matched_bytes": 11,
+      "matched_bytes": 44,
       "compiled_bytes": 0,
-      "pct": 22.9,
-      "score": "11/48",
+      "pct": 91.7,
+      "score": "44/48",
       "source": "wip",
-      "note": "11/48 same-size DIFF; index pinning and explicit goto preserved size, but retail uses a longer error-path layout and explicit shift/add sequence while agbcc still places the table return block differently"
+      "note": "44/48 same-size seed (sweep_seeds); two permuter runs (120s x8 jobs, 300s x3 jobs) best 30, never 0. Delta is the error-path layout: retail keeps the error call block before the valid table path with a `bls` target shape"
     },
     {
       "name": "sub_0803DD60",
@@ -4081,12 +4081,12 @@
       "wip": true,
       "block_reason": "",
       "retail_bytes": 76,
-      "matched_bytes": 36,
+      "matched_bytes": 67,
       "compiled_bytes": 0,
-      "pct": 47.4,
-      "score": "36/76",
+      "pct": 88.2,
+      "score": "67/76",
       "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "note": "67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomization makes it worse \u2014 the hand-tuned seed is already the best shape. Symbols regress it to 14/76, so it must stay symbol-free. Retail's tail returns by reusing r0 == 0 from the loop test"
     },
     {
       "name": "sub_08043BDC",
@@ -8829,7 +8829,7 @@
       "pct": 37.5,
       "score": "9/24",
       "source": "attempt",
-      "note": "11/24 same-size, r0/r1 coalescing"
+      "note": "11/24 same-size, r0/r1 coalescing: retail keeps `adds r1,r0,#0` (copy) and compares r0, agbcc coalesces the copy and emits a trailing nop. This session: 13 more shapes (2- and 3-deep copy chains, u32 copy, operator variants on the sign test, split `r = p;` statement) \u2014 every one byte-identical at 11/24, so agbcc's copy coalescing always wins"
     },
     {
       "name": "sub_0806A314",
@@ -10699,7 +10699,7 @@
       "pct": 97.9,
       "score": "94/96",
       "source": "attempt",
-      "note": "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) \u2014 all 94/96 or worse."
+      "note": "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) \u2014 all 94/96 or worse. This session: 12 more `default_char` shapes (`r0 = (index = C)`, `C + ch`, `index + ch`, split assignments, u32 casts) \u2014 every one 94/96 or size-mismatch; old_agbcc 90/96."
     },
     {
       "name": "sub_080739E8",
