@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **359/633 (56.7%)** |
-| **Decompiled C (bytes)** | **23,284/90,272 (25.8%)** |
+| **Decompiled C (functions)** | **362/633 (57.2%)** |
+| **Decompiled C (bytes)** | **23,586/90,272 (26.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 274/633 (43.3%) |
+| Readable Thumb | 271/633 (42.8%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,39 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — WIP-seed sweep tool + semantic C conversions (+3, 359→362/633)
+- **New tool `tools/decomp/sweep_seeds.py`.** Scores *every* parked `src/wip/*.c`
+  seed (both compilers) for functions whose linked `src/matched/<fn>.c` is still a
+  naked asm block, and reports the best. Rationale: a seed can already match retail
+  100% while the linked file stayed readable Thumb, so the whole queue may hide
+  finished work. One run scored 159 seeds in ~4 min and found 2 such matches.
+- Matched and landed (100% via `match_function.py`, `make compare` OK):
+  | Function | Bytes | How |
+  |--|--|--|
+  | `sub_0803E848` | 160 | `sweep_seeds.py` — stale seed already matched (agbcc) |
+  | `sub_08068798` | 110 | `sweep_seeds.py` — stale seed already matched (agbcc) |
+  | `sub_08033C1C` | 32 | permuter chain (was 21/32 naked asm) |
+- Permuter chains: `sub_08042C3C` / `sub_08062C38` / `sub_08042BB0` seeds turned out
+  to score 0 on import (stale duplicates — their linked C was already semantic);
+  `sub_08073988` (best 10), `sub_08061BE8` (best 60), `sub_08069894` (best 230) floor.
+- **Permuter false zero identified:** `sub_08033158` reports "score 0 but no candidate
+  verifies (branch-target false zero)" — run `permuter/auto.py <fn> --strict-branches`
+  (scores branch targets too). Under strict scoring its best is 1, confirming the real
+  residual DIFF is `cmp r1,#0` (retail) vs `cmp r2,#0` (agbcc) in the tail.
+- Parked with better seeds + notes:
+  | Seed | Before → after |
+  |--|--|
+  | `sub_08043B90` | 36/76 → **67/76** (88.2%, same size; `struct Unk43B90` added, tail `return 0` vs reuse-loaded value) |
+  | `sub_0803DCFC` | unscored → **44/48** (91.7%, same size; index in r1 vs retail r2) |
+  | `sub_0803DBD0` | 23/80 (same size; `-fprologue-bugfix` + distinct table symbols) |
+  | `sub_080361A8` | 23/36 (union `Unk361A8Word` explains `ldrh` + word store at +0x1C) |
+  | `sub_0804495C` | 34/60 (do-while form) |
+  | `sub_08033F30` | 16/24 (branch layout inverted) |
+  | `sub_08069F00`, `sub_08062728` | unscored → parked with diagnosis |
+- Include changes: `union Unk361A8Word` (u16/u32 overlay at +0x1C), `struct Unk43B90`
+  (8-byte scan entry), `gData_0807A1F4` / `gData_0833D1E0` / `gData_0833D1F4` /
+  `gData_080796DC` / `gData_08097458` symbols (moved inside the header guard).
 
 ### 2026-09-21 — asm-stub → semantic C conversions (+2, 357→359/633)
 - Two `src/matched/*.c` readable-Thumb stubs rewritten as semantic C (`old_agbcc`,

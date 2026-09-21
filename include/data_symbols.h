@@ -85,6 +85,12 @@ extern u8 gData_083D2578[];
 extern u8 gData_03000634[];
 extern u8 gData_0300063C[];
 
-#endif // GUARD_DATA_SYMBOLS_H
 extern u8 gData_030040A8[];
 extern u8 gData_030040B8[];
+extern u8 gData_080796DC[];
+extern u8 gData_08097458[];
+extern u8 gData_0807A1F4[];
+extern u8 gData_0833D1E0[];
+extern u8 gData_0833D1F4[];
+
+#endif // GUARD_DATA_SYMBOLS_H

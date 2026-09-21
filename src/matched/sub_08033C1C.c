@@ -1,8 +1,20 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08033c1c
-__attribute__((naked))
 void sub_08033C1C(void)
 {
-    asm(".syntax unified\npush {lr}\nldr r1, _08033C38 @ =0x03000380\nldrb r0, [r1, #0x09]\ncmp r0, #0x01\nbne _08033C34\nmovs r0, #0x00\nstrb r0, [r1, #0x09]\nstrb r0, [r1, #0x0A]\nadds r0, r1, #0x0\nadds r0, #0x0C\nbl sub_080358CC\n_08033C34:\npop {r0}\nbx r0\n_08033C38: .4byte 0x03000380");
+  u32 *new_var;
+  struct Unk0380 *r1;
+  u32 tmp[1];
+  new_var = &tmp[0];
+  tmp[0] = 0x03000380;
+  r1 = (struct Unk0380 *) (*new_var);
+  if (r1->unk09 == 1)
+  {
+    r1->unk09 = 0;
+    r1->unk0A = 0;
+    sub_080358CC(&r1->unk0C);
+  }
 }

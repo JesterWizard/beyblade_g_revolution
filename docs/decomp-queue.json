@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T15:23:19Z",
+  "generated": "2026-09-21T15:44:15Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 274,
-    "semantic_done": 359,
-    "readable_asm": 274,
+    "pending": 271,
+    "semantic_done": 362,
+    "readable_asm": 271,
     "opcode": 0,
     "battle_pending": 87,
     "battle_semantic": 68,
@@ -646,8 +646,8 @@
     {
       "name": "sub_0803E848",
       "addr": "0x0803E848",
-      "kind": "asm",
-      "bytes": 160,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803E848.c",
       "notes": "src/wip/sub_0803E848.md",
       "status": "Two semantic attempts remained size-mismatched: 58/160 (176B) and 56/160 (168B). The second reproduced r4/r5/r6 flow and all call semantics but agbcc did not save r7 for the persistent third argument; retail pushes r4-r7 and keeps out in r7.",
@@ -1207,8 +1207,8 @@
     {
       "name": "sub_08068798",
       "addr": "0x08068798",
-      "kind": "asm",
-      "bytes": 110,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08068798.c",
       "notes": "src/wip/sub_08068798.md",
       "status": "Two semantic attempts: initial queue model 40/110 (116B), then pinned offset/entry/callback registers and matched the body at 70/110 (112B). The remaining mismatch is the missing r7 save/restore in the generated prologue; retail uses f0b5 while agbcc emits 70b5, shifting the early branch and final size by 2 bytes.",
@@ -1691,8 +1691,8 @@
     {
       "name": "sub_08033C1C",
       "addr": "0x08033C1C",
-      "kind": "asm",
-      "bytes": 32,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08033C1C.c",
       "notes": "src/wip/sub_08033C1C.md",
       "status": "matched only with GCC asm labels; stripped DIFF",

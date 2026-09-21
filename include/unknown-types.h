@@ -37,6 +37,13 @@ struct Unk346C0;
 struct Unk361CCDst;
 
 /* 6-byte header: u16, u16, u32. sub_080338E4. */
+/* 8-byte scan entry: pointer key + s32 payload. sub_08043B90. */
+struct Unk43B90 /* 0x08 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ s32 unk04;
+};
+
 struct Unk338E4 /* 0x08 */
 {
     /* 00 */ u16 unk00;
@@ -1541,12 +1548,20 @@ struct Unk70354 /* >= 0x34 */
 };
 
 /* Halfword delta @ +0x1C, words @ +0x14/+0x18. sub_080361A8. */
-struct Unk361A8 /* >= 0x1e */
+/* Halfword/word overlay at +0x1C: retail reloads the halfword and then stores the
+   full word back (sub_080361A8). Access via `.h` (read) / `.w` (write). */
+union Unk361A8Word
+{
+    /* 00 */ u32 w;
+    /* 00 */ u16 h;
+};
+
+struct Unk361A8 /* >= 0x20 */
 {
     /* 00 */ u8 filler_00[0x14];
     /* 14 */ u32 unk14;
     /* 18 */ s32 unk18;
-    /* 1c */ u16 unk1C;
+    /* 1c */ union Unk361A8Word unk1C;
 };
 
 /* Pointer + fields at +0x30..+0x4C. sub_080346C0. */

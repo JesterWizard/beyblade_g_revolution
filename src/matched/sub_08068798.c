@@ -1,70 +1,49 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068798
-__attribute__((naked))
-void sub_08068798(void)
+#include "global.h"
+
+void sub_08068798(struct Unk68798 *state)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r7, [r6, #0x74]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r7, r0\n"
-        "beq _08068800\n"
-        "movs r5, #0x00\n"
-        "cmp r5, r7\n"
-        "bge _08068800\n"
-        "_080687AC:\n"
-        "lsls r1, r5, #0x04\n"
-        "ldr r0, [r6, #0x78]\n"
-        "adds r4, r0, r1\n"
-        "ldr r2, [r4, #0x08]\n"
-        "cmp r2, #0x00\n"
-        "beq _080687CC\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _080687FA\n"
-        "ldr r0, [r4, #0x04]\n"
-        "cmp r0, #0x00\n"
-        "bgt _080687CC\n"
-        "adds r0, r6, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "bl _08073C48\n"
-        "_080687CC:\n"
-        "ldr r2, [r4, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "ble _080687FA\n"
-        "ldr r0, _080687E8 @ =0x03000180\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r0, [r0, #0x04]\n"
-        "subs r1, r1, r0\n"
-        "ldr r0, [r4, #0x04]\n"
-        "cmp r0, #0x00\n"
-        "ble _080687EC\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r4, #0x04]\n"
-        "b _080687F0\n"
-        ".byte 0x00, 0x00\n"
-        "_080687E8: .4byte 0x03000180\n"
-        "_080687EC:\n"
-        "subs r0, r2, r1\n"
-        "str r0, [r4, #0x00]\n"
-        "_080687F0:\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bge _080687FA\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x00]\n"
-        "_080687FA:\n"
-        "adds r5, #0x01\n"
-        "cmp r5, r7\n"
-        "blt _080687AC\n"
-        "_08068800:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk68798 *work;
+    s32 count;
+    s32 i;
+    struct Unk68798Entry *entry;
+    u32 offset;
+    struct Unk68798Entry *entries;
+    s32 value;
+    s32 delta;
+
+    work = state;
+    count = work->unk74;
+    if (count == -1)
+        return;
+    for (i = 0; i < count; i++)
+    {
+        offset = i << 4;
+        entries = work->unk78;
+        entry = (struct Unk68798Entry *)((u8 *)entries + offset);
+        value = (s32)(u32)entry->unk08;
+        if (value != 0)
+        {
+            if (entry->unk00 == 0)
+                continue;
+            if (entry->unk04 <= 0)
+                _08073C48(work, entry, (void *)(u32)value);
+        }
+        value = entry->unk00;
+        if (value > 0)
+        {
+            delta = gUnk_03000180.unk00 - gUnk_03000180.unk04;
+            if (entry->unk04 > 0)
+                entry->unk04 -= delta;
+            else
+                entry->unk00 -= delta;
+            if (entry->unk00 < 0)
+                entry->unk00 = 0;
+        }
+    }
 }
 

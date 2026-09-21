@@ -1,8 +1,8 @@
 {
-  "generated": "2026-09-21T15:23:20Z",
+  "generated": "2026-09-21T15:44:16Z",
   "counts": {
-    "matched": 362,
-    "wip": 157,
+    "matched": 365,
+    "wip": 154,
     "blocked": 8,
     "not_started": 105,
     "size_mismatch": 1
@@ -1389,19 +1389,19 @@
     {
       "name": "sub_08033C1C",
       "addr": "0x08033C1C",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 32,
-      "matched_bytes": 21,
-      "compiled_bytes": 0,
-      "pct": 65.6,
-      "score": "21/32",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 32,
+      "compiled_bytes": 32,
+      "pct": 100.0,
+      "score": "32/32",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08033D90",
@@ -2919,19 +2919,19 @@
     {
       "name": "sub_0803E848",
       "addr": "0x0803E848",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 160,
-      "matched_bytes": 58,
-      "compiled_bytes": 0,
-      "pct": 36.2,
-      "score": "58/160 then 56/160",
-      "source": "wip",
-      "note": "Two semantic attempts remained size-mismatched: 58/160 (176B) and 56/160 (168B). The second reproduced r4/r5/r6 flow and all call semantics but agbcc did not save r7 for the persistent third argument; retail pushes r4-r7 and keeps out in r7."
+      "matched_bytes": 160,
+      "compiled_bytes": 160,
+      "pct": 100.0,
+      "score": "160/160",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_0803E934",
@@ -8444,19 +8444,19 @@
     {
       "name": "sub_08068798",
       "addr": "0x08068798",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 110,
-      "matched_bytes": 40,
-      "compiled_bytes": 0,
-      "pct": 36.4,
-      "score": "40/110 then 70/110",
-      "source": "wip",
-      "note": "Two semantic attempts: initial queue model 40/110 (116B), then pinned offset/entry/callback registers and matched the body at 70/110 (112B). The remaining mismatch is the missing r7 save/restore in the generated prologue; retail uses f0b5 while agbcc emits 70b5, shifting the early branch and final size by 2 bytes."
+      "matched_bytes": 110,
+      "compiled_bytes": 110,
+      "pct": 100.0,
+      "score": "110/110",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08068808",

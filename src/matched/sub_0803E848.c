@@ -1,75 +1,34 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803e848
-__attribute__((naked))
-void sub_0803E848(void)
+#include "global.h"
+
+void sub_0803E848(struct Unk2F520 *a, s32 b, void *c)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r1, #0x0\n"
-        "adds r7, r2, #0x0\n"
-        "ldr r1, _0803E864 @ =0x000002D5\n"
-        "adds r0, r0, r1\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "cmp r4, r0\n"
-        "bne _0803E868\n"
-        "movs r0, #0x0E\n"
-        "bl sub_08061610\n"
-        "b _0803E86E\n"
-        "_0803E864: .4byte 0x000002D5\n"
-        "_0803E868:\n"
-        "movs r0, #0x0F\n"
-        "bl sub_08061610\n"
-        "_0803E86E:\n"
-        "ldr r0, _0803E8D4 @ =0x080D79CC\n"
-        "ldr r1, _0803E8D8 @ =0x080B7429\n"
-        "bl sub_080617C4\n"
-        "lsls r4, r4, #0x04\n"
-        "adds r6, r4, #0x0\n"
-        "adds r6, #0x08\n"
-        "movs r0, #0x00\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_080615EC\n"
-        "ldr r5, _0803E8DC @ =0x0833D408\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r5, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "adds r4, #0x10\n"
-        "movs r0, #0x00\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080615EC\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r5, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _0803E8E0 @ =0x082BCD00\n"
-        "ldr r1, _0803E8E4 @ =0x080B738E\n"
-        "bl sub_080617C4\n"
-        "movs r0, #0x00\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_080615EC\n"
-        "adds r0, r7, #0x0\n"
-        "movs r1, #0x23\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_0803E8D4: .4byte 0x080D79CC\n"
-        "_0803E8D8: .4byte 0x080B7429\n"
-        "_0803E8DC: .4byte 0x0833D408\n"
-        "_0803E8E0: .4byte 0x082BCD00\n"
-        "_0803E8E4: .4byte 0x080B738E\n"
-    );
+    s32 offset;
+    s32 first_y;
+    void *table;
+    void *out;
+
+    out = c;
+    if (b == (s8)a->unk2D5)
+        sub_08061610(0x0E);
+    else
+        sub_08061610(0x0F);
+
+    sub_080617C4((struct Unk617C4 *)0x080D79CC, 0x080B7429);
+    offset = b << 4;
+    first_y = offset + 8;
+    sub_080615EC(0, first_y);
+    table = (void *)0x0833D408;
+    sub_0806171C(table, (u32)(sub_08061784() << 16) >> 17, 0);
+    offset += 0x10;
+    sub_080615EC(0, offset);
+    sub_0806171C(table, (u32)(sub_08061784() << 16) >> 17, 0);
+    sub_080617C4((struct Unk617C4 *)0x082BCD00, 0x080B738E);
+    sub_080615EC(0, first_y);
+    sub_0806171C(out, 0x23, 2);
 }
 
