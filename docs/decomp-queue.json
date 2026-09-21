@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T15:22:14Z",
+  "generated": "2026-09-21T15:23:19Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 87,
     "battle_semantic": 68,
     "blocked": 20,
-    "wip": 208
+    "wip": 210
   },
   "pinned": [],
   "wip": [
@@ -2303,6 +2303,28 @@
       "status": "16/24 same-size, branch layout inverted",
       "next": "permuter branch-order search",
       "score": "16/24"
+    },
+    {
+      "name": "sub_08069F00",
+      "addr": "0x08069F00",
+      "kind": "asm",
+      "bytes": 24,
+      "seed": "src/wip/sub_08069F00.c",
+      "notes": "src/wip/sub_08069F00.md",
+      "status": "11/24 same-size, r0/r1 coalescing",
+      "next": "permuter: keep mul result and adjusted value in separate regs",
+      "score": "11/24"
+    },
+    {
+      "name": "sub_08062728",
+      "addr": "0x08062728",
+      "kind": "asm",
+      "bytes": 18,
+      "seed": "src/wip/sub_08062728.c",
+      "notes": "src/wip/sub_08062728.md",
+      "status": "2/18, stm r0!,{r3} 16B zero fill",
+      "next": "find C shape that emits stmia (4-word struct store)",
+      "score": "2/18"
     }
   ],
   "recommended": [
@@ -2718,18 +2740,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08069F00",
-      "addr": "0x08069F00",
-      "kind": "asm",
-      "bytes": 24,
-      "score": 12,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08035908",
       "addr": "0x08035908",
       "kind": "asm",
@@ -2843,6 +2853,18 @@
       "kind": "asm",
       "bytes": 118,
       "score": 59,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806B064",
+      "addr": "0x0806B064",
+      "kind": "asm",
+      "bytes": 122,
+      "score": 61,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
@@ -3401,18 +3423,6 @@
         "gMainWorkPtr"
       ],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069F00",
-      "addr": "0x08069F00",
-      "kind": "asm",
-      "bytes": 24,
-      "score": 12,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },

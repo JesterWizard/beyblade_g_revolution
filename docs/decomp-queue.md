@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T15:22:14Z_
+_Updated: 2026-09-21T15:23:19Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-09-21T15:22:14Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 87 (68 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 208 |
+| WIP (resume these first) | 210 |
 
 Ranking: **battle** · showing top **40**
 
@@ -234,6 +234,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08033158` | 46 | unscored | `src/wip/sub_08033158.c` | unmatched C parked; see notes | read notes; match_function.py this seed |
 | `sub_08036A68` | 240 | 58/240 | `src/wip/sub_08036A68.c` | 58/240 (24.2%), size 232 vs 240 | permuter or force high-reg live ranges |
 | `sub_08033F30` | 24 | 16/24 | `src/wip/sub_08033F30.c` | 16/24 same-size, branch layout inverted | permuter branch-order search |
+| `sub_08069F00` | 24 | 11/24 | `src/wip/sub_08069F00.c` | 11/24 same-size, r0/r1 coalescing | permuter: keep mul result and adjusted value in separate regs |
+| `sub_08062728` | 18 | 2/18 | `src/wip/sub_08062728.c` | 2/18, stm r0!,{r3} 16B zero fill | find C shape that emits stmia (4-word struct store) |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -270,7 +272,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08039BD4` | `0x08039BD4` | 1552 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08069F00` | `0x08069F00` | 24 | 0 |      | asm | |
 | `sub_08035908` | `0x08035908` | 36 | 0 |      | asm | |
 | `sub_0806BE20` | `0x0806BE20` | 36 | 0 |      | asm | |
 | `sub_080739E8` | `0x080739E8` | 36 | 0 |      | asm | |
@@ -281,6 +282,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08065E0C` | `0x08065E0C` | 92 | 0 |      | asm | |
 | `sub_08061E8C` | `0x08061E8C` | 108 | 0 | pool | asm | |
 | `sub_08073910` | `0x08073910` | 118 | 0 |      | asm | |
+| `sub_0806B064` | `0x0806B064` | 122 | 0 |      | asm | |
 
 ## Blocked
 
@@ -323,6 +325,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (107 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (106 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

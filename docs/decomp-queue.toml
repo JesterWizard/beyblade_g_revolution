@@ -1744,3 +1744,19 @@ notes = "src/wip/sub_08033F30.md"
 status = "16/24 same-size, branch layout inverted"
 next = "permuter branch-order search"
 score = "16/24"
+
+[[wip]]
+name = "sub_08069F00"
+seed = "src/wip/sub_08069F00.c"
+notes = "src/wip/sub_08069F00.md"
+status = "11/24 same-size, r0/r1 coalescing"
+next = "permuter: keep mul result and adjusted value in separate regs"
+score = "11/24"
+
+[[wip]]
+name = "sub_08062728"
+seed = "src/wip/sub_08062728.c"
+notes = "src/wip/sub_08062728.md"
+status = "2/18, stm r0!,{r3} 16B zero fill"
+next = "find C shape that emits stmia (4-word struct store)"
+score = "2/18"
