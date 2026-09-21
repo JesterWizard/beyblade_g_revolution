@@ -6,23 +6,23 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **50.2%** of functions (318/633) and **22.3%** of original function bytes (20,144/90,272).
+Decompiled C is **50.6%** of functions (320/633) and **22.5%** of original function bytes (20,308/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `████████████████░░░░░░░░░░░░░░░░` | **50.2%** | 318/633 |
-| Decompiled C (bytes) | `███████░░░░░░░░░░░░░░░░░░░░░░░░░` | **22.3%** | 20,144/90,272 |
+| Decompiled C (functions) | `████████████████░░░░░░░░░░░░░░░░` | **50.6%** | 320/633 |
+| Decompiled C (bytes) | `███████░░░░░░░░░░░░░░░░░░░░░░░░░` | **22.5%** | 20,308/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 318 (50.2%) | 20,144 (22.3%) |
-| Readable Thumb | 315 (49.8%) | 70,128 (77.7%) |
+| Semantic C | 320 (50.6%) | 20,308 (22.5%) |
+| Readable Thumb | 313 (49.4%) | 69,964 (77.5%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
-Battle: **37.5%** functions / **16.9%** bytes in semantic C (60/160; 0 opcode left).
+Battle: **38.8%** functions / **17.3%** bytes in semantic C (62/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
 

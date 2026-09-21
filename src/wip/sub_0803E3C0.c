@@ -1,19 +1,17 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
-// @ 0x0803E3C0
+// @ 0x0803e3c0
 s32 sub_0803E3C0(struct Unk3E328 *a)
 {
-    const u8 *table1;
-    const u8 *table2;
-    const u8 *table3;
-    const u8 *entry1;
-    s32 value;
+    const u8 *t1 = (const u8 *)0x0807BDB8;
+    u32 i1 = a->unk1E * 4;
+    u32 v1;
+    u32 v2;
 
-    table1 = (const u8 *)0x0807BDB8;
-    table2 = (const u8 *)0x0807BB80;
-    table3 = (const u8 *)0x0807B6F0;
-    entry1 = table1 + ((s32)a->unk1E << 2);
-    value = table2[(((s32)(s8)a->unk20) << 2) + 2] + entry1[2];
-    value += table3[(((s32)a->unk1D) << 2) + 2];
-    return _080741EC(value, 3) - 1;
+    v1 = t1[i1 + 2];
+    v2 = ((const u8 *)0x0807BB80)[(s8)a->unk20 * 4 + 2];
+    v1 += v2;
+    v1 += ((const u8 *)0x0807B6F0)[a->unk1D * 4 + 2];
+    return _080741EC(v1, 3) - 1;
 }

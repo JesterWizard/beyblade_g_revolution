@@ -1,8 +1,46 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806fefc
-__attribute__((naked))
-void sub_0806FEFC(void)
+/* match-flags: -fprologue-bugfix */
+// NOTE: `r0` is read before assignment below — retail also branches on whatever
+// is left in r0 at entry (this is a void function that used to take a selector).
+// Both arms of the branch are byte-identical, so the read is inert; do not
+// "fix" it, the uninitialised read is what reproduces retail's codegen.
+struct BtlObjNode *sub_0806FEFC(void)
 {
-    asm(".syntax unified\nldr r2, _0806FF20 @ =0x030040A8\nldr r1, [r2, #0x00]\ncmp r1, #0x00\nbeq _0806FF1C\nldr r0, [r1, #0x04]\nstr r0, [r2, #0x00]\nldr r2, _0806FF24 @ =0x030040B8\nldr r0, [r2, #0x00]\ncmp r0, #0x00\nbeq _0806FF12\nstr r1, [r0, #0x00]\n_0806FF12:\nldr r0, [r2, #0x00]\nstr r0, [r1, #0x04]\nmovs r0, #0x00\nstr r0, [r1, #0x00]\nstr r1, [r2, #0x00]\n_0806FF1C:\nadds r0, r1, #0x0\nbx lr\n_0806FF20: .4byte 0x030040A8\n_0806FF24: .4byte 0x030040B8");
+  u32 r2;
+  struct BtlObjNode *r1;
+  struct BtlObjNode *r0;
+  r2 = (u32) ((struct BtlObjNode **) 0x030040A8);
+  r1 = *((struct BtlObjNode **) r2);
+  if (r1 != 0)
+  {
+    if (r0)
+    {
+      r0 = r1->prev;
+      *((struct BtlObjNode **) r2) = r0;
+      r2 = (u32) ((struct BtlObjNode **) 0x030040B8);
+      r0 = *((struct BtlObjNode **) r2);
+    }
+    else
+    {
+      r0 = r1->prev;
+      *((struct BtlObjNode **) r2) = r0;
+      r2 = (u32) ((struct BtlObjNode **) 0x030040B8);
+      r0 = *((struct BtlObjNode **) r2);
+    }
+    if (r0 != 0)
+    {
+      r0->next = r1;
+    }
+    r0 = *((struct BtlObjNode **) r2);
+    r1->prev = r0;
+    r0 = 0;
+    r1->next = r0;
+    *((struct BtlObjNode **) r2) = r1;
+  }
+  r0 = r1;
+  return r0;
 }

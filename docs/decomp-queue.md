@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T12:41:58Z_
+_Updated: 2026-09-21T13:32:39Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 318 |
-| Still need semantic C | **315** |
-| Readable Thumb remaining | 315 |
+| Semantic C done | 320 |
+| Still need semantic C | **313** |
+| Readable Thumb remaining | 313 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 94 (60 already semantic) |
+| Battle pending | 92 (62 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 205 |
 
@@ -89,7 +89,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0804188C` | 244 | 19/244 then 41/244 | `src/wip/sub_0804188C.c` | Two semantic attempts failed to reproduce the fixed-point table walk: direct loop 19/244 (208B), then pinned r4/r5/r6/r7 and explicit fixed-point/color locals 41/244 (224B). Object fields and update/callback roles are identified. | Use a targeted register/permuter search for the retail fixed-point index expression (r4=i<<16, r0=asr #14), r5 object slot, r6 table base, and r7 loop index; preserve separate signed count loads. |
 | `sub_08041E14` | 114 | 25/114 then 78/114 | `src/wip/sub_08041E14.c` | Two semantic attempts: baseline 25/114 (104B), then retail register-pinned args/count/table 78/114 (108B). Matching logic and nested +0xC8/+0x10 presence chain are identified; remaining diff is fixed-point table indexing and loop increment shape. | Use a targeted source/permuter search to reproduce lsls index,#16; asrs,#14 byte-offset indexing and bottom increment via r0/lsrs/asrs while retaining r5/r4 args, r6 table, r3 count, r1 index. |
 | `sub_0804245C` | 0 | 140/140 | `src/wip/sub_0804245C.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape) | done |
-| `sub_080425B8` | 120 | 108/120 then 27/120 | `src/wip/sub_080425B8.c` | Two attempts: direct sibling seed 108/120 (same-size), then block-scoped r0 main pin worsened to 27/120 (116B). Baseline correctly captures all behavior; retail initial main/offset and mask register ordering need a selective source/permuter search. | Restore direct baseline; try only an expression/temporary that produces retail r0 main, r1 +0x479 without pinning the whole function, then preserve corrected +0x448 callback and repeated ring index loads. |
+| `sub_080425B8` | 0 | 108/120 then 27/120 | `src/wip/sub_080425B8.c` | Two attempts: direct sibling seed 108/120 (same-size), then block-scoped r0 main pin worsened to 27/120 (116B). Baseline correctly captures all behavior; retail initial main/offset and mask register ordering need a selective source/permuter search. | Restore direct baseline; try only an expression/temporary that produces retail r0 main, r1 +0x479 without pinning the whole function, then preserve corrected +0x448 callback and repeated ring index loads. |
 | `sub_080427E8` | 0 | 220/220 | `src/wip/sub_080427E8.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape) | done |
 | `sub_080429CC` | 308 | 84/308 then 91/308 | `src/wip/sub_080429CC.c` | Two attempts: local pointer seed 84/308 (288B), then r1/r2 pointer pins 91/308 (320B, wrong prologue). Semantic behavior is mapped: copy MainWork+0x1810 to ring command, dispatch by MainWork+0x1828, update 0x17B4/0x17B8 from 0x036C/0x0370/0x0374, then call sub_080428F0. | Restore the 84/308 seed; use targeted register/permuter work to keep main in ordinary r2 without forcing callee-saved pins, and preserve retail case-specific constant materialization. |
 | `sub_08043420` | 438 | 79/438 then 79/438 | `src/wip/sub_08043420.c` | Two semantic attempts both 79/438 (448B): explicit state local and direct switch/state source produced identical codegen. All four transition paths, fixed-point thresholds, mirrored fields, flags, mode values, and sub_080680CC/sub_08043638 fallbacks are identified; mismatch is chiefly global/state pointer register allocation and branch layout. | Use a targeted register/permuter search to keep gUnk_03000554 in r0 and state in r3 as retail, with ordinary per-case MainWork locals; preserve signed s32 coordinate fields and threshold halfwords. |
@@ -221,7 +221,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0806B3E8` | 84 | 67/84 | `src/wip/sub_0806B3E8.c` | permuter 300 s + 900 s, no score 0 (95 → 10); 67/84 | keep readable Thumb; retail tracks the live pointer in two registers |
 | `sub_0806DEF4` | 20 | 19/20 | `src/wip/sub_0806DEF4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806F430` | 0 | 48/48 | `src/wip/sub_0806F430.c` | MATCHED — semantic C in src/matched (materialize the 0x10 mask before reading unk14) | done |
-| `sub_0806FEFC` | 44 | 39/44 | `src/wip/sub_0806FEFC.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_0806FEFC` | 0 | 39/44 | `src/wip/sub_0806FEFC.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806FF28` | 0 | 36/48 | `src/wip/sub_0806FF28.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08070604` | 92 | 73/92 | `src/wip/sub_08070604.c` | permuter 300 s, no score 0 (140 → 10); 73/92 | keep readable Thumb; store ordering and the 0x100 pair |
 | `sub_08071B4C` | 84 | 73/84 | `src/wip/sub_08071B4C.c` | permuter 300 s + 900 s, no score 0 (335 → 5); 73/84 | keep readable Thumb; the second RAM address must not fold into the first, and the str/strh zero registers differ |
