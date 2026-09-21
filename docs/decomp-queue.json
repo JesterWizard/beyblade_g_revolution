@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T18:57:45Z",
+  "generated": "2026-09-21T19:12:34Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 253,
-    "semantic_done": 380,
-    "readable_asm": 253,
+    "pending": 249,
+    "semantic_done": 384,
+    "readable_asm": 249,
     "opcode": 0,
     "battle_pending": 84,
     "battle_semantic": 73,
@@ -448,24 +448,24 @@
     {
       "name": "sub_08071E84",
       "addr": "0x08071E84",
-      "kind": "asm",
-      "bytes": 96,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08071E84.c",
       "notes": "src/wip/sub_08071E84.md",
-      "status": "58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450)",
-      "next": "retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24",
-      "score": "58/96"
+      "status": "matched (old_agbcc): for (i = count-1; i != -1; i--) over Unk71E84 slots; id local so the counter increment reuses the value stored in unk18",
+      "next": "done",
+      "score": "0/96"
     },
     {
       "name": "sub_08071EE4",
       "addr": "0x08071EE4",
-      "kind": "asm",
-      "bytes": 96,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08071EE4.c",
       "notes": "src/wip/sub_08071EE4.md",
-      "status": "58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450)",
-      "next": "retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24",
-      "score": "58/96"
+      "status": "matched (old_agbcc): same shape as sub_08071E84, calls sub_08071E04",
+      "next": "done",
+      "score": "0/96"
     },
     {
       "name": "sub_08071F44",
@@ -3930,30 +3930,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08062D80",
-      "addr": "0x08062D80",
-      "kind": "asm",
-      "bytes": 264,
-      "score": 140,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08062E88",
-      "addr": "0x08062E88",
-      "kind": "asm",
-      "bytes": 264,
-      "score": 140,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },

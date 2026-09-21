@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T18:57:45Z_
+_Updated: 2026-09-21T19:12:34Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 380 |
-| Still need semantic C | **253** |
-| Readable Thumb remaining | 253 |
+| Semantic C done | 384 |
+| Still need semantic C | **249** |
+| Readable Thumb remaining | 249 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 84 (73 already semantic) |
 | Blocked (documented) | 20 |
@@ -65,8 +65,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080677A8` | 86 | 12/86 | `src/wip/sub_080677A8.c` | 12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field | try keeping 'x' (masked arg0) live past the sub_08067584 call by referencing it again afterward (e.g. in a debug/dead comparison), or check if retail's extra register holds the original 'arg1' start pointer separately from the incrementing cursor |
 | `sub_0806C78C` | 70 | 12/70 | `src/wip/sub_0806C78C.c` | 12/70 bytes (17.1%), size mismatch (68 vs 70); partial model — calls sub_0806DF38(arg0, &out[1], 0, 1) writing a search-result array (struct UnkDF38Entry, 0x14 stride, added), checks out[0] fields, computes a stride, calls sub_0806C704. Declared both previously-naked callees' signatures from their own bodies. Uncertain: retail writes arg2 to sp+0 before the call but that slot is never read back in this function -- may be an unused stack reservation, a hidden 5th arg to sub_0806DF38, or a struct field I'm misplacing | re-derive sub_0806DF38's full parameter list (it may take 5 args via an implicit stack arg) before retrying this caller; check other call sites of sub_0806DF38 for the sp+0 slot's purpose |
 | `sub_0806D748` | 46 | 7/46 | `src/wip/sub_0806D748.c` | 7/46 bytes (15.2%), size mismatch (40 vs 46); correct algorithm (call the bx-r4 trampoline _08073C50 through arg0->unk94->unk08 handler, default result=1) with push-list now matching ({r4,r5,r6}) after register-pinning the handler and re-adding p/b local copies. Retail unconditionally zero-extends arg3 (u16) at function entry even though it's only used inside the conditional branch, and explicitly re-copies arg1 into r6 before the call; agbcc elides both since they're proven redundant | try using arg3 in an early no-op expression (e.g. volatile-style dead read) to force the upfront extension, matching retail's apparently-unnecessary eager evaluation |
-| `sub_08071E84` | 96 | 58/96 | `src/wip/sub_08071E84.c` | 58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450) | retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24 |
-| `sub_08071EE4` | 96 | 58/96 | `src/wip/sub_08071EE4.c` | 58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450) | retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24 |
+| `sub_08071E84` | 0 | 0/96 | `src/wip/sub_08071E84.c` | matched (old_agbcc): for (i = count-1; i != -1; i--) over Unk71E84 slots; id local so the counter increment reuses the value stored in unk18 | done |
+| `sub_08071EE4` | 0 | 0/96 | `src/wip/sub_08071EE4.c` | matched (old_agbcc): same shape as sub_08071E84, calls sub_08071E04 | done |
 | `sub_08071F44` | 0 | 0/64 | `src/wip/sub_08071F44.c` | matched (old_agbcc): reverse lookup over *gData_030040E4 records with `i != -1` and BOTH gData_ symbols (they are 0x20 apart; plain literals make agbcc fold the second into `subs r0,#0x20`) | done |
 | `sub_0802DEA0` | 424 | 66/424 | `src/wip/sub_0802DEA0.c` | 66/424 bytes (15.6%), size mismatch (400 vs 424); correct algorithm fully derived (16 near-identical blocks: for each of struct Unk026C's linked-list fields unk0C..unk40, if non-null set the node's unk08/unk0C to a color constant (0xFFFFC000 for the first 6, 0xF800 for the rest); then free+null 7 of those same fields via sub_0806FE84; finally vsync, set unk48=0xFF, and OR 0xFFFF into gMainWorkPtr's unk1838/unk183A). Reused existing structs Unk026C/Unk705DC. agbcc's CSE merges the repeated 'gUnk_0300026C' pointer dereference across adjacent blocks (r1 cached, reused via a spare register) even when each block is written as a fresh 'p = gUnk_0300026C' assignment, since no intervening write invalidates it -- retail instead reloads fresh every single block | try inserting a genuinely-opaque side effect between blocks (unlikely to be legitimate semantic C), or accept this as CSE the compiler correctly performs and retail's source simply repeated the full expression per block in a way this agbcc snapshot doesn't reproduce; may need per-block dummy calls or accept as permanently DIFF |
 | `sub_080302E0` | 168 | 63/168 | `src/wip/sub_080302E0.c` | two semantic attempts: 66/168 size_mismatch (148B), then 63/168 size_mismatch (176B); logic and field layouts are identified, but register/literal-pool layout still differs | Use the first candidate's cached battle/target locals as the base for a decomp-permuter or targeted register-layout search; do not hand-loop match retries |
@@ -330,6 +330,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (98 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (96 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

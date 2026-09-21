@@ -1,57 +1,30 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08071ee4
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Same free-slot search as sub_08071E84, calling sub_08071E04 instead.
 void *sub_08071EE4(void *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r3, r0, #0x0\n"
-        "adds r2, r1, #0x0\n"
-        "ldr r0, _08071F18 @ =0x030040E4\n"
-        "ldr r4, [r0, #0x00]\n"
-        "ldr r0, _08071F1C @ =0x030040C4\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "subs r1, #0x01\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "beq _08071F30\n"
-        "ldr r5, _08071F20 @ =0x030000C8\n"
-        "_08071EFE:\n"
-        "ldrb r0, [r4, #0x16]\n"
-        "cmp r0, #0x00\n"
-        "bne _08071F24\n"
-        "adds r0, r4, #0x0\n"
-        "adds r1, r3, #0x0\n"
-        "bl sub_08071E04\n"
-        "ldr r0, [r5, #0x00]\n"
-        "str r0, [r4, #0x18]\n"
-        "adds r0, #0x01\n"
-        "str r0, [r5, #0x00]\n"
-        "ldr r0, [r4, #0x18]\n"
-        "b _08071F3A\n"
-        "_08071F18: .4byte 0x030040E4\n"
-        "_08071F1C: .4byte 0x030040C4\n"
-        "_08071F20: .4byte 0x030000C8\n"
-        "_08071F24:\n"
-        "adds r4, #0x28\n"
-        "subs r1, #0x01\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "bne _08071EFE\n"
-        "_08071F30:\n"
-        "ldr r0, _08071F40 @ =0x083D2578\n"
-        "bl sub_08067B98\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "_08071F3A:\n"
-        "pop {r4, r5}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_08071F40: .4byte 0x083D2578\n"
-    );
+    struct Unk71E84 *e = *(struct Unk71E84 **)gData_030040E4;
+    s32 i;
+    u32 id;
+
+    for (i = *(u8 *)gData_030040C4 - 1; i != -1; i--)
+    {
+        if (e->unk16 == 0)
+        {
+            sub_08071E04(e, a, b);
+            id = *(u32 *)gData_030000C8;
+            e->unk18 = id;
+            id++;
+            *(u32 *)gData_030000C8 = id;
+            return (void *)e->unk18;
+        }
+        e++;
+    }
+    sub_08067B98((void *)gData_083D2578);
+    return (void *)-1;
 }
 

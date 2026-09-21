@@ -403,17 +403,17 @@ score = "7/46"
 name = "sub_08071E84"
 seed = "src/wip/sub_08071E84.c"
 notes = "src/wip/sub_08071E84.md"
-status = "58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450)"
-next = "retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24"
-score = "58/96"
+status = "matched (old_agbcc): for (i = count-1; i != -1; i--) over Unk71E84 slots; id local so the counter increment reuses the value stored in unk18"
+next = "done"
+score = "0/96"
 
 [[wip]]
 name = "sub_08071EE4"
 seed = "src/wip/sub_08071EE4.c"
 notes = "src/wip/sub_08071EE4.md"
-status = "58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450)"
-next = "retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24"
-score = "58/96"
+status = "matched (old_agbcc): same shape as sub_08071E84, calls sub_08071E04"
+next = "done"
+score = "0/96"
 
 [[wip]]
 name = "sub_08071F44"

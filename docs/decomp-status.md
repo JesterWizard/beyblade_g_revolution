@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **380/633 (60.0%)** |
-| **Decompiled C (bytes)** | **24,618/90,272 (27.3%)** |
+| **Decompiled C (functions)** | **384/633 (60.7%)** |
+| **Decompiled C (bytes)** | **25,338/90,272 (28.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 253/633 (40.0%) |
+| Readable Thumb | 249/633 (39.3%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,14 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — two clone families (+4, 380→384/633)
+Both pairs `script_first` listed as remaining readable-Thumb clones.
+
+- `sub_08071E84` / `sub_08071EE4` (96 B, `old_agbcc`) — free-slot scan of the `Unk71E84` array. Plain agbcc folds the entry test `(byte - 1) != -1` into `cmp r0,#0`. `for (i = *(u8 *)gData_030040C4 - 1; i != -1; i--)` keeps retail's materialised -1, and an `id` local makes the counter increment reuse the value just stored into `unk18`. The twin only swaps `sub_08071E44` for `sub_08071E04`.
+- `sub_08062D80` / `sub_08062E88` (264 B) — walk palette indices `a..b`, add or subtract `d` from an RGB555 triplet, clamp at 31 or 0. `if/else` saved `a` into another register and inverted the `c` test; gotos restore `beq` / `beq` / `b`. The three channel stores have to land before any clamp so the first sum stays in r1, and `v0 <<= 24; v0 >>= 24` is the in-place sign extend (`(s8)v0` shifts through r0). The twin swaps in `sub_08062CC8` / `sub_08062CF4`.
+
+`make compare` OK.
 
 ### 2026-09-21 — 3E328 clone family, byte-offset rows (+2, 378→380/633)
 `sub_0803E328` was already matched (`old_agbcc`, `table[scaled + 0]`). Its two clones read the same 4-byte rows at byte 1 and byte 2.
