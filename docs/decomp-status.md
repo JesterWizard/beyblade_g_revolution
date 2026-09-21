@@ -45,6 +45,17 @@ also changes register colouring. Two of the three matches below needed it.
   `sub_08043B58` 38/54 (`ldm r3!,{r1}` vs `adds/ldr` and key/table register swap),
   `sub_080739E8` 11/36 (rotated bottom test with a separate entry guard that agbcc merges).
 - New symbol added: `gData_08096794` (the pointer array walked by `sub_08043B58`).
+- Swept **every** `src/wip` seed for symbol-able literals. Only three improved further:
+  `sub_0803E2AC` 70/124 → 106/124, `sub_08061D00` 27/104 → 41/104,
+  `sub_0803E374`/`sub_0803E3C0` 41/76 → 43/76. (Most of the 0x080BB8xx-family seeds
+  store raw addresses in `u32` locals, so the symbol form trips
+  `-Werror=pointer-to-int`; they need rewriting before the trick applies.)
+- `sub_080620D4` (72B) parked at 37/72: retail walks the `a->unk0C` pointer array with
+  **two** registers (base r5 for the once-only snapshot, walker r3), so the source needs
+  `for (i = 0, q = p; ...; i++, q++)`; plain `p[i]` makes agbcc unswitch the `i == 0` arm
+  and hoist the `p[0] == 0` test (11/72).
+- Removed three stale `src/wip` duplicates of already-matched functions
+  (`sub_0803E848`, `sub_0804A438`, `sub_08062A74`).
 
 ### 2026-09-21 — permuter + inline-literal sweep (+6, 365→371/633)
 - `sub_08031294` (28B) — flags/word init. The two ORs must be written **inline** with an

@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-21T18:10:09Z_
+_Updated: 2026-09-21T18:13:42Z_
 
 ## Legend
 
