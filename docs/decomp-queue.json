@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-21T09:17:36Z",
+  "generated": "2026-09-21T10:52:03Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 334,
-    "semantic_done": 299,
-    "readable_asm": 334,
+    "pending": 331,
+    "semantic_done": 302,
+    "readable_asm": 331,
     "opcode": 0,
-    "battle_pending": 100,
-    "battle_semantic": 54,
+    "battle_pending": 99,
+    "battle_semantic": 55,
     "blocked": 20,
-    "wip": 206
+    "wip": 205
   },
   "pinned": [],
   "wip": [
@@ -2008,26 +2008,15 @@
       "score": "unscored"
     },
     {
-      "name": "sub_08061E40",
-      "addr": "0x08061E40",
-      "kind": "asm",
-      "bytes": 20,
-      "seed": "src/wip/sub_08061E40.c",
-      "notes": "src/wip/sub_08061E40.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "18/20"
-    },
-    {
       "name": "sub_08062A74",
       "addr": "0x08062A74",
       "kind": "asm",
       "bytes": 76,
       "seed": "src/wip/sub_08062A74.c",
       "notes": "src/wip/sub_08062A74.md",
-      "status": "72/76; ldrh/handler r3 vs r2",
-      "next": "overnight permuter",
-      "score": "72/76"
+      "status": "74/76; shift/add register pair differs",
+      "next": "constrained source/permuter search for lsls r1,r4,#5",
+      "score": "74/76"
     },
     {
       "name": "sub_08062D24",
@@ -2120,8 +2109,8 @@
     {
       "name": "sub_08069988",
       "addr": "0x08069988",
-      "kind": "asm",
-      "bytes": 64,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08069988.c",
       "notes": "src/wip/sub_08069988.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -2186,8 +2175,8 @@
     {
       "name": "sub_0806FF28",
       "addr": "0x0806FF28",
-      "kind": "asm",
-      "bytes": 48,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0806FF28.c",
       "notes": "src/wip/sub_0806FF28.md",
       "status": "matched only with GCC asm labels; stripped DIFF",

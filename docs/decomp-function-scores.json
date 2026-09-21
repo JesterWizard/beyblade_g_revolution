@@ -341,6 +341,39 @@
       "score": "47/52",
       "updated": "2026-09-19T18:06:55Z",
       "note": "near miss: agbcc folds 0x504 from 0x534 via subs, retail uses separate pool entry"
+    },
+    "sub_08061308": {
+      "matched_bytes": 46,
+      "retail_bytes": 48,
+      "compiled_bytes": 48,
+      "pct": 95.8,
+      "diff_bytes": 2,
+      "status": "identical_diff",
+      "score": "46/48",
+      "updated": "2026-09-21T09:58:19Z",
+      "note": "baseline u16 tmp; u32/u8/member-address variants did not improve ldrb destination"
+    },
+    "sub_08061E40": {
+      "matched_bytes": 18,
+      "retail_bytes": 20,
+      "compiled_bytes": 20,
+      "pct": 90.0,
+      "diff_bytes": 2,
+      "status": "same_size",
+      "score": "18/20",
+      "updated": "2026-09-21T09:48:33Z",
+      "note": "semantic retry from parked seed"
+    },
+    "sub_08062A74": {
+      "matched_bytes": 74,
+      "retail_bytes": 76,
+      "compiled_bytes": 76,
+      "pct": 97.4,
+      "diff_bytes": 2,
+      "status": "same_size",
+      "score": "74/76",
+      "updated": "2026-09-21T09:58:09Z",
+      "note": "permuter seed; 74/76, remaining handler/shift register pair"
     }
   }
 }

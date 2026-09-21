@@ -105,13 +105,24 @@ Mask-first `movs r0,#N; ldrb r1,[r5]; ands r0,r1` can compile as `movs r1,#N; ld
 ## Permuter workflow
 
 ```bash
+# Import → score the seed → search → verify → integrate, all in one command.
+python3 tools/decomp/permuter/auto.py sub_XXXXXXXX --seconds 240 --jobs 8
+```
+
+`auto.py` prints the base score first. If the seed already scores 0 it skips the search and integrates immediately (that is the `-fprologue-bugfix` case). It exits 0 only after `match_function.py` confirms **MATCH**.
+
+Manual equivalent when you want to look at candidates:
+
+```bash
 python3 tools/decomp/permuter/import_function.py sub_XXXXXXXX
 tools/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 8 --stop-on-zero
 # Score 0 → still verify:
 python3 tools/decomp/match_function.py sub_XXXXXXXX <permuter-output.c>
 ```
 
-Run overnight on near-misses; don’t babysit interactive retries.
+`import_function.py` writes a `matchflags` sidecar from the seed's `/* match-flags: … */` comment; `permuter/compile.sh` passes it to agbcc. Without it the permuter cannot reach score 0 for the 21 functions needing `-fprologue-bugfix` (agbcc emits a `push {lr}` retail does not have). If `auto.py` reports a base score that does not match `match_function.py`'s DIFF, the flags or the seed are wrong — fix that before letting it search.
+
+Run overnight on near-misses; don't babysit interactive retries.
 
 ## When to stop (document, don’t spin)
 

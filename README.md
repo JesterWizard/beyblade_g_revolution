@@ -6,23 +6,23 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **47.2%** of functions (299/633) and **20.8%** of original function bytes (18,778/90,272).
+Decompiled C is **47.7%** of functions (302/633) and **20.9%** of original function bytes (18,910/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `███████████████░░░░░░░░░░░░░░░░░` | **47.2%** | 299/633 |
-| Decompiled C (bytes) | `███████░░░░░░░░░░░░░░░░░░░░░░░░░` | **20.8%** | 18,778/90,272 |
+| Decompiled C (functions) | `███████████████░░░░░░░░░░░░░░░░░` | **47.7%** | 302/633 |
+| Decompiled C (bytes) | `███████░░░░░░░░░░░░░░░░░░░░░░░░░` | **20.9%** | 18,910/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 299 (47.2%) | 18,778 (20.8%) |
-| Readable Thumb | 334 (52.8%) | 71,494 (79.2%) |
+| Semantic C | 302 (47.7%) | 18,910 (20.9%) |
+| Readable Thumb | 331 (52.3%) | 71,362 (79.1%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
-Battle: **33.8%** functions / **15.2%** bytes in semantic C (54/160; 0 opcode left).
+Battle: **34.4%** functions / **15.4%** bytes in semantic C (55/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
 
@@ -69,18 +69,18 @@ python3 tools/decomp/integrate_c.py sub_XXXXXXXX @scratch.c --kind semantic --no
 make compare
 ```
 
-Max two `match_function.py` retries. On DIFF:
+Max one `match_function.py` attempt. On DIFF:
 
 ```bash
+# Same-size DIFF → the local permuter, NOT another hand edit.
+python3 tools/decomp/permuter/auto.py sub_XXXXXXXX --seconds 240
 python3 tools/decomp/park_wip.py sub_XXXXXXXX scratch.c --status "…" --next "…" --score "N/M"
 ```
 
-Same-size DIFF → permuter, not a long retry loop. Clone families → one new matcher in `c_patterns.py`:
+`permuter/auto.py` imports the seed, scores it, searches, and lands score 0 for you — it costs no tokens, so it always runs before a second model attempt. It honours per-function `/* match-flags: -fprologue-bugfix */` (21 functions need it). Clone families → one new matcher in `c_patterns.py`:
 
 ```bash
 python3 tools/decomp/cluster_shapes.py
-tools/decomp/permuter/permute.sh import sub_XXXXXXXX
-tools/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 4 --stop-on-zero
 ```
 
 ### Commands
@@ -93,6 +93,7 @@ tools/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 4 --stop-on-ze
 | `python3 tools/decomp/integrate_c.py FN @file.c --kind semantic` | Land MATCH into `src/matched/` |
 | `python3 tools/decomp/park_wip.py FN file.c` | Save unmatched C in `src/wip/` |
 | `python3 tools/decomp/cluster_shapes.py` | Find Thumb clones for new patterns |
+| `python3 tools/decomp/permuter/auto.py FN` | Local permuter: import → score → search → integrate on score 0 |
 | `python3 tools/decomp/unblock_symbols.py` | Draft prototypes for `bl _080…` |
 | `make compare` | Must stay `beyblade_g_revolution.gba: OK` |
 

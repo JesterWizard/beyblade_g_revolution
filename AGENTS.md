@@ -37,7 +37,7 @@ make compare
 # 2. Deterministic pass (no model)
 python3 tools/decomp/script_first.py
 
-# 3. Remainder: one compact packet, then C (max 2 retries → park)
+# 3. Remainder: one compact packet, then C (max 1 attempt → permuter → park)
 python3 tools/decomp/agent_packet.py --next
 
 # 4. Every 3–5 batches: RAM map pass
@@ -111,6 +111,7 @@ bash build_tools.sh
 | Verify C | `tools/decomp/match_function.py` | Compile + compact DIFF vs retail |
 | Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |
 | Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/wip/`) |
+| Local permuter | `tools/decomp/permuter/auto.py` | Import → score → search → integrate on score 0 |
 | decomp-permuter | `tools/decomp/permuter/` | agbcc literal-pool / instruction-order search |
 | agbcc | `tools/agbcc/bin/agbcc` | Matching compiler |
 | Luvdis | `tools/luvdis/` | Initial disassembly |

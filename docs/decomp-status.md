@@ -8,18 +8,29 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **299/633 (47.2%)** |
-| **Decompiled C (bytes)** | **18,778/90,272 (20.8%)** |
+| **Decompiled C (functions)** | **302/633 (47.7%)** |
+| **Decompiled C (bytes)** | **18,910/90,272 (20.9%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 334/633 (52.8%) |
+| Readable Thumb | 331/633 (52.3%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 54/160 (33.8% fn, 15.2% bytes) |
+| Battle semantic C | 55/160 (34.4% fn, 15.4% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — semantic C +1 (299→300/633)
+- Matched `sub_08061E40` with direct `Unk61E40` field stores; this preserves
+  retail's zero-constant materialization order without register annotations.
+- Improved the parked `sub_08062A74` seed to 74/76 through a valid source
+  permutation; it remains parked because the final shift/add register pair
+  still differs.
+- Fixed permuter imports to prefer parked WIP C and to select newly suffixed
+  work directories. Tightened address-word classification so instruction
+  bytes are not misreported as pool-only differences.
+- `make compare`: OK
 
 ### 2026-09-21 — semantic C rematch (+1, 298→299/633)
 - Matched `sub_080726E0` (halfword-stride transfer helper). Reusing the
@@ -970,3 +981,23 @@ First 4 functions + `src/stubs.c`.
   `sub_080726E0`, `sub_08071B4C` (81%), `sub_080312B0` (90%), `sub_08031300`,
   `sub_08034810`, `sub_0802D52C` (72%), `sub_0802D8C4` (push/pop leaf quirk,
   likely same class as the confirmed dead-end leaf-function list)
+
+### 2026-09-21 — permuter repair (+2 semantic C, 302/633, 47.7%)
+
+- Fixed `tools/decomp/permuter/compile.sh`: it never passed per-function
+  `/* match-flags: */`, so the **21 functions needing `-fprologue-bugfix`**
+  could never reach permuter score 0. Proof: `sub_08061BDC` scored **205**
+  before (agbcc emitted `push {lr}`/`pop {pc}`) and **0** after.
+- Added `tools/decomp/permuter/auto.py`: fresh import → base score → bounded
+  search → re-verify with `match_function.py` → integrate. Kills the worker
+  pool on timeout (previously leaked processes and blocked the output pipe).
+- `script_first.py` now tries parked WIP seeds first and permutes near-misses
+  (`--permute-seconds`, default 120) instead of only parking them.
+- `agent_packet.py` permutes near-miss/WIP seeds before asking for C, and the
+  hand-retry budget is **1** attempt.
+- **Matches from functions previously written off as unreachable:**
+  `sub_08069988`, `sub_0806FF28` (both score 0 in 2s from their parked seeds).
+- `sub_0806DEF4`: permuter reports score 0 but `match_function.py` says 95% —
+  the permuter ignores branch targets. `auto.py` refuses to integrate it;
+  `--strict-branches` reaches best 1. Do not trust score 0 alone.
+- make compare: OK

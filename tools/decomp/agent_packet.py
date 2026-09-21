@@ -13,7 +13,10 @@ packet — not mission/roadmap dumps or full objdump hex.
 from __future__ import annotations
 
 import argparse
+import os
 import re
+import signal
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -46,7 +49,10 @@ _OFF = re.compile(r"\[r\d+,\s*#(0x[0-9A-Fa-f]+|\d+)\]")
 _RAM = re.compile(r"0x0[23][0-9A-Fa-f]{6,7}")
 _MAX_THUMB = 50
 _MAX_SEED = 80
-_MAX_ATTEMPTS = 2
+# One hand-written attempt per function. A same-size DIFF goes to the local
+# permuter (free) — not to another model turn.
+_MAX_ATTEMPTS = 1
+_AUTO_PERMUTE_SECONDS = 60
 
 
 def _bucket_of(name: str, buckets: dict[str, list[str]]) -> str:
@@ -195,7 +201,46 @@ def _try_candidates(name: str) -> tuple[list[str], str | None, str | None]:
     return lines, match_body, best_diff
 
 
-def build_packet(name: str) -> str:
+def _auto_permute(name: str, seconds: int) -> tuple[bool, str | None]:
+    """Run the bounded local permuter. Returns (matched, note).
+
+    A same-size DIFF is the permuter's job: it searches locally for free, so the
+    agent only has to wake up for functions it cannot solve.
+    """
+    if seconds <= 0:
+        return False, None
+    script = ROOT / "tools/decomp/permuter/auto.py"
+    if not script.is_file():
+        return False, None
+    proc = subprocess.Popen(
+        [sys.executable, str(script), name, "--seconds", str(seconds)],
+        cwd=str(ROOT),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        start_new_session=True,
+    )
+    try:
+        text, _ = proc.communicate(timeout=seconds + 120)
+    except subprocess.TimeoutExpired:
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except (ProcessLookupError, PermissionError, OSError):
+            proc.kill()
+        text, _ = proc.communicate()
+        return False, "permuter timed out"
+    text = text or ""
+    if proc.returncode == 0:
+        return True, "permuter/auto.py — already verified and integrated"
+    best = None
+    for m in re.finditer(r"no score 0 within budget, best (\d+)", text):
+        best = m.group(1)
+    if best is None and "failed match_function" in text:
+        return False, "permuter found 0 but the candidate failed verification"
+    return False, f"permuter best {best}" if best else "permuter no score 0"
+
+
+def build_packet(name: str, permute_seconds: int = _AUTO_PERMUTE_SECONDS) -> str:
     buckets, missing_by_symbol, cse_risk = classify()
     bucket = _bucket_of(name, buckets)
     try:
@@ -226,13 +271,26 @@ def build_packet(name: str) -> str:
     auto: list[str] = []
     match_body: str | None = None
     best_diff: str | None = None
+    permuted = False
     if wip:
         auto = ["(skipped — WIP seed exists; resume that, do not re-run m2c)"]
     else:
         auto, match_body, best_diff = _try_candidates(name)
+    # Near-miss or parked seed: let the local permuter try before the agent does.
+    # It costs no tokens, so this is the cheapest possible fork.
+    if match_body is None and (wip or best_diff) and permute_seconds > 0:
+        permuted, note = _auto_permute(name, permute_seconds)
+        if note:
+            auto.append(f"[PERM ] {note}")
     out.append("## Auto try (do not redo these)")
     out.extend(auto if auto else ["(no candidates)"])
     out.append("")
+
+    if permuted:
+        out.append("## MATCH — permuter already verified and integrated")
+        out.append("Nothing to write. Run make compare once, then take the next function.")
+        out.append("")
+        return "\n".join(out) + "\n"
 
     if match_body:
         out.append("## MATCH — integrate, do not rewrite")
@@ -246,7 +304,7 @@ def build_packet(name: str) -> str:
     out.append("## Agent job")
     out.append(
         f"Write semantic C from the seed below. Max {_MAX_ATTEMPTS} "
-        "match_function.py retries, then park_wip.py."
+        "match_function.py attempt, then park_wip.py."
     )
     out.append(f"python3 tools/decomp/match_function.py {name} scratch.c")
     out.append(
@@ -258,6 +316,12 @@ def build_packet(name: str) -> str:
         '--status "…" --next "…" --score "N/M"'
     )
     out.append("")
+    out.append(
+        "If the result is a same-size DIFF, do NOT hand-edit to chase registers — "
+        "run the local permuter and park if it fails:"
+    )
+    out.append(f"python3 tools/decomp/permuter/auto.py {name} --seconds 240")
+    out.append("")
 
     if best_diff:
         out.append("## Best auto DIFF")
@@ -268,7 +332,7 @@ def build_packet(name: str) -> str:
         out.append("## WIP seed (resume here)")
         out.append(wip)
         out.append("")
-        out.append("Do not re-read decomp-mission.md / roadmap. Park on DIFF after 2 tries.")
+        out.append("Do not re-read decomp-mission.md / roadmap. Park on DIFF, do not retry-loop.")
         return "\n".join(out) + "\n"
 
     out.append("## Thumb (stripped)")
@@ -325,7 +389,7 @@ def build_packet(name: str) -> str:
     else:
         out.append("(m2c failed)")
     out.append("")
-    out.append("Do not re-read decomp-mission.md / roadmap. Park on DIFF after 2 tries.")
+    out.append("Do not re-read decomp-mission.md / roadmap. Park on DIFF, do not retry-loop.")
     return "\n".join(out) + "\n"
 
 
@@ -336,6 +400,15 @@ def main() -> int:
     parser.add_argument("--battle", action="store_true", help="prefer next_queue battle ranking")
     parser.add_argument("--wip", action="store_true", help="prefer parked src/wip/ seeds")
     parser.add_argument("--write", metavar="PATH", help="also write the packet to a file")
+    parser.add_argument(
+        "--permute-seconds",
+        type=int,
+        default=_AUTO_PERMUTE_SECONDS,
+        help=(
+            "local permuter budget for near-miss/WIP seeds before the agent is "
+            "asked to write C (0 disables; default %(default)s)"
+        ),
+    )
     args = parser.parse_args()
 
     name = args.function
@@ -348,7 +421,7 @@ def main() -> int:
         print("function must be sub_XXXXXXXX", file=sys.stderr)
         return 2
 
-    packet = build_packet(name)
+    packet = build_packet(name, permute_seconds=args.permute_seconds)
     print(packet, end="")
     if args.write:
         path = Path(args.write)

@@ -25,15 +25,19 @@ python3 tools/decomp/script_first.py
 python3 tools/decomp/agent_packet.py --next
 ```
 
-Agent reads **one packet**, writes C, max **2** `match_function.py` retries, then parks. Do not dump mission docs or full hex DIFFs (`match_function.py` is compact by default; `--full` if needed).
+Agent reads **one packet**, writes C, max **1** `match_function.py` attempt, then parks. Do not dump mission docs or full hex DIFFs (`match_function.py` is compact by default; `--full` if needed).
+
+The packet runs the local permuter on near-miss/WIP seeds before asking the agent to write anything (`--permute-seconds`, default 60). If the packet says *MATCH — permuter already verified and integrated*, there is nothing to write.
 
 ## At each fork
 
 1. `script_first.py` / `c_patterns` → integrate
 2. Packet + cleaned m2c → MATCH → `integrate_c.py`
-3. Same-size DIFF → permuter, not hand retry loops
+3. Same-size DIFF → `permuter/auto.py` (local, free), not hand retry loops
 4. Still DIFF → `park_wip.py`
 5. Clone family → `cluster_shapes.py` → new pattern
 6. Role clear → `ram_map_pass.sh`, then rename batch
+
+Token budget: one batch = one packet + at most one C write + one `make compare`. Do not re-derive a function the permuter already solved, and do not run `make compare` per function inside a batch.
 
 Full fork tree: **docs/decomp-mission.md** (open only if the packet is insufficient).

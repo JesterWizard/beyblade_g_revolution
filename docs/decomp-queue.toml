@@ -1530,20 +1530,12 @@ next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "unscored"
 
 [[wip]]
-name = "sub_08061E40"
-seed = "src/wip/sub_08061E40.c"
-notes = "src/wip/sub_08061E40.md"
-status = "matched only with GCC asm labels; stripped DIFF"
-next = "rewrite without register asm / empty asm(); permuter if same-size"
-score = "18/20"
-
-[[wip]]
 name = "sub_08062A74"
 seed = "src/wip/sub_08062A74.c"
 notes = "src/wip/sub_08062A74.md"
-status = "72/76; ldrh/handler r3 vs r2"
-next = "overnight permuter"
-score = "72/76"
+status = "74/76; shift/add register pair differs"
+next = "constrained source/permuter search for lsls r1,r4,#5"
+score = "74/76"
 
 [[wip]]
 name = "sub_08062D24"

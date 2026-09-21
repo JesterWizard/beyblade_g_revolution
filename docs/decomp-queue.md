@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T09:17:36Z_
+_Updated: 2026-09-21T10:52:03Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 299 |
-| Still need semantic C | **334** |
-| Readable Thumb remaining | 334 |
+| Semantic C done | 302 |
+| Still need semantic C | **331** |
+| Readable Thumb remaining | 331 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 100 (54 already semantic) |
+| Battle pending | 99 (55 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 206 |
+| WIP (resume these first) | 205 |
 
 Ranking: **battle** · showing top **40**
 
@@ -207,8 +207,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080617C4` | 60 | 13/60 | `src/wip/sub_080617C4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08061BE8` | 96 | 92/96 | `src/wip/sub_08061BE8.c` | 92/96; lsls vs table ldr order | 62CC8-style &local or overnight permuter |
 | `sub_08061C48` | 56 | unscored | `src/wip/sub_08061C48.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08061E40` | 20 | 18/20 | `src/wip/sub_08061E40.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08062A74` | 76 | 72/76 | `src/wip/sub_08062A74.c` | 72/76; ldrh/handler r3 vs r2 | overnight permuter |
+| `sub_08062A74` | 76 | 74/76 | `src/wip/sub_08062A74.c` | 74/76; shift/add register pair differs | constrained source/permuter search for lsls r1,r4,#5 |
 | `sub_08062D24` | 42 | 36/42 | `src/wip/sub_08062D24.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08066224` | 112 | 96/112 | `src/wip/sub_08066224.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_080674A4` | 6 | 2/6 | `src/wip/sub_080674A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
@@ -217,13 +216,13 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08069894` | 96 | 85/96 | `src/wip/sub_08069894.c` | 85/96; IWRAM stores preloaded vs sequential | continue permuter from output-245-1 |
 | `sub_08069908` | 64 | 8/64 | `src/wip/sub_08069908.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08069948` | 64 | 8/64 | `src/wip/sub_08069948.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08069988` | 64 | 8/64 | `src/wip/sub_08069988.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_08069988` | 0 | 8/64 | `src/wip/sub_08069988.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806A3A4` | 144 | 10/144 | `src/wip/sub_0806A3A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806B3E8` | 84 | 67/84 | `src/wip/sub_0806B3E8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806DEF4` | 20 | 19/20 | `src/wip/sub_0806DEF4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806F430` | 48 | 41/48 | `src/wip/sub_0806F430.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806FEFC` | 44 | 39/44 | `src/wip/sub_0806FEFC.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_0806FF28` | 48 | 36/48 | `src/wip/sub_0806FF28.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_0806FF28` | 0 | 36/48 | `src/wip/sub_0806FF28.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08070604` | 92 | 73/92 | `src/wip/sub_08070604.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08071B4C` | 84 | 73/84 | `src/wip/sub_08071B4C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08071BA0` | 148 | 32/148 | `src/wip/sub_08071BA0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |

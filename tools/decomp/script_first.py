@@ -79,14 +79,54 @@ def _park(name: str, body: str, info: dict) -> None:
     )
 
 
-def convert_one(name: str, park_near: bool) -> str:
-    """Return 'match' | 'fail' | 'parked' | 'skip'."""
+def _permute(name: str, seconds: int) -> bool:
+    """Bounded local permuter run; True if it landed a match without an agent."""
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "tools/decomp/permuter/auto.py"),
+            name,
+            "--seconds",
+            str(seconds),
+            "--skip-compare",
+        ],
+        cwd=str(ROOT),
+        check=False,
+    )
+    return result.returncode == 0
+
+
+def _wip_body(name: str) -> str | None:
+    """Function definition from a parked WIP seed, minus its #include lines.
+
+    Parked seeds are the best available starting point (already near-matching),
+    so they are tried before c_patterns/m2c — and they keep their
+    `/* match-flags: … */` comment, which verification needs.
+    """
+    path = WIP / f"{name}.c"
+    if not path.is_file():
+        return None
+    kept = [
+        line
+        for line in path.read_text().splitlines()
+        if not line.strip().startswith("#include")
+    ]
+    body = "\n".join(kept).strip()
+    return body or None
+
+
+def convert_one(name: str, park_near: bool, permute_seconds: int) -> str:
+    """Return 'match' | 'permuted' | 'fail' | 'parked' | 'skip'."""
     asm = asm_lines(name)
     if asm is None:
         return "skip"
+    cands = list(candidates(name, asm))
+    wip_body = _wip_body(name)
+    if wip_body:
+        cands.insert(0, ("wip", "parked WIP seed", wip_body))
     best_body: str | None = None
     best_info: dict | None = None
-    for src, note, body in candidates(name, asm):
+    for src, note, body in cands:
         with tempfile.TemporaryDirectory() as tmp:
             scratch = Path(tmp) / "scratch.c"
             write_single_function_c(name, body, scratch)
@@ -104,10 +144,22 @@ def convert_one(name: str, park_near: bool) -> str:
         if best_info is None or info["pct"] > best_info["pct"]:
             best_info = info
             best_body = body
-    if park_near and best_body and best_info and _near_miss(best_info):
-        _park(name, best_body, best_info)
-        print(f"PARK  {name} ({best_info.get('score')} {best_info.get('status')})", flush=True)
-        return "parked"
+    if best_body and best_info and _near_miss(best_info):
+        # Same-size DIFF is the permuter's job, not the agent's: it is local,
+        # free, and stops at score 0. Falls back to parking on a timeout.
+        if permute_seconds > 0:
+            print(
+                f"PERMUTE {name} (seed {best_info.get('score')} "
+                f"{best_info.get('status')}, budget {permute_seconds}s)",
+                flush=True,
+            )
+            if _permute(name, permute_seconds):
+                print(f"MATCH {name} (permuter)", flush=True)
+                return "permuted"
+        if park_near:
+            _park(name, best_body, best_info)
+            print(f"PARK  {name} ({best_info.get('score')} {best_info.get('status')})", flush=True)
+            return "parked"
     return "fail"
 
 
@@ -115,6 +167,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("limit", nargs="?", type=int, default=30)
     parser.add_argument("--park-near-miss", action="store_true")
+    parser.add_argument(
+        "--permute-seconds",
+        type=int,
+        default=120,
+        help="local permuter budget per near-miss (0 disables; default 120)",
+    )
     parser.add_argument("--cluster-only", action="store_true")
     parser.add_argument("--skip-unblock", action="store_true")
     parser.add_argument("--write-prototypes", action="store_true")
@@ -135,22 +193,24 @@ def main() -> int:
 
     names = _targets()[: args.limit]
     print(f"==> script_first: trying {len(names)} remaining functions")
-    matched = parked = failed = 0
+    matched = parked = failed = permuted = 0
     for name in names:
-        result = convert_one(name, args.park_near_miss)
+        result = convert_one(name, args.park_near_miss, args.permute_seconds)
         if result == "match":
             matched += 1
+        elif result == "permuted":
+            permuted += 1
         elif result == "parked":
             parked += 1
         elif result == "fail":
             failed += 1
 
     print(
-        f"==> script_first: {matched} MATCH, {parked} parked, {failed} still Thumb "
-        f"(attempted {len(names)})"
+        f"==> script_first: {matched} MATCH, {permuted} permuted, "
+        f"{parked} parked, {failed} still Thumb (attempted {len(names)})"
     )
 
-    if matched:
+    if matched or permuted:
         subprocess.run(["make", "compare"], cwd=str(ROOT), check=True)
         subprocess.run(
             [sys.executable, str(ROOT / "tools/decomp/progress.py"), "--write"],

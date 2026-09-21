@@ -11,7 +11,9 @@ and match_function.py MATCH.
 from __future__ import annotations
 
 import argparse
+import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -21,12 +23,22 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
 from m2c_asm import m2c_decompile  # noqa: E402
+from m2c_cleanup import cleanup_text  # noqa: E402
 from opcode_stubs import is_opcode_stub  # noqa: E402
 
 NON = ROOT / "asm" / "nonmatchings"
 MATCHED = ROOT / "src" / "matched"
+WIP = ROOT / "src" / "wip"
 PERM = ROOT / "tools" / "decomp-permuter"
 COMPILE_SH = ROOT / "tools" / "decomp" / "permuter" / "compile.sh"
+
+# Per-function agbcc flags carried in a `/* match-flags: ... */` comment.
+# Must stay in sync with match_function.py ALLOWED_MATCH_FLAGS, and with the
+# whitelist in permuter/compile.sh.
+MATCH_FLAGS_RE = re.compile(r"/\*\s*match-flags:\s*(.*?)\s*\*/")
+ALLOWED_MATCH_FLAGS = frozenset({"-fprologue-bugfix", "-fomit-frame-pointer"})
+
+_UNCOMPILABLE = ("?", "M2C_FIELD", "M2C_UNK", "BITCAST", "/* extern */")
 
 
 def to_glabel_asm(function: str) -> str:
@@ -57,6 +69,31 @@ def clean_m2c(text: str) -> str | None:
     )
     text = text.replace("->unk", "->unk_")
     return text
+
+
+def looks_uncompilable(body: str) -> bool:
+    return any(tok in body for tok in _UNCOMPILABLE)
+
+
+def match_flags(function: str, seed_text: str) -> list[str]:
+    """Flags from the seed, else the parked/matched C for this function.
+
+    The permuter preprocesses base.c before calling compile.sh, so the comment
+    cannot be read at compile time — this is written to a `matchflags` sidecar
+    that compile.sh picks up from the workdir.
+    """
+    texts = [seed_text]
+    for path in (WIP / f"{function}.c", MATCHED / f"{function}.c"):
+        if path.is_file():
+            texts.append(path.read_text())
+    for text in texts:
+        found = MATCH_FLAGS_RE.search(text)
+        if not found:
+            continue
+        flags = [f for f in shlex.split(found.group(1)) if f in ALLOWED_MATCH_FLAGS]
+        if flags:
+            return flags
+    return []
 
 
 KNOWN_SEEDS = {
@@ -526,25 +563,43 @@ struct BtlObjNode *sub_0806FEFC(void)
 
 
 def seed_c(function: str) -> str:
+    wip = WIP / f"{function}.c"
+    if wip.is_file():
+        return wip.read_text()
     if function in KNOWN_SEEDS:
         return KNOWN_SEEDS[function]
     existing = MATCHED / f"{function}.c"
     if existing.is_file() and not is_opcode_stub(existing):
         return existing.read_text()
 
+    header = '#include "global.h"\n#include "ram_map.h"\n#include "battle.h"\n\n'
     m2c = m2c_decompile(function, valid_syntax=True) or m2c_decompile(function)
-    cleaned = clean_m2c(m2c) if m2c else None
-    if cleaned:
-        return f'#include "global.h"\n#include "ram_map.h"\n#include "battle.h"\n\n{cleaned}\n'
-
+    if not m2c:
+        raise SystemExit(
+            f"no semantic seed for {function}: m2c failed and src is an opcode stub"
+        )
+    # Prefer the same cleaned seed the agent packet shows; the permuter can only
+    # reshuffle correct C, so a m2c-valid seed that still has `?` types is worse
+    # than a slightly less literal cleaned one.
+    cleaned = cleanup_text(m2c, function)
+    if cleaned.strip() and not looks_uncompilable(cleaned):
+        return header + cleaned.rstrip() + "\n"
+    fallback = clean_m2c(m2c)
+    if fallback and not looks_uncompilable(fallback):
+        return header + fallback.rstrip() + "\n"
     raise SystemExit(
-        f"no semantic seed for {function}: m2c failed and src is an opcode stub"
+        f"no semantic seed for {function}: m2c output is not compilable C"
     )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("function")
+    parser.add_argument(
+        "--keep",
+        action="store_true",
+        help="keep existing nonmatchings/<function>* workdirs instead of a fresh import",
+    )
     args = parser.parse_args()
     name = args.function
 
@@ -559,7 +614,16 @@ def main() -> int:
     staging.mkdir(parents=True, exist_ok=True)
     c_path = staging / f"{name}.c"
     s_path = staging / f"{name}.s"
-    c_path.write_text(seed_c(name))
+    existing_workdirs = set((ROOT / "nonmatchings").glob(f"{name}*"))
+    if not args.keep:
+        # Stale workdirs force import.py into `<name>-2`, `<name>-3` … and the
+        # permuter then runs on an out-of-date seed. Re-import is always fresh.
+        for old in sorted(existing_workdirs):
+            shutil.rmtree(old, ignore_errors=True)
+            print(f"removed stale workdir {old.relative_to(ROOT)}")
+        existing_workdirs = set()
+    seed = seed_c(name)
+    c_path.write_text(seed)
     s_path.write_text(to_glabel_asm(name))
     result = subprocess.run(
         [sys.executable, str(PERM / "import.py"), str(c_path), str(s_path)],
@@ -568,19 +632,36 @@ def main() -> int:
     if result.returncode != 0:
         return result.returncode
 
-    workdir = ROOT / "nonmatchings" / name
-    if not workdir.is_dir():
-        # import.py may suffix -2, -3 on reimport
-        matches = sorted((ROOT / "nonmatchings").glob(f"{name}*"))
-        if not matches:
+    matches = sorted(
+        set((ROOT / "nonmatchings").glob(f"{name}*")) - existing_workdirs
+    )
+    if matches:
+        workdir = matches[-1]
+    else:
+        workdir = ROOT / "nonmatchings" / name
+        if not workdir.is_dir():
             print("import.py did not create nonmatchings/", file=sys.stderr)
             return 1
-        workdir = matches[-1]
 
     shutil.copy(COMPILE_SH, workdir / "compile.sh")
     (workdir / "compile.sh").chmod(0o755)
+
+    flags = match_flags(name, seed)
+    flags_path = workdir / "matchflags"
+    if flags:
+        flags_path.write_text("\n".join(flags) + "\n")
+    else:
+        flags_path.unlink(missing_ok=True)
+
     print(f"imported {name} -> {workdir.relative_to(ROOT)}")
-    print(f"next: tools/decomp/permuter/permute.sh run {workdir.relative_to(ROOT)} -j 4 --stop-on-zero")
+    if flags:
+        print(f"match-flags: {' '.join(flags)} (permuter compile.sh honours these)")
+    else:
+        print("match-flags: none")
+    print(
+        f"next: tools/decomp/permuter/permute.sh run {workdir.relative_to(ROOT)} "
+        f"-j {os.cpu_count() or 4} --stop-on-zero"
+    )
     return 0
 
 

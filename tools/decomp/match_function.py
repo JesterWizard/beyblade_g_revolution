@@ -275,7 +275,20 @@ def _is_addr_word(raw: bytes) -> bool:
     value = int.from_bytes(raw[:4], "little")
     if value == 0:
         return True
-    return 0x02000000 <= value <= 0x0EFFFFFF
+    if value & 3:
+        return False
+    return any(
+        lo <= value < hi
+        for lo, hi in (
+            (0x02000000, 0x02040000),  # EWRAM
+            (0x03000000, 0x03008000),  # IWRAM
+            (0x04000000, 0x04000400),  # I/O
+            (0x05000000, 0x05000400),  # palette RAM
+            (0x06000000, 0x06018000),  # VRAM
+            (0x08000000, 0x0E000000),  # ROM
+            (0x0E000000, 0x0E010000),  # SRAM
+        )
+    )
 
 
 def score_bytes(got: bytes, want: bytes) -> dict[str, Any]:
@@ -379,7 +392,15 @@ def record_score(function: str, info: dict[str, Any], *, note: str = "") -> None
 
 
 def write_single_function_c(function: str, body: str, out: Path) -> None:
-    out.write_text(f'#include "global.h"\n\n// @ {addr_from_name(function):#010x}\n{body}\n')
+    # battle.h + ram_map.h are include-guarded and re-include global.h, so this
+    # is safe for every function and lets permuter output that references
+    # gBattleWork / RAM names integrate without a manual header fix.
+    out.write_text(
+        '#include "global.h"\n'
+        '#include "ram_map.h"\n'
+        '#include "battle.h"\n\n'
+        f"// @ {addr_from_name(function):#010x}\n{body}\n"
+    )
 
 
 def compile_and_score(

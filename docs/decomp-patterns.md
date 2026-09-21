@@ -9,14 +9,18 @@ Automatic matchers live in [`tools/decomp/c_patterns.py`](../tools/decomp/c_patt
 # 0. Session start — no agent
 python3 tools/decomp/script_first.py
 
-# 1. Compact packet (only leftover functions)
+# 1. Compact packet (only leftover functions). The packet runs the local
+#    permuter on near-miss/WIP seeds before asking the agent to write anything.
 python3 tools/decomp/agent_packet.py --next
 python3 tools/decomp/agent_packet.py sub_08034894
 
-# 2. If the packet has no MATCH, write C from its seed (max 2 retries)
+# 2. If the packet has no MATCH, write C from its seed (max 1 attempt)
 python3 tools/decomp/try_convert.py sub_08034894 --integrate --note battle/input
 python3 tools/decomp/match_function.py sub_08034894 scratch.c   # compact DIFF by default
 python3 tools/decomp/integrate_c.py sub_08034894 @scratch.c --kind semantic --note "…"
+
+# 3. Same-size DIFF → local permuter (imports, scores, searches, integrates):
+python3 tools/decomp/permuter/auto.py sub_08034894 --seconds 240
 
 # Grow patterns from clones instead of converting each by hand:
 python3 tools/decomp/cluster_shapes.py
@@ -212,9 +216,38 @@ From [`decomp-mission.md`](decomp-mission.md):
 
 | Command | When |
 |---------|------|
-| `python3 tools/decomp/script_first.py` | Every session first (patterns + cleaned m2c) |
+| `python3 tools/decomp/script_first.py` | Every session first (patterns + cleaned m2c + permuter on near-misses) |
 | `python3 tools/decomp/agent_packet.py --next` | One leftover function |
+| `python3 tools/decomp/permuter/auto.py FN` | Bounded permuter run; integrates on verified score 0 |
 | `python3 tools/decomp/cluster_shapes.py` | Clone families → new `c_patterns.py` matcher |
 | `tools/decomp/battle_semantic_batch.sh 10 --seeds-only` | Hand-verified battle seeds |
 
 After any batch: `make compare` must stay **OK**. End-to-end: [README.md](../README.md) § Decompilation.
+
+---
+
+## Permuter notes
+
+`tools/decomp/permuter/auto.py` is the only entry point you need:
+
+1. imports a fresh seed (`src/wip/FN.c` first, then m2c) and writes a
+   `matchflags` sidecar from the seed's `/* match-flags: … */` comment
+2. scores the seed once (`permuter.py --debug`) — score 0 means the seed already
+   matches, so the search is skipped
+3. otherwise searches, bounded by `--seconds`, then
+4. verifies every score-0 candidate with `match_function.py` and integrates the
+   first one that is byte-exact.
+
+Gotchas:
+
+- **`-fprologue-bugfix` is required for 21 functions.** `matchflags` is the only
+  way the permuter compiler sees it (the permuter strips comments before
+  compiling). Without it agbcc emits `push {lr}` / `pop {pc}` and score 0 is
+  unreachable.
+- **Score 0 is not proof.** The permuter ignores branch targets, so a candidate
+  can score 0 and still differ by a branch offset (`sub_0806DEF4`). `auto.py`
+  always re-verifies; if every score-0 candidate fails, retry with
+  `--strict-branches`.
+- Configured compile flags live in `tools/decomp/permuter/compile.sh` and must
+  stay in sync with `match_function.py` `ALLOWED_MATCH_FLAGS`.
+
