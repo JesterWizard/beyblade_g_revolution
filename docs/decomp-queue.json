@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T18:33:05Z",
+  "generated": "2026-09-21T18:35:14Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 256,
-    "semantic_done": 377,
-    "readable_asm": 256,
+    "pending": 255,
+    "semantic_done": 378,
+    "readable_asm": 255,
     "opcode": 0,
     "battle_pending": 84,
     "battle_semantic": 73,
@@ -316,8 +316,8 @@
     {
       "name": "sub_08061800",
       "addr": "0x08061800",
-      "kind": "asm",
-      "bytes": 76,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08061800.c",
       "notes": "src/wip/sub_08061800.md",
       "status": "41/76 bytes (53.9%), same size; correctly identified _08073C4C as a 'bx r3' trampoline (4th C arg = handler fn ptr, confirmed by precedent in sub_08035884.c) and the 3rd call arg as the reused 'stride' intermediate (not zero, matching retail leaving r2 unset/leftover). Remaining diff is pure register-allocation/instruction-ordering noise around the p->unk5D and p->unk98 field loads (retail resets r0=p fresh before each offset add; agbcc here does incremental adds/reuses r1 directly for the shift)",
