@@ -1792,3 +1792,11 @@ notes = "src/wip/sub_08073114.md"
 status = "18/112 (108B); i=0 must precede count=...; table pseudo wants r1 not r0"
 next = "permuter"
 score = "18/112"
+
+[[wip]]
+name = "sub_080739E8"
+seed = "src/wip/sub_080739E8.c"
+notes = "src/wip/sub_080739E8.md"
+status = "11/36; rotated bottom test + separate entry guard, agbcc merges them"
+next = "permuter"
+score = "11/36"

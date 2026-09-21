@@ -1,41 +1,29 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080617c4
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+// @ 0x080617c4
+// Register the object at gUnk_03000798 with the engine: store `a` and `b` in the two
+// slots at +0x88/+0x8C, publish `a`'s two bytes at +0xA0/+0xA2, then derive the word at
+// +0x9C from the halfword just written at +0xA0 (read back, not the local, which is why
+// it survives as a reload). The `& 1` test on a->unk0C comes first and returns early.
+// The table is a real typed lvalue (gUnk_03000798) so agbcc keeps the literal in one
+// register instead of re-materialising it.
 void sub_080617C4(struct Unk617C4 *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "adds r2, r0, #0x0\n"
-        "movs r0, #0x01\n"
-        "ldrb r3, [r2, #0x0C]\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "beq _080617F8\n"
-        "ldr r0, _080617FC @ =0x03000798\n"
-        "ldr r3, [r0, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x88\n"
-        "str r2, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "str r1, [r0, #0x00]\n"
-        "ldrb r0, [r2, #0x04]\n"
-        "adds r1, r3, #0x0\n"
-        "adds r1, #0xA0\n"
-        "strh r0, [r1, #0x00]\n"
-        "ldrb r0, [r2, #0x05]\n"
-        "adds r2, r3, #0x0\n"
-        "adds r2, #0xA2\n"
-        "strh r0, [r2, #0x00]\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "lsrs r1, r1, #0x02\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x9C\n"
-        "strh r1, [r0, #0x00]\n"
-        "_080617F8:\n"
-        "bx lr\n"
-        ".byte 0x00, 0x00\n"
-        "_080617FC: .4byte 0x03000798\n"
-    );
+    struct Unk0798 *s;
+
+    if ((a->unk0C & 1) == 0)
+        return;
+    s = gUnk_03000798;
+    s->unk88 = a;
+    s->unk8C = b;
+    s->unkA0 = a->unk04;
+    s->unkA2 = a->unk05;
+    s->unk9C = s->unkA0 >> 2;
 }
 

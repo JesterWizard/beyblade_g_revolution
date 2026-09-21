@@ -1,45 +1,32 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08071f44
-__attribute__((naked))
-struct Unk71F84 *sub_08071F44(s32 a)
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+// @ 0x08071f44
+// Find the first of *gData_030040C4 consecutive 0x28-byte records at *gData_030040E4
+// whose +0x16 flag is set and whose +0x18 word equals `a`. The countdown is written
+// `i != -1` (not `i >= 0`): retail materialises -1 once (`movs r0,#1; negs r0,r0`) and
+// then compares the counter against a *register* holding it at both the entry guard and
+// the back edge (`cmp r2,r0` / `cmp r2,r4`); `i >= 0` makes agbcc emit `cmp #0` plus a
+// different loop shape (18/64).
+// The two addresses MUST come from data_symbols.s: they are 0x20 apart, and with plain
+// literals agbcc substitutes the second pool load with `subs r0, #0x20` (60 bytes,
+// size mismatch). As symbols it emits two independent pool words like retail.
+struct Unk71E84 *sub_08071F44(s32 a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "adds r3, r0, #0x0\n"
-        "ldr r0, _08071F6C @ =0x030040E4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r0, _08071F70 @ =0x030040C4\n"
-        "ldrb r2, [r0, #0x00]\n"
-        "subs r2, #0x01\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r2, r0\n"
-        "beq _08071F7C\n"
-        "adds r4, r0, #0x0\n"
-        "_08071F5C:\n"
-        "ldrb r0, [r1, #0x16]\n"
-        "cmp r0, #0x00\n"
-        "beq _08071F74\n"
-        "ldr r0, [r1, #0x18]\n"
-        "cmp r0, r3\n"
-        "bne _08071F74\n"
-        "adds r0, r1, #0x0\n"
-        "b _08071F7E\n"
-        "_08071F6C: .4byte 0x030040E4\n"
-        "_08071F70: .4byte 0x030040C4\n"
-        "_08071F74:\n"
-        "adds r1, #0x28\n"
-        "subs r2, #0x01\n"
-        "cmp r2, r4\n"
-        "bne _08071F5C\n"
-        "_08071F7C:\n"
-        "movs r0, #0x00\n"
-        "_08071F7E:\n"
-        "pop {r4}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk71E84 *p = *(struct Unk71E84 **)gData_030040E4;
+    s32 i;
+
+    for (i = *(u8 *)gData_030040C4 - 1; i != -1; i--)
+    {
+        if (p->unk16 != 0 && p->unk18 == a)
+            return p;
+        p++;
+    }
+    return 0;
 }
 

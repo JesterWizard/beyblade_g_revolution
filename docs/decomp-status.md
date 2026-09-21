@@ -8,18 +8,43 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **362/633 (57.2%)** |
-| **Decompiled C (bytes)** | **23,586/90,272 (26.1%)** |
+| **Decompiled C (functions)** | **374/633 (59.1%)** |
+| **Decompiled C (bytes)** | **24,270/90,272 (26.9%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 271/633 (42.8%) |
+| Readable Thumb | 259/633 (40.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 68/160 (42.5% fn, 18.0% bytes) |
+| Battle semantic C | 70/160 (43.8% fn, 18.3% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — `data_symbols.s` addressing sweep (+3, 371→374/633)
+The breakthrough this batch: **when retail's two pool words are 0x20 apart, plain
+literals make agbcc collapse the second into `subs r0, #0x20`.** Switching the address to
+a symbol from `asm/data_symbols.s` (see `include/data_symbols.h`) stops the folding and
+also changes register colouring. Two of the three matches below needed it.
+- `sub_080617C4` (60B) — register the object with the engine: `a`/`b` into
+  `gUnk_03000798->unk88/unk8C`, `a->unk04`/`unk05` into `unkA0`/`unkA2`, then
+  `unk9C = unkA0 >> 2` (read **back** from the field, not from a local).
+- `sub_08071F44` (64B) — scan `*gData_030040C4` records of 0x28 bytes at
+  `*gData_030040E4`. Requires **both** `i != -1` (retail materialises -1 once and compares
+  a register at both the entry guard and the back edge; `i >= 0` gives 18/64) **and** the
+  two `gData_` symbols (0x030040C4 is 0x20 below 0x030040E4; literals give a 60-byte
+  `subs r0, #0x20` version).
+- `sub_0802C62C` (64B) — count entries of `gMainWorkPtr->unk1694` whose signed +3 byte
+  equals the argument. `val = (s8)a;` must be initialised **before** `count = 0;`: with
+  `s32 count = 0;` declared/initialised first the `movs r3,#0` lands ahead of the argument
+  truncation (59/64).
+- Re-parked with much stronger seeds (same technique):
+  `sub_08061C48` 36/56 → **52/56** (only `ldr r5` vs `lsls` scheduling swapped at +0x0e),
+  `sub_08043B90` 67/76 (struct-field form; tail return must reuse r0 == 0 — note symbols
+  make it *worse*, 14/76, because retail synthesises 0x16E0 with `movs #0xB7 << 5`),
+  `sub_08043B58` 38/54 (`ldm r3!,{r1}` vs `adds/ldr` and key/table register swap),
+  `sub_080739E8` 11/36 (rotated bottom test with a separate entry guard that agbcc merges).
+- New symbol added: `gData_08096794` (the pointer array walked by `sub_08043B58`).
 
 ### 2026-09-21 — permuter + inline-literal sweep (+6, 365→371/633)
 - `sub_08031294` (28B) — flags/word init. The two ORs must be written **inline** with an

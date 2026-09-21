@@ -44,6 +44,13 @@ struct Unk43B90 /* 0x08 */
     /* 04 */ s32 unk04;
 };
 
+/* 8-byte keyed list node: u32 key at +0, next at +4. sub_08043B58. */
+struct Unk43B58 /* 0x08 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ struct Unk43B58 *unk04;
+};
+
 
 struct Unk338E4 /* 0x08 */
 {
