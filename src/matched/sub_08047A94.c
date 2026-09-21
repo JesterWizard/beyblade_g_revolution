@@ -1,78 +1,27 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08047a94
-__attribute__((naked))
-void sub_08047A94(void)
+#include "global.h"
+
+// @ 0x08047a94
+void sub_08047A94(u8 *a, s32 b, u32 c)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r1, #0x0\n"
-        "adds r7, r2, #0x0\n"
-        "ldr r1, _08047AB0 @ =0x000002D5\n"
-        "adds r0, r0, r1\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "cmp r4, r0\n"
-        "bne _08047AB4\n"
-        "movs r0, #0x0E\n"
-        "bl sub_08061610\n"
-        "b _08047ABA\n"
-        "_08047AB0: .4byte 0x000002D5\n"
-        "_08047AB4:\n"
-        "movs r0, #0x0F\n"
-        "bl sub_08061610\n"
-        "_08047ABA:\n"
-        "ldr r0, _08047B28 @ =0x080D79CC\n"
-        "ldr r1, _08047B2C @ =0x080B7429\n"
-        "bl sub_080617C4\n"
-        "lsls r4, r4, #0x04\n"
-        "adds r6, r4, #0x0\n"
-        "adds r6, #0x28\n"
-        "movs r0, #0x00\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_080615EC\n"
-        "ldr r5, _08047B30 @ =0x083A6BE0\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r5, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "adds r4, #0x30\n"
-        "movs r0, #0x00\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080615EC\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r5, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _08047B34 @ =0x082BCD00\n"
-        "ldr r1, _08047B38 @ =0x080B738E\n"
-        "bl sub_080617C4\n"
-        "movs r0, #0x00\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_080615EC\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r7, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08047B28: .4byte 0x080D79CC\n"
-        "_08047B2C: .4byte 0x080B7429\n"
-        "_08047B30: .4byte 0x083A6BE0\n"
-        "_08047B34: .4byte 0x082BCD00\n"
-        "_08047B38: .4byte 0x080B738E\n"
-    );
+    u32 t;
+
+    if (b == *(s8 *)(a + 0x2D5))
+        sub_08061610(0x0E);
+    else
+        sub_08061610(0x0F);
+    sub_080617C4((struct Unk617C4 *)gData_080D79CC, (u32)gData_080B7429);
+    t = (u32)b << 4;
+    sub_080615EC(0, t + 0x28);
+    sub_0806171C((void *)gData_083A6BE0, sub_08061784() >> 1, 0);
+    sub_080615EC(0, t + 0x30);
+    sub_0806171C((void *)gData_083A6BE0, sub_08061784() >> 1, 0);
+    sub_080617C4((struct Unk617C4 *)gData_082BCD00, (u32)gData_080B738E);
+    sub_080615EC(0, t + 0x28);
+    sub_0806171C((void *)c, sub_08061784() >> 1, 0);
 }
 

@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-21T14:17:48Z",
+  "generated": "2026-09-21T14:34:52Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 307,
-    "semantic_done": 326,
-    "readable_asm": 307,
+    "pending": 296,
+    "semantic_done": 337,
+    "readable_asm": 296,
     "opcode": 0,
-    "battle_pending": 92,
-    "battle_semantic": 62,
+    "battle_pending": 87,
+    "battle_semantic": 67,
     "blocked": 20,
     "wip": 205
   },
@@ -822,8 +822,8 @@
     {
       "name": "sub_08047A94",
       "addr": "0x08047A94",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08047A94.c",
       "notes": "src/wip/sub_08047A94.md",
       "status": "Two semantic attempts: baseline 50/168 (188B) and register-pinned 54/168 (188B). Calls/constants and rendering sequence are mapped, but retail's r4/r7 argument lifetime and saved-r7 prologue differ; second pinning caused an unsaved-r7 prologue.",
@@ -844,8 +844,8 @@
     {
       "name": "sub_0804A438",
       "addr": "0x0804A438",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804A438.c",
       "notes": "src/wip/sub_0804A438.md",
       "status": "Two attempts: generic renderer 56/168 (180B), cloned direct-shift/register-layout seed 57/168 (176B). Rendering semantics and constants match, but agbcc omits retail's saved-r7 prologue for the persistent third argument and emits extra coordinate narrowing.",
@@ -877,8 +877,8 @@
     {
       "name": "sub_0804B40C",
       "addr": "0x0804B40C",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804B40C.c",
       "notes": "src/wip/sub_0804B40C.md",
       "status": "Two semantic attempts: direct family seed 51/168 (176B), then fixed-offset r4 variant 49/168 (176B). Call sequence, constants, and signed-index behavior are mapped; register pinning worsened the prologue and retail's offset/first-coordinate lifetime remains unresolved.",
@@ -888,8 +888,8 @@
     {
       "name": "sub_0804C27C",
       "addr": "0x0804C27C",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804C27C.c",
       "notes": "src/wip/sub_0804C27C.md",
       "status": "Two attempts consumed: parameter-register syntax was rejected by agbcc; the viable local r4/r6 pin produced 56/168 (176B). Renderer semantics/constants are mapped, but fixed-register declaration order swaps the retail saved-register prologue and coordinate lifetime.",
@@ -899,8 +899,8 @@
     {
       "name": "sub_0804CE2C",
       "addr": "0x0804CE2C",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804CE2C.c",
       "notes": "src/wip/sub_0804CE2C.md",
       "status": "Two semantic attempts: family seed 51/168 (176B), then r4/r6 explicit locals 56/168 (176B). Constants and call sequence are correct; agbcc still swaps the desired index/first-coordinate register allocation and retains an 8-byte size delta.",
@@ -910,8 +910,8 @@
     {
       "name": "sub_0804E4F4",
       "addr": "0x0804E4F4",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804E4F4.c",
       "notes": "src/wip/sub_0804E4F4.md",
       "status": "Two semantic attempts: generic renderer 51/168 (176B), then first-coordinate r6 pin 53/168 (176B). Rendering semantics and constants are correct, but saved-register allocation/prologue and coordinate narrowing remain different from retail.",
@@ -1735,8 +1735,8 @@
     {
       "name": "sub_0803DD60",
       "addr": "0x0803DD60",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803DD60.c",
       "notes": "src/wip/sub_0803DD60.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1790,8 +1790,8 @@
     {
       "name": "sub_0803EBB0",
       "addr": "0x0803EBB0",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803EBB0.c",
       "notes": "src/wip/sub_0803EBB0.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1801,8 +1801,8 @@
     {
       "name": "sub_0803EC34",
       "addr": "0x0803EC34",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803EC34.c",
       "notes": "src/wip/sub_0803EC34.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1812,8 +1812,8 @@
     {
       "name": "sub_0803ECB8",
       "addr": "0x0803ECB8",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803ECB8.c",
       "notes": "src/wip/sub_0803ECB8.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1856,8 +1856,8 @@
     {
       "name": "sub_08042B00",
       "addr": "0x08042B00",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08042B00.c",
       "notes": "src/wip/sub_08042B00.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1904,9 +1904,9 @@
       "bytes": 144,
       "seed": "src/wip/sub_080442FC.c",
       "notes": "src/wip/sub_080442FC.md",
-      "status": "132/144; a in r4 vs r5",
+      "status": "134/144; a in r4 vs r5 (gData symbols fixed pool fold)",
       "next": "perm_refer_to_var so index takes r4",
-      "score": "132/144"
+      "score": "134/144"
     },
     {
       "name": "sub_08045128",
