@@ -55,9 +55,11 @@ def ensure_import(name: str, *, force: bool) -> int:
         capture_output=True,
         text=True,
     )
-        for line in (result.stdout or "").splitlines():
-            if line.startswith(("imported ", "match-flags:", "match-compiler:", "removed stale")):
-                print(line)
+    for line in (result.stdout or "").splitlines():
+        if line.startswith(
+            ("imported ", "match-flags:", "match-compiler:", "removed stale")
+        ):
+            print(line)
     if result.returncode != 0:
         sys.stderr.write(result.stdout or "")
         sys.stderr.write(result.stderr or "")
