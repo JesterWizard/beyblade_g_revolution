@@ -149,6 +149,40 @@ def extra_cflags(c_path: Path) -> list[str]:
     return flags
 
 
+DATA_SYMBOLS = ROOT / "asm" / "data_symbols.s"
+SET_DATA_RE = re.compile(
+    r"^SET_DATA\s+([A-Za-z_][A-Za-z0-9_]*)\s*,\s*(0x[0-9A-Fa-f]+|\d+)\s*$"
+)
+
+
+def data_symbol_value(name: str) -> int | None:
+    """Absolute value of a project data symbol (see asm/data_symbols.s)."""
+    if not DATA_SYMBOLS.is_file():
+        return None
+    for line in DATA_SYMBOLS.read_text().splitlines():
+        match = SET_DATA_RE.match(line.split("@")[0].strip())
+        if match and match.group(1) == name:
+            return int(match.group(2), 0)
+    return None
+
+
+def data_symbol_defsyms() -> list[str]:
+    """`--defsym` args so `.word gData_…` resolves at assembly time.
+
+    Retail addressed some tables through symbols; agbcc only reproduces those
+    codegen shapes (no constant folding / substitution / re-colouring) when the
+    address is a symbol, not a literal.  Values come from asm/data_symbols.s.
+    """
+    args: list[str] = []
+    if not DATA_SYMBOLS.is_file():
+        return args
+    for line in DATA_SYMBOLS.read_text().splitlines():
+        match = SET_DATA_RE.match(line.split("@")[0].strip())
+        if match:
+            args += ["--defsym", f"{match.group(1)}={match.group(2)}"]
+    return args
+
+
 def preprocess(c_path: Path, out_path: Path, *, quiet: bool = False) -> None:
     extra = {"capture_output": True, "text": True} if quiet else {}
     subprocess.run(
@@ -200,6 +234,7 @@ def compile_c(
             "arm-none-eabi-as",
             "-mcpu=arm7tdmi",
             "-mthumb-interwork",
+            *data_symbol_defsyms(),
             str(asm_path),
             "-o",
             str(obj_path),

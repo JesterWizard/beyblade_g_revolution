@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T13:43:42Z",
+  "generated": "2026-09-21T14:10:21Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 313,
-    "semantic_done": 320,
-    "readable_asm": 313,
+    "pending": 308,
+    "semantic_done": 325,
+    "readable_asm": 308,
     "opcode": 0,
     "battle_pending": 92,
     "battle_semantic": 62,
@@ -1713,8 +1713,8 @@
     {
       "name": "sub_08037318",
       "addr": "0x08037318",
-      "kind": "asm",
-      "bytes": 100,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08037318.c",
       "notes": "src/wip/sub_08037318.md",
       "status": "91/100; 0x2C vs table ldr order",
@@ -1845,8 +1845,8 @@
     {
       "name": "sub_08041858",
       "addr": "0x08041858",
-      "kind": "asm",
-      "bytes": 52,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08041858.c",
       "notes": "src/wip/sub_08041858.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1867,8 +1867,8 @@
     {
       "name": "sub_08042B28",
       "addr": "0x08042B28",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08042B28.c",
       "notes": "src/wip/sub_08042B28.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1878,8 +1878,8 @@
     {
       "name": "sub_08042B50",
       "addr": "0x08042B50",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08042B50.c",
       "notes": "src/wip/sub_08042B50.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1988,8 +1988,8 @@
     {
       "name": "sub_08061BE8",
       "addr": "0x08061BE8",
-      "kind": "asm",
-      "bytes": 96,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08061BE8.c",
       "notes": "src/wip/sub_08061BE8.md",
       "status": "92/96; lsls vs table ldr order",

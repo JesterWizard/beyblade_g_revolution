@@ -35,3 +35,4 @@
 .include "ram_map_iwram.s"
 .include "ram_map_ewram.s"
 .include "ram_map_sram.s"
+.include "data_symbols.s"

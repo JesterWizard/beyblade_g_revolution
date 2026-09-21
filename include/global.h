@@ -9,6 +9,7 @@
 #include "unknown-types.h"
 #include "unknown-functions.h"
 #include "ram_map.h"
+#include "data_symbols.h"
 
 // Place game-wide types, externs, and helpers here as the decomp grows.
 

@@ -113,7 +113,8 @@ RAM_MAP_FRAGMENTS := \
 	$(ASM_SUBDIR)/ram_map_ewram.s \
 	$(ASM_SUBDIR)/ram_map_sram.s \
 	$(ASM_SUBDIR)/ram_map_iwram_pool.inc \
-	$(ASM_SUBDIR)/ram_map_ewram_pool.inc
+	$(ASM_SUBDIR)/ram_map_ewram_pool.inc \
+	$(ASM_SUBDIR)/data_symbols.s
 ASM_MATCHINGS := $(wildcard $(ASM_SUBDIR)/matchings/*.s)
 ASM_ROM_GAPS := $(wildcard $(ASM_SUBDIR)/rom_gap_*.s)
 ASM_SRCS := \
