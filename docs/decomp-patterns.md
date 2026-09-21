@@ -153,6 +153,15 @@ True `bx lr` leaves with a branch: default agbcc emits extra `push {lr}` / `pop 
 
 **`/* match-flags: -fprologue-bugfix */`:** per-file (parsed by `match_function.py`; not global `CFLAGS`). Honest wins include null-check stores (`sub_0802D8C4`, `sub_08061BDC`, `sub_08062684`, `sub_080475C4`), clamp `u32` args (`sub_080615EC`), and small helpers (`sub_08033958`, `sub_0806AC68`). Table walks / `+r` barriers that only matched with GCC asm labels were parked.
 
+**`/* match-compiler: old_agbcc */`:** per-file compiler choice. `pret/agbcc`'s `install.sh` installs **two** compilers (`tools/agbcc/bin/agbcc`, `tools/agbcc/bin/old_agbcc`) and they do **not** generate identical code — the older one emits some un-coalesced load forms the newer one folds, and vice versa. `match_function.py` parses the comment (`MATCH_COMPILER_RE`), `import_function.py` mirrors it into a `compiler` sidecar so `permuter/compile.sh` swaps `CC`, and the default stays `agbcc`. This is the escape hatch for "unreachable in semantic C" seeds:
+
+| Function | Old compiler wins |
+|----------|-------------------|
+| `sub_08061308` | un-coalesced `ldrb r0,[r0]; lsls r1,r0` (48/48, `agbcc` 46/48 in 4,000 variants) |
+| `sub_08062A74` | `lsls r1,r4,#5` with the handler pool held in `r2` (76/76, `agbcc` 74/76) |
+
+Before parking a seed whose DIFF is a register *destination* on a load, score it with both compilers (`build/dual_compiler_sweep.py` does the whole `src/wip` backlog).
+
 Clamp helpers take `u32` args so the callee has no `lsls/lsrs` (`sub_080615EC`). Head/tail IWRAM 0x10 apart and BG I/O switch trees still need honest C (parked: `sub_0806FEFC`, `sub_08061E40`, `sub_08069908`).
 
 Retry remaining `bx lr` + branch functions with the comment before parking (`sub_08034894`, `sub_08062728` stm-fill, `sub_080699C8`).

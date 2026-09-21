@@ -55,9 +55,9 @@ def ensure_import(name: str, *, force: bool) -> int:
         capture_output=True,
         text=True,
     )
-    for line in (result.stdout or "").splitlines():
-        if line.startswith(("imported ", "match-flags:", "removed stale")):
-            print(line)
+        for line in (result.stdout or "").splitlines():
+            if line.startswith(("imported ", "match-flags:", "match-compiler:", "removed stale")):
+                print(line)
     if result.returncode != 0:
         sys.stderr.write(result.stdout or "")
         sys.stderr.write(result.stderr or "")
@@ -177,6 +177,23 @@ def prepend_match_flags(candidate: str, workdir: Path) -> str:
     return f"/* match-flags: {' '.join(flags)} */\n{candidate}"
 
 
+def prepend_compiler(candidate: str, workdir: Path) -> str:
+    """Re-attach `/* match-compiler: ... */` to an extracted body.
+
+    Same reason as prepend_match_flags: the permuter's `base.c`/`source.c` are
+    preprocessed, so the comment is gone. Without it the candidate is verified
+    (and landed) with the default agbcc, which cannot reproduce the bytes it was
+    searched for with old_agbcc.
+    """
+    compiler_path = workdir / "compiler"
+    if not compiler_path.is_file() or "match-compiler" in candidate:
+        return candidate
+    compiler = compiler_path.read_text().strip()
+    if not compiler or compiler == "agbcc":
+        return candidate
+    return f"/* match-compiler: {compiler} */\n{candidate}"
+
+
 def verify(name: str, body: str, scratch: Path) -> bool:
     sys.path.insert(0, str(ROOT / "tools" / "decomp"))
     from match_function import write_single_function_c  # noqa: WPS433
@@ -234,6 +251,7 @@ def candidate_from(workdir: Path, name: str) -> tuple[str, str] | None:
         if not body:
             continue
         body = prepend_match_flags(body, workdir)
+        body = prepend_compiler(body, workdir)
         if verify(name, body, scratch):
             return body, f"permuter/{source.relative_to(ROOT)}"
     return None

@@ -46,10 +46,32 @@ if [ -f "$FLAGS_FILE" ]; then
   done <"$FLAGS_FILE"
 fi
 
+# Compiler choice. pret/agbcc installs two compilers and they do not generate
+# identical code, so a function that only matches with the older one records
+# `/* match-compiler: old_agbcc */`, which import_function.py writes to a
+# `compiler` sidecar next to this script.
+CC="tools/agbcc/bin/agbcc"
+COMPILER_FILE="$here/compiler"
+if [ -f "$COMPILER_FILE" ]; then
+  want="$(tr -d '[:space:]' <"$COMPILER_FILE")"
+  case "$want" in
+    "" | agbcc) ;;
+    old_agbcc) CC="tools/agbcc/bin/old_agbcc" ;;
+    *)
+      echo "error: unsupported match-compiler '$want' in $COMPILER_FILE" >&2
+      exit 1
+      ;;
+  esac
+fi
+if [ ! -x "$CC" ]; then
+  echo "error: $CC missing — run build_tools.sh" >&2
+  exit 1
+fi
+
 ASM="$(mktemp --suffix=.s)"
 trap 'rm -f "$ASM"' EXIT
 
-tools/agbcc/bin/agbcc \
+"$CC" \
   "$INPUT" -o "$ASM" \
   -mthumb-interwork -Wimplicit -Wparentheses -O2 -g -fhex-asm \
   "${EXTRA_FLAGS[@]}"

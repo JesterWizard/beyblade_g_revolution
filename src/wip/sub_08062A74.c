@@ -1,6 +1,7 @@
 #include "global.h"
 
 // @ 0x08062a74
+/* match-compiler: old_agbcc */
 void sub_08062A74(u32 a, void *src)
 {
     u32 r0;
@@ -27,9 +28,8 @@ void sub_08062A74(u32 a, void *src)
     r0 |= r2;
     *(u16 *)r1 = (u16)r0;
     r2 = 0x080BB8C0;
-    r1 = (r3 = r4 << 5);
-    r0 = 0x05000200;
-    r1 += r0;
+    r2 = 0x080BB8C0;
+    r1 = (r4 << 5) + 0x05000200;
     r3 = *(u32 *)r2;
     r0 = (u32)r5;
     r2 = 0x20;

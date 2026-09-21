@@ -6,20 +6,20 @@ Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **47.7%** of functions (302/633) and **20.9%** of original function bytes (18,910/90,272).
+Decompiled C is **48.0%** of functions (304/633) and **21.1%** of original function bytes (19,034/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `███████████████░░░░░░░░░░░░░░░░░` | **47.7%** | 302/633 |
-| Decompiled C (bytes) | `███████░░░░░░░░░░░░░░░░░░░░░░░░░` | **20.9%** | 18,910/90,272 |
+| Decompiled C (functions) | `███████████████░░░░░░░░░░░░░░░░░` | **48.0%** | 304/633 |
+| Decompiled C (bytes) | `███████░░░░░░░░░░░░░░░░░░░░░░░░░` | **21.1%** | 19,034/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 302 (47.7%) | 18,910 (20.9%) |
-| Readable Thumb | 331 (52.3%) | 71,362 (79.1%) |
+| Semantic C | 304 (48.0%) | 19,034 (21.1%) |
+| Readable Thumb | 329 (52.0%) | 71,238 (78.9%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **34.4%** functions / **15.4%** bytes in semantic C (55/160; 0 opcode left).
@@ -77,7 +77,7 @@ python3 tools/decomp/permuter/auto.py sub_XXXXXXXX --seconds 240
 python3 tools/decomp/park_wip.py sub_XXXXXXXX scratch.c --status "…" --next "…" --score "N/M"
 ```
 
-`permuter/auto.py` imports the seed, scores it, searches, and lands score 0 for you — it costs no tokens, so it always runs before a second model attempt. It honours per-function `/* match-flags: -fprologue-bugfix */` (21 functions need it). Clone families → one new matcher in `c_patterns.py`:
+`permuter/auto.py` imports the seed, scores it, searches, and lands score 0 for you — it costs no tokens, so it always runs before a second model attempt. It honours per-function `/* match-flags: -fprologue-bugfix */` (21 functions need it) and `/* match-compiler: old_agbcc */` (the toolchain ships two agbcc builds that emit different code). Clone families → one new matcher in `c_patterns.py`:
 
 ```bash
 python3 tools/decomp/cluster_shapes.py

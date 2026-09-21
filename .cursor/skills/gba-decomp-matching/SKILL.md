@@ -83,6 +83,17 @@ Wins that stay MATCH without asm labels: null-check stores (`sub_0802D8C4`, `sub
 
 `match_function.py` reads the comment from the original `.c` (gcc `-E` strips it). If it still extra-pushes after the flag + retail register order, park.
 
+### 6b. Per-function compiler: `/* match-compiler: old_agbcc */`
+
+`pret/agbcc`'s `install.sh` installs **two** compilers — `tools/agbcc/bin/agbcc` and `tools/agbcc/bin/old_agbcc` — and they do not generate identical code. The older one keeps some loads un-coalesced (e.g. `ldrb r0,[r0]; lsls r1,r0`) where the newer one folds the load into its consumer, and prefers different registers for nested assignments. When a seed is stuck on a *destination* register of a load/shift, score it with both compilers before parking:
+
+```c
+// @ 0x08061308
+/* match-compiler: old_agbcc */
+```
+
+`match_function.py` parses it (`MATCH_COMPILER_RE`), `import_function.py` writes a `compiler` sidecar (the permuter preprocesses `base.c`, so `compile.sh` cannot read the comment itself) and `permuter/compile.sh` swaps `CC`. Wins: `sub_08061308` (48/48 vs 46/48), `sub_08062A74` (76/76 vs 74/76). `build/dual_compiler_sweep.py` scores the whole `src/wip` backlog with both.
+
 ### 7. Schedule a pool load between two ops on one local
 
 Retail `lsls r0,#24; ldr r2,=0x05000200; lsrs r0,#23`. agbcc delays the `ldr` until the add. Win: take the address of the shifted local so the second shift reloads it:
@@ -120,7 +131,7 @@ tools/decomp/permuter/permute.sh run nonmatchings/sub_XXXXXXXX -j 8 --stop-on-ze
 python3 tools/decomp/match_function.py sub_XXXXXXXX <permuter-output.c>
 ```
 
-`import_function.py` writes a `matchflags` sidecar from the seed's `/* match-flags: … */` comment; `permuter/compile.sh` passes it to agbcc. Without it the permuter cannot reach score 0 for the 21 functions needing `-fprologue-bugfix` (agbcc emits a `push {lr}` retail does not have). If `auto.py` reports a base score that does not match `match_function.py`'s DIFF, the flags or the seed are wrong — fix that before letting it search.
+`import_function.py` writes `matchflags` and `compiler` sidecars from the seed's `/* match-flags: … */` and `/* match-compiler: … */` comments; `permuter/compile.sh` passes them to agbcc. Without it the permuter cannot reach score 0 for the 21 functions needing `-fprologue-bugfix` (agbcc emits a `push {lr}` retail does not have). If `auto.py` reports a base score that does not match `match_function.py`'s DIFF, the flags or the seed are wrong — fix that before letting it search.
 
 Run overnight on near-misses; don't babysit interactive retries.
 

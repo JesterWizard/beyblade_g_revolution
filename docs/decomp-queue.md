@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T11:14:55Z_
+_Updated: 2026-09-21T11:32:15Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 302 |
-| Still need semantic C | **331** |
-| Readable Thumb remaining | 331 |
+| Semantic C done | 304 |
+| Still need semantic C | **329** |
+| Readable Thumb remaining | 329 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 99 (55 already semantic) |
 | Blocked (documented) | 20 |
@@ -203,11 +203,11 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080523A4` | 112 | 71/112 | `src/wip/sub_080523A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08052934` | 84 | 49/84 | `src/wip/sub_08052934.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806105C` | 44 | 38/44 | `src/wip/sub_0806105C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08061308` | 48 | 46/48 | `src/wip/sub_08061308.c` | 46/48; ldrb r1 vs r0 — unreachable in semantic C (agbcc always coalesces the load into the shift destination) | do not re-attempt; naked wrapper in src/matched already byte-matches |
+| `sub_08061308` | 0 | 48/48 | `src/wip/sub_08061308.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc coalesces the ldrb into its shift destination) | done |
 | `sub_080617C4` | 60 | 13/60 | `src/wip/sub_080617C4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08061BE8` | 96 | 92/96 | `src/wip/sub_08061BE8.c` | 92/96; lsls vs table ldr order | 62CC8-style &local or overnight permuter |
 | `sub_08061C48` | 56 | unscored | `src/wip/sub_08061C48.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08062A74` | 76 | 74/76 | `src/wip/sub_08062A74.c` | 74/76; ldrh wants r2 while lsls wants r1 — mutually exclusive attractors | do not re-attempt; naked wrapper in src/matched already byte-matches |
+| `sub_08062A74` | 0 | 76/76 | `src/wip/sub_08062A74.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc puts lsls in r3 for the nested-assign form) | done |
 | `sub_08062D24` | 42 | 36/42 | `src/wip/sub_08062D24.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08066224` | 112 | 96/112 | `src/wip/sub_08066224.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_080674A4` | 6 | 2/6 | `src/wip/sub_080674A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
@@ -226,7 +226,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08070604` | 92 | 73/92 | `src/wip/sub_08070604.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08071B4C` | 84 | 73/84 | `src/wip/sub_08071B4C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08071BA0` | 148 | 32/148 | `src/wip/sub_08071BA0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08073988` | 96 | 94/96 | `src/wip/sub_08073988.c` | 94/96; table constant lands in r2, retail materialises it in the free r0 | do not re-attempt; naked wrapper in src/matched already byte-matches |
+| `sub_08073988` | 96 | 94/96 | `src/wip/sub_08073988.c` | 94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) — all 94/96 or worse. | bounded permuter run with old_agbcc (seeded from this file); if score 0, integrate. Else leave the readable Thumb wrapper. |
 | `sub_08043B58` | 54 | 47/54 | `src/wip/sub_08043B58.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0802B994` | 58 | 42/58 | `src/wip/sub_0802B994.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0804495C` | 60 | 34/60 | `src/wip/sub_0804495C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |

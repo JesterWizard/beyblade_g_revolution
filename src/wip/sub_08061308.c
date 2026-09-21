@@ -1,6 +1,7 @@
 #include "global.h"
 
 // @ 0x08061308
+/* match-compiler: old_agbcc */
 void sub_08061308(void)
 {
     struct Unk0798 *s;

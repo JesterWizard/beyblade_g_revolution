@@ -34,6 +34,8 @@ The packet runs the local permuter on near-miss/WIP seeds before asking the agen
 1. `script_first.py` / `c_patterns` → integrate
 2. Packet + cleaned m2c → MATCH → `integrate_c.py`
 3. Same-size DIFF → `permuter/auto.py` (local, free), not hand retry loops
+   - register-destination DIFF on a load/shift → also score with `old_agbcc`
+     (`/* match-compiler: old_agbcc */`); `agbcc` cannot emit some un-coalesced forms
 4. Still DIFF → `park_wip.py`
 5. Clone family → `cluster_shapes.py` → new pattern
 6. Role clear → `ram_map_pass.sh`, then rename batch

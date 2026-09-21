@@ -38,6 +38,12 @@ COMPILE_SH = ROOT / "tools" / "decomp" / "permuter" / "compile.sh"
 MATCH_FLAGS_RE = re.compile(r"/\*\s*match-flags:\s*(.*?)\s*\*/")
 ALLOWED_MATCH_FLAGS = frozenset({"-fprologue-bugfix", "-fomit-frame-pointer"})
 
+# Must stay in sync with match_function.py MATCH_COMPILER_RE / COMPILERS, and with
+# the `compiler` sidecar handling in permuter/compile.sh. pret/agbcc installs two
+# compilers; a subset of functions only reaches retail with the older one.
+MATCH_COMPILER_RE = re.compile(r"/\*\s*match-compiler:\s*(\S+?)\s*\*/")
+ALLOWED_COMPILERS = ("agbcc", "old_agbcc")
+
 _UNCOMPILABLE = ("?", "M2C_FIELD", "M2C_UNK", "BITCAST", "/* extern */")
 
 
@@ -94,6 +100,31 @@ def match_flags(function: str, seed_text: str) -> list[str]:
         if flags:
             return flags
     return []
+
+
+def match_compiler(function: str, seed_text: str) -> str:
+    """Compiler from the seed, else the parked/matched C for this function.
+
+    Like match_flags, this has to be a sidecar: the permuter preprocesses base.c,
+    so compile.sh cannot read the comment itself.
+    """
+    texts = [seed_text]
+    for path in (WIP / f"{function}.c", MATCHED / f"{function}.c"):
+        if path.is_file():
+            texts.append(path.read_text())
+    for text in texts:
+        found = MATCH_COMPILER_RE.search(text)
+        if not found:
+            continue
+        name = found.group(1).strip()
+        if name in ALLOWED_COMPILERS:
+            return name
+        print(
+            f"warning: unsupported match-compiler `{name}` for {function}; "
+            f"allowed: {', '.join(ALLOWED_COMPILERS)}",
+            file=sys.stderr,
+        )
+    return "agbcc"
 
 
 KNOWN_SEEDS = {
@@ -653,11 +684,19 @@ def main() -> int:
     else:
         flags_path.unlink(missing_ok=True)
 
+    compiler = match_compiler(name, seed)
+    compiler_path = workdir / "compiler"
+    if compiler == "agbcc":
+        compiler_path.unlink(missing_ok=True)
+    else:
+        compiler_path.write_text(compiler + "\n")
+
     print(f"imported {name} -> {workdir.relative_to(ROOT)}")
     if flags:
         print(f"match-flags: {' '.join(flags)} (permuter compile.sh honours these)")
     else:
         print("match-flags: none")
+    print(f"match-compiler: {compiler}")
     print(
         f"next: tools/decomp/permuter/permute.sh run {workdir.relative_to(ROOT)} "
         f"-j {os.cpu_count() or 4} --stop-on-zero"

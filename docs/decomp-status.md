@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **302/633 (47.7%)** |
-| **Decompiled C (bytes)** | **18,910/90,272 (20.9%)** |
+| **Decompiled C (functions)** | **304/633 (48.0%)** |
+| **Decompiled C (bytes)** | **19,034/90,272 (21.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 331/633 (52.3%) |
+| Readable Thumb | 329/633 (52.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,37 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — per-function compiler split: +2 semantic C (302→304/633)
+- **Found the real blocker behind the `ldrb`/`lsls` family:** `pret/agbcc`'s
+  `install.sh` ships **two** compilers, `tools/agbcc/bin/agbcc` and
+  `tools/agbcc/bin/old_agbcc`, and they do not generate identical code. The
+  parked seeds that were "unreachable in semantic C" only needed the older one.
+- New per-function selector, parsed from a comment and honoured end to end:
+  ```c
+  // @ 0x08061308
+  /* match-compiler: old_agbcc */
+  ```
+  `match_function.py` (`MATCH_COMPILER_RE` / `COMPILERS`) picks the binary;
+  `import_function.py` writes a `compiler` sidecar because the permuter
+  preprocesses `base.c` before `compile.sh` runs; `permuter/compile.sh` reads it
+  and swaps `CC`. Default stays `agbcc` when the comment is absent.
+- Matched **`sub_08061308`** (48/48): the `u16 tmp` baseline that was stuck at
+  46/48. `old_agbcc` emits the un-coalesced `ldrb r0,[r0]; lsls r1,r0` retail
+  form that a 4,000-variant `agbcc` sweep and a synthetic probe both declared
+  impossible for `agbcc`.
+- Matched **`sub_08062A74`** (76/76): the nested-assign form
+  (`r1 = (r3 = r4 << 5)`) that `agbcc` compiles with `lsls r3` reaches retail
+  under `old_agbcc` once the palette constant is written twice
+  (`r2 = 0x080BB8C0; r2 = 0x080BB8C0;`) and the OBJ-PAL offset is folded into
+  `r1 = (r4 << 5) + 0x05000200;`.
+- Both were naked Thumb wrappers in `src/matched/`; they are now semantic C.
+- `sub_08073988` (94/96) did **not** benefit: `old_agbcc` gives the same
+  `base→ip / constant→r7` split, and a flag matrix, 30 register-named forms, 46
+  tmp-reuse forms and 38 chain forms modelled on the matched sibling
+  `sub_0806B3E8` all land at 94/96 or worse. A bounded `old_agbcc` permuter run
+  is the current attempt.
+- `make compare`: OK
 
 ### 2026-09-21 — semantic C +1 (299→300/633)
 - Matched `sub_08061E40` with direct `Unk61E40` field stores; this preserves

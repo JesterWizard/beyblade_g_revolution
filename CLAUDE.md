@@ -119,6 +119,7 @@ bash build_tools.sh
 | Shiftable check | `tools/decomp/check_shiftable.py` | Phase 5 gate |
 | Status | `tools/decomp/report_status.py` | Progress summary + refresh counter |
 | Progress bar | `tools/decomp/progress.py` | Semantic C % vs original (JSON + SVG) |
+| Per-function compiler | `/* match-compiler: old_agbcc */` in the .c | `agbcc` and `old_agbcc` generate different code; `match_function.py` + the permuter honour the comment |
 
 ## User report template
 

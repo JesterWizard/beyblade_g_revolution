@@ -53,6 +53,39 @@ ALLOWED_MATCH_FLAGS = frozenset(
     }
 )
 
+# Per-function compiler selection, parsed from `/* match-compiler: old_agbcc */`.
+# pret/agbcc's install.sh ships two compilers and they do not generate identical
+# code: for a subset of functions only `old_agbcc` reaches retail (it does not
+# coalesce a load into the register that consumes it, among other differences).
+# See docs/decomp-status.md 2026-09-21.
+MATCH_COMPILER_RE = re.compile(r"/\*\s*match-compiler:\s*(\S+?)\s*\*/")
+COMPILERS: dict[str, Path] = {
+    "agbcc": AGBCC,
+    "old_agbcc": ROOT / "tools" / "agbcc" / "bin" / "old_agbcc",
+}
+DEFAULT_COMPILER = "agbcc"
+
+
+def match_compiler(c_path: Path) -> Path:
+    """Return the agbcc binary this C file must be compiled with."""
+    try:
+        text = c_path.read_text()
+    except OSError:
+        return COMPILERS[DEFAULT_COMPILER]
+    match = MATCH_COMPILER_RE.search(text)
+    if not match:
+        return COMPILERS[DEFAULT_COMPILER]
+    name = match.group(1).strip()
+    if name not in COMPILERS:
+        raise ValueError(
+            f"unknown match-compiler `{name}` in {c_path}; "
+            f"allowed: {sorted(COMPILERS)}"
+        )
+    compiler = COMPILERS[name]
+    if not compiler.is_file():
+        raise FileNotFoundError(f"{name} missing at {compiler} — run build_tools.sh")
+    return compiler
+
 # `register`, GCC asm labels, and empty compiler barriers are not semantic C.
 # Naked Thumb wrappers and BIOS `swi` are the only allowed asm().
 _COMMENT_BLOCK_RE = re.compile(r"/\*.*?\*/", re.S)
@@ -138,11 +171,12 @@ def compile_c(
         i_path = Path(tmp.name)
     extra = {"capture_output": True, "text": True} if quiet else {}
     flags = list(extra_flags) if extra_flags else extra_cflags(c_path)
+    compiler = match_compiler(c_path)
     try:
         preprocess(c_path, i_path, quiet=quiet)
         subprocess.run(
             [
-                str(AGBCC),
+                str(compiler),
                 str(i_path),
                 "-o",
                 str(asm_path),

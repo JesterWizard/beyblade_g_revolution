@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T11:14:55Z",
+  "generated": "2026-09-21T11:32:15Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 331,
-    "semantic_done": 302,
-    "readable_asm": 331,
+    "pending": 329,
+    "semantic_done": 304,
+    "readable_asm": 329,
     "opcode": 0,
     "battle_pending": 99,
     "battle_semantic": 55,
@@ -1966,13 +1966,13 @@
     {
       "name": "sub_08061308",
       "addr": "0x08061308",
-      "kind": "asm",
-      "bytes": 48,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08061308.c",
       "notes": "src/wip/sub_08061308.md",
-      "status": "46/48; ldrb r1 vs r0 \u2014 unreachable in semantic C (agbcc always coalesces the load into the shift destination)",
-      "next": "do not re-attempt; naked wrapper in src/matched already byte-matches",
-      "score": "46/48"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc coalesces the ldrb into its shift destination)",
+      "next": "done",
+      "score": "48/48"
     },
     {
       "name": "sub_080617C4",
@@ -2010,13 +2010,13 @@
     {
       "name": "sub_08062A74",
       "addr": "0x08062A74",
-      "kind": "asm",
-      "bytes": 76,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08062A74.c",
       "notes": "src/wip/sub_08062A74.md",
-      "status": "74/76; ldrh wants r2 while lsls wants r1 \u2014 mutually exclusive attractors",
-      "next": "do not re-attempt; naked wrapper in src/matched already byte-matches",
-      "score": "74/76"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc puts lsls in r3 for the nested-assign form)",
+      "next": "done",
+      "score": "76/76"
     },
     {
       "name": "sub_08062D24",
@@ -2223,8 +2223,8 @@
       "bytes": 96,
       "seed": "src/wip/sub_08073988.c",
       "notes": "src/wip/sub_08073988.md",
-      "status": "94/96; table constant lands in r2, retail materialises it in the free r0",
-      "next": "do not re-attempt; naked wrapper in src/matched already byte-matches",
+      "status": "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) \u2014 all 94/96 or worse.",
+      "next": "bounded permuter run with old_agbcc (seeded from this file); if score 0, integrate. Else leave the readable Thumb wrapper.",
       "score": "94/96"
     },
     {
