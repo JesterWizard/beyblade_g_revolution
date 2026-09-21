@@ -1291,8 +1291,9 @@ struct Unk680CCRec /* >= 0x0a */
 {
     /* 00 */ u16 unk00;
     /* 02 */ u16 unk02;
-    /* 04 */ u8 filler_04[4];
-    /* 08 */ u16 unk08;
+    /* 04 */ u16 unk04; /* element count. sub_08067FC8 */
+    /* 06 */ u16 unk06;
+    /* 08 */ u16 unk08; /* first of unk04 halfwords. sub_08067FC8 */
 };
 
 struct Unk680CC /* >= 0x30 */

@@ -1760,3 +1760,27 @@ notes = "src/wip/sub_08062728.md"
 status = "2/18, stm r0!,{r3} 16B zero fill"
 next = "find C shape that emits stmia (4-word struct store)"
 score = "2/18"
+
+[[wip]]
+name = "sub_08042784"
+seed = "src/wip/sub_08042784.c"
+notes = "src/wip/sub_08042784.md"
+status = "35/100 same-size; retail keeps the ring pointer in r12"
+next = "permuter"
+score = "35/100"
+
+[[wip]]
+name = "sub_080699C8"
+seed = "src/wip/sub_080699C8.c"
+notes = "src/wip/sub_080699C8.md"
+status = "size mismatch; shared tail not reproducible"
+next = "permuter"
+score = "25/80"
+
+[[wip]]
+name = "sub_08067FC8"
+seed = "src/wip/sub_08067FC8.c"
+notes = "src/wip/sub_08067FC8.md"
+status = "43/74 same-size; total=0 must precede the call, entry check uses r8"
+next = "permuter"
+score = "43/74"

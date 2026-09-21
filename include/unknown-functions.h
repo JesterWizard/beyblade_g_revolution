@@ -51,6 +51,7 @@ u8 sub_08035C64(struct Unk346C0Inner *a, s32 x, s32 y, s32 z, s32 threshold);
 s32 sub_08035D1C(struct Unk346C0Inner *a, s32 b, s32 c);
 void sub_08035984(struct Unk35984 *a);
 u32 sub_08067FC8(void *a, u32 b);
+s32 sub_08067F3C(void *a, u32 v);
 void sub_08071F84(s32 a);
 void sub_08071FC8(s32 a, u32 b);
 void sub_080603A4(u16 a);

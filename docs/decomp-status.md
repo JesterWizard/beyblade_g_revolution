@@ -21,6 +21,25 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-21 — natural-C form beats permuter-mangled seeds (+1, 365→366/633)
+- `sub_08034894` (84B) — matched with **plain `if`/`else`** (`old_agbcc`). The parked
+  seed scored only 75/84 because it factored the shared trailing store through a
+  temporary; spelling the three stores out in *both* arms is what retail wants.
+  **Rule of thumb: when a hand/permtuer-mangled seed stalls, retry the obvious
+  source shape before reaching for the permuter.**
+- New declarations added for it and for `sub_08067FC8`:
+  `struct Unk680CCRec` grew `unk04` (u16 element count) + `unk06`, and
+  `s32 sub_08067F3C(void *a, u32 v);` was declared.
+- `sub_08067FC8` parked at 43/74 (same size): retail sets `total = 0` *before* the
+  `sub_08067F98` call and the rotated entry check compares the accumulator's known
+  zero; hoisting that initialiser in C costs 17 bytes of accuracy.
+- Also parked/annotated: `sub_08042784` (35/100 — retail keeps the ring pointer in
+  r12, no source shape reaches that), `sub_080699C8` (size mismatch — retail shares
+  a 2-store tail between the BG2/BG3 cases via `adds r1,#4` folding).
+- `sub_08074144` confirmed **toolchain-blocked**: the single `mov pc, lr` in the ROM
+  (2 bytes); both bundled agbcc builds emit `bx lr` for an empty function, with or
+  without `-mthumb-interwork`.
+
 ### 2026-09-21 — sweep tool v2 + 3 more semantic C (+3, 362→365/633)
 - `sweep_seeds.py` rewritten to call `match_function.compile_and_score` directly
   (no subprocess per seed) and to *classify* each near-miss:
