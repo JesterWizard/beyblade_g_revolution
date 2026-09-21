@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T10:52:03Z",
+  "generated": "2026-09-21T11:14:56Z",
   "counts": {
     "matched": 305,
     "wip": 193,
@@ -10701,7 +10701,7 @@
       "pct": 97.9,
       "score": "94/96",
       "source": "wip",
-      "note": "94/96; table ldr r2 vs r0 (base now r7)"
+      "note": "94/96; table constant lands in r2, retail materialises it in the free r0"
     },
     {
       "name": "sub_080739E8",

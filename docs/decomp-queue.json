@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T10:52:03Z",
+  "generated": "2026-09-21T11:14:55Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -1970,8 +1970,8 @@
       "bytes": 48,
       "seed": "src/wip/sub_08061308.c",
       "notes": "src/wip/sub_08061308.md",
-      "status": "46/48; ldrb r1 vs r0",
-      "next": "dummy ldrb / overnight permuter",
+      "status": "46/48; ldrb r1 vs r0 \u2014 unreachable in semantic C (agbcc always coalesces the load into the shift destination)",
+      "next": "do not re-attempt; naked wrapper in src/matched already byte-matches",
       "score": "46/48"
     },
     {
@@ -2014,8 +2014,8 @@
       "bytes": 76,
       "seed": "src/wip/sub_08062A74.c",
       "notes": "src/wip/sub_08062A74.md",
-      "status": "74/76; shift/add register pair differs",
-      "next": "constrained source/permuter search for lsls r1,r4,#5",
+      "status": "74/76; ldrh wants r2 while lsls wants r1 \u2014 mutually exclusive attractors",
+      "next": "do not re-attempt; naked wrapper in src/matched already byte-matches",
       "score": "74/76"
     },
     {
@@ -2223,8 +2223,8 @@
       "bytes": 96,
       "seed": "src/wip/sub_08073988.c",
       "notes": "src/wip/sub_08073988.md",
-      "status": "94/96; table ldr r2 vs r0 (base now r7)",
-      "next": "r7 pressure without assigning table to index",
+      "status": "94/96; table constant lands in r2, retail materialises it in the free r0",
+      "next": "do not re-attempt; naked wrapper in src/matched already byte-matches",
       "score": "94/96"
     },
     {

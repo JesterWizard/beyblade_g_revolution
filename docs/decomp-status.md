@@ -1001,3 +1001,39 @@ First 4 functions + `src/stubs.c`.
   the permuter ignores branch targets. `auto.py` refuses to integrate it;
   `--strict-branches` reaches best 1. Do not trust score 0 alone.
 - make compare: OK
+
+### 2026-09-21 — close-out on three register-allocation near-misses (+0 semantic C, 302/633)
+
+Attempted `sub_08073988` (94/96), `sub_08062A74` (74/76), `sub_08061308` (46/48)
+— the top three entries in `docs/decomp-functions.md`. **No new semantic C**; all
+three are already byte-identical via the naked Thumb wrappers in `src/matched/`,
+so `make compare` was never at risk. The semantic-C gap is now characterised and
+documented in each `src/wip/<fn>.md`.
+
+What was tried (all negative):
+
+- ~4,000 enumerated C variants across the three (temp types, split/absent temps,
+  named shift temporaries, nested-assignment "register reservation" tricks,
+  constant typing, statement reorders, declaration-order shuffles), the last
+  2,300 as a randomized sweep.
+- Both allowed `match-flags` (`-fomit-frame-pointer`, `-fprologue-bugfix`) — no change.
+- 20 min × 8 jobs of `permuter/auto.py` per function — base score 10, never below 10.
+
+Decisive finding for `sub_08061308` and its six-function family: for the shape
+`(t << n) + (C << 19)` agbcc **always** coalesces the load into the register that
+consumes it (`ldrb rX,[rX]; lsls rX,rX,#n`). Retail has `ldrb r0,[r0]; lsls r1,r0`
+— the load stays in the dead address register and the shift writes a *different*
+register. A synthetic sweep over 0–6 extra live values produced the coalesced form
+in every configuration, so the load destination is not a free choice in the source.
+The retail ROM does contain the un-coalesced idiom (52 of 443 self-reusing loads in
+the full disassembly), confirming a compiler behavioural difference rather than a
+source-shape difference. This is why 331/633 "matched" functions are asm wrappers,
+and why siblings `sub_08060D58` / `sub_08060E48` are integrated as wrappers.
+
+Also noted: the two attractors for `sub_08062A74` are mutually exclusive (fixing
+`ldrh r2` costs `lsls r1`), and the `sub_08073988` register file is saturated at
+`default_char`, so retail's constant lands in the only free register `r0` while
+agbcc picks `r2`.
+
+- `docs/decomp-queue.toml`: the three entries now say "do not re-attempt".
+- make compare: OK

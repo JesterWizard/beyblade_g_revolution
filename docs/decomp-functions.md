@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-21T10:52:03Z_
+_Updated: 2026-09-21T11:14:56Z_
 
 ## Legend
 
@@ -35,7 +35,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
-| `sub_08073988` | WIP (parked C) | 97.9% | 94/96 | 94/96; table ldr r2 vs r0 (base now r7) |
+| `sub_08073988` | WIP (parked C) | 97.9% | 94/96 | 94/96; table constant lands in r2, retail materialises it in the free r0 |
 | `sub_08062A74` | WIP (parked C) | 97.4% | 74/76 | permuter seed; 74/76, remaining handler/shift register pair |
 | `sub_08061308` | WIP (parked C) | 95.8% | 46/48 | baseline u16 tmp; u32/u8/member-address variants did not improve ldrb destina… |
 | `sub_08061BE8` | WIP (parked C) | 95.8% | 92/96 | 92/96; lsls vs table ldr order |

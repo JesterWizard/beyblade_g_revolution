@@ -1501,8 +1501,8 @@ score = "38/44"
 name = "sub_08061308"
 seed = "src/wip/sub_08061308.c"
 notes = "src/wip/sub_08061308.md"
-status = "46/48; ldrb r1 vs r0"
-next = "dummy ldrb / overnight permuter"
+status = "46/48; ldrb r1 vs r0 — unreachable in semantic C (agbcc always coalesces the load into the shift destination)"
+next = "do not re-attempt; naked wrapper in src/matched already byte-matches"
 score = "46/48"
 
 [[wip]]
@@ -1533,8 +1533,8 @@ score = "unscored"
 name = "sub_08062A74"
 seed = "src/wip/sub_08062A74.c"
 notes = "src/wip/sub_08062A74.md"
-status = "74/76; shift/add register pair differs"
-next = "constrained source/permuter search for lsls r1,r4,#5"
+status = "74/76; ldrh wants r2 while lsls wants r1 — mutually exclusive attractors"
+next = "do not re-attempt; naked wrapper in src/matched already byte-matches"
 score = "74/76"
 
 [[wip]]
@@ -1685,8 +1685,8 @@ score = "32/148"
 name = "sub_08073988"
 seed = "src/wip/sub_08073988.c"
 notes = "src/wip/sub_08073988.md"
-status = "94/96; table ldr r2 vs r0 (base now r7)"
-next = "r7 pressure without assigning table to index"
+status = "94/96; table constant lands in r2, retail materialises it in the free r0"
+next = "do not re-attempt; naked wrapper in src/matched already byte-matches"
 score = "94/96"
 
 [[wip]]
