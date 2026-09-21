@@ -21,6 +21,28 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-21 — tiny-function sweep: local-initialisation order wins (+5, 365→370/633)
+- `sub_08035908` (36B) — the loop must be `if (e != 0) { while (...) }`, not an
+  early `if (e == 0) return 1;` (that flips the entry branch layout and floors at 18/36).
+- `sub_08065E0C` (92B) — keyed tile-blit wrapper: the two helpers and the callee take
+  the record's **first word** (`p->unk00`), not the record pointer; returning the
+  pointer keeps retail's high-register live ranges.
+- `sub_08062728` (18B) — word-array clear. The zero must be a real local, initialised
+  **after** `i` but **before** the count/pointer (`u32 i = 0; u32 z = 0; ... *p++ = z;`).
+  Inline `*p++ = 0` puts the `movs r3,#0` after the two loads (13/18); zero declared
+  first swaps the two `movs` (16/18).
+- `sub_08033F30` (24B) — if/else **polarity is observable**: retail's `blt` jumps over
+  the `movs r0,#0` into the 0x800 block, so the non-negative arm must be the inline one.
+  Also added `union Unk33F30Unk1C` (+0x1C is written as a byte here, read as an inner
+  pointer by `sub_08033D90`).
+- `sub_08034894` (84B) — plain `if`/`else` with the three stores spelled out in both
+  arms; factoring the shared store through a temporary floors at 75/84.
+- **New rule of thumb: retry the obvious source shape (and its local-initialisation
+  order) before reaching for the permuter.** Four of these five were found that way.
+- Parked with shape analyses: `sub_08073114` (18/112, table pseudo wants r1),
+  `sub_08069F00` (11/24, missing `adds r1,r0,#0` copy), and the `sub_0803DD8x` family
+  (`sub_0803DD88` 30/40, `sub_0803DDB0`/`sub_0803DDD8` 27/40 — register/schedule only).
+
 ### 2026-09-21 — natural-C form beats permuter-mangled seeds (+1, 365→366/633)
 - `sub_08034894` (84B) — matched with **plain `if`/`else`** (`old_agbcc`). The parked
   seed scored only 75/84 because it factored the shared trailing store through a
