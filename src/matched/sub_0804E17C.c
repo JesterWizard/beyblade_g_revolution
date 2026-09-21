@@ -1,67 +1,23 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0804e17c
-__attribute__((naked))
-void sub_0804E17C(void)
+#include "global.h"
+
+// @ 0x0804e17c
+void sub_0804E17C(u32 a, s32 b, u32 c)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "mov r6, r8\n"
-        "push {r6}\n"
-        "adds r4, r1, #0x0\n"
-        "mov r8, r2\n"
-        "ldr r0, _0804E1F8 @ =0x080D79CC\n"
-        "ldr r1, _0804E1FC @ =0x080B7429\n"
-        "bl sub_080617C4\n"
-        "lsls r4, r4, #0x04\n"
-        "adds r6, r4, #0x0\n"
-        "adds r6, #0x08\n"
-        "movs r0, #0x00\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_080615EC\n"
-        "ldr r5, _0804E200 @ =0x083A83F4\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r5, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "adds r4, #0x10\n"
-        "movs r0, #0x00\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080615EC\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r5, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _0804E204 @ =0x082BCD00\n"
-        "ldr r1, _0804E208 @ =0x080B738E\n"
-        "bl sub_080617C4\n"
-        "movs r0, #0x00\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_080615EC\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "mov r0, r8\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_0804E1F8: .4byte 0x080D79CC\n"
-        "_0804E1FC: .4byte 0x080B7429\n"
-        "_0804E200: .4byte 0x083A83F4\n"
-        "_0804E204: .4byte 0x082BCD00\n"
-        "_0804E208: .4byte 0x080B738E\n"
-    );
+    u32 t;
+
+    sub_080617C4((struct Unk617C4 *)gData_080D79CC, (u32)gData_080B7429);
+    t = (u32)b << 4;
+    sub_080615EC(0, t + 0x8);
+    sub_0806171C((void *)gData_083A83F4, sub_08061784() >> 1, 0);
+    sub_080615EC(0, t + 0x10);
+    sub_0806171C((void *)gData_083A83F4, sub_08061784() >> 1, 0);
+    sub_080617C4((struct Unk617C4 *)gData_082BCD00, (u32)gData_080B738E);
+    sub_080615EC(0, t + 0x8);
+    sub_0806171C((void *)c, sub_08061784() >> 1, 0);
 }
 

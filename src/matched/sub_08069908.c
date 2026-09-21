@@ -1,45 +1,20 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08069908
-__attribute__((naked))
-void sub_08069908(void)
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+// @ 0x08069908
+u16 *sub_08069908(u8 sel)
 {
-    asm(
-        ".syntax unified\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "adds r1, r0, #0x0\n"
-        "cmp r0, #0x01\n"
-        "beq _08069930\n"
-        "cmp r0, #0x01\n"
-        "bgt _0806991C\n"
-        "cmp r0, #0x00\n"
-        "beq _08069926\n"
-        "b _08069942\n"
-        "_0806991C:\n"
-        "cmp r1, #0x02\n"
-        "beq _08069938\n"
-        "cmp r1, #0x03\n"
-        "beq _08069940\n"
-        "b _08069942\n"
-        "_08069926:\n"
-        "ldr r0, _0806992C @ =0x04000010\n"
-        "b _08069942\n"
-        ".byte 0x00, 0x00\n"
-        "_0806992C: .4byte 0x04000010\n"
-        "_08069930:\n"
-        "ldr r0, _08069934 @ =0x04000014\n"
-        "b _08069942\n"
-        "_08069934: .4byte 0x04000014\n"
-        "_08069938:\n"
-        "ldr r0, _0806993C @ =0x04000018\n"
-        "b _08069942\n"
-        "_0806993C: .4byte 0x04000018\n"
-        "_08069940:\n"
-        "ldr r0, _08069944 @ =0x0400001C\n"
-        "_08069942:\n"
-        "bx lr\n"
-        "_08069944: .4byte 0x0400001C\n"
-    );
+    switch (sel)
+    {
+    case 0: return (u16 *)0x04000010;
+    case 1: return (u16 *)0x04000014;
+    case 2: return (u16 *)0x04000018;
+    case 3: return (u16 *)0x0400001C;
+    }
 }
 

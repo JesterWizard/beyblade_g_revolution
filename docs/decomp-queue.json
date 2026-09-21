@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T14:34:52Z",
+  "generated": "2026-09-21T14:38:50Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 296,
-    "semantic_done": 337,
-    "readable_asm": 296,
+    "pending": 290,
+    "semantic_done": 343,
+    "readable_asm": 290,
     "opcode": 0,
     "battle_pending": 87,
     "battle_semantic": 67,
@@ -96,8 +96,8 @@
     {
       "name": "sub_08049F98",
       "addr": "0x08049F98",
-      "kind": "asm",
-      "bytes": 144,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08049F98.c",
       "notes": "src/wip/sub_08049F98.md",
       "status": "same-size DIFF 36/144 (25%); logic confirmed correct (2x sub_080617C4 header calls, sub_080615EC coord set via idx<<4 chain, sub_08061784 return, sub_0806171C draw); agbcc keeps out-param in r8 across 3 calls in retail (push r8 at entry) but my C only uses out at final call so agbcc doesn't preallocate r8 early \u2014 retail's r8 usage implies out is referenced earlier in source or a dummy read keeps it live",
@@ -2087,8 +2087,8 @@
     {
       "name": "sub_08069908",
       "addr": "0x08069908",
-      "kind": "asm",
-      "bytes": 64,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08069908.c",
       "notes": "src/wip/sub_08069908.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -2098,8 +2098,8 @@
     {
       "name": "sub_08069948",
       "addr": "0x08069948",
-      "kind": "asm",
-      "bytes": 64,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08069948.c",
       "notes": "src/wip/sub_08069948.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -2881,29 +2881,29 @@
       "name": "sub_08049F98",
       "addr": "0x08049F98",
       "reason": "sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 \u2014 m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter",
-      "kind": "asm",
-      "bytes": 144
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_0804E17C",
       "addr": "0x0804E17C",
       "reason": "byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker",
-      "kind": "asm",
-      "bytes": 144
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_08051578",
       "addr": "0x08051578",
       "reason": "byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker",
-      "kind": "asm",
-      "bytes": 144
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_08053218",
       "addr": "0x08053218",
       "reason": "byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker",
-      "kind": "asm",
-      "bytes": 144
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_080601C4",

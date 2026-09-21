@@ -60,4 +60,20 @@ extern u8 gData_083A7DF8[];
 extern u8 gData_083A7EE0[];
 extern u8 gData_083A8424[];
 
+extern u8 gData_083A734C[];
+extern u8 gData_083A83F4[];
+extern u8 gData_083A85A4[];
+extern u8 gData_083A8724[];
+
+extern u8 gData_0807AEEC[];
+extern u8 gData_0807AEFC[];
+extern u8 gData_04000010[];
+extern u8 gData_04000012[];
+extern u8 gData_04000014[];
+extern u8 gData_04000016[];
+extern u8 gData_04000018[];
+extern u8 gData_0400001A[];
+extern u8 gData_0400001C[];
+extern u8 gData_0400001E[];
+
 #endif // GUARD_DATA_SYMBOLS_H

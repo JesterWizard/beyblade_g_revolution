@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T14:34:52Z_
+_Updated: 2026-09-21T14:38:50Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 337 |
-| Still need semantic C | **296** |
-| Readable Thumb remaining | 296 |
+| Semantic C done | 343 |
+| Still need semantic C | **290** |
+| Readable Thumb remaining | 290 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 87 (67 already semantic) |
 | Blocked (documented) | 20 |
@@ -33,7 +33,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802BF04` | 140 | 55/140 | `src/wip/sub_0802BF04.c` | best 55/140 size-mismatch; s16 comparison and explicit r8 zero-register hints did not recover retail setup/order | leave readable Thumb; revisit with targeted constant/pointer reuse or permuter |
 | `sub_08035C64` | 182 | 85/182 | `src/wip/sub_08035C64.c` | same_size DIFF 85/182 (46.7%); logic fully correct (repulsion physics on Unk346C0Inner, dx/dy/distSq/threshold gate) but agbcc always emits the early-return (zero) block first regardless of if/else source order — branch layout inverted vs retail which keeps compute as fallthrough and zero-block at function end | try computing zero-branch via explicit goto label placed after compute code, or split into two functions/permuter branch-order search |
 | `sub_08034568` | 0 | 156/176 | `src/wip/sub_08034568.c` | size_mismatch 156/176 (88.6%, compiled 168B vs retail 176B); all field init logic correct (Unk346C0 tail-region zero/const init, 8 byte writes + 3 halfword + several u32); agbcc picks r1-chain instead of r4-chain for final unk2C4 store, dropping one add-chain step vs retail | try alternate field write order or split into two helper calls matching retail's r1/r4 chain split; permuter candidate (small, near miss) |
-| `sub_08049F98` | 144 | unscored | `src/wip/sub_08049F98.c` | same-size DIFF 36/144 (25%); logic confirmed correct (2x sub_080617C4 header calls, sub_080615EC coord set via idx<<4 chain, sub_08061784 return, sub_0806171C draw); agbcc keeps out-param in r8 across 3 calls in retail (push r8 at entry) but my C only uses out at final call so agbcc doesn't preallocate r8 early — retail's r8 usage implies out is referenced earlier in source or a dummy read keeps it live | try touching 'out' earlier (e.g. volatile read) or reorder params so out is 2nd arg; also try casting idx shift result through s16 (retail uses lsrs #17 = arithmetic sign truncate to s15 for the return-value cast, suggesting val type may be s16 not u16 -- already tried, needs recheck combined with r8 fix). Twin clones sub_0804E17C/sub_08051578 share same structure - crack this one first, then just re-run match_function.py with same seed |
+| `sub_08049F98` | 0 | unscored | `src/wip/sub_08049F98.c` | same-size DIFF 36/144 (25%); logic confirmed correct (2x sub_080617C4 header calls, sub_080615EC coord set via idx<<4 chain, sub_08061784 return, sub_0806171C draw); agbcc keeps out-param in r8 across 3 calls in retail (push r8 at entry) but my C only uses out at final call so agbcc doesn't preallocate r8 early — retail's r8 usage implies out is referenced earlier in source or a dummy read keeps it live | try touching 'out' earlier (e.g. volatile read) or reorder params so out is 2nd arg; also try casting idx shift result through s16 (retail uses lsrs #17 = arithmetic sign truncate to s15 for the return-value cast, suggesting val type may be s16 not u16 -- already tried, needs recheck combined with r8 fix). Twin clones sub_0804E17C/sub_08051578 share same structure - crack this one first, then just re-run match_function.py with same seed |
 | `sub_080385DC` | 80 | 18/80 | `src/wip/sub_080385DC.c` | same_size DIFF 18/80; shared masks and r12/r6/r1 pointer/register hints did not improve the baseline | leave readable Thumb; revisit with targeted pointer-cache/permuter technique |
 | `sub_080733E4` | 90 | 14/90 | `src/wip/sub_080733E4.c` | size_mismatch 14/90 baseline; explicit-goto and r2/r5-pinned variants did not reproduce retail loop allocation | leave readable Thumb; revisit with permuter over skip/main-loop source shape |
 | `sub_08069B78` | 154 | 62/154 | `src/wip/sub_08069B78.c` | same-size DIFF 62/154 (40.3%); shared mask/inverse and r10/r5 hints did not improve post-call register scheduling | leave readable Thumb; revisit with targeted post-call register scheduling or permuter |
@@ -214,8 +214,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080674B4` | 0 | 6/6 | `src/wip/sub_080674B4.c` | MATCHED — matching C in src/matched: parameterised BIOS swi operands keep r0/r1 pass-through and materialise r2 = 0; header declares an empty parameter list so existing no-arg callers compile | done |
 | `sub_08067F98` | 0 | 48/48 | `src/wip/sub_08067F98.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape) | done |
 | `sub_08069894` | 96 | 85/96 | `src/wip/sub_08069894.c` | 85/96; IWRAM stores preloaded vs sequential | continue permuter from output-245-1 |
-| `sub_08069908` | 64 | 8/64 | `src/wip/sub_08069908.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08069948` | 64 | 8/64 | `src/wip/sub_08069948.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_08069908` | 0 | 8/64 | `src/wip/sub_08069908.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_08069948` | 0 | 8/64 | `src/wip/sub_08069948.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08069988` | 0 | 8/64 | `src/wip/sub_08069988.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806A3A4` | 144 | 10/144 | `src/wip/sub_0806A3A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806B3E8` | 84 | 67/84 | `src/wip/sub_0806B3E8.c` | permuter 300 s + 900 s, no score 0 (95 → 10); 67/84 | keep readable Thumb; retail tracks the live pointer in two registers |
@@ -291,10 +291,10 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_08045C5C` | `0x08045C5C` | 136 | gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter |
 | `sub_080473E4` | `0x080473E4` | 20 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
-| `sub_08049F98` | `0x08049F98` | 144 | sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter |
-| `sub_0804E17C` | `0x0804E17C` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker |
-| `sub_08051578` | `0x08051578` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker |
-| `sub_08053218` | `0x08053218` | 144 | byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker |
+| `sub_08049F98` | `0x08049F98` | 0 | sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter |
+| `sub_0804E17C` | `0x0804E17C` | 0 | byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker |
+| `sub_08051578` | `0x08051578` | 0 | byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker |
+| `sub_08053218` | `0x08053218` | 0 | byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker |
 | `sub_080601C4` | `0x080601C4` | 0 | r8 pool pin — permuter best score ~100 |
 | `sub_080604C8` | `0x080604C8` | 112 | byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter |
 | `sub_08062728` | `0x08062728` | 18 | u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen |
