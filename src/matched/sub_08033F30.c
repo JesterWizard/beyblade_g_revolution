@@ -4,9 +4,6 @@
 
 // @ 0x08033f30
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08033f30
 // Store the signed value and raise the flag, then publish the damping word: 0 for a
 // non-negative value, 0x800 for a negative one. The polarity of the if/else is
 // observable -- retail's `blt` jumps *over* the `movs r0,#0` into the 0x800 block,

@@ -4,9 +4,6 @@
 
 // @ 0x0806be20
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x0806be20
 // Index into a size-prefixed entry table: entry = base + 4, then walk `c`
 // entries by adding the u16 length stored at the head of each entry.
 // Declaration order matters here: agbcc emits `i = 0` before `p = b + 4` only

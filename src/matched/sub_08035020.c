@@ -4,9 +4,6 @@
 
 // @ 0x08035020
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08035020
 // Reset the +0x2CC state word to "7" (keeping the +0x2FC payload a caller passes
 // only on a real transition) and invalidate the +0x2F8 companion, except in the
 // three "leave alone" states. Retail's comparison chain is

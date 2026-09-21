@@ -295,7 +295,7 @@ name = "sub_080473F8"
 seed = "src/wip/sub_080473F8.c"
 notes = "src/wip/sub_080473F8.md"
 status = "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits"
-next = "reuse the sub_08041858/sub_08069894 barrier: after storing through the first IWRAM pointer, asm(\"\" : \"+r\"(r0), \"+r\"(r1) : : \"memory\") then reload the second address"
+next = "use distinct gData_* symbols for gUnk_03000630 / gUnk_03000638 (0x20 apart): the data_symbols.s addressing sweep shows that stops agbcc folding the second address into `subs r0,#0x20`. Empty-asm barriers are banned in semantic C and must not be used here"
 score = "50/100"
 
 [[wip]]
@@ -419,9 +419,9 @@ score = "58/96"
 name = "sub_08071F44"
 seed = "src/wip/sub_08071F44.c"
 notes = "src/wip/sub_08071F44.md"
-status = "35/64 bytes (54.7%), size mismatch (60 vs 64); correct algorithm (reverse lookup: find first Unk71E84 entry with unk16!=0 and unk18==arg0). Push list matches retail exactly ({r4,lr}) and the -1 compare form is preserved correctly here (no simplification, unlike the sub_08071E84 family). Only diff: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart), the recurring literal-pool quirk seen across ~6 functions this session"
-next = "retry the sub_08071B4C / sub_08041858 IWRAM barrier: keep the first pointer live with asm(\"\" : \"+r\"(r0) : : \"memory\") then reload gUnk_030040C4 as its own literal (0x20 from gUnk_030040E4)"
-score = "35/64"
+status = "matched (old_agbcc): reverse lookup over *gData_030040E4 records with `i != -1` and BOTH gData_ symbols (they are 0x20 apart; plain literals make agbcc fold the second into `subs r0,#0x20`)"
+next = "done"
+score = "0/64"
 
 [[wip]]
 name = "sub_0802DEA0"

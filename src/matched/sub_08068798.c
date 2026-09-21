@@ -3,8 +3,6 @@
 #include "battle.h"
 
 // @ 0x08068798
-#include "global.h"
-
 void sub_08068798(struct Unk68798 *state)
 {
     struct Unk68798 *work;

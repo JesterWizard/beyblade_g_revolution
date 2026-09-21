@@ -3,9 +3,6 @@
 #include "battle.h"
 
 // @ 0x08068988
-#include "global.h"
-
-// @ 0x08068988
 // Set up one tile-map blit: reset both per-slot state words, forward the args to
 // sub_08068A08, then clamp a 1<<unk5F x 1<<unk60 rect to the state's own size.
 // `width`/`height` MUST be signed: retail emits `bge` (signed) for both clamps,

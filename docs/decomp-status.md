@@ -1031,6 +1031,8 @@ First 4 functions + `src/stubs.c`.
 | `tools/decomp/cursor_batch.sh` | Triage + m2c seeds |
 | `tools/decomp/integrate_match.py` | Link match into ROM peel |
 | `tools/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP; patches Thumb BL relocs) |
+| `tools/decomp/worddiff.py` | Word-aligned retail-vs-compiled table for hand matching (wraps `match_function.py --full`) |
+| `tools/decomp/test_variants.py` | Batch a `@@BODY@@` template against a list of source variants |
 | `tools/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
 | `tools/decomp/permuter/` | decomp-permuter wrappers (agbcc pool/order search) |
 

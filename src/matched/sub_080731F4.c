@@ -4,9 +4,6 @@
 
 // @ 0x080731f4
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x080731f4
 s32 sub_080731F4(u8 *s)
 {
     s32 n = 0;

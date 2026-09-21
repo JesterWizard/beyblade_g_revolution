@@ -1,9 +1,6 @@
 #include "global.h"
 
 // @ 0x0804745c
-#include "global.h"
-
-// @ 0x0804745c
 void sub_0804745C(void)
 {
     s32 i;

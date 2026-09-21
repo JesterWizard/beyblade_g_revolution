@@ -4,9 +4,6 @@
 
 // @ 0x08062728
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08062728
 // Zero `a->unk08` words starting at `a->unk04` (a do-while, so a zero count still
 // writes one word -- matching retail, which has no entry guard).
 // The zero must be its own local, initialised AFTER `i` but BEFORE the count and

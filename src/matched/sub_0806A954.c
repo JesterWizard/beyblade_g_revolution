@@ -4,9 +4,6 @@
 
 // @ 0x0806a954
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x0806a954
 void *sub_0806A954(u8 a)
 {
     if (a > 9)

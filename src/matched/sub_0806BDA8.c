@@ -4,9 +4,6 @@
 
 // @ 0x0806bda8
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x0806bda8
 void *sub_0806BDA8(struct Unk6BDA8 *a, u32 i)
 {
     void **t = a->unk114;

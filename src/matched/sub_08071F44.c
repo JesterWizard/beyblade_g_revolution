@@ -4,9 +4,6 @@
 
 // @ 0x08071f44
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08071f44
 // Find the first of *gData_030040C4 consecutive 0x28-byte records at *gData_030040E4
 // whose +0x16 flag is set and whose +0x18 word equals `a`. The countdown is written
 // `i != -1` (not `i >= 0`): retail materialises -1 once (`movs r0,#1; negs r0,r0`) and

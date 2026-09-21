@@ -3,9 +3,6 @@
 #include "battle.h"
 
 // @ 0x08053218
-#include "global.h"
-
-// @ 0x08053218
 void sub_08053218(u32 a, s32 b, u32 c)
 {
     u32 t;

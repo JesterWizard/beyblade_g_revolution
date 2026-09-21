@@ -4,9 +4,6 @@
 
 // @ 0x080347e4
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x080347e4
 void sub_080347E4(struct Unk346C0 *a)
 {
     struct Unk346C0Inner *p = a->unk00;

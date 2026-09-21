@@ -3,9 +3,6 @@
 #include "battle.h"
 
 // @ 0x0804c27c
-#include "global.h"
-
-// @ 0x0804c27c
 void sub_0804C27C(u8 *a, s32 b, u32 c)
 {
     u32 t;

@@ -4,7 +4,6 @@
 
 // @ 0x080428c4
 /* match-compiler: old_agbcc */
-#include "global.h"
 #include "ram_map.h"
 
 // @ 0x080428c4

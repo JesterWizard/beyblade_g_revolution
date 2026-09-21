@@ -4,9 +4,6 @@
 
 // @ 0x08073078
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08073078
 s32 sub_08073078(u8 *s)
 {
     s32 n = 0;

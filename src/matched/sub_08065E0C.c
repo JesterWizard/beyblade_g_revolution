@@ -3,9 +3,6 @@
 #include "battle.h"
 
 // @ 0x08065e0c
-#include "global.h"
-
-// @ 0x08065e0c
 // Blit a keyed tile record: recover the record for `c`'s key (word >> 8), route
 // its two cursors through sub_080674AC/B4, then hand [a, b, record->unk00, d, e] to
 // sub_08068988. `b`/`d`/`e` truncate (u8/u16/u16) and the record's first word --

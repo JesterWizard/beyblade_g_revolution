@@ -4,9 +4,6 @@
 
 // @ 0x08031294
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08031294
 // Set both byte flags to all-ones, then publish -1 in the +0x04 word and clear the
 // +0x0C word / +0x08 byte. The two ORs must be written out inline with an explicit
 // (u8) cast: a `u8 m = 0xFF;` local makes agbcc emit the `ldrb`/`orrs` pair in the

@@ -109,6 +109,8 @@ bash build_tools.sh
 | Unblock symbols | `tools/decomp/unblock_symbols.py` | Draft prototypes for `bl _080…` |
 | Try convert | `tools/decomp/try_convert.py` | One-function patterns + cleaned m2c |
 | Verify C | `tools/decomp/match_function.py` | Compile + compact DIFF vs retail |
+| Word diff | `tools/decomp/worddiff.py` | Word-aligned retail-vs-compiled table (16-bit words, DIFF flagged) |
+| Variant sweep | `tools/decomp/test_variants.py` | Test many `@@BODY@@` source variants against one function |
 | Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |
 | Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/wip/`) |
 | Local permuter | `tools/decomp/permuter/auto.py` | Import → score → search → integrate on score 0 |

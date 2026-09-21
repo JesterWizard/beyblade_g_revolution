@@ -3,9 +3,6 @@
 #include "battle.h"
 
 // @ 0x0802c62c
-#include "global.h"
-
-// @ 0x0802c62c
 // Count the 4-byte entries of gMainWorkPtr->unk1694 (128 of them) whose signed +3 byte
 // equals `a`, sign-extended. Twin of sub_0802C5DC (which sets unk01 and returns at the
 // first hit). `val` must be initialised before `count`: retail truncates the argument

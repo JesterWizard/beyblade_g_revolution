@@ -4,9 +4,6 @@
 
 // @ 0x08042e78
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08042e78
 void *sub_08042E78(u32 i)
 {
     if (i > 0x36)

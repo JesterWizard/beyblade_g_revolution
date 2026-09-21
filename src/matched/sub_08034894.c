@@ -4,9 +4,6 @@
 
 // @ 0x08034894
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08034894
 // Copy the three shadow scroll values into the +0x300..+0x304 working words when
 // unk30C is clear, otherwise zero the same three. Plain `if/else` with the three
 // stores spelled out in each arm matches; factoring the shared trailing store

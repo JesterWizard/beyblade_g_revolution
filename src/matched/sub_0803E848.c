@@ -3,8 +3,6 @@
 #include "battle.h"
 
 // @ 0x0803e848
-#include "global.h"
-
 void sub_0803E848(struct Unk2F520 *a, s32 b, void *c)
 {
     s32 offset;

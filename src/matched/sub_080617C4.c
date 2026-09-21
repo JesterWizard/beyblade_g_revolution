@@ -4,9 +4,6 @@
 
 // @ 0x080617c4
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x080617c4
 // Register the object at gUnk_03000798 with the engine: store `a` and `b` in the two
 // slots at +0x88/+0x8C, publish `a`'s two bytes at +0xA0/+0xA2, then derive the word at
 // +0x9C from the halfword just written at +0xA0 (read back, not the local, which is why

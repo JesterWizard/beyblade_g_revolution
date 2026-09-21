@@ -3,9 +3,6 @@
 #include "battle.h"
 
 // @ 0x0803dd60
-#include "global.h"
-
-// @ 0x0803dd60
 u32 sub_0803DD60(u32 i)
 {
     u32 **tbl = (u32 **)gData_0807B0C4;

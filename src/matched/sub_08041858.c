@@ -3,9 +3,6 @@
 #include "battle.h"
 
 // @ 0x08041858
-#include "global.h"
-
-// @ 0x08041858
 // Release the slot held at 0x03000508 (via sub_0806A434) and zero the two
 // battle-state words. gData_* symbols keep the 0x03000508/0x03000534/0x03000504
 // pool literals distinct (raw literals get folded into base+offset).

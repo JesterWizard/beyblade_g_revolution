@@ -4,7 +4,6 @@
 
 // @ 0x0806fefc
 /* match-compiler: old_agbcc */
-#include "global.h"
 #include "ram_map.h"
 
 // @ 0x0806fefc

@@ -4,9 +4,6 @@
 
 // @ 0x08035908
 /* match-compiler: old_agbcc */
-#include "global.h"
-
-// @ 0x08035908
 // AABB-up-front test: walk the +4 sibling array. Returns 0 as soon as an entry
 // whose +0 span contains v is found (v <= unk00 + unk04), else 1. The
 // `if (e != 0) { while (...) } return 1` shape is required: an early
