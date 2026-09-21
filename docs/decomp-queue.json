@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-21T18:13:41Z",
+  "generated": "2026-09-21T18:33:05Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 259,
-    "semantic_done": 374,
-    "readable_asm": 259,
+    "pending": 256,
+    "semantic_done": 377,
+    "readable_asm": 256,
     "opcode": 0,
-    "battle_pending": 87,
-    "battle_semantic": 70,
+    "battle_pending": 84,
+    "battle_semantic": 73,
     "blocked": 20,
     "wip": 215
   },
@@ -1746,8 +1746,8 @@
     {
       "name": "sub_0803DD88",
       "addr": "0x0803DD88",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803DD88.c",
       "notes": "src/wip/sub_0803DD88.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1757,8 +1757,8 @@
     {
       "name": "sub_0803DDB0",
       "addr": "0x0803DDB0",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803DDB0.c",
       "notes": "src/wip/sub_0803DDB0.md",
       "status": "31/40 same-size (old_agbcc); idx_var form",
@@ -1768,8 +1768,8 @@
     {
       "name": "sub_0803DDD8",
       "addr": "0x0803DDD8",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803DDD8.c",
       "notes": "src/wip/sub_0803DDD8.md",
       "status": "31/40 same-size (old_agbcc); idx_var form",

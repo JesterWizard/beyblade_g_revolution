@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T18:13:41Z_
+_Updated: 2026-09-21T18:33:05Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 374 |
-| Still need semantic C | **259** |
-| Readable Thumb remaining | 259 |
+| Semantic C done | 377 |
+| Still need semantic C | **256** |
+| Readable Thumb remaining | 256 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 87 (70 already semantic) |
+| Battle pending | 84 (73 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 215 |
 
@@ -183,9 +183,9 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08037318` | 0 | 91/100 | `src/wip/sub_08037318.c` | 91/100; 0x2C vs table ldr order | overnight permuter |
 | `sub_08037430` | 216 | 84/216 | `src/wip/sub_08037430.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DD60` | 0 | 16/40 | `src/wip/sub_0803DD60.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_0803DD88` | 40 | 7/40 | `src/wip/sub_0803DD88.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_0803DDB0` | 40 | 31/40 | `src/wip/sub_0803DDB0.c` | 31/40 same-size (old_agbcc); idx_var form | retail keeps subs r0,#1 then lsls #2 (unfolded) and materialises the table const in r1; agbcc folds to lsls #4 |
-| `sub_0803DDD8` | 40 | 31/40 | `src/wip/sub_0803DDD8.c` | 31/40 same-size (old_agbcc); idx_var form | same as sub_0803DDB0 (table 0x0807AEFC) |
+| `sub_0803DD88` | 0 | 7/40 | `src/wip/sub_0803DD88.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_0803DDB0` | 0 | 31/40 | `src/wip/sub_0803DDB0.c` | 31/40 same-size (old_agbcc); idx_var form | retail keeps subs r0,#1 then lsls #2 (unfolded) and materialises the table const in r1; agbcc folds to lsls #4 |
+| `sub_0803DDD8` | 0 | 31/40 | `src/wip/sub_0803DDD8.c` | 31/40 same-size (old_agbcc); idx_var form | same as sub_0803DDB0 (table 0x0807AEFC) |
 | `sub_0803E328` | 0 | 41/76 | `src/wip/sub_0803E328.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803EBB0` | 0 | 16/40 | `src/wip/sub_0803EBB0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803EC34` | 0 | 16/40 | `src/wip/sub_0803EC34.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
