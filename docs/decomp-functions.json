@@ -1,8 +1,8 @@
 {
-  "generated": "2026-09-21T11:30:02Z",
+  "generated": "2026-09-21T11:57:07Z",
   "counts": {
-    "matched": 307,
-    "wip": 191,
+    "matched": 315,
+    "wip": 183,
     "blocked": 14,
     "not_started": 109,
     "size_mismatch": 11,
@@ -897,19 +897,19 @@
     {
       "name": "sub_080312B0",
       "addr": "0x080312B0",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 40,
-      "matched_bytes": 36,
-      "compiled_bytes": 0,
-      "pct": 90.0,
-      "score": "36/40",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 40,
+      "compiled_bytes": 40,
+      "pct": 100.0,
+      "score": "40/40",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_080312D8",
@@ -1225,7 +1225,7 @@
       "display": "matched",
       "blocked": true,
       "wip": false,
-      "block_reason": "battle state branch \u2014 subs r2 #0x6C vs direct unk201C pool (same-size DIFF)",
+      "block_reason": "",
       "retail_bytes": 68,
       "matched_bytes": 68,
       "compiled_bytes": 68,
@@ -1237,19 +1237,19 @@
     {
       "name": "sub_08033574",
       "addr": "0x08033574",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 80,
-      "matched_bytes": 20,
-      "compiled_bytes": 0,
-      "pct": 25.0,
-      "score": "20/80",
-      "source": "wip",
-      "note": "20/80 after embedded-state modeling; semantic field map is plausible, but agbcc uses r4/r5 and omits retail r6 while the retail prologue keeps the global pointer in r5, base in r1, and 0x2088 in r6"
+      "matched_bytes": 80,
+      "compiled_bytes": 80,
+      "pct": 100.0,
+      "score": "80/80",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_0803370C",
@@ -1951,19 +1951,19 @@
     {
       "name": "sub_080353A0",
       "addr": "0x080353A0",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 200,
-      "matched_bytes": 105,
-      "compiled_bytes": 0,
-      "pct": 52.5,
-      "score": "105/200",
-      "source": "wip",
-      "note": "two attempts: 105/200 (208B) direct draft, then 105/200 (204B) after correcting the third angle source to parent inner->unk52; register/order and first mask scheduling still differ"
+      "matched_bytes": 200,
+      "compiled_bytes": 200,
+      "pct": 100.0,
+      "score": "200/200",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08035468",
@@ -2364,7 +2364,7 @@
       "display": "matched",
       "blocked": true,
       "wip": false,
-      "block_reason": "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] \u2014 logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)",
+      "block_reason": "",
       "retail_bytes": 108,
       "matched_bytes": 108,
       "compiled_bytes": 108,
@@ -3073,19 +3073,19 @@
     {
       "name": "sub_08040088",
       "addr": "0x08040088",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 56,
-      "matched_bytes": 41,
-      "compiled_bytes": 0,
-      "pct": 73.2,
-      "score": "41/56",
-      "source": "wip",
-      "note": "41/56 same-size DIFF after pinning target to r3; retail still keeps the target-pointer location in r1 and the timer field address in r2, while agbcc uses r2/r1 oppositely"
+      "matched_bytes": 56,
+      "compiled_bytes": 56,
+      "pct": 100.0,
+      "score": "56/56",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_080400C0",
@@ -3549,19 +3549,19 @@
     {
       "name": "sub_0804245C",
       "addr": "0x0804245C",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 140,
-      "matched_bytes": 116,
-      "compiled_bytes": 0,
-      "pct": 82.9,
-      "score": "116/140 then 133/140",
-      "source": "wip",
-      "note": "Two attempts: baseline combined cursor update 116/140 (136B), then split stores 133/140 (same-size 140B). Dispatch and ring update match; final 7-byte diff is second cursor reload register shape (retail reuses r2 as ring-location pointer and loads ring into r1, seed overwrites r2 with ring)."
+      "matched_bytes": 140,
+      "compiled_bytes": 140,
+      "pct": 100.0,
+      "score": "140/140",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_080424E8",
@@ -3685,19 +3685,19 @@
     {
       "name": "sub_080427E8",
       "addr": "0x080427E8",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 220,
-      "matched_bytes": 119,
-      "compiled_bytes": 0,
-      "pct": 54.1,
-      "score": "119/220 then 98/220",
-      "source": "wip",
-      "note": "Two attempts: switch-based semantic seed 119/220 (same-size), then r2-pinned MainWork/direct ring mode 98/220 (216B). Behavior is mapped across ring modes 0x20/0x40/0x80/0x100; remaining differences are register/literal scheduling and duplicated callback/flag block layout."
+      "matched_bytes": 220,
+      "compiled_bytes": 220,
+      "pct": 100.0,
+      "score": "220/220",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_080428C4",
@@ -4008,19 +4008,19 @@
     {
       "name": "sub_08043944",
       "addr": "0x08043944",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 48,
-      "matched_bytes": 22,
-      "compiled_bytes": 44,
-      "pct": 45.8,
-      "score": "22/48",
-      "source": "attempt",
-      "note": "sub_08043944"
+      "matched_bytes": 48,
+      "compiled_bytes": 48,
+      "pct": 100.0,
+      "score": "48/48",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08043974",
@@ -4666,7 +4666,7 @@
       "pct": 50.0,
       "score": "50/100",
       "source": "wip",
-      "note": "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits"
+      "note": "src/wip/sub_080473F8.c"
     },
     {
       "name": "sub_0804745C",
@@ -6223,7 +6223,7 @@
       "display": "blocked",
       "blocked": true,
       "wip": false,
-      "block_reason": "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A \u2014 logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter",
+      "block_reason": "",
       "retail_bytes": 112,
       "matched_bytes": 0,
       "compiled_bytes": 0,
@@ -8173,19 +8173,19 @@
     {
       "name": "sub_08067F98",
       "addr": "0x08067F98",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 48,
-      "matched_bytes": 39,
-      "compiled_bytes": 0,
-      "pct": 81.2,
-      "score": "39/48",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 48,
+      "compiled_bytes": 48,
+      "pct": 100.0,
+      "score": "48/48",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08067FC8",
@@ -9120,7 +9120,7 @@
       "pct": 39.7,
       "score": "46/116 then 43/116",
       "source": "wip",
-      "note": "Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit."
+      "note": "src/wip/sub_0806BC0C.c"
     },
     {
       "name": "sub_0806BDA8",
@@ -10225,7 +10225,7 @@
       "pct": 19.8,
       "score": "19/96",
       "source": "wip",
-      "note": "19/96 bytes (19.8%), size mismatch (92 vs 96); correct algorithm (walk 0x28-stride Unk71E84 array from gUnk_030040E4, find first entry with unk16==0 within gUnk_030040C4 count, call sub_08071E44, stamp a running id from gUnk_030000C8 into entry->unk18 and return it; on exhaustion, call sub_08067B98 with a format string and return -1). Uses the shared struct Unk71E84 and existing sub_08071E44/sub_08071E84 prototypes. Remaining diffs: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart, the recurring literal-pool quirk), and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form"
+      "note": "src/wip/sub_08071E84.c"
     },
     {
       "name": "sub_08071EE4",
@@ -10242,7 +10242,7 @@
       "pct": 19.8,
       "score": "19/96",
       "source": "wip",
-      "note": "19/96 bytes (19.8%), size mismatch (92 vs 96); exact clone of sub_08071E84 (same struct/algorithm, calls sub_08071E04 instead of sub_08071E44) and hits the identical diff pattern: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4, and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form. See sub_08071E84's WIP notes for the same analysis"
+      "note": "src/wip/sub_08071EE4.c"
     },
     {
       "name": "sub_08071F44",

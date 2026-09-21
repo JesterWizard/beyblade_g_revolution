@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-21T11:32:15Z",
+  "generated": "2026-09-21T11:57:07Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 329,
-    "semantic_done": 304,
-    "readable_asm": 329,
+    "pending": 321,
+    "semantic_done": 312,
+    "readable_asm": 321,
     "opcode": 0,
-    "battle_pending": 99,
-    "battle_semantic": 55,
+    "battle_pending": 96,
+    "battle_semantic": 58,
     "blocked": 20,
     "wip": 205
   },
@@ -101,7 +101,7 @@
       "seed": "src/wip/sub_08049F98.c",
       "notes": "src/wip/sub_08049F98.md",
       "status": "same-size DIFF 36/144 (25%); logic confirmed correct (2x sub_080617C4 header calls, sub_080615EC coord set via idx<<4 chain, sub_08061784 return, sub_0806171C draw); agbcc keeps out-param in r8 across 3 calls in retail (push r8 at entry) but my C only uses out at final call so agbcc doesn't preallocate r8 early \u2014 retail's r8 usage implies out is referenced earlier in source or a dummy read keeps it live",
-      "next": "try touching 'out' earlier (e.g. volatile read) or reorder params so out is 2nd arg; also try casting idx shift result through s16 (retail uses lsrs #17 = arithmetic sign truncate to s15 for the return-value cast, suggesting val type may be s16 not u16 -- already tried, needs recheck combined with r8 fix). Twin clones sub_0804E17C/sub_08051578 share same structure - crack this one first, then just re-run match_function.py with same seed",
+      "next": "",
       "score": "unscored"
     },
     {
@@ -151,24 +151,24 @@
     {
       "name": "sub_08043944",
       "addr": "0x08043944",
-      "kind": "asm",
-      "bytes": 48,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08043944.c",
       "notes": "src/wip/sub_08043944.md",
-      "status": "best 77.1% (37/48) same-size DIFF after r3/r4 hints; input-normalization order still differs",
-      "next": "leave readable Thumb; revisit with a source shape that forces idx normalization before flags normalization",
-      "score": "37/48"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "48/48"
     },
     {
       "name": "sub_08033574",
       "addr": "0x08033574",
-      "kind": "asm",
-      "bytes": 80,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08033574.c",
       "notes": "src/wip/sub_08033574.md",
-      "status": "20/80 after embedded-state modeling; semantic field map is plausible, but agbcc uses r4/r5 and omits retail r6 while the retail prologue keeps the global pointer in r5, base in r1, and 0x2088 in r6",
-      "next": "try explicit r5 global-pointer and r6 offset register pins, while preserving the embedded state at 0x1FAC and byte flag at +0x3A",
-      "score": "20/80"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "80/80"
     },
     {
       "name": "sub_08038580",
@@ -217,13 +217,13 @@
     {
       "name": "sub_08040088",
       "addr": "0x08040088",
-      "kind": "asm",
-      "bytes": 56,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08040088.c",
       "notes": "src/wip/sub_08040088.md",
-      "status": "41/56 same-size DIFF after pinning target to r3; retail still keeps the target-pointer location in r1 and the timer field address in r2, while agbcc uses r2/r1 oppositely",
-      "next": "pin  to r1 (and let target remain r3); preserve direct  member access so the initial 0x9D/0xC1 offset setup follows retail",
-      "score": "41/56"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "56/56"
     },
     {
       "name": "sub_08040EF4",
@@ -298,8 +298,8 @@
       "bytes": 100,
       "seed": "src/wip/sub_080473F8.c",
       "notes": "src/wip/sub_080473F8.md",
-      "status": "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits",
-      "next": "reuse the sub_08041858/sub_08069894 barrier: after storing through the first IWRAM pointer, asm(\"\" : \"+r\"(r0), \"+r\"(r1) : : \"memory\") then reload the second address",
+      "status": "",
+      "next": "",
       "score": "50/100"
     },
     {
@@ -408,7 +408,7 @@
       "bytes": 0,
       "seed": "src/wip/sub_08066BF0.c",
       "notes": "src/wip/sub_08066BF0.md",
-      "status": "47/70 bytes (67.1%), same size; correct algorithm confirmed via manual disasm match (loop over ~29 halfword-stride entries in arg0->unk230, select alt (0x080BAF6A[i]) or default (0x080BAFA6[i]) palette value based on the flag byte at gUnk_030009A8, write to entries[i]->unk18) with end computed via register arithmetic (matching retail's non-folded 'adds r6,r3,#0; adds r6,#0x3A' instead of a literal). Added struct Unk66BF0Entry (local, unk18 at +0x18) and reused struct Unk66BC4 for arg0. Only remaining diff: register swap between 'end' and the flag pointer (r5/r6 vs retail's r6/r5)",
+      "status": "",
       "next": "try computing the flag-pointer as a named local (not inline gUnk_030009A8 macro use) declared between altVal and end, which may flip which gets r5 vs r6",
       "score": "47/70"
     },
@@ -452,7 +452,7 @@
       "bytes": 96,
       "seed": "src/wip/sub_08071E84.c",
       "notes": "src/wip/sub_08071E84.md",
-      "status": "19/96 bytes (19.8%), size mismatch (92 vs 96); correct algorithm (walk 0x28-stride Unk71E84 array from gUnk_030040E4, find first entry with unk16==0 within gUnk_030040C4 count, call sub_08071E44, stamp a running id from gUnk_030000C8 into entry->unk18 and return it; on exhaustion, call sub_08067B98 with a format string and return -1). Uses the shared struct Unk71E84 and existing sub_08071E44/sub_08071E84 prototypes. Remaining diffs: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart, the recurring literal-pool quirk), and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form",
+      "status": "",
       "next": "try writing the first bounds check with the same (count != -1) form used in the loop instead of implicit truthiness, to keep the comparison shape consistent",
       "score": "19/96"
     },
@@ -463,7 +463,7 @@
       "bytes": 96,
       "seed": "src/wip/sub_08071EE4.c",
       "notes": "src/wip/sub_08071EE4.md",
-      "status": "19/96 bytes (19.8%), size mismatch (92 vs 96); exact clone of sub_08071E84 (same struct/algorithm, calls sub_08071E04 instead of sub_08071E44) and hits the identical diff pattern: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4, and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form. See sub_08071E84's WIP notes for the same analysis",
+      "status": "",
       "next": "same as sub_08071E84 -- try the (count != -1) form for the first check; whatever unlocks that sibling should apply here too",
       "score": "19/96"
     },
@@ -475,7 +475,7 @@
       "seed": "src/wip/sub_08071F44.c",
       "notes": "src/wip/sub_08071F44.md",
       "status": "35/64 bytes (54.7%), size mismatch (60 vs 64); correct algorithm (reverse lookup: find first Unk71E84 entry with unk16!=0 and unk18==arg0). Push list matches retail exactly ({r4,lr}) and the -1 compare form is preserved correctly here (no simplification, unlike the sub_08071E84 family). Only diff: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart), the recurring literal-pool quirk seen across ~6 functions this session",
-      "next": "retry the sub_08071B4C / sub_08041858 IWRAM barrier: keep the first pointer live with asm(\"\" : \"+r\"(r0) : : \"memory\") then reload gUnk_030040C4 as its own literal (0x20 from gUnk_030040E4)",
+      "next": "",
       "score": "35/64"
     },
     {
@@ -558,13 +558,13 @@
     {
       "name": "sub_080353A0",
       "addr": "0x080353A0",
-      "kind": "asm",
-      "bytes": 200,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_080353A0.c",
       "notes": "src/wip/sub_080353A0.md",
-      "status": "two attempts: 105/200 (208B) direct draft, then 105/200 (204B) after correcting the third angle source to parent inner->unk52; register/order and first mask scheduling still differ",
-      "next": "Use corrected inner->unk52 seed; force retail mask-before-byte and r4/r3/r2 argument register scheduling with a targeted source/permuter search",
-      "score": "105/200"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "200/200"
     },
     {
       "name": "sub_0803559C",
@@ -596,7 +596,7 @@
       "seed": "src/wip/sub_08035984.c",
       "notes": "src/wip/sub_08035984.md",
       "status": "direct seed 232/348 (344B) retained. Loading both velocities before squaring either dropped score or added an extra adds r6,r0 copy",
-      "next": "keep 232/348 seed; force ldr r5,[r4,#0x1C] immediately after ldr r0,[r4,#0x18] without a second pointer copy",
+      "next": "",
       "score": "232/348"
     },
     {
@@ -684,7 +684,7 @@
       "seed": "src/wip/sub_0804188C.c",
       "notes": "src/wip/sub_0804188C.md",
       "status": "Two semantic attempts failed to reproduce the fixed-point table walk: direct loop 19/244 (208B), then pinned r4/r5/r6/r7 and explicit fixed-point/color locals 41/244 (224B). Object fields and update/callback roles are identified.",
-      "next": "Use a targeted register/permuter search for the retail fixed-point index expression (r4=i<<16, r0=asr #14), r5 object slot, r6 table base, and r7 loop index; preserve separate signed count loads.",
+      "next": "",
       "score": "19/244 then 41/244"
     },
     {
@@ -695,19 +695,19 @@
       "seed": "src/wip/sub_08041E14.c",
       "notes": "src/wip/sub_08041E14.md",
       "status": "Two semantic attempts: baseline 25/114 (104B), then retail register-pinned args/count/table 78/114 (108B). Matching logic and nested +0xC8/+0x10 presence chain are identified; remaining diff is fixed-point table indexing and loop increment shape.",
-      "next": "Use a targeted source/permuter search to reproduce lsls index,#16; asrs,#14 byte-offset indexing and bottom increment via r0/lsrs/asrs while retaining r5/r4 args, r6 table, r3 count, r1 index.",
+      "next": "",
       "score": "25/114 then 78/114"
     },
     {
       "name": "sub_0804245C",
       "addr": "0x0804245C",
-      "kind": "asm",
-      "bytes": 140,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804245C.c",
       "notes": "src/wip/sub_0804245C.md",
-      "status": "Two attempts: baseline combined cursor update 116/140 (136B), then split stores 133/140 (same-size 140B). Dispatch and ring update match; final 7-byte diff is second cursor reload register shape (retail reuses r2 as ring-location pointer and loads ring into r1, seed overwrites r2 with ring).",
-      "next": "Use a block-scoped ring-location local pinned to r2 and ring pointer to r1 for the two post-dispatch stores, or a tiny permuter search; preserve split unmasked increment then masked write.",
-      "score": "116/140 then 133/140"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "140/140"
     },
     {
       "name": "sub_080425B8",
@@ -723,13 +723,13 @@
     {
       "name": "sub_080427E8",
       "addr": "0x080427E8",
-      "kind": "asm",
-      "bytes": 220,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_080427E8.c",
       "notes": "src/wip/sub_080427E8.md",
-      "status": "Two attempts: switch-based semantic seed 119/220 (same-size), then r2-pinned MainWork/direct ring mode 98/220 (216B). Behavior is mapped across ring modes 0x20/0x40/0x80/0x100; remaining differences are register/literal scheduling and duplicated callback/flag block layout.",
-      "next": "Restore the 119/220 switch seed; use targeted source/permuter work for initial main in r2, ring mode in r1, and shared +0x448 callback/flag blocks. Do not retain the broad r2 pin.",
-      "score": "119/220 then 98/220"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "220/220"
     },
     {
       "name": "sub_080429CC",
@@ -937,7 +937,7 @@
       "seed": "src/wip/sub_0805264C.c",
       "notes": "src/wip/sub_0805264C.md",
       "status": "Two semantic attempts after correcting the existing prototype: struct-table lookup 29/96 (same size), then split ROM-table lookup with r5 pointer pin 9/96 (92B). Callback semantics, signed selector, and two position draws are mapped; retail requires the exact split 0x080995AC+8 table address and r5 data/r4 index lifetime without the extra saved register.",
-      "next": "Restore the first same-size semantic seed and use a targeted table-address/source-order search; force ldr base, lsl index, adds #8, adds offset, ldr callback, with data in r5 and index in r4.",
+      "next": "",
       "score": "29/96 then 9/96"
     },
     {
@@ -1288,7 +1288,7 @@
       "bytes": 116,
       "seed": "src/wip/sub_0806BC0C.c",
       "notes": "src/wip/sub_0806BC0C.md",
-      "status": "Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit.",
+      "status": "",
       "next": "Compile the final revision with current/count pinned to r4 and limit pinned to r6. Preserve the source count halfword load, cap callback, and fixed-point loop; verify the post-loop +0x114/+0x10/+0x118 stores.",
       "score": "46/116 then 43/116"
     },
@@ -1333,7 +1333,7 @@
       "seed": "src/wip/sub_0806FE84.c",
       "notes": "src/wip/sub_0806FE84.md",
       "status": "Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1.",
-      "next": "Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit).",
+      "next": "",
       "score": "33/120"
     },
     {
@@ -1531,7 +1531,7 @@
       "seed": "src/wip/sub_08032DC4.c",
       "notes": "src/wip/sub_08032DC4.md",
       "status": "418/660 (656B); arg copies now state_a, state_b, frame. Remaining 4-byte shortage plus keys-held mask order",
-      "next": "find the missing 4-byte insn without shrinking the rest; try mask-first movs #8 before ldrh on gBtlKeysHeld via permuter",
+      "next": "",
       "score": "418/660"
     },
     {
@@ -1658,13 +1658,13 @@
     {
       "name": "sub_080312B0",
       "addr": "0x080312B0",
-      "kind": "asm",
-      "bytes": 40,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_080312B0.c",
       "notes": "src/wip/sub_080312B0.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "36/40"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "40/40"
     },
     {
       "name": "sub_08031300",
@@ -2065,13 +2065,13 @@
     {
       "name": "sub_08067F98",
       "addr": "0x08067F98",
-      "kind": "asm",
-      "bytes": 48,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08067F98.c",
       "notes": "src/wip/sub_08067F98.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "39/48"
+      "status": "MATCHED \u2014 semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape)",
+      "next": "done",
+      "score": "48/48"
     },
     {
       "name": "sub_08069894",
@@ -2838,7 +2838,7 @@
     {
       "name": "sub_08033530",
       "addr": "0x08033530",
-      "reason": "battle state branch \u2014 subs r2 #0x6C vs direct unk201C pool (same-size DIFF)",
+      "reason": "",
       "kind": "missing",
       "bytes": 0
     },
@@ -2852,7 +2852,7 @@
     {
       "name": "sub_08038314",
       "addr": "0x08038314",
-      "reason": "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] \u2014 logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)",
+      "reason": "",
       "kind": "missing",
       "bytes": 0
     },
@@ -2915,7 +2915,7 @@
     {
       "name": "sub_080604C8",
       "addr": "0x080604C8",
-      "reason": "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A \u2014 logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter",
+      "reason": "",
       "kind": "asm",
       "bytes": 112
     },

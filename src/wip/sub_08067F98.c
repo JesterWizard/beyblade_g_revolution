@@ -1,6 +1,7 @@
 #include "global.h"
 
 // @ 0x08067f98
+/* match-compiler: old_agbcc */
 struct Unk680CCRec *sub_08067F98(struct Unk680CC *a, u32 key)
 {
     u32 r1;

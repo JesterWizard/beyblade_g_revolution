@@ -1,6 +1,7 @@
 #include "global.h"
 
 // @ 0x08033574
+/* match-compiler: old_agbcc */
 void sub_08033574(void)
 {
     struct BattleWork *w;

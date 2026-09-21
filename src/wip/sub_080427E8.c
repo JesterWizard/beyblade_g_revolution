@@ -1,5 +1,7 @@
 #include "global.h"
 
+// @ 0x080427e8
+/* match-compiler: old_agbcc */
 void sub_080427E8(void)
 {
     struct MainWork *main;

@@ -1,6 +1,7 @@
 #include "global.h"
 
 // @ 0x0804245c
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 void sub_0804245C(void)

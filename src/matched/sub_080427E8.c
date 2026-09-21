@@ -1,8 +1,36 @@
 #include "global.h"
 
 // @ 0x080427e8
-__attribute__((naked))
+/* match-compiler: old_agbcc */
 void sub_080427E8(void)
 {
-    asm(".syntax unified\npush {r4, lr}\nldr r4, _0804280C @ =0x03000198\nldr r2, [r4, #0x00]\nldr r1, _08042810 @ =0x0000182C\nadds r0, r2, r1\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _080428B6\nldr r0, _08042814 @ =0x03000538\nldr r0, [r0, #0x00]\nldrh r1, [r0, #0x02]\ncmp r1, #0x40\nbeq _08042826\ncmp r1, #0x40\nbgt _08042818\ncmp r1, #0x20\nbeq _08042854\nb _080428B6\n_0804280C: .4byte 0x03000198\n_08042810: .4byte 0x0000182C\n_08042814: .4byte 0x03000538\n_08042818:\ncmp r1, #0x80\nbeq _08042880\nmovs r0, #0x80\nlsls r0, r0, #0x01\ncmp r1, r0\nbeq _08042898\nb _080428B6\n_08042826:\nldr r1, _0804284C @ =0x00000462\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x05\nbeq _0804283A\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x05\nbl sub_080680CC\n_0804283A:\nldr r1, [r4, #0x00]\nldr r2, _08042850 @ =0x00000479\nadds r1, r1, r2\nmovs r0, #0x02\nldrb r2, [r1, #0x00]\nands r0, r2\nstrb r0, [r1, #0x00]\nb _080428B6\n.byte 0x00, 0x00\n_0804284C: .4byte 0x00000462\n_08042850: .4byte 0x00000479\n_08042854:\nldr r1, _08042878 @ =0x00000462\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x05\nbeq _08042868\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x05\nbl sub_080680CC\n_08042868:\nldr r0, [r4, #0x00]\nldr r2, _0804287C @ =0x00000479\nadds r0, r0, r2\nmovs r1, #0x01\nldrb r2, [r0, #0x00]\norrs r1, r2\nb _080428B4\n.byte 0x00, 0x00\n_08042878: .4byte 0x00000462\n_0804287C: .4byte 0x00000479\n_08042880:\nldr r1, _08042894 @ =0x00000462\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x06\nbeq _080428AC\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x06\nb _080428A8\n.byte 0x00, 0x00\n_08042894: .4byte 0x00000462\n_08042898:\nldr r1, _080428BC @ =0x00000462\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x07\nbeq _080428AC\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x07\n_080428A8:\nbl sub_080680CC\n_080428AC:\nldr r0, [r4, #0x00]\nldr r2, _080428C0 @ =0x00000479\nadds r0, r0, r2\nmovs r1, #0x00\n_080428B4:\nstrb r1, [r0, #0x00]\n_080428B6:\npop {r4}\npop {r0}\nbx r0\n_080428BC: .4byte 0x00000462\n_080428C0: .4byte 0x00000479");
+    struct MainWork *main;
+
+    main = gMainWorkPtr;
+    if (main->unk182C == 0)
+        return;
+    switch (gUnk_03000538->unk02)
+    {
+    case 0x40:
+        if (main->unk0462 != 5)
+            sub_080680CC((struct Unk680CC *)&main->unk0448, 5);
+        gMainWorkPtr->unk0479 = 2 & gMainWorkPtr->unk0479;
+        break;
+    case 0x20:
+        if (main->unk0462 != 5)
+            sub_080680CC((struct Unk680CC *)&main->unk0448, 5);
+        gMainWorkPtr->unk0479 = 1 | gMainWorkPtr->unk0479;
+        break;
+    case 0x80:
+        if (main->unk0462 != 6)
+            sub_080680CC((struct Unk680CC *)&main->unk0448, 6);
+        gMainWorkPtr->unk0479 = 0;
+        break;
+    case 0x100:
+        if (main->unk0462 != 7)
+            sub_080680CC((struct Unk680CC *)&main->unk0448, 7);
+        gMainWorkPtr->unk0479 = 0;
+        break;
+    }
 }
+

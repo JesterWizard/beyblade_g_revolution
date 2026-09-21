@@ -8,18 +8,50 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **304/633 (48.0%)** |
-| **Decompiled C (bytes)** | **19,034/90,272 (21.1%)** |
+| **Decompiled C (functions)** | **312/633 (49.3%)** |
+| **Decompiled C (bytes)** | **19,866/90,272 (22.0%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 329/633 (52.0%) |
+| Readable Thumb | 321/633 (50.7%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 55/160 (34.4% fn, 15.4% bytes) |
+| Battle semantic C | 58/160 (36.2% fn, 16.5% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — `old_agbcc` backlog sweep: +8 semantic C (304→312/633)
+- `build/dual_compiler_sweep.py` re-scored every WIP seed with both compiler
+  binaries. **10 seeds** reach 100% bytes only under `old_agbcc` (2 were already
+  landed last batch); the rest were parked as "blocked on register allocation".
+- Integrated this batch (all with `/* match-compiler: old_agbcc */`, verified
+  `match_function.py` 100%):
+  | Function | Bytes | Parked DIFF |
+  |--|--|--|
+  | `sub_080312B0` | 40 | `ldrh` destination r0 vs r5 (had "GCC asm label" draft) |
+  | `sub_08033574` | 80 | pool addend `0x3B` vs `0x3A`, r4/r5 vs retail r5/r1/r6 |
+  | `sub_080353A0` | 200 | 105/200 — mask scheduling + argument registers |
+  | `sub_08040088` | 56 | 41/56 — target pointer r1 vs r3, timer addr r2 vs r1 |
+  | `sub_0804245C` | 140 | 133/140 — ring-location pointer r2 vs r1 |
+  | `sub_080427E8` | 220 | 119/220 — MainWork in r2, ring mode in r1 |
+  | `sub_08043944` | 48 | 37/48 — r3/r4 hint attempts |
+  | `sub_08067F98` | 48 | "GCC asm label" draft; still register-shaped C (see caveat) |
+- The shared cause is the same one found for `sub_08061308`: for this codebase's
+  shapes `agbcc` coalesces a `ldrb`/`ldrh` into the register that consumes it or
+  reuses a still-live address register, while `old_agbcc` reproduces retail's
+  extra load. No C rephrasing reproduces that with `agbcc`.
+- Cleanups applied while landing: deduplicated the doubled `#include "global.h"`
+  headers four seeds carried, and replaced `sub_0804245C`'s `u8 *base/ring` mask
+  hack with `gUnk_03000538->unk00 = 0x1F & ...` (still byte-exact under
+  `old_agbcc`).
+- Caveat: `sub_08067F98`'s matching form is register-named pseudo-C (`r0`…`r4`
+  locals + `*(u16 *)` record walk) — byte-exact, but every natural
+  `Unk68014Rec` walk written instead is a same-size DIFF (best 6/48 bytes), and a
+  600 s bounded permuter run from the semantic seed did not reach score 0. The
+  register-shaped C is what is landed; the walk needs a different source shape
+  (or a newer tool) before it can be called semantic C.
+- `make compare` → **OK** (312/633 semantic C, 19,866 bytes).
 
 ### 2026-09-21 — per-function compiler split: +2 semantic C (302→304/633)
 - **Found the real blocker behind the `ldrb`/`lsls` family:** `pret/agbcc`'s

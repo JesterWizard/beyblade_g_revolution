@@ -1,6 +1,7 @@
 #include "global.h"
 
 // @ 0x08040088
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 // @ 0x08040088

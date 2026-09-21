@@ -1,39 +1,41 @@
 #include "global.h"
 
 // @ 0x08067f98
-__attribute__((naked))
-void sub_08067F98(void)
+/* match-compiler: old_agbcc */
+struct Unk680CCRec *sub_08067F98(struct Unk680CC *a, u32 key)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r3, r1, #0x10\n"
-        "ldr r2, [r0, #0x00]\n"
-        "ldr r1, [r2, #0x18]\n"
-        "adds r2, r2, r1\n"
-        "movs r1, #0x00\n"
-        "ldrh r0, [r0, #0x28]\n"
-        "cmp r1, r0\n"
-        "bcs _08067FC0\n"
-        "_08067FAC:\n"
-        "ldrh r4, [r2, #0x00]\n"
-        "cmp r4, r3\n"
-        "bne _08067FB6\n"
-        "adds r0, r2, #0x0\n"
-        "b _08067FC2\n"
-        "_08067FB6:\n"
-        "ldrh r4, [r2, #0x02]\n"
-        "adds r2, r4, r2\n"
-        "adds r1, #0x01\n"
-        "cmp r1, r0\n"
-        "bcc _08067FAC\n"
-        "_08067FC0:\n"
-        "movs r0, #0x00\n"
-        "_08067FC2:\n"
-        "pop {r4}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u32 r1;
+    u8 *r2;
+    u32 r3;
+    u32 r4;
+    u32 r0;
+
+    r1 = key;
+    r1 <<= 16;
+    r3 = r1 >> 16;
+    r2 = (u8 *)a->unk00;
+    r1 = ((struct Unk68014 *)r2)->unk18;
+    r2 += r1;
+    r1 = 0;
+    r0 = a->unk28;
+    if (r1 >= r0)
+        goto notfound;
+loop:
+    r4 = *(u16 *)r2;
+    if (r4 != r3)
+        goto next;
+    r0 = (u32)r2;
+    goto done;
+next:
+    r4 = *(u16 *)(r2 + 2);
+    r2 = (u8 *)(r4 + (u32)r2);
+    r1++;
+    if (r1 < r0)
+        goto loop;
+notfound:
+    r0 = 0;
+done:
+    return (struct Unk680CCRec *)r0;
 }
+
 

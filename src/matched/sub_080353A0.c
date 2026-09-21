@@ -1,8 +1,38 @@
 #include "global.h"
 
 // @ 0x080353a0
-__attribute__((naked))
-void sub_080353A0(void)
+/* match-compiler: old_agbcc */
+void sub_080353A0(struct Unk35258 *a)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nadd sp, #-0x00C\nadds r6, r0, #0x0\nldr r0, _08035464 @ =0x000002C5\nadds r7, r6, r0\nmovs r0, #0x01\nldrb r1, [r7, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _080353EC\nmovs r2, #0xAC\nlsls r2, r2, #0x02\nadds r4, r6, r2\nmovs r3, #0xAD\nlsls r3, r3, #0x02\nadds r1, r6, r3\nldr r0, [r4, #0x00]\nldr r1, [r1, #0x00]\nadds r0, r0, r1\nstr r0, [r4, #0x00]\nadds r5, r6, #0x0\nadds r5, #0x1C\nadds r0, r5, #0x0\nbl sub_080686D8\nldr r0, [r6, #0x00]\nldr r1, [r0, #0x0C]\nldr r2, [r0, #0x10]\nldr r3, [r0, #0x14]\nmovs r0, #0x00\nstr r0, [sp, #0x000]\nstr r0, [sp, #0x004]\nldr r0, [r4, #0x00]\nlsls r0, r0, #0x08\nstr r0, [sp, #0x008]\nadds r0, r5, #0x0\nbl sub_08035468\n_080353EC:\nmovs r0, #0x04\nldrb r1, [r7, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _08035426\nmovs r2, #0xEA\nlsls r2, r2, #0x01\nadds r4, r6, r2\nadds r0, r4, #0x0\nbl sub_080686D8\nmovs r3, #0xB9\nlsls r3, r3, #0x02\nadds r0, r6, r3\nldr r1, [r0, #0x00]\nmovs r2, #0xBA\nlsls r2, r2, #0x02\nadds r0, r6, r2\nldr r2, [r0, #0x00]\nadds r3, #0x08\nadds r0, r6, r3\nldr r3, [r0, #0x00]\nmovs r0, #0x00\nstr r0, [sp, #0x000]\nstr r0, [sp, #0x004]\nstr r0, [sp, #0x008]\nadds r0, r4, #0x0\nbl sub_08035468\n_08035426:\nmovs r0, #0x02\nldrb r7, [r7, #0x00]\nands r0, r7\ncmp r0, #0x00\nbeq _0803545C\nadds r5, r6, #0x0\nadds r5, #0xF8\nadds r0, r5, #0x0\nbl sub_080686D8\nldr r4, [r6, #0x00]\nldr r1, [r4, #0x0C]\nldr r2, [r4, #0x10]\nldr r3, [r4, #0x14]\nmovs r0, #0x00\nstr r0, [sp, #0x000]\nmovs r0, #0x80\nlsls r0, r0, #0x06\nstr r0, [sp, #0x004]\nadds r4, #0x52\nmovs r6, #0x00\nldsh r0, [r4, r6]\nlsls r0, r0, #0x08\nstr r0, [sp, #0x008]\nadds r0, r5, #0x0\nbl sub_08035468\n_0803545C:\nadd sp, #0x00C\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_08035464: .4byte 0x000002C5");
+    if ((1 & a->unk2C5) != 0)
+    {
+        a->unk2B0 += a->unk2B4;
+        sub_080686D8(&a->unk1C);
+        sub_08035468(
+            &a->unk1C,
+            a->unk00->unk0C,
+            a->unk00->unk10,
+            a->unk00->unk14,
+            0,
+            0,
+            a->unk2B0 << 8);
+    }
+    if ((4 & a->unk2C5) != 0)
+    {
+        sub_080686D8(&a->unk1D4);
+        sub_08035468(&a->unk1D4, a->unk2E4, a->unk2E8, a->unk2EC, 0, 0, 0);
+    }
+    if ((2 & a->unk2C5) != 0)
+    {
+        sub_080686D8(&a->unkF8);
+        sub_08035468(
+            &a->unkF8,
+            a->unk00->unk0C,
+            a->unk00->unk10,
+            a->unk00->unk14,
+            0,
+            0x2000,
+            a->unk00->unk52 << 8);
+    }
 }
+

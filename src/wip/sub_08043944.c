@@ -1,6 +1,7 @@
 #include "global.h"
 
 // @ 0x08043944
+/* match-compiler: old_agbcc */
 void sub_08043944(bool8 skip, u8 idx, u8 flags)
 {
     struct Unk0554 *p;
