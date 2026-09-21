@@ -21,6 +21,39 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-21 — sweep tool v2 + 3 more semantic C (+3, 362→365/633)
+- `sweep_seeds.py` rewritten to call `match_function.compile_and_score` directly
+  (no subprocess per seed) and to *classify* each near-miss:
+  - `SIGNONLY` — every differing byte is a Thumb conditional-branch condition byte
+    and the pair is a signed/unsigned twin (`bcs`/`bge`, `blo`/`blt`, `bls`/`ble`,
+    `bhi`/`bgt`), so the fix is a signedness change on the compared expression.
+  - `branch-target` — same size, only branch offsets differ.
+- **Signedness is now a pinned repair.** Three functions this batch were one
+  signedness change away from retail:
+  | Function | DIFF | Fix |
+  |--|--|--|
+  | `sub_08068988` (126B) | `bcs` where retail has `bge` (x2) | `u32 width/height` → `s32` |
+  | `sub_08035020` (52B) | `blo`/`bls` where retail has `blt`/`ble` | `switch ((s32)a->unk2CC)` |
+  | `sub_0806BE20` (36B) | already right shape | swap `s32 i` / `u8 *p` declaration order |
+- Landed (100%, `make compare` OK):
+  | Function | Bytes | How |
+  |--|--|--|
+  | `sub_08035020` | 52 | signed `switch` over the +0x2CC state word |
+  | `sub_0806BE20` | 36 | size-prefixed entry walk; declaration order fixes the first insn |
+  | `sub_08068988` | 126 | stale seed, fixed by signed clamp locals |
+- **Declaration order matters.** agbcc emits locals in declaration/initialisation
+  order, so reordering two declarations is a legitimate (and often sufficient) fix
+  for a same-size DIFF whose first instruction is swapped.
+- Permuter chain 3 (`--strict-branches`): `sub_08033158` best 1 (confirmed residual:
+  `cmp r1,#0` retail vs `cmp r2,#0` agbcc), `sub_0803DDB0` best 10. Both floor.
+- Parked/annotated: `sub_0802C2B0` (92/100, agbcc hoists `mov r12,r1` one insn early),
+  `sub_0803DCFC` (44/48), `sub_08043B90` (67/76), `sub_08073988` (94/96 — the last
+  2 bytes need the pool constant in r0 instead of r2; every declaration-order and
+  assignment shape tried floors at 89/96, so the permuter should have another go),
+  `sub_08062D50` / `sub_08062CF4` (leaf that nevertheless pushes r4/r5/r6 — no source
+  shape found), `sub_08074144` (**blocked by toolchain**: retail is `mov pc, lr`,
+  both agbcc builds emit `bx lr`; the only `mov pc, lr` in the ROM, 2 bytes).
+
 ### 2026-09-21 — WIP-seed sweep tool + semantic C conversions (+3, 359→362/633)
 - **New tool `tools/decomp/sweep_seeds.py`.** Scores *every* parked `src/wip/*.c`
   seed (both compilers) for functions whose linked `src/matched/<fn>.c` is still a

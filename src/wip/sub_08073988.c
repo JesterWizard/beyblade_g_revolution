@@ -1,6 +1,13 @@
 #include "global.h"
 
 // @ 0x08073988
+// 94/96 same-size (97.9%). Remaining 2 bytes: at the `default_char` block retail
+// emits `ldr r0,=0x080BB748; adds r0,r1,r0` (pool constant lands in r0, the same
+// register that receives the sum) while agbcc puts the constant in r2
+// (`ldr r2,=...; adds r0,r1,r2`). Only the `index = 0x080BB748` side-effect form
+// below reproduces retail's prologue; rewriting that statement as a plain
+// expression (`r0 = ch + 0x080BB748`, `r0 = 0x080BB748; r0 += ch`, ...) all floor
+// at 89/96 because they re-colour r7/r12. Permuter chain (strict branches) best 10.
 s32 sub_08073988(void *text_arg, const void *base_arg, u32 delta_arg, u32 space_arg)
 {
     const u8 *text;

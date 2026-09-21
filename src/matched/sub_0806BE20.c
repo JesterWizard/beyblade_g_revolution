@@ -1,33 +1,32 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806be20
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+// @ 0x0806be20
+// Index into a size-prefixed entry table: entry = base + 4, then walk `c`
+// entries by adding the u16 length stored at the head of each entry.
+// Declaration order matters here: agbcc emits `i = 0` before `p = b + 4` only
+// when `i` is declared/initialised first (retail: movs r3,#0; adds r0,r1,#4).
 void *sub_0806BE20(void *a, void *b, s32 c)
 {
-    asm(
-        ".syntax unified\n"
-        "movs r3, #0x00\n"
-        "adds r0, r1, #0x4\n"
-        "cmp r1, #0x00\n"
-        "beq _0806BE2E\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "cmp r2, r1\n"
-        "blt _0806BE32\n"
-        "_0806BE2E:\n"
-        "movs r0, #0x00\n"
-        "b _0806BE42\n"
-        "_0806BE32:\n"
-        "cmp r3, r2\n"
-        "bge _0806BE42\n"
-        "adds r3, r2, #0x0\n"
-        "_0806BE38:\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "adds r0, r1, r0\n"
-        "subs r3, #0x01\n"
-        "cmp r3, #0x00\n"
-        "bne _0806BE38\n"
-        "_0806BE42:\n"
-        "bx lr\n"
-    );
+    s32 i = 0;
+    u8 *p = (u8 *)b + 4;
+
+    if (b == 0 || c >= (s32)*(u16 *)b)
+        return 0;
+    if (i < c)
+    {
+        i = c;
+        do
+        {
+            p = p + *(u16 *)p;
+            i--;
+        } while (i != 0);
+    }
+    return p;
 }
 

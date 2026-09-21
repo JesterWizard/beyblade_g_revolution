@@ -1,73 +1,42 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068988
-__attribute__((naked))
-void sub_08068988(void)
+#include "global.h"
+
+// @ 0x08068988
+// Set up one tile-map blit: reset both per-slot state words, forward the args to
+// sub_08068A08, then clamp a 1<<unk5F x 1<<unk60 rect to the state's own size.
+// `width`/`height` MUST be signed: retail emits `bge` (signed) for both clamps,
+// unsigned locals make agbcc emit `bcs`. Same 126 bytes either way; only the
+// branch opcode differs.
+void sub_08068988(
+    struct Unk68988 *state,
+    u32 index_arg,
+    u32 unused,
+    u32 limit_arg,
+    u32 mode_arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "add sp, #-0x00C\n"
-        "adds r6, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "ldr r0, [sp, #0x020]\n"
-        "lsls r4, r4, #0x18\n"
-        "lsrs r4, r4, #0x18\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "adds r7, r0, #0x0\n"
-        "str r7, [sp, #0x000]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_08068A08\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08069908\n"
-        "movs r5, #0x00\n"
-        "strh r5, [r0, #0x00]\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08069948\n"
-        "strh r5, [r0, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x5F\n"
-        "movs r1, #0x01\n"
-        "adds r2, r1, #0x0\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r2, r0\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x60\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0\n"
-        "ldr r0, [r6, #0x00]\n"
-        "cmp r0, r2\n"
-        "bge _080689D8\n"
-        "adds r2, r0, #0x0\n"
-        "_080689D8:\n"
-        "ldr r0, [r6, #0x04]\n"
-        "cmp r0, r1\n"
-        "bge _080689E0\n"
-        "adds r1, r0, #0x0\n"
-        "_080689E0:\n"
-        "movs r0, #0x02\n"
-        "ands r0, r7\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "cmp r0, #0x00\n"
-        "bne _080689FE\n"
-        "str r0, [sp, #0x000]\n"
-        "str r2, [sp, #0x004]\n"
-        "str r1, [sp, #0x008]\n"
-        "adds r0, r6, #0x0\n"
-        "movs r1, #0x00\n"
-        "movs r2, #0x00\n"
-        "movs r3, #0x00\n"
-        "bl sub_08069270\n"
-        "_080689FE:\n"
-        "add sp, #0x00C\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    u8 index;
+    u16 limit;
+    u16 mode;
+    s32 width;
+    s32 height;
+
+    index = (u8)index_arg;
+    limit = (u16)limit_arg;
+    mode = (u16)mode_arg;
+    sub_08068A08(state, index, (void *)unused, limit, mode);
+    *sub_08069908(index) = 0;
+    *sub_08069948(index) = 0;
+    width = 1 << state->unk5F;
+    height = 1 << state->unk60;
+    if (state->unk00 < width)
+        width = state->unk00;
+    if (state->unk04 < height)
+        height = state->unk04;
+    if ((mode & 2) == 0)
+        sub_08069270(state, 0, 0, 0, 0, width, height);
 }
 

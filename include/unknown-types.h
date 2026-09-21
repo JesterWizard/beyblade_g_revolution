@@ -44,6 +44,7 @@ struct Unk43B90 /* 0x08 */
     /* 04 */ s32 unk04;
 };
 
+
 struct Unk338E4 /* 0x08 */
 {
     /* 00 */ u16 unk00;
