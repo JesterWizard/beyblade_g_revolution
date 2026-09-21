@@ -1,8 +1,8 @@
 {
-  "generated": "2026-09-21T11:57:07Z",
+  "generated": "2026-09-21T12:41:58Z",
   "counts": {
-    "matched": 315,
-    "wip": 183,
+    "matched": 321,
+    "wip": 177,
     "blocked": 14,
     "not_started": 109,
     "size_mismatch": 11,
@@ -81,19 +81,19 @@
     {
       "name": "sub_0802B994",
       "addr": "0x0802B994",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 58,
-      "matched_bytes": 42,
-      "compiled_bytes": 0,
-      "pct": 72.4,
-      "score": "42/58",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 58,
+      "compiled_bytes": 58,
+      "pct": 100.0,
+      "score": "58/58",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_0802BA4C",
@@ -1225,7 +1225,7 @@
       "display": "matched",
       "blocked": true,
       "wip": false,
-      "block_reason": "",
+      "block_reason": "battle state branch \u2014 subs r2 #0x6C vs direct unk201C pool (same-size DIFF)",
       "retail_bytes": 68,
       "matched_bytes": 68,
       "compiled_bytes": 68,
@@ -1793,7 +1793,7 @@
       "pct": 81.2,
       "score": "91/112",
       "source": "wip",
-      "note": "91/112 same-size; off in r0 vs r1"
+      "note": "permuter 300 s + 900 s, no score 0 (130 \u2192 110); 91/112"
     },
     {
       "name": "sub_08034FBC",
@@ -2364,7 +2364,7 @@
       "display": "matched",
       "blocked": true,
       "wip": false,
-      "block_reason": "",
+      "block_reason": "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] \u2014 logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)",
       "retail_bytes": 108,
       "matched_bytes": 108,
       "compiled_bytes": 108,
@@ -4071,7 +4071,7 @@
       "pct": 87.0,
       "score": "47/54",
       "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "note": "permuter 300 s + 900 s, no score 0 (45 \u2192 20); 47/54 same-size"
     },
     {
       "name": "sub_08043B90",
@@ -4416,19 +4416,19 @@
     {
       "name": "sub_08045128",
       "addr": "0x08045128",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 80,
-      "matched_bytes": 55,
-      "compiled_bytes": 0,
-      "pct": 68.8,
-      "score": "55/80",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 80,
+      "compiled_bytes": 80,
+      "pct": 100.0,
+      "score": "80/80",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08045198",
@@ -4666,7 +4666,7 @@
       "pct": 50.0,
       "score": "50/100",
       "source": "wip",
-      "note": "src/wip/sub_080473F8.c"
+      "note": "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits"
     },
     {
       "name": "sub_0804745C",
@@ -6223,7 +6223,7 @@
       "display": "blocked",
       "blocked": true,
       "wip": false,
-      "block_reason": "",
+      "block_reason": "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A \u2014 logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter",
       "retail_bytes": 112,
       "matched_bytes": 0,
       "compiled_bytes": 0,
@@ -6371,19 +6371,19 @@
     {
       "name": "sub_0806105C",
       "addr": "0x0806105C",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 44,
-      "matched_bytes": 38,
-      "compiled_bytes": 0,
-      "pct": 86.4,
-      "score": "38/44",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 44,
+      "compiled_bytes": 44,
+      "pct": 100.0,
+      "score": "44/44",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_080610A8",
@@ -7442,19 +7442,19 @@
     {
       "name": "sub_08062D24",
       "addr": "0x08062D24",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 42,
-      "matched_bytes": 36,
-      "compiled_bytes": 0,
-      "pct": 85.7,
-      "score": "36/42",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 42,
+      "compiled_bytes": 42,
+      "pct": 100.0,
+      "score": "42/42",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08062D50",
@@ -7675,7 +7675,7 @@
       "pct": 85.7,
       "score": "96/112",
       "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "note": "permuter 300 s + 900 s, no score 0 (110 \u2192 55); 96/112"
     },
     {
       "name": "sub_08066390",
@@ -7918,19 +7918,19 @@
     {
       "name": "sub_080674B4",
       "addr": "0x080674B4",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 6,
-      "matched_bytes": 5,
-      "compiled_bytes": 0,
-      "pct": 83.3,
-      "score": "5/6",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 6,
+      "compiled_bytes": 6,
+      "pct": 100.0,
+      "score": "6/6",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_080674BC",
@@ -9018,7 +9018,7 @@
       "pct": 79.8,
       "score": "67/84",
       "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "note": "permuter 300 s + 900 s, no score 0 (95 \u2192 10); 67/84"
     },
     {
       "name": "sub_0806B5B8",
@@ -9120,7 +9120,7 @@
       "pct": 39.7,
       "score": "46/116 then 43/116",
       "source": "wip",
-      "note": "src/wip/sub_0806BC0C.c"
+      "note": "Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit."
     },
     {
       "name": "sub_0806BDA8",
@@ -9550,19 +9550,19 @@
     {
       "name": "sub_0806F430",
       "addr": "0x0806F430",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 48,
-      "matched_bytes": 41,
-      "compiled_bytes": 0,
-      "pct": 85.4,
-      "score": "41/48",
-      "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "matched_bytes": 48,
+      "compiled_bytes": 48,
+      "pct": 100.0,
+      "score": "48/48",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_0806F8C4",
@@ -9919,7 +9919,7 @@
       "pct": 79.3,
       "score": "73/92",
       "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "note": "permuter 300 s, no score 0 (140 \u2192 10); 73/92"
     },
     {
       "name": "sub_08070678",
@@ -10157,7 +10157,7 @@
       "pct": 86.9,
       "score": "73/84",
       "source": "wip",
-      "note": "matched only with GCC asm labels; stripped DIFF"
+      "note": "permuter 300 s + 900 s, no score 0 (335 \u2192 5); 73/84"
     },
     {
       "name": "sub_08071BA0",
@@ -10225,7 +10225,7 @@
       "pct": 19.8,
       "score": "19/96",
       "source": "wip",
-      "note": "src/wip/sub_08071E84.c"
+      "note": "19/96 bytes (19.8%), size mismatch (92 vs 96); correct algorithm (walk 0x28-stride Unk71E84 array from gUnk_030040E4, find first entry with unk16==0 within gUnk_030040C4 count, call sub_08071E44, stamp a running id from gUnk_030000C8 into entry->unk18 and return it; on exhaustion, call sub_08067B98 with a format string and return -1). Uses the shared struct Unk71E84 and existing sub_08071E44/sub_08071E84 prototypes. Remaining diffs: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart, the recurring literal-pool quirk), and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form"
     },
     {
       "name": "sub_08071EE4",
@@ -10242,7 +10242,7 @@
       "pct": 19.8,
       "score": "19/96",
       "source": "wip",
-      "note": "src/wip/sub_08071EE4.c"
+      "note": "19/96 bytes (19.8%), size mismatch (92 vs 96); exact clone of sub_08071E84 (same struct/algorithm, calls sub_08071E04 instead of sub_08071E44) and hits the identical diff pattern: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4, and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form. See sub_08071E84's WIP notes for the same analysis"
     },
     {
       "name": "sub_08071F44",

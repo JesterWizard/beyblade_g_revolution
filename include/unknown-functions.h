@@ -126,7 +126,10 @@ s32 sub_080674B0(s32 a);
 s32 sub_08042BB0(s32 a);
 s32 sub_08042B78(s32 a);
 void sub_080346A8(struct Unk346A8 *a, u32 v);
-void sub_080674B4(void);
+/* `swi 5` pass-through: r0/r1 reach the swi untouched, r2 is zeroed. Declared with an
+ * empty parameter list because the C callers in this repo invoke it with no arguments
+ * while the ROM function forwards whatever r0/r1 already held. */
+void sub_080674B4();
 void sub_08067504(void *source, void *destination, u16 count);
 void sub_080674AC(void *a, void *b);
 void sub_0806BC0C(void *a, void *b);

@@ -8,18 +8,59 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **312/633 (49.3%)** |
-| **Decompiled C (bytes)** | **19,866/90,272 (22.0%)** |
+| **Decompiled C (functions)** | **318/633 (50.2%)** |
+| **Decompiled C (bytes)** | **20,144/90,272 (22.3%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 321/633 (50.7%) |
+| Readable Thumb | 315/633 (49.8%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 58/160 (36.2% fn, 16.5% bytes) |
+| Battle semantic C | 60/160 (37.5% fn, 16.9% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — register-shape batch: +6 semantic C (312→318/633), past 50% functions
+- Targets were the twelve worst "matched only with GCC asm labels; stripped DIFF"
+  entries in `decomp-functions.md`. Method per the fork order: `script_first.py`
+  first, then a bounded local permuter per function (`build/perm_batch.sh`, 4
+  concurrent × 2 jobs, `--no-integrate`, re-verified with `match_function.py`).
+- **`old_agbcc` does not help this family.** Scoring all twelve with both binaries
+  (`build/score_list.py`) gives identical percentages; only 2 of the 12 improve and
+  none reach 100%. This is a different failure mode from the `sub_08061308` family.
+- Matched (all 100% via `match_function.py`, `make compare` OK):
+  | Function | Bytes | How |
+  |--|--|--|
+  | `sub_0806105C` | 44 | `script_first.py` cleaned-m2c pattern |
+  | `sub_08062D24` | 42 | permuter: re-materialize `shifted` through a pointer local |
+  | `sub_0806F430` | 48 | move the `0x10` mask materialization before the `unk14` read |
+  | `sub_08045128` | 80 | permuter: pointer local keeps the shifted index live |
+  | `sub_0802B994` | 58 | permuter: `&row` local stops the second table address folding |
+  | `sub_080674B4` | 6 | parameterised BIOS `swi` operands (new technique, below) |
+- **New pattern — BIOS `swi` with pass-through registers** (`sub_080674B4`): a
+  6-byte trampoline that only zeroes `r2` before `swi 5`. `CpuSet(src, dest, 0)`
+  emits `push/bl CpuSet/pop` (this repo's `gba/syscall.h` declares a real function)
+  and inline `asm("movs r2,#0\n\tswi #5")` is rejected by the semantic-asm policy.
+  Giving the function the register-carrying parameters and letting the operand list
+  place the zero is byte-exact:
+  ```c
+  void sub_080674B4(const void *src, void *dest)
+  {
+      asm("swi 5" : : "r"(src), "r"(dest), "r"(0));
+  }
+  ```
+  `include/unknown-functions.h` declares it with an empty parameter list so the
+  existing no-argument callers keep compiling. Documented in
+  `docs/decomp-patterns.md`.
+- **Parked after permutation** (300 s then 900 s each, no score 0 — permuter score
+  in brackets): `sub_08071B4C` (335→5), `sub_0806B3E8` (95→10), `sub_08043B58`
+  (45→20), `sub_08066224` (110→55), `sub_08034A68` (130→110), `sub_08070604`
+  (140→10). All stay readable Thumb with the specific residual gap recorded in
+  `src/wip/*.md`.
+- `src/wip/*.c` now holds the matching form for every function landed (verified
+  byte-exact from the seed too), so a re-import cannot regress to the old DIFF.
+- `make compare` → **OK** — 318/633 functions (50.2%), 20,144 bytes (22.3%).
 
 ### 2026-09-21 — `old_agbcc` backlog sweep: +8 semantic C (304→312/633)
 - `build/dual_compiler_sweep.py` re-scored every WIP seed with both compiler

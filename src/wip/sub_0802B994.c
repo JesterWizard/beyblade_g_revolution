@@ -1,16 +1,14 @@
 #include "global.h"
 
 // @ 0x0802b994
-#include "global.h"
-
 /* match-flags: -fprologue-bugfix */
-
 void *sub_0802B994(void)
 {
     u32 key;
     struct Unk7709C *row;
     u32 *value;
     u32 result;
+    struct Unk7709C **rowLoc;
 
     key = gMainWorkPtr->unk1690->unk00;
     row = (struct Unk7709C *)0x0807709C;
@@ -20,7 +18,8 @@ void *sub_0802B994(void)
         value = &row->unk04;
         do
         {
-            result = row->unk00;
+            rowLoc = &row;
+            result = (*rowLoc)->unk00;
             if (result == key)
             {
                 result = *value;
@@ -35,3 +34,4 @@ void *sub_0802B994(void)
 done:
     return (void *)result;
 }
+

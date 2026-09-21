@@ -203,9 +203,54 @@ python3 tools/decomp/function_scores.py --close
 |---------|---------|------------|
 | Extra `push {lr}` on branch | `sub_0802D8C4`, null-check leaves | Block; permuter or stay readable Thumb |
 | rN pool pin | `sub_080601C4` | Permuter; may stay asm-only |
-| Dest reg mismatch (same size) | table lookup family | evaluation order; `&local` reload (`sub_08062CC8`); dummy `ldrb` (`sub_0803531C`); else park |
+| Dest reg mismatch (same size) | table lookup family | evaluation order; `&local` reload (`sub_08062CC8`, `sub_08062D24`); dummy `ldrb` (`sub_0803531C`); else park |
 | Pool in middle of fn | `sub_08042B78` | Permuter or readable Thumb |
 | Branchy leaf | `sub_080615EC` | Readable Thumb until types clear |
+| Load coalesced into its consumer | `sub_08061308` family | Compile that file with `old_agbcc` (see below) |
+| BIOS `swi` with pass-through registers | `sub_080674B4` | Parameterised `swi` operands (see below) |
+
+### `/* match-compiler: old_agbcc */` (load/coalesce family)
+
+`pret/agbcc` ships **two** compilers (`tools/agbcc/bin/agbcc` and `bin/old_agbcc`) and
+they do not generate identical code. For a specific shape — a `ldrb`/`ldrh` whose result
+is shifted immediately, or a `str` that reuses a still-live address register — `agbcc`
+coalesces the load into the consuming instruction (or drops the redundant one) while
+`old_agbcc` reproduces retail's extra instruction. No C rephrasing steers `agbcc` there.
+
+Mark the file and every tool follows:
+
+```c
+// @ 0x08061308
+/* match-compiler: old_agbcc */
+```
+
+`match_function.py` (`MATCH_COMPILER_RE`) picks the binary; `import_function.py` writes a
+`compiler` sidecar (the permuter preprocesses `base.c` before `compile.sh` runs);
+`permuter/compile.sh` swaps `CC`. Absent the comment the default stays `agbcc`.
+To find candidates, score the whole backlog with both binaries:
+
+```bash
+python3 build/dual_compiler_sweep.py
+```
+
+### BIOS `swi` wrapper with pass-through registers (`sub_080674B4`)
+
+A 6-byte trampoline that only zeroes `r2` before `swi 5` cannot be written as a call
+(the repo's `gba/syscall.h` declares `CpuSet` as a real function, so `CpuSet(src, dest, 0)`
+emits `push/bl/pop`). Inline `asm` is allowed for BIOS `swi` only, and a bare
+`asm("swi 5")` never materialises the zero. Give the function the register-carrying
+parameters and let the operand list do the placement:
+
+```c
+void sub_080674B4(const void *src, void *dest)
+{
+    asm("swi 5" : : "r"(src), "r"(dest), "r"(0));
+}
+```
+
+`src`/`dest` are already live in `r0`/`r1`, so only `movs r2, #0` is emitted. The
+prototype in `include/unknown-functions.h` uses an empty parameter list (`void f();`)
+because the repo's C callers invoke it with no arguments.
 
 ---
 
