@@ -1,100 +1,55 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080686f4
-__attribute__((naked))
-void sub_080686F4(void)
+/* match-compiler: old_agbcc */
+void sub_080686F4(struct Unk68798 *a, s32 b, s32 c, s32 d, s32 e)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r4, r0, #0x0\n"
-        "mov r8, r1\n"
-        "mov r9, r2\n"
-        "adds r7, r3, #0x0\n"
-        "ldr r1, [r4, #0x74]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "bne _0806872E\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x74]\n"
-        "movs r0, #0x40\n"
-        "bl sub_0806A3A4\n"
-        "cmp r0, #0x00\n"
-        "bne _08068728\n"
-        "ldr r0, _08068724 @ =0x083A94D4\n"
-        "bl sub_08067A9C\n"
-        "b _0806878C\n"
-        "_08068724: .4byte 0x083A94D4\n"
-        "_08068728:\n"
-        "str r0, [r4, #0x7C]\n"
-        "ldr r0, [r0, #0x00]\n"
-        "str r0, [r4, #0x78]\n"
-        "_0806872E:\n"
-        "ldr r1, [r4, #0x74]\n"
-        "cmp r1, #0x03\n"
-        "ble _08068772\n"
-        "movs r5, #0x01\n"
-        "negs r5, r5\n"
-        "movs r6, #0x00\n"
-        "movs r2, #0x00\n"
-        "ldr r3, [r4, #0x78]\n"
-        "adds r1, r3, #0x0\n"
-        "_08068740:\n"
-        "ldr r0, [r1, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _0806874E\n"
-        "cmp r5, #0x00\n"
-        "bge _0806874C\n"
-        "adds r5, r2, #0x0\n"
-        "_0806874C:\n"
-        "adds r6, #0x01\n"
-        "_0806874E:\n"
-        "adds r1, #0x10\n"
-        "adds r2, #0x01\n"
-        "cmp r2, #0x03\n"
-        "ble _08068740\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r5, r0\n"
-        "bne _08068762\n"
-        "adds r1, r3, #0x0\n"
-        "b _08068766\n"
-        "_08068762:\n"
-        "lsls r0, r5, #0x04\n"
-        "adds r1, r3, r0\n"
-        "_08068766:\n"
-        "cmp r6, #0x04\n"
-        "bne _08068778\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x74]\n"
-        "adds r1, r3, #0x0\n"
-        "b _08068778\n"
-        "_08068772:\n"
-        "lsls r1, r1, #0x04\n"
-        "ldr r0, [r4, #0x78]\n"
-        "adds r1, r0, r1\n"
-        "_08068778:\n"
-        "mov r0, r8\n"
-        "str r0, [r1, #0x08]\n"
-        "str r7, [r1, #0x00]\n"
-        "ldr r0, [sp, #0x01C]\n"
-        "str r0, [r1, #0x04]\n"
-        "mov r0, r9\n"
-        "str r0, [r1, #0x0C]\n"
-        "ldr r0, [r4, #0x74]\n"
-        "adds r0, #0x01\n"
-        "str r0, [r4, #0x74]\n"
-        "_0806878C:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk68798Heap *hp;
+    struct Unk68798Entry *slot;
+    struct Unk68798Entry *entries;
+    s32 i;
+    s32 free;
+    s32 count;
+
+    if (a->unk74 == -1) {
+        a->unk74 = 0;
+        hp = sub_0806A3A4(0x40);
+        if (hp == 0) {
+            sub_08067A9C((void *)0x083A94D4);
+            return;
+        }
+        a->unk7C = hp;
+        a->unk78 = hp->unk00;
+    }
+    if (a->unk74 > 3) {
+        free = -1;
+        count = 0;
+        i = 0;
+        entries = a->unk78;
+        for (; i < 4; i++) {
+            if (entries[i].unk00 == 0) {
+                if (free < 0)
+                    free = i;
+                count++;
+            }
+        }
+        if (free == -1)
+            slot = entries;
+        else
+            slot = &entries[free];
+        if (count == 4) {
+            a->unk74 = 0;
+            slot = entries;
+        }
+    } else {
+        slot = &a->unk78[a->unk74];
+    }
+    slot->unk08 = (void *)b;
+    slot->unk00 = d;
+    slot->unk04 = e;
+    slot->unk0C = c;
+    a->unk74++;
 }
 

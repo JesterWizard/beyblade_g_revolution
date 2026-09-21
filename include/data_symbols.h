@@ -47,6 +47,10 @@ extern u8 gData_080B738E[];
 // IWRAM
 extern u32 gData_03000198[];
 extern u8 gData_03000290[];
+extern u32 gData_030003CC[];
+extern u8 gData_05000200[];
+extern u32 gData_08079068[];
+extern u32 gData_08079358[];
 extern u8 gData_030002A0[];
 extern void *gData_03000508[];
 extern u32 gData_03000534[];

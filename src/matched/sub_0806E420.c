@@ -1,101 +1,44 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806e420
-__attribute__((naked))
-void sub_0806E420(void)
+s32 sub_0806E420(struct Unk6E420Obj *a, struct Unk6E420Model *b, struct Unk6E420Out *c,
+                 u32 d, s32 e, s32 f, s32 g, s32 h)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "adds r4, r0, #0x0\n"
-        "mov r8, r2\n"
-        "cmp r1, #0x00\n"
-        "beq _0806E4C2\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0x20\n"
-        "lsls r1, r3, #0x02\n"
-        "adds r1, r1, r0\n"
-        "ldr r0, [r1, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "ldr r2, [r4, #0x04]\n"
-        "adds r4, r2, r0\n"
-        "ldr r0, [r1, #0x04]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r6, r2, r0\n"
-        "ldr r0, [sp, #0x028]\n"
-        "ldr r1, [sp, #0x020]\n"
-        "subs r7, r0, r1\n"
-        "ldr r0, [sp, #0x02C]\n"
-        "ldr r3, [sp, #0x024]\n"
-        "subs r2, r0, r3\n"
-        "ldr r0, [r6, #0x00]\n"
-        "ldr r1, [r4, #0x00]\n"
-        "mov r12, r1\n"
-        "mov r3, r12\n"
-        "subs r3, r0, r3\n"
-        "mov r9, r3\n"
-        "ldr r0, [r6, #0x04]\n"
-        "ldr r3, [r4, #0x04]\n"
-        "subs r0, r0, r3\n"
-        "mov r10, r0\n"
-        "mov r1, r9\n"
-        "muls r1, r2\n"
-        "mov r0, r10\n"
-        "muls r0, r7\n"
-        "subs r5, r1, r0\n"
-        "cmp r5, #0x00\n"
-        "beq _0806E4C2\n"
-        "ldr r1, [sp, #0x024]\n"
-        "subs r0, r3, r1\n"
-        "muls r0, r7\n"
-        "ldr r3, [sp, #0x020]\n"
-        "adds r1, r2, #0x0\n"
-        "muls r1, r3\n"
-        "adds r0, r0, r1\n"
-        "mov r1, r12\n"
-        "muls r1, r2\n"
-        "subs r0, r0, r1\n"
-        "lsls r0, r0, #0x0A\n"
-        "adds r1, r5, #0x0\n"
-        "bl sub_080674A0\n"
-        "mov r1, r9\n"
-        "muls r1, r0\n"
-        "asrs r1, r1, #0x0A\n"
-        "ldr r3, [r4, #0x00]\n"
-        "adds r3, r3, r1\n"
-        "mov r1, r10\n"
-        "muls r1, r0\n"
-        "asrs r1, r1, #0x0A\n"
-        "ldr r2, [r4, #0x04]\n"
-        "adds r2, r2, r1\n"
-        "mov r1, r8\n"
-        "str r3, [r1, #0x00]\n"
-        "str r2, [r1, #0x04]\n"
-        "ldr r1, [r6, #0x08]\n"
-        "ldr r2, [r4, #0x08]\n"
-        "subs r1, r1, r2\n"
-        "muls r1, r0\n"
-        "asrs r1, r1, #0x0A\n"
-        "adds r2, r2, r1\n"
-        "mov r3, r8\n"
-        "str r2, [r3, #0x08]\n"
-        "str r0, [r3, #0x0C]\n"
-        "movs r0, #0x01\n"
-        "b _0806E4C4\n"
-        "_0806E4C2:\n"
-        "movs r0, #0x00\n"
-        "_0806E4C4:\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk6E420Vec *p1;
+    struct Unk6E420Vec *p2;
+    u32 *idx;
+    s32 dx;
+    s32 dy;
+    s32 den;
+    s32 num;
+    s32 t;
+    s32 w;
+    s32 v;
+
+    if (b == 0)
+        return 0;
+    idx = b->unk20;
+    p1 = &a->unk04[idx[d]];
+    p2 = &a->unk04[idx[d + 1]];
+    w = g - e;
+    v = h - f;
+    dx = p2->unk00 - p1->unk00;
+    dy = p2->unk04 - p1->unk04;
+    den = dx * v - dy * w;
+    if (den == 0)
+        return 0;
+    num = (p1->unk04 - f) * w + v * e - p1->unk00 * v;
+    t = sub_080674A0(num << 10, den);
+    {
+        s32 x = p1->unk00 + ((dx * t) >> 10);
+        s32 y = p1->unk04 + ((dy * t) >> 10);
+        c->unk00 = x;
+        c->unk04 = y;
+    }
+    c->unk08 = p1->unk08 + (((p2->unk08 - p1->unk08) * t) >> 10);
+    c->unk0C = t;
+    return 1;
 }
 

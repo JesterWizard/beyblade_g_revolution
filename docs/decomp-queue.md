@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T20:31:11Z_
+_Updated: 2026-09-21T22:32:35Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 394 |
-| Still need semantic C | **239** |
-| Readable Thumb remaining | 239 |
+| Semantic C done | 399 |
+| Still need semantic C | **234** |
+| Readable Thumb remaining | 234 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 217 |
+| WIP (resume these first) | 218 |
 
 Ranking: **battle** · showing top **40**
 
@@ -243,6 +243,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080739E8` | 36 | 11/36 | `src/wip/sub_080739E8.c` | 11/36; rotated bottom test + separate entry guard, agbcc merges them | permuter |
 | `sub_0803715C` | 444 | 33/444 | `src/wip/sub_0803715C.c` | 33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 instead of r8 and about 20 bytes of reloads are folded | do not hand-chase registers; only revisit if a same-size seed appears, then permuter |
 | `sub_08067F3C` | 92 | 58/92 | `src/wip/sub_08067F3C.c` | 58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs | s32 counter and mask-first flag both scored worse; permuter only if a same-size seed appears |
+| `sub_08038438` | 240 | 8/240 | `src/wip/sub_08038438.c` | C structurally close (both index-table scans) but register pressure differs: retail keeps i<<16 in r9 and the 0x080BB8C0 pointer address in r8 (push r6/r7), compiled uses neither -> 220B vs retail 240B | permuter/auto.py sub_08038438, else re-derive with the r8/r9 live values |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -280,16 +281,16 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0806B064` | `0x0806B064` | 122 | 0 |      | asm | |
 | `sub_08041C8C` | `0x08041C8C` | 142 | 0 | pool | asm | |
 | `sub_0806E31C` | `0x0806E31C` | 148 | 0 | pool | asm | |
-| `sub_0806833C` | `0x0806833C` | 156 | 0 |      | asm | |
 | `sub_08041B74` | `0x08041B74` | 162 | 0 | pool | asm | |
 | `sub_08073AEC` | `0x08073AEC` | 162 | 0 |      | asm | |
-| `sub_080686F4` | `0x080686F4` | 164 | 0 | pool | asm | |
 | `sub_0806A4D8` | `0x0806A4D8` | 168 | 0 |      | asm | |
 | `sub_080419B0` | `0x080419B0` | 172 | 0 | pool | asm | |
-| `sub_08068180` | `0x08068180` | 174 | 0 | pool | asm | |
-| `sub_08070D44` | `0x08070D44` | 176 | 0 |      | asm | |
 | `sub_080416C4` | `0x080416C4` | 176 | 0 | pool | asm | |
-| `sub_0806E420` | `0x0806E420` | 178 | 0 |      | asm | |
+| `sub_0806FF58` | `0x0806FF58` | 180 | 0 | pool | asm | |
+| `sub_080700CC` | `0x080700CC` | 188 | 0 | pool | asm | |
+| `sub_080688C8` | `0x080688C8` | 190 | 0 |      | asm | |
+| `sub_0807000C` | `0x0807000C` | 192 | 0 | pool | asm | |
+| `sub_08062358` | `0x08062358` | 192 | 0 |      | asm | |
 
 ## Blocked
 
@@ -332,6 +333,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (91 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (85 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -312,7 +312,8 @@ struct Unk7069C /* >= 0x30 */
 {
     /* 00 */ u32 unk00;
     /* 04 */ u16 unk04;
-    /* 06 */ u8 filler_06[4];
+    /* 06 */ u8 filler_06[2];
+    /* 08 */ u16 unk08;
     /* 0a */ u16 unk0A;
     /* 0c */ u8 filler_0C[8];
     /* 14 */ u8 unk14;
@@ -1332,12 +1333,15 @@ struct Unk68014Rec /* 0x08 */
     /* 00 */ u16 unk00;
     /* 02 */ u16 unk02;
     /* 04 */ u16 unk04;
-    /* 06 */ u8 filler_06[2];
+    /* 06 */ u8 unk06;
+    /* 07 */ u8 unk07;
 };
 
 struct Unk68014 /* >= 0x28 */
 {
-    /* 00 */ u8 filler_00[8];
+    /* 00 */ u32 unk00; /* sub_08068180 */
+    /* 04 */ u8 filler_04[3];
+    /* 07 */ u8 unk07; /* sub_08068180 */
     /* 08 */ u32 unk08;
     /* 0c */ u8 filler_0C[0xC];
     /* 18 */ u32 unk18;
@@ -1412,7 +1416,10 @@ struct Unk68598 /* >= 0xc4 */
     /* 20 */ u16 unk20;
     /* 22 */ s16 unk22;
     /* 24 */ u8 unk24;
-    /* 25 */ u8 filler_25[0x0D];
+    /* 25 */ u8 filler_25;
+    /* 26 */ u16 unk26;
+    /* 28 */ u8 filler_28[9];
+    /* 31 */ u8 unk31;
     /* 32 */ u8 unk32;
     /* 33 */ u8 unk33;
     /* 34 */ u16 unk34;
@@ -1423,7 +1430,10 @@ struct Unk68598 /* >= 0xc4 */
     /* 60 */ u16 unk60;
     /* 62 */ u8 filler_62[0x36];
     /* 98 */ u8 unk98;
-    /* 99 */ u8 filler_99[0x27];
+    /* 99 */ u8 filler_99[0x0B];
+    /* a4 */ u8 unkA4;
+    /* a5 */ u8 unkA5;
+    /* a6 */ u8 filler_A6[0x1A];
     /* c0 */ void *unkC0;
 };
 
@@ -1432,14 +1442,20 @@ struct Unk68798Entry /* 0x10 */
     /* 00 */ s32 unk00;
     /* 04 */ s32 unk04;
     /* 08 */ void *unk08;
-    /* 0c */ u8 filler_0C[4];
+    /* 0c */ s32 unk0C;
 };
 
-struct Unk68798 /* >= 0x7c */
+struct Unk68798Heap /* >= 0x04 */
+{
+    /* 00 */ struct Unk68798Entry *unk00;
+};
+
+struct Unk68798 /* >= 0x80 */
 {
     /* 00 */ u8 filler_00[0x74];
     /* 74 */ s32 unk74;
     /* 78 */ struct Unk68798Entry *unk78;
+    /* 7c */ struct Unk68798Heap *unk7C;
 };
 
 /* Bounds and bit shifts consumed by sub_08068988. */
@@ -1572,6 +1588,41 @@ struct Unk6EE48 /* >= 0x355 */
     /* 344 */ void *unk344;
     /* 348 */ u8 filler_348[0x0C];
     /* 354 */ u8 unk354;
+};
+
+struct Unk38438 /* 0x42, index bitmap + per-slot counts */
+{
+    /* 00 */ u16 unk00[0x10];
+    /* 20 */ u16 unk20;
+    /* 22 */ u16 unk22[0x10];
+};
+
+struct Unk6E420Vec /* 0x10, world-space point */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+};
+
+struct Unk6E420Model /* >= 0x24, vertex table owner */
+{
+    /* 00 */ u8 filler_00[0x20];
+    /* 20 */ u32 unk20[1]; /* vertex indices */
+};
+
+struct Unk6E420Obj /* >= 0x08 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ struct Unk6E420Vec *unk04; /* vertices */
+};
+
+struct Unk6E420Out /* 0x10, interpolated result */
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
 };
 
 struct Unk6FE84 /* >= 0x34 */

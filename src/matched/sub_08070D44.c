@@ -1,101 +1,45 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08070d44
-__attribute__((naked))
-u8 sub_08070D44(struct Unk7069C *a, void *b, u8 c)
+/* match-compiler: old_agbcc */
+u8 sub_08070D44(struct Unk7069C *a, s32 value, u8 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x010\n"
-        "mov r8, r0\n"
-        "adds r5, r1, #0x0\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "mov r9, r2\n"
-        "movs r0, #0x00\n"
-        "mov r10, r0\n"
-        "movs r7, #0x03\n"
-        "movs r6, #0x0E\n"
-        "cmp r5, #0x00\n"
-        "bge _08070D6C\n"
-        "movs r1, #0x01\n"
-        "mov r10, r1\n"
-        "negs r5, r5\n"
-        "_08070D6C:\n"
-        "mov r4, sp\n"
-        "adds r4, #0x0F\n"
-        "movs r0, #0x00\n"
-        "strb r0, [r4, #0x00]\n"
-        "cmp r5, #0x00\n"
-        "bne _08070D80\n"
-        "subs r4, #0x01\n"
-        "movs r0, #0x30\n"
-        "strb r0, [r4, #0x00]\n"
-        "b _08070DCA\n"
-        "_08070D80:\n"
-        "movs r0, #0x40\n"
-        "mov r2, r8\n"
-        "ldrh r2, [r2, #0x08]\n"
-        "ands r0, r2\n"
-        "cmp r0, #0x00\n"
-        "bne _08070DA4\n"
-        "subs r0, r7, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r7, r0, #0x18\n"
-        "cmp r7, #0xFF\n"
-        "bne _08070DA4\n"
-        "subs r4, #0x01\n"
-        "movs r0, #0x2C\n"
-        "strb r0, [r4, #0x00]\n"
-        "movs r7, #0x02\n"
-        "subs r0, r6, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r6, r0, #0x18\n"
-        "_08070DA4:\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x0A\n"
-        "bl sub_080674A4\n"
-        "subs r4, #0x01\n"
-        "adds r0, #0x30\n"
-        "strb r0, [r4, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x0A\n"
-        "bl sub_080674A0\n"
-        "adds r5, r0, #0x0\n"
-        "subs r0, r6, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r6, r0, #0x18\n"
-        "cmp r5, #0x00\n"
-        "beq _08070DCA\n"
-        "cmp r6, #0x00\n"
-        "bne _08070D80\n"
-        "_08070DCA:\n"
-        "mov r0, r10\n"
-        "cmp r0, #0x00\n"
-        "beq _08070DD6\n"
-        "subs r4, #0x01\n"
-        "movs r0, #0x2D\n"
-        "strb r0, [r4, #0x00]\n"
-        "_08070DD6:\n"
-        "mov r0, r8\n"
-        "adds r1, r4, #0x0\n"
-        "mov r2, r9\n"
-        "bl sub_08070930\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "add sp, #0x010\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u8 buf[0x10];
+    u32 neg;
+    u8 commas;
+    u8 digits;
+    u8 *p;
+
+    neg = 0;
+    commas = 3;
+    digits = 0x0E;
+    if (value < 0) {
+        neg = 1;
+        value = -value;
+    }
+    p = buf + 15;
+    *p = 0;
+    do {
+        if (value == 0) {
+            *--p = 0x30;
+            break;
+        }
+        if ((a->unk08 & 0x40) == 0) {
+            commas--;
+            if (commas == 0xFF) {
+                *--p = 0x2C;
+                commas = 2;
+                digits--;
+            }
+        }
+        *--p = (u8)sub_080674A4(value, 10) + 0x30;
+        value = sub_080674A0(value, 10);
+        digits--;
+    } while (value != 0 && digits != 0);
+    if (neg != 0)
+        *--p = 0x2D;
+    return sub_08070930(a, p, b);
 }
 

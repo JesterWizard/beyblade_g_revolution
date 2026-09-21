@@ -1816,3 +1816,11 @@ notes = "src/wip/sub_08067F3C.md"
 status = "58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs"
 next = "s32 counter and mask-first flag both scored worse; permuter only if a same-size seed appears"
 score = "58/92"
+
+[[wip]]
+name = "sub_08038438"
+seed = "src/wip/sub_08038438.c"
+notes = "src/wip/sub_08038438.md"
+status = "C structurally close (both index-table scans) but register pressure differs: retail keeps i<<16 in r9 and the 0x080BB8C0 pointer address in r8 (push r6/r7), compiled uses neither -> 220B vs retail 240B"
+next = "permuter/auto.py sub_08038438, else re-derive with the r8/r9 live values"
+score = "8/240"

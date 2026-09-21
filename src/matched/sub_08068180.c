@@ -1,100 +1,51 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068180
-__attribute__((naked))
-void sub_08068180(struct Unk680CC *a, u16 b)
+/* match-compiler: old_agbcc */
+void sub_08068180(struct Unk68598 *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r3, r0, #0x0\n"
-        "adds r6, r1, #0x0\n"
-        "lsls r0, r6, #0x03\n"
-        "adds r0, #0x20\n"
-        "ldr r2, [r3, #0x00]\n"
-        "adds r5, r2, r0\n"
-        "ldr r0, [r2, #0x00]\n"
-        "lsls r1, r0, #0x01\n"
-        "movs r0, #0x02\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806819C\n"
-        "adds r1, #0x02\n"
-        "_0806819C:\n"
-        "movs r0, #0x10\n"
-        "ldrb r4, [r2, #0x07]\n"
-        "ands r0, r4\n"
-        "cmp r0, #0x00\n"
-        "beq _080681C8\n"
-        "ldr r0, [r2, #0x08]\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r0, #0x20\n"
-        "adds r0, r2, r0\n"
-        "adds r2, r0, r1\n"
-        "cmp r2, #0x00\n"
-        "beq _080681C8\n"
-        "lsls r0, r6, #0x04\n"
-        "adds r2, r2, r0\n"
-        "ldrb r1, [r2, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0xA4\n"
-        "strb r1, [r0, #0x00]\n"
-        "ldrb r0, [r2, #0x01]\n"
-        "adds r2, r3, #0x0\n"
-        "adds r2, #0xA5\n"
-        "strb r0, [r2, #0x00]\n"
-        "_080681C8:\n"
-        "ldrh r0, [r5, #0x00]\n"
-        "mov r12, r0\n"
-        "ldrh r7, [r5, #0x02]\n"
-        "ldrb r4, [r5, #0x07]\n"
-        "ldrb r0, [r5, #0x06]\n"
-        "adds r2, r3, #0x0\n"
-        "adds r2, #0x32\n"
-        "movs r1, #0x00\n"
-        "strb r0, [r2, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x33\n"
-        "strb r4, [r0, #0x00]\n"
-        "ldrh r0, [r5, #0x04]\n"
-        "movs r2, #0x00\n"
-        "strh r0, [r3, #0x34]\n"
-        "strh r1, [r3, #0x36]\n"
-        "ldr r0, _0806820C @ =0x03000180\n"
-        "ldr r0, [r0, #0x00]\n"
-        "str r0, [r3, #0x58]\n"
-        "strh r7, [r3, #0x26]\n"
-        "strh r6, [r3, #0x20]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x24\n"
-        "strb r2, [r0, #0x00]\n"
-        "movs r0, #0x02\n"
-        "ands r0, r4\n"
-        "cmp r0, #0x00\n"
-        "beq _08068214\n"
-        "ldr r1, _08068210 @ =0x0000FFFF\n"
-        "adds r0, r7, r1\n"
-        "add r0, r12\n"
-        "strh r0, [r3, #0x22]\n"
-        "b _08068218\n"
-        ".byte 0x00, 0x00\n"
-        "_0806820C: .4byte 0x03000180\n"
-        "_08068210: .4byte 0x0000FFFF\n"
-        "_08068214:\n"
-        "mov r2, r12\n"
-        "strh r2, [r3, #0x22]\n"
-        "_08068218:\n"
-        "adds r1, r3, #0x0\n"
-        "adds r1, #0x31\n"
-        "movs r0, #0x0C\n"
-        "ands r4, r0\n"
-        "lsrs r0, r4, #0x02\n"
-        "ldrb r4, [r1, #0x00]\n"
-        "eors r0, r4\n"
-        "strb r0, [r1, #0x00]\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk68014 *p;
+    struct Unk68014Rec *rec;
+    struct Unk68014Rec *e;
+    u8 *q;
+    u32 m;
+    u16 w;
+    u16 h;
+    u8 f;
+    u8 g;
+
+    rec = &a->unk00->unk20[b];
+    p = a->unk00;
+    m = p->unk00 << 1;
+    if (m & 2)
+        m += 2;
+    if ((p->unk07 & 0x10) != 0) {
+        e = &p->unk20[p->unk08];
+        q = (u8 *)e + m;
+        if (q != 0) {
+            q += b << 4;
+            a->unkA4 = q[0];
+            a->unkA5 = q[1];
+        }
+    }
+    w = rec->unk00;
+    h = rec->unk02;
+    f = rec->unk07;
+    g = rec->unk06;
+    a->unk32 = g;
+    a->unk33 = f;
+    a->unk34 = rec->unk04;
+    a->unk36 = 0;
+    a->unk58 = gUnk_03000180.unk00;
+    a->unk26 = h;
+    a->unk20 = b;
+    a->unk24 = 0;
+    if ((f & 2) != 0)
+        a->unk22 = w + (h + 0xFFFF);
+    else
+        a->unk22 = w;
+    a->unk31 ^= (f & 0x0C) >> 2;
 }
 
