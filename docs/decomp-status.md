@@ -21,6 +21,18 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-21 — permuter + inline-literal sweep (+6, 365→371/633)
+- `sub_08031294` (28B) — flags/word init. The two ORs must be written **inline** with an
+  explicit `(u8)` cast (`a->unk00 = (s8)((u8)a->unk00 | 0xFF);`); a `u8 m = 0xFF;` local
+  makes agbcc emit the `ldrb`/`orrs` pair in the opposite register order (5/28) and adds
+  a stack frame.
+- `sub_08042B78` — matched by `permuter/auto.py` (base seed scored 0), integrated by the
+  permuter itself.
+- Parked with shape analyses: `sub_08062D50` (12/46 — retail keeps the 0x05000000 base in
+  r5 from the first instruction, agbcc materialises it at the store), `sub_0806D748`
+  (retail pushes r4/r5/r6 and truncates the unused 4th arg; agbcc keeps `a` in r2 and
+  drops the truncation), `sub_0803DD8x` family, `sub_08069F00`, `sub_08073114`.
+
 ### 2026-09-21 — tiny-function sweep: local-initialisation order wins (+5, 365→370/633)
 - `sub_08035908` (36B) — the loop must be `if (e != 0) { while (...) }`, not an
   early `if (e == 0) return 1;` (that flips the entry branch layout and floors at 18/36).
