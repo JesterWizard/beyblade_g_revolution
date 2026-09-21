@@ -1,3 +1,4 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 u32 sub_08038438(void *a);

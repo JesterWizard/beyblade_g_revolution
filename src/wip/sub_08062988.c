@@ -1,3 +1,4 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 void sub_08062988(struct Unk62988 *a)

@@ -1,3 +1,4 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 s32 sub_0803D51C(void)

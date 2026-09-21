@@ -1,3 +1,4 @@
+/* match-compiler: old_agbcc */
 #define sub_08070354 sub_08070354_void_proto
 #define sub_0807027C sub_0807027C_void_proto
 #include "global.h"

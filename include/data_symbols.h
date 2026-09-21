@@ -46,6 +46,7 @@ extern u8 gData_080B738E[];
 
 // IWRAM
 extern u32 gData_03000198[];
+extern u8 gData_03000290[];
 extern u8 gData_030002A0[];
 extern void *gData_03000508[];
 extern u32 gData_03000534[];
@@ -75,5 +76,13 @@ extern u8 gData_04000018[];
 extern u8 gData_0400001A[];
 extern u8 gData_0400001C[];
 extern u8 gData_0400001E[];
+
+extern u8 gData_030040E4[];
+extern u8 gData_030040C4[];
+extern u8 gData_030000C8[];
+extern u8 gData_083D2578[];
+
+extern u8 gData_03000634[];
+extern u8 gData_0300063C[];
 
 #endif // GUARD_DATA_SYMBOLS_H

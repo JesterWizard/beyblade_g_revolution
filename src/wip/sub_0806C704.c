@@ -1,3 +1,4 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 void sub_0806C704(void *arg0, void *arg1, s32 arg2, s32 arg3)

@@ -1,29 +1,21 @@
 #include "global.h"
-
-void *sub_08071EE4(void *arg0, u32 arg1)
+void *sub_08071EE4(void *a, u32 b)
 {
-    struct Unk71E84 *entry;
-    s32 count;
+    struct Unk71E84 *e = *(struct Unk71E84 **)gData_030040E4;
+    s32 count = *(u8 *)gData_030040C4 - 1;
 
-    entry = *(struct Unk71E84 **)gUnk_030040E4;
-    count = *(u8 *)gUnk_030040C4 - 1;
-
-    if (count != -1)
+    while (count != -1)
     {
-        do
+        if (e->unk16 == 0)
         {
-            if (entry->unk16 == 0)
-            {
-                sub_08071E04(entry, arg0, arg1);
-                entry->unk18 = *(u32 *)gUnk_030000C8;
-                (*(u32 *)gUnk_030000C8)++;
-                return (void *)entry->unk18;
-            }
-            entry = (struct Unk71E84 *)((u8 *)entry + 0x28);
-            count--;
-        } while (count != -1);
+            sub_08071E44(e, a, (s16 *)b);
+            e->unk18 = *(u32 *)gData_030000C8;
+            (*(u32 *)gData_030000C8)++;
+            return (void *)e->unk18;
+        }
+        e = (struct Unk71E84 *)((u8 *)e + 0x28);
+        count--;
     }
-
-    sub_08067B98((void *)0x083D2578);
+    sub_08067B98((void *)gData_083D2578);
     return (void *)-1;
 }

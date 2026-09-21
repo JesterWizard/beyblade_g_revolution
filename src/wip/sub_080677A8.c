@@ -1,3 +1,4 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 u32 sub_080677A8(u32 arg0, void *arg1v)

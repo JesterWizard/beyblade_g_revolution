@@ -1,55 +1,30 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806184c
-__attribute__((naked))
-void sub_0806184C(u16 a, u16 b)
+/* match-compiler: old_agbcc */
+void sub_0806184C(u16 x, u16 y)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, lr}\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r4, r0, #0x10\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r3, r1, #0x10\n"
-        "ldr r0, _080618A0 @ =0x03000798\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0x9A\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "lsrs r0, r0, #0x03\n"
-        "subs r0, #0x01\n"
-        "cmp r3, r0\n"
-        "bge _0806189A\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0x98\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "lsrs r2, r0, #0x03\n"
-        "subs r0, r2, #0x1\n"
-        "cmp r4, r0\n"
-        "bge _0806189A\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0x5D\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0, #0x0E\n"
-        "movs r0, #0xC0\n"
-        "lsls r0, r0, #0x13\n"
-        "adds r1, r1, r0\n"
-        "lsls r0, r2, #0x05\n"
-        "muls r0, r3\n"
-        "adds r1, r1, r0\n"
-        "lsls r0, r4, #0x05\n"
-        "adds r1, r1, r0\n"
-        "ldr r0, _080618A4 @ =0x080BB8BC\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "_0806189A:\n"
-        "pop {r4}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_080618A0: .4byte 0x03000798\n"
-        "_080618A4: .4byte 0x080BB8BC\n"
-    );
+  void *new_var;
+  struct Unk0798 *work;
+  u16 width;
+  u32 bank;
+  int new_var2;
+  void *destination;
+  work = *((struct Unk0798 **) 0x03000798);
+  if (y >= ((work->unk9A >> 3) - 1))
+  {
+    return;
+  }
+  width = work->unk98 >> 3;
+  if (x >= (width - 1))
+  {
+    return;
+  }
+  new_var = (void *) 0;
+  bank = work->unk5D;
+  new_var2 = 0x6000000 + (bank << 14);
+  destination = (void *) ((new_var2 + ((((u32) width) << 5) * y)) + (x << 5));
+  _08073C4C(new_var, destination, 0x20, *((void **) 0x080BB8BC));
 }
-

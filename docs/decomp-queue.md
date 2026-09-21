@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T14:38:50Z_
+_Updated: 2026-09-21T15:11:35Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 343 |
-| Still need semantic C | **290** |
-| Readable Thumb remaining | 290 |
+| Semantic C done | 357 |
+| Still need semantic C | **276** |
+| Readable Thumb remaining | 276 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 87 (67 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 205 |
+| WIP (resume these first) | 207 |
 
 Ranking: **battle** · showing top **40**
 
@@ -65,8 +65,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080677A8` | 86 | 12/86 | `src/wip/sub_080677A8.c` | 12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field | try keeping 'x' (masked arg0) live past the sub_08067584 call by referencing it again afterward (e.g. in a debug/dead comparison), or check if retail's extra register holds the original 'arg1' start pointer separately from the incrementing cursor |
 | `sub_0806C78C` | 70 | 12/70 | `src/wip/sub_0806C78C.c` | 12/70 bytes (17.1%), size mismatch (68 vs 70); partial model — calls sub_0806DF38(arg0, &out[1], 0, 1) writing a search-result array (struct UnkDF38Entry, 0x14 stride, added), checks out[0] fields, computes a stride, calls sub_0806C704. Declared both previously-naked callees' signatures from their own bodies. Uncertain: retail writes arg2 to sp+0 before the call but that slot is never read back in this function -- may be an unused stack reservation, a hidden 5th arg to sub_0806DF38, or a struct field I'm misplacing | re-derive sub_0806DF38's full parameter list (it may take 5 args via an implicit stack arg) before retrying this caller; check other call sites of sub_0806DF38 for the sp+0 slot's purpose |
 | `sub_0806D748` | 46 | 7/46 | `src/wip/sub_0806D748.c` | 7/46 bytes (15.2%), size mismatch (40 vs 46); correct algorithm (call the bx-r4 trampoline _08073C50 through arg0->unk94->unk08 handler, default result=1) with push-list now matching ({r4,r5,r6}) after register-pinning the handler and re-adding p/b local copies. Retail unconditionally zero-extends arg3 (u16) at function entry even though it's only used inside the conditional branch, and explicitly re-copies arg1 into r6 before the call; agbcc elides both since they're proven redundant | try using arg3 in an early no-op expression (e.g. volatile-style dead read) to force the upfront extension, matching retail's apparently-unnecessary eager evaluation |
-| `sub_08071E84` | 96 | 19/96 | `src/wip/sub_08071E84.c` | 19/96 bytes (19.8%), size mismatch (92 vs 96); correct algorithm (walk 0x28-stride Unk71E84 array from gUnk_030040E4, find first entry with unk16==0 within gUnk_030040C4 count, call sub_08071E44, stamp a running id from gUnk_030000C8 into entry->unk18 and return it; on exhaustion, call sub_08067B98 with a format string and return -1). Uses the shared struct Unk71E84 and existing sub_08071E44/sub_08071E84 prototypes. Remaining diffs: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart, the recurring literal-pool quirk), and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form | try writing the first bounds check with the same (count != -1) form used in the loop instead of implicit truthiness, to keep the comparison shape consistent |
-| `sub_08071EE4` | 96 | 19/96 | `src/wip/sub_08071EE4.c` | 19/96 bytes (19.8%), size mismatch (92 vs 96); exact clone of sub_08071E84 (same struct/algorithm, calls sub_08071E04 instead of sub_08071E44) and hits the identical diff pattern: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4, and the first-iteration -1 check compiles as 'cmp r0,#0' instead of retail's consistent 'cmp r1,r0(-1)' form. See sub_08071E84's WIP notes for the same analysis | same as sub_08071E84 -- try the (count != -1) form for the first check; whatever unlocks that sibling should apply here too |
+| `sub_08071E84` | 96 | 58/96 | `src/wip/sub_08071E84.c` | 58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450) | retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24 |
+| `sub_08071EE4` | 96 | 58/96 | `src/wip/sub_08071EE4.c` | 58/96 same-size; gData symbols + while(count != -1); permuter 300s best 360 (base 450) | retail keeps the entry -1 test as subs r1,#1 + materialised -1 (movs/negs); agbcc folds it to cmp r0,#0. Also counter reload [r5] not CSE-ed at +0x24 |
 | `sub_08071F44` | 64 | 35/64 | `src/wip/sub_08071F44.c` | 35/64 bytes (54.7%), size mismatch (60 vs 64); correct algorithm (reverse lookup: find first Unk71E84 entry with unk16!=0 and unk18==arg0). Push list matches retail exactly ({r4,lr}) and the -1 compare form is preserved correctly here (no simplification, unlike the sub_08071E84 family). Only diff: agbcc folds gUnk_030040C4 into an offset-add from gUnk_030040E4 (0x20 apart), the recurring literal-pool quirk seen across ~6 functions this session | retry the sub_08071B4C / sub_08041858 IWRAM barrier: keep the first pointer live with asm("" : "+r"(r0) : : "memory") then reload gUnk_030040C4 as its own literal (0x20 from gUnk_030040E4) |
 | `sub_0802DEA0` | 424 | 66/424 | `src/wip/sub_0802DEA0.c` | 66/424 bytes (15.6%), size mismatch (400 vs 424); correct algorithm fully derived (16 near-identical blocks: for each of struct Unk026C's linked-list fields unk0C..unk40, if non-null set the node's unk08/unk0C to a color constant (0xFFFFC000 for the first 6, 0xF800 for the rest); then free+null 7 of those same fields via sub_0806FE84; finally vsync, set unk48=0xFF, and OR 0xFFFF into gMainWorkPtr's unk1838/unk183A). Reused existing structs Unk026C/Unk705DC. agbcc's CSE merges the repeated 'gUnk_0300026C' pointer dereference across adjacent blocks (r1 cached, reused via a spare register) even when each block is written as a fresh 'p = gUnk_0300026C' assignment, since no intervening write invalidates it -- retail instead reloads fresh every single block | try inserting a genuinely-opaque side effect between blocks (unlikely to be legitimate semantic C), or accept this as CSE the compiler correctly performs and retail's source simply repeated the full expression per block in a way this agbcc snapshot doesn't reproduce; may need per-block dummy calls or accept as permanently DIFF |
 | `sub_080302E0` | 168 | 63/168 | `src/wip/sub_080302E0.c` | two semantic attempts: 66/168 size_mismatch (148B), then 63/168 size_mismatch (176B); logic and field layouts are identified, but register/literal-pool layout still differs | Use the first candidate's cached battle/target locals as the base for a decomp-permuter or targeted register-layout search; do not hand-loop match retries |
@@ -118,7 +118,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080610A8` | 98 | 46/98 then 73/98 | `src/wip/sub_080610A8.c` | Two semantic attempts: if-chain 46/98 (96B), then switch with unsigned half-shift 73/98 (same size). Guards, fields, call arguments, and comparison tree now match; remaining same-size diff is case body placement/order (retail lays out mode 0, mode 2, mode 1 before the shared sub_0806105C tail). | Keep the switch comparison and unsigned shift; reorder source case bodies to case 0, case 2, case 1 (or use gotos) to reproduce retail labels _080610E0/_080610EC/_080610F4 and shared tail. |
 | `sub_0806114C` | 88 | 15/88 then 31/88 | `src/wip/sub_0806114C.c` | Two attempts: explicit min/max locals 15/88 (100B), then direct parameter swap/streaming pointer 31/88 (same-size). Semantics are correct; remaining register allocation keeps state in r7 and palette in r6 instead of retail state r6, palette r2, screen pointer r1. | Move palette masking/shift before the VRAM screen-address calculation and retain direct first/last swap plus streaming *screen loop; this should reproduce retail r6 state, r5 tile, r4 stack end, r1 screen, r2 palette and eliminate r7. |
 | `sub_08061564` | 136 | 11/136 then 9/136 | `src/wip/sub_08061564.c` | Two semantic attempts: switch-based C 11/136 (144B), then explicit branch/goto form 9/136 (148B). Existing matched file is retained as naked assembly. Semantic body is mapped; remaining codegen requires pinning input/cursor/opcode to retail r0/r4/r2, restoring direct unk92 += unkA2 for load order, and using switch cases 8/7 with default handling opcode 10 via inverted cmp. | Use a switch on opcode with only cases 8 and 7; in default, if opcode != 10 dispatch unknown, otherwise perform the Unk0798 update then fall through shared x/y draw. Pin input r0, cursor r4, opcode r2 if needed. |
-| `sub_0806184C` | 92 | 47/92 then 80/92 | `src/wip/sub_0806184C.c` | Two attempts: initial semantic seed 47/92 (96B), then signed-width and shifted-stride corrections 80/92 (same-size). Bounds, VRAM layout, and copy call now match; remaining diff is only bank-byte/address register order (retail loads bank into r0 then shifts into r1, candidate loads into r1). | Pin the bank temporary to r0 (or otherwise force ), retain u16 width and ; this should reproduce the final address instructions. |
+| `sub_0806184C` | 0 | 47/92 then 80/92 | `src/wip/sub_0806184C.c` | Two attempts: initial semantic seed 47/92 (96B), then signed-width and shifted-stride corrections 80/92 (same-size). Bounds, VRAM layout, and copy call now match; remaining diff is only bank-byte/address register order (retail loads bank into r0 then shifts into r1, candidate loads into r1). | Pin the bank temporary to r0 (or otherwise force ), retain u16 width and ; this should reproduce the final address instructions. |
 | `sub_08061AB8` | 120 | 18/120 then 50/120 | `src/wip/sub_08061AB8.c` | Two attempts: direct global C 18/120 same-size, then r4/r5/r6/r7 global anchors 50/120 (128B). Allocation is close but the fixed r7 table did not get a saved-register prologue; retail also retains work in r2 for the VRAM copy while the candidate reloads it into r0/r1. | Make table an ordinary local so agbcc saves normal r7, and introduce a work pointer anchored in r2 after allocation (work=*work_loc) for the bank and +0x94 copy-size expressions. Preserve count_loc r6, work_loc r5, buffer r4. |
 | `sub_08061D00` | 104 | 49/104 then 23/104 | `src/wip/sub_08061D00.c` | Two same-size attempts: direct semantic C 49/104, then r2/r4/r5 register anchors 23/104 (100B). The copy semantics are mapped; remaining differences are input-mask ordering and the compiler CSE/retention of the VRAM base in r6, while retail recomputes it in caller-saved r3 between the two copies. | Compute the u16 arg0 mask and encoded r5 value before loading work_loc r4. Use separate base1/base2 address statements (or a source shape that recomputes VRAM after the first _08073C4C) so the constant stays in r3 and the second destination replaces r4. |
 | `sub_08062988` | 140 | 23/140 then 32/140 | `src/wip/sub_08062988.c` | Two semantic attempts: unpinned field locals 23/140 (136B), then r1/r2/r3 register anchors 32/140 (136B). Conditions and three buffer operations are mapped; remaining mismatch is initial flags/variant scratch allocation (retail flags in r0 and raw +4 byte in r0, derived group r3/mode r1/variant r2), plus default literal scheduling. | Pin flags to r0 and introduce a raw +4 byte temporary in r0 before assigning masked variant r2; retain group r3 and mode r1. Then tune default palette/buffer expression order if needed. |
@@ -142,7 +142,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0806A314` | 144 | 38/144 then 40/144 | `src/wip/sub_0806A314.c` | Two semantic attempts: direct allocator/linked-list wrapper 38/144 (same size), then register-shaped pointer/marker rewrite 40/144 (140B). The allocator and node sentinel semantics are mapped; the remaining prologue issue is loading the 0x03003F40 literal after reading *0x03003F44, while the candidate loads it first, plus counter literal-pool and post-node register order. | Clone the matched sub_0806A3A4 shape: current_value then r2=0x03003F40; IWRAM +r barrier between 0x03003F48 and 0x03003F4C; set r0=work+8, r1=*0x03000B40, r2=0x3400, r3=*current before the stack args |
 | `sub_0806A434` | 164 | 31/164 then 29/164 | `src/wip/sub_0806A434.c` | Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped. | Avoid keeping key live across control-flow/calls: use state->unk00 directly for the initial zero check and reload it into r1 immediately before each pool/counter comparison. Keep state r6, previous r4, next r5 so the prologue remains 70b5. |
 | `sub_0806BC0C` | 116 | 46/116 then 43/116 | `src/wip/sub_0806BC0C.c` | Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit. | Compile the final revision with current/count pinned to r4 and limit pinned to r6. Preserve the source count halfword load, cap callback, and fixed-point loop; verify the post-loop +0x114/+0x10/+0x118 stores. |
-| `sub_0806C704` | 136 | 15/136 then 17/136 | `src/wip/sub_0806C704.c` | Two semantic attempts: initial wrapper 15/136 (140B), then a six-word output workspace and normal extra parameter produced the exact retail prologue/stack frame (17/136, 140B). Remaining mismatch begins only at the flag test: retail forms state+0x8D in r1 and loads the byte into r1, while the candidate uses r0 for the address. | Pin a u8 pointer flag_ptr to r1 and assign it with &state->unk8D before testing; retain source r5, state r4, input r6, extra r7, and output[6] to preserve f0b5/add sp -0x18. |
+| `sub_0806C704` | 0 | 15/136 then 17/136 | `src/wip/sub_0806C704.c` | Two semantic attempts: initial wrapper 15/136 (140B), then a six-word output workspace and normal extra parameter produced the exact retail prologue/stack frame (17/136, 140B). Remaining mismatch begins only at the flag test: retail forms state+0x8D in r1 and loads the byte into r1, while the candidate uses r0 for the address. | Pin a u8 pointer flag_ptr to r1 and assign it with &state->unk8D before testing; retain source r5, state r4, input r6, extra r7, and output[6] to preserve f0b5/add sp -0x18. |
 | `sub_0806EE48` | 124 | 56/124 then 120/124 | `src/wip/sub_0806EE48.c` | Two semantic attempts: direct dispatcher 56/124 (132B), then flag_ptr pinned to r2 reached 120/124 same size. The full loop and handler/callback paths match; only the bit-clear branch differs because retail reuses the already-loaded flag byte in r1, while the candidate reloads it from the r2 pointer before masking. | Keep the loaded flag in a u8 local for both the test and clear path: flags = *flag_ptr; if ((flags & 1) == 0) ... else *flag_ptr = flags & -2. Preserve flag_ptr r2 and handler r3; avoid a second dereference in the else branch. |
 | `sub_0806FDD0` | 128 | 8/128 then 21/128 | `src/wip/sub_0806FDD0.c` | Two semantic attempts: sorted-list insertion model 8/128 (120B), then corrected u16 key ABI and literal pointer lifetimes reached 21/128 (120B). The body is structurally exact, but retail saves r7 (f0b5) while agbcc emits 70b5 despite keeping the free-list address in r7 across calls; this shifts literal-pool offsets and leaves the match short. | Force a normal callee-saved local live across sub_0806FDB4/sub_0806F8C4 so agbcc emits the r7 save/restore, while retaining key as u16, free-list address r7, head address r5, and node r4. Then verify the sorted predecessor/successor insertion and counter decrement. |
 | `sub_0806FE84` | 120 | 33/120 | `src/wip/sub_0806FE84.c` | Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1. | Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit). |
@@ -184,8 +184,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08037430` | 216 | 84/216 | `src/wip/sub_08037430.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DD60` | 0 | 16/40 | `src/wip/sub_0803DD60.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DD88` | 40 | 7/40 | `src/wip/sub_0803DD88.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_0803DDB0` | 40 | 11/40 | `src/wip/sub_0803DDB0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_0803DDD8` | 40 | 11/40 | `src/wip/sub_0803DDD8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_0803DDB0` | 40 | 31/40 | `src/wip/sub_0803DDB0.c` | 31/40 same-size (old_agbcc); idx_var form | retail keeps subs r0,#1 then lsls #2 (unfolded) and materialises the table const in r1; agbcc folds to lsls #4 |
+| `sub_0803DDD8` | 40 | 31/40 | `src/wip/sub_0803DDD8.c` | 31/40 same-size (old_agbcc); idx_var form | same as sub_0803DDB0 (table 0x0807AEFC) |
 | `sub_0803E328` | 0 | 41/76 | `src/wip/sub_0803E328.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803EBB0` | 0 | 16/40 | `src/wip/sub_0803EBB0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803EC34` | 0 | 16/40 | `src/wip/sub_0803EC34.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
@@ -219,7 +219,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08069988` | 0 | 8/64 | `src/wip/sub_08069988.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806A3A4` | 144 | 10/144 | `src/wip/sub_0806A3A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806B3E8` | 84 | 67/84 | `src/wip/sub_0806B3E8.c` | permuter 300 s + 900 s, no score 0 (95 → 10); 67/84 | keep readable Thumb; retail tracks the live pointer in two registers |
-| `sub_0806DEF4` | 20 | 19/20 | `src/wip/sub_0806DEF4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_0806DEF4` | 0 | 19/20 | `src/wip/sub_0806DEF4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806F430` | 0 | 48/48 | `src/wip/sub_0806F430.c` | MATCHED — semantic C in src/matched (materialize the 0x10 mask before reading unk14) | done |
 | `sub_0806FEFC` | 0 | 39/44 | `src/wip/sub_0806FEFC.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806FF28` | 0 | 36/48 | `src/wip/sub_0806FF28.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
@@ -231,6 +231,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802B994` | 0 | 58/58 | `src/wip/sub_0802B994.c` | MATCHED — semantic C in src/matched (permuter: `&row` local forces the loop pointer to be re-read, `-fprologue-bugfix`) | done |
 | `sub_0804495C` | 60 | 34/60 | `src/wip/sub_0804495C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DBD0` | 80 | 23/80 | `src/wip/sub_0803DBD0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_08033158` | 46 | unscored | `src/wip/sub_08033158.c` | unmatched C parked; see notes | read notes; match_function.py this seed |
+| `sub_08036A68` | 240 | 58/240 | `src/wip/sub_08036A68.c` | 58/240 (24.2%), size 232 vs 240 | permuter or force high-reg live ranges |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -241,7 +243,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08046E7C` | `0x08046E7C` | 872 | 3 | pool | asm | (gMainWorkPtr, gBtlInputMask, gBattlerArena/gBtlK) |
 | `sub_0803C5DC` | `0x0803C5DC` | 220 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0803C500` | `0x0803C500` | 220 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
-| `sub_08036A68` | `0x08036A68` | 240 | 2 | pool | asm | (gMainWorkPtr, gBattleWork) |
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_08042784` | `0x08042784` | 100 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
@@ -268,16 +269,17 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08039BD4` | `0x08039BD4` | 1552 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080717F0` | `0x080717F0` | 24 | 0 | pool | asm | |
 | `sub_08033F30` | `0x08033F30` | 24 | 0 |      | asm | |
-| `sub_08068884` | `0x08068884` | 24 | 0 |      | asm | |
 | `sub_08069F00` | `0x08069F00` | 24 | 0 |      | asm | |
-| `sub_0806BE08` | `0x0806BE08` | 24 | 0 |      | asm | |
-| `sub_0806BDA8` | `0x0806BDA8` | 26 | 0 |      | asm | |
-| `sub_08042E78` | `0x08042E78` | 28 | 0 | pool | asm | |
-| `sub_0806A954` | `0x0806A954` | 28 | 0 | pool | asm | |
-| `sub_0806FDB4` | `0x0806FDB4` | 28 | 0 |      | asm | |
-| `sub_08073078` | `0x08073078` | 34 | 0 |      | asm | |
+| `sub_08035908` | `0x08035908` | 36 | 0 |      | asm | |
+| `sub_0806BE20` | `0x0806BE20` | 36 | 0 |      | asm | |
+| `sub_080739E8` | `0x080739E8` | 36 | 0 |      | asm | |
+| `sub_080320CC` | `0x080320CC` | 52 | 0 | pool | asm | |
+| `sub_08035020` | `0x08035020` | 52 | 0 |      | asm | |
+| `sub_08067FC8` | `0x08067FC8` | 74 | 0 |      | asm | |
+| `sub_080699C8` | `0x080699C8` | 80 | 0 | pool | asm | |
+| `sub_08067F3C` | `0x08067F3C` | 92 | 0 |      | asm | |
+| `sub_08065E0C` | `0x08065E0C` | 92 | 0 |      | asm | |
 
 ## Blocked
 
@@ -290,7 +292,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08038314` | `0x08038314` | 0 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
 | `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_08045C5C` | `0x08045C5C` | 136 | gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter |
-| `sub_080473E4` | `0x080473E4` | 20 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
+| `sub_080473E4` | `0x080473E4` | 0 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
 | `sub_08049F98` | `0x08049F98` | 0 | sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter |
 | `sub_0804E17C` | `0x0804E17C` | 0 | byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker |
 | `sub_08051578` | `0x08051578` | 0 | byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker |
@@ -320,6 +322,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (121 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (109 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

@@ -1,80 +1,39 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806c704
-__attribute__((naked))
-void sub_0806C704(void)
+/* match-compiler: old_agbcc */
+void sub_0806C704(void *arg0, void *arg1, s32 arg2, s32 arg3)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "add sp, #-0x018\n"
-        "adds r5, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "adds r6, r2, #0x0\n"
-        "adds r7, r3, #0x0\n"
-        "adds r1, #0x8D\n"
-        "movs r0, #0x04\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C728\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r6, #0x0\n"
-        "mov r2, sp\n"
-        "bl sub_0806E060\n"
-        "b _0806C734\n"
-        "_0806C728:\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r6, #0x0\n"
-        "mov r2, sp\n"
-        "adds r3, r7, #0x0\n"
-        "bl sub_0806E31C\n"
-        "_0806C734:\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C784\n"
-        "ldr r1, [sp, #0x000]\n"
-        "lsls r1, r1, #0x05\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x9A\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "lsls r0, r0, #0x08\n"
-        "subs r1, r1, r0\n"
-        "str r1, [r4, #0x04]\n"
-        "ldr r1, [sp, #0x004]\n"
-        "lsls r1, r1, #0x05\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x9C\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "lsls r0, r0, #0x08\n"
-        "subs r1, r1, r0\n"
-        "str r1, [r4, #0x08]\n"
-        "ldr r1, [sp, #0x008]\n"
-        "lsls r1, r1, #0x05\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x9E\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "lsls r0, r0, #0x08\n"
-        "subs r1, r1, r0\n"
-        "str r1, [r4, #0x0C]\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x80\n"
-        "str r5, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "str r6, [r0, #0x00]\n"
-        "adds r1, r4, #0x0\n"
-        "adds r1, #0x88\n"
-        "lsls r0, r7, #0x08\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x44]\n"
-        "_0806C784:\n"
-        "add sp, #0x018\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+  void **new_var;
+  void *source;
+  struct Unk6C704 *state;
+  void *input;
+  s32 extra;
+  s32 output[6];
+  u32 result;
+  source = arg0;
+  new_var = &arg1;
+  state = *new_var;
+  input = (void *) arg2;
+  extra = arg3;
+  if ((state->unk8D & 4) != 0)
+  {
+    result = sub_0806E060(source, input, output);
+  }
+  else
+  {
+    result = sub_0806E31C(source, input, output, extra);
+  }
+  if (result != 0)
+  {
+    state->unk04 = (output[0] << 5) - (state->unk9A << 8);
+    state->unk08 = (output[1] << 5) - (state->unk9C << 8);
+    state->unk0C = (output[2] << 5) - (state->unk9E << 8);
+    state->unk80 = source;
+    state->unk84 = input;
+    state->unk88 = extra << 8;
+    state->unk44 = 0;
+  }
 }
-

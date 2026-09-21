@@ -1,3 +1,4 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 struct Unk71E84 *sub_08071F44(s32 arg0)
