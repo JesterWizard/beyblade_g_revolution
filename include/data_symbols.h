@@ -30,6 +30,9 @@ extern u32 gData_080BB8C0[];
 extern u8 gData_080BB748[];
 extern s16 gData_08091204[];
 extern u8 gData_08091208[];
+extern u8 gData_0807B6F0[];
+extern u8 gData_0807BB80[];
+extern u8 gData_0807BDB8[];
 
 // IWRAM
 extern u32 gData_03000198[];

@@ -25,9 +25,9 @@ void sub_080442FC(
     {
         index = b->unk16;
         gMainWorkPtr->unk181B = (u8)sub_0806F1A0(
-            (struct Unk6F1A0 *)0x08091208,
+            (struct Unk6F1A0 *)gData_08091208,
             b->unk14,
-            *(s16 *)0x08091204);
+            gData_08091204[0]);
     }
     if (a->unk84 >= 0)
         sub_0806D958((struct Unk6D958 *)a);
@@ -38,7 +38,7 @@ void sub_080442FC(
     r1 = r3 << 5;
     r1 += r3;
     r1 <<= 2;
-    r0 = 0x08091208;
+    r0 = (u32)gData_08091208;
     r1 += r0;
     *(u32 *)slot = r1;
     arg2 = 0x82;

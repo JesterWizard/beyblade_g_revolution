@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T14:10:21Z",
+  "generated": "2026-09-21T14:17:48Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 308,
-    "semantic_done": 325,
-    "readable_asm": 308,
+    "pending": 307,
+    "semantic_done": 326,
+    "readable_asm": 307,
     "opcode": 0,
     "battle_pending": 92,
     "battle_semantic": 62,
@@ -1779,8 +1779,8 @@
     {
       "name": "sub_0803E328",
       "addr": "0x0803E328",
-      "kind": "asm",
-      "bytes": 76,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803E328.c",
       "notes": "src/wip/sub_0803E328.md",
       "status": "matched only with GCC asm labels; stripped DIFF",

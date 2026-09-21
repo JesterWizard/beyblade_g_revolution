@@ -374,6 +374,36 @@
       "score": "74/76",
       "updated": "2026-09-21T09:58:09Z",
       "note": "permuter seed; 74/76, remaining handler/shift register pair"
+    },
+    "sub_080442FC": {
+      "matched_bytes": 134,
+      "retail_bytes": 144,
+      "compiled_bytes": 144,
+      "pct": 93.1,
+      "diff_bytes": 10,
+      "status": "same_size",
+      "score": "134/144",
+      "updated": "2026-09-21T14:18:08Z"
+    },
+    "sub_08040F4C": {
+      "matched_bytes": 319,
+      "retail_bytes": 336,
+      "compiled_bytes": 336,
+      "pct": 94.9,
+      "diff_bytes": 17,
+      "status": "same_size",
+      "score": "319/336",
+      "updated": "2026-09-21T14:18:08Z"
+    },
+    "sub_08073988": {
+      "matched_bytes": 94,
+      "retail_bytes": 96,
+      "compiled_bytes": 96,
+      "pct": 97.9,
+      "diff_bytes": 2,
+      "status": "same_size",
+      "score": "94/96",
+      "updated": "2026-09-21T14:18:09Z"
     }
   }
 }

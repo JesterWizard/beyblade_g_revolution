@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T14:10:21Z_
+_Updated: 2026-09-21T14:17:48Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 325 |
-| Still need semantic C | **308** |
-| Readable Thumb remaining | 308 |
+| Semantic C done | 326 |
+| Still need semantic C | **307** |
+| Readable Thumb remaining | 307 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 92 (62 already semantic) |
 | Blocked (documented) | 20 |
@@ -186,7 +186,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0803DD88` | 40 | 7/40 | `src/wip/sub_0803DD88.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DDB0` | 40 | 11/40 | `src/wip/sub_0803DDB0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DDD8` | 40 | 11/40 | `src/wip/sub_0803DDD8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_0803E328` | 76 | 41/76 | `src/wip/sub_0803E328.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_0803E328` | 0 | 41/76 | `src/wip/sub_0803E328.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803EBB0` | 40 | 16/40 | `src/wip/sub_0803EBB0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803EC34` | 40 | 16/40 | `src/wip/sub_0803EC34.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803ECB8` | 40 | 16/40 | `src/wip/sub_0803ECB8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |

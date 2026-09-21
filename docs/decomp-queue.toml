@@ -1453,9 +1453,9 @@ score = "36/76"
 name = "sub_080442FC"
 seed = "src/wip/sub_080442FC.c"
 notes = "src/wip/sub_080442FC.md"
-status = "132/144; a in r4 vs r5"
+status = "134/144; a in r4 vs r5 (gData symbols fixed pool fold)"
 next = "perm_refer_to_var so index takes r4"
-score = "132/144"
+score = "134/144"
 
 [[wip]]
 name = "sub_08045128"
