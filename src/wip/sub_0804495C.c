@@ -1,32 +1,19 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
+#include "ram_map.h"
 
 // @ 0x0804495c
-#include "global.h"
-
-/* match-flags: -fprologue-bugfix */
-
+// 34/60 same-size (56.7%). do-while form matches retail's `subs r2,#1; cmp; bge`
+// loop; remaining diff is in the src-pointer setup (table at 0x08094E00 indexed by
+// the s8 unk181F) and register choice for dst/n.
 void sub_0804495C(void)
 {
-    u32 table;
-    s32 idx;
-    u16 *src;
-    u16 *dst;
-    s32 n;
-    u16 tmp;
+    u16 *src = *(u16 **)((u8 *)0x08094E00 + gMainWorkPtr->unk181F * 4);
+    u16 *dst = (u16 *)0x050001C0;
+    s32 n = 0x1F;
 
-    table = 0x08094E00;
-    idx = gMainWorkPtr->unk181F;
-    idx <<= 2;
-    idx = idx + table;
-    src = *(u16 **)idx;
-    dst = (u16 *)0x050001C0;
-    n = 0x1F;
     do
     {
-        tmp = *src;
-        *dst = tmp;
-        src++;
-        dst++;
-        n--;
-    } while (n >= 0);
+        *dst++ = *src++;
+    } while (--n >= 0);
 }

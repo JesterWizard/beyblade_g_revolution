@@ -1,12 +1,12 @@
 {
-  "generated": "2026-09-21T15:09:48Z",
+  "generated": "2026-09-21T15:22:15Z",
   "counts": {
-    "matched": 360,
-    "wip": 152,
-    "blocked": 10,
-    "not_started": 108,
-    "size_mismatch": 2,
-    "same_size": 1
+    "matched": 362,
+    "wip": 155,
+    "blocked": 9,
+    "not_started": 105,
+    "same_size": 1,
+    "size_mismatch": 1
   },
   "total": 633,
   "functions": [
@@ -1033,18 +1033,18 @@
     {
       "name": "sub_080320CC",
       "addr": "0x080320CC",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "not_started",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": false,
       "block_reason": "",
       "retail_bytes": 52,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/52",
-      "source": "none",
+      "matched_bytes": 52,
+      "compiled_bytes": 52,
+      "pct": 100.0,
+      "score": "52/52",
+      "source": "integrated",
       "note": ""
     },
     {
@@ -1171,9 +1171,9 @@
       "addr": "0x08033158",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 46,
       "matched_bytes": 0,
@@ -1181,7 +1181,7 @@
       "pct": 0.0,
       "score": "0/46",
       "source": "none",
-      "note": ""
+      "note": "unmatched C parked; see notes"
     },
     {
       "name": "sub_08033188",
@@ -1494,9 +1494,9 @@
       "addr": "0x08033F30",
       "kind": "asm",
       "status": "size_mismatch",
-      "display": "size_mismatch",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 24,
       "matched_bytes": 1,
@@ -1504,7 +1504,7 @@
       "pct": 3.6,
       "score": "1/24",
       "source": "attempt",
-      "note": ""
+      "note": "16/24 same-size, branch layout inverted"
     },
     {
       "name": "sub_08033F48",
@@ -2276,17 +2276,17 @@
       "addr": "0x08036A68",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 240,
-      "matched_bytes": 0,
+      "matched_bytes": 58,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/240",
-      "source": "none",
-      "note": ""
+      "pct": 24.2,
+      "score": "58/240",
+      "source": "wip",
+      "note": "58/240 (24.2%), size 232 vs 240"
     },
     {
       "name": "sub_0803715C",
@@ -3702,18 +3702,18 @@
     {
       "name": "sub_080428C4",
       "addr": "0x080428C4",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "blocked",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": true,
       "wip": false,
       "block_reason": "docs/battle.md: readable Thumb \u2014 C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)",
       "retail_bytes": 44,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/44",
-      "source": "none",
+      "matched_bytes": 44,
+      "compiled_bytes": 44,
+      "pct": 100.0,
+      "score": "44/44",
+      "source": "integrated",
       "note": ""
     },
     {

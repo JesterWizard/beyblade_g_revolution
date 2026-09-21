@@ -1736,3 +1736,11 @@ notes = "src/wip/sub_08036A68.md"
 status = "58/240 (24.2%), size 232 vs 240"
 next = "permuter or force high-reg live ranges"
 score = "58/240"
+
+[[wip]]
+name = "sub_08033F30"
+seed = "src/wip/sub_08033F30.c"
+notes = "src/wip/sub_08033F30.md"
+status = "16/24 same-size, branch layout inverted"
+next = "permuter branch-order search"
+score = "16/24"

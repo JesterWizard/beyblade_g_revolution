@@ -3,44 +3,29 @@
 #include "battle.h"
 
 // @ 0x0806fefc
-/* match-flags: -fprologue-bugfix */
-// NOTE: `r0` is read before assignment below — retail also branches on whatever
-// is left in r0 at entry (this is a void function that used to take a selector).
-// Both arms of the branch are byte-identical, so the read is inert; do not
-// "fix" it, the uninitialised read is what reproduces retail's codegen.
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
+// @ 0x0806fefc
+// Pop the head node off the battle-object list and push it onto the tail list.
+// gData_030040A8/gData_030040B8 symbols (not raw literals) stop agbcc folding
+// 0x030040B8 into 0x030040A8+0x10.
 struct BtlObjNode *sub_0806FEFC(void)
 {
-  u32 r2;
-  struct BtlObjNode *r1;
-  struct BtlObjNode *r0;
-  r2 = (u32) ((struct BtlObjNode **) 0x030040A8);
-  r1 = *((struct BtlObjNode **) r2);
-  if (r1 != 0)
-  {
-    if (r0)
+    struct BtlObjNode *n = *(struct BtlObjNode **)gData_030040A8;
+    struct BtlObjNode *t;
+
+    if (n != 0)
     {
-      r0 = r1->prev;
-      *((struct BtlObjNode **) r2) = r0;
-      r2 = (u32) ((struct BtlObjNode **) 0x030040B8);
-      r0 = *((struct BtlObjNode **) r2);
+        *(struct BtlObjNode **)gData_030040A8 = n->prev;
+        t = *(struct BtlObjNode **)gData_030040B8;
+        if (t != 0)
+            t->next = n;
+        n->prev = *(struct BtlObjNode **)gData_030040B8;
+        n->next = 0;
+        *(struct BtlObjNode **)gData_030040B8 = n;
     }
-    else
-    {
-      r0 = r1->prev;
-      *((struct BtlObjNode **) r2) = r0;
-      r2 = (u32) ((struct BtlObjNode **) 0x030040B8);
-      r0 = *((struct BtlObjNode **) r2);
-    }
-    if (r0 != 0)
-    {
-      r0->next = r1;
-    }
-    r0 = *((struct BtlObjNode **) r2);
-    r1->prev = r0;
-    r0 = 0;
-    r1->next = r0;
-    *((struct BtlObjNode **) r2) = r1;
-  }
-  r0 = r1;
-  return r0;
+    return n;
 }
+

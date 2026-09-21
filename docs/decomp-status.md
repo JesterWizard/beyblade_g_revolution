@@ -8,18 +8,36 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **357/633 (56.4%)** |
-| **Decompiled C (bytes)** | **23,188/90,272 (25.7%)** |
+| **Decompiled C (functions)** | **359/633 (56.7%)** |
+| **Decompiled C (bytes)** | **23,284/90,272 (25.8%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 276/633 (43.6%) |
+| Readable Thumb | 274/633 (43.3%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 67/160 (41.9% fn, 17.8% bytes) |
+| Battle semantic C | 68/160 (42.5% fn, 18.0% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — asm-stub → semantic C conversions (+2, 357→359/633)
+- Two `src/matched/*.c` readable-Thumb stubs rewritten as semantic C (`old_agbcc`,
+  both 100% via `match_function.py`, `make compare` OK):
+  | Function | Bytes | How |
+  |--|--|--|
+  | `sub_080320CC` | 52 | 4 unrolled `gUnk_030002A0.records[i].unk0C` clamps; struct-index form reproduces retail's `adds r1,#0x90` for the 4th record |
+  | `sub_080428C4` | 44 | `gMainWorkPtr->unk1808 & 0x2000` gate + two byte stores through `gUnk_03000538` (retail reloads the pointer between the two stores) |
+- Re-landed cleaner semantic versions of `sub_0806FEFC` (list pop-head/push-tail through
+  `gData_030040A8`/`gData_030040B8`) and `sub_08041858` (net 0 — replaced awkward prior forms).
+- **New pinned technique:** two RAM addresses that differ by a small constant must go through
+  *distinct* `gData_*` symbols, otherwise agbcc folds the second into `adds rX,#imm`
+  (raw literals: `0x030040B8` became `0x030040A8 + 0x10`). Same trick already used by
+  `sub_08041858` / `sub_08037318`.
+- Parked with notes: `sub_08033158` (44/46), `sub_08036A68` (58/240), `sub_08033F30` (16/24,
+  branch layout), `sub_0804495C` (34/60), `sub_0803DD88`.
+- Permuter chain over the top-scoring WIP seeds: `sub_08042C3C` re-landed; `sub_08073988`
+  floored at best 10.
 
 ### 2026-09-21 — register-shape batch: +6 semantic C (312→318/633), past 50% functions
 - Targets were the twelve worst "matched only with GCC asm labels; stripped DIFF"

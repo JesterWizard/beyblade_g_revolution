@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-21T15:11:35Z",
+  "generated": "2026-09-21T15:22:14Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 276,
-    "semantic_done": 357,
-    "readable_asm": 276,
+    "pending": 274,
+    "semantic_done": 359,
+    "readable_asm": 274,
     "opcode": 0,
     "battle_pending": 87,
-    "battle_semantic": 67,
+    "battle_semantic": 68,
     "blocked": 20,
-    "wip": 207
+    "wip": 208
   },
   "pinned": [],
   "wip": [
@@ -2292,6 +2292,17 @@
       "status": "58/240 (24.2%), size 232 vs 240",
       "next": "permuter or force high-reg live ranges",
       "score": "58/240"
+    },
+    {
+      "name": "sub_08033F30",
+      "addr": "0x08033F30",
+      "kind": "asm",
+      "bytes": 24,
+      "seed": "src/wip/sub_08033F30.c",
+      "notes": "src/wip/sub_08033F30.md",
+      "status": "16/24 same-size, branch layout inverted",
+      "next": "permuter branch-order search",
+      "score": "16/24"
     }
   ],
   "recommended": [
@@ -2707,18 +2718,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08033F30",
-      "addr": "0x08033F30",
-      "kind": "asm",
-      "bytes": 24,
-      "score": 12,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08069F00",
       "addr": "0x08069F00",
       "kind": "asm",
@@ -2763,18 +2762,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080320CC",
-      "addr": "0x080320CC",
-      "kind": "asm",
-      "bytes": 52,
-      "score": 23,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
@@ -2837,6 +2824,30 @@
       "has_pool": false,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08061E8C",
+      "addr": "0x08061E8C",
+      "kind": "asm",
+      "bytes": 108,
+      "score": 58,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08073910",
+      "addr": "0x08073910",
+      "kind": "asm",
+      "bytes": 118,
+      "score": 59,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -2879,8 +2890,8 @@
       "name": "sub_080428C4",
       "addr": "0x080428C4",
       "reason": "docs/battle.md: readable Thumb \u2014 C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)",
-      "kind": "asm",
-      "bytes": 44
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_08045C5C",
@@ -3394,18 +3405,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08033F30",
-      "addr": "0x08033F30",
-      "kind": "asm",
-      "bytes": 24,
-      "score": 12,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08069F00",
       "addr": "0x08069F00",
       "kind": "asm",
@@ -3450,18 +3449,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080320CC",
-      "addr": "0x080320CC",
-      "kind": "asm",
-      "bytes": 52,
-      "score": 23,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },

@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T15:11:35Z_
+_Updated: 2026-09-21T15:22:14Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 357 |
-| Still need semantic C | **276** |
-| Readable Thumb remaining | 276 |
+| Semantic C done | 359 |
+| Still need semantic C | **274** |
+| Readable Thumb remaining | 274 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 87 (67 already semantic) |
+| Battle pending | 87 (68 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 207 |
+| WIP (resume these first) | 208 |
 
 Ranking: **battle** · showing top **40**
 
@@ -233,6 +233,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0803DBD0` | 80 | 23/80 | `src/wip/sub_0803DBD0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08033158` | 46 | unscored | `src/wip/sub_08033158.c` | unmatched C parked; see notes | read notes; match_function.py this seed |
 | `sub_08036A68` | 240 | 58/240 | `src/wip/sub_08036A68.c` | 58/240 (24.2%), size 232 vs 240 | permuter or force high-reg live ranges |
+| `sub_08033F30` | 24 | 16/24 | `src/wip/sub_08033F30.c` | 16/24 same-size, branch layout inverted | permuter branch-order search |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -269,17 +270,17 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08039BD4` | `0x08039BD4` | 1552 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08033F30` | `0x08033F30` | 24 | 0 |      | asm | |
 | `sub_08069F00` | `0x08069F00` | 24 | 0 |      | asm | |
 | `sub_08035908` | `0x08035908` | 36 | 0 |      | asm | |
 | `sub_0806BE20` | `0x0806BE20` | 36 | 0 |      | asm | |
 | `sub_080739E8` | `0x080739E8` | 36 | 0 |      | asm | |
-| `sub_080320CC` | `0x080320CC` | 52 | 0 | pool | asm | |
 | `sub_08035020` | `0x08035020` | 52 | 0 |      | asm | |
 | `sub_08067FC8` | `0x08067FC8` | 74 | 0 |      | asm | |
 | `sub_080699C8` | `0x080699C8` | 80 | 0 | pool | asm | |
 | `sub_08067F3C` | `0x08067F3C` | 92 | 0 |      | asm | |
 | `sub_08065E0C` | `0x08065E0C` | 92 | 0 |      | asm | |
+| `sub_08061E8C` | `0x08061E8C` | 108 | 0 | pool | asm | |
+| `sub_08073910` | `0x08073910` | 118 | 0 |      | asm | |
 
 ## Blocked
 
@@ -290,7 +291,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08033530` | `0x08033530` | 0 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 84 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
 | `sub_08038314` | `0x08038314` | 0 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
-| `sub_080428C4` | `0x080428C4` | 44 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
+| `sub_080428C4` | `0x080428C4` | 0 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
 | `sub_08045C5C` | `0x08045C5C` | 136 | gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter |
 | `sub_080473E4` | `0x080473E4` | 0 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
 | `sub_08049F98` | `0x08049F98` | 0 | sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter |
@@ -322,6 +323,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (109 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (107 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
