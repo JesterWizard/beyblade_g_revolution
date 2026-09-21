@@ -1784,3 +1784,11 @@ notes = "src/wip/sub_08067FC8.md"
 status = "43/74 same-size; total=0 must precede the call, entry check uses r8"
 next = "permuter"
 score = "43/74"
+
+[[wip]]
+name = "sub_08073114"
+seed = "src/wip/sub_08073114.c"
+notes = "src/wip/sub_08073114.md"
+status = "18/112 (108B); i=0 must precede count=...; table pseudo wants r1 not r0"
+next = "permuter"
+score = "18/112"

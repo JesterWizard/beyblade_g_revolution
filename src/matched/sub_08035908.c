@@ -1,34 +1,31 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035908
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+// @ 0x08035908
+// AABB-up-front test: walk the +4 sibling array. Returns 0 as soon as an entry
+// whose +0 span contains v is found (v <= unk00 + unk04), else 1. The
+// `if (e != 0) { while (...) } return 1` shape is required: an early
+// `if (e == 0) return 1;` makes agbcc emit the opposite branch layout
+// (`bne` + fall-through) and floors at 18/36.
 u8 sub_08035908(struct Unk35878 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "ldr r2, [r0, #0x04]\n"
-        "ldr r3, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08035928\n"
-        "b _08035922\n"
-        "_08035912:\n"
-        "ldr r0, [r2, #0x00]\n"
-        "ldr r1, [r2, #0x04]\n"
-        "adds r0, r0, r1\n"
-        "cmp r3, r0\n"
-        "bgt _08035920\n"
-        "movs r0, #0x00\n"
-        "b _0803592A\n"
-        "_08035920:\n"
-        "adds r2, #0x10\n"
-        "_08035922:\n"
-        "ldr r0, [r2, #0x08]\n"
-        "cmp r0, #0x00\n"
-        "bne _08035912\n"
-        "_08035928:\n"
-        "movs r0, #0x01\n"
-        "_0803592A:\n"
-        "bx lr\n"
-    );
+    struct Unk35878 *e = (struct Unk35878 *)a->unk04;
+    s32 v = a->unk00;
+
+    if (e != 0)
+    {
+        while (e->unk08 != 0)
+        {
+            if (v <= (s32)(e->unk00 + e->unk04))
+                return 0;
+            e++;
+        }
+    }
+    return 1;
 }
 

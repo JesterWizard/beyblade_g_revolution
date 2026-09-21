@@ -1,53 +1,23 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08065e0c
-__attribute__((naked))
-void sub_08065E0C(void)
+#include "global.h"
+
+// @ 0x08065e0c
+// Blit a keyed tile record: recover the record for `c`'s key (word >> 8), route
+// its two cursors through sub_080674AC/B4, then hand [a, b, record->unk00, d, e] to
+// sub_08068988. `b`/`d`/`e` truncate (u8/u16/u16) and the record's first word --
+// not the record pointer -- is what the two helpers receive and what is returned
+// paths use. Returning the pointer keeps the high-register live ranges retail has.
+void *sub_08065E0C(void *a, u8 b, void *c, u16 d, u16 e)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "mov r6, r10\n"
-        "mov r5, r9\n"
-        "mov r4, r8\n"
-        "push {r4, r5, r6}\n"
-        "add sp, #-0x004\n"
-        "mov r10, r0\n"
-        "adds r6, r1, #0x0\n"
-        "mov r9, r2\n"
-        "mov r8, r3\n"
-        "ldr r4, [sp, #0x020]\n"
-        "lsls r6, r6, #0x18\n"
-        "lsrs r6, r6, #0x18\n"
-        "mov r0, r8\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r8, r0\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "ldr r0, [r2, #0x00]\n"
-        "lsrs r0, r0, #0x08\n"
-        "bl sub_0806A3A4\n"
-        "adds r5, r0, #0x0\n"
-        "ldr r1, [r5, #0x00]\n"
-        "mov r0, r9\n"
-        "bl sub_080674AC\n"
-        "bl sub_080674B4\n"
-        "ldr r2, [r5, #0x00]\n"
-        "str r4, [sp, #0x000]\n"
-        "mov r0, r10\n"
-        "adds r1, r6, #0x0\n"
-        "mov r3, r8\n"
-        "bl sub_08068988\n"
-        "adds r0, r5, #0x0\n"
-        "add sp, #0x004\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk68988 *p = sub_0806A3A4(*(u32 *)c >> 8);
+
+    sub_080674AC(c, (void *)p->unk00);
+    sub_080674B4();
+    sub_08068988(a, b, p->unk00, d, e);
+    return p;
 }
 

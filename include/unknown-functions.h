@@ -131,6 +131,8 @@ void sub_080346A8(struct Unk346A8 *a, u32 v);
  * empty parameter list because the C callers in this repo invoke it with no arguments
  * while the ROM function forwards whatever r0/r1 already held. */
 void sub_080674B4();
+void *sub_08065E0C(void *a, u8 b, void *c, u16 d, u16 e);
+void sub_08068988(struct Unk68988 *state, u32 index, u32 unused, u32 limit, u32 mode);
 void sub_08067504(void *source, void *destination, u16 count);
 void sub_080674AC(void *a, void *b);
 void sub_0806BC0C(void *a, void *b);
