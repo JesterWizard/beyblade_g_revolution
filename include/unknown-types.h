@@ -930,7 +930,9 @@ struct MainWork /* >= 0x18B4 */
     /* 16EC */ u8 filler_16EC[0x1C]; /* sub_0805D99C */
     /* 1708 */ u32 unk1708; /* sub_0805D99C */
     /* 170C */ s32 unk170C;
-    /* 1710 */ s32 unk1710[27];
+    /* 1710 */ s32 unk1710[25];
+    /* 1774 */ s32 unk1774; /* sub_08045C5C */
+    /* 1778 */ s32 unk1778; /* sub_08045C5C */
     /* 177C */ s32 unk177C;
     /* 1780 */ s32 unk1780;
     /* 1784 */ u8 filler_1784[4];
@@ -1299,6 +1301,32 @@ struct Unk07B0 /* >= 0x118 */
 };
 
 /* Header + 8-byte records. sub_08068014. */
+/* Object built by sub_08061E8C. */
+struct Unk61E8CSrc /* >= 0x06 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u8 unk04;
+    /* 05 */ u8 unk05;
+};
+
+struct Unk61E8CAlloc /* >= 0x04 */
+{
+    /* 00 */ void *unk00;
+};
+
+struct Unk61E8C /* >= 0x24 */
+{
+    /* 00 */ struct Unk61E8CAlloc *unk00;
+    /* 04 */ void *unk04;
+    /* 08 */ struct Unk61E8CSrc *unk08;
+    /* 0C */ void *unk0C;
+    /* 10 */ u8 filler_10[0xC];
+    /* 1C */ u16 unk1C;
+    /* 1E */ u16 unk1E;
+    /* 20 */ u16 unk20;
+    /* 22 */ u16 unk22;
+};
+
 struct Unk68014Rec /* 0x08 */
 {
     /* 00 */ u16 unk00;

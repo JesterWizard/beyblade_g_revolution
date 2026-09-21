@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-21T19:12:34Z_
+_Updated: 2026-09-21T20:31:11Z_
 
 ## Legend
 
@@ -22,13 +22,13 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 386 |
+| matched | 396 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 145 |
-| not started | 96 |
-| blocked | 6 |
+| WIP (parked C) | 141 |
+| not started | 91 |
+| blocked | 5 |
 | **total** | **633** |
 
 ## Close / attempted
@@ -43,8 +43,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0803DCFC` | WIP (parked C) | 91.7% | 44/48 | 44/48 same-size seed (sweep_seeds); two permuter runs (120s x8 jobs, 300s x3 … |
 | `sub_08069894` | WIP (parked C) | 88.5% | 85/96 | 85/96; IWRAM stores preloaded vs sequential |
 | `sub_08043B90` | WIP (parked C) | 88.2% | 67/76 | 67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomizati… |
-| `sub_08043B58` | WIP (parked C) | 87.0% | 47/54 | permuter 300 s + 900 s, no score 0 (45 → 20); 47/54 same-size |
-| `sub_08071B4C` | WIP (parked C) | 86.9% | 73/84 | permuter 300 s + 900 s, no score 0 (335 → 5); 73/84 |
 | `sub_08066224` | WIP (parked C) | 85.7% | 96/112 | permuter 300 s + 900 s, no score 0 (110 → 55); 96/112 |
 | `sub_08034A68` | WIP (parked C) | 81.2% | 91/112 | permuter 300 s + 900 s, no score 0 (130 → 110); 91/112 |
 | `sub_0806B3E8` | WIP (parked C) | 79.8% | 67/84 | permuter 300 s + 900 s, no score 0 (95 → 10); 67/84 |
@@ -53,10 +51,9 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080361A8` | WIP (parked C) | 63.9% | 23/36 | matched only with GCC asm labels; stripped DIFF |
 | `sub_080523A4` | WIP (parked C) | 63.4% | 71/112 | matched only with GCC asm labels; stripped DIFF |
 | `sub_08032DC4` | WIP (parked C) | 63.3% | 418/660 | 418/660 (656B); arg copies now state_a, state_b, frame. Remaining 4-byte shor… |
+| `sub_08067F3C` | WIP (parked C) | 63.0% | 58/92 | 58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs |
 | `sub_08032908` | WIP (parked C) | 61.2% | 235/384 | three attempts: 151/384 (388B), 235/384 (388B) retained; loc-pin rewrite 114/… |
-| `sub_08052934` | WIP (parked C) | 58.3% | 49/84 | matched only with GCC asm labels; stripped DIFF |
 | `sub_08067FC8` | WIP (parked C) | 58.1% | 43/74 | 43/74 same-size; total=0 must precede the call, entry check uses r8 |
-| `sub_0804495C` | WIP (parked C) | 56.7% | 34/60 | matched only with GCC asm labels; stripped DIFF |
 | `sub_080348E8` | WIP (parked C) | 54.2% | 208/384 | two semantic attempts: 208/384 same-size first draft; second fixed-register a… |
 | `sub_0803E2AC` | WIP (parked C) | 54.0% | 67/124 then 72/124 | Two semantic attempts are same-size but differ in table literal/index schedul… |
 | `sub_0802BC14` | WIP (parked C) | 51.8% | 58/112 | same-size DIFF (58/112, 51.8%) after signed-call and r0-pointer hints; remain… |
@@ -91,7 +88,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08067BB8` | WIP (parked C) | 37.2% | 113/304 then 44/304 | Two semantic constructor attempts: structured field initialization reached 11… |
 | `sub_08042784` | WIP (parked C) | 35.0% | 35/100 | 35/100 same-size; retail keeps the ring pointer in r12 |
 | `sub_08066FB8` | WIP (parked C) | 33.7% | 101/300 then 93/300 | Two semantic attempts: direct renderer 101/300 (304B), then r4/r5/r6 register… |
-| `sub_080674A4` | WIP (parked C) | 33.3% | 2/6 | matched only with GCC asm labels; stripped DIFF |
 | `sub_08062068` | WIP (parked C) | 33.3% | 16/48 | 16/48 bytes (28.6%), size mismatch (56 vs 48); correct algorithm (3-way selec… |
 | `sub_08038D68` | WIP (parked C) | 33.0% | 37/112 | two attempts: direct semantic seed 15/112 (108B); pinned base/table registers… |
 | `sub_08070468` | WIP (parked C) | 32.5% | 37/114 | Two attempts: the semantic sorted-list reposition candidate reached 37/114 (1… |
@@ -99,7 +95,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080699C8` | WIP (parked C) | 31.2% | 25/80 | size mismatch; shared tail not reproducible |
 | `sub_080333E4` | WIP (parked C) | 30.9% | 84/272 | Mode resource initializer semantics reconstructed; second candidate reached e… |
 | `sub_0804AC3C` | WIP (parked C) | 30.8% | 32/104 then 38/104 | Two attempts: semantic seed 32/104 (96B), then r6/r5/r4 register-pinned data/… |
-| `sub_0805264C` | WIP (parked C) | 30.2% | 29/96 then 9/96 | Two semantic attempts after correcting the existing prototype: struct-table l… |
 | `sub_0803139C` | WIP (parked C) | 29.4% | 103/350 | Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/3… |
 | `sub_0803DBD0` | WIP (parked C) | 28.8% | 23/80 | matched only with GCC asm labels; stripped DIFF |
 | `sub_08062D50` | WIP (parked C) | 28.3% | 13/46 | 13/46 bytes (28.3%), same size; correct algorithm (write a BGR555 palette ent… |
@@ -172,6 +167,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08061564` | WIP (parked C) | 8.1% | 11/136 then 9/136 | Two semantic attempts: switch-based C 11/136 (144B), then explicit branch/got… |
 | `sub_0804188C` | WIP (parked C) | 7.8% | 19/244 then 41/244 | Two semantic attempts failed to reproduce the fixed-point table walk: direct … |
 | `sub_08031300` | WIP (parked C) | 7.7% | 6/78 | matched only with GCC asm labels; stripped DIFF |
+| `sub_0803715C` | WIP (parked C) | 7.4% | 33/444 | 33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 ins… |
 | `sub_0803114C` | WIP (parked C) | 7.1% | 13/184 | Entry-position initialization semantics reconstructed with both direction bra… |
 | `sub_0805E044` | WIP (parked C) | 7.0% | 16/228 then 15/228 | Two semantic attempts: typed table-pointer loop 16/228 (212B), then explicit … |
 | `sub_080436B0` | WIP (parked C) | 7.0% | 46/658 then 85/658 | Two semantic attempts failed: structured local seed 46/658 (616B), then fixed… |
@@ -193,8 +189,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0803DCFC` | `0x0803DCFC` | WIP (parked C) | 91.7% | 44/48 | asm |
 | `sub_08069894` | `0x08069894` | WIP (parked C) | 88.5% | 85/96 | asm |
 | `sub_08043B90` | `0x08043B90` | WIP (parked C) | 88.2% | 67/76 | asm |
-| `sub_08043B58` | `0x08043B58` | WIP (parked C) | 87.0% | 47/54 | asm |
-| `sub_08071B4C` | `0x08071B4C` | WIP (parked C) | 86.9% | 73/84 | asm |
 | `sub_08066224` | `0x08066224` | WIP (parked C) | 85.7% | 96/112 | asm |
 | `sub_08034A68` | `0x08034A68` | WIP (parked C) | 81.2% | 91/112 | asm |
 | `sub_0806B3E8` | `0x0806B3E8` | WIP (parked C) | 79.8% | 67/84 | asm |
@@ -203,10 +197,9 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080361A8` | `0x080361A8` | WIP (parked C) | 63.9% | 23/36 | asm |
 | `sub_080523A4` | `0x080523A4` | WIP (parked C) | 63.4% | 71/112 | asm |
 | `sub_08032DC4` | `0x08032DC4` | WIP (parked C) | 63.3% | 418/660 | asm |
+| `sub_08067F3C` | `0x08067F3C` | WIP (parked C) | 63.0% | 58/92 | asm |
 | `sub_08032908` | `0x08032908` | WIP (parked C) | 61.2% | 235/384 | asm |
-| `sub_08052934` | `0x08052934` | WIP (parked C) | 58.3% | 49/84 | asm |
 | `sub_08067FC8` | `0x08067FC8` | WIP (parked C) | 58.1% | 43/74 | asm |
-| `sub_0804495C` | `0x0804495C` | WIP (parked C) | 56.7% | 34/60 | asm |
 | `sub_080348E8` | `0x080348E8` | WIP (parked C) | 54.2% | 208/384 | asm |
 | `sub_0803E2AC` | `0x0803E2AC` | WIP (parked C) | 54.0% | 67/124 then 72/124 | asm |
 | `sub_0802BC14` | `0x0802BC14` | WIP (parked C) | 51.8% | 58/112 | asm |
@@ -241,7 +234,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08067BB8` | `0x08067BB8` | WIP (parked C) | 37.2% | 113/304 then 44/304 | asm |
 | `sub_08042784` | `0x08042784` | WIP (parked C) | 35.0% | 35/100 | asm |
 | `sub_08066FB8` | `0x08066FB8` | WIP (parked C) | 33.7% | 101/300 then 93/300 | asm |
-| `sub_080674A4` | `0x080674A4` | WIP (parked C) | 33.3% | 2/6 | asm |
 | `sub_08062068` | `0x08062068` | WIP (parked C) | 33.3% | 16/48 | asm |
 | `sub_08038D68` | `0x08038D68` | WIP (parked C) | 33.0% | 37/112 | asm |
 | `sub_08070468` | `0x08070468` | WIP (parked C) | 32.5% | 37/114 | asm |
@@ -249,7 +241,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080699C8` | `0x080699C8` | WIP (parked C) | 31.2% | 25/80 | asm |
 | `sub_080333E4` | `0x080333E4` | WIP (parked C) | 30.9% | 84/272 | asm |
 | `sub_0804AC3C` | `0x0804AC3C` | WIP (parked C) | 30.8% | 32/104 then 38/104 | asm |
-| `sub_0805264C` | `0x0805264C` | WIP (parked C) | 30.2% | 29/96 then 9/96 | asm |
 | `sub_0803139C` | `0x0803139C` | WIP (parked C) | 29.4% | 103/350 | asm |
 | `sub_0803DBD0` | `0x0803DBD0` | WIP (parked C) | 28.8% | 23/80 | asm |
 | `sub_08062D50` | `0x08062D50` | WIP (parked C) | 28.3% | 13/46 | asm |
@@ -322,6 +313,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08061564` | `0x08061564` | WIP (parked C) | 8.1% | 11/136 then 9/136 | asm |
 | `sub_0804188C` | `0x0804188C` | WIP (parked C) | 7.8% | 19/244 then 41/244 | asm |
 | `sub_08031300` | `0x08031300` | WIP (parked C) | 7.7% | 6/78 | asm |
+| `sub_0803715C` | `0x0803715C` | WIP (parked C) | 7.4% | 33/444 | asm |
 | `sub_0803114C` | `0x0803114C` | WIP (parked C) | 7.1% | 13/184 | asm |
 | `sub_0805E044` | `0x0805E044` | WIP (parked C) | 7.0% | 16/228 then 15/228 | asm |
 | `sub_080436B0` | `0x080436B0` | WIP (parked C) | 7.0% | 46/658 then 85/658 | asm |
@@ -330,11 +322,8 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08067584` | `0x08067584` | WIP (parked C) | 6.2% | 11/176 then 41/176 | asm |
 | `sub_0803370C` | `0x0803370C` | WIP (parked C) | 5.8% | 21/362 | asm |
 | `sub_0802E2F8` | `0x0802E2F8` | WIP (parked C) | 3.6% | 4/110 | asm |
-| `sub_08067F3C` | `0x08067F3C` | not started | 0.0% | 0/92 | asm |
-| `sub_08061E8C` | `0x08061E8C` | not started | 0.0% | 0/108 | asm |
 | `sub_08073910` | `0x08073910` | not started | 0.0% | 0/118 | asm |
 | `sub_0806B064` | `0x0806B064` | not started | 0.0% | 0/122 | asm |
-| `sub_080735DC` | `0x080735DC` | not started | 0.0% | 0/132 | asm |
 | `sub_08041C8C` | `0x08041C8C` | not started | 0.0% | 0/142 | asm |
 | `sub_0806E31C` | `0x0806E31C` | not started | 0.0% | 0/148 | asm |
 | `sub_08044FB0` | `0x08044FB0` | not started | 0.0% | 0/156 | asm |
@@ -352,7 +341,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806FF58` | `0x0806FF58` | not started | 0.0% | 0/180 | asm |
 | `sub_080700CC` | `0x080700CC` | not started | 0.0% | 0/188 | asm |
 | `sub_080688C8` | `0x080688C8` | not started | 0.0% | 0/190 | asm |
-| `sub_08051444` | `0x08051444` | not started | 0.0% | 0/192 | asm |
 | `sub_08062358` | `0x08062358` | not started | 0.0% | 0/192 | asm |
 | `sub_0807000C` | `0x0807000C` | not started | 0.0% | 0/192 | asm |
 | `sub_08054494` | `0x08054494` | not started | 0.0% | 0/196 | asm |
@@ -402,7 +390,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08070930` | `0x08070930` | not started | 0.0% | 0/420 | asm |
 | `sub_080618EC` | `0x080618EC` | not started | 0.0% | 0/428 | asm |
 | `sub_08048DB8` | `0x08048DB8` | not started | 0.0% | 0/440 | asm |
-| `sub_0803715C` | `0x0803715C` | not started | 0.0% | 0/444 | asm |
 | `sub_08056BA4` | `0x08056BA4` | not started | 0.0% | 0/450 | asm |
 | `sub_08068A08` | `0x08068A08` | not started | 0.0% | 0/460 | asm |
 | `sub_0806E060` | `0x0806E060` | not started | 0.0% | 0/492 | asm |
@@ -429,7 +416,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08074144` | `0x08074144` | blocked | 0.0% | 0/2 | asm |
 | `sub_08062CF4` | `0x08062CF4` | blocked | 0.0% | 0/48 | asm |
 | `sub_08030938` | `0x08030938` | blocked | 0.0% | 0/78 | asm |
-| `sub_080604C8` | `0x080604C8` | blocked | 0.0% | 0/112 | asm |
 | `sub_08045C5C` | `0x08045C5C` | blocked | 0.0% | 0/136 | asm |
 | `sub_0806A6F8` | `0x0806A6F8` | blocked | 0.0% | 0/436 | asm |
 | `sub_08067A9C` | `0x08067A9C` | matched | 100.0% | 2/2 | semantic |
@@ -439,6 +425,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080674A0` | `0x080674A0` | matched | 100.0% | 4/4 | semantic |
 | `sub_080674AC` | `0x080674AC` | matched | 100.0% | 4/4 | semantic |
 | `sub_080674B0` | `0x080674B0` | matched | 100.0% | 4/4 | semantic |
+| `sub_080674A4` | `0x080674A4` | matched | 100.0% | 6/6 | semantic |
 | `sub_080674B4` | `0x080674B4` | matched | 100.0% | 6/6 | semantic |
 | `sub_08067B98` | `0x08067B98` | matched | 100.0% | 6/6 | semantic |
 | `sub_080705CC` | `0x080705CC` | matched | 100.0% | 6/6 | semantic |
@@ -642,6 +629,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080726E0` | `0x080726E0` | matched | 100.0% | 52/52 | semantic |
 | `sub_080302A8` | `0x080302A8` | matched | 100.0% | 54/54 | semantic |
 | `sub_08033F48` | `0x08033F48` | matched | 100.0% | 54/54 | semantic |
+| `sub_08043B58` | `0x08043B58` | matched | 100.0% | 54/54 | semantic |
 | `sub_08062758` | `0x08062758` | matched | 100.0% | 54/54 | semantic |
 | `sub_0802B95C` | `0x0802B95C` | matched | 100.0% | 56/56 | semantic |
 | `sub_0802E1B4` | `0x0802E1B4` | matched | 100.0% | 56/56 | semantic |
@@ -662,6 +650,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806F1A0` | `0x0806F1A0` | matched | 100.0% | 58/58 | semantic |
 | `sub_080726A4` | `0x080726A4` | matched | 100.0% | 58/58 | semantic |
 | `sub_08034810` | `0x08034810` | matched | 100.0% | 60/60 | semantic |
+| `sub_0804495C` | `0x0804495C` | matched | 100.0% | 60/60 | semantic |
 | `sub_080603A4` | `0x080603A4` | matched | 100.0% | 60/60 | semantic |
 | `sub_08060468` | `0x08060468` | matched | 100.0% | 60/60 | semantic |
 | `sub_080617C4` | `0x080617C4` | matched | 100.0% | 60/60 | semantic |
@@ -727,7 +716,9 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0807179C` | `0x0807179C` | matched | 100.0% | 82/82 | semantic |
 | `sub_08034894` | `0x08034894` | matched | 100.0% | 84/84 | semantic |
 | `sub_08041F88` | `0x08041F88` | matched | 100.0% | 84/84 | semantic |
+| `sub_08052934` | `0x08052934` | matched | 100.0% | 84/84 | semantic |
 | `sub_0805D99C` | `0x0805D99C` | matched | 100.0% | 84/84 | semantic |
+| `sub_08071B4C` | `0x08071B4C` | matched | 100.0% | 84/84 | semantic |
 | `sub_08038D10` | `0x08038D10` | matched | 100.0% | 86/86 | semantic |
 | `sub_0803D4C4` | `0x0803D4C4` | matched | 100.0% | 88/88 | semantic |
 | `sub_080424E8` | `0x080424E8` | matched | 100.0% | 88/88 | semantic |
@@ -741,6 +732,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08041DB4` | `0x08041DB4` | matched | 100.0% | 94/94 | semantic |
 | `sub_0802C6AC` | `0x0802C6AC` | matched | 100.0% | 96/96 | semantic |
 | `sub_080435D8` | `0x080435D8` | matched | 100.0% | 96/96 | semantic |
+| `sub_0805264C` | `0x0805264C` | matched | 100.0% | 96/96 | semantic |
 | `sub_08061BE8` | `0x08061BE8` | matched | 100.0% | 96/96 | semantic |
 | `sub_08071E84` | `0x08071E84` | matched | 100.0% | 96/96 | semantic |
 | `sub_08071EE4` | `0x08071EE4` | matched | 100.0% | 96/96 | semantic |
@@ -763,10 +755,12 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08038314` | `0x08038314` | matched | 100.0% | 108/108 | semantic |
 | `sub_08042718` | `0x08042718` | matched | 100.0% | 108/108 | semantic |
 | `sub_0804A4E0` | `0x0804A4E0` | matched | 100.0% | 108/108 | semantic |
+| `sub_08061E8C` | `0x08061E8C` | matched | 100.0% | 108/108 | semantic |
 | `sub_08068798` | `0x08068798` | matched | 100.0% | 110/110 | semantic |
 | `sub_08036264` | `0x08036264` | matched | 100.0% | 112/112 | semantic |
 | `sub_0803E934` | `0x0803E934` | matched | 100.0% | 112/112 | semantic |
 | `sub_08059C98` | `0x08059C98` | matched | 100.0% | 112/112 | semantic |
+| `sub_080604C8` | `0x080604C8` | matched | 100.0% | 112/112 | semantic |
 | `sub_080392D0` | `0x080392D0` | matched | 100.0% | 116/116 | semantic |
 | `sub_08042630` | `0x08042630` | matched | 100.0% | 116/116 | semantic |
 | `sub_080426A4` | `0x080426A4` | matched | 100.0% | 116/116 | semantic |
@@ -779,6 +773,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08068988` | `0x08068988` | matched | 100.0% | 126/126 | semantic |
 | `sub_080462D4` | `0x080462D4` | matched | 100.0% | 130/130 | semantic |
 | `sub_0803531C` | `0x0803531C` | matched | 100.0% | 132/132 | semantic |
+| `sub_080735DC` | `0x080735DC` | matched | 100.0% | 132/132 | semantic |
 | `sub_0806C704` | `0x0806C704` | matched | 100.0% | 136/136 | semantic |
 | `sub_0804245C` | `0x0804245C` | matched | 100.0% | 140/140 | semantic |
 | `sub_08034618` | `0x08034618` | matched | 100.0% | 142/142 | semantic |
@@ -805,6 +800,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080632F8` | `0x080632F8` | matched | 100.0% | 184/184 | semantic |
 | `sub_08052F0C` | `0x08052F0C` | matched | 100.0% | 188/188 | semantic |
 | `sub_0806225C` | `0x0806225C` | matched | 100.0% | 188/188 | semantic |
+| `sub_08051444` | `0x08051444` | matched | 100.0% | 192/192 | semantic |
 | `sub_080353A0` | `0x080353A0` | matched | 100.0% | 200/200 | semantic |
 | `sub_0802D8DC` | `0x0802D8DC` | matched | 100.0% | 204/204 | semantic |
 | `sub_0803B078` | `0x0803B078` | matched | 100.0% | 204/204 | semantic |

@@ -1,42 +1,38 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08071b4c
 void sub_08071B4C(void)
 {
-    u32 r0;
-    u32 r1;
-    u32 r2;
-    u32 r3;
-    u32 r4;
+    u32 w = (u32)gData_04000084;
+    u32 z = 0;
+    u32 keep;
+    u32 n;
+    u32 scaled;
+    u32 *sym;
+    void *ptr;
 
-    r0 = 0x04000084;
-    r1 = 0;
-    *(u16 *)r0 = (u16)r1;
-    r0 -= 2;
-    *(u16 *)r0 = (u16)r1;
-    r0 += 0x42;
-    r4 = 0;
-    *(u32 *)r0 = r4;
-    r0 += 0x0C;
-    *(u32 *)r0 = r4;
-    r0 += 0x34;
-    *(u32 *)r0 = r4;
-    r0 -= 4;
-    *(u32 *)r0 = r4;
-
-    r3 = 0x080BB8BC;
-    r0 = gUnk_030040DC;
-    r1 = *(u32 *)r0;
-r0 = gUnk_0300410C;
-r2 = *(u16 *)r0;
-    r0 = r2 << 1;
-    r0 += 0x20;
-    r2 = r2 + r0;
-    r3 = *(u32 *)r3;
-    r0 = 0;
-    _08073C4C((void *)r0, (void *)r1, r2, (void *)r3);
-
-    r0 = gUnk_030000C0;
-    *(s32 *)r0 = r4;
+    *(vu16 *)w = z;
+    w -= 2;
+    *(vu16 *)w = z;
+    w += 0x42;
+    z = w;
+    keep = 0;
+    *(vu32 *)w = keep;
+    w += 0x0C;
+    *(vu32 *)w = keep;
+    w += 0x34;
+    *(vu32 *)w = keep;
+    w -= 4;
+    *(vu32 *)w = keep;
+    sym = gData_080BB8BC;
+    ptr = (void *)gData_030040DC[0];
+    n = gData_0300410C[0];
+    scaled = n << 1;
+    scaled += 0x20;
+    n += scaled;
+    _08073C4C(0, ptr, n, (void *)*sym);
+    gData_030000C0[0] = keep;
+    (void)z;
 }
-

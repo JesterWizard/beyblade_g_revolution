@@ -1,74 +1,34 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080735dc
-__attribute__((naked))
-void sub_080735DC(void)
-{
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "add sp, #-0x018\n"
-        "adds r4, r0, #0x0\n"
-        "adds r6, r1, #0x0\n"
-        "adds r7, r2, #0x0\n"
-        "ldr r1, _08073614 @ =0x083D26F0\n"
-        "mov r0, sp\n"
-        "movs r2, #0x16\n"
-        "bl _08075A58\n"
-        "movs r5, #0x14\n"
-        "movs r0, #0x01\n"
-        "mov r8, r0\n"
-        "cmp r4, #0x00\n"
-        "bge _08073604\n"
-        "negs r4, r4\n"
-        "movs r1, #0x00\n"
-        "mov r8, r1\n"
-        "_08073604:\n"
-        "cmp r4, #0x00\n"
-        "bne _08073642\n"
-        "ldr r0, _08073618 @ =0x083D2708\n"
-        "adds r1, r6, #0x0\n"
-        "adds r2, r7, #0x0\n"
-        "bl sub_08073218\n"
-        "b _08073654\n"
-        "_08073614: .4byte 0x083D26F0\n"
-        "_08073618: .4byte 0x083D2708\n"
-        "_0807361C:\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x0A\n"
-        "bl sub_080674A4\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "adds r2, r5, #0x0\n"
-        "subs r1, r2, #0x1\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r5, r1, #0x18\n"
-        "mov r3, sp\n"
-        "adds r1, r3, r2\n"
-        "adds r0, #0x30\n"
-        "strb r0, [r1, #0x00]\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x0A\n"
-        "bl sub_080674A0\n"
-        "adds r4, r0, #0x0\n"
-        "_08073642:\n"
-        "cmp r4, #0x00\n"
-        "bgt _0807361C\n"
-        "mov r1, sp\n"
-        "adds r0, r1, r5\n"
-        "add r0, r8\n"
-        "adds r1, r6, #0x0\n"
-        "adds r2, r7, #0x0\n"
-        "bl sub_08073218\n"
-        "_08073654:\n"
-        "add sp, #0x018\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
-}
+s32 sub_08073218(u8 *src, u8 *dst, u32 n);
 
+void sub_080735DC(s32 num, void *dst, u32 n)
+{
+    u8 buf[0x16];
+    u32 sign;
+    u8 pos;
+
+    _08075A58(buf, gData_083D26F0, 0x16);
+    pos = 0x14;
+    sign = 1;
+    if (num < 0) {
+        num = -num;
+        sign = 0;
+    }
+    if (num == 0)
+        sub_08073218(gData_083D2708, dst, n);
+    else {
+        while (num > 0) {
+            u8 digit = sub_080674A4(num, 10);
+            u8 slot = pos;
+
+            pos = (u8)(pos - 1);
+            buf[slot] = digit + 0x30;
+            num = sub_080674A0(num, 10);
+        }
+        sub_08073218(buf + pos + sign, dst, n);
+    }
+}

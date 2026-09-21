@@ -8,18 +8,32 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **384/633 (60.7%)** |
-| **Decompiled C (bytes)** | **25,338/90,272 (28.1%)** |
+| **Decompiled C (functions)** | **394/633 (62.2%)** |
+| **Decompiled C (bytes)** | **26,266/90,272 (29.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 249/633 (39.3%) |
+| Readable Thumb | 239/633 (37.8%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 73/160 (45.6% fn, 18.7% bytes) |
+| Battle semantic C | 77/160 (48.1% fn, 19.7% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — ten semantic matches (384→394/633)
+Small call-sequence and register-scheduling functions. `make compare` after the batch.
+
+- `sub_080674A4` — SWI 6 remainder (`asm("swi 6")`, return the second result).
+- `sub_080604C8` (`old_agbcc`) — pack window bytes. The last halfword store stays `strh [rN]` because an if/else join keeps the pointer increment live.
+- `sub_08043B58` (`old_agbcc`) — table walk. The key is `gMainWorkPtr->unk1690->unk00`, and `*walk++` is the `ldmia`.
+- `sub_08051444` — battle gfx setup. Pointer locals are assigned after the first two calls so the loads are not hoisted.
+- `sub_08052934` — gfx row. `gData_080995AC + 0xC` stays a separate `adds #0xC`, and `&unk1818` is taken before the table load.
+- `sub_0805264C` — menu row. Symbol load before `idx << 4`; sign-extended `unk2D5` is read before the highlight constant so that constant reuses the object's register.
+- `sub_08061E8C` — fill `Unk61E8C`. `u16` tail arguments are real parameters (in-place `lsls`/`lsrs`), and `0x200` is `0x80 << 2`.
+- `sub_080735DC` — signed decimal text. `pos` and the sign flag are set after the template copy.
+- `sub_0804495C` (`old_agbcc`) — copy 32 palette halfwords. The table symbol is loaded before `unk181F`.
+- `sub_08071B4C` — sound register reset. A dead `z = w` drops the halfword zero from r1 so the word stores use the callee-saved zero. `gData_0300410C` is its own symbol (`0x030040DC + 0x30` would fold).
 
 ### 2026-09-21 — packet `sub_0803715C`, then smallest non-WIP `sub_08067F3C` (no new match)
 `agent_packet.py --next` returned `sub_0803715C` (444 B, high register pressure, m2c failed). The asm is a 20..100 score folded into `MainWork.unk0874` and an `Unk002A0` slot. Types added (`struct Unk3715C`, `struct Unk3715CTail`, `Unk002A0Record.unk24`) and `s32 sub_08042C3C(s32)` declared. The transcription scores 33/444 and is 20 bytes short: `a` stays in r4 instead of `mov r8, r0`. Parked. `make compare` OK — the linked file is still the Thumb wrapper.

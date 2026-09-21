@@ -1,62 +1,29 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08061e8c
-__attribute__((naked))
-void sub_08061E8C(void)
+void sub_08061E8C(struct Unk61E8C *obj, void *b, struct Unk61E8CSrc *src, u16 c, u16 d)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r7, r0, #0x0\n"
-        "mov r8, r1\n"
-        "adds r6, r2, #0x0\n"
-        "adds r4, r3, #0x0\n"
-        "ldr r5, [sp, #0x01C]\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "lsls r5, r5, #0x10\n"
-        "lsrs r5, r5, #0x10\n"
-        "ldr r0, _08061EF4 @ =0x080BB8BC\n"
-        "mov r9, r0\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "adds r1, r7, #0x0\n"
-        "movs r2, #0x28\n"
-        "bl _08073C4C\n"
-        "mov r0, r8\n"
-        "str r0, [r7, #0x04]\n"
-        "str r6, [r7, #0x08]\n"
-        "ldrb r0, [r6, #0x04]\n"
-        "strh r0, [r7, #0x20]\n"
-        "ldrb r0, [r6, #0x05]\n"
-        "strh r0, [r7, #0x22]\n"
-        "strh r4, [r7, #0x1C]\n"
-        "strh r5, [r7, #0x1E]\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x02\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_0806A3A4\n"
-        "str r0, [r7, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08061EE8\n"
-        "ldr r1, [r0, #0x00]\n"
-        "str r1, [r7, #0x0C]\n"
-        "mov r0, r9\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "adds r2, r4, #0x0\n"
-        "bl _08073C4C\n"
-        "_08061EE8:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08061EF4: .4byte 0x080BB8BC\n"
-    );
-}
+    u32 *sym = gData_080BB8BC;
+    u32 size;
+    struct Unk61E8CAlloc *alloc;
+    void *inner;
 
+    _08073C4C(0, obj, 0x28, (void *)*sym);
+    obj->unk04 = b;
+    obj->unk08 = src;
+    obj->unk20 = src->unk04;
+    obj->unk22 = src->unk05;
+    obj->unk1C = c;
+    obj->unk1E = d;
+    size = 0x80;
+    size <<= 2;
+    alloc = sub_0806A3A4(size);
+    obj->unk00 = alloc;
+    if (alloc != 0) {
+        inner = alloc->unk00;
+        obj->unk0C = inner;
+        _08073C4C(0, inner, size, (void *)*sym);
+    }
+}

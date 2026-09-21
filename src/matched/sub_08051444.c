@@ -1,8 +1,28 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08051444
-__attribute__((naked))
-void sub_08051444(void)
+
+void sub_08051578(u32 a, s32 b, u32 c);
+void sub_08051504(void *a);
+
+void sub_08051444(void *a, void *b)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nmov r6, r9\nmov r5, r8\npush {r5, r6}\nadds r6, r0, #0x0\nbl sub_080674B4\nmovs r0, #0x00\nmovs r1, #0x00\nbl sub_080615EC\nldr r0, _080514E4 @ =0x080D79CC\nmov r8, r0\nldr r0, _080514E8 @ =0x080B7429\nmov r9, r0\nmov r0, r8\nmov r1, r9\nbl sub_080617C4\nldr r4, _080514EC @ =0x083A858C\nbl sub_08061784\nadds r1, r0, #0x0\nlsls r1, r1, #0x10\nlsrs r1, r1, #0x11\nadds r0, r4, #0x0\nmovs r2, #0x00\nbl sub_0806171C\nldr r1, _080514F0 @ =0x080969CC\nldr r5, _080514F4 @ =0x03000198\nldr r0, [r5, #0x00]\nldr r4, _080514F8 @ =0x00001818\nadds r0, r0, r4\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nldr r2, [r0, #0x00]\nadds r0, r6, #0x0\nmovs r1, #0x00\nbl sub_08051578\nldr r1, _080514FC @ =0x080969E0\nldr r0, [r5, #0x00]\nadds r0, r0, r4\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nldr r2, [r0, #0x00]\nadds r0, r6, #0x0\nmovs r1, #0x01\nbl sub_08051578\nmov r0, r8\nmov r1, r9\nbl sub_080617C4\nmovs r0, #0x00\nmovs r1, #0x28\nbl sub_080615EC\nldr r4, _08051500 @ =0x083A8598\nbl sub_08061784\nadds r1, r0, #0x0\nlsls r1, r1, #0x10\nlsrs r1, r1, #0x11\nadds r0, r4, #0x0\nmovs r2, #0x00\nbl sub_0806171C\nadds r0, r6, #0x0\nbl sub_08051504\npop {r3, r4}\nmov r8, r3\nmov r9, r4\npop {r4, r5, r6}\npop {r0}\nbx r0\n_080514E4: .4byte 0x080D79CC\n_080514E8: .4byte 0x080B7429\n_080514EC: .4byte 0x083A858C\n_080514F0: .4byte 0x080969CC\n_080514F4: .4byte 0x03000198\n_080514F8: .4byte 0x00001818\n_080514FC: .4byte 0x080969E0\n_08051500: .4byte 0x083A8598");
+    struct Unk617C4 *gfx;
+    u32 pal;
+
+    sub_080674B4();
+    sub_080615EC(0, 0);
+    gfx = (struct Unk617C4 *)gData_080D79CC;
+    pal = (u32)gData_080B7429;
+    sub_080617C4(gfx, pal);
+    sub_0806171C((void *)gData_083A858C, sub_08061784() >> 1, 0);
+    sub_08051578((u32)a, 0, gData_080969CC[gMainWorkPtr->unk1818]);
+    sub_08051578((u32)a, 1, gData_080969E0[gMainWorkPtr->unk1818]);
+    sub_080617C4(gfx, pal);
+    sub_080615EC(0, 0x28);
+    sub_0806171C((void *)gData_083A8598, sub_08061784() >> 1, 0);
+    sub_08051504(a);
 }
+

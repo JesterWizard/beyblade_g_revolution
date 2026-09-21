@@ -1,56 +1,29 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0805264c
-__attribute__((naked))
-void sub_0805264C(void)
+void sub_0805264C(struct Unk2F520 *a, u32 idx)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "ldr r0, _080526A4 @ =0x080995AC\n"
-        "lsls r1, r4, #0x04\n"
-        "adds r0, #0x08\n"
-        "adds r1, r1, r0\n"
-        "ldr r2, [r1, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08052668\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "bl _08073C48\n"
-        "_08052668:\n"
-        "ldr r1, _080526A8 @ =0x000002D5\n"
-        "adds r0, r5, r1\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "movs r5, #0x0F\n"
-        "cmp r4, r0\n"
-        "bne _0805267A\n"
-        "movs r5, #0x0E\n"
-        "_0805267A:\n"
-        "lsls r4, r4, #0x01\n"
-        "adds r0, r4, #0x5\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "adds r1, r5, #0x0\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x19\n"
-        "bl sub_08061D68\n"
-        "adds r4, #0x06\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "adds r0, r4, #0x0\n"
-        "adds r1, r5, #0x0\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x19\n"
-        "bl sub_08061D68\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_080526A4: .4byte 0x080995AC\n"
-        "_080526A8: .4byte 0x000002D5\n"
-    );
-}
+    u32 off;
+    u32 scaled;
+    void *fn;
+    s32 field;
+    u32 row;
+    u16 n;
 
+    off = (u32)gData_080995AC;
+    scaled = idx << 4;
+    off += 8;
+    fn = *(void **)(off + scaled);
+    if (fn != 0)
+        _08073C48(a, (void *)idx, fn);
+    field = a->unk2D5;
+    row = 0x0F;
+    if (idx == (u32)field)
+        row = 0x0E;
+    n = (idx << 1) + 5;
+    sub_08061D68(n, row, 4, 0x19);
+    n = (idx << 1) + 6;
+    sub_08061D68(n, row, 4, 0x19);
+}

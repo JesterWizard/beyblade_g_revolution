@@ -1,28 +1,22 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08052934
-#include "global.h"
-
-void sub_08052934(s32 arg0)
+void sub_08052934(u32 a)
 {
-    u32 idx;
-    u32 r0;
-    u32 r1;
+    u32 idx = a << 24;
+    u32 off;
+    u8 *id;
+    void **table;
 
-    idx = arg0;
-    idx = (u8)idx << 4;
+    idx >>= 20;
     sub_080615EC(0, idx + 8);
-    sub_080617C4((struct Unk617C4 *)0x082BCD00, 0x080B738E);
-    r0 = 0x080995AC;
-r0 += 0xC;
-    idx += r0;
-    r0 = (u32)gMainWorkPtr;
-r1 = 0x1818;
-    r0 += r1;
-    r1 = *(u32 *)idx;
-    r0 = *(u8 *)r0;
-    r0 <<= 2;
-    r0 += r1;
-    sub_0806171C(*(void **)r0, 0x24, 2);
+    sub_080617C4((struct Unk617C4 *)gData_082BCD00, (u32)gData_080B738E);
+    off = (u32)gData_080995AC;
+    off += 0xC;
+    idx += off;
+    id = &gMainWorkPtr->unk1818;
+    table = *(void ***)idx;
+    sub_0806171C(table[*id], 0x24, 2);
 }
-

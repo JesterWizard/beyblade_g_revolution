@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-21T19:12:34Z",
+  "generated": "2026-09-21T20:31:11Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 249,
-    "semantic_done": 384,
-    "readable_asm": 249,
+    "pending": 239,
+    "semantic_done": 394,
+    "readable_asm": 239,
     "opcode": 0,
-    "battle_pending": 84,
-    "battle_semantic": 73,
+    "battle_pending": 80,
+    "battle_semantic": 77,
     "blocked": 20,
-    "wip": 215
+    "wip": 217
   },
   "pinned": [],
   "wip": [
@@ -932,8 +932,8 @@
     {
       "name": "sub_0805264C",
       "addr": "0x0805264C",
-      "kind": "asm",
-      "bytes": 96,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0805264C.c",
       "notes": "src/wip/sub_0805264C.md",
       "status": "Two semantic attempts after correcting the existing prototype: struct-table lookup 29/96 (same size), then split ROM-table lookup with r5 pointer pin 9/96 (92B). Callback semantics, signed selector, and two position draws are mapped; retail requires the exact split 0x080995AC+8 table address and r5 data/r4 index lifetime without the extra saved register.",
@@ -1944,8 +1944,8 @@
     {
       "name": "sub_08052934",
       "addr": "0x08052934",
-      "kind": "asm",
-      "bytes": 84,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08052934.c",
       "notes": "src/wip/sub_08052934.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -2043,8 +2043,8 @@
     {
       "name": "sub_080674A4",
       "addr": "0x080674A4",
-      "kind": "asm",
-      "bytes": 6,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_080674A4.c",
       "notes": "src/wip/sub_080674A4.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -2197,8 +2197,8 @@
     {
       "name": "sub_08071B4C",
       "addr": "0x08071B4C",
-      "kind": "asm",
-      "bytes": 84,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08071B4C.c",
       "notes": "src/wip/sub_08071B4C.md",
       "status": "permuter 300 s + 900 s, no score 0 (335 \u2192 5); 73/84",
@@ -2230,8 +2230,8 @@
     {
       "name": "sub_08043B58",
       "addr": "0x08043B58",
-      "kind": "asm",
-      "bytes": 54,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08043B58.c",
       "notes": "src/wip/sub_08043B58.md",
       "status": "permuter 300 s + 900 s, no score 0 (45 \u2192 20); 47/54 same-size",
@@ -2252,8 +2252,8 @@
     {
       "name": "sub_0804495C",
       "addr": "0x0804495C",
-      "kind": "asm",
-      "bytes": 60,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0804495C.c",
       "notes": "src/wip/sub_0804495C.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -2380,6 +2380,28 @@
       "status": "11/36; rotated bottom test + separate entry guard, agbcc merges them",
       "next": "permuter",
       "score": "11/36"
+    },
+    {
+      "name": "sub_0803715C",
+      "addr": "0x0803715C",
+      "kind": "asm",
+      "bytes": 444,
+      "seed": "src/wip/sub_0803715C.c",
+      "notes": "src/wip/sub_0803715C.md",
+      "status": "33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 instead of r8 and about 20 bytes of reloads are folded",
+      "next": "do not hand-chase registers; only revisit if a same-size seed appears, then permuter",
+      "score": "33/444"
+    },
+    {
+      "name": "sub_08067F3C",
+      "addr": "0x08067F3C",
+      "kind": "asm",
+      "bytes": 92,
+      "seed": "src/wip/sub_08067F3C.c",
+      "notes": "src/wip/sub_08067F3C.md",
+      "status": "58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs",
+      "next": "s32 counter and mask-first flag both scored worse; permuter only if a same-size seed appears",
+      "score": "58/92"
     }
   ],
   "recommended": [
@@ -2464,20 +2486,6 @@
       "kind": "asm",
       "bytes": 160,
       "score": 73,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08051444",
-      "addr": "0x08051444",
-      "kind": "asm",
-      "bytes": 192,
-      "score": 104,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -2627,20 +2635,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803715C",
-      "addr": "0x0803715C",
-      "kind": "asm",
-      "bytes": 444,
-      "score": 210,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08056BA4",
       "addr": "0x08056BA4",
       "kind": "asm",
@@ -2781,30 +2775,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08067F3C",
-      "addr": "0x08067F3C",
-      "kind": "asm",
-      "bytes": 92,
-      "score": 50,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08061E8C",
-      "addr": "0x08061E8C",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 58,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08073910",
       "addr": "0x08073910",
       "kind": "asm",
@@ -2825,18 +2795,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080735DC",
-      "addr": "0x080735DC",
-      "kind": "asm",
-      "bytes": 132,
-      "score": 72,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
@@ -2918,6 +2876,66 @@
       "kind": "asm",
       "bytes": 168,
       "score": 84,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_080419B0",
+      "addr": "0x080419B0",
+      "kind": "asm",
+      "bytes": 172,
+      "score": 80,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08068180",
+      "addr": "0x08068180",
+      "kind": "asm",
+      "bytes": 174,
+      "score": 82,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08070D44",
+      "addr": "0x08070D44",
+      "kind": "asm",
+      "bytes": 176,
+      "score": 94,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_080416C4",
+      "addr": "0x080416C4",
+      "kind": "asm",
+      "bytes": 176,
+      "score": 100,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806E420",
+      "addr": "0x0806E420",
+      "kind": "asm",
+      "bytes": 178,
+      "score": 91,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
@@ -3021,8 +3039,8 @@
       "name": "sub_080604C8",
       "addr": "0x080604C8",
       "reason": "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A \u2014 logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter",
-      "kind": "asm",
-      "bytes": 112
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_08062728",
@@ -3158,20 +3176,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08051444",
-      "addr": "0x08051444",
-      "kind": "asm",
-      "bytes": 192,
-      "score": 104,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08063D68",
       "addr": "0x08063D68",
       "kind": "asm",
@@ -3306,20 +3310,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gBtlInputMask"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803715C",
-      "addr": "0x0803715C",
-      "kind": "asm",
-      "bytes": 444,
-      "score": 210,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
       ],
       "has_pool": true,
       "blocked": false,
@@ -3466,30 +3456,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08067F3C",
-      "addr": "0x08067F3C",
-      "kind": "asm",
-      "bytes": 92,
-      "score": 50,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08061E8C",
-      "addr": "0x08061E8C",
-      "kind": "asm",
-      "bytes": 108,
-      "score": 58,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08073910",
       "addr": "0x08073910",
       "kind": "asm",
@@ -3510,18 +3476,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080735DC",
-      "addr": "0x080735DC",
-      "kind": "asm",
-      "bytes": 132,
-      "score": 72,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },
