@@ -238,7 +238,7 @@ void sub_080435D8(void);
 void sub_080433F4(void);
 void sub_08060428(void);
 void sub_08043C70(void *a, void *b, u32 c, u32 d, u32 e);
-void sub_0806C78C(s32 a, void *b, s32 c);
+s32 sub_0806C78C(void *a, void *b, s32 c);
 u8 sub_08060394(void);
 void sub_080602C0(u8 a);
 void sub_08061D00(u16 a, u32 b);

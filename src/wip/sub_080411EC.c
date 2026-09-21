@@ -37,7 +37,7 @@ void sub_080411EC(void *arg)
         keys = *(vu16 *)gBtlKeysHeld;
         if ((keys & 1) != 0 && a->unk26C != 0)
         {
-            _08073C48(a, a->unk26C);
+            _08073C48(a, a->unk26C, 0);
             return;
         }
         if ((keys & 2) != 0 && a->unk270 != 0)
@@ -49,27 +49,27 @@ void sub_080411EC(void *arg)
         keys = *(vu16 *)gBtlKeysHeld;
         if ((keys & 0x20) != 0 && a->unk25C != 0)
         {
-            _08073C48(a, a->unk25C);
+            _08073C48(a, a->unk25C, 0);
             return;
         }
         if ((keys & 0x10) != 0 && a->unk260 != 0)
         {
-            _08073C48(a, a->unk260);
+            _08073C48(a, a->unk260, 0);
             return;
         }
         if ((keys & 0x40) != 0 && a->unk264 != 0)
         {
-            _08073C48(a, a->unk264);
+            _08073C48(a, a->unk264, 0);
             return;
         }
         if ((keys & 0x80) != 0 && a->unk268 != 0)
         {
-            _08073C48(a, a->unk268);
+            _08073C48(a, a->unk268, 0);
             return;
         }
         if ((keys & 1) != 0 && a->unk26C != 0)
         {
-            _08073C48(a, a->unk26C);
+            _08073C48(a, a->unk26C, 0);
             return;
         }
         if ((keys & 2) != 0 && a->unk270 != 0)

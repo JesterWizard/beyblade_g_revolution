@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08069b78
-void sub_08069B78(u8 a, u8 b, u8 c, u8 d)
+void sub_08069B78(u32 a, u32 b, u32 c, u32 d)
 {
     u8 *p;
 
