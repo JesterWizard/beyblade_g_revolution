@@ -3,24 +3,26 @@
 | | |
 |--|--|
 | ROM | `0x0803DDB0` |
-| Retail | |
-| `src/matched` | readable Thumb |
+| Retail | 40 B: identical structure to `sub_0803DDD8` with the pointer table at `0x0807AEEC` |
+| `src/matched` | `src/matched/sub_0803DDB0.c` — **MATCHED** (old_agbcc) |
 | Seed | `src/wip/sub_0803DDB0.c` |
-| Last `match_function.py` | 11/40
-| Sibling / types | |
+| Last `match_function.py` | 40/40 (`old_agbcc`) |
+| Sibling / types | Twin of `sub_0803DDD8` |
 
 ## Role
 
-(one sentence)
+Same slot/offset lookup as `sub_0803DDD8`, against the second pointer table.
 
 ## Process
 
-- 2026-09-20 — parked. Status: matched only with GCC asm labels; stripped DIFF
+- 2026-09-21 — **matched** by cloning the `sub_0803DDD8` shape and swapping the table
+  symbol. Cracked one, the twin followed with no further work — exactly as the sweep
+  predicted for the 85% pair.
 
 ## Current state
 
-matched only with GCC asm labels; stripped DIFF
+Matched and integrated; `make compare` OK.
 
 ## Next
 
-rewrite without register asm / empty asm(); permuter if same-size
+Done.

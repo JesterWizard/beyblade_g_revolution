@@ -21,6 +21,52 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-21 — sweep-ranked near-miss batch: table-lookup family + sum-order fix (+4, 374→378/633)
+Worked the top of a fresh `sweep_seeds.py` ranking (155 scored seeds). Four matches,
+all needing `/* match-compiler: old_agbcc */`, all landed via `match_function.py` +
+`integrate_c.py`; `make compare` OK after each sub-batch.
+
+- `sub_0803DDD8` / `sub_0803DDB0` (40B each, were 34/40) — the 85% twins from the
+  ranking. Winning shape: `u8 *tbl = <symbol>;` as a **local**, then
+  `u32 *row = (u32 *)(tbl + (a - 1) * 4);` and the dereference left **inline** as
+  `*row`. The local is what keeps `subs r0,#1` / `lsls r2,r0,#2` unfolded instead of
+  the `lsls #4` fold; the inline deref is what makes old_agbcc hoist `ldr r1,=tbl`
+  above the decrement. Cracked one, the twin followed with a table swap.
+- `sub_0803DD88` (40B, was 30/40) — same family, 40-byte stride, value return:
+  `off = gMainWorkPtr->unk1818 * 4 + a * 40;` must be a **separate** local
+  (`ldrb r1,[r1]` + `lsls r2,r1,#2` index handling). This is the clean replacement
+  for the parked `register asm` version.
+- `sub_08061800` (76B, was 71/76) — `off = arg0 * stride + 0x06000000;` as its own
+  local. Accumulation order is the whole delta: retail forms `arg0*stride + 0x06000000`
+  first and adds `lo` last; left-associating in one expression accumulates
+  `lo + arg0*stride` first.
+
+Negative results banked (each with a new `src/wip/<fn>.md` write-up and a
+`docs/decomp-queue.toml` status, so they are not re-attempted):
+
+- `sub_08033158` — 45/46. The permuter's `if (b || sign) r = b; else r = b;` shape
+  settles the tail compare on `b`; the last 2 bytes are **jump threading**: retail
+  redirects the loop-exit `beq` past the dead `r = b` copy straight to `movs r2,#1`,
+  agbcc targets the block entry. 8 tail rewrites (plain form, `!b`, if/else, `for`,
+  ternary, braces) floor at 44–45/46.
+- `sub_08073988` — 94/96, unchanged after 12 more `default_char` shapes; `old_agbcc`
+  is worse (90/96). The pool load destination (retail r0, agbcc r2) is an allocator
+  heuristic. Confirms the note already in this log.
+- `sub_0802C2B0` — 92/100 after 9 more variants over the tail sum order and prologue
+  pointer plumbing. Two 2-byte deltas remain: `mov r12,r1` scheduling and an
+  `adds r1,r0,r1` / `adds r1,r1,r0` Rn/Rm swap that GCC canonicalises, so writing
+  `off + base` does not flip it.
+- `sub_08069F00` — 11/24. 13 shapes (2- and 3-deep copy chains, `u32` copy, operator
+  variants on the sign test, split assignment) are **all byte-identical**: agbcc's
+  copy coalescing always removes retail's `adds r1,r0,#0`. Reinforces the
+  un-coalesced-load finding already documented above.
+
+`script_first.py` permuter runs (120s × 8 jobs each) over the same queue: `sub_0803DCFC`
+best 30/48, `sub_08061C48` best 10/56, `sub_08061DC0` best 40/72 — no score 0, so each
+is parked rather than parked-and-retried. `sub_08043B90` went *backwards* under the
+randomizing permuter (67/76 seed → best 200); its queue entry now says not to re-run a
+randomizing permuter on that seed.
+
 ### 2026-09-21 — `data_symbols.s` addressing sweep (+3, 371→374/633)
 The breakthrough this batch: **when retail's two pool words are 0x20 apart, plain
 literals make agbcc collapse the second into `subs r0, #0x20`.** Switching the address to
