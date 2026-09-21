@@ -1147,6 +1147,14 @@ struct Unk33F30Inner /* >= 0x34 */
 };
 
 /* Signed store + flag. sub_08033F30, sub_08033F48, sub_08034360, sub_0803403C. */
+/* +0x1C is stored as a *byte* flag by sub_08033F30 (`movs r0,#1; strb r0,[r2,#0x1C]`)
+ * and read as an inner pointer by sub_08033D90, so it is a union overlay. */
+union Unk33F30Unk1C
+{
+    struct Unk33F30Inner *p;
+    u8 flag;
+};
+
 struct Unk33F30 /* >= 0x68 */
 {
     /* 00 */ u32 unk00;
@@ -1159,7 +1167,7 @@ struct Unk33F30 /* >= 0x68 */
     /* 10 */ u8 filler_10[4];
     /* 14 */ s32 unk14;
     /* 18 */ u32 unk18;
-    /* 1c */ struct Unk33F30Inner *unk1C;
+    /* 1c */ union Unk33F30Unk1C unk1C;
     /* 20 */ u32 unk20;
     /* 24 */ u8 unk24;
     /* 25 */ u8 unk25;
