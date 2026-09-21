@@ -1800,3 +1800,19 @@ notes = "src/wip/sub_080739E8.md"
 status = "11/36; rotated bottom test + separate entry guard, agbcc merges them"
 next = "permuter"
 score = "11/36"
+
+[[wip]]
+name = "sub_0803715C"
+seed = "src/wip/sub_0803715C.c"
+notes = "src/wip/sub_0803715C.md"
+status = "33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 instead of r8 and about 20 bytes of reloads are folded"
+next = "do not hand-chase registers; only revisit if a same-size seed appears, then permuter"
+score = "33/444"
+
+[[wip]]
+name = "sub_08067F3C"
+seed = "src/wip/sub_08067F3C.c"
+notes = "src/wip/sub_08067F3C.md"
+status = "58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs"
+next = "s32 counter and mask-first flag both scored worse; permuter only if a same-size seed appears"
+score = "58/92"

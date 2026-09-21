@@ -350,6 +350,21 @@ union Unk30D4CResource /* 0x6c */
 };
 
 /* IWRAM state at 0x030002A0. sub_08031204. */
+/* Counter slot pointed to by Unk002A0Record.unk24. sub_0803715C. */
+struct Unk3715C /* >= 0x05 */
+{
+    /* 00 */ s16 unk00;
+    /* 02 */ u8 filler_02[2];
+    /* 04 */ s8 unk04;
+};
+
+/* Object with a u16 counter at +0x26. Unk002A0Record.unk28. sub_0803715C. */
+struct Unk3715CTail /* >= 0x28 */
+{
+    /* 00 */ u8 filler_00[0x26];
+    /* 26 */ u16 unk26;
+};
+
 struct Unk002A0Record /* 0x2c */
 {
     /* 00 */ u32 unk00;
@@ -359,8 +374,9 @@ struct Unk002A0Record /* 0x2c */
     /* 10 */ u8 filler_10[8];
     /* 18 */ u32 unk18;
     /* 1c */ s8 unk1C; /* sub_08038F30 */
-    /* 1d */ u8 filler_1D[0x0B];
-    /* 28 */ void *unk28;
+    /* 1d */ u8 filler_1D[7];
+    /* 24 */ struct Unk3715C *unk24;
+    /* 28 */ struct Unk3715CTail *unk28;
 };
 
 struct Unk002A0 /* >= 0xb0 */

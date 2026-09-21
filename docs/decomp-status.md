@@ -21,6 +21,11 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-21 — packet `sub_0803715C`, then smallest non-WIP `sub_08067F3C` (no new match)
+`agent_packet.py --next` returned `sub_0803715C` (444 B, high register pressure, m2c failed). The asm is a 20..100 score folded into `MainWork.unk0874` and an `Unk002A0` slot. Types added (`struct Unk3715C`, `struct Unk3715CTail`, `Unk002A0Record.unk24`) and `s32 sub_08042C3C(s32)` declared. The transcription scores 33/444 and is 20 bytes short: `a` stays in r4 instead of `mov r8, r0`. Parked. `make compare` OK — the linked file is still the Thumb wrapper.
+
+`sub_08067F3C` (92 B) is the smallest remaining function that was not already a WIP seed. 58/92, 4 bytes over: the product is `muls r3, r2` instead of `muls r2, r3`, and the `u16` loop count is a `lsls`/`lsrs` pair instead of `subs r1, #1`. Parked.
+
 ### 2026-09-21 — two clone families (+4, 380→384/633)
 Both pairs `script_first` listed as remaining readable-Thumb clones.
 
