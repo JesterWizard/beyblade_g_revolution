@@ -222,17 +222,17 @@ score = "44/48"
 name = "sub_0803E374"
 seed = "src/wip/sub_0803E374.c"
 notes = "src/wip/sub_0803E374.md"
-status = "40/76 same-size DIFF; cloned signed table lookup matches size and most arithmetic, but agbcc still schedules the 0x0807BDB8 literal after the 0x1E index setup despite r0/r1 pins"
-next = "try a dependency-preserving table-base load before the first signed index (or reuse the successful 3E328 pattern with a forced r0 table local); the remaining table accesses are offset +1"
-score = "40/76"
+status = "matched (old_agbcc): byte 1 of the 4-byte rows, via struct Unk3E374Row. Discarded `v2 = table[index]` reads hoist each pool load before the index math"
+next = "done"
+score = "0/76"
 
 [[wip]]
 name = "sub_0803E3C0"
 seed = "src/wip/sub_0803E3C0.c"
 notes = "src/wip/sub_0803E3C0.md"
-status = "40/76 same-size DIFF; clone table offsets +2 are correct, but agbcc retains the same literal-load scheduling difference seen in 3E328/3E374"
-next = "solve the shared three-function table-load ordering pattern once, then apply the byte offset variant to this seed"
-score = "40/76"
+status = "matched (old_agbcc): byte 2 twin of sub_0803E374, same discarded-read hoist"
+next = "done"
+score = "0/76"
 
 [[wip]]
 name = "sub_08040088"

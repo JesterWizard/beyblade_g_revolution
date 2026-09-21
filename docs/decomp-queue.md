@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T18:49:23Z_
+_Updated: 2026-09-21T18:57:45Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 378 |
-| Still need semantic C | **255** |
-| Readable Thumb remaining | 255 |
+| Semantic C done | 380 |
+| Still need semantic C | **253** |
+| Readable Thumb remaining | 253 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 84 (73 already semantic) |
 | Blocked (documented) | 20 |
@@ -42,8 +42,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08033574` | 0 | 80/80 | `src/wip/sub_08033574.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape) | done |
 | `sub_08038580` | 92 | 24/92 | `src/wip/sub_08038580.c` | best 24/92 same-size DIFF; logic and size are correct, but baseline uses dst in r6, p in r2, and mask in r7 while retail uses dst r2, p r0, mask r6, and preserves original index in r7; direct all-register pinning worsened to 13/92 and 104B | try selective pins only: dst r2 and original index r7, leaving global pointer/mask allocation to agbcc; preserve the 92-byte baseline shape |
 | `sub_0803DCFC` | 48 | 44/48 | `src/wip/sub_0803DCFC.c` | 44/48 same-size seed (sweep_seeds); two permuter runs (120s x8 jobs, 300s x3 jobs) best 30, never 0. Delta is the error-path layout: retail keeps the error call block before the valid table path with a `bls` target shape | park: permuter saturated at 30/48. Revisit only with a hand-restructured error-path layout that keeps `index` and a separate `offset` |
-| `sub_0803E374` | 76 | 40/76 | `src/wip/sub_0803E374.c` | 40/76 same-size DIFF; cloned signed table lookup matches size and most arithmetic, but agbcc still schedules the 0x0807BDB8 literal after the 0x1E index setup despite r0/r1 pins | try a dependency-preserving table-base load before the first signed index (or reuse the successful 3E328 pattern with a forced r0 table local); the remaining table accesses are offset +1 |
-| `sub_0803E3C0` | 76 | 40/76 | `src/wip/sub_0803E3C0.c` | 40/76 same-size DIFF; clone table offsets +2 are correct, but agbcc retains the same literal-load scheduling difference seen in 3E328/3E374 | solve the shared three-function table-load ordering pattern once, then apply the byte offset variant to this seed |
+| `sub_0803E374` | 0 | 0/76 | `src/wip/sub_0803E374.c` | matched (old_agbcc): byte 1 of the 4-byte rows, via struct Unk3E374Row. Discarded `v2 = table[index]` reads hoist each pool load before the index math | done |
+| `sub_0803E3C0` | 0 | 0/76 | `src/wip/sub_0803E3C0.c` | matched (old_agbcc): byte 2 twin of sub_0803E374, same discarded-read hoist | done |
 | `sub_08040088` | 0 | 56/56 | `src/wip/sub_08040088.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape) | done |
 | `sub_08040EF4` | 88 | 34/88 | `src/wip/sub_08040EF4.c` | best 34/88 size-mismatch after raw offset and full register pins; baseline was 13/88 at 72B, while retail requires r5 key, r4 byte offset, r2/r3 table cursors, and r6 base+4 without the extra saved registers | try only key r5 and offset r4 pins; let agbcc allocate table cursors, while retaining an explicit second-word base to keep the adds r4+r6 shape |
 | `sub_08042B78` | 0 | 45/56 | `src/wip/sub_08042B78.c` | 45/56 same-size DIFF after r1/r2/r3/r4 shaping; loop and sentinel behavior now match, but retail loads the ROM table into r2 before materializing -1 in r1, while agbcc schedules -1 first | force the base assignment to be live before the minus-one assignment, then preserve the r4 copy and r1 table-cursor reuse |
@@ -231,7 +231,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802B994` | 0 | 58/58 | `src/wip/sub_0802B994.c` | MATCHED — semantic C in src/matched (permuter: `&row` local forces the loop pointer to be re-read, `-fprologue-bugfix`) | done |
 | `sub_0804495C` | 60 | 34/60 | `src/wip/sub_0804495C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DBD0` | 80 | 23/80 | `src/wip/sub_0803DBD0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08033158` | 46 | 45/46 | `src/wip/sub_08033158.c` | 45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46 | park: remaining delta is jump-threading (retail threads the `b == 0` exit edge past the dead `r = b` copy), not reachable from source with this agbcc. Revisit only if a newer seed/compiler changes the loop-exit branch shape |
+| `sub_08033158` | 46 | 45/46 | `src/wip/sub_08033158.c` | 45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46 | do NOT re-run the default permuter: it reports a false score 0 for this seed (branch-ignoring metric) because the whole remaining delta IS the branch target. Use --strict-branches if ever re-run. Parked otherwise: jump threading is not source-reachable with this agbcc |
 | `sub_08036A68` | 240 | 58/240 | `src/wip/sub_08036A68.c` | 58/240 (24.2%), size 232 vs 240 | permuter or force high-reg live ranges |
 | `sub_08033F30` | 0 | 16/24 | `src/wip/sub_08033F30.c` | 16/24 same-size, branch layout inverted | permuter branch-order search |
 | `sub_08069F00` | 24 | 11/24 | `src/wip/sub_08069F00.c` | 11/24 same-size, r0/r1 coalescing: retail keeps `adds r1,r0,#0` (copy) and compares r0, agbcc coalesces the copy and emits a trailing nop. This session: 13 more shapes (2- and 3-deep copy chains, u32 copy, operator variants on the sign test, split `r = p;` statement) — every one byte-identical at 11/24, so agbcc's copy coalescing always wins | park: the extra copy is a pre-coalescing compiler artifact; not source-reachable with this agbcc. Leave the readable Thumb wrapper |

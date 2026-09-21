@@ -2294,6 +2294,16 @@ struct Unk3E328 /* >= 0x21 */
     /* 20 */ u8 unk20;
 };
 
+/* 4-byte rows in gData_0807BDB8 / gData_0807BB80 / gData_0807B6F0.
+   sub_0803E374 reads byte 1, sub_0803E3C0 reads byte 2. */
+struct Unk3E374Row /* 0x04 */
+{
+    /* 00 */ u8 unk00;
+    /* 01 */ u8 unk01;
+    /* 02 */ u8 unk02;
+    /* 03 */ u8 unk03;
+};
+
 /* Same signed table indices as Unk3E328, with byte-offset table reads. */
 struct Unk3E374 /* >= 0x21 */
 {

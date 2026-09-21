@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **378/633 (59.7%)** |
-| **Decompiled C (bytes)** | **24,466/90,272 (27.1%)** |
+| **Decompiled C (functions)** | **380/633 (60.0%)** |
+| **Decompiled C (bytes)** | **24,618/90,272 (27.3%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 255/633 (40.3%) |
+| Readable Thumb | 253/633 (40.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,14 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-21 — 3E328 clone family, byte-offset rows (+2, 378→380/633)
+`sub_0803E328` was already matched (`old_agbcc`, `table[scaled + 0]`). Its two clones read the same 4-byte rows at byte 1 and byte 2.
+
+- `sub_0803E374` (76B) — `table[scaled + 1]` compiles to `adds r0,#1` then `ldrb [r0]` (80B). A member of new `struct Unk3E374Row` (`->unk01`) puts the offset back on `ldrb [rN,#1]`.
+- `sub_0803E3C0` (76B) — same shape, `->unk02`.
+
+The other delta was pool-load order. Retail emits `ldr r3,=table` *before* `movs r1,#imm` / `ldsb` for the 2nd and 3rd tables. A discarded `v2 = table[index];` immediately before the real member read hoists that load; both discards are required (dropping one falls back to 67/76 or worse). `make compare` OK.
 
 ### 2026-09-21 — sweep-ranked near-miss batch: table-lookup family + sum-order fix (+4, 374→378/633)
 Worked the top of a fresh `sweep_seeds.py` ranking (155 scored seeds). Four matches,

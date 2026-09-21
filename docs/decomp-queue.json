@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-21T18:49:23Z",
+  "generated": "2026-09-21T18:57:45Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 255,
-    "semantic_done": 378,
-    "readable_asm": 255,
+    "pending": 253,
+    "semantic_done": 380,
+    "readable_asm": 253,
     "opcode": 0,
     "battle_pending": 84,
     "battle_semantic": 73,
@@ -195,24 +195,24 @@
     {
       "name": "sub_0803E374",
       "addr": "0x0803E374",
-      "kind": "asm",
-      "bytes": 76,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803E374.c",
       "notes": "src/wip/sub_0803E374.md",
-      "status": "40/76 same-size DIFF; cloned signed table lookup matches size and most arithmetic, but agbcc still schedules the 0x0807BDB8 literal after the 0x1E index setup despite r0/r1 pins",
-      "next": "try a dependency-preserving table-base load before the first signed index (or reuse the successful 3E328 pattern with a forced r0 table local); the remaining table accesses are offset +1",
-      "score": "40/76"
+      "status": "matched (old_agbcc): byte 1 of the 4-byte rows, via struct Unk3E374Row. Discarded `v2 = table[index]` reads hoist each pool load before the index math",
+      "next": "done",
+      "score": "0/76"
     },
     {
       "name": "sub_0803E3C0",
       "addr": "0x0803E3C0",
-      "kind": "asm",
-      "bytes": 76,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0803E3C0.c",
       "notes": "src/wip/sub_0803E3C0.md",
-      "status": "40/76 same-size DIFF; clone table offsets +2 are correct, but agbcc retains the same literal-load scheduling difference seen in 3E328/3E374",
-      "next": "solve the shared three-function table-load ordering pattern once, then apply the byte offset variant to this seed",
-      "score": "40/76"
+      "status": "matched (old_agbcc): byte 2 twin of sub_0803E374, same discarded-read hoist",
+      "next": "done",
+      "score": "0/76"
     },
     {
       "name": "sub_08040088",
@@ -2279,7 +2279,7 @@
       "seed": "src/wip/sub_08033158.c",
       "notes": "src/wip/sub_08033158.md",
       "status": "45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46",
-      "next": "park: remaining delta is jump-threading (retail threads the `b == 0` exit edge past the dead `r = b` copy), not reachable from source with this agbcc. Revisit only if a newer seed/compiler changes the loop-exit branch shape",
+      "next": "do NOT re-run the default permuter: it reports a false score 0 for this seed (branch-ignoring metric) because the whole remaining delta IS the branch target. Use --strict-branches if ever re-run. Parked otherwise: jump threading is not source-reachable with this agbcc",
       "score": "45/46"
     },
     {
