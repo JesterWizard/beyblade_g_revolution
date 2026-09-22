@@ -1,4 +1,9 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+
+// @ 0x08061bac
+#include "global.h"
 
 // @ 0x08061bac
 void sub_08061BAC(void)
@@ -20,6 +25,6 @@ void sub_08061BAC(void)
         p++;
         n--;
     } while (n >= 0);
-    *(u32 *)gUnk_03000794 = 0;
+    gUnk_03000794 = 0;
 }
 

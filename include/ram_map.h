@@ -89,6 +89,7 @@
 #define gUnk_030006B8 (*(u16 *)0x030006B8)
 #define gUnk_03000674 (*(u32 *)0x03000674)
 #define gUnk_03000678 (*(u32 *)0x03000678)
+#define gUnk_03000758Loc ((struct Unk0758 **)0x03000758)
 #define gUnk_03000758 (*(struct Unk0758 **)0x03000758)
 #define gUnk_03000770 ((struct Unk0770 *)0x03000770)
 #define gUnk_03000794 (*(u32 *)0x03000794)

@@ -1,27 +1,29 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+
+// @ 0x08060758
+#include "global.h"
+#include "data_symbols.h"
 
 // @ 0x08060758
 void sub_08060758(void)
 {
-    void **slotA;
-    void **slotB;
-    void **fn;
+    u32 *slotA;
+    struct Unk0758 **slotB;
     void *p;
-    void *q;
     struct Unk0758 *r;
 
-    slotA = (void **)gUnk_03000754;
+    slotA = (u32 *)gUnk_03000754;
     *slotA = 0;
-    slotB = (void **)gUnk_03000758;
+    slotB = gUnk_03000758Loc;
     *slotB = 0;
     p = sub_0806A3A4(0x0C);
-    *slotA = p;
+    *slotA = (u32)p;
     if (p != 0)
     {
-        q = *(void **)p;
-        *slotB = q;
-        fn = (void **)0x080BB8BC;
-        _08073C4C((void *)0, q, 0x0C, *fn);
+        *slotB = *(struct Unk0758 **)p;
+        _08073C4C(0, *slotB, 0x0C, (void *)gData_080BB8BC[0]);
         r = *slotB;
         r->unk06 = 0;
     }
