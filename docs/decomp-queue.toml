@@ -1840,3 +1840,19 @@ notes = "src/wip/sub_0806B064.md"
 status = "62/122 same-size shape, 120 vs 122; only the struct-param/total register assignment differs (param r3 vs retail r4)"
 next = "re-shape to 122 bytes then permuter, or clone the register shape from another 0xDC-item walker"
 score = "62/122"
+
+[[wip]]
+name = "sub_08073910"
+seed = "src/wip/sub_08073910.c"
+notes = "src/wip/sub_08073910.md"
+status = "same_size 40/118"
+next = "retail skip-loop is top-tested without agbcc's peeled rotation; prologue regs differ (retail r5=src r4=dst r6=size, agbcc r4/r6/r7)"
+score = "40/118"
+
+[[wip]]
+name = "sub_08045C5C"
+seed = "src/wip/sub_08045C5C.c"
+notes = "src/wip/sub_08045C5C.md"
+status = "same_size 16/136"
+next = "no w local needs to stay (same-size); retail keeps frame w/ r7 (5 pushes) and materialises &mask via r0 then copies to r4; agbcc loads pool straight to r4 and swaps mask/const regs"
+score = "16/136"

@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-22T19:43:55Z",
+  "generated": "2026-09-22T20:00:06Z",
   "counts": {
-    "matched": 410,
-    "wip": 135,
-    "blocked": 4,
-    "not_started": 84
+    "matched": 411,
+    "wip": 137,
+    "not_started": 83,
+    "blocked": 2
   },
   "total": 633,
   "functions": [
@@ -725,18 +725,18 @@
     {
       "name": "sub_08030938",
       "addr": "0x08030938",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "blocked",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": true,
       "wip": false,
       "block_reason": "computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack \u2014 logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter",
       "retail_bytes": 78,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/78",
-      "source": "none",
+      "matched_bytes": 78,
+      "compiled_bytes": 78,
+      "pct": 100.0,
+      "score": "78/78",
+      "source": "integrated",
       "note": ""
     },
     {
@@ -4501,17 +4501,17 @@
       "addr": "0x08045C5C",
       "kind": "asm",
       "status": "not_started",
-      "display": "blocked",
+      "display": "wip",
       "blocked": true,
-      "wip": false,
+      "wip": true,
       "block_reason": "gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 \u2014 logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter",
       "retail_bytes": 136,
-      "matched_bytes": 0,
+      "matched_bytes": 16,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/136",
-      "source": "none",
-      "note": ""
+      "pct": 11.8,
+      "score": "16/136",
+      "source": "wip",
+      "note": "same_size 16/136"
     },
     {
       "name": "sub_08045D3C",
@@ -10672,17 +10672,17 @@
       "addr": "0x08073910",
       "kind": "asm",
       "status": "not_started",
-      "display": "not_started",
+      "display": "wip",
       "blocked": false,
-      "wip": false,
+      "wip": true,
       "block_reason": "",
       "retail_bytes": 118,
-      "matched_bytes": 0,
+      "matched_bytes": 40,
       "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/118",
-      "source": "none",
-      "note": ""
+      "pct": 33.9,
+      "score": "40/118",
+      "source": "wip",
+      "note": "same_size 40/118"
     },
     {
       "name": "sub_08073988",

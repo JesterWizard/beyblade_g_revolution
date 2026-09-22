@@ -6,7 +6,6 @@ void sub_08030F38(void);
 void sub_0803D4C4(void);
 void sub_080302E0(void *a);
 void sub_08035D68(void *a, void *b);
-void sub_0803531C(void *a);
 void sub_080353A0(void *a);
 s32 sub_08035AE0(void *a, void *b);
 void sub_080361A8(void *a);
@@ -61,9 +60,9 @@ void sub_0803019C(void)
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk790,
         (u32)((struct Unk3019CWork *)gBattleWork)->unk478);
     sub_0803531C(
-        ((struct Unk3019CWork *)gBattleWork)->unk478);
+        (struct Unk35258 *)((struct Unk3019CWork *)gBattleWork)->unk478);
     sub_0803531C(
-        ((struct Unk3019CWork *)gBattleWork)->unk790);
+        (struct Unk35258 *)((struct Unk3019CWork *)gBattleWork)->unk790);
     sub_080353A0(
         ((struct Unk3019CWork *)gBattleWork)->unk478);
     sub_080353A0(

@@ -22,7 +22,7 @@ void sub_08068020(struct Unk680CC *a, u16 key, u16 arg2)
             a->unk1E = 0;
             a->unk1A = key;
             a->unk2E = arg2;
-            sub_08068180(a, rec->unk08);
+            sub_08068180((struct Unk68598 *)a, rec->unk08);
             return;
         }
         off = rec->unk02;

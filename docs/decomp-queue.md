@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-22T19:43:31Z_
+_Updated: 2026-09-22T20:00:06Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 408 |
-| Still need semantic C | **225** |
-| Readable Thumb remaining | 225 |
+| Semantic C done | 409 |
+| Still need semantic C | **224** |
+| Readable Thumb remaining | 224 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 220 |
+| WIP (resume these first) | 222 |
 
 Ranking: **battle** · showing top **40**
 
@@ -246,6 +246,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08038438` | 240 | 8/240 | `src/wip/sub_08038438.c` | C structurally close (both index-table scans) but register pressure differs: retail keeps i<<16 in r9 and the 0x080BB8C0 pointer address in r8 (push r6/r7), compiled uses neither -> 220B vs retail 240B | permuter/auto.py sub_08038438, else re-derive with the r8/r9 live values |
 | `sub_08062CF4` | 0 | 23/48 | `src/wip/sub_08062CF4.c` | same-size 23/48; retail holds palette base in r5 early | permuter/auto.py sub_08062CF4 |
 | `sub_0806B064` | 0 | 62/122 | `src/wip/sub_0806B064.c` | 62/122 same-size shape, 120 vs 122; only the struct-param/total register assignment differs (param r3 vs retail r4) | re-shape to 122 bytes then permuter, or clone the register shape from another 0xDC-item walker |
+| `sub_08073910` | 118 | 40/118 | `src/wip/sub_08073910.c` | same_size 40/118 | retail skip-loop is top-tested without agbcc's peeled rotation; prologue regs differ (retail r5=src r4=dst r6=size, agbcc r4/r6/r7) |
+| `sub_08045C5C` | 136 | 16/136 | `src/wip/sub_08045C5C.c` | same_size 16/136 | no w local needs to stay (same-size); retail keeps frame w/ r7 (5 pushes) and materialises &mask via r0 then copies to r4; agbcc loads pool straight to r4 and swaps mask/const regs |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -279,7 +281,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08039BD4` | `0x08039BD4` | 1552 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08073910` | `0x08073910` | 118 | 0 |      | asm | |
 | `sub_08041C8C` | `0x08041C8C` | 142 | 0 | pool | asm | |
 | `sub_0806E31C` | `0x0806E31C` | 148 | 0 | pool | asm | |
 | `sub_08041B74` | `0x08041B74` | 162 | 0 | pool | asm | |
@@ -293,13 +294,14 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0807000C` | `0x0807000C` | 192 | 0 | pool | asm | |
 | `sub_08062358` | `0x08062358` | 192 | 0 |      | asm | |
 | `sub_0806FBF8` | `0x0806FBF8` | 196 | 0 | pool | asm | |
+| `sub_08054494` | `0x08054494` | 196 | 0 | pool | asm | |
 
 ## Blocked
 
 | Function | Address | Bytes | Reason |
 |----------|---------|------:|--------|
 | `sub_0802C62C` | `0x0802C62C` | 0 | counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a — same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter |
-| `sub_08030938` | `0x08030938` | 78 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
+| `sub_08030938` | `0x08030938` | 0 | computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter |
 | `sub_08033530` | `0x08033530` | 0 | battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF) |
 | `sub_08034894` | `0x08034894` | 0 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
 | `sub_08038314` | `0x08038314` | 0 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
@@ -335,6 +337,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (84 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (83 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

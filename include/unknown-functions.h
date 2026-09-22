@@ -121,7 +121,7 @@ void *sub_0806A4D8(
     void *d,
     void *e,
     void *f);
-void sub_08067A9C(void *a, ...);
+void sub_08067A9C();
 void sub_08035878(struct Unk35878 *a, u32 v1, u32 v2, u32 v3);
 void sub_080358CC(struct Unk35878 *a);
 s32 sub_080674A0(s32 a, s32 b);
@@ -244,7 +244,7 @@ s32 sub_0806C78C(void *a, void *b, s32 c);
 u8 sub_08060394(void);
 void sub_080602C0(u8 a);
 void sub_08061D00(u16 a, u32 b);
-void *sub_0806BB38(void *a, u16 b);
+void *sub_0806BB38(struct Unk6BB38 *a, u32 idx);
 void sub_08052FC8(void);
 void sub_08046E7C(void);
 void sub_08042718(void);
@@ -470,7 +470,7 @@ s32 sub_08047624(u32 mode);
 void sub_08071BA0(void);
 void sub_080442FC(struct Unk442FC *a, struct Unk442FCInput *b, u32 c, u32 d);
 void sub_080628E4(s32 a);
-void sub_080603E0(u8 a);
+void sub_080603E0(u16 a);
 void sub_080475F4(void);
 void sub_08062A1C(u32 a);
 u32 sub_08072F94(void);

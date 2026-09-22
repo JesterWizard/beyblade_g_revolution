@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-22T19:43:31Z",
+  "generated": "2026-09-22T20:00:06Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 225,
-    "semantic_done": 408,
-    "readable_asm": 225,
+    "pending": 224,
+    "semantic_done": 409,
+    "readable_asm": 224,
     "opcode": 0,
     "battle_pending": 80,
     "battle_semantic": 77,
     "blocked": 20,
-    "wip": 220
+    "wip": 222
   },
   "pinned": [],
   "wip": [
@@ -2435,6 +2435,28 @@
       "status": "62/122 same-size shape, 120 vs 122; only the struct-param/total register assignment differs (param r3 vs retail r4)",
       "next": "re-shape to 122 bytes then permuter, or clone the register shape from another 0xDC-item walker",
       "score": "62/122"
+    },
+    {
+      "name": "sub_08073910",
+      "addr": "0x08073910",
+      "kind": "asm",
+      "bytes": 118,
+      "seed": "src/wip/sub_08073910.c",
+      "notes": "src/wip/sub_08073910.md",
+      "status": "same_size 40/118",
+      "next": "retail skip-loop is top-tested without agbcc's peeled rotation; prologue regs differ (retail r5=src r4=dst r6=size, agbcc r4/r6/r7)",
+      "score": "40/118"
+    },
+    {
+      "name": "sub_08045C5C",
+      "addr": "0x08045C5C",
+      "kind": "asm",
+      "bytes": 136,
+      "seed": "src/wip/sub_08045C5C.c",
+      "notes": "src/wip/sub_08045C5C.md",
+      "status": "same_size 16/136",
+      "next": "no w local needs to stay (same-size); retail keeps frame w/ r7 (5 pushes) and materialises &mask via r0 then copies to r4; agbcc loads pool straight to r4 and swaps mask/const regs",
+      "score": "16/136"
     }
   ],
   "recommended": [
@@ -2808,18 +2830,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08073910",
-      "addr": "0x08073910",
-      "kind": "asm",
-      "bytes": 118,
-      "score": 59,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08041C8C",
       "addr": "0x08041C8C",
       "kind": "asm",
@@ -2974,6 +2984,18 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_08054494",
+      "addr": "0x08054494",
+      "kind": "asm",
+      "bytes": 196,
+      "score": 100,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -2988,8 +3010,8 @@
       "name": "sub_08030938",
       "addr": "0x08030938",
       "reason": "computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack \u2014 logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter",
-      "kind": "asm",
-      "bytes": 78
+      "kind": "missing",
+      "bytes": 0
     },
     {
       "name": "sub_08033530",
@@ -3485,18 +3507,6 @@
         "gMainWorkPtr"
       ],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08073910",
-      "addr": "0x08073910",
-      "kind": "asm",
-      "bytes": 118,
-      "score": 59,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },

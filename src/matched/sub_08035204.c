@@ -8,6 +8,6 @@ void sub_08035204(void *a, u32 b, u32 c, u32 d)
 
     bb = b;
     cc = c;
-    sub_08035258((u32)a, bb);
+    sub_08035258((struct Unk35258 *)a, bb);
     sub_08035054(a, bb, cc, d);
 }

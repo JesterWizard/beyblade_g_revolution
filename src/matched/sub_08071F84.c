@@ -3,7 +3,7 @@
 // @ 0x08071f84
 void sub_08071F84(s32 a)
 {
-    struct Unk71F84 *p;
+    struct Unk71E84 *p;
 
     p = sub_08071F44(a);
     if (p != 0)

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08043bdc
-s32 sub_08043BDC(void)
+void *sub_08043BDC(void)
 {
     struct Unk16E0 *p;
 
@@ -11,7 +11,7 @@ s32 sub_08043BDC(void)
     while (p->unk00 != 0)
     {
         if (sub_08073440(p->unk00, gMainWorkPtr->unk16C8) == 0)
-            return p->unk04;
+            return (void *)p->unk04;
         p++;
     }
     return 0;

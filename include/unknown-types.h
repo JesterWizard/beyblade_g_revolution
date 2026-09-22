@@ -1857,7 +1857,7 @@ struct Unk0748 /* >= 0x168 */
 {
     /* 00 */ u8 filler_00[0xC];
     /* 0C */ void *unk0C; /* sub_0805d99c */
-    /* 10 */ u8 filler_10[0x74];
+    /* 10 */ u8 filler_10[0x70];
     /* 80 */ void *unk80;
     /* 84 */ u8 unk84;
     /* 85 */ u8 filler_85[0xDF];
@@ -2811,7 +2811,6 @@ struct Unk37508Work /* >= 0x210c */
     /* 1fa0 */ s32 unk1FA0;
     /* 1fa4 */ u8 filler_1FA4[0xF0];
     /* 2094 */ struct Unk33A5C unk2094;
-    /* 20a0 */ u8 filler_20A0[4];
     /* 20a4 */ struct Unk33F30 unk20A4;
 };
 
