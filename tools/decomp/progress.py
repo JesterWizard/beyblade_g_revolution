@@ -112,8 +112,31 @@ def _battle_names() -> set[str]:
     return names
 
 
+VERIFIED = ROOT / "build" / "semantic_verified.json"
+
+
+def verified_semantic() -> set[str] | None:
+    """Names whose C is byte-verified against retail, or None when unaudited.
+
+    `file_kind` decides "semantic" from the *text* of the draft (no `asm()`), so a
+    draft that never compiled -- or that compiles to different bytes -- still
+    counted as decompiled C.  The ROM links `asm/matchings/*.s`, so `make compare`
+    cannot catch that.  Once `matched_rescore.py --write-verified` has run, trust
+    its verdict instead of the text heuristic.
+    """
+    if not VERIFIED.is_file():
+        return None
+    data = json.loads(VERIFIED.read_text())
+    return {
+        name
+        for name, row in data.get("functions", {}).items()
+        if row.get("pct", 0.0) >= 100.0
+    }
+
+
 def collect(top: int = 15) -> dict[str, Any]:
     files = sorted(MATCHED_SRC.glob("sub_*.c")) if MATCHED_SRC.is_dir() else []
+    verified = verified_semantic()
     rows: list[dict[str, Any]] = []
     by_kind = {
         "semantic": {"functions": 0, "bytes": 0},
@@ -123,6 +146,10 @@ def collect(top: int = 15) -> dict[str, Any]:
     missing_size = 0
     for path in files:
         kind = file_kind(path)
+        if kind == "semantic" and verified is not None and path.stem not in verified:
+            kind = "asm"
+        if kind == "semantic" and verified is not None and path.stem not in verified:
+            kind = "asm"
         try:
             size = function_size(path.stem, path)
         except FileNotFoundError:

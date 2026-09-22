@@ -73,6 +73,11 @@ def main() -> int:
         choices=["non-semantic", "semantic", "all"],
         help="which manifest kinds to rescore (default: drafts linked as non-semantic)",
     )
+    ap.add_argument(
+        "--write-verified",
+        action="store_true",
+        help="record every draft's score in build/semantic_verified.json",
+    )
     args = ap.parse_args()
 
     funcs = json.loads(MANIFEST.read_text())["functions"]
@@ -101,6 +106,7 @@ def main() -> int:
         return best
 
     hits = []
+    results: dict[str, dict] = {}
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
         for i, best in enumerate(pool.map(work, todo), 1):
             name, src, compiler, first, pct, matched, total = best
@@ -108,8 +114,16 @@ def main() -> int:
             if "MATCH" in first and "DIFF" not in first:
                 flag = "  <-- MATCH"
                 hits.append((name, src, compiler))
+            results[name] = {"pct": pct, "compiler": compiler, "score": f"{matched}/{total}"}
             if pct >= args.min_pct or flag:
                 print(f"[{i:>3}/{len(todo)}] {pct:5.1f}% {compiler:10s} {name}{flag}")
+
+    if args.write_verified:
+        out = ROOT / "build" / "semantic_verified.json"
+        out.write_text(
+            json.dumps({"functions": results}, indent=2, sort_keys=True) + "\n"
+        )
+        print(f"wrote {out.relative_to(ROOT)} ({len(results)} entries)")
 
     print(f"\nmatched_rescore: {len(hits)} exact match(es)")
     for name, src, compiler in hits:
