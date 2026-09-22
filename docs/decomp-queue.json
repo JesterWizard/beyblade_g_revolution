@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-22T18:42:49Z",
+  "generated": "2026-09-22T18:49:53Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 230,
-    "semantic_done": 403,
-    "readable_asm": 230,
+    "pending": 228,
+    "semantic_done": 405,
+    "readable_asm": 228,
     "opcode": 0,
     "battle_pending": 80,
     "battle_semantic": 77,
@@ -294,8 +294,8 @@
     {
       "name": "sub_080473F8",
       "addr": "0x080473F8",
-      "kind": "asm",
-      "bytes": 100,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_080473F8.c",
       "notes": "src/wip/sub_080473F8.md",
       "status": "50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits",
@@ -2076,8 +2076,8 @@
     {
       "name": "sub_08069894",
       "addr": "0x08069894",
-      "kind": "asm",
-      "bytes": 96,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08069894.c",
       "notes": "src/wip/sub_08069894.md",
       "status": "85/96; IWRAM stores preloaded vs sequential",

@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-22T18:42:49Z_
+_Updated: 2026-09-22T18:49:53Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 403 |
-| Still need semantic C | **230** |
-| Readable Thumb remaining | 230 |
+| Semantic C done | 405 |
+| Still need semantic C | **228** |
+| Readable Thumb remaining | 228 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
@@ -51,7 +51,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08042BE8` | 82 | 37/82 | `src/wip/sub_08042BE8.c` | best 37/82 size-mismatch; explicit r4/r5/r6/r7/r3/r2 shaping reproduces the loop body, but agbcc emits push r4-r6 while retail saves r7 as well and retains a longer branch layout | force r7 as an ordinary live callee-saved local rather than only a fixed register pointer; then preserve the current byte-offset table cursors |
 | `sub_08042C3C` | 0 | 54/56 | `src/wip/sub_08042C3C.c` | 54/56 same-size DIFF (96.4%); exact prologue, sentinel handling, cursor registers, and return are matched; only the two cursor increments are reversed (retail value cursor r1 then key cursor r2) | swap the source order of  and ; this is a two-byte instruction-order near-match |
 | `sub_08042F4C` | 80 | 33/80 | `src/wip/sub_08042F4C.c` | 33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization | verify whether sub_08042E78's prototype should accept s32 for this caller (without changing its own matching definition), then retry the same source shape |
-| `sub_080473F8` | 100 | 50/100 | `src/wip/sub_080473F8.c` | 50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits | use distinct gData_* symbols for gUnk_03000630 / gUnk_03000638 (0x20 apart): the data_symbols.s addressing sweep shows that stops agbcc folding the second address into `subs r0,#0x20`. Empty-asm barriers are banned in semantic C and must not be used here |
+| `sub_080473F8` | 0 | 50/100 | `src/wip/sub_080473F8.c` | 50/100 bytes (50%); semantically correct but agbcc emits 'subs r1,#8' peephole instead of retail's full literal reload for the second global-address load (gUnk_03000630 = gUnk_03000638 - 8), a 2-byte vs 4-byte instr diff every variant hits | use distinct gData_* symbols for gUnk_03000630 / gUnk_03000638 (0x20 apart): the data_symbols.s addressing sweep shows that stops agbcc folding the second address into `subs r0,#0x20`. Empty-asm barriers are banned in semantic C and must not be used here |
 | `sub_08059DC8` | 72 | 27/72 | `src/wip/sub_08059DC8.c` | 27/72 bytes (37.5%); this is a state-machine dispatcher that calls a fixed bx-r4 trampoline (_08073C50 at 0x08073C50: 'bx r4') with the actual handler loaded from a jump table at 0x08099710[list->field0] into r4 right before each bl. agbcc dead-code-eliminates the register(r4)-pinned handler assignment since it's never read in C (only consumed implicitly via the trampoline's bx r4), so the table lookup vanishes from output | may need inline asm (not just register-pinned var) to force the r4 load to survive codegen immediately before the bl _08073C50 call, or split into two statements bridged by a volatile-style barrier; check other _08073C50 callers (sub_08069270, sub_0806C7D4, sub_0806D748) for the same pattern once one is solved |
 | `sub_08061800` | 0 | 0/76 | `src/wip/sub_08061800.c` | matched (old_agbcc); separate `off = arg0 * stride + 0x06000000` local forces retail's accumulation order (src/matched/sub_08061800.c) | done |
 | `sub_08061D68` | 88 | 13/88 | `src/wip/sub_08061D68.c` | 13/88 bytes (13.5%), size mismatch (96 vs 88); correct overall algorithm (mask args to 0x1F, build 12-bit palette-select field, swap lo/hi if needed, compute VRAM tile address from gUnk_03000798->unk5C, loop-OR the palette bits into each halfword) but agbcc allocates 4 callee-saved regs (r4-r7) vs retail's 3 (r4-r6) -- retail reuses a non-callee-saved scratch reg (r1) for the swap temp instead of a persistent local | drop the explicit 'tmp' local and do the swap via a compound/ternary expression, or restructure so the swap temp doesn't need to outlive the swap statement (matching retail's transient r1 use) |
@@ -213,7 +213,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080674A4` | 0 | 2/6 | `src/wip/sub_080674A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_080674B4` | 0 | 6/6 | `src/wip/sub_080674B4.c` | MATCHED — matching C in src/matched: parameterised BIOS swi operands keep r0/r1 pass-through and materialise r2 = 0; header declares an empty parameter list so existing no-arg callers compile | done |
 | `sub_08067F98` | 0 | 48/48 | `src/wip/sub_08067F98.c` | MATCHED — semantic C in src/matched with /* match-compiler: old_agbcc */ (agbcc's coalescing/register choice could not be reproduced by source shape) | done |
-| `sub_08069894` | 96 | 85/96 | `src/wip/sub_08069894.c` | 85/96; IWRAM stores preloaded vs sequential | continue permuter from output-245-1 |
+| `sub_08069894` | 0 | 85/96 | `src/wip/sub_08069894.c` | 85/96; IWRAM stores preloaded vs sequential | continue permuter from output-245-1 |
 | `sub_08069908` | 0 | 8/64 | `src/wip/sub_08069908.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08069948` | 0 | 8/64 | `src/wip/sub_08069948.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08069988` | 0 | 8/64 | `src/wip/sub_08069988.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
