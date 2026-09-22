@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-22T19:06:59Z",
+  "generated": "2026-09-22T19:43:31Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 226,
-    "semantic_done": 407,
-    "readable_asm": 226,
+    "pending": 225,
+    "semantic_done": 408,
+    "readable_asm": 225,
     "opcode": 0,
     "battle_pending": 80,
     "battle_semantic": 77,
@@ -393,8 +393,8 @@
     {
       "name": "sub_08062D50",
       "addr": "0x08062D50",
-      "kind": "asm",
-      "bytes": 46,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_08062D50.c",
       "notes": "src/wip/sub_08062D50.md",
       "status": "13/46 bytes (28.3%), same size; correct algorithm (write a BGR555 palette entry to VRAM palette RAM at 0x05000000+arg0*2 from arg1's r/g/b byte triplet). Two orderings tried: address-first (13/46, closer overall byte offset) and color-first (12/46, matches retail's per-field mask/shift/orr shape almost exactly but wrong push-list size, r4/r5 vs retail's r4/r5/r6). agbcc schedules the address computation independent of source statement order in both cases",

@@ -517,6 +517,8 @@ def readme_section(data: dict[str, Any]) -> str:
 
 
 def _patch_marked(path: Path, block: str, *, heading: str, fallback_end: str | None) -> None:
+    from doc_write import write_doc
+
     if not path.is_file():
         path.write_text(f"# {path.stem}\n\n{heading}\n\n{block}")
         return
@@ -524,14 +526,15 @@ def _patch_marked(path: Path, block: str, *, heading: str, fallback_end: str | N
     if STATUS_START in text and STATUS_END in text:
         pre, rest = text.split(STATUS_START, 1)
         _, post = rest.split(STATUS_END, 1)
-        path.write_text(pre.rstrip() + "\n\n" + block.strip() + "\n\n" + post.lstrip("\n"))
+        write_doc(path, pre.rstrip() + "\n\n" + block.strip() + "\n\n" + post.lstrip("\n"))
         return
     if heading in text:
         pre, rest = text.split(heading, 1)
         rest = rest.lstrip("\n")
         if fallback_end and fallback_end in rest:
             _, post = rest.split(fallback_end, 1)
-            path.write_text(
+            write_doc(
+                path,
                 pre.rstrip()
                 + "\n\n"
                 + heading
@@ -539,12 +542,12 @@ def _patch_marked(path: Path, block: str, *, heading: str, fallback_end: str | N
                 + block.strip()
                 + "\n\n"
                 + fallback_end
-                + post
+                + post,
             )
             return
-        path.write_text(pre.rstrip() + "\n\n" + heading + "\n\n" + block.strip() + "\n\n" + rest)
+        write_doc(path, pre.rstrip() + "\n\n" + heading + "\n\n" + block.strip() + "\n\n" + rest)
         return
-    path.write_text(text.rstrip() + f"\n\n{heading}\n\n{block}")
+    write_doc(path, text.rstrip() + f"\n\n{heading}\n\n{block}")
 
 
 def patch_status_md(data: dict[str, Any]) -> None:
@@ -612,11 +615,13 @@ def merge_history(data: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def write_artifacts(data: dict[str, Any]) -> None:
+    from doc_write import write_doc
+
     payload = dict(data)
     payload["history"] = merge_history(data)
     PROGRESS_JSON.parent.mkdir(parents=True, exist_ok=True)
-    PROGRESS_JSON.write_text(json.dumps(payload, indent=2) + "\n")
-    PROGRESS_SVG.write_text(render_svg(data))
+    write_doc(PROGRESS_JSON, json.dumps(payload, indent=2) + "\n")
+    write_doc(PROGRESS_SVG, render_svg(data))
     patch_status_md(data)
     patch_readme(data)
     try:

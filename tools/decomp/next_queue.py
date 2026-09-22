@@ -476,8 +476,10 @@ def format_human(data: dict[str, Any], n: int) -> str:
 
 
 def write_artifacts(data: dict[str, Any]) -> None:
-    OUT_MD.write_text(render_md(data))
-    OUT_JSON.write_text(json.dumps(data, indent=2) + "\n")
+    from doc_write import write_doc
+
+    write_doc(OUT_MD, render_md(data))
+    write_doc(OUT_JSON, json.dumps(data, indent=2) + "\n")
 
 
 def main() -> int:
