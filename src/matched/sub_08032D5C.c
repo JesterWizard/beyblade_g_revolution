@@ -12,7 +12,7 @@ void sub_08032D5C(struct Unk346C0 *a, u32 b)
     a->unk2E4 = v0;
     a->unk2E8 = v1;
     sub_08035054(a, 2, 13, -1);
-    sub_0803559C(a, 2, sub_080628B4(3));
+    sub_0803559C(a, 2, RandRange(3));
     sub_08060254(1, 0x38, 7);
 }
 

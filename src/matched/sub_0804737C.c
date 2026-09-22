@@ -10,6 +10,6 @@ void sub_0804737C(void)
     sub_08045128(idx);
     sub_080628E4(gMainWorkPtr->unk170C * gMainWorkPtr->unk1788 + (s32)0xFC96FCDE);
     sub_080603A4(gMainWorkPtr->unk1819);
-    sub_080603E0(gMainWorkPtr->unk181A);
+    BtlSetAllUnk1710(gMainWorkPtr->unk181A);
     sub_080475F4();
 }

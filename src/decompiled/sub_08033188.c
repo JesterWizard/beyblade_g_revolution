@@ -104,7 +104,7 @@ void sub_08033188(void)
         }
     }
 
-    sub_08070678((struct Unk7069C *)&state);
+    BtlReleaseEntry((struct Unk7069C *)&state);
     sub_080674B4();
     for (i = 0; i < 2; i++)
     {

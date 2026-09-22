@@ -18,7 +18,7 @@ s32 sub_0803D51C(void)
         gBattleWork->unk130 = 1;
         result = 1;
         sub_0802C55C((s8)out.unk00, (s8)out.unk03, (s16)out.unk04);
-        if (sub_0802C5DC((s8)out.unk03) == 0)
+        if (BtlUnk1694FindAndMark((s8)out.unk03) == 0)
             gBattleWork->unk1F73 = result;
     }
 
@@ -30,7 +30,7 @@ s32 sub_0803D51C(void)
         gBattleWork->unk131 = 1;
         result = 1;
         sub_0802C55C((s8)out.unk00, (s8)out.unk03, (s16)out.unk04);
-        if (sub_0802C5DC((s8)out.unk03) == 0)
+        if (BtlUnk1694FindAndMark((s8)out.unk03) == 0)
             gBattleWork->unk1F73 = result;
     }
 

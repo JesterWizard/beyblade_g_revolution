@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08070678
-void sub_08070678(struct Unk7069C *a)
+void BtlReleaseEntry(struct Unk7069C *a)
 {
     struct Unk705CC *p;
 

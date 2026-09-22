@@ -18,7 +18,7 @@ u8 sub_08035C64(struct Unk346C0Inner *a, s32 x, s32 y, s32 z, s32 threshold)
     dy = (y - a->unk10) >> 8;
     distSq = z * z - a->unk38;
     sumSq = dx * dx + dy * dy;
-    randScale = sub_080628B4(0x80) + 0x100;
+    randScale = RandRange(0x80) + 0x100;
 
     if (sumSq > distSq)
     {

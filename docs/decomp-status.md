@@ -21,6 +21,40 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-22 — battle naming batch (23 → 33); document.py prune fix
+
+Named 10 battle functions from the analysis DB plus verified source reads, taking
+named from 23 to **33/633** (battle 21/87, graphics 7/34). No new byte-matches.
+
+- `sub_080735DC` → `TextFormatInt` (10 callers) — signed decimal formatter:
+  repeated div/mod 10 via `sub_080674A4`/`sub_080674A0`, sign slot, zero special
+  case, tail-call into the digit copy. Highest fan-in unnamed function left.
+- `sub_080628B4` → `RandRange` (9 callers) — the battle LCG. Advances the state at
+  `gMainWorkPtr->unk1800` by `0x36F1ACE3`, scales the high bits with `0x9FBF1 >> 16`,
+  then bounds it through `sub_08074264`. Call sites confirm the bound: the result is
+  used directly as an array index, and `sub_080628B4(3)` is passed as a mode.
+- `sub_08067890` → `TimerAdvance` — identified `gUnk_03000180` as a timer from its
+  readers (`delta = unk00 - unk04` is elapsed time, and `unk00` is saved into a
+  timestamp field). This function rotates the triple: `unk04 = unk00` then
+  `unk00 += unk08`.
+- `sub_08044EE8` → `BtlClearUnk1688Entry`, `sub_080433F4` → `BtlClearUnk1834`,
+  `sub_0802C5DC` → `BtlUnk1694FindAndMark`, `sub_0803E440` → `BtlCountLiveSlots`,
+  `sub_080603E0` → `BtlSetAllUnk1710`, `sub_0802BA4C` → `BtlFreeUnk1694Obj`,
+  `sub_08070678` → `BtlReleaseEntry` (0.7–0.85) — each evidenced in `symbols.json`
+  and rendered into the generated "Why this name" section.
+- **`document.py` now prunes stale pages.** It only ever wrote, never deleted, so a
+  rename left the old page behind (the `BgMapSetPaletteBankRun.md` orphan from the
+  previous batch was still on disk). This broke the "generated view" invariant —
+  the tree was no longer a faithful view of `symbols.json`. Now anything carrying
+  the generator banner that is not in the current output set is removed; 1 stale
+  page pruned, second run prunes 0. Hand-written markdown in the same directory is
+  untouched.
+
+Verified after the batch: `symbols.py apply` rewrote 31 files / 37 occurrences; all
+10 renamed functions re-checked with `match_function.py` — **10/10 still 100%**;
+`make audit` 633/633 clean; `make compare` OK on a forced full rebuild;
+`make analyze` still idempotent.
+
 ### 2026-09-22 — matched-C integrity fix: 65 files did not compile
 
 Found while verifying a rename: **65 of the 633 files counted as matched could not

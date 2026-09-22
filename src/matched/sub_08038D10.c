@@ -21,7 +21,7 @@ void sub_08038D10(struct Unk38D10 *a)
         if (entry != 0)
             sub_08070AD4(&gBattleWork->unk023C[i], entry, 1);
         else
-            sub_08070678(&gBattleWork->unk023C[i]);
+            BtlReleaseEntry(&gBattleWork->unk023C[i]);
     }
 }
 

@@ -9,7 +9,7 @@ void sub_08052FC8(void)
 {
     struct MainWork **wp;
 
-    sub_08067890();
+    TimerAdvance();
     wp = gMainWorkPtrLoc;
     sub_08068418((u8 *)*wp + 0x36C);
     sub_08067CE8((u8 *)*wp + 0x36C, 0);

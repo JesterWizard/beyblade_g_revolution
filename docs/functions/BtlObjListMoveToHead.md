@@ -35,4 +35,4 @@
 - `sub_0806FE84`
 - `sub_080700CC`
 - `sub_0807027C`
-- `sub_08070678`
+- [`BtlReleaseEntry`](BtlReleaseEntry.md)

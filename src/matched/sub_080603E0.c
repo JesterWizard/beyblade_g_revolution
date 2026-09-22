@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080603e0
-void sub_080603E0(u16 a)
+void BtlSetAllUnk1710(u16 a)
 {
     s16 i;
 

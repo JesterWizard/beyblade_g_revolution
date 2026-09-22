@@ -26,7 +26,7 @@ s32 sub_08035AE0(
     dy = (b->unk10 - a->unk10) >> 8;
     dz = (b->unk14 - a->unk14) >> 8;
     distance = dx * dx + dy * dy + dz * dz;
-    scale = sub_080628B4(0x100) + 0x100;
+    scale = RandRange(0x100) + 0x100;
     if (distance < threshold)
     {
         length = (u16)sub_080674B0(distance);

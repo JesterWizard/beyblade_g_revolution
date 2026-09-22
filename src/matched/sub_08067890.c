@@ -2,7 +2,7 @@
 
 // @ 0x08067890
 
-void sub_08067890(void)
+void TimerAdvance(void)
 {
     struct Unk0180 *p;
 

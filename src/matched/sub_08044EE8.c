@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08044ee8
-void sub_08044EE8(s32 idx)
+void BtlClearUnk1688Entry(s32 idx)
 {
     struct Unk1688Entry *p;
 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T21:36:15Z",
+  "generated": "2026-09-22T21:51:14Z",
   "total": 633,
   "functions": [
     {
@@ -157,7 +157,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlFreeUnk1694Obj",
       "note": "battle/free gUnk_03000268 + clear unk1694",
       "insn_count": 17,
       "offsets": [
@@ -471,7 +471,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlUnk1694FindAndMark",
       "note": "battle/unk1694 find-and-mark",
       "insn_count": 35,
       "offsets": [
@@ -5925,7 +5925,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlCountLiveSlots",
       "note": "battle/count positive unk1861 slots",
       "insn_count": 21,
       "offsets": [
@@ -7968,7 +7968,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlClearUnk1834",
       "note": "battle/clear-unk1834-and-flag",
       "insn_count": 14,
       "offsets": [
@@ -9053,7 +9053,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlClearUnk1688Entry",
       "note": "battle/clear Unk1688Entry[idx]",
       "insn_count": 18,
       "offsets": [
@@ -13012,7 +13012,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlSetAllUnk1710",
       "note": "battle/call 71FC8 on unk1710 then set unk181A",
       "insn_count": 28,
       "offsets": [
@@ -15200,7 +15200,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "RandRange",
       "note": "battle/LCG step unk1800",
       "insn_count": 17,
       "offsets": [
@@ -16872,7 +16872,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "TimerAdvance",
       "note": "semantic C",
       "insn_count": 7,
       "offsets": [
@@ -20819,7 +20819,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlReleaseEntry",
       "note": "semantic C",
       "insn_count": 15,
       "offsets": [
@@ -22167,7 +22167,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "TextFormatInt",
       "note": "signed decimal text",
       "insn_count": 57,
       "offsets": [

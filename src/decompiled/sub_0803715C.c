@@ -33,7 +33,7 @@ s32 sub_0803715C(u8 a, u8 b)
             gUnk_030002A0.records[0].unk28->unk26 += 5;
         }
         else
-            score = sub_080628B4(10) + 1;
+            score = RandRange(10) + 1;
         if (gMainWorkPtr->unk0874 > 0x3FFF)
             gMainWorkPtr->unk0874 = 0x3FFF;
         slot = gUnk_030002A0.records[b].unk24;

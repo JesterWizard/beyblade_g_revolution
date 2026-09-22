@@ -1,6 +1,6 @@
 {
-  "count": 23,
-  "generated": "2026-09-22T21:32:48Z",
+  "count": 33,
+  "generated": "2026-09-22T21:50:34Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -13,6 +13,36 @@
       "kind": "function",
       "source": "ai",
       "symbol": "GetIndexedRecordWord",
+      "updated": "2026-09-22"
+    },
+    "0x0802BA4C": {
+      "aliases": [
+        "sub_0802BA4C"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "If the pointer stored at gUnk_03000268 is non-null, releases it with BtlObjFree and nulls the slot",
+        "Then clears gMainWorkPtr->unk1694, so it tears down the object that owns the unk1694 table",
+        "Note field: battle/free gUnk_03000268 + clear unk1694"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlFreeUnk1694Obj",
+      "updated": "2026-09-22"
+    },
+    "0x0802C5DC": {
+      "aliases": [
+        "sub_0802C5DC"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Scans gMainWorkPtr->unk1694[0..0x7F] for the record whose unk03 equals the signed byte argument, sets that record's unk01 to 1, and returns 1",
+        "Returns 0 when the table is uninitialised or no record matches - a find-and-mark lookup by id",
+        "Note field: battle/unk1694 find-and-mark"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlUnk1694FindAndMark",
       "updated": "2026-09-22"
     },
     "0x080314FC": {
@@ -71,6 +101,65 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BtlCaptureInput",
+      "updated": "2026-09-22"
+    },
+    "0x0803E440": {
+      "aliases": [
+        "sub_0803E440"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Counts the entries of gMainWorkPtr->unk1861[0..0x52] whose signed byte value is greater than 0",
+        "53 slots scanned; the caller compares the result against 0x53, i.e. all slots filled",
+        "Note field: battle/count positive unk1861 slots"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlCountLiveSlots",
+      "updated": "2026-09-22"
+    },
+    "0x080433F4": {
+      "aliases": [
+        "sub_080433F4"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "Clears gMainWorkPtr->unk1834 to 0 then masks bit 9 (0x200) out of the flag word at gMainWorkPtr->unk1808",
+        "Note field: battle/clear-unk1834-and-flag"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlClearUnk1834",
+      "updated": "2026-09-22"
+    },
+    "0x08044EE8": {
+      "aliases": [
+        "sub_08044EE8"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Zeroes every field of gMainWorkPtr->unk1688[idx]: unk04, unk00, unk08, unk10, unk12, unk14, unk16",
+        "Index-based, so it clears one record of the unk1688 array",
+        "Note field: battle/clear Unk1688Entry[idx]"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlClearUnk1688Entry",
+      "updated": "2026-09-22"
+    },
+    "0x080603E0": {
+      "aliases": [
+        "sub_080603E0"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "Calls sub_08071FC8(gMainWorkPtr->unk1710[i], a) for every i in 0..0x18, i.e. applies one value across a 25-entry table",
+        "Then records the same value at gMainWorkPtr->unk181A, so the table and a mode byte stay in sync",
+        "Note field: battle/call 71FC8 on unk1710 then set unk181A"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlSetAllUnk1710",
       "updated": "2026-09-22"
     },
     "0x08061564": {
@@ -159,6 +248,37 @@
       "kind": "function",
       "source": "ai",
       "symbol": "TextRowSetPaletteBank",
+      "updated": "2026-09-22"
+    },
+    "0x080628B4": {
+      "aliases": [
+        "sub_080628B4"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "Advances a 32-bit LCG state in gMainWorkPtr->unk1800 by the multiplier 0x36F1ACE3 and writes it back",
+        "Scales the high bits ((seed * 0x9FBF1) >> 16) then calls sub_08074264(scaled, a), giving a value in [0, a)",
+        "Call sites treat the result as a bounded value: sub_080628B4(3) passed as a mode, and a result used directly as an array index",
+        "Note field: battle/LCG step unk1800"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "RandRange",
+      "updated": "2026-09-22"
+    },
+    "0x08067890": {
+      "aliases": [
+        "sub_08067890"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "Shifts the triple at gUnk_03000180: unk04 = unk00 (previous <- current), then unk00 += unk08 (current += step)",
+        "Callers read unk00 as the current time and compute elapsed as unk00 - unk04; another stores unk00 into a saved field",
+        "Called once per frame in the battle update loops"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TimerAdvance",
       "updated": "2026-09-22"
     },
     "0x08067B98": {
@@ -264,6 +384,21 @@
       "symbol": "BtlObjListMoveToHead",
       "updated": "2026-09-22"
     },
+    "0x08070678": {
+      "aliases": [
+        "sub_08070678"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "Releases the sub-object at a->unk14 via sub_080700CC",
+        "Then frees the BtlObj at a->unk2C through sub_080705D4 plus BtlObjListMoveToHead, and nulls a->unk2C",
+        "Destructor for Unk7069C, the 4-entry slot array at BattleWork unk023C[4]"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlReleaseEntry",
+      "updated": "2026-09-22"
+    },
     "0x08072F94": {
       "aliases": [
         "sub_08072F94"
@@ -321,6 +456,22 @@
       "kind": "function",
       "source": "ai",
       "symbol": "MemClear",
+      "updated": "2026-09-22"
+    },
+    "0x080735DC": {
+      "aliases": [
+        "sub_080735DC"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Converts a signed s32 to decimal ASCII by repeated div/mod 10 (sub_080674A4 remainder, sub_080674A0 quotient), building digits from the end of a scratch buffer",
+        "Handles the negative case by negating and keeping a sign slot, and takes a special path for zero from gData_083D2708",
+        "Tails into sub_08073218(firstDigit, dst, n) - a copy of the digits into the destination string",
+        "10 callers, all formatting numbers for display"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextFormatInt",
       "updated": "2026-09-22"
     },
     "0x08073988": {

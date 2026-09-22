@@ -19,7 +19,7 @@ void sub_080302E0(struct Unk346C0 *a)
     if (a->unk00->unk00 != 0)
     {
         if ((delta >> 8) > 0x1F)
-            a->unk00->unk00->unk18 = sub_080628B4(2);
+            a->unk00->unk00->unk18 = RandRange(2);
         else
             a->unk00->unk00->unk18 = 2;
         if (a->unk00->unk00->unk30 != 0)

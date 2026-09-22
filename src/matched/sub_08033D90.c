@@ -5,7 +5,7 @@ void sub_08033D90(struct Unk33F30 *a)
 {
     u32 idx;
 
-    idx = sub_080628B4(a->unk1C.p->unk2C);
+    idx = RandRange(a->unk1C.p->unk2C);
     if (a->unk1C.p->unk30 != 0 && a->unk1C.p->unk30[idx] != 0)
     {
         a->unk08 = idx;

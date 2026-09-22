@@ -39,7 +39,7 @@
 
 ## Callers
 
-- `sub_0802BA4C`
+- [`BtlFreeUnk1694Obj`](BtlFreeUnk1694Obj.md)
 - `sub_0802D3F0`
 - `sub_08032908`
 - `sub_08041394`

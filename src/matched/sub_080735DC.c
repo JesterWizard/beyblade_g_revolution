@@ -5,7 +5,7 @@
 // @ 0x080735dc
 s32 sub_08073218(u8 *src, u8 *dst, u32 n);
 
-void sub_080735DC(s32 num, void *dst, u32 n)
+void TextFormatInt(s32 num, void *dst, u32 n)
 {
     u8 buf[0x16];
     u32 sign;

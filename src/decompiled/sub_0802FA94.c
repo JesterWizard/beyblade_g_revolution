@@ -118,7 +118,7 @@ void sub_0802FA94(void)
                 sub_080731F4((u8 *)buffer);
                 record = (*root_loc)->records + base;
                 result = record->unk08;
-                sub_080735DC(result, buffer, 0x10);
+                TextFormatInt(result, buffer, 0x10);
                 TextDrawAlign(buffer, 0xD4, 1);
             }
         }

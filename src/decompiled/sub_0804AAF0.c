@@ -33,7 +33,7 @@ void sub_0804AAF0(void)
             0xC4,
             1);
 
-    sub_080735DC(gUnk_03000660->unk26, buffer, 0x10);
+    TextFormatInt(gUnk_03000660->unk26, buffer, 0x10);
     TextSetCursor(0, 0x40);
     TextDrawAlign(buffer, 0xC4, 1);
     TextSetCursor(0, 0x48);

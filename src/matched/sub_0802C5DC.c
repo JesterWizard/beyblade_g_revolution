@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802c5dc
-s32 sub_0802C5DC(u8 a)
+s32 BtlUnk1694FindAndMark(u8 a)
 {
     s32 i;
     s8 val;

@@ -12,16 +12,24 @@
  */
 
 #define GetIndexedRecordWord sub_0802B8BC
+#define BtlFreeUnk1694Obj sub_0802BA4C
+#define BtlUnk1694FindAndMark sub_0802C5DC
 #define BtlSetTimer118 sub_080314FC
 #define BtlSetMode1F90 sub_080330F4
 #define BtlClearState sub_08033878
 #define BtlCaptureInput sub_08034894
+#define BtlCountLiveSlots sub_0803E440
+#define BtlClearUnk1834 sub_080433F4
+#define BtlClearUnk1688Entry sub_08044EE8
+#define BtlSetAllUnk1710 sub_080603E0
 #define TextDraw sub_08061564
 #define TextSetCursor sub_080615EC
 #define TextSetPaletteBank sub_08061610
 #define TextDrawAlign sub_0806171C
 #define TextGetAreaWidth sub_08061784
 #define TextRowSetPaletteBank sub_08061D68
+#define RandRange sub_080628B4
+#define TimerAdvance sub_08067890
 #define DebugPrint sub_08067B98
 #define BgGetHofsReg sub_08069908
 #define BgGetVofsReg sub_08069948
@@ -29,10 +37,12 @@
 #define BtlObjFree sub_0806A434
 #define BtlObjListMoveHeadToTail sub_0806FEFC
 #define BtlObjListMoveToHead sub_0806FF28
+#define BtlReleaseEntry sub_08070678
 #define GetBtlLookupByte sub_08072F94
 #define BtlObjTableAdd sub_0807309C
 #define BtlObjTableRemove sub_08073114
 #define MemClear sub_08073184
+#define TextFormatInt sub_080735DC
 #define TextMeasureWidth sub_08073988
 
 #endif // GUARD_SYMBOLS_H

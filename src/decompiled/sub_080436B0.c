@@ -127,7 +127,7 @@ void sub_080436B0(void)
             gMainWorkPtr->unk181C = 2;
             (*stateLoc)->unk01 = 0xFF;
             gMainWorkPtr->unk1808 &= ~0x200;
-            sub_080433F4();
+            BtlClearUnk1834();
         }
     }
     else if (phase == 1)

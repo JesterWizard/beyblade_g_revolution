@@ -19,7 +19,7 @@ void sub_080474AC(void)
         pool->unk44--;
         if (pool->unk44 == 0)
         {
-            pool->unk40 = (sub_080628B4(0x1E) + 0x1E) << 6;
+            pool->unk40 = (RandRange(0x1E) + 0x1E) << 6;
             return;
         }
     }
@@ -41,9 +41,9 @@ void sub_080474AC(void)
         for (i = 0; i <= 0x0F; i++)
         {
             slot = pool->unk00[i];
-            slot->unk08 = sub_080628B4(0xE8) << 8;
-            slot->unk0C = sub_080628B4(0x98) << 8;
-            slot->unk18 = sub_080628B4(4);
+            slot->unk08 = RandRange(0xE8) << 8;
+            slot->unk0C = RandRange(0x98) << 8;
+            slot->unk18 = RandRange(4);
         }
     }
 }

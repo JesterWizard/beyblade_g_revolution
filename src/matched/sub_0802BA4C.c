@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802ba4c
-void sub_0802BA4C(void)
+void BtlFreeUnk1694Obj(void)
 {
     void *p;
 

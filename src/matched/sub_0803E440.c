@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0803e440
-s32 sub_0803E440(void)
+s32 BtlCountLiveSlots(void)
 {
     s32 count;
     s32 i;

@@ -57,7 +57,7 @@ void sub_08032908(void)
     entry = &gBattleWork->unk023C[0];
     for (i = 3; i >= 0; i--)
     {
-        sub_08070678(entry);
+        BtlReleaseEntry(entry);
         entry++;
     }
     sub_08062044(&gBattleWork->unk2FC);

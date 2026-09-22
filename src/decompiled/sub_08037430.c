@@ -29,13 +29,13 @@ void sub_08037430(void)
     r0 = 3;
     r1 = (u32)r6;
     r2 = 0x40;
-    sub_080735DC((s32)r0, (void *)r1, r2);
+    TextFormatInt((s32)r0, (void *)r1, r2);
     goto after_count;
 use_count:
     r0 = *(u8 *)r0;
     r1 = (u32)r6;
     r2 = 0x40;
-    sub_080735DC((s32)r0, (void *)r1, r2);
+    TextFormatInt((s32)r0, (void *)r1, r2);
 after_count:
     r1 = 0x08096ECC;
 r0 = (u32)gMainWorkPtr;

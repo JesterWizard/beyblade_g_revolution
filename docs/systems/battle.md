@@ -3,7 +3,7 @@
 
 # battle subsystem
 
-87 functions — 11 named.
+87 functions — 21 named.
 
 | Tier | Functions |
 |------|----------:|
@@ -21,12 +21,12 @@
 | [`BtlObjFree`](../functions/BtlObjFree.md) | `0x0806A434` | UNDERSTOOD | 164 | 25 | 1 | gUnk_03000B30, gUnk_03000B3C |
 | [`BtlObjTableAdd`](../functions/BtlObjTableAdd.md) | `0x0807309C` | MATCHING | 120 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
 | [`BtlObjTableRemove`](../functions/BtlObjTableRemove.md) | `0x08073114` | UNDERSTOOD | 112 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
-| `sub_080735DC` | `0x080735DC` | MATCHING | 132 | 10 | 4 |  |
-| `sub_080628B4` | `0x080628B4` | MATCHING | 48 | 9 | 1 | gMainWorkPtr |
+| [`TextFormatInt`](../functions/TextFormatInt.md) | `0x080735DC` | MATCHING | 132 | 10 | 4 |  |
+| [`RandRange`](../functions/RandRange.md) | `0x080628B4` | MATCHING | 48 | 9 | 1 | gMainWorkPtr |
 | `sub_08068418` | `0x08068418` | UNKNOWN | 272 | 9 | 3 | gUnk_03000180 |
 | `sub_0806A6F8` | `0x0806A6F8` | UNKNOWN | 436 | 8 | 0 | gBtlInputMask, gBtlKeyQueueCount |
 | `sub_080601C4` | `0x080601C4` | MATCHING | 92 | 5 | 3 | gMainWorkPtr |
-| `sub_08070678` | `0x08070678` | MATCHING | 36 | 5 | 3 |  |
+| [`BtlReleaseEntry`](../functions/BtlReleaseEntry.md) | `0x08070678` | MATCHING | 36 | 5 | 3 |  |
 | `sub_080474AC` | `0x080474AC` | DECOMPILED | 232 | 4 | 1 | gMainWorkPtr, gUnk_03000630 |
 | `sub_08061E8C` | `0x08061E8C` | MATCHING | 108 | 4 | 2 |  |
 | `sub_08061EF8` | `0x08061EF8` | UNKNOWN | 332 | 4 | 9 |  |
@@ -36,18 +36,18 @@
 | `sub_08033574` | `0x08033574` | MATCHING | 80 | 3 | 2 | gBattleWork |
 | `sub_080411EC` | `0x080411EC` | DECOMPILED | 346 | 3 | 3 | gBtlKeysHeld |
 | `sub_08062238` | `0x08062238` | MATCHING | 34 | 3 | 2 |  |
-| `sub_08067890` | `0x08067890` | MATCHING | 20 | 3 | 0 | gUnk_03000180 |
+| [`TimerAdvance`](../functions/TimerAdvance.md) | `0x08067890` | MATCHING | 20 | 3 | 0 | gUnk_03000180 |
 | `sub_080302E0` | `0x080302E0` | DECOMPILED | 168 | 2 | 3 | gBattleWork |
 | `sub_08030F38` | `0x08030F38` | DECOMPILED | 348 | 2 | 0 | gBattleWork |
 | [`BtlSetMode1F90`](../functions/BtlSetMode1F90.md) | `0x080330F4` | MATCHING | 72 | 2 | 0 | gBattleWork |
 | [`BtlClearState`](../functions/BtlClearState.md) | `0x08033878` | MATCHING | 108 | 2 | 1 | gBattleWork |
 | [`BtlCaptureInput`](../functions/BtlCaptureInput.md) | `0x08034894` | MATCHING | 84 | 2 | 0 | gBtlInputMask, gBtlKeysHeld |
 | `sub_080353A0` | `0x080353A0` | MATCHING | 200 | 2 | 2 |  |
-| `sub_080433F4` | `0x080433F4` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
-| `sub_08044EE8` | `0x08044EE8` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
+| [`BtlClearUnk1834`](../functions/BtlClearUnk1834.md) | `0x080433F4` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
+| [`BtlClearUnk1688Entry`](../functions/BtlClearUnk1688Entry.md) | `0x08044EE8` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
 | `sub_08046E7C` | `0x08046E7C` | UNKNOWN | 872 | 2 | 26 | gBtlInputMask, gBtlKeysHeld |
 | `sub_08060428` | `0x08060428` | MATCHING | 14 | 2 | 1 |  |
-| `sub_0802C5DC` | `0x0802C5DC` | MATCHING | 78 | 1 | 0 | gMainWorkPtr |
+| [`BtlUnk1694FindAndMark`](../functions/BtlUnk1694FindAndMark.md) | `0x0802C5DC` | MATCHING | 78 | 1 | 0 | gMainWorkPtr |
 | `sub_0802E1EC` | `0x0802E1EC` | MATCHING | 36 | 1 | 1 | gMainWorkPtr |
 | `sub_08030D4C` | `0x08030D4C` | MATCHING | 436 | 1 | 2 | gBattleWork |
 | `sub_0803114C` | `0x0803114C` | DECOMPILED | 184 | 1 | 1 | gBattleWork |
@@ -63,7 +63,7 @@
 | `sub_08035468` | `0x08035468` | DECOMPILED | 308 | 1 | 1 | gBattleWork |
 | `sub_08037430` | `0x08037430` | DECOMPILED | 216 | 1 | 6 | gBattleWork, gMainWorkPtr |
 | `sub_0803D4C4` | `0x0803D4C4` | MATCHING | 88 | 1 | 2 | gBattleWork |
-| `sub_0803E440` | `0x0803E440` | MATCHING | 52 | 1 | 0 | gMainWorkPtr |
+| [`BtlCountLiveSlots`](../functions/BtlCountLiveSlots.md) | `0x0803E440` | MATCHING | 52 | 1 | 0 | gMainWorkPtr |
 | `sub_0804245C` | `0x0804245C` | MATCHING | 140 | 1 | 5 | gMainWorkPtr, gUnk_03000538 |
 | `sub_08042630` | `0x08042630` | MATCHING | 116 | 1 | 1 | gMainWorkPtr, gUnk_03000538 |
 | `sub_080426A4` | `0x080426A4` | MATCHING | 116 | 1 | 1 | gMainWorkPtr, gUnk_03000538 |
@@ -74,11 +74,11 @@
 | `sub_08052FC8` | `0x08052FC8` | MATCHING | 72 | 1 | 9 | gMainWorkPtr |
 | `sub_080602C0` | `0x080602C0` | MATCHING | 14 | 1 | 1 |  |
 | `sub_08060394` | `0x08060394` | MATCHING | 14 | 1 | 1 |  |
-| `sub_080603E0` | `0x080603E0` | MATCHING | 72 | 1 | 1 | gMainWorkPtr |
+| [`BtlSetAllUnk1710`](../functions/BtlSetAllUnk1710.md) | `0x080603E0` | MATCHING | 72 | 1 | 1 | gMainWorkPtr |
 | `sub_080628E4` | `0x080628E4` | MATCHING | 20 | 1 | 0 | gMainWorkPtr |
 | [`BtlObjListMoveHeadToTail`](../functions/BtlObjListMoveHeadToTail.md) | `0x0806FEFC` | MATCHING | 44 | 1 | 0 | gBtlObjListHead, gBtlObjListTail |
 | [`GetBtlLookupByte`](../functions/GetBtlLookupByte.md) | `0x08072F94` | MATCHING | 20 | 1 | 0 | gBtlLookupBase, gBtlLookupPtr |
-| `sub_0802BA4C` | `0x0802BA4C` | MATCHING | 48 | 0 | 1 | gMainWorkPtr, gUnk_03000268 |
+| [`BtlFreeUnk1694Obj`](../functions/BtlFreeUnk1694Obj.md) | `0x0802BA4C` | MATCHING | 48 | 0 | 1 | gMainWorkPtr, gUnk_03000268 |
 | `sub_0803019C` | `0x0803019C` | MATCHING | 268 | 0 | 11 | gBattleWork |
 | `sub_08030638` | `0x08030638` | DECOMPILED | 268 | 0 | 0 | gBattleWork |
 | `sub_08031C98` | `0x08031C98` | DECOMPILED | 150 | 0 | 2 | gBattleWork, gUnk_030002A0 |

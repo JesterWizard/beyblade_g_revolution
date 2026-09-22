@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080628b4
-u32 sub_080628B4(u32 a)
+u32 RandRange(u32 a)
 {
     u32 seed;
 
