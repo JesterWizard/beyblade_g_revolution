@@ -44,7 +44,7 @@ void sub_0802C2B0(u32 a, u32 b)
                 (u8 *)(*loop_loc) + loop_offset);
             scaled_index = index << 2;
             record_reg = (struct Unk1694 *)(
-                (u8 *)record_reg + scaled_index);
+                scaled_index + (u32)record_reg);
             if (record_reg->unk03 == value)
                 record_reg->unk01 = zero;
             index++;
@@ -54,6 +54,6 @@ void sub_0802C2B0(u32 a, u32 b)
     shifted_key = key << 16;
     final_base = final_work->unk1694;
     record_reg = (struct Unk1694 *)(
-        (u8 *)final_base + ((s32)shifted_key >> 14));
+        ((s32)shifted_key >> 14) + (u32)final_base);
     record_reg->unk01 = 1;
 }

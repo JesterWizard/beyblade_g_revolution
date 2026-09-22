@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-22T19:01:07Z_
+_Updated: 2026-09-22T19:06:59Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 406 |
-| Still need semantic C | **227** |
-| Readable Thumb remaining | 227 |
+| Semantic C done | 407 |
+| Still need semantic C | **226** |
+| Readable Thumb remaining | 226 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
@@ -231,7 +231,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802B994` | 0 | 58/58 | `src/wip/sub_0802B994.c` | MATCHED — semantic C in src/matched (permuter: `&row` local forces the loop pointer to be re-read, `-fprologue-bugfix`) | done |
 | `sub_0804495C` | 0 | 34/60 | `src/wip/sub_0804495C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DBD0` | 80 | 23/80 | `src/wip/sub_0803DBD0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08033158` | 46 | 45/46 | `src/wip/sub_08033158.c` | 45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46 | do NOT re-run the default permuter: it reports a false score 0 for this seed (branch-ignoring metric) because the whole remaining delta IS the branch target. Use --strict-branches if ever re-run. Parked otherwise: jump threading is not source-reachable with this agbcc |
+| `sub_08033158` | 0 | 45/46 | `src/wip/sub_08033158.c` | 45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46 | do NOT re-run the default permuter: it reports a false score 0 for this seed (branch-ignoring metric) because the whole remaining delta IS the branch target. Use --strict-branches if ever re-run. Parked otherwise: jump threading is not source-reachable with this agbcc |
 | `sub_08036A68` | 240 | 58/240 | `src/wip/sub_08036A68.c` | 58/240 (24.2%), size 232 vs 240 | permuter or force high-reg live ranges |
 | `sub_08033F30` | 0 | 16/24 | `src/wip/sub_08033F30.c` | 16/24 same-size, branch layout inverted | permuter branch-order search |
 | `sub_08069F00` | 24 | 11/24 | `src/wip/sub_08069F00.c` | 11/24 same-size, r0/r1 coalescing: retail keeps `adds r1,r0,#0` (copy) and compares r0, agbcc coalesces the copy and emits a trailing nop. This session: 13 more shapes (2- and 3-deep copy chains, u32 copy, operator variants on the sign test, split `r = p;` statement) — every one byte-identical at 11/24, so agbcc's copy coalescing always wins | park: the extra copy is a pre-coalescing compiler artifact; not source-reachable with this agbcc. Leave the readable Thumb wrapper |

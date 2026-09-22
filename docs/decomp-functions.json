@@ -1,8 +1,8 @@
 {
-  "generated": "2026-09-22T19:01:08Z",
+  "generated": "2026-09-22T19:07:00Z",
   "counts": {
-    "matched": 408,
-    "wip": 137,
+    "matched": 409,
+    "wip": 136,
     "blocked": 4,
     "not_started": 84
   },
@@ -1167,19 +1167,19 @@
     {
       "name": "sub_08033158",
       "addr": "0x08033158",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 46,
-      "matched_bytes": 45,
-      "compiled_bytes": 0,
-      "pct": 97.8,
-      "score": "45/46",
-      "source": "wip",
-      "note": "45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = b;` shape fixed the tail compare register (`cmp r1,#0`). Remaining 2 bytes are the loop-exit `beq` target: retail threads it to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`. 8 hand variants (plain `r = b; if (b==0) r = 1;`, if/else, for-loop, `!b`, `!b`/else, ternary) all floor at 44-45/46"
+      "matched_bytes": 46,
+      "compiled_bytes": 46,
+      "pct": 100.0,
+      "score": "46/46",
+      "source": "integrated",
+      "note": ""
     },
     {
       "name": "sub_08033188",

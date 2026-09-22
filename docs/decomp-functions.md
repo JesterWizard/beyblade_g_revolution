@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-22T19:01:08Z_
+_Updated: 2026-09-22T19:07:00Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 408 |
+| matched | 409 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 137 |
+| WIP (parked C) | 136 |
 | not started | 84 |
 | blocked | 4 |
 | **total** | **633** |
@@ -36,7 +36,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
 | `sub_08073988` | WIP (parked C) | 97.9% | 94/96 | 94/96; table constant lands in r2, retail materialises it in the free r0. Re-… |
-| `sub_08033158` | WIP (parked C) | 97.8% | 45/46 | 45/46 (97.8%) with old_agbcc; the permuter's `if (b || sign) r = b; else r = … |
 | `sub_08040F4C` | WIP (parked C) | 94.9% | 319/336 | 319/336; done in r4 vs r5 |
 | `sub_080442FC` | WIP (parked C) | 93.1% | 134/144 | 134/144; a in r4 vs r5 (gData symbols fixed pool fold) |
 | `sub_0802C2B0` | WIP (parked C) | 92.0% | 92/100 | 92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `add… |
@@ -178,7 +177,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
 | `sub_08073988` | `0x08073988` | WIP (parked C) | 97.9% | 94/96 | asm |
-| `sub_08033158` | `0x08033158` | WIP (parked C) | 97.8% | 45/46 | asm |
 | `sub_08040F4C` | `0x08040F4C` | WIP (parked C) | 94.9% | 319/336 | asm |
 | `sub_080442FC` | `0x080442FC` | WIP (parked C) | 93.1% | 134/144 | asm |
 | `sub_0802C2B0` | `0x0802C2B0` | WIP (parked C) | 92.0% | 92/100 | asm |
@@ -583,6 +581,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806DEC8` | `0x0806DEC8` | matched | 100.0% | 44/44 | semantic |
 | `sub_0806F174` | `0x0806F174` | matched | 100.0% | 44/44 | semantic |
 | `sub_0806FEFC` | `0x0806FEFC` | matched | 100.0% | 44/44 | semantic |
+| `sub_08033158` | `0x08033158` | matched | 100.0% | 46/46 | semantic |
 | `sub_08059D08` | `0x08059D08` | matched | 100.0% | 46/46 | semantic |
 | `sub_0802BA4C` | `0x0802BA4C` | matched | 100.0% | 48/48 | semantic |
 | `sub_080405E8` | `0x080405E8` | matched | 100.0% | 48/48 | semantic |
