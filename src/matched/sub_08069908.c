@@ -4,7 +4,7 @@
 
 // @ 0x08069908
 /* match-compiler: old_agbcc */
-u16 *sub_08069908(u8 sel)
+u16 *BgGetHofsReg(u8 sel)
 {
     switch (sel)
     {

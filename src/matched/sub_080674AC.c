@@ -1,7 +1,8 @@
 #include "global.h"
 
 // @ 0x080674ac
-void sub_080674AC(void)
+void sub_080674AC(void *a, void *b)
+
 {
     asm("swi 17");
 }

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T21:06:20Z",
+  "generated": "2026-09-22T21:36:15Z",
   "total": 633,
   "functions": [
     {
@@ -13736,8 +13736,8 @@
       "size": 136,
       "kind": "asm",
       "status": "not_started",
-      "tier": "DECOMPILED",
-      "symbol": "",
+      "tier": "UNDERSTOOD",
+      "symbol": "TextDraw",
       "note": "battle/readable-thumb",
       "insn_count": 60,
       "offsets": [
@@ -13773,7 +13773,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "TextSetCursor",
       "note": "clamp x/y then store Unk0798 unk90/unk92; -fprologue-bugfix; u32 args",
       "insn_count": 16,
       "offsets": [
@@ -13832,7 +13832,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "TextSetPaletteBank",
       "note": "semantic/phase3b",
       "insn_count": 10,
       "offsets": [
@@ -13907,7 +13907,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "TextDrawAlign",
       "note": "Text draw wrapper: measures a bounded string, selects alignment mode, updates the shared text state, and renders the command stream.",
       "insn_count": 47,
       "offsets": [
@@ -13967,7 +13967,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "TextGetAreaWidth",
       "note": "semantic C",
       "insn_count": 5,
       "offsets": [
@@ -14527,7 +14527,7 @@
       "kind": "asm",
       "status": "not_started",
       "tier": "UNDERSTOOD",
-      "symbol": "BgMapSetPaletteBankRun",
+      "symbol": "TextRowSetPaletteBank",
       "note": "readable-thumb",
       "insn_count": 40,
       "offsets": [
@@ -18244,7 +18244,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BgGetHofsReg",
       "note": "returns the palette/scroll reg pointer for a 4-way selector",
       "insn_count": 23,
       "offsets": [],
@@ -18273,7 +18273,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BgGetVofsReg",
       "note": "returns the palette/scroll reg pointer for a 4-way selector",
       "insn_count": 23,
       "offsets": [],
@@ -22273,8 +22273,8 @@
       "size": 96,
       "kind": "asm",
       "status": "same_size",
-      "tier": "DECOMPILED",
-      "symbol": "",
+      "tier": "UNDERSTOOD",
+      "symbol": "TextMeasureWidth",
       "note": "string width parser; table[ch] then base[idx]",
       "insn_count": 46,
       "offsets": [

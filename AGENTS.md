@@ -145,6 +145,8 @@ bash build_tools.sh
 | Unblock symbols | `tools/decomp/unblock_symbols.py` | Draft prototypes for `bl _080…` |
 | Try convert | `tools/decomp/try_convert.py` | One-function patterns + cleaned m2c |
 | Verify C | `tools/decomp/match_function.py` | Compile + compact DIFF vs retail |
+| C compile audit | `tools/decomp/audit_c_compiles.py` | `make audit` — find matched C that will not compile |
+| Signature repair | `tools/decomp/repair_naked_signatures.py` | `make repair-signatures` — align defs with prototypes |
 | Word diff | `tools/decomp/worddiff.py` | Word-aligned retail-vs-compiled table (16-bit words, DIFF flagged) |
 | Variant sweep | `tools/decomp/test_variants.py` | Test many `@@BODY@@` source variants against one function |
 | Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |

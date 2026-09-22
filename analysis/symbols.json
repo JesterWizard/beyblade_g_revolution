@@ -1,6 +1,6 @@
 {
-  "count": 15,
-  "generated": "2026-09-22T21:06:07Z",
+  "count": 23,
+  "generated": "2026-09-22T21:32:48Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -73,20 +73,92 @@
       "symbol": "BtlCaptureInput",
       "updated": "2026-09-22"
     },
-    "0x08061D68": {
+    "0x08061564": {
       "aliases": [
-        "sub_08061D68"
+        "sub_08061564"
       ],
-      "confidence": 0.7,
+      "confidence": 0.8,
       "evidence": [
-        "Writes 16-bit BG tilemap entries at 0x06000000 + (u8)gUnk_03000798[0x5C]*0x800 + (arg0&0x1F)*0x40",
-        "Read-modify-write: ANDs 0x3FF to preserve flip/priority bits, ORs (arg1&0xF)<<12 (palette bank)",
-        "Loops columns min(arg2,arg3)..max(arg2,arg3) - a horizontal run on one 32-entry tilemap row",
-        "29 callers are scene/BG setup routines"
+        "Walks the string byte-by-byte; byte 0x0A resets cursor x (+0x90) to 0 and advances cursor y (+0x92) by the line height at +0xA2",
+        "Handles control codes 0x07/0x08 like TextMeasureWidth, the sibling width measurer"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BgMapSetPaletteBankRun",
+      "symbol": "TextDraw",
+      "updated": "2026-09-22"
+    },
+    "0x080615EC": {
+      "aliases": [
+        "sub_080615EC"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Clamps x>0xEF and y>0x9F to 0 (GBA screen bounds 240x160) then stores the pair at Unk0798 +0x90/+0x92",
+        "Callers pass y as a row stride (0x40, 0x50, 0x60...) with x=0, then call TextDrawAlign which derives x from measured width"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextSetCursor",
+      "updated": "2026-09-22"
+    },
+    "0x08061610": {
+      "aliases": [
+        "sub_08061610"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "Stores (a & 15) << 12 into Unk0798 +0x96 - bits 12-15 are the GBA BG tilemap palette-bank field",
+        "Callers alternate it with 0x0E/0x0F immediately before recolouring a text row"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextSetPaletteBank",
+      "updated": "2026-09-22"
+    },
+    "0x0806171C": {
+      "aliases": [
+        "sub_0806171C"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Three modes assign cursor x from the same index: mode 0 = index - width/2 (centre), 1 = index - width (right), 2 = index (left)",
+        "Derives width from TextMeasureWidth(data, unk8C, unkA0, unk9C) then tail-calls the glyph walker",
+        "Bounds-checks index >= unk98 (text area width) and returns without drawing"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextDrawAlign",
+      "updated": "2026-09-22"
+    },
+    "0x08061784": {
+      "aliases": [
+        "sub_08061784"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Returns gUnk_03000798->unk98, the same field TextDrawAlign bounds-checks the x index against",
+        "Callers use it as TextDrawAlign(data, TextGetAreaWidth() >> 1, 0) - halved width means horizontally centred"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGetAreaWidth",
+      "updated": "2026-09-22"
+    },
+    "0x08061D68": {
+      "aliases": [
+        "sub_08061D68",
+        "BgMapSetPaletteBankRun"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "Writes the palette-bank field into a horizontal run of BG tilemap entries, columns arg2..arg3 (callers pass 2..0x1B = 26 cells, one text row)",
+        "Address = BG base + (u8)gUnk_03000798[0x5C]*0x800 + (arg0&0x1F)*0x40, one 32-cell tilemap row",
+        "Read-modify-write preserves flip/priority bits via AND 0x3FF while ORing (arg1&0xF)<<12",
+        "Supersedes the earlier less specific name BgMapSetPaletteBankRun; callers are all text drawing code"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextRowSetPaletteBank",
       "updated": "2026-09-22"
     },
     "0x08067B98": {
@@ -102,6 +174,33 @@
       "kind": "function",
       "source": "ai",
       "symbol": "DebugPrint",
+      "updated": "2026-09-22"
+    },
+    "0x08069908": {
+      "aliases": [
+        "sub_08069908"
+      ],
+      "confidence": 0.95,
+      "evidence": [
+        "Returns 0x04000010 + sel*4 for sel 0..3 - GBA BGxHOFS registers (BG0..BG3 horizontal scroll)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgGetHofsReg",
+      "updated": "2026-09-22"
+    },
+    "0x08069948": {
+      "aliases": [
+        "sub_08069948"
+      ],
+      "confidence": 0.95,
+      "evidence": [
+        "Returns 0x04000012 + sel*4 for sel 0..3 - GBA BGxVOFS registers (BG0..BG3 vertical scroll)",
+        "Exact +2 offset from BgGetHofsReg, matching the HOFS/VOFS register layout"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgGetVofsReg",
       "updated": "2026-09-22"
     },
     "0x0806A3A4": {
@@ -222,6 +321,20 @@
       "kind": "function",
       "source": "ai",
       "symbol": "MemClear",
+      "updated": "2026-09-22"
+    },
+    "0x08073988": {
+      "aliases": [
+        "sub_08073988"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "Walks a NUL-terminated byte string accumulating widths via a table lookup indexed by character",
+        "Treats 0x07/0x08/0x0A as control codes; result is halved to centre text in TextDrawAlign"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextMeasureWidth",
       "updated": "2026-09-22"
     }
   }

@@ -3,7 +3,7 @@
 // @ 0x080615ec
 /* match-flags: -fprologue-bugfix */
 
-void sub_080615EC(u32 x, u32 y)
+void TextSetCursor(u32 x, u32 y)
 {
     u32 r2;
     u32 r3;

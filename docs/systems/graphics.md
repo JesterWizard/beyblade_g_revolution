@@ -3,7 +3,7 @@
 
 # graphics subsystem
 
-34 functions — 1 named.
+34 functions — 7 named.
 
 | Tier | Functions |
 |------|----------:|
@@ -15,14 +15,14 @@
 
 | Function | Address | Tier | Size | Callers | Callees | RAM |
 |----------|---------|------|-----:|--------:|--------:|-----|
-| `sub_080615EC` | `0x080615EC` | MATCHING | 36 | 31 | 0 | gUnk_03000798 |
-| `sub_0806171C` | `0x0806171C` | MATCHING | 104 | 29 | 2 | gUnk_03000798 |
-| [`BgMapSetPaletteBankRun`](../functions/BgMapSetPaletteBankRun.md) | `0x08061D68` | UNDERSTOOD | 88 | 29 | 0 | gUnk_03000798 |
-| `sub_08061784` | `0x08061784` | MATCHING | 16 | 20 | 0 | gUnk_03000798 |
+| [`TextSetCursor`](../functions/TextSetCursor.md) | `0x080615EC` | MATCHING | 36 | 31 | 0 | gUnk_03000798 |
+| [`TextDrawAlign`](../functions/TextDrawAlign.md) | `0x0806171C` | MATCHING | 104 | 29 | 2 | gUnk_03000798 |
+| [`TextRowSetPaletteBank`](../functions/TextRowSetPaletteBank.md) | `0x08061D68` | UNDERSTOOD | 88 | 29 | 0 | gUnk_03000798 |
+| [`TextGetAreaWidth`](../functions/TextGetAreaWidth.md) | `0x08061784` | MATCHING | 16 | 20 | 0 | gUnk_03000798 |
 | `sub_080617C4` | `0x080617C4` | MATCHING | 60 | 17 | 0 | gUnk_03000798 |
-| `sub_08061610` | `0x08061610` | MATCHING | 24 | 11 | 0 | gUnk_03000798 |
-| `sub_08069908` | `0x08069908` | MATCHING | 64 | 4 | 0 |  |
-| `sub_08069948` | `0x08069948` | MATCHING | 64 | 4 | 0 |  |
+| [`TextSetPaletteBank`](../functions/TextSetPaletteBank.md) | `0x08061610` | MATCHING | 24 | 11 | 0 | gUnk_03000798 |
+| [`BgGetHofsReg`](../functions/BgGetHofsReg.md) | `0x08069908` | MATCHING | 64 | 4 | 0 |  |
+| [`BgGetVofsReg`](../functions/BgGetVofsReg.md) | `0x08069948` | MATCHING | 64 | 4 | 0 |  |
 | `sub_0802E048` | `0x0802E048` | DECOMPILED | 228 | 1 | 4 | gMainWorkPtr, gUnk_0300026C |
 | `sub_08031300` | `0x08031300` | DECOMPILED | 78 | 1 | 2 |  |
 | `sub_080442FC` | `0x080442FC` | DECOMPILED | 144 | 1 | 5 | gMainWorkPtr |

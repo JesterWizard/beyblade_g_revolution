@@ -4,7 +4,7 @@
 
 // @ 0x08069948
 /* match-compiler: old_agbcc */
-u16 *sub_08069948(u8 sel)
+u16 *BgGetVofsReg(u8 sel)
 {
     switch (sel)
     {

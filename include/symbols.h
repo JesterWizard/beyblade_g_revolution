@@ -16,8 +16,15 @@
 #define BtlSetMode1F90 sub_080330F4
 #define BtlClearState sub_08033878
 #define BtlCaptureInput sub_08034894
-#define BgMapSetPaletteBankRun sub_08061D68
+#define TextDraw sub_08061564
+#define TextSetCursor sub_080615EC
+#define TextSetPaletteBank sub_08061610
+#define TextDrawAlign sub_0806171C
+#define TextGetAreaWidth sub_08061784
+#define TextRowSetPaletteBank sub_08061D68
 #define DebugPrint sub_08067B98
+#define BgGetHofsReg sub_08069908
+#define BgGetVofsReg sub_08069948
 #define BtlObjAlloc sub_0806A3A4
 #define BtlObjFree sub_0806A434
 #define BtlObjListMoveHeadToTail sub_0806FEFC
@@ -26,5 +33,6 @@
 #define BtlObjTableAdd sub_0807309C
 #define BtlObjTableRemove sub_08073114
 #define MemClear sub_08073184
+#define TextMeasureWidth sub_08073988
 
 #endif // GUARD_SYMBOLS_H

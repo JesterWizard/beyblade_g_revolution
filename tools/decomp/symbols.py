@@ -306,9 +306,21 @@ def put(
                 f"({existing.get('symbol')}) outranks {source}"
             )
 
+    aliases = [label_for(key)]
+    if existing:
+        # Keep the previous readable name as an alias. `apply` has already
+        # rewritten source to use it, so dropping it would leave those call
+        # sites referring to an identifier that symbols.h no longer defines.
+        previous = existing.get("symbol")
+        if previous and previous != symbol:
+            aliases.append(str(previous))
+        for alias in existing.get("aliases") or []:
+            if alias not in aliases:
+                aliases.append(str(alias))
+
     data["symbols"][key] = {
         "symbol": symbol,
-        "aliases": [label_for(key)],
+        "aliases": aliases,
         "kind": kind,
         "confidence": round(float(confidence), 2),
         "source": source,
@@ -458,7 +470,14 @@ def cmd_apply(args: argparse.Namespace) -> int:
         print("no emittable symbols — nothing to apply")
         return 0
 
-    replacements = {label_for(key): symbol for key, symbol in emitted.items()}
+    replacements: dict[str, str] = {}
+    for key, symbol in emitted.items():
+        replacements[label_for(key)] = symbol
+        # Also rewrite any previous readable name for this address, so a
+        # renamed symbol does not strand source that already uses the old one.
+        entry = data["symbols"].get(key) or {}
+        for alias in entry.get("aliases") or []:
+            replacements.setdefault(str(alias), symbol)
 
     touched = 0
     edits = 0

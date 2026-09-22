@@ -27,8 +27,8 @@ void sub_08069894(void)
     zero = 0;
     while (i <= 3)
     {
-        *sub_08069908(i) = zero;
-        *sub_08069948(i) = zero;
+        *BgGetHofsReg(i) = zero;
+        *BgGetVofsReg(i) = zero;
         i = (u8)(i + 1);
     }
 

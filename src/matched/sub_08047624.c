@@ -2,7 +2,7 @@
 
 // @ 0x08047624
 __attribute__((naked))
-void sub_08047624(void)
+s32 sub_08047624(u32 mode)
 {
     asm(".syntax unified\npush {r4, r5, lr}\nlsls r0, r0, #0x18\nlsrs r1, r0, #0x18\nadds r4, r1, #0x0\nldr r0, _08047654 @ =0x03000198\nldr r2, [r0, #0x00]\nmovs r3, #0xDC\nlsls r3, r3, #0x02\nadds r0, r2, r3\nldr r0, [r0, #0x00]\nasrs r3, r0, #0x08\nmovs r5, #0xDD\nlsls r5, r5, #0x02\nadds r0, r2, r5\nldr r0, [r0, #0x00]\nasrs r0, r0, #0x08\nmovs r2, #0x00\ncmp r1, #0x01\nbeq _0804767C\ncmp r1, #0x01\nbgt _08047658\ncmp r1, #0x00\nbeq _08047662\nb _080476CC\n_08047654: .4byte 0x03000198\n_08047658:\ncmp r4, #0x02\nbeq _08047696\ncmp r4, #0x03\nbeq _080476B2\nb _080476CC\n_08047662:\nsubs r1, r3, #0x1\nmovs r0, #0x07\nands r0, r1\ncmp r0, #0x00\nbeq _080476AE\nmovs r3, #0x07\n_0804766E:\nsubs r1, #0x01\nadds r2, #0x01\nadds r0, r1, #0x0\nands r0, r3\ncmp r0, #0x00\nbne _0804766E\nb _080476AE\n_0804767C:\nadds r1, r3, #0x1\nmovs r0, #0x07\nands r0, r1\ncmp r0, #0x00\nbeq _080476AE\nmovs r3, #0x07\n_08047688:\nadds r1, #0x01\nadds r2, #0x01\nadds r0, r1, #0x0\nands r0, r3\ncmp r0, #0x00\nbne _08047688\nb _080476AE\n_08047696:\nsubs r1, r0, #0x1\nmovs r0, #0x07\nands r0, r1\ncmp r0, #0x00\nbeq _080476AE\nmovs r3, #0x07\n_080476A2:\nsubs r1, #0x01\nadds r2, #0x01\nadds r0, r1, #0x0\nands r0, r3\ncmp r0, #0x00\nbne _080476A2\n_080476AE:\nadds r0, r2, #0x0\nb _080476CC\n_080476B2:\nadds r1, r0, #0x1\nmovs r0, #0x07\nands r0, r1\ncmp r0, #0x00\nbeq _080476CA\nmovs r3, #0x07\n_080476BE:\nadds r1, #0x01\nadds r2, #0x01\nadds r0, r1, #0x0\nands r0, r3\ncmp r0, #0x00\nbne _080476BE\n_080476CA:\nadds r0, r2, #0x0\n_080476CC:\npop {r4, r5}\npop {r1}\nbx r1");
 }

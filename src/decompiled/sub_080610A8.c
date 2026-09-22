@@ -10,7 +10,7 @@ void sub_080610A8(
 
     if (base == 0 || index >= base->unk98)
         return;
-    value = sub_08073988(text, base->unk8C, base->unkA0, base->unk9C);
+    value = TextMeasureWidth(text, base->unk8C, base->unkA0, base->unk9C);
     switch (mode)
     {
     case 1:

@@ -40,7 +40,7 @@ void sub_0802ECD8(void)
     s32 amount;
     s32 base;
 
-    sub_08061784();
+    TextGetAreaWidth();
     buffer = BtlObjTableAdd(0x10);
     i = 0;
     root_loc = (struct Unk2ECD8Root **)gUnk_03000278;
@@ -52,7 +52,7 @@ void sub_0802ECD8(void)
         record = (*root_loc)->records + base;
         if (record->unk0C >= 0)
         {
-            sub_080615EC(0, (i << 4) + 0x40);
+            TextSetCursor(0, (i << 4) + 0x40);
             if (i == (*root_loc)->unk138)
             {
                 result = _080563A8(record->unk0D, record->unk0C);
@@ -64,15 +64,15 @@ void sub_0802ECD8(void)
                     sub_08070AD4(
                         (struct Unk7069C *)&(*root_loc)->unkF8,
                         record->unk04, 0x0F);
-                sub_08061610(0x0E);
-                BgMapSetPaletteBankRun(x >> 16, 0x0E, 2, 0x1B);
-                BgMapSetPaletteBankRun(y >> 16, 0x0E, 2, 0x1B);
+                TextSetPaletteBank(0x0E);
+                TextRowSetPaletteBank(x >> 16, 0x0E, 2, 0x1B);
+                TextRowSetPaletteBank(y >> 16, 0x0E, 2, 0x1B);
             }
             else
             {
-                sub_08061610(0x0F);
-                BgMapSetPaletteBankRun(x >> 16, 0x0F, 2, 0x1B);
-                BgMapSetPaletteBankRun(y >> 16, 0x0F, 2, 0x1B);
+                TextSetPaletteBank(0x0F);
+                TextRowSetPaletteBank(x >> 16, 0x0F, 2, 0x1B);
+                TextRowSetPaletteBank(y >> 16, 0x0F, 2, 0x1B);
             }
             if (base < (*root_loc)->unk130 - 1)
             {
@@ -94,11 +94,11 @@ void sub_0802ECD8(void)
                         record->unk0D, record->unk0C, mode);
                 }
                 sub_080735DC(result, buffer, 0x10);
-                sub_0806171C(buffer, 0xD4, 1);
+                TextDrawAlign(buffer, 0xD4, 1);
             }
         }
         record = (*root_loc)->records + base;
-        sub_0806171C(record->unk04, 0x0C, 2);
+        TextDrawAlign(record->unk04, 0x0C, 2);
         x += 0x800;
         y += 0x800;
         i++;

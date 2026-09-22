@@ -148,11 +148,34 @@ The scoreboard `docs/decomp-functions.md` is unchanged and stays the
 ```
 
 Every stage is also directly runnable and has a `make` target:
-`make analyze`, `make symbols`, `make tier`, `make document`, `make status`.
+`make analyze`, `make symbols`, `make tier`, `make document`, `make status`,
+`make audit`, `make repair-signatures`.
+
+## Verifying the C corpus itself
+
+`make compare` proves the **ROM** is reproduced. It does **not** prove the C is
+valid, because matched C is never linked — the Makefile's `C_SRCS` is empty and
+the ROM links generated `asm/matchings/*.s` at fixed VMAs. A file can therefore be
+counted as matched while not compiling at all.
+
+`make audit` closes that gap: it compiles every `src/matched/*.c` standalone
+through agbcc (honouring each file's `match-flags` / `match-compiler` comments)
+and reports the first diagnostic. It must report **0 failures**.
+
+The dominant defect it finds is a signature that disagrees with
+`include/unknown-functions.h` — usually a `__attribute__((naked))` wrapper declared
+`(void)` against a real parameter list. `make repair-signatures` copies the
+prototype's return type and parameter list into the definition, re-runs
+`match_function.py` on every file it touches, and reverts any whose match
+regresses, since a signature change *can* alter codegen for an ordinary function.
+
 
 ## Non-negotiables
 
-- **`make compare` stays `OK`.** It is the only objective correctness signal.
+- **`make compare` stays `OK`.** It is the only objective correctness signal for
+  the ROM.
+- **`make audit` reports `0` failures.** `make compare` cannot see the C, so the
+  C corpus needs its own gate.
 - The naming layer is alias-only: no file renames, no manifest changes, no
   linker edits. A hard-rename command is explicitly out of scope.
 - A wrong name must stay cheap to revert — guaranteed by the generated-view

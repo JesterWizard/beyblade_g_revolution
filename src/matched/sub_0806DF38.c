@@ -2,7 +2,7 @@
 
 // @ 0x0806df38
 __attribute__((naked))
-void sub_0806DF38(void)
+u16 sub_0806DF38(void *a, struct UnkDF38Entry *out, s32 matchVal, u32 maxCount)
 {
     asm(
         ".syntax unified\n"

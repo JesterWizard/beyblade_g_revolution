@@ -11,11 +11,11 @@ void sub_0804A4E0(struct Unk2F520 *a)
     field2FC = a->unk2FC;
     sub_08061BE8();
     doubled = ((s32)field2FC << 24) >> 23;
-    BgMapSetPaletteBankRun((u16)(doubled + 5), 0xF, 4, 0x1A);
+    TextRowSetPaletteBank((u16)(doubled + 5), 0xF, 4, 0x1A);
     doubled = doubled + 6;
-    BgMapSetPaletteBankRun((u16)doubled, 0xF, 4, 0x1A);
+    TextRowSetPaletteBank((u16)doubled, 0xF, 4, 0x1A);
     doubled = ((s32)field2D5 << 24) >> 23;
-    BgMapSetPaletteBankRun((u16)(doubled + 5), 0xE, 4, 0x1A);
+    TextRowSetPaletteBank((u16)(doubled + 5), 0xE, 4, 0x1A);
     doubled = doubled + 6;
-    BgMapSetPaletteBankRun((u16)doubled, 0xE, 4, 0x1A);
+    TextRowSetPaletteBank((u16)doubled, 0xE, 4, 0x1A);
 }

@@ -1,6 +1,6 @@
 #include "global.h"
 
-void sub_08061564(u8 *data)
+void TextDraw(u8 *data)
 {
     u8 *cursor;
     u8 opcode;
@@ -13,7 +13,7 @@ void sub_08061564(u8 *data)
     {
         if (opcode == 8)
         {
-            sub_08061610(*cursor);
+            TextSetPaletteBank(*cursor);
             cursor++;
         }
         else
@@ -39,7 +39,7 @@ void sub_08061564(u8 *data)
             {
                 goto unknown_opcode;
             }
-            sub_080615EC(*cursor++, *cursor++);
+            TextSetCursor(*cursor++, *cursor++);
             goto next_opcode;
         }
         goto next_opcode;

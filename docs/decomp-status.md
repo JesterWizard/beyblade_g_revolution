@@ -21,6 +21,95 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-22 — matched-C integrity fix: 65 files did not compile
+
+Found while verifying a rename: **65 of the 633 files counted as matched could not
+be compiled at all** (568 clean, 65 failing). All 65 failed with agbcc's
+`conflicting types`, because a `__attribute__((naked))` wrapper was declared
+`(void)` while `include/unknown-functions.h` declares the real parameter list —
+plus a handful of wrong return types (`void` vs `s32`, `void` vs `void *`) and one
+wrong parameter type (`u32 a` vs `u16 a`).
+
+This was **pre-existing and independent of naming** (the sampled offender
+`sub_0803114C` is unchanged at `HEAD` and is not in `symbols.json`), and nothing
+caught it: `make compare` is green because matched C is never linked — the
+Makefile's `C_SRCS` is empty and the ROM links generated `asm/matchings/*.s`. So
+the "403/633 semantic C" figure was resting in part on source that does not
+compile.
+
+- **`tools/decomp/audit_c_compiles.py`** (`make audit`): compiles every
+  `src/matched/*.c` standalone through agbcc, honouring each file's
+  `match-flags` / `match-compiler` comments, and reports the first diagnostic.
+- **`tools/decomp/repair_naked_signatures.py`** (`make repair-signatures`): copies
+  the prototype's return type and parameter list into a definition whose signature
+  disagrees. Deliberately narrow — it only rewrites a definition anchored by a
+  `__attribute__((naked))` line or that is the file's own top-level definition of
+  its own stem, because a loose pattern over `src/matched/*.c` also matches call
+  sites and forward declarations (an earlier draft "repaired" 290 files that way).
+  It only touches files that actually fail to compile, so a signature differing
+  solely in parameter *names* is left as is — 27 such files were skipped as
+  cosmetic.
+- Applied to 63 files plus 2 hand-fixed (`sub_08073988`, which a rename had
+  renamed to `TextMeasureWidth`). A signature change *can* alter codegen for an
+  ordinary function, so every touched file was re-checked with
+  `match_function.py`: **63 kept, 0 reverted** — no match regressed.
+
+**Result: `make audit` 633/633 clean (was 568), `make compare` OK** (forced full
+rebuild). The C corpus is now verifiable from its own sources.
+
+### 2026-09-22 — text/BG naming batch; target-picker fix; 1 blocked
+
+No new byte-matches (the matching axis remains blocked on a compiler
+behavioural difference; see below). Naming advanced 15 → 23 and the session
+target picker was repaired.
+
+- **`agent_packet.py --next` was picking the wrong end of the queue.** All 15
+  `small_clean` plus all 4 `leaf_branch` and all 77 `large` targets are parked
+  seeds, so the old two-pass logic (fresh targets first, parked seeds only as a
+  last resort) skipped every cheap bucket and returned a fresh **1552-byte
+  `high_reg_pressure`** function — the most expensive target in the ROM. It also
+  never looked at `leaf_branch` at all. Rewritten so the difficulty bucket is the
+  primary key and parked-vs-fresh is only a tiebreak inside a bucket; `--next`
+  now returns a 78-byte seed. `leaf_branch` is now reachable.
+- **`symbols.py`: renaming an already-applied symbol corrupted the source.** The
+  rewriter only mapped `sub_XXXXXXXX` → readable name, and `put` discarded the
+  previous name. So re-naming an already-migrated function left the old readable
+  identifier in every call site while `symbols.h` stopped defining it — a compile
+  error. Now the superseded name is retained in `aliases[]` and `apply` rewrites
+  every alias. Caught by re-naming `BgMapSetPaletteBankRun` → `TextRowSetPaletteBank`
+  (23 files were in the broken state); repaired and re-verified.
+- **Text rendering subsystem identified.** The `graphics`-classified cluster around
+  `gUnk_03000798` is a text engine, established from the call sites rather than
+  guessed: `TextDrawAlign(data, x, mode)` aligns by measured string width across
+  three modes (0 = centre, 1 = right, 2 = left); callers write
+  `TextDrawAlign(d, TextGetAreaWidth() >> 1, 0)` to centre. The nine new names:
+  - `sub_08069908` → `BgGetHofsReg`, `sub_08069948` → `BgGetVofsReg` (conf 0.95) —
+    `0x04000010|0x04000012 + sel*4`, the GBA BGxHOFS/BGxVOFS register pair.
+  - `sub_080615EC` → `TextSetCursor`, `sub_08061784` → `TextGetAreaWidth`,
+    `sub_0806171C` → `TextDrawAlign`, `sub_08061610` → `TextSetPaletteBank`,
+    `sub_08061564` → `TextDraw`, `sub_08073988` → `TextMeasureWidth` (0.8–0.85).
+  - `sub_08061D68` → `TextRowSetPaletteBank` (0.7), refining the previous
+    less-specific `BgMapSetPaletteBankRun` now that its callers are known to be
+    text code.
+  Engine layout recovered: `+0x90` cursor x, `+0x92` cursor y, `+0x96` palette
+  bank, `+0x98` text area width, `+0xA0/+0xA2` byte size and line height, `+0x9C`
+  size in words.
+- **`make compare` after the batch: OK.** Verified with a forced full rebuild
+  (`rm` the `.gba` and ELF) plus per-function `match_function.py` re-checks of four
+  rewritten callers — all still 100%.
+
+### Blocker: `sub_08031300` (parked, do not re-attempt)
+
+Wrote clean semantic C for the 78-byte text-palette tick. Result: **same size
+(78/78), 22/78 bytes matched** — the best result seen for it. A 6-shape variant
+sweep on both compilers scored 15–31/78 and the local permuter (240 s × 8 jobs)
+found no score 0 (best 920). The mismatch is a register **destination** choice:
+retail keeps the incoming parameter in `r2` and gives `r1` to the shifted palette
+value, while agbcc coalesces it into `r1`. Control flow and size are identical;
+only the register and its dependent operands differ. Same family as the
+`sub_08061308` finding, so it is unlikely to be reachable by source reshaping.
+Full reasoning in `src/decompiled/sub_08031300.md`.
+
 ### 2026-09-22 — pipeline rework: analysis DB, DECOMPILED tier, naming layer
 
 No new byte-matches this batch. This restructures the workflow so matching is one

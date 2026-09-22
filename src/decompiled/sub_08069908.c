@@ -5,7 +5,7 @@
 
 /* match-flags: -fprologue-bugfix */
 
-u16 *sub_08069908(u8 a)
+u16 *BgGetHofsReg(u8 a)
 {
     u32 r0;
     u32 r1;

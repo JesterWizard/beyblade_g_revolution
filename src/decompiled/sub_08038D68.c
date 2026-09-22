@@ -9,7 +9,7 @@ void sub_08038D68(struct Unk38D68 *a)
 
     base = a;
     table = (void **)gUnk_030003E0;
-    value = sub_08073988(
+    value = TextMeasureWidth(
         table[base->unk2FC + base->unk300],
         (const void *)0x080B7258,
         8,

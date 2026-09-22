@@ -33,7 +33,7 @@ void sub_0802FA94(void)
     void *table;
     u8 table_index;
 
-    sub_08061784();
+    TextGetAreaWidth();
     buffer = BtlObjTableAdd(0x10);
     i = 0;
     root_loc = (struct Unk2FA94Root **)gUnk_03000278;
@@ -47,7 +47,7 @@ void sub_0802FA94(void)
         record = (*root_loc)->records + base;
         if (record->unk08 > 0)
         {
-            sub_080615EC(0, step);
+            TextSetCursor(0, step);
             if (i == (*root_loc)->unk138)
             {
                 result = _08056428(record->unk04, record->unk00);
@@ -59,20 +59,20 @@ void sub_0802FA94(void)
                     sub_08070AD4(
                         (struct Unk7069C *)((u8 *)*root_loc + 0xF8),
                         record->unk0C, 0x0F);
-                sub_08061610(0x0E);
-                BgMapSetPaletteBankRun(x >> 16, 0x0E, 2, 0x1B);
-                BgMapSetPaletteBankRun(y >> 16, 0x0E, 2, 0x1B);
+                TextSetPaletteBank(0x0E);
+                TextRowSetPaletteBank(x >> 16, 0x0E, 2, 0x1B);
+                TextRowSetPaletteBank(y >> 16, 0x0E, 2, 0x1B);
             }
             else
             {
-                sub_08061610(0x0F);
-                BgMapSetPaletteBankRun(x >> 16, 0x0F, 2, 0x1B);
-                BgMapSetPaletteBankRun(y >> 16, 0x0F, 2, 0x1B);
+                TextSetPaletteBank(0x0F);
+                TextRowSetPaletteBank(x >> 16, 0x0F, 2, 0x1B);
+                TextRowSetPaletteBank(y >> 16, 0x0F, 2, 0x1B);
             }
             if (record->unk04 == 1)
             {
                 result = sub_0803DD88(record->unk00);
-                sub_0806171C((void *)result, 0x0C, 2);
+                TextDrawAlign((void *)result, 0x0C, 2);
             }
             else if (record->unk04 == 2 || record->unk04 == 3)
             {
@@ -109,7 +109,7 @@ void sub_0802FA94(void)
                 if (table != 0)
                 {
                     table_index = (*main_loc)->unk1818;
-                    sub_0806171C(
+                    TextDrawAlign(
                         ((void **)table)[table_index], 0x0C, 2);
                 }
             }
@@ -119,27 +119,27 @@ void sub_0802FA94(void)
                 record = (*root_loc)->records + base;
                 result = record->unk08;
                 sub_080735DC(result, buffer, 0x10);
-                sub_0806171C(buffer, 0xD4, 1);
+                TextDrawAlign(buffer, 0xD4, 1);
             }
         }
         else
         {
             if (i == (*root_loc)->unk138)
             {
-                sub_08061610(0x0E);
-                BgMapSetPaletteBankRun(x >> 16, 0x0E, 2, 0x1B);
-                BgMapSetPaletteBankRun(y >> 16, 0x0E, 2, 0x1B);
+                TextSetPaletteBank(0x0E);
+                TextRowSetPaletteBank(x >> 16, 0x0E, 2, 0x1B);
+                TextRowSetPaletteBank(y >> 16, 0x0E, 2, 0x1B);
             }
             else
             {
-                sub_08061610(0x0F);
-                BgMapSetPaletteBankRun(x >> 16, 0x0F, 2, 0x1B);
-                BgMapSetPaletteBankRun(y >> 16, 0x0F, 2, 0x1B);
+                TextSetPaletteBank(0x0F);
+                TextRowSetPaletteBank(x >> 16, 0x0F, 2, 0x1B);
+                TextRowSetPaletteBank(y >> 16, 0x0F, 2, 0x1B);
             }
-            sub_080615EC(0, step);
+            TextSetCursor(0, step);
             table = (void *)0x08096B5C;
             table_index = (*main_loc)->unk1818;
-            sub_0806171C(
+            TextDrawAlign(
                 ((void **)table)[table_index], 0x0C, 2);
         }
         x += 0x40000;

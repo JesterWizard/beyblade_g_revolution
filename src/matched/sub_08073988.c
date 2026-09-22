@@ -2,7 +2,7 @@
 
 // @ 0x08073988
 __attribute__((naked))
-void sub_08073988(void)
+s32 TextMeasureWidth(void *a, const void *b, u32 c, u32 d)
 {
     asm(
         ".syntax unified\n"

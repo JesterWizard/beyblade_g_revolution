@@ -2,13 +2,13 @@
 
 // @ 0x0806171c
 
-void sub_0806171C(void *data, u32 index, u32 mode)
+void TextDrawAlign(void *data, u32 index, u32 mode)
 {
     s32 value;
 
     if (index >= gUnk_03000798->unk98)
         return;
-    value = sub_08073988(
+    value = TextMeasureWidth(
         data,
         (void *)gUnk_03000798->unk8C,
         gUnk_03000798->unkA0,
@@ -25,6 +25,6 @@ void sub_0806171C(void *data, u32 index, u32 mode)
         gUnk_03000798->unk90 = index - value;
         break;
     }
-    sub_08061564(data);
+    TextDraw(data);
 }
 

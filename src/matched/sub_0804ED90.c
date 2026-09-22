@@ -41,19 +41,19 @@ void sub_0804ED90(void *arg)
     }
 
     sub_080617C4((struct Unk617C4 *)0x080D79CC, 0x080B7429);
-    sub_080615EC(0, 0x20);
+    TextSetCursor(0, 0x20);
     table = (void *)0x083A8470;
-    sub_0806171C(table, 0xDC, 1);
-    sub_080615EC(0, 0x28);
-    sub_0806171C(table, 0xDC, 1);
-    sub_080615EC(0, 0x30);
-    sub_0806171C(table, 0xDC, 1);
-    sub_080615EC(0, 0x38);
-    sub_0806171C(table, 0xDC, 1);
-    sub_080615EC(0, 0x40);
-    sub_0806171C(table, 0xDC, 1);
-    sub_080615EC(0, 0x48);
-    sub_0806171C(table, 0xDC, 1);
+    TextDrawAlign(table, 0xDC, 1);
+    TextSetCursor(0, 0x28);
+    TextDrawAlign(table, 0xDC, 1);
+    TextSetCursor(0, 0x30);
+    TextDrawAlign(table, 0xDC, 1);
+    TextSetCursor(0, 0x38);
+    TextDrawAlign(table, 0xDC, 1);
+    TextSetCursor(0, 0x40);
+    TextDrawAlign(table, 0xDC, 1);
+    TextSetCursor(0, 0x48);
+    TextDrawAlign(table, 0xDC, 1);
     sub_080617C4((struct Unk617C4 *)0x082C44A8, 0x080B7258);
     sub_0804EBF0(arg);
 }

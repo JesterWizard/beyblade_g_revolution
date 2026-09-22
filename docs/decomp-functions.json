@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T21:06:29Z",
+  "generated": "2026-09-22T21:36:24Z",
   "counts": {
     "matched": 413,
     "wip": 135,
@@ -8,8 +8,8 @@
   },
   "tiers": {
     "UNKNOWN": 85,
-    "DECOMPILED": 131,
-    "UNDERSTOOD": 4,
+    "DECOMPILED": 129,
+    "UNDERSTOOD": 6,
     "MATCHING": 413
   },
   "total": 633,
@@ -7269,8 +7269,8 @@
       "score": "11/136 then 9/136",
       "source": "wip",
       "note": "Two semantic attempts: switch-based C 11/136 (144B), then explicit branch/goto form 9/136 (148B). Existing matched file is retained as naked assembly. Semantic body is mapped; remaining codegen requires pinning input/cursor/opcode to retail r0/r4/r2, restoring direct unk92 += unkA2 for load order, and using switch cases 8/7 with default handling opcode 10 via inverted cmp.",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "TextDraw"
     },
     {
       "name": "sub_080615EC",
@@ -7289,7 +7289,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextSetCursor"
     },
     {
       "name": "sub_08061610",
@@ -7308,7 +7308,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextSetPaletteBank"
     },
     {
       "name": "sub_08061628",
@@ -7346,7 +7346,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextDrawAlign"
     },
     {
       "name": "sub_08061784",
@@ -7365,7 +7365,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGetAreaWidth"
     },
     {
       "name": "sub_080617B4",
@@ -7650,7 +7650,7 @@
       "source": "wip",
       "note": "13/88 bytes (13.5%), size mismatch (96 vs 88); correct overall algorithm (mask args to 0x1F, build 12-bit palette-select field, swap lo/hi if needed, compute VRAM tile address from gUnk_03000798->unk5C, loop-OR the palette bits into each halfword) but agbcc allocates 4 callee-saved regs (r4-r7) vs retail's 3 (r4-r6) -- retail reuses a non-callee-saved scratch reg (r1) for the swap temp instead of a persistent local",
       "tier": "UNDERSTOOD",
-      "symbol": "BgMapSetPaletteBankRun"
+      "symbol": "TextRowSetPaletteBank"
     },
     {
       "name": "sub_08061DC0",
@@ -9702,7 +9702,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgGetHofsReg"
     },
     {
       "name": "sub_08069948",
@@ -9721,7 +9721,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgGetVofsReg"
     },
     {
       "name": "sub_08069988",
@@ -11962,8 +11962,8 @@
       "score": "94/96",
       "source": "attempt",
       "note": "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) \u2014 all 94/96 or worse. This session: 12 more `default_char` shapes (`r0 = (index = C)`, `C + ch`, `index + ch`, split assignments, u32 casts) \u2014 every one 94/96 or size-mismatch; old_agbcc 90/96.",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "TextMeasureWidth"
     },
     {
       "name": "sub_080739E8",

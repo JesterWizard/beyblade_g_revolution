@@ -82,32 +82,64 @@ def _pick_next(*, battle: bool, resume_wip: bool) -> str | None:
     blocked = _blocked_names(data)
     wip_names = {p.stem for p in WIP.glob("sub_*.c")}
 
-    def ok(name: str) -> bool:
-        if name not in remaining or name in skip or name in blocked:
-            return False
-        if resume_wip:
-            return name in wip_names
-        return name not in wip_names
-
     if battle:
         for row in data.get("recommended") or []:
             name = row.get("name")
-            if name and ok(name):
+            if name and _pickable(name, remaining, skip, blocked, wip_names, resume_wip):
                 return name
 
-    for name in buckets.get("small_clean") or []:
-        if ok(name):
-            return name
-    for key in ("unblock_first", "large", "high_reg_pressure"):
-        for name in buckets.get(key) or []:
-            if ok(name):
-                return name
-    for name in remaining:
-        if ok(name):
-            return name
-    if not resume_wip:
-        return _pick_next(battle=battle, resume_wip=True)
-    return None
+    # Bucket order is the *primary* key: it is the difficulty ranking from
+    # classify_semantic_targets.py, and a parked small seed is far cheaper to
+    # finish than a fresh 1.5 KB high_reg_pressure function. WIP-ness is only a
+    # tiebreak inside a bucket, so a parked small_clean seed beats a fresh
+    # high_reg_pressure one. (`leaf_branch` was previously absent here, so those
+    # targets were unreachable from --next.)
+    order = (
+        "unblock_first",
+        "small_clean",
+        "leaf_branch",
+        "large",
+        "high_reg_pressure",
+    )
+    for key in order:
+        candidates = [
+            n
+            for n in buckets.get(key) or []
+            if n in remaining and n not in skip and n not in blocked
+        ]
+        if not candidates:
+            continue
+        landed = [n for n in candidates if n in wip_names]
+        fresh = [n for n in candidates if n not in wip_names]
+        if resume_wip:
+            if landed:
+                return landed[0]
+        else:
+            if fresh:
+                return fresh[0]
+            if landed:
+                return landed[0]
+
+    leftover = sorted(remaining - skip - blocked)
+    landed = [n for n in leftover if n in wip_names]
+    fresh = [n for n in leftover if n not in wip_names]
+    pool = landed if resume_wip else (fresh or landed)
+    return pool[0] if pool else None
+
+
+def _pickable(
+    name: str,
+    remaining: set[str],
+    skip: set[str],
+    blocked: set[str],
+    wip_names: set[str],
+    resume_wip: bool,
+) -> bool:
+    if name not in remaining or name in skip or name in blocked:
+        return False
+    if resume_wip:
+        return name in wip_names
+    return name not in wip_names
 
 
 def _thumb_excerpt(name: str) -> str:

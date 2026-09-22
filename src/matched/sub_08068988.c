@@ -25,8 +25,8 @@ void sub_08068988(
     limit = (u16)limit_arg;
     mode = (u16)mode_arg;
     sub_08068A08(state, index, (void *)unused, limit, mode);
-    *sub_08069908(index) = 0;
-    *sub_08069948(index) = 0;
+    *BgGetHofsReg(index) = 0;
+    *BgGetVofsReg(index) = 0;
     width = 1 << state->unk5F;
     height = 1 << state->unk60;
     if (state->unk00 < width)

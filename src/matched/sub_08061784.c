@@ -2,7 +2,7 @@
 
 // @ 0x08061784
 
-u16 sub_08061784(void)
+u16 TextGetAreaWidth(void)
 {
     return gUnk_03000798->unk98;
 }

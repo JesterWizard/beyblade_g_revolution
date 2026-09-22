@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08061610
-void sub_08061610(u16 a)
+void TextSetPaletteBank(u16 a)
 {
     s32 v;
     struct Unk0798 *p;

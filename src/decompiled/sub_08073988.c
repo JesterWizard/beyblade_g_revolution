@@ -8,7 +8,7 @@
 // below reproduces retail's prologue; rewriting that statement as a plain
 // expression (`r0 = ch + 0x080BB748`, `r0 = 0x080BB748; r0 += ch`, ...) all floor
 // at 89/96 because they re-colour r7/r12. Permuter chain (strict branches) best 10.
-s32 sub_08073988(void *text_arg, const void *base_arg, u32 delta_arg, u32 space_arg)
+s32 TextMeasureWidth(void *text_arg, const void *base_arg, u32 delta_arg, u32 space_arg)
 {
     const u8 *text;
     const u8 *base;

@@ -10,6 +10,10 @@ Do **not** re-read `docs/decomp-mission.md` / roadmap each session. Start with s
 ## Non-negotiables
 
 - `make compare` must stay **OK** every batch
+- `make audit` must report **0** failures. Matched C is never linked, so a file can
+  be counted as matching while not compiling at all — `make audit` is what catches
+  that, and `make repair-signatures` fixes the common case (a `naked` wrapper
+  declared `(void)` against a real prototype)
 - Do **not** stop for approval between batches unless escalated
 - Do **not** throw away unmatched C. Park it (`park_wip.py` → `src/decompiled/`) before restoring Thumb in `src/matched/`
 - C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`

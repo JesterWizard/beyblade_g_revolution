@@ -388,12 +388,12 @@
 | `sub_080611F0` | `0x080611F0` |  | MATCHING | 44 | 2 |
 | `sub_0806121C` | `0x0806121C` |  | UNKNOWN | 236 | 1 |
 | `sub_08061308` | `0x08061308` |  | MATCHING | 48 | 2 |
-| `sub_08061564` | `0x08061564` |  | DECOMPILED | 136 | 1 |
-| `sub_080615EC` | `0x080615EC` | graphics | MATCHING | 36 | 31 |
-| `sub_08061610` | `0x08061610` | graphics | MATCHING | 24 | 11 |
+| [`TextDraw`](TextDraw.md) | `0x08061564` |  | UNDERSTOOD | 136 | 1 |
+| [`TextSetCursor`](TextSetCursor.md) | `0x080615EC` | graphics | MATCHING | 36 | 31 |
+| [`TextSetPaletteBank`](TextSetPaletteBank.md) | `0x08061610` | graphics | MATCHING | 24 | 11 |
 | `sub_08061628` | `0x08061628` |  | UNKNOWN | 244 | 2 |
-| `sub_0806171C` | `0x0806171C` | graphics | MATCHING | 104 | 29 |
-| `sub_08061784` | `0x08061784` | graphics | MATCHING | 16 | 20 |
+| [`TextDrawAlign`](TextDrawAlign.md) | `0x0806171C` | graphics | MATCHING | 104 | 29 |
+| [`TextGetAreaWidth`](TextGetAreaWidth.md) | `0x08061784` | graphics | MATCHING | 16 | 20 |
 | `sub_080617B4` | `0x080617B4` |  | MATCHING | 16 | 3 |
 | `sub_080617C4` | `0x080617C4` | graphics | MATCHING | 60 | 17 |
 | `sub_08061800` | `0x08061800` |  | MATCHING | 76 | 0 |
@@ -408,7 +408,7 @@
 | `sub_08061BE8` | `0x08061BE8` |  | MATCHING | 96 | 18 |
 | `sub_08061C48` | `0x08061C48` |  | MATCHING | 56 | 0 |
 | `sub_08061D00` | `0x08061D00` |  | DECOMPILED | 104 | 1 |
-| [`BgMapSetPaletteBankRun`](BgMapSetPaletteBankRun.md) | `0x08061D68` | graphics | UNDERSTOOD | 88 | 29 |
+| [`TextRowSetPaletteBank`](TextRowSetPaletteBank.md) | `0x08061D68` | graphics | UNDERSTOOD | 88 | 29 |
 | `sub_08061DC0` | `0x08061DC0` |  | MATCHING | 72 | 0 |
 | `sub_08061E40` | `0x08061E40` |  | MATCHING | 20 | 1 |
 | `sub_08061E8C` | `0x08061E8C` | battle | MATCHING | 108 | 4 |
@@ -516,8 +516,8 @@
 | `sub_08069270` | `0x08069270` |  | UNKNOWN | 244 | 3 |
 | `sub_0806960C` | `0x0806960C` |  | UNKNOWN | 600 | 1 |
 | `sub_08069894` | `0x08069894` |  | MATCHING | 96 | 5 |
-| `sub_08069908` | `0x08069908` | graphics | MATCHING | 64 | 4 |
-| `sub_08069948` | `0x08069948` | graphics | MATCHING | 64 | 4 |
+| [`BgGetHofsReg`](BgGetHofsReg.md) | `0x08069908` | graphics | MATCHING | 64 | 4 |
+| [`BgGetVofsReg`](BgGetVofsReg.md) | `0x08069948` | graphics | MATCHING | 64 | 4 |
 | `sub_08069988` | `0x08069988` |  | MATCHING | 64 | 5 |
 | `sub_080699C8` | `0x080699C8` |  | DECOMPILED | 80 | 2 |
 | `sub_08069A18` | `0x08069A18` |  | MATCHING | 72 | 1 |
@@ -635,7 +635,7 @@
 | `sub_080735DC` | `0x080735DC` | battle | MATCHING | 132 | 10 |
 | `sub_080737C0` | `0x080737C0` |  | UNKNOWN | 336 | 2 |
 | `sub_08073910` | `0x08073910` |  | DECOMPILED | 118 | 1 |
-| `sub_08073988` | `0x08073988` |  | DECOMPILED | 96 | 9 |
+| [`TextMeasureWidth`](TextMeasureWidth.md) | `0x08073988` |  | UNDERSTOOD | 96 | 9 |
 | `sub_080739E8` | `0x080739E8` |  | DECOMPILED | 36 | 1 |
 | `sub_08073A28` | `0x08073A28` |  | MATCHING | 66 | 0 |
 | `sub_08073AEC` | `0x08073AEC` | battle | UNKNOWN | 162 | 4 |
