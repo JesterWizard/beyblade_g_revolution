@@ -11,6 +11,6 @@ void *sub_0803DCFC(u32 a)
 {
     if (a <= 0x52)
         return (void *)(gData_0807A1F4 + a * 40);
-    sub_08067B98((void *)gData_0833D1E0, (void *)gData_0833D1F4);
+    DebugPrint((void *)gData_0833D1E0, (void *)gData_0833D1F4);
     return 0;
 }

@@ -9,7 +9,7 @@ void sub_080611F0(void)
     p = *(void **)gUnk_03000790;
     if (p != 0)
     {
-        sub_0806A434(p);
+        BtlObjFree(p);
         *(void **)gUnk_03000790 = 0;
     }
     gUnk_03000798 = 0;

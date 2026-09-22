@@ -11,7 +11,7 @@ void sub_08061AB8(void)
     if (*count_loc == 4)
         return;
     work_loc = (struct Unk0798 **)0x03000798;
-    buffer = sub_0806A3A4((*work_loc)->unk94 << 5);
+    buffer = BtlObjAlloc((*work_loc)->unk94 << 5);
     table = (struct Unk0770 *)0x03000770;
     table[*count_loc].unk00 = buffer;
     if (buffer == 0)

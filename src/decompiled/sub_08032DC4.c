@@ -94,7 +94,7 @@ void sub_08032DC4(
                 (struct Unk360BC *)((u8 *)gBattleWork + 0x328),
                 (struct Unk360BC *)((u8 *)gBattleWork + 0x37C), 0x66);
             sub_080361A8((u8 *)gBattleWork + 0xAA8);
-            sub_08034894(state_a);
+            BtlCaptureInput(state_a);
             if (state_a->unk30C == 1)
                 sub_08033DD4();
             if (sub_08033A94(gBattleWork->unk2094) == 0)

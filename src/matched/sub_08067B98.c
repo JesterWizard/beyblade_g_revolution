@@ -2,7 +2,7 @@
 
 // @ 0x08067b98
 
-void sub_08067B98(void *a, ...)
+void DebugPrint(void *a, ...)
 {
 }
 

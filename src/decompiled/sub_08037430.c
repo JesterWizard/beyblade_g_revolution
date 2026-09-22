@@ -11,8 +11,8 @@ void sub_08037430(void)
     u32 r4;
     u32 r5;
 
-    first = sub_0807309C(0x40);
-    r6 = sub_0807309C(0x40);
+    first = BtlObjTableAdd(0x40);
+    r6 = BtlObjTableAdd(0x40);
 
     r0 = gMainWorkPtr->unk1808;
     r1 = 2;
@@ -62,7 +62,7 @@ r0 = (u32)gMainWorkPtr;
     sub_08061EF8((void *)r0, first, 0, 0x28, 0, 0xC8, 0);
 
 cleanup:
-    sub_08073114(first);
-    sub_08073114(r6);
+    BtlObjTableRemove(first);
+    BtlObjTableRemove(r6);
 }
 

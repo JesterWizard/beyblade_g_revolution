@@ -8,7 +8,7 @@
 // unk30C is clear, otherwise zero the same three. Plain `if/else` with the three
 // stores spelled out in each arm matches; factoring the shared trailing store
 // through a temporary makes agbcc re-order the pool and the tail (75/84).
-void sub_08034894(struct Unk346C0 *a)
+void BtlCaptureInput(struct Unk346C0 *a)
 {
     if (a->unk30C == 0)
     {

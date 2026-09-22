@@ -84,7 +84,7 @@ SHELL := bash -o pipefail
 .DELETE_ON_ERROR:
 
 .PHONY: all rom modern compare clean tidy tools check-baserom
-
+.PHONY: analyze symbols tier document status
 all: rom
 
 C_SUBDIR = src
@@ -163,6 +163,21 @@ cluster:
 
 script-first:
 	python3 tools/decomp/script_first.py
+
+analyze:
+	python3 tools/decomp/analyze.py
+
+symbols:
+	python3 tools/decomp/symbols.py generate
+
+tier:
+	python3 tools/decomp/tier.py
+
+document:
+	python3 tools/decomp/document.py
+
+status:
+	python3 tools/decomp/cli.py status
 
 rom: check-baserom $(ROM)
 ifeq ($(COMPARE),1)

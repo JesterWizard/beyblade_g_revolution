@@ -16,10 +16,10 @@ u8 sub_08073568(void **out, u8 count, u32 size)
         p = out;
         do
         {
-            *p = sub_0807309C(size);
+            *p = BtlObjTableAdd(size);
             if (*p == 0)
             {
-                sub_08067B98((void *)0x083D26C0);
+                DebugPrint((void *)0x083D26C0);
                 return i;
             }
             p++;

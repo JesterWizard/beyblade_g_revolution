@@ -102,7 +102,7 @@ void sub_0802D3F0(void)
         slot = *(void **)0x03000270;
         if (slot != 0)
         {
-            sub_0806A434(slot);
+            BtlObjFree(slot);
             *(void **)0x03000270 = 0;
         }
     }

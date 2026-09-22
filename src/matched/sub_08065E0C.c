@@ -10,7 +10,7 @@
 // paths use. Returning the pointer keeps the high-register live ranges retail has.
 void *sub_08065E0C(void *a, u8 b, void *c, u16 d, u16 e)
 {
-    struct Unk68988 *p = sub_0806A3A4(*(u32 *)c >> 8);
+    struct Unk68988 *p = BtlObjAlloc(*(u32 *)c >> 8);
 
     sub_080674AC(c, (void *)p->unk00);
     sub_080674B4();

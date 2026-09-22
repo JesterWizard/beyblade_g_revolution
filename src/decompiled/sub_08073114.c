@@ -31,7 +31,7 @@
 //   - all 6 declaration orders of table/count/i.
 // Next: permuter (register-only miss), or find a source shape that keeps the
 // loaded table value out of the address pseudo's register.
-void sub_08073114(void *a)
+void BtlObjTableRemove(void *a)
 {
     struct BtlObj **table;
     u8 *count;
@@ -47,7 +47,7 @@ void sub_08073114(void *a)
     {
         if (table[i] != 0 && table[i]->next == a)
         {
-            sub_0806A434(table[i]);
+            BtlObjFree(table[i]);
             table[i] = 0;
             (*(u8 *)gBtlObjLiveCount)--;
             break;
@@ -56,5 +56,5 @@ void sub_08073114(void *a)
     }
 
     if (i == *(u8 *)gBtlObjTableCount)
-        sub_08067B98((void *)0x083D2690);
+        DebugPrint((void *)0x083D2690);
 }

@@ -17,7 +17,7 @@ r1 = r2 << 2;
     {
         r0 = 0x083A2CD0;
         r1 = r2;
-        sub_08067B98((void *)r0, r1);
+        DebugPrint((void *)r0, r1);
     }
     return *(void **)r4;
 }

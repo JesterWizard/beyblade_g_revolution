@@ -19,7 +19,7 @@ r0 = (u32)mode << 2;
     r1 = *(u32 *)r0;
     sub_08034FF8((struct Unk34FF8 *)state_a, r1, (u32)state_b);
     sub_08034FF8((struct Unk34FF8 *)state_b, (u32)0x08078E58, (u32)state_a);
-    sub_080330F4(0x80);
+    BtlSetMode1F90(0x80);
     r1 = 1;
     r1 = -r1;
     minusOne = r1;

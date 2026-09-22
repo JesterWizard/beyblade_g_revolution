@@ -5,7 +5,7 @@
 
 /* match-flags: -fprologue-bugfix */
 
-struct BtlObjNode *sub_0806FEFC(void)
+struct BtlObjNode *BtlObjListMoveHeadToTail(void)
 {
     u32 r2;
     struct BtlObjNode *r1;

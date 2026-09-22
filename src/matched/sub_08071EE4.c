@@ -24,7 +24,7 @@ void *sub_08071EE4(void *a, u32 b)
         }
         e++;
     }
-    sub_08067B98((void *)gData_083D2578);
+    DebugPrint((void *)gData_083D2578);
     return (void *)-1;
 }
 

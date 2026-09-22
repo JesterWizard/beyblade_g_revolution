@@ -78,7 +78,7 @@ s32 sub_0802BAD4(u32 a, u32 b, u32 c, u32 d)
                 result = sub_0802C3DC(1, (s8)signed_arg0, 0);
                 if (result != 0)
                 {
-                    sub_08067B98((void *)0x0833BE1C, signed_arg0);
+                    DebugPrint((void *)0x0833BE1C, signed_arg0);
                     return 1;
                 }
                 sub_0803DEC8(

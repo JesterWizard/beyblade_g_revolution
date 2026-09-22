@@ -12,5 +12,18 @@
  */
 
 #define GetIndexedRecordWord sub_0802B8BC
+#define BtlSetTimer118 sub_080314FC
+#define BtlSetMode1F90 sub_080330F4
+#define BtlClearState sub_08033878
+#define BtlCaptureInput sub_08034894
+#define DebugPrint sub_08067B98
+#define BtlObjAlloc sub_0806A3A4
+#define BtlObjFree sub_0806A434
+#define BtlObjListMoveHeadToTail sub_0806FEFC
+#define BtlObjListMoveToHead sub_0806FF28
+#define GetBtlLookupByte sub_08072F94
+#define BtlObjTableAdd sub_0807309C
+#define BtlObjTableRemove sub_08073114
+#define MemClear sub_08073184
 
 #endif // GUARD_SYMBOLS_H

@@ -19,7 +19,7 @@ void sub_08061BAC(void)
     {
         if (p->unk00 != 0)
         {
-            sub_0806A434(p->unk00);
+            BtlObjFree(p->unk00);
             p->unk00 = z;
         }
         p++;

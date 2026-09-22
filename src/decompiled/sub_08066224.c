@@ -41,7 +41,7 @@ void sub_08066224(struct Unk66224 *a, s32 index)
     r6->unk14 = 0xFFFF - r2 * r6->unk0C;
     r6->unk04 = r2;
     state = &r6->unk40;
-    r0 = sub_08072F94();
+    r0 = GetBtlLookupByte();
     r0 <<= 2;
     obj += 4;
     obj += r0;

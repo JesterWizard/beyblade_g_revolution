@@ -10,7 +10,7 @@
 // Pop the head node off the battle-object list and push it onto the tail list.
 // gData_030040A8/gData_030040B8 symbols (not raw literals) stop agbcc folding
 // 0x030040B8 into 0x030040A8+0x10.
-struct BtlObjNode *sub_0806FEFC(void)
+struct BtlObjNode *BtlObjListMoveHeadToTail(void)
 {
     struct BtlObjNode *n = *(struct BtlObjNode **)gData_030040A8;
     struct BtlObjNode *t;

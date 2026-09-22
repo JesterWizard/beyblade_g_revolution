@@ -20,7 +20,7 @@ u32 sub_0806F430(void)
     flags &= otherBit;
     if (flags != 0)
         return 0;
-    sub_08067B98((void *)0x083D2030);
+    DebugPrint((void *)0x083D2030);
     return 0;
 }
 

@@ -18,7 +18,7 @@ void *sub_0806A580(struct Unk6A580 *p, u32 n)
         }
         p++;
     }
-    sub_08067B98((void *)0x083D1B5C, n);
+    DebugPrint((void *)0x083D1B5C, n);
     return 0;
 }
 

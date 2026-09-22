@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T20:55:19Z",
+  "generated": "2026-09-22T21:03:20Z",
   "total": 633,
   "functions": [
     {
@@ -9,7 +9,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "GetIndexedRecordWord",
       "note": "semantic/table-lookup",
       "insn_count": 7,
       "offsets": [
@@ -2071,7 +2071,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlSetTimer118",
       "note": "battle/work-init-field-118",
       "insn_count": 8,
       "offsets": [
@@ -2425,7 +2425,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlSetMode1F90",
       "note": "unk1F90/unk1F94/unk1F98 BattleWork trio",
       "insn_count": 26,
       "offsets": [
@@ -2718,7 +2718,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlClearState",
       "note": "reset battle-work state and release four entries",
       "insn_count": 42,
       "offsets": [
@@ -3509,7 +3509,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlCaptureInput",
       "note": "shadow scroll copy/clear",
       "insn_count": 32,
       "offsets": [
@@ -16994,7 +16994,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "DebugPrint",
       "note": "",
       "insn_count": 3,
       "offsets": [],
@@ -18575,8 +18575,8 @@
       "size": 144,
       "kind": "asm",
       "status": "not_started",
-      "tier": "DECOMPILED",
-      "symbol": "",
+      "tier": "UNDERSTOOD",
+      "symbol": "BtlObjAlloc",
       "note": "arena node alloc from 0x03000B30 pool",
       "insn_count": 57,
       "offsets": [
@@ -18640,8 +18640,8 @@
       "size": 164,
       "kind": "asm",
       "status": "not_started",
-      "tier": "DECOMPILED",
-      "symbol": "",
+      "tier": "UNDERSTOOD",
+      "symbol": "BtlObjFree",
       "note": "battle/readable-thumb",
       "insn_count": 58,
       "offsets": [
@@ -20243,7 +20243,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlObjListMoveHeadToTail",
       "note": "battle-object list pop-head/push-tail",
       "insn_count": 18,
       "offsets": [
@@ -20276,7 +20276,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlObjListMoveToHead",
       "note": "permuter/nonmatchings/sub_0806FF28/output-0-1/source.c",
       "insn_count": 20,
       "offsets": [
@@ -21768,7 +21768,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "GetBtlLookupByte",
       "note": "btl lookup byte (stack pool trick)",
       "insn_count": 6,
       "offsets": [
@@ -21828,7 +21828,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlObjTableAdd",
       "note": "battle/readable-thumb",
       "insn_count": 51,
       "offsets": [
@@ -21879,8 +21879,8 @@
       "size": 112,
       "kind": "asm",
       "status": "not_started",
-      "tier": "DECOMPILED",
-      "symbol": "",
+      "tier": "UNDERSTOOD",
+      "symbol": "BtlObjTableRemove",
       "note": "battle/readable-thumb",
       "insn_count": 42,
       "offsets": [
@@ -21935,7 +21935,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MemClear",
       "note": "semantic C",
       "insn_count": 18,
       "offsets": [

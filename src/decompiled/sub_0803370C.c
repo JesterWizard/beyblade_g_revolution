@@ -18,7 +18,7 @@ void sub_0803370C(void)
     gBattleWork->unk0B78--;
     if (gBattleWork->unk0B78 < 0)
     {
-        sub_08033878();
+        BtlClearState();
         return;
     }
     if (gBattleWork->unk0B64 < gBattleWork->unk0B68)

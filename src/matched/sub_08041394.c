@@ -12,7 +12,7 @@ void sub_08041394(struct Unk41394 *a)
         q = a->unk220[i];
         if (q != 0)
         {
-            sub_0806A434(q);
+            BtlObjFree(q);
             a->unk220[i] = 0;
         }
         i++;

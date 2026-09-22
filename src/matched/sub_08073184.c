@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08073184
-void sub_08073184(u8 *a, u32 n)
+void MemClear(u8 *a, u32 n)
 {
     u32 i;
 

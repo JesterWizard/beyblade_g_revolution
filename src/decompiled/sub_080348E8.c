@@ -12,7 +12,7 @@ void sub_080348E8(struct Unk346C0 *a, u32 b)
     sub_08035984(a->unk00);
     if (a->unk18 == 1)
         sub_08035884(&a->unk08);
-    sub_08034894(a);
+    BtlCaptureInput(a);
     if (a->unk310 != 0 &&
         a->unk2CC != 2 &&
         a->unk2CC != 6 &&

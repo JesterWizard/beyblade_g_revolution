@@ -11,7 +11,7 @@ void sub_080735B0(void **a, u32 n)
     for (i = 0; i < n; i++)
     {
         if (a[i] != 0)
-            sub_08073114(a[i]);
+            BtlObjTableRemove(a[i]);
     }
 }
 

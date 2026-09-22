@@ -21,7 +21,7 @@ struct Unk6A4D8Node *sub_0806A314(struct Unk6A314 *state)
     }
     buffer = sub_0806A580(gUnk_03003F40, 0x20);
     if (buffer == 0)
-        sub_08067B98((void *)0x083D1AC8, work);
+        DebugPrint((void *)0x083D1AC8, work);
     node = sub_0806A4D8(
         (u8 *)work + 8,
         gUnk_03000B40,

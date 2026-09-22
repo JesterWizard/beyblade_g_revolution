@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08072f94
-u32 sub_08072F94(void)
+u32 GetBtlLookupByte(void)
 {
     u32 tmp[2];
     u32 *ptr;

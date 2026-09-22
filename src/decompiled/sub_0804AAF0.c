@@ -6,7 +6,7 @@ void sub_0804AAF0(void)
     struct Unk4AAF0 *entry;
     struct Unk4AAF0 **current_loc;
 
-    buffer = sub_0807309C(0x10);
+    buffer = BtlObjTableAdd(0x10);
     current_loc = &gUnk_03000660;
     entry = gUnk_03000658[gUnk_03000654];
     *current_loc = entry;
@@ -41,5 +41,5 @@ void sub_0804AAF0(void)
         (void *)sub_0803DD60(gUnk_03000660->unk1F & 3),
         0xC4,
         1);
-    sub_08073114(buffer);
+    BtlObjTableRemove(buffer);
 }

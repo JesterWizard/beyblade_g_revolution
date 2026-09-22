@@ -13,16 +13,16 @@ void sub_08036A68(struct Unk346C0 *a, u32 b, u32 c)
     u8 *p2;
     u8 *p3;
 
-    p1 = sub_0807309C(0x80);
-    p2 = sub_0807309C(0x80);
-    p3 = sub_0807309C(0x80);
+    p1 = BtlObjTableAdd(0x80);
+    p2 = BtlObjTableAdd(0x80);
+    p3 = BtlObjTableAdd(0x80);
     sub_08037318(a, (u8)c);
     sub_08061E8C(gData_03000290 + 0x14C, (void *)0x080B72F3, (void *)0x082BF600, 0xB0, 0x150);
     sub_08073AEC((void *)*(u32 *)(0x080972A0 + gMainWorkPtr->unk1818 * 4), p1, sub_08042B00(*(u32 *)(gData_030002A0 + c * 0x2C)), 0x23, 0x80);
     sub_08073AEC(p1, p2, (void *)sub_0803DD88(*(u32 *)(gData_030002A0 + 4 + c * 0x2C)), 0x40, 0x80);
     sub_08061EF8(gData_03000290 + 0x14C, p2, 0, 0x50, 0, 0xC8, 0);
-    sub_08073114(p1);
-    sub_08073114(p2);
-    sub_08073114(p3);
+    BtlObjTableRemove(p1);
+    BtlObjTableRemove(p2);
+    BtlObjTableRemove(p3);
     sub_08037430();
 }

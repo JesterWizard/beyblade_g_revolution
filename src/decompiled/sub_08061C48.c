@@ -28,7 +28,7 @@ void sub_08061C48(void)
     gData_03000794[0] = i;
     if (((struct Unk0770 *)gData_03000770)[i].unk00 != 0)
     {
-        sub_0806A434(((struct Unk0770 *)gData_03000770)[i].unk00);
+        BtlObjFree(((struct Unk0770 *)gData_03000770)[i].unk00);
         ((struct Unk0770 *)gData_03000770)[gData_03000794[0]].unk00 = 0;
     }
 }

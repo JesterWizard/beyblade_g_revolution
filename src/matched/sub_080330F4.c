@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080330f4
-void sub_080330F4(s32 a)
+void BtlSetMode1F90(s32 a)
 {
     gBattleWork->unk1F90 = a;
     gBattleWork->unk1F98 = 1;

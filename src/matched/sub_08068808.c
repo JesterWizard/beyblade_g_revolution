@@ -9,7 +9,7 @@ void sub_08068808(struct Unk68574 *a)
         a->unkB8 = 0;
     }
     if (a->unk7C != 0)
-        sub_0806A434(a->unk7C);
+        BtlObjFree(a->unk7C);
     a->unk74 = -1;
     a->unk78 = 0;
     a->unk7C = 0;

@@ -14,7 +14,7 @@ void sub_08033A5C(struct Unk33A5C *a)
         sub_08035020(a->unk08, 0x2D);
         a->unk04 = (struct Unk346C0 *)z;
         a->unk08 = (struct Unk346C0 *)z;
-        sub_080330F4(-0x80);
+        BtlSetMode1F90(-0x80);
     }
 }
 

@@ -13,7 +13,7 @@ void sub_08060468(void)
     *slotA = 0;
     slotB = (void **)gUnk_0300075C;
     *slotB = 0;
-    p = sub_0806A3A4(0x18);
+    p = BtlObjAlloc(0x18);
     *slotB = p;
     if (p != 0)
     {

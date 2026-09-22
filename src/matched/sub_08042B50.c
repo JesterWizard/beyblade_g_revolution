@@ -8,7 +8,7 @@ void *sub_08042B50(u32 i)
     u32 *t = gData_080910E8;
 
     if (t[i] == 0)
-        sub_08067B98((void *)0x083A2CD0, i);
+        DebugPrint((void *)0x083A2CD0, i);
     return (void *)t[i];
 }
 

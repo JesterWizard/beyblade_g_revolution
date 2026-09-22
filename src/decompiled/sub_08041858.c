@@ -11,7 +11,7 @@ void sub_08041858(void)
     slot = (void **)gUnk_03000508;
     if (*slot != 0)
     {
-        sub_0806A434(*slot);
+        BtlObjFree(*slot);
         *slot = 0;
     }
     r0 = gUnk_03000534;

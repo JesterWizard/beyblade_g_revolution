@@ -34,7 +34,7 @@ void sub_0806FE84(void *arg)
     }
     if (state->unk30 != 0)
     {
-        sub_0806FF28((struct BtlObj *)state);
+        BtlObjListMoveToHead((struct BtlObj *)state);
         state->unk30 = 0;
     }
     gUnk_030040B4++;

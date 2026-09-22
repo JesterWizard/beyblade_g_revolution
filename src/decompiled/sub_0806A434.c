@@ -1,6 +1,6 @@
 #include "global.h"
 
-void sub_0806A434(void *arg)
+void BtlObjFree(void *arg)
 {
     struct Unk6A434 *state;
     struct Unk6A4D8Node *previous;
@@ -12,7 +12,7 @@ void sub_0806A434(void *arg)
     next = state->unk08;
     key = state->unk00;
     if (key == 0)
-        sub_08067B98((void *)0x083D1B38);
+        DebugPrint((void *)0x083D1B38);
     if (next == 0)
     {
         if (previous == 0)

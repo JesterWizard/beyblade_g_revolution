@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0807309c
-void *sub_0807309C(u32 size)
+void *BtlObjTableAdd(u32 size)
 {
     struct BtlObj **table;
     u8 count;
@@ -24,12 +24,12 @@ void *sub_0807309C(u32 size)
         return 0;
 
     slot = &table[i];
-    obj = sub_0806A3A4(size);
+    obj = BtlObjAlloc(size);
     *slot = obj;
     if (obj == 0)
         return 0;
 
-    sub_08073184((u8 *)obj, size);
+    MemClear((u8 *)obj, size);
     (*(u8 *)gBtlObjLiveCount)++;
     return obj;
 }

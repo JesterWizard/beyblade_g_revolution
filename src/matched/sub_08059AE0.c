@@ -29,7 +29,7 @@ void *sub_08059AE0(struct Unk59AE0Src *src)
 
             if (src->unk0C != 0)
             {
-                node->unk0C = (u32)sub_0806A3A4(src->unk0C);
+                node->unk0C = (u32)BtlObjAlloc(src->unk0C);
                 node->unk10 = *(u32 *)node->unk0C;
             }
 

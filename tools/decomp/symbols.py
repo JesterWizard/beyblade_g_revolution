@@ -380,6 +380,112 @@ def cmd_unset(args: argparse.Namespace) -> int:
     return 0
 
 
+#: Source trees whose text the naming pass rewrites.
+_SOURCE_DIRS = (ROOT / "src" / "matched", ROOT / "src" / "decompiled")
+
+
+def rewrite_identifiers(text: str, replacements: dict[str, str]) -> tuple[str, int]:
+    """Rename whole identifiers *outside* strings, chars, and comments.
+
+    This has to be literal-aware. Readable-Thumb files carry mnemonics inside
+    `asm("...")` string literals, and the preprocessor does not expand macros
+    inside a string — so rewriting `bl sub_08067B98` to `bl DebugPrint` there
+    would emit a reference to a symbol that does not exist and silently break
+    the bytes. Comments are left untouched for the same reason: an `asm()` body
+    inside a comment should still read as the real disassembly.
+    """
+    out: list[str] = []
+    i = 0
+    n = len(text)
+    hits = 0
+
+    while i < n:
+        two = text[i : i + 2]
+        if two == "//":
+            j = text.find("\n", i)
+            j = n if j == -1 else j
+            out.append(text[i:j])
+            i = j
+            continue
+        if two == "/*":
+            j = text.find("*/", i + 2)
+            j = n if j == -1 else j + 2
+            out.append(text[i:j])
+            i = j
+            continue
+        ch = text[i]
+        if ch in ('"', "'"):
+            j = i + 1
+            while j < n:
+                if text[j] == "\\":
+                    j += 2
+                    continue
+                if text[j] == ch:
+                    j += 1
+                    break
+                j += 1
+            out.append(text[i:j])
+            i = j
+            continue
+        if ch.isalpha() or ch == "_":
+            j = i
+            while j < n and (text[j].isalnum() or text[j] == "_"):
+                j += 1
+            word = text[i:j]
+            replacement = replacements.get(word)
+            if replacement is not None:
+                out.append(replacement)
+                hits += 1
+            else:
+                out.append(word)
+            i = j
+            continue
+        out.append(ch)
+        i += 1
+
+    return "".join(out), hits
+
+
+def cmd_apply(args: argparse.Namespace) -> int:
+    """Rewrite source text to use readable names for already-named functions.
+
+    Purely presentational: `#define Name sub_XXXXXXXX` in symbols.h expands the
+    token back to the link label, so the compiled bytes are unchanged.
+    """
+    data = load()
+    emitted, problems = emit_set(data)
+    if not emitted:
+        print("no emittable symbols — nothing to apply")
+        return 0
+
+    replacements = {label_for(key): symbol for key, symbol in emitted.items()}
+
+    touched = 0
+    edits = 0
+    for base in _SOURCE_DIRS:
+        if not base.is_dir():
+            continue
+        for path in sorted(base.glob("*.c")):
+            text = path.read_text(errors="replace")
+            new, hits = rewrite_identifiers(text, replacements)
+            if not hits:
+                continue
+            touched += 1
+            edits += hits
+            if not args.dry_run:
+                path.write_text(new)
+
+    mode = "would rewrite" if args.dry_run else "rewrote"
+    print(f"=== apply symbols ===")
+    print(f"  {mode} {touched} file(s), {edits} identifier occurrence(s)")
+    print("  (occurrences inside strings, chars, and comments are left alone)")
+    for problem in problems:
+        print(f"  skipped {label_for(problem['key'])} ({problem['reason']})")
+    if args.dry_run:
+        print("\n  re-run without --dry-run to write")
+    return 0
+
+
 def cmd_generate(_: argparse.Namespace) -> int:
     result = generate()
     print(f"=== symbols ===")
@@ -434,6 +540,11 @@ def main() -> int:
     sub.add_parser("generate", help="write include/symbols.h + [renames]")
     sub.add_parser("check", help="report collisions")
 
+    p_apply = sub.add_parser(
+        "apply", help="rewrite src/ text to use readable names"
+    )
+    p_apply.add_argument("--dry-run", action="store_true")
+
     args = ap.parse_args()
     if args.cmd in (None, "list"):
         return cmd_list(args)
@@ -445,6 +556,8 @@ def main() -> int:
         return cmd_generate(args)
     if args.cmd == "check":
         return cmd_check(args)
+    if args.cmd == "apply":
+        return cmd_apply(args)
     return 2
 
 

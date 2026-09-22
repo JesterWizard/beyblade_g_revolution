@@ -23,11 +23,11 @@ void sub_08037508(void)
     gBattleWork37508.unk1FA0 = -1;
     gBattleWork37508.unk1F9C = -1;
     sub_08033574();
-    sub_08033878();
+    BtlClearState();
     sub_08033A5C(&gBattleWork37508.unk2094);
     sub_0803403C(&gBattleWork37508.unk20A4);
     sub_08033F48(&gBattleWork37508.unk20A4);
-    sub_080314FC();
+    BtlSetTimer118();
     sub_08062C38(5);
     sub_0803114C(&gBattleWork37508.unkAE8.unkB00, 0, 0x1900, 0);
     sub_0803114C(&gBattleWork37508.unkAE8.unkB20, 0, 0xD400, 1);

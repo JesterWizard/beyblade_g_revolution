@@ -7,7 +7,7 @@ void sub_08030D4C(void)
     s32 i;
 
     i = 0;
-    sub_08067B98((void *)0x0833C318, (void *)0x0833C334);
+    DebugPrint((void *)0x0833C318, (void *)0x0833C334);
     if (gBattleWork->unk0AE8.fields.unkAF0 != 0)
     {
         sub_0806FE84(gBattleWork->unk0AE8.fields.unkAF0);

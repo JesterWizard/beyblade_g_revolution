@@ -2,7 +2,7 @@
 
 // @ 0x0802b8bc
 
-u16 sub_0802B8BC(s32 a)
+u16 GetIndexedRecordWord(s32 a)
 {
     s32 r0;
     u8 *r1;

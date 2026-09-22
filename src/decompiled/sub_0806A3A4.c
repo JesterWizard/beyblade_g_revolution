@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0806a3a4
-void *sub_0806A3A4(u32 size)
+void *BtlObjAlloc(u32 size)
 {
     struct Unk6A4D8Node *node;
     void *buffer;
@@ -29,7 +29,7 @@ r0 = 0x03000B38;
     }
     buffer = sub_0806A580(*(struct Unk6A580 **)r2, 0x60);
     if (buffer == 0)
-        sub_08067B98((void *)0x083D1B00, (void *)work);
+        DebugPrint((void *)0x083D1B00, (void *)work);
 
     r0 = work + 8;
     r1 = gUnk_03000B34;

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08033878
-void sub_08033878(void)
+void BtlClearState(void)
 {
     s32 zero;
 

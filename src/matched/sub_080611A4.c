@@ -18,7 +18,7 @@ void sub_080611A4(void)
     slotB = gUnk_03000798Loc;
     *slotB = 0;
     gUnk_03000794 = 0;
-    p = sub_0806A3A4(0xAC);
+    p = BtlObjAlloc(0xAC);
     *slotA = (u32)p;
     if (p != 0)
     {

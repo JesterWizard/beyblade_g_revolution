@@ -6,7 +6,7 @@ void sub_0802C6AC(void)
     struct MainWork **loc;
     void *base;
 
-    sub_08067B98((void *)0x0833BE48, 0x0833BE50);
+    DebugPrint((void *)0x0833BE48, 0x0833BE50);
     loc = (struct MainWork **)0x03000198;
     (*loc)->unk15C8 = 0;
     (*loc)->unk15C9 = 0;

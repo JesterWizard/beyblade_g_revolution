@@ -4,7 +4,7 @@
 
 // @ 0x0806ff28
 /* match-flags: -fprologue-bugfix */
-void sub_0806FF28(struct BtlObj *a)
+void BtlObjListMoveToHead(struct BtlObj *a)
 {
   struct BtlObj *r3;
   u32 r0;

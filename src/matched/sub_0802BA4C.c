@@ -8,7 +8,7 @@ void sub_0802BA4C(void)
     p = *(void **)gUnk_03000268;
     if (p != 0)
     {
-        sub_0806A434(p);
+        BtlObjFree(p);
         *(void **)gUnk_03000268 = 0;
     }
     gMainWorkPtr->unk1694 = 0;

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Repo-root shim for the decomp pipeline. See tools/decomp/cli.py.
+set -euo pipefail
+exec python3 "$(dirname "$0")/tools/decomp/cli.py" "$@"

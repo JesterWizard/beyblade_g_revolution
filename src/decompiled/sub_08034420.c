@@ -48,7 +48,7 @@ out->unk19 = 0;
     bytep = &state_b->unk28->unk24;
     value = *bytep;
     out->unk2C0 = value;
-    sub_08067B98(
+    DebugPrint(
         (void *)0x0833C5AC, *mode_ptr, (s8)*(u8 *)bytep);
     if (out->unk00 != 0)
     {

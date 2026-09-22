@@ -24,7 +24,7 @@ void sub_080473F8(void)
     struct Unk474ACSlot *slot;
     s32 i;
 
-    tmp = sub_0806A3A4(0x48);
+    tmp = BtlObjAlloc(0x48);
     *(u32 *)gData_03000638 = (u32)tmp;
     *(struct Unk473F8 **)gData_03000630 = *(struct Unk473F8 **)tmp;
     pool = *(struct Unk473F8 **)gData_03000630;

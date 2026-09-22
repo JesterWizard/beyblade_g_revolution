@@ -34,7 +34,7 @@ void sub_0802FA94(void)
     u8 table_index;
 
     sub_08061784();
-    buffer = sub_0807309C(0x10);
+    buffer = BtlObjTableAdd(0x10);
     i = 0;
     root_loc = (struct Unk2FA94Root **)gUnk_03000278;
     main_loc = gMainWorkPtrLoc;
@@ -147,5 +147,5 @@ void sub_0802FA94(void)
         step += 0x10;
         i++;
     } while (i <= 2);
-    sub_08073114(buffer);
+    BtlObjTableRemove(buffer);
 }

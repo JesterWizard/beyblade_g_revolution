@@ -41,7 +41,7 @@ void sub_0802ECD8(void)
     s32 base;
 
     sub_08061784();
-    buffer = sub_0807309C(0x10);
+    buffer = BtlObjTableAdd(0x10);
     i = 0;
     root_loc = (struct Unk2ECD8Root **)gUnk_03000278;
     y = 0xD000;
@@ -103,5 +103,5 @@ void sub_0802ECD8(void)
         y += 0x800;
         i++;
     } while (i <= 2);
-    sub_08073114(buffer);
+    BtlObjTableRemove(buffer);
 }

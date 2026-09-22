@@ -19,7 +19,7 @@ void sub_08061E8C(struct Unk61E8C *obj, void *b, struct Unk61E8CSrc *src, u16 c,
     obj->unk1E = d;
     size = 0x80;
     size <<= 2;
-    alloc = sub_0806A3A4(size);
+    alloc = BtlObjAlloc(size);
     obj->unk00 = alloc;
     if (alloc != 0) {
         inner = alloc->unk00;
