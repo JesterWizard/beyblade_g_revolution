@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-22T18:49:53Z_
+_Updated: 2026-09-22T19:01:07Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 405 |
-| Still need semantic C | **228** |
-| Readable Thumb remaining | 228 |
+| Semantic C done | 406 |
+| Still need semantic C | **227** |
+| Readable Thumb remaining | 227 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
@@ -143,7 +143,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0806A434` | 164 | 31/164 then 29/164 | `src/wip/sub_0806A434.c` | Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped. | Avoid keeping key live across control-flow/calls: use state->unk00 directly for the initial zero check and reload it into r1 immediately before each pool/counter comparison. Keep state r6, previous r4, next r5 so the prologue remains 70b5. |
 | `sub_0806BC0C` | 116 | 46/116 then 43/116 | `src/wip/sub_0806BC0C.c` | Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit. | Compile the final revision with current/count pinned to r4 and limit pinned to r6. Preserve the source count halfword load, cap callback, and fixed-point loop; verify the post-loop +0x114/+0x10/+0x118 stores. |
 | `sub_0806C704` | 0 | 15/136 then 17/136 | `src/wip/sub_0806C704.c` | Two semantic attempts: initial wrapper 15/136 (140B), then a six-word output workspace and normal extra parameter produced the exact retail prologue/stack frame (17/136, 140B). Remaining mismatch begins only at the flag test: retail forms state+0x8D in r1 and loads the byte into r1, while the candidate uses r0 for the address. | Pin a u8 pointer flag_ptr to r1 and assign it with &state->unk8D before testing; retain source r5, state r4, input r6, extra r7, and output[6] to preserve f0b5/add sp -0x18. |
-| `sub_0806EE48` | 124 | 56/124 then 120/124 | `src/wip/sub_0806EE48.c` | Two semantic attempts: direct dispatcher 56/124 (132B), then flag_ptr pinned to r2 reached 120/124 same size. The full loop and handler/callback paths match; only the bit-clear branch differs because retail reuses the already-loaded flag byte in r1, while the candidate reloads it from the r2 pointer before masking. | Keep the loaded flag in a u8 local for both the test and clear path: flags = *flag_ptr; if ((flags & 1) == 0) ... else *flag_ptr = flags & -2. Preserve flag_ptr r2 and handler r3; avoid a second dereference in the else branch. |
+| `sub_0806EE48` | 0 | 56/124 then 120/124 | `src/wip/sub_0806EE48.c` | Two semantic attempts: direct dispatcher 56/124 (132B), then flag_ptr pinned to r2 reached 120/124 same size. The full loop and handler/callback paths match; only the bit-clear branch differs because retail reuses the already-loaded flag byte in r1, while the candidate reloads it from the r2 pointer before masking. | Keep the loaded flag in a u8 local for both the test and clear path: flags = *flag_ptr; if ((flags & 1) == 0) ... else *flag_ptr = flags & -2. Preserve flag_ptr r2 and handler r3; avoid a second dereference in the else branch. |
 | `sub_0806FDD0` | 128 | 8/128 then 21/128 | `src/wip/sub_0806FDD0.c` | Two semantic attempts: sorted-list insertion model 8/128 (120B), then corrected u16 key ABI and literal pointer lifetimes reached 21/128 (120B). The body is structurally exact, but retail saves r7 (f0b5) while agbcc emits 70b5 despite keeping the free-list address in r7 across calls; this shifts literal-pool offsets and leaves the match short. | Force a normal callee-saved local live across sub_0806FDB4/sub_0806F8C4 so agbcc emits the r7 save/restore, while retaining key as u16, free-list address r7, head address r5, and node r4. Then verify the sorted predecessor/successor insertion and counter decrement. |
 | `sub_0806FE84` | 120 | 33/120 | `src/wip/sub_0806FE84.c` | Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1. | Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit). |
 | `sub_08070354` | 168 | 47/168 | `src/wip/sub_08070354.c` | Semantic object/flag updater reconstructed. Final verified attempt reached 47/168 (172B); control flow and flag masks match conceptually, but agbcc schedules the arg2 truncation after arg3 truncation (retail copies arg2 to r5 first), and the resulting size differs by 4 bytes. | Preserve the typed state/object model and force the prologue order: mask b, lsls arg2, lsrs r5, then mask arg3 before loading state->unk30 and state->unk10. Next tune the temporary value register so new-object mode emits object->unk08 mask/shift, 0x100 OR, then the common flags OR. |

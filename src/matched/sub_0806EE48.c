@@ -1,75 +1,43 @@
 #include "global.h"
 
 // @ 0x0806ee48
-__attribute__((naked))
-void sub_0806EE48(void)
+// Handler/callback dispatch plus a 4-slot motion scan.
+// Two shapes are load-bearing in the bit-clear path:
+//  - the clean path re-reads the byte as `m & *flag_ptr` rather than masking a
+//    cached copy: mask the cached value and agbcc writes the `and` result into
+//    r1, while retail writes r0. The `ldrb` is still shared (agbcc CSEs the two
+//    `*flag_ptr` reads) and the mask must be a `s32` local so agbcc emits
+//    `movs r0,#2; negs r0,r0` instead of folding a literal -2 to `& 0xFE`.
+void sub_0806EE48(struct Unk6EE48 *state)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "movs r1, #0x89\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r5, r1\n"
-        "ldr r3, [r0, #0x00]\n"
-        "cmp r3, #0x00\n"
-        "beq _0806EE8E\n"
-        "movs r0, #0xD5\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r2, r5, r0\n"
-        "ldrb r1, [r2, #0x00]\n"
-        "movs r0, #0x01\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _0806EE86\n"
-        "movs r1, #0xD1\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r5, r1\n"
-        "ldr r2, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "bne _0806EE7C\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_0806EEC8\n"
-        "b _0806EE8E\n"
-        "_0806EE7C:\n"
-        "adds r0, r3, #0x0\n"
-        "adds r1, r5, #0x0\n"
-        "bl _08073C48\n"
-        "b _0806EE8E\n"
-        "_0806EE86:\n"
-        "movs r0, #0x02\n"
-        "negs r0, r0\n"
-        "ands r0, r1\n"
-        "strb r0, [r2, #0x00]\n"
-        "_0806EE8E:\n"
-        "movs r4, #0x00\n"
-        "_0806EE90:\n"
-        "movs r1, #0x88\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r5, r1\n"
-        "ldr r1, [r0, #0x00]\n"
-        "lsls r0, r4, #0x01\n"
-        "adds r0, r0, r4\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r1, #0x14\n"
-        "adds r1, r1, r0\n"
-        "ldr r0, [r1, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806EEB4\n"
-        "lsls r0, r4, #0x04\n"
-        "adds r0, r0, r4\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r0, r5, r0\n"
-        "bl sub_08068E54\n"
-        "_0806EEB4:\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r4, r0, #0x18\n"
-        "cmp r4, #0x03\n"
-        "bls _0806EE90\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
-}
+    struct Unk6EE48 *work;
+    void *handler;
+    u8 *flag_ptr;
+    void *callback;
+    u8 i;
 
+    work = state;
+    handler = work->unk224;
+    if (handler != 0)
+    {
+        flag_ptr = &work->unk354;
+        if ((*flag_ptr & 1) == 0)
+        {
+            callback = work->unk344;
+            if (callback == 0)
+                sub_0806EEC8(work);
+            else
+                _08073C48(handler, work, callback);
+        }
+        else
+        {
+            s32 m = -2;
+            *flag_ptr = m & *flag_ptr;
+        }
+    }
+    for (i = 0; i < 4; i++)
+    {
+        if (work->unk220->entries[i].unk00 != 0)
+            sub_08068E54(&work->motion[i]);
+    }
+}

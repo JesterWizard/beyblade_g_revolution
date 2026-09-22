@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-22T18:49:53Z",
+  "generated": "2026-09-22T19:01:07Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 228,
-    "semantic_done": 405,
-    "readable_asm": 228,
+    "pending": 227,
+    "semantic_done": 406,
+    "readable_asm": 227,
     "opcode": 0,
     "battle_pending": 80,
     "battle_semantic": 77,
@@ -1306,8 +1306,8 @@
     {
       "name": "sub_0806EE48",
       "addr": "0x0806EE48",
-      "kind": "asm",
-      "bytes": 124,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/wip/sub_0806EE48.c",
       "notes": "src/wip/sub_0806EE48.md",
       "status": "Two semantic attempts: direct dispatcher 56/124 (132B), then flag_ptr pinned to r2 reached 120/124 same size. The full loop and handler/callback paths match; only the bit-clear branch differs because retail reuses the already-loaded flag byte in r1, while the candidate reloads it from the r2 pointer before masking.",
