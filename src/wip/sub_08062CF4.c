@@ -1,8 +1,3 @@
-#include "global.h"
-#include "ram_map.h"
-#include "battle.h"
-
-// @ 0x08062cf4
 /* match-compiler: old_agbcc */
 #include "global.h"
 
@@ -22,4 +17,3 @@ void sub_08062CF4(u8 idx, u8 *rgb)
     c = (rgb[0] & mask) | ((rgb[1] & mask) << 5) | ((rgb[2] & mask) << 10);
     pal[idx] = c;
 }
-

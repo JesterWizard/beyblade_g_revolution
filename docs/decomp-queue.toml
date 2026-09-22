@@ -1824,3 +1824,19 @@ notes = "src/wip/sub_08038438.md"
 status = "C structurally close (both index-table scans) but register pressure differs: retail keeps i<<16 in r9 and the 0x080BB8C0 pointer address in r8 (push r6/r7), compiled uses neither -> 220B vs retail 240B"
 next = "permuter/auto.py sub_08038438, else re-derive with the r8/r9 live values"
 score = "8/240"
+
+[[wip]]
+name = "sub_08062CF4"
+seed = "src/wip/sub_08062CF4.c"
+notes = "src/wip/sub_08062CF4.md"
+status = "same-size 23/48; retail holds palette base in r5 early"
+next = "permuter/auto.py sub_08062CF4"
+score = "23/48"
+
+[[wip]]
+name = "sub_0806B064"
+seed = "src/wip/sub_0806B064.c"
+notes = "src/wip/sub_0806B064.md"
+status = "62/122 same-size shape, 120 vs 122; only the struct-param/total register assignment differs (param r3 vs retail r4)"
+next = "re-shape to 122 bytes then permuter, or clone the register shape from another 0xDC-item walker"
+score = "62/122"

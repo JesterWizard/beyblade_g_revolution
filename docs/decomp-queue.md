@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-21T22:32:35Z_
+_Updated: 2026-09-22T18:30:30Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 399 |
-| Still need semantic C | **234** |
-| Readable Thumb remaining | 234 |
+| Semantic C done | 402 |
+| Still need semantic C | **231** |
+| Readable Thumb remaining | 231 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 218 |
+| WIP (resume these first) | 220 |
 
 Ranking: **battle** · showing top **40**
 
@@ -179,7 +179,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08031300` | 78 | 6/78 | `src/wip/sub_08031300.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08033978` | 180 | 22/180 | `src/wip/sub_08033978.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08033C1C` | 0 | 21/32 | `src/wip/sub_08033C1C.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_080361A8` | 36 | 23/36 | `src/wip/sub_080361A8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_080361A8` | 0 | 23/36 | `src/wip/sub_080361A8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08037318` | 0 | 91/100 | `src/wip/sub_08037318.c` | 91/100; 0x2C vs table ldr order | overnight permuter |
 | `sub_08037430` | 216 | 84/216 | `src/wip/sub_08037430.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0803DD60` | 0 | 16/40 | `src/wip/sub_0803DD60.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
@@ -244,6 +244,8 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0803715C` | 444 | 33/444 | `src/wip/sub_0803715C.c` | 33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 instead of r8 and about 20 bytes of reloads are folded | do not hand-chase registers; only revisit if a same-size seed appears, then permuter |
 | `sub_08067F3C` | 92 | 58/92 | `src/wip/sub_08067F3C.c` | 58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs | s32 counter and mask-first flag both scored worse; permuter only if a same-size seed appears |
 | `sub_08038438` | 240 | 8/240 | `src/wip/sub_08038438.c` | C structurally close (both index-table scans) but register pressure differs: retail keeps i<<16 in r9 and the 0x080BB8C0 pointer address in r8 (push r6/r7), compiled uses neither -> 220B vs retail 240B | permuter/auto.py sub_08038438, else re-derive with the r8/r9 live values |
+| `sub_08062CF4` | 0 | 23/48 | `src/wip/sub_08062CF4.c` | same-size 23/48; retail holds palette base in r5 early | permuter/auto.py sub_08062CF4 |
+| `sub_0806B064` | 0 | 62/122 | `src/wip/sub_0806B064.c` | 62/122 same-size shape, 120 vs 122; only the struct-param/total register assignment differs (param r3 vs retail r4) | re-shape to 122 bytes then permuter, or clone the register shape from another 0xDC-item walker |
 
 Per-function notes: `src/wip/<fn>.md`.
 
@@ -278,7 +280,6 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08039BD4` | `0x08039BD4` | 1552 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08073910` | `0x08073910` | 118 | 0 |      | asm | |
-| `sub_0806B064` | `0x0806B064` | 122 | 0 |      | asm | |
 | `sub_08041C8C` | `0x08041C8C` | 142 | 0 | pool | asm | |
 | `sub_0806E31C` | `0x0806E31C` | 148 | 0 | pool | asm | |
 | `sub_08041B74` | `0x08041B74` | 162 | 0 | pool | asm | |
@@ -291,6 +292,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_080688C8` | `0x080688C8` | 190 | 0 |      | asm | |
 | `sub_0807000C` | `0x0807000C` | 192 | 0 | pool | asm | |
 | `sub_08062358` | `0x08062358` | 192 | 0 |      | asm | |
+| `sub_0806FBF8` | `0x0806FBF8` | 196 | 0 | pool | asm | |
 
 ## Blocked
 
@@ -312,7 +314,7 @@ Per-function notes: `src/wip/<fn>.md`.
 | `sub_080604C8` | `0x080604C8` | 0 | byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter |
 | `sub_08062728` | `0x08062728` | 0 | u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen |
 | `sub_08062C80` | `0x08062C80` | 0 | calls _08073C4C(0, dst, size, src) at raw address 0x08073C4C twice (VRAM/PLTT clear via CpuFastSet-style primitive) — that callee has no C symbol/prototype anywhere in the codebase yet (only referenced via bl _08073C4C from naked asm in many other unconverted functions); needs the callee named/prototyped first |
-| `sub_08062CF4` | `0x08062CF4` | 48 | BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] -> u16 @ PLTT 0x05000200+idx*2 — logic reconstructed correctly (same-size DIFF, ~1 instruction reordered) across many register-pinned variants; retail keeps r6 live (push {r4,r5,r6,lr}) but my C never needed r6 pressure, changing push set; needs permuter |
+| `sub_08062CF4` | `0x08062CF4` | 0 | BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] -> u16 @ PLTT 0x05000200+idx*2 — logic reconstructed correctly (same-size DIFF, ~1 instruction reordered) across many register-pinned variants; retail keeps r6 live (push {r4,r5,r6,lr}) but my C never needed r6 pressure, changing push set; needs permuter |
 | `sub_0806A6F8` | `0x0806A6F8` | 436 | docs/battle.md: readable Thumb — large input hub (436B, 6 IWRAM refs) |
 | `sub_08073114` | `0x08073114` | 112 | BtlObjTable scan+remove (loop over gBtlObjTable[0..gBtlObjTableCount) matching entry->key==obj, calls sub_0806A434/sub_08067B98) — logic reconstructed correctly (same-size DIFF on every variant tried) but agbcc compiles the do-while as pre-test loop + different table-pointer register placement than retail; needs permuter or deeper agbcc loop-codegen trick |
 | `sub_08074144` | `0x08074144` | 2 | single instruction 'mov pc, lr' (2B) — semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm |
@@ -333,6 +335,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (85 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (84 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

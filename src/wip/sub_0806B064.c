@@ -1,8 +1,3 @@
-#include "global.h"
-#include "ram_map.h"
-#include "battle.h"
-
-// @ 0x0806b064
 /* match-compiler: old_agbcc */
 #include "global.h"
 
@@ -43,4 +38,3 @@ s32 sub_0806B064(struct Unk6B3E8 *a)
     total = (a->unk24 * total) >> 8;
     return total;
 }
-

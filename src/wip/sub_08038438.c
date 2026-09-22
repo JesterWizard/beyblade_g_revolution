@@ -32,7 +32,7 @@ s32 sub_08038438(u32 arg0)
             s->unk20 |= 1 << j;
             s->unk22[j] = 1;
             _08073C4C((void *)gData_08079358[i],
-                      (void *)(gData_05000200 + ((s16)j << 5)), 0x20,
+                      (void *)&gData_05000200[(s16)j << 4], 0x20,
                       (void *)gData_080BB8C0[0]);
             return (s8)j;
         }

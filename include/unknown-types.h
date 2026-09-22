@@ -1973,21 +1973,29 @@ struct Unk6BDA8 /* >= 0x118 */
     /* 114 */ void **unk114;
 };
 
-/* Item, 0xDC stride (struct is wider; only unk70 known). sub_0806B3E8. */
+/* Item, 0xDC stride. sub_0806B3E8, sub_0806B064. */
 struct Unk6B3E8Item /* >= 0xdc, stride 0xdc */
 {
-    /* 00 */ u8 filler_00[0x70];
+    /* 00 */ u8 filler_00[0x10];
+    /* 10 */ u8 unk10;
+    /* 11 */ u8 filler_11[0x11];
+    /* 22 */ s16 unk22;
+    /* 24 */ u8 filler_24[0x4C];
     /* 70 */ s32 unk70;
     /* 74 */ u8 filler_74[0x68];
 };
 
-/* String cursor + item array. sub_0806B3E8. */
-struct Unk6B3E8 /* >= 0x14 */
+/* String cursor + item array. sub_0806B3E8, sub_0806B064. */
+struct Unk6B3E8 /* >= 0x2c */
 {
     /* 00 */ struct Unk6B3E8Item *unk00;
     /* 04 */ u8 unk04;
     /* 05 */ u8 filler_05[0xB];
     /* 10 */ const u8 *unk10;
+    /* 14 */ u8 filler_14[0x10];
+    /* 24 */ s16 unk24;
+    /* 26 */ u8 filler_26[0x2];
+    /* 28 */ const u8 *unk28;
 };
 
 /* Indexed byte-chain walk. sub_0806DEC8. */
