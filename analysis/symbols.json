@@ -1,0 +1,19 @@
+{
+  "count": 1,
+  "generated": "2026-09-22T20:57:02Z",
+  "symbols": {
+    "0x0802B8BC": {
+      "aliases": [
+        "sub_0802B8BC"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "a is a u16 index scaled by 4 into a record array at gUnk_03000264; returns the u16 at +2"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GetIndexedRecordWord",
+      "updated": "2026-09-22"
+    }
+  }
+}

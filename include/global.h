@@ -8,6 +8,7 @@
 #include "gba/gba.h"
 #include "unknown-types.h"
 #include "unknown-functions.h"
+#include "symbols.h"
 #include "ram_map.h"
 #include "data_symbols.h"
 
