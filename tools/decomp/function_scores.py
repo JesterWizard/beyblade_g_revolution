@@ -37,6 +37,14 @@ sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from opcode_stubs import file_kind  # noqa: E402
 from progress import function_size  # noqa: E402
 from next_queue import _load_toml  # noqa: E402
+from tier import (  # noqa: E402
+    MATCHING_STATUSES,
+    TIERS,
+    derive_tier,
+    is_named,
+    load_symbols,
+    symbol_for,
+)
 
 # "5/108 bytes" after "differ" / "short" → unmatched count, not matched count.
 _DIFFER = re.compile(
@@ -152,9 +160,13 @@ def collect() -> dict[str, Any]:
             wip[name] = row
 
     functions: list[dict[str, Any]] = []
+    symbols = load_symbols()
     for path in sorted(MATCHED_SRC.glob("sub_*.c")):
         name = path.stem
         kind = file_kind(path)
+        entry = symbol_for(name, symbols)
+        named = is_named(entry)
+        symbol = str(entry.get("symbol") or "")
         try:
             size = function_size(name, path)
         except FileNotFoundError:
@@ -233,6 +245,12 @@ def collect() -> dict[str, Any]:
                 "score": score,
                 "source": source,
                 "note": note,
+                "tier": derive_tier(
+                    has_c=(kind == "semantic" or name in wip),
+                    named=named,
+                    matches=status in MATCHING_STATUSES,
+                ),
+                "symbol": symbol,
             }
         )
 
@@ -240,10 +258,15 @@ def collect() -> dict[str, Any]:
     for row in functions:
         counts[row["display"]] = counts.get(row["display"], 0) + 1
 
+    tiers: dict[str, int] = {tier: 0 for tier in TIERS}
+    for row in functions:
+        tiers[row["tier"]] = tiers.get(row["tier"], 0) + 1
+
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     return {
         "generated": generated,
         "counts": counts,
+        "tiers": tiers,
         "total": len(functions),
         "functions": functions,
     }
@@ -403,6 +426,7 @@ def write_artifacts(data: dict[str, Any]) -> None:
     payload = {
         "generated": data["generated"],
         "counts": data["counts"],
+        "tiers": data["tiers"],
         "total": data["total"],
         "functions": data["functions"],
     }

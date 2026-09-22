@@ -45,6 +45,7 @@ _HEX_BYTE = re.compile(r"0x[0-9A-Fa-f]{2}")
 
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from opcode_stubs import file_kind  # noqa: E402
+from tier import TIERS, collect as tier_collect, summarize as tier_summarize  # noqa: E402
 
 
 def _pct(part: int, whole: int, digits: int = 1) -> float:
@@ -95,6 +96,14 @@ def _linked_count() -> int:
     if MATCH_ASM.is_dir():
         return len(list(MATCH_ASM.glob("sub_*.s")))
     return 0
+
+
+def _tier_summary() -> dict[str, Any]:
+    """Lifecycle tier counts. Never fatal: progress must survive a bad analysis."""
+    try:
+        return tier_summarize(tier_collect())
+    except Exception:  # noqa: BLE001 - reporting must not break the build
+        return {}
 
 
 def _battle_names() -> set[str]:
@@ -219,6 +228,7 @@ def collect(top: int = 15) -> dict[str, Any]:
         "generated": generated,
         "phase": PHASE_LABEL,
         "expected_functions": expected,
+        "tiers": _tier_summary(),
         "src_matched": total_fn,
         "linked_in_rom": linked,
         "total_bytes": total_bytes,
@@ -282,6 +292,16 @@ def format_human(data: dict[str, Any]) -> str:
             f"  Battle: {battle['semantic']}/{battle['functions']} semantic C "
             f"({battle['pct_functions']:.1f}% fn, {battle['pct_bytes']:.1f}% bytes)"
         )
+    tiers = (data.get("tiers") or {}).get("tiers") or {}
+    if tiers:
+        parts = [
+            f"{tier} {tiers[tier]['functions']}"
+            for tier in TIERS
+            if tier in tiers
+        ]
+        lines.append(f"  Lifecycle: {'  |  '.join(parts)}")
+        named = (data.get("tiers") or {}).get("flags", {}).get("named", 0)
+        lines.append(f"  Named: {named}/{expected}")
     return "\n".join(lines)
 
 
