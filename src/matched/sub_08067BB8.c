@@ -2,7 +2,7 @@
 
 // @ 0x08067bb8
 __attribute__((naked))
-void sub_08067BB8(void)
+void sub_08067BB8(void *a, void *b, s32 c, s32 d, s32 e, s32 f, s32 g)
 {
     asm(
         ".syntax unified\n"

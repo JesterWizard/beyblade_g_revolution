@@ -2,7 +2,7 @@
 
 // @ 0x08070604
 __attribute__((naked))
-void sub_08070604(void)
+void sub_08070604(struct Unk7069C *dst, void *a, void *b, s32 c, s32 d, s32 e, s32 f)
 {
     asm(
         ".syntax unified\n"

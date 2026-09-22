@@ -131,6 +131,8 @@ bash build_tools.sh
 
 | Tool | Path | Role |
 |------|------|------|
+| Signature arity | `tools/decomp/audit_signatures.py` | Prototypes vs definitions vs call sites |
+| Fix stub arity | `tools/decomp/fix_stub_arities.py` | Align asm stubs to the agreed arity |
 | Lifecycle vocabulary | `tools/decomp/tier.py` | Single enum: has_c / named / matches → tier |
 | Analysis DB | `tools/decomp/analyze.py` | `analysis/{functions,xrefs,structs,systems}.json` |
 | Subsystems | `tools/decomp/systems.py` | Deterministic, evidence-backed membership |

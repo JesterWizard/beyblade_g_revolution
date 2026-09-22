@@ -21,6 +21,52 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-22 — signature arity audit (`make signatures`) + 13 stub fixes
+
+The VBlankIntrWait find was not a one-off: a function can compile everywhere and
+still be declared, defined and called three different ways, because each C file
+compiles in isolation and the C is never linked. Built the machine check for it.
+
+`make signatures` (`audit_signatures.py`) cross-checks the three sources of truth
+per function — `unknown-functions.h` prototypes, `src/matched/*.c` definitions, and
+all 1474 call sites across `src/matched/` + `src/decompiled/`. It folds readable
+names back to their `sub_` label via `symbols.h` so renamed functions stay
+checkable, blanks comments/strings/preprocessor so `asm("bl sub_…")` is not read as
+a call, and reports each disagreement **once** with every claim and its source
+rather than a wall of call-site lines.
+
+Sources are not equally trustworthy, so claims are weighted: header prototype 3,
+caller's local prototype 2, semantic definition 2, call site 1, and a
+**readable-Thumb asm stub 0** — a stub says `(void)` only because its body ignores
+the registers, so it is a placeholder, not a claim. Deliberately open signatures
+(`void f();`, `f(...)` — the stripped `DebugPrint` stubs) are never reported, since
+varying arity is their whole point.
+
+First run found **13 functions whose sources disagreed on arity**, all the same
+shape: a `src/matched/` readable-Thumb stub declaring `(void)` while its callers
+passed 1–7 arguments, with the truth sitting in the callers' local prototypes.
+None was in `unknown-functions.h`, which is why nothing had ever noticed.
+
+`make fix-stub-arities` repairs them. Types get picked up from prototypes, but a
+stub is its own translation unit, so a type named only in a *caller's* local
+prototype is not visible where the stub is compiled — the first attempt on
+`sub_0803139C` copied `struct Unk3114C *` from `sub_0803114C.c` and the stub stopped
+compiling. Fixed by trying candidate parameter lists in order (header, local
+prototype, opaque `void *`) and keeping the first that still byte-matches.
+`sub_0803139C` fell back to opaque pointers; the other 12 kept their real types.
+All 13 verified byte-identical with `match_function.py`.
+
+Result: 13 conflicts → **0**, and 0 call sites on the wrong arity. `make audit`
+633/633, `make compare` OK on a forced rebuild.
+
+Also from this round: `make audit-drafts` / `make repair-drafts` to surface draft
+compile health (114 of 130 drafts compile; the 16 failures are hand work, tracked
+below), and `document.py` now prunes stale pages on rename.
+
+Still open: `sub_0803139C` and any future stub may want its *return type* synced
+too — the audit only compares arity, and that stub still says `void` where callers
+expect `s32`.
+
 ### 2026-09-22 — BIOS wrapper + pool naming batch (33 → 43); draft audit targets
 
 Named 10 more, taking named 33 → **43/633** (battle 22/87, graphics 8/34). Two of

@@ -149,7 +149,8 @@ The scoreboard `docs/decomp-functions.md` is unchanged and stays the
 
 Every stage is also directly runnable and has a `make` target:
 `make analyze`, `make symbols`, `make tier`, `make document`, `make status`,
-`make audit`, `make repair-signatures`, `make audit-drafts`, `make repair-drafts`.
+`make audit`, `make repair-signatures`, `make audit-drafts`, `make repair-drafts`,
+`make signatures`, `make fix-stub-arities`.
 
 ## Verifying the C corpus itself
 
@@ -183,6 +184,43 @@ failures mean the draft's guess at a callee's signature is better than the
 header's, so rewriting the draft to agree with the header would throw away the
 draft's information. They are triaged per file.
 
+## Agreeing on arity
+
+Compiling is necessary but not sufficient: a file can compile perfectly while
+*lying* about a function it defines or calls. `sub_080674B4` was declared `()` and
+defined `(const void *src, void *dest)` while all 38 call sites passed nothing —
+it was BIOS VBlankIntrWait. Every gate stayed green, because each file compiles in
+isolation and the C is never linked.
+
+`make signatures` cross-checks the three sources of truth per function:
+`include/unknown-functions.h` prototypes, the definitions in `src/matched/*.c`, and
+every call site in `src/matched/` + `src/decompiled/`. Where they disagree it
+reports the function once, with each claim and its source, rather than a wall of
+call-site lines.
+
+Weights decide who is right, because the sources are not equally trustworthy:
+
+| Source | Weight |
+|--------|--------|
+| header prototype | 3 |
+| local prototype in a caller | 2 |
+| semantic definition | 2 |
+| call site | 1 |
+| readable-Thumb asm stub definition | 0 |
+
+An asm stub ranks *below* a call site deliberately: it says `(void)` only because
+its body ignores the registers, which makes it a placeholder rather than a claim.
+A signature that is deliberately open (`void f();` / `f(...)`, e.g. the stripped
+`DebugPrint` stubs) is never reported, since varying arity is its whole point.
+
+`make fix-stub-arities` then repairs the stubs this finds: it takes the parameter
+list from the best prototype stating the agreed arity and rewrites the stub. A stub
+is its own translation unit, so a type named only in some caller's local prototype
+is *not* visible there — candidate parameter lists are therefore tried in order
+(header, then local prototype, then opaque `void *` pointers) and the first that
+still byte-matches is kept. Every change is re-verified with `match_function.py`
+and reverted if the bytes move.
+
 
 ## Non-negotiables
 
@@ -190,6 +228,9 @@ draft's information. They are triaged per file.
   the ROM.
 - **`make audit` reports `0` failures.** `make compare` cannot see the C, so the
   C corpus needs its own gate.
+- **`make signatures` reports `0` conflicts.** Compiling is not the same as
+  agreeing: a function can compile everywhere and still be declared, defined and
+  called three different ways.
 - The naming layer is alias-only: no file renames, no manifest changes, no
   linker edits. A hard-rename command is explicitly out of scope.
 - A wrong name must stay cheap to revert — guaranteed by the generated-view
