@@ -239,7 +239,7 @@ make compare: OK
 - `asm/rom_layout.ld`
 - `build/matched.json`
 - `src/*.c`, `include/*.h` (when C lands)
-- `src/wip/` (when parking unmatched C)
+- `src/decompiled/` (when parking unmatched C)
 - `beyblade_g_revolution.toml` (renames)
 - `docs/decomp-status.md`, `docs/ram-map.md`, `docs/decomp-wip.md`
 

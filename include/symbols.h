@@ -16,6 +16,7 @@
 #define BtlSetMode1F90 sub_080330F4
 #define BtlClearState sub_08033878
 #define BtlCaptureInput sub_08034894
+#define BgMapSetPaletteBankRun sub_08061D68
 #define DebugPrint sub_08067B98
 #define BtlObjAlloc sub_0806A3A4
 #define BtlObjFree sub_0806A434

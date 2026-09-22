@@ -10,6 +10,6 @@ Grouped deterministically by hardware address ranges, named RAM symbols, and han
 |-----------|----------:|------:|
 | [audio](audio.md) | 1 | 0 |
 | [battle](battle.md) | 87 | 11 |
-| [graphics](graphics.md) | 34 | 0 |
+| [graphics](graphics.md) | 34 | 1 |
 | [input](input.md) | 5 | 0 |
 | [menu](menu.md) | 1 | 0 |

@@ -1,6 +1,6 @@
 {
-  "count": 14,
-  "generated": "2026-09-22T20:58:05Z",
+  "count": 15,
+  "generated": "2026-09-22T21:06:07Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -71,6 +71,22 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BtlCaptureInput",
+      "updated": "2026-09-22"
+    },
+    "0x08061D68": {
+      "aliases": [
+        "sub_08061D68"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "Writes 16-bit BG tilemap entries at 0x06000000 + (u8)gUnk_03000798[0x5C]*0x800 + (arg0&0x1F)*0x40",
+        "Read-modify-write: ANDs 0x3FF to preserve flip/priority bits, ORs (arg1&0xF)<<12 (palette bank)",
+        "Loops columns min(arg2,arg3)..max(arg2,arg3) - a horizontal run on one 32-entry tilemap row",
+        "29 callers are scene/BG setup routines"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgMapSetPaletteBankRun",
       "updated": "2026-09-22"
     },
     "0x08067B98": {

@@ -408,7 +408,7 @@
 | `sub_08061BE8` | `0x08061BE8` |  | MATCHING | 96 | 18 |
 | `sub_08061C48` | `0x08061C48` |  | MATCHING | 56 | 0 |
 | `sub_08061D00` | `0x08061D00` |  | DECOMPILED | 104 | 1 |
-| `sub_08061D68` | `0x08061D68` | graphics | DECOMPILED | 88 | 29 |
+| [`BgMapSetPaletteBankRun`](BgMapSetPaletteBankRun.md) | `0x08061D68` | graphics | UNDERSTOOD | 88 | 29 |
 | `sub_08061DC0` | `0x08061DC0` |  | MATCHING | 72 | 0 |
 | `sub_08061E40` | `0x08061E40` |  | MATCHING | 20 | 1 |
 | `sub_08061E8C` | `0x08061E8C` | battle | MATCHING | 108 | 4 |

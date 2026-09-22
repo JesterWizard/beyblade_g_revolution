@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T21:03:20Z",
+  "generated": "2026-09-22T21:06:20Z",
   "total": 633,
   "functions": [
     {
@@ -14526,8 +14526,8 @@
       "size": 88,
       "kind": "asm",
       "status": "not_started",
-      "tier": "DECOMPILED",
-      "symbol": "",
+      "tier": "UNDERSTOOD",
+      "symbol": "BgMapSetPaletteBankRun",
       "note": "readable-thumb",
       "insn_count": 40,
       "offsets": [

@@ -3,12 +3,13 @@
 
 # graphics subsystem
 
-34 functions — 0 named.
+34 functions — 1 named.
 
 | Tier | Functions |
 |------|----------:|
 | MATCHING | 30 |
-| DECOMPILED | 4 |
+| UNDERSTOOD | 1 |
+| DECOMPILED | 3 |
 
 ## Functions
 
@@ -16,7 +17,7 @@
 |----------|---------|------|-----:|--------:|--------:|-----|
 | `sub_080615EC` | `0x080615EC` | MATCHING | 36 | 31 | 0 | gUnk_03000798 |
 | `sub_0806171C` | `0x0806171C` | MATCHING | 104 | 29 | 2 | gUnk_03000798 |
-| `sub_08061D68` | `0x08061D68` | DECOMPILED | 88 | 29 | 0 | gUnk_03000798 |
+| [`BgMapSetPaletteBankRun`](../functions/BgMapSetPaletteBankRun.md) | `0x08061D68` | UNDERSTOOD | 88 | 29 | 0 | gUnk_03000798 |
 | `sub_08061784` | `0x08061784` | MATCHING | 16 | 20 | 0 | gUnk_03000798 |
 | `sub_080617C4` | `0x080617C4` | MATCHING | 60 | 17 | 0 | gUnk_03000798 |
 | `sub_08061610` | `0x08061610` | MATCHING | 24 | 11 | 0 | gUnk_03000798 |

@@ -23,7 +23,7 @@ void sub_0805264C(struct Unk2F520 *a, u32 idx)
     if (idx == (u32)field)
         row = 0x0E;
     n = (idx << 1) + 5;
-    sub_08061D68(n, row, 4, 0x19);
+    BgMapSetPaletteBankRun(n, row, 4, 0x19);
     n = (idx << 1) + 6;
-    sub_08061D68(n, row, 4, 0x19);
+    BgMapSetPaletteBankRun(n, row, 4, 0x19);
 }

@@ -10,12 +10,12 @@ void sub_08066FB8(void)
 
     sub_080674B4();
     sub_08061BE8();
-    sub_08061D68(5, 0x0F, 3, 0x1A);
-    sub_08061D68(6, 0x0F, 3, 0x1A);
-    sub_08061D68(7, 0x0F, 3, 0x1A);
-    sub_08061D68(8, 0x0F, 3, 0x1A);
-    sub_08061D68(9, 0x0F, 3, 0x1A);
-    sub_08061D68(0x0A, 0x0F, 3, 0x1A);
+    BgMapSetPaletteBankRun(5, 0x0F, 3, 0x1A);
+    BgMapSetPaletteBankRun(6, 0x0F, 3, 0x1A);
+    BgMapSetPaletteBankRun(7, 0x0F, 3, 0x1A);
+    BgMapSetPaletteBankRun(8, 0x0F, 3, 0x1A);
+    BgMapSetPaletteBankRun(9, 0x0F, 3, 0x1A);
+    BgMapSetPaletteBankRun(0x0A, 0x0F, 3, 0x1A);
     sub_080674B4();
     table = (u32 *)0x080BB110;
     table += 3;
@@ -39,17 +39,17 @@ void sub_08066FB8(void)
     mode = gUnk_03000678;
     if (mode == 0)
     {
-        sub_08061D68(5, 0x0E, 3, 0x1A);
-        sub_08061D68(6, 0x0E, 3, 0x1A);
+        BgMapSetPaletteBankRun(5, 0x0E, 3, 0x1A);
+        BgMapSetPaletteBankRun(6, 0x0E, 3, 0x1A);
     }
     else if (mode == 1)
     {
-        sub_08061D68(7, 0x0E, 3, 0x1A);
-        sub_08061D68(8, 0x0E, 3, 0x1A);
+        BgMapSetPaletteBankRun(7, 0x0E, 3, 0x1A);
+        BgMapSetPaletteBankRun(8, 0x0E, 3, 0x1A);
     }
     else if (mode == 2)
     {
-        sub_08061D68(9, 0x0E, 3, 0x1A);
-        sub_08061D68(0x0A, 0x0E, 3, 0x1A);
+        BgMapSetPaletteBankRun(9, 0x0E, 3, 0x1A);
+        BgMapSetPaletteBankRun(0x0A, 0x0E, 3, 0x1A);
     }
 }

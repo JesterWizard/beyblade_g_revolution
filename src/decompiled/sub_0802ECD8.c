@@ -65,14 +65,14 @@ void sub_0802ECD8(void)
                         (struct Unk7069C *)&(*root_loc)->unkF8,
                         record->unk04, 0x0F);
                 sub_08061610(0x0E);
-                sub_08061D68(x >> 16, 0x0E, 2, 0x1B);
-                sub_08061D68(y >> 16, 0x0E, 2, 0x1B);
+                BgMapSetPaletteBankRun(x >> 16, 0x0E, 2, 0x1B);
+                BgMapSetPaletteBankRun(y >> 16, 0x0E, 2, 0x1B);
             }
             else
             {
                 sub_08061610(0x0F);
-                sub_08061D68(x >> 16, 0x0F, 2, 0x1B);
-                sub_08061D68(y >> 16, 0x0F, 2, 0x1B);
+                BgMapSetPaletteBankRun(x >> 16, 0x0F, 2, 0x1B);
+                BgMapSetPaletteBankRun(y >> 16, 0x0F, 2, 0x1B);
             }
             if (base < (*root_loc)->unk130 - 1)
             {

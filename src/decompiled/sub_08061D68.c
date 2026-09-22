@@ -1,7 +1,7 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
 
-void sub_08061D68(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
+void BgMapSetPaletteBankRun(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
 {
     u32 x;
     u16 palBits;

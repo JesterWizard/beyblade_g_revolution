@@ -2,7 +2,7 @@
 # usage: try_compilers.sh FUNCTION  -- tests the WIP seed under agbcc and old_agbcc
 cd /home/username/Github/beyblade_g_revolution
 fn="$1"
-seed="src/wip/$fn.c"
+seed="src/decompiled/$fn.c"
 for cc in agbcc old_agbcc; do
   out="/tmp/v/${fn}_${cc}.c"
   # strip any existing match-compiler line, then prepend ours

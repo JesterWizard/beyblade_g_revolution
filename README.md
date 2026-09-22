@@ -40,7 +40,30 @@ make HACKS=1 modern   # link append ROM (runtime + src_custom)
 
 ## Decompilation
 
-All 633 functions are already in the ROM peel (`make compare` green). Remaining work is **semantic C**: replace readable Thumb in `src/matched/` with C that still byte-matches. Agent notes: [AGENTS.md](AGENTS.md).
+All 633 functions are already in the ROM peel (`make compare` green). What remains
+is not one grind but **four parallel axes**: semantic C, an analysis database,
+evidenced names, and generated documentation. Byte-matching is one axis — progress
+on names is *not* gated on matching bytes. Full design:
+[docs/decomp-pipeline.md](docs/decomp-pipeline.md). Agent notes: [AGENTS.md](AGENTS.md).
+
+| Axis | Question it answers | Where it lives |
+|------|--------------------|----------------|
+| **Matching** | does the C compile byte-identical? | `src/matched/*.c` |
+| **Drafts** | what is the best C so far? | `src/decompiled/*.c` |
+| **Analysis** | what calls what, and what RAM is touched? | `analysis/*.json` |
+| **Names** | what is this function called? | `analysis/symbols.json` |
+| **Docs** | what is this subsystem? | `docs/systems/`, `docs/functions/` |
+
+Lifecycle: one vocabulary in `tools/decomp/tier.py`. Three independent flags —
+`has_c`, `named`, `matches` — derive a tier:
+
+```
+UNKNOWN ──▶ DECOMPILED ──▶ UNDERSTOOD ──▶ MATCHING
+ no C        C seed,         named,          byte-identical
+             no match        no match        (top)
+```
+
+`make tier` prints the spread.
 
 ### One-time
 
@@ -83,21 +106,59 @@ python3 tools/decomp/park_wip.py sub_XXXXXXXX scratch.c --status "…" --next "�
 python3 tools/decomp/cluster_shapes.py
 ```
 
+### Naming (independent of matching)
+
+Names live in `analysis/symbols.json`, never in source. `include/symbols.h` is a
+generated view that defines `#define Name sub_XXXXXXXX`, so the source reads with
+human names while the linker still sees `sub_*` — naming **cannot** break
+`make compare`. Provenance is `auto` < `ai` < `human`, and a lower-provenance pass
+never overwrites a higher one.
+
+```bash
+make analyze                                    # rebuild analysis/*.json
+python3 tools/decomp/symbols.py set sub_XXXXXXXX --symbol BtlFoo \
+    --confidence 0.8 --source ai --evidence "why you believe this"
+python3 tools/decomp/symbols.py apply           # rewrite source to use the names
+python3 tools/decomp/symbols.py check           # collisions
+make compare
+```
+
+All 633 functions are eligible immediately — a parked draft or an unmatched
+function can be named as soon as its role is understood.
+
+### Documentation
+
+```bash
+make document     # docs/systems/*.md, docs/functions/*.md, docs/functions/index.md
+make tier         # lifecycle spread
+```
+
+Unnamed functions get no page (nothing readable to title it with) but always
+appear in the index and on their subsystem page. The scoreboard
+[docs/decomp-functions.md](docs/decomp-functions.md) is unchanged.
+
 ### Commands
 
 | Command | Role |
 |---------|------|
+| `./decomp status` | Lifecycle tier table + progress |
+| `./decomp analyze` | Rebuild `analysis/*.json` (idempotent) |
+| `./decomp decompile` | Deterministic pass + one packet |
+| `./decomp rename …` | Symbol layer (`list`/`set`/`apply`/`check`/`generate`) |
+| `./decomp document` | Regenerate `docs/systems/` + `docs/functions/` |
+| `./decomp verify` | `match_function` + `make compare` |
 | `python3 tools/decomp/script_first.py` | Deterministic convert batch |
 | `python3 tools/decomp/agent_packet.py --next` | Compact context for one leftover function |
 | `python3 tools/decomp/match_function.py FN file.c` | Compile + compact DIFF vs retail |
 | `python3 tools/decomp/integrate_c.py FN @file.c --kind semantic` | Land MATCH into `src/matched/` |
-| `python3 tools/decomp/park_wip.py FN file.c` | Save unmatched C in `src/wip/` |
+| `python3 tools/decomp/park_wip.py FN file.c` | Park unmatched C in `src/decompiled/` |
 | `python3 tools/decomp/cluster_shapes.py` | Find Thumb clones for new patterns |
 | `python3 tools/decomp/permuter/auto.py FN` | Local permuter: import → score → search → integrate on score 0 |
-| `python3 tools/decomp/unblock_symbols.py` | Draft prototypes for `bl _080…` |
 | `make compare` | Must stay `beyblade_g_revolution.gba: OK` |
 
-Matching C is `src/matched/` (one file per function). Unmatched drafts are `src/wip/` (not linked). Patterns: [docs/decomp-patterns.md](docs/decomp-patterns.md). Queue: `make queue`.
+Matching C is `src/matched/` (one file per function). Unmatched drafts are
+`src/decompiled/` (not linked — `C_SRCS` is empty). Patterns:
+[docs/decomp-patterns.md](docs/decomp-patterns.md). Queue: `make queue`.
 
 Do not enable `HACKS=1` while matching — that breaks the SHA1 compare.
 

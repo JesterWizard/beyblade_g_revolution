@@ -13,24 +13,24 @@ void sub_0804A028(u8 *data)
     {
         position = ((s32)(s8)second << 16) + 0x50000;
         coordinate = (u16)((u32)position >> 16);
-        sub_08061D68(coordinate, 0x0F, 9, 0x14);
+        BgMapSetPaletteBankRun(coordinate, 0x0F, 9, 0x14);
         position = ((s32)(s8)first << 16) + 0x50000;
         coordinate = (u16)((u32)position >> 16);
-        sub_08061D68(coordinate, 0x0E, 9, 0x14);
+        BgMapSetPaletteBankRun(coordinate, 0x0E, 9, 0x14);
     }
     else
     {
         position = ((s32)(s8)second << 1) + 5;
         coordinate = (u16)position;
-        sub_08061D68(coordinate, 0x0F, 9, 0x14);
+        BgMapSetPaletteBankRun(coordinate, 0x0F, 9, 0x14);
         position += 6;
         coordinate = (u16)position;
-        sub_08061D68(coordinate, 0x0F, 9, 0x14);
+        BgMapSetPaletteBankRun(coordinate, 0x0F, 9, 0x14);
         position = ((s32)(s8)first << 1) + 5;
         coordinate = (u16)position;
-        sub_08061D68(coordinate, 0x0E, 9, 0x14);
+        BgMapSetPaletteBankRun(coordinate, 0x0E, 9, 0x14);
         position += 6;
         coordinate = (u16)position;
-        sub_08061D68(coordinate, 0x0E, 9, 0x14);
+        BgMapSetPaletteBankRun(coordinate, 0x0E, 9, 0x14);
     }
 }

@@ -11,10 +11,26 @@ Do **not** re-read `docs/decomp-mission.md` / roadmap each session. Start with s
 
 - `make compare` must stay **OK** every batch
 - Do **not** stop for approval between batches unless escalated
-- Do **not** throw away unmatched C. Park it (`park_wip.py`) before restoring Thumb in `src/matched/`
+- Do **not** throw away unmatched C. Park it (`park_wip.py` → `src/decompiled/`) before restoring Thumb in `src/matched/`
 - C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`
 - Semantic C uses struct members (`a->unkA0`), not offset-casts, `register`, `asm volatile`, GCC asm labels, or empty `asm("")`
 - **README.md** is tables only — no mermaid, no `decomp-progress.svg`
+- Names live in `analysis/symbols.json`; `include/symbols.h`, `[renames]`, and `analysis/*.json` are **generated** — never hand-edit
+- Rename identifiers only with `symbols.py apply` (string-literal aware). A plain text replace corrupts `asm("...")`, where macros cannot expand
+
+## Four parallel axes
+
+Matching is one axis, not the gate. Progress is tracked by lifecycle tier
+(`tools/decomp/tier.py`: `UNKNOWN` → `DECOMPILED` → `UNDERSTOOD` → `MATCHING`),
+derived from independent `has_c` / `named` / `matches` flags — so one hard
+function never blocks the others.
+
+```bash
+make analyze   # refresh analysis/{functions,xrefs,structs,systems}.json (idempotent)
+make symbols   # regenerate include/symbols.h + [renames] from analysis/symbols.json
+make tier      # lifecycle counts
+make document  # regenerate docs/systems/ + docs/functions/
+```
 
 ## Each session
 
@@ -38,8 +54,15 @@ The packet runs the local permuter on near-miss/WIP seeds before asking the agen
      (`/* match-compiler: old_agbcc */`); `agbcc` cannot emit some un-coalesced forms
 4. Still DIFF → `park_wip.py`
 5. Clone family → `cluster_shapes.py` → new pattern
-6. Role clear → `ram_map_pass.sh`, then rename batch
+6. Role clear → `ram_map_pass.sh`, then a `symbols.py set` naming batch
+
+**Naming runs on its own schedule and is never gated on matching.** Every one of
+the 633 functions already has a `analysis/functions.json` row with
+`callers[]`/`callees[]`/`ram_refs[]`, so all are eligible now — matched, draft, or
+neither. Read the analysis DB (plus `structs.json`), write `symbols.json` entries
+with `--confidence` and at least one `--evidence` line, then `symbols.py apply`.
+AUTO never overwrites AI, and AI never overwrites HUMAN.
 
 Token budget: one batch = one packet + at most one C write + one `make compare`. Do not re-derive a function the permuter already solved, and do not run `make compare` per function inside a batch.
 
-Full fork tree: **docs/decomp-mission.md** (open only if the packet is insufficient).
+Full fork tree: **docs/decomp-mission.md**; pipeline design: **docs/decomp-pipeline.md** (open only if the packet is insufficient).

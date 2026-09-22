@@ -7,20 +7,23 @@ Autonomous decomp mission — do not stop for approval between batches.
 
 Do not re-read decomp-mission.md / roadmap. Start with scripts.
 
-Goal: byte-matching C for all 633 functions, self-documenting names, make compare always OK.
+Goal: byte-matching C for all 633 functions, evidenced names for all of them,
+make compare always OK. Progress on naming is NOT gated on progress on bytes.
 
 Each session until done:
 1. python3 tools/decomp/report_status.py && make compare
 2. python3 tools/decomp/script_first.py
-3. python3 tools/decomp/agent_packet.py --next   # one leftover function; max 2 retries then park
-4. Every 3–5 batches: tools/decomp/ram_map_pass.sh
-5. Update docs/decomp-status.md
-6. Commit after each green batch (see Commit policy)
+3. python3 tools/decomp/agent_packet.py --next   # one leftover function; max 1 retry then park
+4. Naming batch: read analysis/functions.json + structs.json, then
+   tools/decomp/symbols.py set ... / apply / generate
+5. Every 3–5 batches: tools/decomp/ram_map_pass.sh, then make analyze
+6. Update docs/decomp-status.md
+7. Commit after each green batch (see Commit policy)
 
 Escalate only: baserom missing, agbcc broken, make compare fails after 3 fix attempts.
 
-Do not stop until every function has src/matched/*.c OR is documented asm-only with reason,
-and beyblade_g_revolution.toml [renames] covers all functions with self-documenting names.
+Do not stop until every function has src/matched/*.c OR is documented asm-only with
+reason, and every function has a symbols.json entry (or a recorded reason it has none).
 ```
 
 ---
@@ -30,9 +33,12 @@ and beyblade_g_revolution.toml [renames] covers all functions with self-document
 | Layer | Criterion | Current tooling |
 |-------|-----------|-----------------|
 | **ROM linked** | 633/633 functions in peel; `make compare` OK | `match_batch.sh`, `integrate_match.py` |
+| **Analysis DB** | `analysis/*.json` complete and idempotent | `analyze.py`, `make analyze` |
 | **C decomp** | Every *convertible* function has verified C in `src/matched/` | `script_first.py`, `match_function.py`, `integrate_c.py` |
+| **Drafts** | Unmatched C parked in `src/decompiled/` (DECOMPILED tier), indexed | `park_wip.py`, `promote_wip.py` |
 | **RAM map** | Battle/menu IWRAM named; pool rescanned periodically | `ram_map_pass.sh`, `battle_scan.py` |
-| **Names** | `[renames]` in `beyblade_g_revolution.toml`; C/asm use readable names | Phase 4 + `generate_asm.py --force` |
+| **Names** | Every function has an evidenced `analysis/symbols.json` entry | `symbols.py`, [decomp-pipeline.md](decomp-pipeline.md) |
+| **Docs** | `docs/systems/` and `docs/functions/` regenerate clean | `document.py`, `make document` |
 | **Shiftable** | No fixed-VMA per-function sections (Phase 5) | `check_shiftable.py` |
 
 **Asm-only is acceptable** for functions that cannot byte-match in agbcc (literal-pool PC-relative loads, permuter-hard stubs). List them in `docs/decomp-status.md` under **Asm-only (documented)** with the blocker reason.
@@ -42,6 +48,10 @@ and beyblade_g_revolution.toml [renames] covers all functions with self-document
 ## Session loop (current phase: 3b → 4)
 
 Phase 1 (link all asm) is **complete**. Phase 3 placed byte-matched C for all 633 functions; **many are opcode embeds** (`asm(".byte …")`). **Phase 3b** replaces those with semantic C.
+
+Pipeline stages and the lifecycle vocabulary are documented in
+[decomp-pipeline.md](decomp-pipeline.md). Read that before touching
+`analysis/` or `symbols.json`.
 
 Default loop:
 
@@ -55,15 +65,23 @@ python3 tools/decomp/script_first.py
 
 # 3. Remainder — one packet, not a doc dump
 python3 tools/decomp/agent_packet.py --next
-# Write C from that packet only. Max 2 match_function.py retries, then park_wip.py.
+# Write C from that packet only. Max 1 match_function.py retry, then park_wip.py.
 
 # 4. Grow zero-token path from clones
 python3 tools/decomp/cluster_shapes.py
 
-# 5. RAM map (every 3–5 conversion batches)
-tools/decomp/ram_map_pass.sh
+# 5. Naming — independent of matching, so all 633 are eligible
+make analyze
+make tier
+python3 tools/decomp/symbols.py set sub_XXXXXXXX --symbol Name \
+    --confidence 0.8 --source ai --evidence "..."
+python3 tools/decomp/symbols.py apply
 
-# 6. Report + commit
+# 6. Refresh derived views + RAM map (every 3–5 conversion batches)
+tools/decomp/ram_map_pass.sh
+make analyze && make document
+
+# 7. Report + commit
 python3 tools/decomp/report_status.py
 ```
 
@@ -77,18 +95,18 @@ When multiple approaches exist, try in this order. **Never break `make compare`.
 ┌─ script_first.py / c_patterns MATCH?
 │    YES → already integrated (or try_convert.py --integrate)
 │    NO  ↓
-├─ agent_packet.py seed + hand-refined C (max 2 retries)?
+├─ agent_packet.py seed + hand-refined C (max 1 retry)?
 │    match_function.py → MATCH → integrate_c.py
 │    DIFF → permuter (same-size); still DIFF ↓
 ├─ Literal-pool / agbcc ordering mismatch?
-│    Keep asm matching in `src/matched/`; **park** unmatched C in `src/wip/`
+│    Keep asm matching in `src/matched/`; **park** unmatched C in `src/decompiled/`
 │    (see docs/decomp-wip.md). Do not revert a reconstruction without a seed.
 │    Promote RAM symbols if tracing clarified globals
-├─ Clone family in cluster_shapes.py?
+├─ Clip-on family in cluster_shapes.py?
 │    Add one matcher to c_patterns.py; re-run script_first.py
 ├─ Role understood while reading asm?
-│    Promote gUnk_* → named SET_DATA in asm/ram_map_*.s; ram_map_pass.sh
-│    Subsystem complete? → batch [renames] in beyblade_g_revolution.toml
+│    Name it: symbols.py set (AI provenance + evidence); promote gUnk_* in
+│    asm/ram_map_*.s; ram_map_pass.sh. Naming does NOT require a MATCH.
 └─ ≥80% in C + check_shiftable gates met?
      Begin Phase 5 shiftable ROM migration (see decomp-roadmap.md)
 ```
@@ -101,7 +119,17 @@ When multiple approaches exist, try in this order. **Never break `make compare`.
 4. **Audio (Gax)** — if distinct cluster appears in scans
 5. **Remaining** — triage by size + call graph
 
-Rename (`sub_*` → `BtlFoo`) only in **Phase 4**, after the function's role is understood — not at first conversion.
+Naming is **not gated on matching**. Once a function's role is understood — from
+its callees, its RAM references, or the disassembly — record it immediately:
+
+```bash
+python3 tools/decomp/symbols.py set sub_XXXXXXXX --symbol BtlFoo \
+    --confidence 0.8 --source ai --evidence "why you believe this"
+python3 tools/decomp/symbols.py apply
+```
+
+Names live in `analysis/symbols.json` and reach the compiler as `#define` macros,
+so naming cannot break `make compare`. See [decomp-pipeline.md](decomp-pipeline.md).
 
 ---
 
@@ -152,9 +180,9 @@ make compare: OK
 ```
 
 ```
-decomp: rename batch (subsystem Btl)
+decomp: naming batch (subsystem Btl, +N named)
 
-[renames] in beyblade_g_revolution.toml
+symbols.json = source of truth; include/symbols.h + [renames] regenerated
 make compare: OK
 ```
 
@@ -180,13 +208,17 @@ If the user explicitly says **do not commit** in the chat, skip commits and repo
 | Function packet | `tools/decomp/agent_packet.py` |
 | Master plan | `docs/decomp-roadmap.md` |
 | Live log | `docs/decomp-status.md` |
-| Parked unmatched C | `docs/decomp-wip.md`, `src/wip/` |
+| Pipeline / lifecycle | [decomp-pipeline.md](decomp-pipeline.md) |
+| Parked unmatched C | `docs/decomp-wip.md`, `src/decompiled/` |
+| Analysis database | `analysis/*.json`, `tools/decomp/analyze.py` |
+| Symbol names | `analysis/symbols.json`, `tools/decomp/symbols.py` |
+| Generated docs | `docs/systems/`, `docs/functions/` |
 | C-vs-original counter | `docs/decomp-progress.json` / `decomp-progress.svg` |
 | Battle notes | `docs/battle.md` |
 | Matched C | `src/matched/*.c` |
 | Types | `include/unknown-types.h`, `include/unknown-functions.h` |
 | Manifest | `build/matched.json` |
-| Renames | `beyblade_g_revolution.toml` `[renames]` |
+| Renames (generated view) | `beyblade_g_revolution.toml` `[renames]` |
 
 ---
 

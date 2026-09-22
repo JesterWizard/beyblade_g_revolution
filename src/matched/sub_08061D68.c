@@ -2,7 +2,7 @@
 
 // @ 0x08061d68
 __attribute__((naked))
-void sub_08061D68(u32 a, u32 b, u32 c, u32 d)
+void BgMapSetPaletteBankRun(u32 a, u32 b, u32 c, u32 d)
 {
     asm(
         ".syntax unified\n"

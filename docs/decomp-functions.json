@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T20:50:46Z",
+  "generated": "2026-09-22T21:06:29Z",
   "counts": {
     "matched": 413,
     "wip": 135,
@@ -8,8 +8,8 @@
   },
   "tiers": {
     "UNKNOWN": 85,
-    "DECOMPILED": 135,
-    "UNDERSTOOD": 0,
+    "DECOMPILED": 131,
+    "UNDERSTOOD": 4,
     "MATCHING": 413
   },
   "total": 633,
@@ -31,7 +31,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "GetIndexedRecordWord"
     },
     {
       "name": "sub_0802B90C",
@@ -1133,7 +1133,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlSetTimer118"
     },
     {
       "name": "sub_08031C98",
@@ -1304,7 +1304,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlSetMode1F90"
     },
     {
       "name": "sub_08033158",
@@ -1437,7 +1437,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlClearState"
     },
     {
       "name": "sub_080338E4",
@@ -1969,7 +1969,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlCaptureInput"
     },
     {
       "name": "sub_080348E8",
@@ -7649,8 +7649,8 @@
       "score": "13/88",
       "source": "wip",
       "note": "13/88 bytes (13.5%), size mismatch (96 vs 88); correct overall algorithm (mask args to 0x1F, build 12-bit palette-select field, swap lo/hi if needed, compute VRAM tile address from gUnk_03000798->unk5C, loop-OR the palette bits into each halfword) but agbcc allocates 4 callee-saved regs (r4-r7) vs retail's 3 (r4-r6) -- retail reuses a non-callee-saved scratch reg (r1) for the swap temp instead of a persistent local",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "BgMapSetPaletteBankRun"
     },
     {
       "name": "sub_08061DC0",
@@ -9075,7 +9075,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "DebugPrint"
     },
     {
       "name": "sub_08067BB8",
@@ -9910,8 +9910,8 @@
       "score": "10/144",
       "source": "wip",
       "note": "matched only with GCC asm labels; stripped DIFF",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "BtlObjAlloc"
     },
     {
       "name": "sub_0806A434",
@@ -9929,8 +9929,8 @@
       "score": "31/164 then 29/164",
       "source": "wip",
       "note": "Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped.",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "BtlObjFree"
     },
     {
       "name": "sub_0806A4D8",
@@ -10823,7 +10823,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjListMoveHeadToTail"
     },
     {
       "name": "sub_0806FF28",
@@ -10842,7 +10842,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjListMoveToHead"
     },
     {
       "name": "sub_0806FF58",
@@ -11659,7 +11659,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "GetBtlLookupByte"
     },
     {
       "name": "sub_08073078",
@@ -11697,7 +11697,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjTableAdd"
     },
     {
       "name": "sub_08073114",
@@ -11715,8 +11715,8 @@
       "score": "18/112",
       "source": "wip",
       "note": "18/112 (108B); i=0 must precede count=...; table pseudo wants r1 not r0",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "BtlObjTableRemove"
     },
     {
       "name": "sub_08073184",
@@ -11735,7 +11735,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MemClear"
     },
     {
       "name": "sub_080731F4",

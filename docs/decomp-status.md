@@ -21,6 +21,58 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-22 — pipeline rework: analysis DB, DECOMPILED tier, naming layer
+
+No new byte-matches this batch. This restructures the workflow so matching is one
+axis of progress rather than the entry gate. Design:
+[docs/decomp-pipeline.md](decomp-pipeline.md).
+
+- **Lifecycle vocabulary** (`tools/decomp/tier.py`): `UNKNOWN` → `DECOMPILED` →
+  `UNDERSTOOD` → `MATCHING`, derived from independent `has_c` / `named` / `matches`
+  flags, so one hard function never blocks the pipeline. `function_scores.py` and
+  `progress.py` now import it instead of each carrying their own status strings.
+- **Analysis DB** (`tools/decomp/analyze.py`, `make analyze`): emits
+  `analysis/functions.json` (633 rows), `xrefs.json`, `structs.json`,
+  `systems.json`. Adds the global call graph — `callers[]` / `callees[]` did not
+  exist anywhere before — plus per-function `ram_refs[]`, `pool[]`, `offsets[]`,
+  `insn_count`. Verified idempotent: two consecutive runs are byte-identical apart
+  from timestamps.
+- **`src/wip/` promoted to `src/decompiled/`** (`tools/decomp/promote_wip.py`):
+  219 `.c` + 221 `.md` moved flat, `[[wip]]` seed/notes paths in
+  `docs/decomp-queue.toml` rewritten so `make queue` is unaffected. The DECOMPILED
+  tier is first-class and navigable; it remains non-linked (the Makefile's
+  `C_SRCS` is empty — matched code links as generated `asm/matchings/*.s`).
+- **Symbol layer** (`tools/decomp/symbols.py`, `make symbols`): names live in
+  `analysis/symbols.json`, keyed by address, with `AUTO`/`AI`/`HUMAN` provenance
+  where a lower-provenance pass can never overwrite a higher one. It generates
+  `include/symbols.h` as `#define <Name> sub_XXXXXXXX` alias macros, included from
+  `include/global.h`, so the preprocessor still emits the original link label and
+  `make compare` **cannot** be broken by naming. `[renames]` in the `.toml` is now
+  a generated read-only view. Collisions are skipped and flagged, not emitted.
+- **Naming is decoupled from matching.** A naming pass reads `callers[]` /
+  `callees[]` / `ram_refs[]` plus `structs.json` and must supply `--confidence`
+  and at least one `--evidence` line; the evidence is rendered into the generated
+  docs as a "Why this name" section. All 633 functions are eligible immediately,
+  so the previously 0-of-633 named gap starts closing without waiting on any
+  single hard match. 15 named so far.
+- **End-to-end alias validation** (the plan's byte-neutrality gate): named
+  `sub_08061D68` → `BgMapSetPaletteBankRun`, then `symbols.py apply` rewrote **137
+  identifier occurrences across 23 files** of semantic C. `make compare` → **OK**,
+  and `asm/matchings/sub_08061D68.s` still emits `.global sub_08061D68`. The
+  rewriter skips string literals, char literals, and comments, so the ~222
+  readable-Thumb wrappers that carry `bl sub_XXXXXXXX` inside `asm("...")` are left
+  alone — a macro cannot expand inside a string, and a naive text replace
+  regressed 38 matching files before this was fixed.
+- **Docs** (`tools/decomp/document.py`, `make document`): `docs/systems/*.md` and
+  `docs/functions/*.md` generated from the DB with readable names throughout. The
+  generated scoreboard `docs/decomp-functions.md` is unchanged.
+- **CLI** (`./decomp` → `tools/decomp/cli.py`): `setup` / `analyze` /
+  `decompile` / `rename` / `document` / `verify` / `status`, dispatched over the
+  existing tools. New `make analyze` / `symbols` / `tier` / `document` targets.
+
+Lifecycle after the batch: `UNKNOWN 84 | DECOMPILED 132 | UNDERSTOOD 4 | MATCHING 413`.
+Named 15/633. `make compare`: **OK**.
+
 ### 2026-09-21 — ten semantic matches (384→394/633)
 Small call-sequence and register-scheduling functions. `make compare` after the batch.
 

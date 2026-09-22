@@ -14,9 +14,9 @@ void sub_0804AC3C(u8 *data)
     sub_0804AAF0(ptr);
 
     coordinate = (u32)(((s32)(s8)second << 16) + 0x70000) >> 16;
-    sub_08061D68(coordinate, 0x0F, 4, 0x19);
+    BgMapSetPaletteBankRun(coordinate, 0x0F, 4, 0x19);
     coordinate = (u32)(((s32)(s8)first << 16) + 0x70000) >> 16;
-    sub_08061D68(coordinate, 0x0E, 4, 0x19);
+    BgMapSetPaletteBankRun(coordinate, 0x0E, 4, 0x19);
 
     sub_080674B4();
     _08073C40(*(void **)0x080BB888);

@@ -160,7 +160,7 @@ True `bx lr` leaves with a branch: default agbcc emits extra `push {lr}` / `pop 
 | `sub_08061308` | un-coalesced `ldrb r0,[r0]; lsls r1,r0` (48/48, `agbcc` 46/48 in 4,000 variants) |
 | `sub_08062A74` | `lsls r1,r4,#5` with the handler pool held in `r2` (76/76, `agbcc` 74/76) |
 
-Before parking a seed whose DIFF is a register *destination* on a load, score it with both compilers (`build/dual_compiler_sweep.py` does the whole `src/wip` backlog).
+Before parking a seed whose DIFF is a register *destination* on a load, score it with both compilers (`build/dual_compiler_sweep.py` does the whole `src/decompiled` backlog).
 
 Clamp helpers take `u32` args so the callee has no `lsls/lsrs` (`sub_080615EC`). Head/tail IWRAM 0x10 apart and BG I/O switch trees still need honest C (parked: `sub_0806FEFC`, `sub_08061E40`, `sub_08069908`).
 
@@ -284,7 +284,7 @@ After any batch: `make compare` must stay **OK**. End-to-end: [README.md](../REA
 
 `tools/decomp/permuter/auto.py` is the only entry point you need:
 
-1. imports a fresh seed (`src/wip/FN.c` first, then m2c) and writes a
+1. imports a fresh seed (`src/decompiled/FN.c` first, then m2c) and writes a
    `matchflags` sidecar from the seed's `/* match-flags: … */` comment
 2. scores the seed once (`permuter.py --debug`) — score 0 means the seed already
    matches, so the search is skipped

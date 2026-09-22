@@ -26,7 +26,8 @@ before touching build output, hook wiring, or the runtime toggle system.
 | Path | What's in it |
 |---|---|
 | `src/matched/*.c` | One matched function per file (semantic C or readable Thumb). |
-| `src/wip/` | Unmatched C seeds + process notes. Not linked. See `docs/decomp-wip.md`. |
+| `src/decompiled/` | Unmatched C seeds + process notes (the DECOMPILED lifecycle tier). Not linked. See `docs/decomp-wip.md`. |
+| `analysis/` | Generated analysis DB: functions, xrefs, structs, systems, symbols. See `docs/decomp-pipeline.md`. |
 | `src_custom/*.c` | New hooks/features with no vanilla equivalent. |
 | `include/*.h` | Headers for both of the above, plus `ram_map.h` (EWRAM/IWRAM symbol table) and `runtime.h` (`RuntimeConfig` + `APPEND_*` macros). |
 | `asm/*.s` | Hand-written trampolines, `ram_map*.s` (address registry), and `rom.s` (raw ROM segment definitions). |

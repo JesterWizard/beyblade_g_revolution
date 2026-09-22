@@ -60,14 +60,14 @@ void sub_0802FA94(void)
                         (struct Unk7069C *)((u8 *)*root_loc + 0xF8),
                         record->unk0C, 0x0F);
                 sub_08061610(0x0E);
-                sub_08061D68(x >> 16, 0x0E, 2, 0x1B);
-                sub_08061D68(y >> 16, 0x0E, 2, 0x1B);
+                BgMapSetPaletteBankRun(x >> 16, 0x0E, 2, 0x1B);
+                BgMapSetPaletteBankRun(y >> 16, 0x0E, 2, 0x1B);
             }
             else
             {
                 sub_08061610(0x0F);
-                sub_08061D68(x >> 16, 0x0F, 2, 0x1B);
-                sub_08061D68(y >> 16, 0x0F, 2, 0x1B);
+                BgMapSetPaletteBankRun(x >> 16, 0x0F, 2, 0x1B);
+                BgMapSetPaletteBankRun(y >> 16, 0x0F, 2, 0x1B);
             }
             if (record->unk04 == 1)
             {
@@ -127,14 +127,14 @@ void sub_0802FA94(void)
             if (i == (*root_loc)->unk138)
             {
                 sub_08061610(0x0E);
-                sub_08061D68(x >> 16, 0x0E, 2, 0x1B);
-                sub_08061D68(y >> 16, 0x0E, 2, 0x1B);
+                BgMapSetPaletteBankRun(x >> 16, 0x0E, 2, 0x1B);
+                BgMapSetPaletteBankRun(y >> 16, 0x0E, 2, 0x1B);
             }
             else
             {
                 sub_08061610(0x0F);
-                sub_08061D68(x >> 16, 0x0F, 2, 0x1B);
-                sub_08061D68(y >> 16, 0x0F, 2, 0x1B);
+                BgMapSetPaletteBankRun(x >> 16, 0x0F, 2, 0x1B);
+                BgMapSetPaletteBankRun(y >> 16, 0x0F, 2, 0x1B);
             }
             sub_080615EC(0, step);
             table = (void *)0x08096B5C;
