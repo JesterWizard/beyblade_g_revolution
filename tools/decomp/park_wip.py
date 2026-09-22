@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """Park unmatched semantic C so the next session can resume.
 
-  python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c
-  python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c \\
+  python3 tools/decomp/park_wip.py sub_XXXXXXXX src/decompiled/sub_XXXXXXXX.c
+  python3 tools/decomp/park_wip.py sub_XXXXXXXX src/decompiled/sub_XXXXXXXX.c \\
       --status "same-size DIFF" --next "permuter" --score "64/64"
 
-Copies the seed into src/wip/, writes a notes stub if missing, and appends
-[[wip]] to docs/decomp-queue.toml when the name is new.
+Copies the seed into src/decompiled/ (the DECOMPILED lifecycle tier), writes a
+notes stub if missing, and appends [[wip]] to docs/decomp-queue.toml when the
+name is new.
 
 Does not touch src/matched/ and does not link into the ROM.
 """
@@ -20,7 +21,7 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-WIP_DIR = ROOT / "src" / "wip"
+DECOMPILED_DIR = ROOT / "src" / "decompiled"
 QUEUE = ROOT / "docs" / "decomp-queue.toml"
 MATCHED = ROOT / "src" / "matched"
 
@@ -31,7 +32,7 @@ _NOTES_STUB = """# {name} — WIP
 | ROM | `{addr}` |
 | Retail | |
 | `src/matched` | readable Thumb |
-| Seed | `src/wip/{name}.c` |
+| Seed | `src/decompiled/{name}.c` |
 | Last `match_function.py` | {score}
 | Sibling / types | |
 
@@ -94,7 +95,7 @@ def _append_wip(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("name", help="sub_XXXXXXXX")
-    parser.add_argument("seed", help="path to the C seed (copied into src/wip/)")
+    parser.add_argument("seed", help="path to the C seed (copied into src/decompiled/)")
     parser.add_argument("--status", default="unmatched C parked; see notes")
     parser.add_argument("--next", dest="nxt", default="read notes; match_function.py this seed")
     parser.add_argument("--score", default="unscored")
@@ -112,12 +113,12 @@ def main() -> int:
         print(f"seed not found: {args.seed}", file=sys.stderr)
         return 2
 
-    WIP_DIR.mkdir(parents=True, exist_ok=True)
-    dest = WIP_DIR / f"{name}.c"
+    DECOMPILED_DIR.mkdir(parents=True, exist_ok=True)
+    dest = DECOMPILED_DIR / f"{name}.c"
     if src.resolve() != dest.resolve():
         shutil.copy2(src, dest)
 
-    notes = WIP_DIR / f"{name}.md"
+    notes = DECOMPILED_DIR / f"{name}.md"
     if not notes.is_file():
         notes.write_text(
             _NOTES_STUB.format(

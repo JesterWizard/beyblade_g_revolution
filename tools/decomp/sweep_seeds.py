@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Score parked WIP seeds for functions still linked as readable Thumb.
 
-Cheap, high-value sweep: a seed in `src/wip/` can already match retail 100% while
+Cheap, high-value sweep: a seed in `src/decompiled/` can already match retail 100% while
 the linked `src/matched/<fn>.c` is still a naked asm block.  One run over the
 whole wip directory surfaces those for `integrate_c.py`.
 
@@ -137,7 +137,7 @@ def main() -> int:
                     help="print only SIGNONLY near-misses")
     args = ap.parse_args()
 
-    seeds = sorted((ROOT / "src" / "wip").glob("sub_*.c"))
+    seeds = sorted((ROOT / "src" / "decompiled").glob("sub_*.c"))
     rows: list[str] = []
     with cf.ThreadPoolExecutor(max_workers=args.jobs) as ex:
         futs = {ex.submit(worker, p, args.all): p for p in seeds}

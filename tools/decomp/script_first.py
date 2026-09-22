@@ -17,7 +17,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-WIP = ROOT / "src" / "wip"
+WIP = ROOT / "src" / "decompiled"
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
 from classify_semantic_targets import classify  # noqa: E402

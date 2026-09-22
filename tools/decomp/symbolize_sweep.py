@@ -80,7 +80,7 @@ def score(fn: str, text: str, compiler: str) -> str:
 def main() -> int:
     only = set(sys.argv[1:])
     hits = []
-    for p in sorted(Path("src/wip").glob("sub_*.c")):
+    for p in sorted(Path("src/decompiled").glob("sub_*.c")):
         fn = p.stem
         if only and fn not in only:
             continue

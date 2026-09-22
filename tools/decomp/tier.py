@@ -35,7 +35,6 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 MATCHED = ROOT / "src" / "matched"
 DECOMPILED = ROOT / "src" / "decompiled"
-LEGACY_WIP = ROOT / "src" / "wip"
 SYMBOLS_JSON = ROOT / "analysis" / "symbols.json"
 MANIFEST = ROOT / "build" / "matched.json"
 FUNCTIONS_JSON = ROOT / "docs" / "decomp-functions.json"
@@ -171,7 +170,7 @@ def _function_names() -> list[str]:
             names |= {f["name"] for f in data.get("functions") or [] if f.get("name")}
         except (json.JSONDecodeError, KeyError, TypeError):
             pass
-    for base in (MATCHED, DECOMPILED, LEGACY_WIP):
+    for base in (MATCHED, DECOMPILED):
         if base.is_dir():
             names |= {p.stem for p in base.glob("sub_*.c")}
     return sorted(names)
@@ -202,8 +201,6 @@ def collect() -> list[dict[str, Any]]:
         if matched_path.is_file():
             has_c = _matched_has_c(matched_path, verified)
         if not has_c and (DECOMPILED / f"{name}.c").is_file():
-            has_c = True
-        if not has_c and (LEGACY_WIP / f"{name}.c").is_file():
             has_c = True
 
         status = statuses.get(name, "not_started")

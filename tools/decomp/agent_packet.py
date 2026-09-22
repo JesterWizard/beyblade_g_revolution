@@ -23,7 +23,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 MATCHED = ROOT / "src" / "matched"
-WIP = ROOT / "src" / "wip"
+WIP = ROOT / "src" / "decompiled"
 HEADERS = ROOT / "include" / "unknown-functions.h"
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
@@ -398,7 +398,7 @@ def main() -> int:
     parser.add_argument("function", nargs="?", help="sub_080XXXXXX")
     parser.add_argument("--next", action="store_true", help="pick cheapest remaining target")
     parser.add_argument("--battle", action="store_true", help="prefer next_queue battle ranking")
-    parser.add_argument("--wip", action="store_true", help="prefer parked src/wip/ seeds")
+    parser.add_argument("--wip", action="store_true", help="prefer parked src/decompiled/ seeds")
     parser.add_argument("--write", metavar="PATH", help="also write the packet to a file")
     parser.add_argument(
         "--permute-seconds",

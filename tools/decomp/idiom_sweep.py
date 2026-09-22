@@ -110,7 +110,7 @@ def targets(only: set[str]) -> list[str]:
     for f in data["functions"]:
         if f["status"] == "matched" or f["pct"] < MIN_PCT:
             continue
-        if not Path(f"src/wip/{f['name']}.c").exists():
+        if not Path(f"src/decompiled/{f['name']}.c").exists():
             continue
         matched = Path(f"src/matched/{f['name']}.c")
         if matched.exists() and file_kind(matched) == "semantic":
@@ -123,7 +123,7 @@ def main() -> int:
     fns = targets(set(sys.argv[1:]))
     hits = []
     for fn in fns:
-        src = Path(f"src/wip/{fn}.c").read_text()
+        src = Path(f"src/decompiled/{fn}.c").read_text()
         base = {}
         for name, fn_t in TRANSFORMS.items():
             text = fn_t(src)

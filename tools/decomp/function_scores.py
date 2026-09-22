@@ -9,7 +9,7 @@ Statuses:
   size_mismatch   — compiled length != retail
   not_started     — readable Thumb / opcode, no recorded C attempt
   blocked         — documented in docs/decomp-queue.toml (score still shown)
-  wip             — unmatched C parked in src/wip/ (resume, do not restart)
+  wip             — unmatched C parked in src/decompiled/ (resume, do not restart)
 
   python3 tools/decomp/function_scores.py           # summary
   python3 tools/decomp/function_scores.py --write   # docs/decomp-functions.md
@@ -330,7 +330,7 @@ def render_md(data: dict[str, Any]) -> str:
         "| **same-size DIFF** | Same size, instruction bytes differ | no |",
         "| **size DIFF** | Compiled length ≠ retail | no |",
         "| **not started** | Readable Thumb, no C attempt recorded | no |",
-        "| **WIP (parked C)** | Unmatched draft in [`src/wip/`](../src/wip/README.md) — resume, do not restart | no |",
+        "| **WIP (parked C)** | Unmatched draft in [`src/decompiled/`](../src/decompiled/README.md) — resume, do not restart | no |",
         "| **blocked** | Documented in [`decomp-queue.toml`](decomp-queue.toml) | no |",
         "",
         "Score is **matched bytes / retail bytes** (e.g. `68/70`). "

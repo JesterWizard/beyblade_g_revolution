@@ -277,8 +277,8 @@ def collect() -> dict[str, Any]:
                 "addr": _addr(name) if name.startswith("sub_") else "",
                 "kind": base["kind"] if base else "missing",
                 "bytes": base["bytes"] if base else 0,
-                "seed": row.get("seed", f"src/wip/{name}.c"),
-                "notes": row.get("notes", f"src/wip/{name}.md"),
+                "seed": row.get("seed", f"src/decompiled/{name}.c"),
+                "notes": row.get("notes", f"src/decompiled/{name}.md"),
                 "status": row.get("status", ""),
                 "next": row.get("next", ""),
                 "score": row.get("score", ""),
@@ -347,7 +347,7 @@ def render_md(data: dict[str, Any]) -> str:
         "",
         f"Ranking: **{pref}** · showing top **{top}**",
         "",
-        "Park unmatched C in [`src/wip/`](../src/wip/README.md) — see [`decomp-wip.md`](decomp-wip.md).",
+        "Park unmatched C in [`src/decompiled/`](../src/decompiled/README.md) — see [`decomp-wip.md`](decomp-wip.md).",
         "",
     ]
     wip_rows = data.get("wip") or []
@@ -367,7 +367,7 @@ def render_md(data: dict[str, Any]) -> str:
                 f"| `{row['name']}` | {row.get('bytes', 0)} | {row.get('score', '')} | "
                 f"`{row.get('seed', '')}` | {row.get('status', '')} | {row.get('next', '')} |"
             )
-        lines.extend(["", "Per-function notes: `src/wip/<fn>.md`.", ""])
+        lines.extend(["", "Per-function notes: `src/decompiled/<fn>.md`.", ""])
 
     lines.extend(
         [
@@ -419,8 +419,8 @@ def render_md(data: dict[str, Any]) -> str:
             "```bash",
             "make queue                              # refresh this file",
             "python3 tools/decomp/next_queue.py -n 10",
-            "python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c --status \"…\" --next \"…\"",
-            "python3 tools/decomp/match_function.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c",
+            "python3 tools/decomp/park_wip.py sub_XXXXXXXX src/decompiled/sub_XXXXXXXX.c --status \"…\" --next \"…\"",
+            "python3 tools/decomp/match_function.py sub_XXXXXXXX src/decompiled/sub_XXXXXXXX.c",
             "python3 tools/decomp/try_convert.py sub_XXXXXXXX --integrate",
             "python3 tools/decomp/function_scores.py --close",
             "python3 tools/decomp/script_first.py",

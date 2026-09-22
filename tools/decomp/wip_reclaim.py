@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Reclaim parked WIP seeds that already MATCH.
+"""Reclaim parked DECOMPILED seeds that already MATCH.
 
-Some parked `src/wip/*.c` files are byte-exact already (often thanks to a
+Some parked `src/decompiled/*.c` files are byte-exact already (often thanks to a
 `/* match-compiler: old_agbcc */` line inside the file that a later sweep added
 but never integrated).  Score each parked seed under both compilers and
 integrate every MATCH.
@@ -23,7 +23,7 @@ from opcode_stubs import file_kind  # noqa: E402
 def main() -> int:
     dry = "--dry-run" in sys.argv
     hits = []
-    for p in sorted(Path("src/wip").glob("sub_*.c")):
+    for p in sorted(Path("src/decompiled").glob("sub_*.c")):
         fn = p.stem
         matched = Path(f"src/matched/{fn}.c")
         if matched.exists() and file_kind(matched) == "semantic":
@@ -52,7 +52,7 @@ def main() -> int:
     if dry:
         return 0
     for fn, comp, text in hits:
-        src = Path(f"src/wip/{fn}.c")
+        src = Path(f"src/decompiled/{fn}.c")
         src.write_text(text)
         r = subprocess.run(
             [sys.executable, "tools/decomp/integrate_c.py", fn, f"@{src}"],

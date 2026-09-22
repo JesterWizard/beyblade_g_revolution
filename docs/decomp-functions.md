@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-22T20:50:32Z_
+_Updated: 2026-09-22T20:55:26Z_
 
 ## Legend
 
@@ -13,7 +13,7 @@ _Updated: 2026-09-22T20:50:32Z_
 | **same-size DIFF** | Same size, instruction bytes differ | no |
 | **size DIFF** | Compiled length ≠ retail | no |
 | **not started** | Readable Thumb, no C attempt recorded | no |
-| **WIP (parked C)** | Unmatched draft in [`src/wip/`](../src/wip/README.md) — resume, do not restart | no |
+| **WIP (parked C)** | Unmatched draft in [`src/decompiled/`](../src/decompiled/README.md) — resume, do not restart | no |
 | **blocked** | Documented in [`decomp-queue.toml`](decomp-queue.toml) | no |
 
 Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that ratio. A function that compiles to the same bytes *except* a literal-pool address is **byte-identical DIFF**, not matched.

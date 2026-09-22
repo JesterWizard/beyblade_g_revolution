@@ -65,7 +65,7 @@ def tail_assign(src: str) -> str | None:
 
 def main() -> int:
     hits = []
-    for p in sorted(Path("src/wip").glob("sub_*.c")):
+    for p in sorted(Path("src/decompiled").glob("sub_*.c")):
         fn = p.stem
         matched = Path(f"src/matched/{fn}.c")
         if matched.exists() and file_kind(matched) == "semantic":

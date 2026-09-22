@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path.cwd()
-WIP = sorted(Path("src/wip").glob("sub_*.c"))
+WIP = sorted(Path("src/decompiled").glob("sub_*.c"))
 cmp_re = re.compile(r"^/\*\s*match-compiler:")
 
 

@@ -5,7 +5,7 @@ A function can sit in `build/matched.json` as `kind: "asm"` (readable Thumb is
 what the ROM links) while `src/matched/<name>.c` already holds a *semantic draft*
 that nobody verified.  Those drafts are free wins whenever they happen to be
 byte-exact, and near-misses are prime permuter seeds -- both are invisible to
-tools that only look at `src/wip/`.
+tools that only look at `src/decompiled/`.
 
 usage:
     matched_rescore.py [-n N] [--min-pct P] [--integrate] [--jobs N]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Word-aligned retail-vs-compiled view for a hand-matching session.
 
-  python3 tools/decomp/worddiff.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c
+  python3 tools/decomp/worddiff.py sub_XXXXXXXX src/decompiled/sub_XXXXXXXX.c
 
 Runs `match_function.py --full`, pulls the retail/compiled hex out of the DIFF, and
 prints them as one 16-bit word per line with the differing words flagged. Much easier

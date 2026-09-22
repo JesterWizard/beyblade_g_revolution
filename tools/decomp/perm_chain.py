@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Background permuter chain for near-miss parked seeds only.
 
-Selection: every unmatched `src/wip/sub_*.c` whose recorded score is a
+Selection: every unmatched `src/decompiled/sub_*.c` whose recorded score is a
 *same-size* DIFF at >= MIN_PCT, sorted best-first.  The permuter only reliably
 closes small deltas, so low-similarity seeds are left to hand work.
 
@@ -33,7 +33,7 @@ def candidates() -> list[tuple[float, str]]:
     for f in data["functions"]:
         if f["status"] == "matched":
             continue
-        seed = Path(f"src/wip/{f['name']}.c")
+        seed = Path(f"src/decompiled/{f['name']}.c")
         matched = Path(f"src/matched/{f['name']}.c")
         if not seed.exists():
             continue
