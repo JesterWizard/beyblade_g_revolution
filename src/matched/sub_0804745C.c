@@ -1,30 +1,37 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+
+// @ 0x0804745c
+#include "global.h"
 
 // @ 0x0804745c
 void sub_0804745C(void)
 {
+    struct Unk473F8 **slot;
     s32 i;
-    u32 base;
-    s32 off;
+    struct Unk474ACSlot *p;
 
-    if (*(void **)gUnk_03000630 != 0)
+    if (gUnk_03000630 != 0)
     {
-        for (i = 0; i <= 0xF; i++)
+        i = 0;
+        slot = &gUnk_03000630;
+        do
         {
-            base = *(u32 *)gUnk_03000630;
-            off = i * 4;
-            if (*(void **)(base + off) != 0)
+            p = (*slot)->unk00[i];
+            if (p != 0)
             {
-                sub_0806FE84(*(void **)(base + off));
-                *(void **)(*(u32 *)gUnk_03000630 + off) = 0;
+                sub_0806FE84(p);
+                (*slot)->unk00[i] = 0;
             }
-        }
+            i++;
+        } while (i <= 0xF);
     }
-    if (*(void **)gUnk_03000638 != 0)
+    if (gUnk_03000638 != 0)
     {
-        sub_0806A434(*(void **)gUnk_03000638);
-        *(void **)gUnk_03000638 = 0;
+        sub_0806A434(gUnk_03000638);
+        gUnk_03000638 = 0;
     }
-    *(void **)gUnk_03000630 = 0;
+    gUnk_03000630 = 0;
 }
 

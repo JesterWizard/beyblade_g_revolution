@@ -1856,3 +1856,43 @@ notes = "src/wip/sub_08045C5C.md"
 status = "same_size 16/136"
 next = "no w local needs to stay (same-size); retail keeps frame w/ r7 (5 pushes) and materialises &mask via r0 then copies to r4; agbcc loads pool straight to r4 and swaps mask/const regs"
 score = "16/136"
+
+[[wip]]
+name = "sub_08038314"
+seed = "src/wip/sub_08038314.c"
+notes = "src/wip/sub_08038314.md"
+status = "same-size DIFF: pool literal 0x03004060 lands in r0 vs retail r1"
+next = "read notes; match_function.py this seed"
+score = "94.4"
+
+[[wip]]
+name = "sub_08063104"
+seed = "src/wip/sub_08063104.c"
+notes = "src/wip/sub_08063104.md"
+status = "same-size DIFF: ldr r0,=0x080BB8C0 scheduled after the 0xA0<<19 / 0x80<<2 constants instead of before"
+next = "read notes; match_function.py this seed"
+score = "86.1"
+
+[[wip]]
+name = "sub_0806306C"
+seed = "src/wip/sub_0806306C.c"
+notes = "src/wip/sub_0806306C.md"
+status = "same-size DIFF: ldr r4,=0x080BB8C0 scheduled after the constants instead of before"
+next = "read notes; match_function.py this seed"
+score = "93.4"
+
+[[wip]]
+name = "sub_08047594"
+seed = "src/wip/sub_08047594.c"
+notes = "src/wip/sub_08047594.md"
+status = "agbcc strength-reduces the unk00[i] walk into ldmia r3!,{r0} (40B vs retail 48B); needs a shape that blocks loop.c induction"
+next = "read notes; match_function.py this seed"
+score = "18.8"
+
+[[wip]]
+name = "sub_0807309C"
+seed = "src/wip/sub_0807309C.c"
+notes = "src/wip/sub_0807309C.md"
+status = "agbcc hoists the count load + folds i=0 into a separate register; retail keeps table in r5, i=0 in r6, count value in r2. Structure matches (for-loop inversion into do-while) but allocation differs"
+next = "read notes; match_function.py this seed"
+score = "11.7"

@@ -1,31 +1,33 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+
+// @ 0x080611a4
+#include "global.h"
+#include "data_symbols.h"
 
 // @ 0x080611a4
 void sub_080611A4(void)
 {
-    void **slotA;
-    void **slotB;
-    void **slotC;
-    void **fn;
+    u32 *slotA;
+    struct Unk0758 **slotB;
     void *p;
-    void *q;
 
-    slotA = (void **)gUnk_03000790;
+    slotA = (u32 *)gUnk_03000790;
     *slotA = 0;
-    slotB = (void **)0x03000798;
+    slotB = gUnk_03000798Loc;
     *slotB = 0;
-    slotC = (void **)gUnk_03000794;
-    *slotC = 0;
+    gUnk_03000794 = 0;
     p = sub_0806A3A4(0xAC);
-    *slotA = p;
+    *slotA = (u32)p;
     if (p != 0)
     {
-        q = *(void **)p;
-        *slotB = q;
-        fn = (void **)0x080BB8BC;
-        _08073C4C((void *)0, q, 0xAC, *fn);
+        *slotB = *(struct Unk0758 **)p;
+        _08073C4C(0, *slotB, 0xAC, (void *)gData_080BB8BC[0]);
     }
     else
+    {
         sub_080611F0();
+    }
 }
 

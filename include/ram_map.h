@@ -83,6 +83,8 @@
 #define gUnk_03000610 (*(struct Unk0610 *)0x03000610)
 #define gUnk_03000600 (*(struct Unk0600 *)0x03000600)
 #define gUnk_03000630 (*(struct Unk473F8 **)0x03000630)
+#undef gUnk_03000638
+#define gUnk_03000638 (*(void **)0x03000638)
 #define gUnk_03000654 (*(s16 *)0x03000654)
 #define gUnk_03000658 (*(struct Unk4AAF0 ***)0x03000658)
 #define gUnk_03000660 (*(struct Unk4AAF0 **)0x03000660)
@@ -90,6 +92,7 @@
 #define gUnk_03000674 (*(u32 *)0x03000674)
 #define gUnk_03000678 (*(u32 *)0x03000678)
 #define gUnk_03000758Loc ((struct Unk0758 **)0x03000758)
+#define gUnk_03000798Loc ((struct Unk0758 **)0x03000798)
 #define gUnk_03000758 (*(struct Unk0758 **)0x03000758)
 #define gUnk_03000770 ((struct Unk0770 *)0x03000770)
 #define gUnk_03000794 (*(u32 *)0x03000794)
@@ -124,6 +127,7 @@
 #define gBtlInputMask      0x03003F60
 #define gBtlState          0x03003F64
 #define gBtlKeysHeld       0x03004060
+#define gBtlKeysHeldU16    (*(u16 *)0x03004060)
 #define gBtlKeysNew        0x0300406C
 #define gBtlKeyQueuePtr    0x03004070
 #define gBtlKeyQueueCount  0x03004074

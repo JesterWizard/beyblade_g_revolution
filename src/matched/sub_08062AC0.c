@@ -1,22 +1,18 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+
+// @ 0x08062ac0
+#include "global.h"
+#include "data_symbols.h"
 
 // @ 0x08062ac0
 void sub_08062AC0(void)
 {
-    void *p;
-    void **fn;
-    void *dst;
-    u32 n;
-
-    p = *(void **)gUnk_030008D0;
-    if (p != 0)
+    if (gUnk_030008D0 != 0)
     {
-        fn = (void **)0x080BB8BC;
-        _08073C4C((void *)0, p, 0x44, *fn);
-        dst = (void *)0x05000200;
-        n = 0x80;
-        n <<= 2;
-        _08073C4C((void *)0, dst, n, *fn);
+        _08073C4C(0, (void *)gUnk_030008D0, 0x44, (void *)gData_080BB8BC[0]);
+        _08073C4C(0, (void *)gData_05000200, 0x200, (void *)gData_080BB8BC[0]);
     }
 }
 
