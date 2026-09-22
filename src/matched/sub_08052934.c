@@ -12,7 +12,7 @@ void sub_08052934(u32 a)
 
     idx >>= 20;
     TextSetCursor(0, idx + 8);
-    sub_080617C4((struct Unk617C4 *)gData_082BCD00, (u32)gData_080B738E);
+    TextSetActiveObject((struct Unk617C4 *)gData_082BCD00, (u32)gData_080B738E);
     off = (u32)gData_080995AC;
     off += 0xC;
     idx += off;

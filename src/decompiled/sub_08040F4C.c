@@ -28,7 +28,7 @@ void sub_08040F4C(void)
 loop:
     sub_080604C8();
     sub_080607BC();
-    sub_080674B4();
+    VBlankIntrWait();
     sub_0806A6F8();
     r0 = (u32)&state.unk324;
     r0 = *(u32 *)r0;

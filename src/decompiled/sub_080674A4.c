@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x080674a4
-s32 sub_080674A4(s32 num, s32 den)
+s32 DivRemainder(s32 num, s32 den)
 {
     s32 rem;
 

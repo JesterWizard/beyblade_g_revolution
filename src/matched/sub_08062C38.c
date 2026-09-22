@@ -19,7 +19,7 @@ void sub_08062C38(u16 arg0)
       arg0 = 0;
     }
     *((u16 *) 0x04000054) = counter;
-    sub_080674B4();
+    VBlankIntrWait();
     _08073C40(*((void **) 0x080BB888));
     sub_080474AC();
   }

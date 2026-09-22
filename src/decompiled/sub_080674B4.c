@@ -1,9 +1,16 @@
 #include "global.h"
 
 // @ 0x080674b4
-/* `swi 5` with the caller's r0/r1 forwarded untouched and r2 = 0: the parameters keep
- * r0/r1 live, the third asm operand materialises the zero in r2. */
-void sub_080674B4(const void *src, void *dest)
+/* BIOS VBlankIntrWait (SWI 0x05), called with no arguments at all 38 call sites.
+ * Superseded: this function now byte-matches in src/matched/sub_080674B4.c, so
+ * this file is kept only as the draft record. */
+__attribute__((naked))
+void VBlankIntrWait(void)
 {
-    asm("swi 5" : : "r"(src), "r"(dest), "r"(0));
+    asm(
+        ".syntax unified\n"
+        "movs r2, #0\n"
+        "swi #5\n"
+        "bx lr\n"
+    );
 }

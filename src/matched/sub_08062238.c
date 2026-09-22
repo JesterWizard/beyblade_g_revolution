@@ -7,7 +7,7 @@ void sub_08062238(struct Unk62634 *a)
     {
         if (a->unk08 != 0)
         {
-            sub_0806FE84(a->unk08);
+            BtlObjPoolFree(a->unk08);
             a->unk08 = 0;
         }
         sub_08062684(a);

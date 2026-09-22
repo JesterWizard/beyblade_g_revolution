@@ -5,7 +5,7 @@ void sub_0802EECC(void)
 {
     sub_08061BE8();
     sub_0802ECD8();
-    sub_080674B4();
+    VBlankIntrWait();
     _08073C40(*(void **)0x080BB888);
 }
 

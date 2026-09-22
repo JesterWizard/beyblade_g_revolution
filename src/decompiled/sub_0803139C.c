@@ -22,12 +22,12 @@ s32 sub_0803139C(
     {
         do
         {
-            quotient = sub_080674A0(key, 10);
+            quotient = Div(key, 10);
             remainder = key - quotient * 10;
             entry = *entries;
             if (entry == 0)
             {
-                *entries = sub_0806FDD0(0x1C2);
+                *entries = BtlObjPoolAlloc(0x1C2);
                 if (*entries != 0)
                 {
                     resource_id = (u16)sub_08038438(table);
@@ -36,7 +36,7 @@ s32 sub_0803139C(
                         (u32)entry,
                         (u16)(index - 0x30));
                     if (*entries != 0)
-                        sub_080705DC(
+                        TextEntrySetPaletteBank(
                             (struct Unk705DC *)*entries,
                             (u8)resource_id);
                 }
@@ -55,7 +55,7 @@ s32 sub_0803139C(
         entry = *entries;
         if (entry == 0)
         {
-            *entries = sub_0806FDD0(0x1C2);
+            *entries = BtlObjPoolAlloc(0x1C2);
             if (*entries != 0)
             {
                 resource_id = (u16)sub_08038438(table);
@@ -64,7 +64,7 @@ s32 sub_0803139C(
                     (u32)entry,
                     (u16)(index - 0x30));
                 if (*entries != 0)
-                    sub_080705DC(
+                    TextEntrySetPaletteBank(
                         (struct Unk705DC *)*entries,
                         (u8)resource_id);
             }
@@ -84,7 +84,7 @@ s32 sub_0803139C(
             resource_type = entry->unk14 & 0xF000;
             resource_type >>= 12;
             sub_08038638(resource_type);
-            sub_0806FE84(entry);
+            BtlObjPoolFree(entry);
             *entries = 0;
         }
         entries++;

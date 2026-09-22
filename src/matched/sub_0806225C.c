@@ -33,7 +33,7 @@ void sub_0806225C(struct Unk62634 *a)
         {
             target->unk08 = a->unk24 - a->unk04->unk0C;
             target->unk0C = a->unk28 - a->unk04->unk10;
-            sub_080705DC(target, a->unk60);
+            TextEntrySetPaletteBank(target, a->unk60);
         }
     }
     else
@@ -43,7 +43,7 @@ void sub_0806225C(struct Unk62634 *a)
         {
             target->unk08 = a->unk24;
             target->unk0C = a->unk28;
-            sub_080705DC(target, a->unk60);
+            TextEntrySetPaletteBank(target, a->unk60);
         }
     }
     if (a->unk00 != 0)

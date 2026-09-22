@@ -16,7 +16,7 @@ void sub_08052FC8(void)
     sub_0805D1AC();
     _0802D9A8();
     _08073C40(*(void **)0x080BB888);
-    sub_080674B4();
+    VBlankIntrWait();
     sub_0806A6F8();
     sub_080474AC();
 }

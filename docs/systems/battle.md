@@ -3,13 +3,13 @@
 
 # battle subsystem
 
-87 functions — 21 named.
+87 functions — 22 named.
 
 | Tier | Functions |
 |------|----------:|
 | MATCHING | 52 |
-| UNDERSTOOD | 2 |
-| DECOMPILED | 22 |
+| UNDERSTOOD | 3 |
+| DECOMPILED | 21 |
 | UNKNOWN | 11 |
 
 ## Functions
@@ -17,7 +17,7 @@
 | Function | Address | Tier | Size | Callers | Callees | RAM |
 |----------|---------|------|-----:|--------:|--------:|-----|
 | [`DebugPrint`](../functions/DebugPrint.md) | `0x08067B98` | MATCHING | 6 | 30 | 0 |  |
-| `sub_0806FE84` | `0x0806FE84` | DECOMPILED | 120 | 28 | 3 | gUnk_030040A4, gUnk_030040AC |
+| [`BtlObjPoolFree`](../functions/BtlObjPoolFree.md) | `0x0806FE84` | UNDERSTOOD | 120 | 28 | 3 | gUnk_030040A4, gUnk_030040AC |
 | [`BtlObjFree`](../functions/BtlObjFree.md) | `0x0806A434` | UNDERSTOOD | 164 | 25 | 1 | gUnk_03000B30, gUnk_03000B3C |
 | [`BtlObjTableAdd`](../functions/BtlObjTableAdd.md) | `0x0807309C` | MATCHING | 120 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
 | [`BtlObjTableRemove`](../functions/BtlObjTableRemove.md) | `0x08073114` | UNDERSTOOD | 112 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |

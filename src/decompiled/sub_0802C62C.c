@@ -3,7 +3,8 @@
 // @ 0x0802c62c
 #include "global.h"
 
-s32 sub_0802C62C(u8 a)
+s32 sub_0802C62C(s8 a)
+
 {
     s8 *p;
     s32 count;

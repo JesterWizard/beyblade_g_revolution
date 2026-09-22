@@ -18,7 +18,7 @@ void sub_0806BC0C(void *arg, void *source_arg)
     if ((s16)source->unk04 > 0x40)
     {
         current = 0x40;
-        sub_08067A9C((void *)0x083D1D3C, source);
+        DebugMessage((void *)0x083D1D3C, source);
     }
     limit = current << 16;
     index = 0;

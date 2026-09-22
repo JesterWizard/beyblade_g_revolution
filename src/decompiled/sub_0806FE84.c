@@ -1,7 +1,7 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
 
-void sub_0806FE84(void *arg)
+void BtlObjPoolFree(void *arg)
 {
     struct Unk6FE84 *state;
     struct Unk6FE84 *previous;

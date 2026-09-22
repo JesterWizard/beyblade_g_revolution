@@ -15,7 +15,7 @@ void sub_08051BBC(void)
         (*main_loc)->unk17F2++;
         REG_BLDALPHA = 0x3748;
         *bldy = ((*main_loc)->unk17F2 << 8) | (*main_loc)->unk17F0;
-        sub_080674B4();
+        VBlankIntrWait();
         _08073C40(*(void **)0x080BB888);
         sub_0806A6F8();
     }

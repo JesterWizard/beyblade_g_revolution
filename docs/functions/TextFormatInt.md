@@ -28,8 +28,8 @@
 
 ## Callees
 
-- `sub_080674A0`
-- `sub_080674A4`
+- [`Div`](Div.md)
+- [`DivRemainder`](DivRemainder.md)
 - `sub_08073218`
 - `sub_08075A58` _(not one of the 633 functions)_
 

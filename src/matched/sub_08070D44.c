@@ -34,8 +34,8 @@ u8 sub_08070D44(struct Unk7069C *a, s32 value, u8 b)
                 digits--;
             }
         }
-        *--p = (u8)sub_080674A4(value, 10) + 0x30;
-        value = sub_080674A0(value, 10);
+        *--p = (u8)DivRemainder(value, 10) + 0x30;
+        value = Div(value, 10);
         digits--;
     } while (value != 0 && digits != 0);
     if (neg != 0)

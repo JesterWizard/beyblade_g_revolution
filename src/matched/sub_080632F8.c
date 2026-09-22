@@ -19,7 +19,7 @@ void sub_080632F8(void)
     sub_0804109C((struct Unk40F4C *)&work, sub_0806639C());
     do
     {
-        sub_080674B4();
+        VBlankIntrWait();
         sub_0806A6F8();
         if ((work.unk324 & 1) == 0)
             _08073C40(*(void **)0x080BB888);

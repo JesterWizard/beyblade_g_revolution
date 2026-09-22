@@ -22,12 +22,12 @@ void TextFormatInt(s32 num, void *dst, u32 n)
         sub_08073218(gData_083D2708, dst, n);
     else {
         while (num > 0) {
-            u8 digit = sub_080674A4(num, 10);
+            u8 digit = DivRemainder(num, 10);
             u8 slot = pos;
 
             pos = (u8)(pos - 1);
             buf[slot] = digit + 0x30;
-            num = sub_080674A0(num, 10);
+            num = Div(num, 10);
         }
         sub_08073218(buf + pos + sign, dst, n);
     }

@@ -127,7 +127,17 @@ def main() -> int:
     ap.add_argument("--apply", action="store_true", help="write the repairs")
     ap.add_argument("--check", action="store_true", help="report only (default)")
     ap.add_argument("--jobs", type=int, default=8)
+    ap.add_argument(
+        "--dirs",
+        default="matched",
+        help=(
+            "comma-separated src/ subdirs. `matched` repairs are verified against "
+            "retail bytes and reverted on regression; `decompiled` drafts only have "
+            "to compile, since they are not expected to match yet"
+        ),
+    )
     args = ap.parse_args()
+    dirs = [d.strip() for d in args.dirs.split(",") if d.strip()]
 
     table = protos()
     if not table:
@@ -138,7 +148,11 @@ def main() -> int:
     sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
     from audit_c_compiles import compile_one  # noqa: WPS433
 
-    candidates = list(sorted(MATCHED.glob("sub_*.c")))
+    candidates = [
+        path
+        for d in dirs
+        for path in sorted((ROOT / "src" / d).glob("sub_*.c"))
+    ]
     failing: dict[str, str] = {}
     with cf.ThreadPoolExecutor(max_workers=args.jobs) as pool:
         for name, err in pool.map(compile_one, candidates):
@@ -164,6 +178,7 @@ def main() -> int:
             print(f"    {path.stem}  {why}")
 
     print("=== signature repair ===")
+    print(f"  dirs               : {', '.join(dirs)}")
     print(f"  failing to compile : {len(failing)}")
     print(f"  repairable         : {len(changes)}")
     print(f"  {'repaired' if args.apply else 'would repair'}: {len(changes)} file(s)")
@@ -183,22 +198,35 @@ def main() -> int:
     reverted: list[str] = []
     for path, original, fixed, _why in changes:
         path.write_text(fixed)
-        r = subprocess.run(
-            ["python3", "tools/decomp/match_function.py", path.stem,
-             str(path.relative_to(ROOT))],
-            capture_output=True, text=True, cwd=ROOT, timeout=600,
-        )
-        if not r.stdout.startswith("MATCH"):
+        rel = str(path.relative_to(ROOT))
+        if path.parent.name == "matched":
+            # Matched source is verified code: a signature fix must not perturb
+            # the bytes, so re-check and roll back if it does.
+            r = subprocess.run(
+                ["python3", "tools/decomp/match_function.py", path.stem, rel],
+                capture_output=True, text=True, cwd=ROOT, timeout=600,
+            )
+            if r.stdout.startswith("MATCH"):
+                print(f"    OK     {path.stem}")
+                continue
             path.write_text(original)
             reverted.append(path.stem)
             print(f"    REVERT {path.stem} — match regressed")
+            continue
+
+        # Drafts are not expected to match; compiling is the bar.
+        _name, err = compile_one(path)
+        if err:
+            path.write_text(original)
+            reverted.append(path.stem)
+            print(f"    REVERT {path.stem} — still does not compile")
         else:
             print(f"    OK     {path.stem}")
 
     print(f"\n  kept    : {len(changes) - len(reverted)}")
     print(f"  reverted: {len(reverted)}")
     for name in reverted:
-        print(f"    {name} (signature fix changes the bytes — needs matching work)")
+        print(f"    {name} (needs hand fixing)")
     return 0
 
 

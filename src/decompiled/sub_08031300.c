@@ -23,7 +23,7 @@ void sub_08031300(struct Unk312EC *a)
     if ((t & 5) != 0)
         return;
     if (v == (s32)a->unk01)
-        sub_080705DC(p, (u8)a->unk00);
+        TextEntrySetPaletteBank(p, (u8)a->unk00);
     else
-        sub_080705DC(p, (u8)a->unk01);
+        TextEntrySetPaletteBank(p, (u8)a->unk01);
 }

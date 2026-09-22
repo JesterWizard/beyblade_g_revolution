@@ -32,7 +32,7 @@
 
 ## Callers
 
-- `sub_0806FE84`
+- [`BtlObjPoolFree`](BtlObjPoolFree.md)
 - `sub_080700CC`
 - `sub_0807027C`
 - [`BtlReleaseEntry`](BtlReleaseEntry.md)

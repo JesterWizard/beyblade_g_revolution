@@ -1,6 +1,7 @@
 #include "global.h"
 
-void sub_0804AAF0(void)
+void sub_0804AAF0(void *a)
+
 {
     void *buffer;
     struct Unk4AAF0 *entry;

@@ -30,7 +30,7 @@
 
 ## Callees
 
-- `sub_0806FE84`
+- [`BtlObjPoolFree`](BtlObjPoolFree.md)
 
 ## Callers
 

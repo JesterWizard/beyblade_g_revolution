@@ -17,7 +17,7 @@ void sub_0804745C(void)
       p = (*slot)->unk00[i];
       if (p != 0)
       {
-        sub_0806FE84(p);
+        BtlObjPoolFree(p);
         (*slot)->unk00[i] = 0;
       }
       i++;

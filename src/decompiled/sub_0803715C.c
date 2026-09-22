@@ -26,7 +26,7 @@ s32 sub_0803715C(u8 a, u8 b)
         key = sub_08042C3C((s8)_080672A8());
         slot = gUnk_030002A0.records[b].unk24;
         if (slot->unk04 > 0)
-            score = sub_080674A0(score, slot->unk04);
+            score = Div(score, slot->unk04);
         if (gMainWorkPtr->unk0874 < key || key == -1)
         {
             gMainWorkPtr->unk0874 += score;
@@ -52,7 +52,7 @@ s32 sub_0803715C(u8 a, u8 b)
         if (slot != 0)
         {
             if (slot->unk04 > 0)
-                score = sub_080674A0(score, slot->unk04);
+                score = Div(score, slot->unk04);
             slot->unk00 += score;
             rec->unk28->unk26 += 5;
             if (slot->unk00 > 0x3FFF)

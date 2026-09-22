@@ -182,8 +182,14 @@ status:
 audit:
 	python3 tools/decomp/audit_c_compiles.py --dirs matched
 
+audit-drafts:
+	python3 tools/decomp/audit_c_compiles.py --dirs decompiled
+
 repair-signatures:
-	python3 tools/decomp/repair_naked_signatures.py --apply
+	python3 tools/decomp/repair_naked_signatures.py --dirs matched --apply
+
+repair-drafts:
+	python3 tools/decomp/repair_naked_signatures.py --dirs decompiled --apply
 
 rom: check-baserom $(ROM)
 ifeq ($(COMPARE),1)

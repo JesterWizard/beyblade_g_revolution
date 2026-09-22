@@ -79,7 +79,7 @@ void sub_08033188(void)
     sub_0806A6F8();
     for (;;)
     {
-        sub_080674B4();
+        VBlankIntrWait();
         sub_0806A6F8();
         delta = target - (s32)state.unk00;
         if (delta != 0)
@@ -105,7 +105,7 @@ void sub_08033188(void)
     }
 
     BtlReleaseEntry((struct Unk7069C *)&state);
-    sub_080674B4();
+    VBlankIntrWait();
     for (i = 0; i < 2; i++)
     {
         asset = (struct Unk33188Entry *)

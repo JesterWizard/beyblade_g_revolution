@@ -20,19 +20,19 @@ void sub_08032908(void)
     sub_08030D4C();
     if (gBattleWork->unk324 != 0)
     {
-        sub_0806FE84(gBattleWork->unk324);
+        BtlObjPoolFree(gBattleWork->unk324);
         gBattleWork->unk324 = 0;
     }
     if (gBattleWork->unk1F0C != 0)
     {
-        sub_0806FE84(gBattleWork->unk1F0C);
+        BtlObjPoolFree(gBattleWork->unk1F0C);
         gBattleWork->unk1F0C = 0;
     }
     for (i = 0; i <= 3; i++)
     {
         if (gBattleWork->unk0AC8[i] != 0)
         {
-            sub_0806FE84(gBattleWork->unk0AC8[i]);
+            BtlObjPoolFree(gBattleWork->unk0AC8[i]);
             gBattleWork->unk0AC8[i] = 0;
         }
     }
@@ -40,7 +40,7 @@ void sub_08032908(void)
     {
         if (gBattleWork->unk0AD8[i] != 0)
         {
-            sub_0806FE84(gBattleWork->unk0AD8[i]);
+            BtlObjPoolFree(gBattleWork->unk0AD8[i]);
             gBattleWork->unk0AD8[i] = 0;
         }
     }
@@ -50,7 +50,7 @@ void sub_08032908(void)
     {
         if (gMainWorkPtr->unk07A4[i] != 0)
         {
-            sub_0806FE84(gMainWorkPtr->unk07A4[i]);
+            BtlObjPoolFree(gMainWorkPtr->unk07A4[i]);
             gMainWorkPtr->unk07A4[i] = 0;
         }
     }

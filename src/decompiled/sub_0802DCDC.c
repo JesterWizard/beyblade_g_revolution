@@ -70,10 +70,10 @@ void sub_0802DCDC(void *arg)
     (*main_loc)->unk16D4 = sub_08042B00(state->unk4E);
     if (state->unk28 != 0)
     {
-        sub_0806FE84(state->unk28);
+        BtlObjPoolFree(state->unk28);
         state->unk28 = (struct Unk705DC *)mask;
     }
-    state->unk28 = sub_0806FDD0(1);
+    state->unk28 = BtlObjPoolAlloc(1);
     resource = sub_08042B28(state->unk4E);
     sub_0806FF58(
         state->unk28, resource, mask, 1, 1, mask,
@@ -82,7 +82,7 @@ void sub_0802DCDC(void *arg)
     _08073C4C(
         resource, (void *)0x05000380, 0x20,
         *(void **)0x080BB8C0);
-    sub_080705DC(state->unk28, 0x0C);
+    TextEntrySetPaletteBank(state->unk28, 0x0C);
     sub_0802E18C(
         (struct Unk310F0b *)state->unk38,
         (struct Unk310F0b *)state->unk3C, (s32)(s8)result->unk03);

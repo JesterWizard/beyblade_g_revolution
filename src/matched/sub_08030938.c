@@ -25,8 +25,8 @@ void sub_08030938(struct Unk346C0 *a)
     r4 = a->unk2D4;
     r2 = a->unk04->unk0C;
     r1 = a->unk2F4;
-    r3 = sub_080674A0((s32)(r4 * r2), (s32)r1);
-    r0 = sub_080674A0((s32)((0xB4 - r4) * r3), (s32)r4);
+    r3 = Div((s32)(r4 * r2), (s32)r1);
+    r0 = Div((s32)((0xB4 - r4) * r3), (s32)r4);
     r3 = 0xB4 - r0;
     sub_080346C0(a, a->unk00->unk30, a->unk00->unk34, r6, (u32)r3);
 }

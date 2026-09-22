@@ -30,7 +30,7 @@ s32 sub_0806E420(struct Unk6E420Obj *a, struct Unk6E420Model *b, struct Unk6E420
     if (den == 0)
         return 0;
     num = (p1->unk04 - f) * w + v * e - p1->unk00 * v;
-    t = sub_080674A0(num << 10, den);
+    t = Div(num << 10, den);
     {
         s32 x = p1->unk00 + ((dx * t) >> 10);
         s32 y = p1->unk04 + ((dy * t) >> 10);

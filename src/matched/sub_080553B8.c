@@ -4,7 +4,7 @@
 
 void sub_080553B8(u8 *data)
 {
-    sub_080674B4();
+    VBlankIntrWait();
     _08073C40(*(void **)0x080BB888);
     TextRowSetPaletteBank(6, 0x0F, 0x0A, 0x1A);
     TextRowSetPaletteBank(7, 0x0F, 0x0A, 0x1A);

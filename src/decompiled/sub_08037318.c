@@ -12,7 +12,7 @@ void sub_08037318(struct Unk346C0 *a, u32 index_arg)
     struct Unk705DC **slot;
 
     index = (u8)index_arg;
-    p = sub_0806FDD0(0);
+    p = BtlObjPoolAlloc(0);
     slot = &a->unk28C;
     *slot = p;
     r1 = (u32)&gUnk_030002A0;
@@ -31,5 +31,5 @@ void sub_08037318(struct Unk346C0 *a, u32 index_arg)
         0,
         0);
     sub_08038580(sub_08042B50(record->unk00), 0x0E);
-    sub_080705DC(*slot, 0x0E);
+    TextEntrySetPaletteBank(*slot, 0x0E);
 }

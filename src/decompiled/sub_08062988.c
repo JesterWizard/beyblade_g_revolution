@@ -19,8 +19,8 @@ void sub_08062988(struct Unk62988 *a)
         && variant <= 2
         && group != 0)
     {
-        sub_080674B4();
-        sub_080674AC(a, gUnk_030007A4);
+        VBlankIntrWait();
+        LZ77UnCompWram(a, gUnk_030007A4);
     }
     else
     {

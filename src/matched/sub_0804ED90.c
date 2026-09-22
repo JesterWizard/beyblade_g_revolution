@@ -8,7 +8,7 @@ void sub_0804ED90(void *arg)
     u16 value;
     void *table;
 
-    sub_080674B4();
+    VBlankIntrWait();
     for (i = 0x0A; i <= 0x19; i++)
     {
         value = (u16)i;
@@ -40,7 +40,7 @@ void sub_0804ED90(void *arg)
         sub_0806184C(value, 9);
     }
 
-    sub_080617C4((struct Unk617C4 *)0x080D79CC, 0x080B7429);
+    TextSetActiveObject((struct Unk617C4 *)0x080D79CC, 0x080B7429);
     TextSetCursor(0, 0x20);
     table = (void *)0x083A8470;
     TextDrawAlign(table, 0xDC, 1);
@@ -54,7 +54,7 @@ void sub_0804ED90(void *arg)
     TextDrawAlign(table, 0xDC, 1);
     TextSetCursor(0, 0x48);
     TextDrawAlign(table, 0xDC, 1);
-    sub_080617C4((struct Unk617C4 *)0x082C44A8, 0x080B7258);
+    TextSetActiveObject((struct Unk617C4 *)0x082C44A8, 0x080B7258);
     sub_0804EBF0(arg);
 }
 

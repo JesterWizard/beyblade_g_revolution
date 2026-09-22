@@ -15,9 +15,9 @@ void sub_08035984(struct Unk35984 *a)
     const u8 *table8;
     const s16 *table16;
 
-    speed = sub_080674B0(a->unk18 * a->unk18 + a->unk1C * a->unk1C);
+    speed = Sqrt(a->unk18 * a->unk18 + a->unk1C * a->unk1C);
     speed16 = (u16)speed;
-    angle = sub_080674A0(a->unk1C << 8, speed16);
+    angle = Div(a->unk1C << 8, speed16);
     half = angle >> 1;
     if (half > 0x7F)
         half = 0x7F;

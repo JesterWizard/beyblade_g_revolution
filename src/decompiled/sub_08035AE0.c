@@ -29,10 +29,10 @@ s32 sub_08035AE0(
     scale = RandRange(0x100) + 0x100;
     if (distance < threshold)
     {
-        length = (u16)sub_080674B0(distance);
-        dx = sub_080674A0(dx << 8, length);
-        dy = sub_080674A0(dy << 8, length);
-        dz = sub_080674A0(dz << 8, length);
+        length = (u16)Sqrt(distance);
+        dx = Div(dx << 8, length);
+        dy = Div(dy << 8, length);
+        dz = Div(dz << 8, length);
         velocity_x = a->unk18 - b->unk18;
         velocity_y = a->unk1C - b->unk1C;
         velocity_z = a->unk20 - b->unk20;
@@ -40,7 +40,7 @@ s32 sub_08035AE0(
             velocity_x * velocity_x +
             velocity_y * velocity_y +
             velocity_z * velocity_z;
-        velocity_distance = (u16)sub_080674B0(velocity_distance);
+        velocity_distance = (u16)Sqrt(velocity_distance);
         midpoint_x = (a->unk0C + b->unk0C) >> 1;
         midpoint_y = (a->unk10 + b->unk10) >> 1;
         offset_x = dx << 4;

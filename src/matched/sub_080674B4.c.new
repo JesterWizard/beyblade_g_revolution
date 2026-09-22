@@ -1,0 +1,13 @@
+#include "global.h"
+
+// @ 0x080674b4
+__attribute__((naked))
+void sub_080674B4(void)
+{
+    asm(
+        ".syntax unified\n"
+        "movs r2, #0\n"
+        "swi #5\n"
+        "bx lr\n"
+    );
+}

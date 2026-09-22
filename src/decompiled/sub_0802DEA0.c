@@ -91,47 +91,47 @@ void sub_0802DEA0(void)
     p = gUnk_0300026C;
     if (p->unk28 != 0)
     {
-        sub_0806FE84(p->unk28);
+        BtlObjPoolFree(p->unk28);
         gUnk_0300026C->unk28 = 0;
     }
     p = gUnk_0300026C;
     if (p->unk2C != 0)
     {
-        sub_0806FE84(p->unk2C);
+        BtlObjPoolFree(p->unk2C);
         gUnk_0300026C->unk2C = 0;
     }
     p = gUnk_0300026C;
     if (p->unk30 != 0)
     {
-        sub_0806FE84(p->unk30);
+        BtlObjPoolFree(p->unk30);
         gUnk_0300026C->unk30 = 0;
     }
     p = gUnk_0300026C;
     if (p->unk34 != 0)
     {
-        sub_0806FE84(p->unk34);
+        BtlObjPoolFree(p->unk34);
         gUnk_0300026C->unk34 = 0;
     }
     p = gUnk_0300026C;
     if (p->unk38 != 0)
     {
-        sub_0806FE84(p->unk38);
+        BtlObjPoolFree(p->unk38);
         gUnk_0300026C->unk38 = 0;
     }
     p = gUnk_0300026C;
     if (p->unk3C != 0)
     {
-        sub_0806FE84(p->unk3C);
+        BtlObjPoolFree(p->unk3C);
         gUnk_0300026C->unk3C = 0;
     }
     p = gUnk_0300026C;
     if (p->unk40 != 0)
     {
-        sub_0806FE84(p->unk40);
+        BtlObjPoolFree(p->unk40);
         gUnk_0300026C->unk40 = 0;
     }
 
-    sub_080674B4();
+    VBlankIntrWait();
     _08073C40(*(void **)0x080BB888);
 
     gUnk_0300026C->unk48 = 0xFF;

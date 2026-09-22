@@ -8,7 +8,7 @@ void sub_08066FB8(void)
     u32 value;
     u32 mode;
 
-    sub_080674B4();
+    VBlankIntrWait();
     sub_08061BE8();
     TextRowSetPaletteBank(5, 0x0F, 3, 0x1A);
     TextRowSetPaletteBank(6, 0x0F, 3, 0x1A);
@@ -16,7 +16,7 @@ void sub_08066FB8(void)
     TextRowSetPaletteBank(8, 0x0F, 3, 0x1A);
     TextRowSetPaletteBank(9, 0x0F, 3, 0x1A);
     TextRowSetPaletteBank(0x0A, 0x0F, 3, 0x1A);
-    sub_080674B4();
+    VBlankIntrWait();
     table = (u32 *)0x080BB110;
     table += 3;
     index_loc = (u32 *)0x03000674;

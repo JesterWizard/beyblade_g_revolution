@@ -17,7 +17,7 @@ void sub_080686F4(struct Unk68798 *a, s32 b, s32 c, s32 d, s32 e)
         a->unk74 = 0;
         hp = BtlObjAlloc(0x40);
         if (hp == 0) {
-            sub_08067A9C((void *)0x083A94D4);
+            DebugMessage((void *)0x083A94D4);
             return;
         }
         a->unk7C = hp;

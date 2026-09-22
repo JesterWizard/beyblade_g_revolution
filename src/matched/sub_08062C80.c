@@ -5,7 +5,7 @@ void sub_08062C80(void)
 {
     void **src;
 
-    sub_080674B4();
+    VBlankIntrWait();
     sub_080608D4();
 
     *(u16 *)0x04000050 = 0xFF;

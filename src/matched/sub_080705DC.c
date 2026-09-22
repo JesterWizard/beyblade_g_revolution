@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080705dc
-void sub_080705DC(struct Unk705DC *a, s32 b)
+void TextEntrySetPaletteBank(struct Unk705DC *a, s32 b)
 {
     u32 t;
     u32 v;

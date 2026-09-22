@@ -3,7 +3,7 @@
 // @ 0x0803b078
 void sub_0803B078(struct Unk2F520 *a)
 {
-    sub_080674B4();
+    VBlankIntrWait();
     _08073C40(*(void **)0x080BB888);
     TextRowSetPaletteBank(5, 0x0F, 0x0A, 0x1A);
     TextRowSetPaletteBank(6, 0x0F, 0x0A, 0x1A);

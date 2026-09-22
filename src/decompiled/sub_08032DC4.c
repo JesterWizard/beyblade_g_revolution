@@ -44,7 +44,7 @@ void sub_08032DC4(
     {
         do
         {
-            sub_080674B4();
+            VBlankIntrWait();
             TimerAdvance();
             sub_0806A6F8();
             if ((*(u16 *)gBtlKeysHeld & 8) != 0)

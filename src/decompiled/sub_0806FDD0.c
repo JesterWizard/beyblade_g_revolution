@@ -1,6 +1,6 @@
 #include "global.h"
 
-void *sub_0806FDD0(u16 key_arg)
+void *BtlObjPoolAlloc(u16 key_arg)
 {
     u16 key;
     struct Unk6FDB4 *node;
@@ -15,7 +15,7 @@ void *sub_0806FDD0(u16 key_arg)
     node = *free_loc;
     if (node == 0)
     {
-        sub_08067A9C((void *)0x083D2230);
+        DebugMessage((void *)0x083D2230);
         goto finish;
     }
     head_loc = (struct Unk6FDB4 **)0x030040A4;

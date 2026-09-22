@@ -21,6 +21,77 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-22 — BIOS wrapper + pool naming batch (33 → 43); draft audit targets
+
+Named 10 more, taking named 33 → **43/633** (battle 22/87, graphics 8/34). Two of
+them had C seeds, so DECOMPILED went 130 → 128 and UNDERSTOOD 6 → 8.
+
+**The BIOS wrapper family** (`sub_080674A0…B4`) — five adjacent functions at
+`0x080674A0`, all `<swi> ; bx lr`. Read off the retail bytes, cross-checked
+against call-site behaviour:
+
+| Function | Retail | BIOS | Name |
+|----------|--------|------|------|
+| `sub_080674A0` | `swi #6` | Div (quotient) | `Div` |
+| `sub_080674A4` | `swi #6 ; r0 = r1` | Div (remainder) | `DivRemainder` |
+| `sub_080674B0` | `swi #8` | Sqrt | `Sqrt` |
+| `sub_080674AC` | `swi #17` | LZ77UnCompWram | `LZ77UnCompWram` |
+| `sub_080674B4` | `movs r2,#0 ; swi #5` | VBlankIntrWait | `VBlankIntrWait` |
+
+`Div`/`DivRemainder` click immediately against `TextFormatInt`, which peels digits
+with exactly that pair (`num = Div(num, 10)`, `digit = DivRemainder(num, 10)`).
+
+- **`sub_080674B4` had a lying signature.** It was declared and defined as
+  `(const void *src, void *dest)` — a memory-copy shape — but every one of its
+  **38 call sites** calls it with no arguments, and the header only compiled
+  because the declaration was left unprototyped (`void sub_080674B4();`). The
+  retail body is `swi #5`, which is VBlankIntrWait. Every call site is the same
+  frame sequence — `sub_08061BE8` (queue a VRAM upload) → update → **wait for
+  VBlank** → `_08073C40` commit — which is exactly where you must wait before
+  presenting. Rewrote it as a `naked` wrapper with an honest `(void)` signature
+  and tightened the header prototype. This is the single most-called function in
+  the ROM, so the old shape was the most misleading comment in the tree.
+- `sub_0806FDD0` / `sub_0806FE84` → `BtlObjPoolAlloc` / `BtlObjPoolFree` — an
+  exact alloc/free pair over a pool keyed at `node->unk22`: Alloc pops the free
+  list at `0x030040AC` and links into the active list at `0x030040A4` ordered by
+  key; Free unlinks, relinquishes the node's status bit via `sub_0806FBF8`, and
+  pushes back onto the free list. The pool head sits directly beside
+  `gBtlObjListHead` (`0x030040A8`), the list `BtlObjListMoveToHead` uses.
+- `sub_08067A9C` → `DebugMessage`. Its retail body is **empty** (a bare `bx lr`),
+  yet callers pass strings read straight out of the ROM: *"No sprites left!"*,
+  *"Error allocating memory for actor motion modifiers\n"*, *"Spline count for
+  collision data exceeds maximum available"*. So the shipping build has the
+  diagnostic reporting stripped out — these paths fail silently. Sibling
+  `DebugPrint` (`sub_08067B98`) is the varargs half of the same stripped pair.
+- `sub_080705DC` → `TextEntrySetPaletteBank` (26 callers) — writes `(b & 0xF) << 12`
+  into an entry's `unk14` under the `0xFFF` mask, i.e. bits 12–15 of a GBA screen
+  entry, which is the palette bank. Sibling `TextSetPaletteBank` sets the engine's
+  global bank (`gUnk_03000798->unk96`); this one sets it on a single entry.
+  Callers pass real banks (`0x0E`, and bank 2 across a run of entries).
+- `sub_080617C4` → `TextSetActiveObject` (0.7, 17 callers) — stores a descriptor at
+  `engine+0x88`, its data pointer at `+0x8C`, publishes descriptor bytes into
+  `+0xA0/+0xA2` and derives `+0x9C`. Every call site passes two ROM addresses, so
+  it activates a ROM-described resource; the early-out tests a flag at
+  descriptor `+0x0C`. Lower confidence — the evidence is the register traffic, not
+  the domain.
+
+**Draft compile health is now visible.** `make audit` only ever covered
+`src/matched/`. Added `make audit-drafts` (and `make repair-drafts`), and taught
+`repair_naked_signatures.py` about `--dirs`: matched repairs are still gated on
+byte-identity and reverted on regression, while drafts only have to compile, since
+they are not expected to match yet. Current state of the 130 drafts: **114 compile,
+16 do not** (9 cross-function `conflicting types`, 6 warnings-as-errors, 1 syntax
+error). Only 1 was auto-repairable and it still failed to compile, so the tool
+reverted it — correctly leaving all 16 for hand work. Deliberately not mass-fixed:
+several of those conflicts mean the *draft's* signature is the better guess than
+the header's, so aligning them blindly would destroy information. Tracked here as
+the next tooling/quality item.
+
+Verified: `symbols.py apply` rewrote 57 files / 140 occurrences (string literals
+untouched); all 10 renamed functions re-checked, plus the 5 earlier BIOS wrappers —
+100% each; `make audit` 633/633; `make compare` OK on a forced full rebuild;
+`make analyze` idempotent.
+
 ### 2026-09-22 — battle naming batch (23 → 33); document.py prune fix
 
 Named 10 battle functions from the analysis DB plus verified source reads, taking

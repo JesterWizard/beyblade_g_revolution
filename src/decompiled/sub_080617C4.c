@@ -5,7 +5,7 @@
 
 /* match-flags: -fprologue-bugfix */
 
-void sub_080617C4(struct Unk617C4 *a, u32 b)
+void TextSetActiveObject(struct Unk617C4 *a, u32 b)
 {
     struct Unk617C4 *r2;
     u32 r0;

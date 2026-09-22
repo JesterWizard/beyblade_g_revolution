@@ -18,7 +18,7 @@ void sub_08062BF0(u16 a)
             a = 0;
         }
         *(u16 *)0x04000054 = b;
-        sub_080674B4();
+        VBlankIntrWait();
         src = (void **)0x080BB888;
         _08073C40(*src);
         sub_080474AC();

@@ -32,10 +32,10 @@ u8 sub_08035C64(struct Unk346C0Inner *a, s32 x, s32 y, s32 z, s32 threshold)
         }
         else
         {
-            speed = sub_080674B0(sumSq);
-            vx = sub_080674A0(dx << 8, speed);
-            vy = sub_080674A0(dy << 8, speed);
-            curSpeed = sub_080674B0(a->unk18 * a->unk18 + a->unk1C * a->unk1C);
+            speed = Sqrt(sumSq);
+            vx = Div(dx << 8, speed);
+            vy = Div(dy << 8, speed);
+            curSpeed = Sqrt(a->unk18 * a->unk18 + a->unk1C * a->unk1C);
             scale = (randScale * curSpeed) >> 8;
             vx = (vx * scale) >> 8;
             vy = (vy * scale) >> 8;

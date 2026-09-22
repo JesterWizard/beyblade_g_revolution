@@ -9,7 +9,7 @@ void sub_08036264(struct Unk36264 *out, struct Unk360BC *a, struct Unk360BC *b, 
 
     dx = (a->unk0C - b->unk0C) >> 8;
     dy = (a->unk10 - b->unk10) >> 8;
-    dist = sub_080674B0(dx * dx + dy * dy) << 16;
+    dist = Sqrt(dx * dx + dy * dy) << 16;
     out->unk00 = a->unk0C + ((scale * ((b->unk0C - a->unk0C) >> 1)) >> 8);
     out->unk04 = a->unk10 + ((scale * ((b->unk10 - a->unk10) >> 1)) >> 8);
     out->unk08 = (((u32)dist >> 18) + 0xFFFFFEFC) << 8;

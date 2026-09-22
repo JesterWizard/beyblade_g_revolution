@@ -16,7 +16,7 @@ void BtlClearState(void)
     {
         if (gBattleWork->unk0B54[zero] != 0)
         {
-            sub_0806FE84(gBattleWork->unk0B54[zero]);
+            BtlObjPoolFree(gBattleWork->unk0B54[zero]);
             gBattleWork->unk0B54[zero] = 0;
         }
     }

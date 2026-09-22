@@ -17,7 +17,7 @@ void sub_0806209C(struct Unk62044 *a)
             p = a->unk0C[i];
             if (p == 0)
                 break;
-            sub_0806FE84(p);
+            BtlObjPoolFree(p);
             a->unk0C[i] = 0;
             i++;
         } while (i <= 0x7F);

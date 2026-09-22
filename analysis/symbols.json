@@ -1,6 +1,6 @@
 {
-  "count": 33,
-  "generated": "2026-09-22T21:50:34Z",
+  "count": 43,
+  "generated": "2026-09-22T21:55:39Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -233,6 +233,21 @@
       "symbol": "TextGetAreaWidth",
       "updated": "2026-09-22"
     },
+    "0x080617C4": {
+      "aliases": [
+        "sub_080617C4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "Stores the descriptor at engine+0x88 and its companion pointer at engine+0x8C, then publishes descriptor->unk04/unk05 into engine+0xA0/0xA2 and derives engine+0x9C = (engine unkA0) >> 2",
+        "Returns early unless descriptor->unk0C has bit 0 set, so the descriptor carries an active/inactive flag at +0x0C",
+        "All 17 call sites pass two ROM addresses, e.g. (0x080D79CC, 0x080B7429) - a ROM descriptor plus its data - so this activates a resource in gUnk_03000798 (the text/BG engine)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextSetActiveObject",
+      "updated": "2026-09-22"
+    },
     "0x08061D68": {
       "aliases": [
         "sub_08061D68",
@@ -266,6 +281,78 @@
       "symbol": "RandRange",
       "updated": "2026-09-22"
     },
+    "0x080674A0": {
+      "aliases": [
+        "sub_080674A0"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "Retail body is 'swi #6 / bx lr'; BIOS SWI 0x06 is Div, returning the quotient in r0",
+        "TextFormatInt uses it to peel decimal digits: num = Div(num, 10)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Div",
+      "updated": "2026-09-22"
+    },
+    "0x080674A4": {
+      "aliases": [
+        "sub_080674A4"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "Retail body is 'swi #6 / adds r0, r1, #0 / bx lr' - SWI 6 (Div) then move the remainder from r1 into r0",
+        "TextFormatInt uses it as the digit: digit = DivRemainder(num, 10), paired with Div for the quotient"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "DivRemainder",
+      "updated": "2026-09-22"
+    },
+    "0x080674AC": {
+      "aliases": [
+        "sub_080674AC"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "Retail body is 'swi #17 / bx lr'; BIOS SWI 0x11 is LZ77UnCompWram",
+        "Callers pass a source and a destination pointer, e.g. LZ77UnCompWram(c, (void *)p->unk00)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "LZ77UnCompWram",
+      "updated": "2026-09-22"
+    },
+    "0x080674B0": {
+      "aliases": [
+        "sub_080674B0"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "Retail body is 'swi #8 / bx lr'; BIOS SWI 0x08 is Sqrt",
+        "Callers pass a squared distance and use the result as a length: dist = Sqrt(dx*dx + dy*dy), speed = Sqrt(dx*dx + dy*dy)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Sqrt",
+      "updated": "2026-09-22"
+    },
+    "0x080674B4": {
+      "aliases": [
+        "sub_080674B4"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "Retail body is exactly 'movs r2, #0 / swi #5 / bx lr'; BIOS SWI 0x05 is VBlankIntrWait",
+        "All 38 call sites call it with no arguments, and the header has always had to keep it unprototyped so that would compile",
+        "Every call site is the same frame sequence: sub_08061BE8 (queue VRAM upload) -> update -> sub_080674B4() -> _08073C40 commit, i.e. wait for VBlank before presenting",
+        "Corrected the definition's signature from the misleading (const void *src, void *dest) to (void)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "VBlankIntrWait",
+      "updated": "2026-09-22"
+    },
     "0x08067890": {
       "aliases": [
         "sub_08067890"
@@ -279,6 +366,22 @@
       "kind": "function",
       "source": "ai",
       "symbol": "TimerAdvance",
+      "updated": "2026-09-22"
+    },
+    "0x08067A9C": {
+      "aliases": [
+        "sub_08067A9C"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Retail body is empty (a bare bx lr) yet every caller passes an error string, so diagnostics were stripped from the shipping build",
+        "Callers' messages: 'No sprites left!', 'Error allocating memory for actor motion modifiers\\n', 'Spline count for collision data exceeds maximum available'",
+        "Called on failure paths only, e.g. BtlObjPoolAlloc's out-of-nodes branch",
+        "Sibling DebugPrint (sub_08067B98) is likewise a no-op varargs stub, so this is the message-string half of the same stripped diagnostic pair"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "DebugMessage",
       "updated": "2026-09-22"
     },
     "0x08067B98": {
@@ -354,6 +457,36 @@
       "symbol": "BtlObjFree",
       "updated": "2026-09-22"
     },
+    "0x0806FDD0": {
+      "aliases": [
+        "sub_0806FDD0"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Pops the head of the free list at 0x030040AC; when it is empty it calls the no-op debug reporter with 'No sprites left!' and bails",
+        "Links the popped node into the active list at 0x030040A4, ordering it by the key stored at node->unk22, and decrements the live count at 0x030040B4",
+        "The pool list head 0x030040A4 sits directly beside gBtlObjListHead (0x030040A8), the list BtlObjListMoveToHead operates on"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjPoolAlloc",
+      "updated": "2026-09-22"
+    },
+    "0x0806FE84": {
+      "aliases": [
+        "sub_0806FE84"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Exact inverse of BtlObjPoolAlloc: unlinks from the active list at 0x030040A4, pushes onto the free list at 0x030040AC, and increments the live count at 0x030040B4",
+        "Releases the node's status/bit through sub_0806FBF8 first, but only when status >= 0 and (node->unk20 & 1) == 0, then sets node->unk24 = -1",
+        "Also moves the node's BtlObj to the head of the display list and clears node->unk30, then re-bases sub_0806F8C4 on the active list head"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjPoolFree",
+      "updated": "2026-09-22"
+    },
     "0x0806FEFC": {
       "aliases": [
         "sub_0806FEFC"
@@ -382,6 +515,22 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BtlObjListMoveToHead",
+      "updated": "2026-09-22"
+    },
+    "0x080705DC": {
+      "aliases": [
+        "sub_080705DC"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "Computes (b & 0xF) << 12 and merges it into a->unk14 under the mask 0xFFF, i.e. writes bits 12-15 and preserves the low 12",
+        "Bits 12-15 of a GBA 16-bit screen entry are the palette bank, and unk14 is exactly such an entry (low 12 bits = tile index plus H/V flip)",
+        "Sibling TextSetPaletteBank writes the same (a & 15) << 12 into the engine's global bank at gUnk_03000798->unk96; this one applies it to a single entry",
+        "Callers pass real palette banks: sub_08037318 uses 0x0E (14), sub_0802D6D4 applies bank 2 across a run of entries"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextEntrySetPaletteBank",
       "updated": "2026-09-22"
     },
     "0x08070678": {

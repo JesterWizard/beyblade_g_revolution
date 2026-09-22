@@ -13,7 +13,7 @@ void sub_0802D52C(u32 a, s32 b)
             w->unk08->unk18 = (u16)a;
             w->unk08->unk08 = gMainWorkPtr->unk0424->unk08 + 0xFFFFF800;
             w->unk08->unk0C = gMainWorkPtr->unk0424->unk0C + 0xFFFFF800;
-            sub_080705DC(w->unk08, 2);
+            TextEntrySetPaletteBank(w->unk08, 2);
         }
     }
     else

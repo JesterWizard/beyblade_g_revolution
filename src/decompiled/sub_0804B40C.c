@@ -11,7 +11,7 @@ void sub_0804B40C(u8 *data, s32 index, void *image)
     else
         TextSetPaletteBank(0x0F);
 
-    sub_080617C4((struct Unk617C4 *)0x080D79CC, 0x080B7429);
+    TextSetActiveObject((struct Unk617C4 *)0x080D79CC, 0x080B7429);
     offset <<= 4;
     first = offset + 8;
     TextSetCursor(0, first);
@@ -26,7 +26,7 @@ void sub_0804B40C(u8 *data, s32 index, void *image)
         ((u32)TextGetAreaWidth() << 16) >> 17,
         0);
 
-    sub_080617C4((struct Unk617C4 *)0x082BCD00, 0x080B738E);
+    TextSetActiveObject((struct Unk617C4 *)0x082BCD00, 0x080B738E);
     TextSetCursor(0, first);
     TextDrawAlign(
         image,

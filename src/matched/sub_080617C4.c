@@ -10,7 +10,7 @@
 // it survives as a reload). The `& 1` test on a->unk0C comes first and returns early.
 // The table is a real typed lvalue (gUnk_03000798) so agbcc keeps the literal in one
 // register instead of re-materialising it.
-void sub_080617C4(struct Unk617C4 *a, u32 b)
+void TextSetActiveObject(struct Unk617C4 *a, u32 b)
 {
     struct Unk0798 *s;
 

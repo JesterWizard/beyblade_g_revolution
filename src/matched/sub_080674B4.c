@@ -1,9 +1,17 @@
 #include "global.h"
 
 // @ 0x080674b4
-/* `swi 5` with the caller's r0/r1 forwarded untouched and r2 = 0: the parameters keep
- * r0/r1 live, the third asm operand materialises the zero in r2. */
-void sub_080674B4(const void *src, void *dest)
+/* BIOS VBlankIntrWait (SWI 0x05). Called with no arguments at every one of its
+ * 38 call sites; the emitted `movs r2, #0` is the original toolchain's inline
+ * form and is reproduced here. The previous signature claimed two pointer
+ * parameters, which no caller has ever passed. */
+__attribute__((naked))
+void VBlankIntrWait(void)
 {
-    asm("swi 5" : : "r"(src), "r"(dest), "r"(0));
+    asm(
+        ".syntax unified\n"
+        "movs r2, #0\n"
+        "swi #5\n"
+        "bx lr\n"
+    );
 }

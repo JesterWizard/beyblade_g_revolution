@@ -2,7 +2,7 @@
 
 // @ 0x0806fe84
 __attribute__((naked))
-void sub_0806FE84(void *a)
+void BtlObjPoolFree(void *a)
 {
     asm(
         ".syntax unified\n"

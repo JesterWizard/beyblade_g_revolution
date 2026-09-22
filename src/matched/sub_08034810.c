@@ -16,7 +16,7 @@ void sub_08034810(struct Unk346C0 *a, u32 b)
                 id = 0xF;
             else
                 id = a->unk2D0;
-            sub_080705DC(a->unk00->unk00, (u8)id);
+            TextEntrySetPaletteBank(a->unk00->unk00, (u8)id);
         }
     }
 }

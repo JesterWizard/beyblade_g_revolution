@@ -18,7 +18,7 @@ void sub_0804AC3C(u8 *data)
     coordinate = (u32)(((s32)(s8)first << 16) + 0x70000) >> 16;
     TextRowSetPaletteBank(coordinate, 0x0E, 4, 0x19);
 
-    sub_080674B4();
+    VBlankIntrWait();
     _08073C40(*(void **)0x080BB888);
     sub_0804AE94();
 }

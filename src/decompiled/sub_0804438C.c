@@ -9,7 +9,7 @@ void sub_0804438C(s8 mode_arg)
     u32 dispcnt;
 
     mode = mode_arg;
-    sub_080617C4((struct Unk617C4 *)0x08119204, 0x080B7429);
+    TextSetActiveObject((struct Unk617C4 *)0x08119204, 0x080B7429);
     *(vu16 *)0x050001FE = 0;
     mode = mode_arg;
     if (mode == -1)

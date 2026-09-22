@@ -149,7 +149,7 @@ The scoreboard `docs/decomp-functions.md` is unchanged and stays the
 
 Every stage is also directly runnable and has a `make` target:
 `make analyze`, `make symbols`, `make tier`, `make document`, `make status`,
-`make audit`, `make repair-signatures`.
+`make audit`, `make repair-signatures`, `make audit-drafts`, `make repair-drafts`.
 
 ## Verifying the C corpus itself
 
@@ -168,6 +168,20 @@ The dominant defect it finds is a signature that disagrees with
 prototype's return type and parameter list into the definition, re-runs
 `match_function.py` on every file it touches, and reverts any whose match
 regresses, since a signature change *can* alter codegen for an ordinary function.
+
+### Drafts
+
+`src/decompiled/` is not linked either, and is held to a lower bar: a draft is a
+record of a decompilation attempt, so it must **compile**, not match.
+`make audit-drafts` reports where that fails, and `make repair-drafts` applies the
+same signature repair with the verification swapped — a draft is kept if it
+compiles afterwards, reverted if it still does not. Nothing here gates
+`make audit`.
+
+These are *not* mass-fixed on purpose. Several cross-function `conflicting types`
+failures mean the draft's guess at a callee's signature is better than the
+header's, so rewriting the draft to agree with the header would throw away the
+draft's information. They are triaged per file.
 
 
 ## Non-negotiables

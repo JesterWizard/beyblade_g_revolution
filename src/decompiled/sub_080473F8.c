@@ -27,7 +27,7 @@ void sub_080473F8(void)
 
     for (i = 0; i <= 0xF; i++)
     {
-        slot = sub_0806FDD0(2);
+        slot = BtlObjPoolAlloc(2);
         (*(struct Unk473F8 **)gData_03000630)->unk00[i] = slot;
         sub_0806FF58(slot, (void *)0x081193C0, 0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
     }

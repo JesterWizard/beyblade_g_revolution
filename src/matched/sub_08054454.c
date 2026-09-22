@@ -12,7 +12,7 @@ void sub_08054454(void)
         {
             if ((*(struct Unk070C **)0x0300070C)->unk00[i] != 0)
             {
-                sub_0806FE84((*(struct Unk070C **)0x0300070C)->unk00[i]);
+                BtlObjPoolFree((*(struct Unk070C **)0x0300070C)->unk00[i]);
                 (*(struct Unk070C **)0x0300070C)->unk00[i] = 0;
             }
         }
