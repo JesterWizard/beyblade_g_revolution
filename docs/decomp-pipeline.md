@@ -150,7 +150,7 @@ The scoreboard `docs/decomp-functions.md` is unchanged and stays the
 Every stage is also directly runnable and has a `make` target:
 `make analyze`, `make symbols`, `make tier`, `make document`, `make status`,
 `make audit`, `make repair-signatures`, `make audit-drafts`, `make repair-drafts`,
-`make signatures`, `make fix-stub-arities`.
+`make prune-drafts`, `make signatures`, `make fix-stub-arities`.
 
 ## Verifying the C corpus itself
 
@@ -183,6 +183,24 @@ These are *not* mass-fixed on purpose. Several cross-function `conflicting types
 failures mean the draft's guess at a callee's signature is better than the
 header's, so rewriting the draft to agree with the header would throw away the
 draft's information. They are triaged per file.
+
+### Retiring superseded drafts
+
+A draft only means something while the function is unmatched. Once
+`src/matched/<name>.c` holds **semantic** C, the draft in `src/decompiled/` is a
+stale duplicate: the DECOMPILED tier is inflated by work that already landed, and
+`docs/decomp-queue.toml` keeps a `[[wip]]` task for a function that is done.
+
+`make prune-drafts` (dry run: `python3 tools/decomp/prune_drafts.py`) deletes the
+draft `.c`, the matching `[[wip]]` queue block, and the draft's `.md` note **when
+that note is still the generated stub from `park_wip.py`**. Hand-written notes are
+kept, and a readable-Thumb wrapper does *not* count as superseding a draft — the
+draft may be the only C that exists. The queue is edited block-wise (line-initial
+`[[section]]` headers), never by regex over text, because status notes contain
+brackets like `[r2]` that would split a block.
+
+The first pass retired 85 drafts, 83 stub notes and 90 stale queue blocks
+(227 → 137 `[[wip]]` entries).
 
 ## Agreeing on arity
 
@@ -221,6 +239,26 @@ is *not* visible there — candidate parameter lists are therefore tried in orde
 still byte-matches is kept. Every change is re-verified with `match_function.py`
 and reverted if the bytes move.
 
+Arity repair must not change what a file *is*. `sub_080674B4` (VBlankIntrWait) is
+the cautionary case: it was semantic C using an `asm("swi 5")` wrapper with two
+dummy pointer parameters, and the honest `(void)` signature is not byte-reproducible
+from an empty parameter list, because the original's `movs r2, #0` only lands in
+`r2` while `r0`/`r1` are occupied. Rewriting it as a `__attribute__((naked))`
+wrapper "fixed" the signature but reclassified the file as readable Thumb — a real
+match traded for cosmetic honesty, and the count dropped 413 → 412. The fix that
+keeps both is an empty parameter list plus the clobber list the ABI justifies:
+
+```c
+void VBlankIntrWait(void)
+{
+    asm("swi 5" : : "r"(0) : "r0", "r1");
+}
+```
+
+The clobbers say what the BIOS ABI says (r0–r3 belong to SWI input/result), and
+they also free `r2` for the zero. Rule of thumb: when a signature fix would move a
+file between `opcode_stubs.file_kind()` categories, find the semantic form first.
+
 
 ## Non-negotiables
 
@@ -231,6 +269,11 @@ and reverted if the bytes move.
 - **`make signatures` reports `0` conflicts.** Compiling is not the same as
   agreeing: a function can compile everywhere and still be declared, defined and
   called three different ways.
+- **Arity repair never reclassifies a file.** A semantic match stays semantic C;
+  `opcode_stubs.file_kind()` must not move as a side effect of a signature fix.
+- **`src/decompiled/` holds no draft whose function already matches semantically.**
+  `make prune-drafts` is the gate; a stale draft inflates DECOMPILED and leaves a
+  dead `[[wip]]` task in the queue.
 - The naming layer is alias-only: no file renames, no manifest changes, no
   linker edits. A hard-rename command is explicitly out of scope.
 - A wrong name must stay cheap to revert — guaranteed by the generated-view

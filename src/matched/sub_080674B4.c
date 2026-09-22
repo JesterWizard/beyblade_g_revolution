@@ -1,17 +1,14 @@
 #include "global.h"
 
 // @ 0x080674b4
-/* BIOS VBlankIntrWait (SWI 0x05). Called with no arguments at every one of its
- * 38 call sites; the emitted `movs r2, #0` is the original toolchain's inline
- * form and is reproduced here. The previous signature claimed two pointer
- * parameters, which no caller has ever passed. */
-__attribute__((naked))
+/* BIOS VBlankIntrWait (SWI 0x05).
+ *
+ * Every one of the 38 call sites calls this with no arguments, so the parameter
+ * list is an empty one.  The AGB BIOS ABI reserves r0-r3 for SWI inputs and
+ * results, so a wrapper declares them clobbered; that also leaves r2 as the only
+ * free register, which is exactly where the original toolchain materialised the
+ * zero (`movs r2, #0`) before `swi 5`. */
 void VBlankIntrWait(void)
 {
-    asm(
-        ".syntax unified\n"
-        "movs r2, #0\n"
-        "swi #5\n"
-        "bx lr\n"
-    );
+    asm("swi 5" : : "r"(0) : "r0", "r1");
 }

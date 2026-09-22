@@ -21,6 +21,53 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-22 — VBlankIntrWait regression recovered as semantic C; draft prune
+
+`make tier` fell 413 → 412 after the stub-arity batch. The cause was the
+VBlankIntrWait repair itself: the honest `(void)` signature was unreachable from
+the old two-dummy-parameter form, so the file had been rewritten as a
+`__attribute__((naked))` wrapper. That byte-matches, but it reclassifies the file as
+**readable Thumb**, so a genuine semantic match was traded for cosmetic honesty and
+dropped out of the MATCHING tier.
+
+The original's `movs r2, #0` only lands in `r2` while another register holds the
+zero operand, which is why the old version kept two pointer parameters it never
+used. A clobber list says the same thing honestly — the BIOS ABI gives r0–r3 to
+SWI input and result — and frees `r2` for the constant:
+
+```c
+void VBlankIntrWait(void)
+{
+    asm("swi 5" : : "r"(0) : "r0", "r1");
+}
+```
+
+Verified 6/6 bytes, still `file_kind() == semantic`, MATCHING restored to **413**.
+The two other BIOS wrappers touched in the same batch (`Div`, `LZ77UnCompWram`)
+were checked for the same trap and are unaffected.
+
+Then the draft tier was cleaned up, since it turned out to be mostly stale:
+
+- **85 `src/decompiled/*.c` drafts** duplicate a function whose `src/matched/`
+  file is already semantic C — leftovers of attempts that succeeded. A draft only
+  means something while the function is unmatched, so they inflated DECOMPILED and
+  kept dead `[[wip]]` tasks alive.
+- **83 paired `.md` notes** were still the machine-generated `park_wip.py` stub;
+  the **2 hand-written notes** (`sub_0803531C`, `sub_08062CC8`) are kept.
+- **90 stale `[[wip]]` blocks** in `docs/decomp-queue.toml` (80 for now-matched
+  functions, 10 whose seed file had vanished) — 227 → 137 entries.
+
+New tool `prune_drafts.py` (`make prune-drafts`) enforces this, with `--keep-notes`.
+It edits the queue **block-wise**, splitting on line-initial `[[section]]` headers,
+never by regex over the whole text: the first attempt used `\[\[wip\]\]([^\[]*)`,
+which a status note containing `[r2]` terminated early, leaving a torn block and a
+TOML parse error. Caught by `next_queue.py`, restored from git, reimplemented
+structurally. A readable-Thumb wrapper does *not* count as superseding a draft —
+there the draft may be the only C that exists.
+
+Result: `make compare` OK, `make audit` 633/633, `make signatures` 0 conflicts,
+MATCHING 413/633, `next_queue.py` parses and runs.
+
 ### 2026-09-22 — signature arity audit (`make signatures`) + 13 stub fixes
 
 The VBlankIntrWait find was not a one-off: a function can compile everywhere and

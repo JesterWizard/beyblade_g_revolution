@@ -84,7 +84,7 @@ SHELL := bash -o pipefail
 .DELETE_ON_ERROR:
 
 .PHONY: all rom modern compare clean tidy tools check-baserom
-.PHONY: analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts signatures fix-stub-arities
+.PHONY: analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities
 all: rom
 
 C_SUBDIR = src
@@ -184,6 +184,9 @@ audit:
 
 audit-drafts:
 	python3 tools/decomp/audit_c_compiles.py --dirs decompiled
+
+prune-drafts:
+	python3 tools/decomp/prune_drafts.py --apply
 
 repair-signatures:
 	python3 tools/decomp/repair_naked_signatures.py --dirs matched --apply

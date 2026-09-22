@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T22:04:35Z",
+  "generated": "2026-09-22T22:10:23Z",
   "total": 633,
   "functions": [
     {
@@ -16611,7 +16611,7 @@
       "name": "sub_080674B4",
       "addr": "0x080674B4",
       "size": 6,
-      "kind": "asm",
+      "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "VBlankIntrWait",
