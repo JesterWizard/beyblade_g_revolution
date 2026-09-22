@@ -2,11 +2,15 @@
 #include "global.h"
 
 // @ 0x08033158
-// 45/46 same-size. Permuter candidate (nonmatchings/sub_08033158/output-0-1)
-// fixed the tail compare register (retail `cmp r1,#0`, agbcc `cmp r2,#0`) via the
-// `if (b || sign) r = b; else r = b;` shape. Remaining DIFF: the loop-exit `beq`
-// target -- retail jumps straight to `movs r2,#1`, agbcc lands on `adds r2,r1,#0`
-// first (semantically equivalent, one instruction longer path).
+// 45/46 same-size, one word off. Sign-preserving normalise: |a| is shifted down
+// to the top set bit of b, or 1 when b is exhausted.
+// Remaining DIFF is 0x14 only: the loop-exit `beq` target. Retail jumps
+// straight to `movs r2,#1` (`05d0`), agbcc lands on the `adds r2,r1,#0` that
+// materialises `r = b` (`02d0`) and falls through. Same size and semantics;
+// jump-threading difference, so `if (b) r = b;` scores the target correctly but
+// coalesces r into b and then emits `cmp r2,#0` instead of retail's `cmp r1,#0`
+// (that coalesced shape is the 45/46 seed below; plain `r = b;` scores 44/46).
+// Permuter candidate (chain, 97.8%).
 s32 sub_08033158(s32 a, s32 b)
 {
     s32 r = a;
@@ -22,14 +26,8 @@ s32 sub_08033158(s32 a, s32 b)
                 break;
             b >>= 1;
         }
-        if (b || sign)
-        {
+        if (b)
             r = b;
-        }
-        else
-        {
-            r = b;
-        }
         if (b == 0)
             r = 1;
         if (sign != 0)

@@ -1,8 +1,38 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 // @ 0x08033158
-__attribute__((naked))
-void sub_08033158(void)
+// Sign-preserving normalise: |a| is shifted down to the top set bit of b, or
+// becomes 1 when b is exhausted; the original sign is restored at the end.
+// The `do { ... } while (0);` around `if (b) r = b;` is load-bearing: it gives
+// that assignment its own basic block, so the loop-exit branch threads directly
+// to `movs r2,#1` (retail) instead of landing on the `adds r2,r1,#0` that
+// materialises `r = b`. Without the extra block the `beq` target is one
+// instruction early and the function floors at 45/46.
+s32 sub_08033158(s32 a, s32 b)
 {
-    asm(".syntax unified\nadds r2, r0, #0x0\nlsrs r3, r2, #0x1F\ncmp r2, #0x00\nbeq _08033182\ncmp r3, #0x00\nbeq _0803316A\nnegs r2, r2\nb _0803316A\n_08033168:\nasrs r1, r1, #0x01\n_0803316A:\ncmp r1, #0x00\nbeq _0803317A\nlsls r0, r1, #0x08\ncmp r2, r0\nble _08033168\nadds r2, r1, #0x0\ncmp r1, #0x00\nbne _0803317C\n_0803317A:\nmovs r2, #0x01\n_0803317C:\ncmp r3, #0x00\nbeq _08033182\nnegs r2, r2\n_08033182:\nadds r0, r2, #0x0\nbx lr");
+    s32 r = a;
+    u32 sign = (u32)r >> 31;
+
+    if (r != 0)
+    {
+        if (sign != 0)
+            r = -r;
+        while (b != 0)
+        {
+            if (r > (b << 8))
+                break;
+            b >>= 1;
+        }
+        do
+        {
+            if (b)
+                r = b;
+        } while (0);
+        if (b == 0)
+            r = 1;
+        if (sign != 0)
+            r = -r;
+    }
+    return r;
 }
