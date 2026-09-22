@@ -69,10 +69,22 @@ struct Unk35878 /* 0x10 */
 };
 
 /* Nested presence chain checked by sub_08041E14. */
-struct Unk41E14Node /* >= 0x14 */
+/* Byte at +0x00, byte at +0x04, halfword at +0x06. sub_08041C8C. */
+struct Unk41C8CDst
+{
+    /* 00 */ u8 unk00;
+    /* 01 */ u8 filler_01[3];
+    /* 04 */ u8 unk04;
+    /* 05 */ u8 filler_05;
+    /* 06 */ u16 unk06;
+};
+
+struct Unk41E14Node /* >= 0x34 */
 {
     /* 00 */ u8 filler_00[0x10];
     /* 10 */ struct Unk41E14Node *unk10;
+    /* 14 */ u8 filler_14[0x1C];
+    /* 30 */ struct Unk41C8CDst *unk30;
 };
 
 /* Store at +0x2f0. sub_080346A8. */
