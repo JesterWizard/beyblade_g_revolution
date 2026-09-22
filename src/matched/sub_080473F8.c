@@ -1,55 +1,40 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080473f8
-__attribute__((naked))
+#include "global.h"
+#include "data_symbols.h"
+
+struct Unk473F8;
+struct Unk474ACSlot;
+
+// @ 0x080473f8
+// Allocate the 0x48-byte pool, publish it through 0x03000638, take the slot
+// pointer out of its first word into 0x03000630 and seed unk44, then fill the 16
+// slots and hand each to sub_0806FF58.
+// Two things are load-bearing: the call is `(slot, src, -0x4000, -0x4000, 0, 1,
+// 0, 0)` (the seed had the last four arguments reversed), and both pool words go
+// through distinct symbols (asm/data_symbols.s) -- as literals agbcc folds the
+// second address into an offset off the first and picks the wrong registers.
 void sub_080473F8(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "add sp, #-0x010\n"
-        "movs r0, #0x48\n"
-        "bl sub_0806A3A4\n"
-        "ldr r1, _0804744C @ =0x03000638\n"
-        "str r0, [r1, #0x00]\n"
-        "ldr r1, _08047450 @ =0x03000630\n"
-        "ldr r2, [r0, #0x00]\n"
-        "str r2, [r1, #0x00]\n"
-        "movs r0, #0xE1\n"
-        "lsls r0, r0, #0x05\n"
-        "str r0, [r2, #0x44]\n"
-        "movs r4, #0x00\n"
-        "ldr r6, _08047454 @ =0xFFFFC000\n"
-        "movs r5, #0x00\n"
-        "_08047418:\n"
-        "movs r0, #0x02\n"
-        "bl sub_0806FDD0\n"
-        "ldr r1, _08047450 @ =0x03000630\n"
-        "ldr r1, [r1, #0x00]\n"
-        "lsls r2, r4, #0x02\n"
-        "adds r1, r1, r2\n"
-        "str r0, [r1, #0x00]\n"
-        "str r5, [sp, #0x000]\n"
-        "movs r1, #0x01\n"
-        "str r1, [sp, #0x004]\n"
-        "str r5, [sp, #0x008]\n"
-        "str r5, [sp, #0x00C]\n"
-        "ldr r1, _08047458 @ =0x081193C0\n"
-        "adds r2, r6, #0x0\n"
-        "adds r3, r6, #0x0\n"
-        "bl sub_0806FF58\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x0F\n"
-        "ble _08047418\n"
-        "add sp, #0x010\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0804744C: .4byte 0x03000638\n"
-        "_08047450: .4byte 0x03000630\n"
-        "_08047454: .4byte 0xFFFFC000\n"
-        "_08047458: .4byte 0x081193C0\n"
-    );
+    void *tmp;
+    struct Unk473F8 *pool;
+    struct Unk474ACSlot *slot;
+    s32 i;
+
+    tmp = sub_0806A3A4(0x48);
+    *(u32 *)gData_03000638 = (u32)tmp;
+    *(struct Unk473F8 **)gData_03000630 = *(struct Unk473F8 **)tmp;
+    pool = *(struct Unk473F8 **)gData_03000630;
+    pool->unk44 = 0x1C20;
+
+    for (i = 0; i <= 0xF; i++)
+    {
+        slot = sub_0806FDD0(2);
+        (*(struct Unk473F8 **)gData_03000630)->unk00[i] = slot;
+        sub_0806FF58(slot, (void *)0x081193C0, 0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+    }
 }
 

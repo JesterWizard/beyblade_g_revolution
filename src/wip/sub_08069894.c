@@ -1,21 +1,22 @@
 #include "global.h"
+#include "data_symbols.h"
 
 // @ 0x08069894
+// Clear two byte flags, set a third to 0x20, zero four entries of the two
+// per-index arrays, then kick two transfers with n = 0x100.
+// The three destinations must be *distinct symbols* (gData_03000108 /
+// gData_030001B0 / gData_030001A8 -- see asm/data_symbols.s): as bare literals
+// agbcc folds the second address into `add r0, #0xA8` and hoists all three pool
+// loads up front, losing retail's interleaved load/store shape.
 void sub_08069894(void)
 {
-    u32 a108;
-    u32 a1b0;
-    u32 a1a8;
     u8 i;
     u16 zero;
     u32 n;
 
-    a108 = gUnk_03000108;
-    a1b0 = gUnk_030001B0;
-    a1a8 = gUnk_030001A8;
-    *(s8 *)a108 = 0;
-    *(s8 *)a1b0 = 0;
-    *(s8 *)a1a8 = 0x20;
+    gData_03000108[0] = 0;
+    gData_030001B0[0] = 0;
+    gData_030001A8[0] = 0x20;
 
     i = 0;
     zero = 0;

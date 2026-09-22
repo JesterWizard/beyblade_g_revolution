@@ -111,6 +111,11 @@ extern u16 gData_0300410C[];
 extern u32 gData_030000C0[];
 extern u8 gData_083D26F0[];
 extern u8 gData_083D2708[];
+extern u8 gData_03000108[];
+extern u8 gData_030001A8[];
+extern u8 gData_030001B0[];
+extern u32 gData_03000630[];
+extern u32 gData_03000638[];
 
 #endif // GUARD_DATA_SYMBOLS_H
 extern struct Unk447CC *gData_08096794[];

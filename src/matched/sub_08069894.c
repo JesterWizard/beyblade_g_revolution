@@ -1,53 +1,40 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08069894
-__attribute__((naked))
+#include "global.h"
+#include "data_symbols.h"
+
+// @ 0x08069894
+// Clear two byte flags, set a third to 0x20, zero four entries of the two
+// per-index arrays, then kick two transfers with n = 0x100.
+// The three destinations must be *distinct symbols* (gData_03000108 /
+// gData_030001B0 / gData_030001A8 -- see asm/data_symbols.s): as bare literals
+// agbcc folds the second address into `add r0, #0xA8` and hoists all three pool
+// loads up front, losing retail's interleaved load/store shape.
 void sub_08069894(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "ldr r0, _080698E8 @ =0x03000108\n"
-        "movs r1, #0x00\n"
-        "strb r1, [r0, #0x00]\n"
-        "ldr r0, _080698EC @ =0x030001B0\n"
-        "strb r1, [r0, #0x00]\n"
-        "ldr r1, _080698F0 @ =0x030001A8\n"
-        "movs r0, #0x20\n"
-        "strb r0, [r1, #0x00]\n"
-        "movs r4, #0x00\n"
-        "movs r5, #0x00\n"
-        "_080698AA:\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08069908\n"
-        "strh r5, [r0, #0x00]\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08069948\n"
-        "strh r5, [r0, #0x00]\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r4, r0, #0x18\n"
-        "cmp r4, #0x03\n"
-        "bls _080698AA\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x01\n"
-        "movs r0, #0x02\n"
-        "movs r1, #0x00\n"
-        "adds r2, r4, #0x0\n"
-        "adds r3, r4, #0x0\n"
-        "bl sub_08069A60\n"
-        "movs r0, #0x03\n"
-        "movs r1, #0x00\n"
-        "adds r2, r4, #0x0\n"
-        "adds r3, r4, #0x0\n"
-        "bl sub_08069A60\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_080698E8: .4byte 0x03000108\n"
-        "_080698EC: .4byte 0x030001B0\n"
-        "_080698F0: .4byte 0x030001A8\n"
-    );
+    u8 i;
+    u16 zero;
+    u32 n;
+
+    gData_03000108[0] = 0;
+    gData_030001B0[0] = 0;
+    gData_030001A8[0] = 0x20;
+
+    i = 0;
+    zero = 0;
+    while (i <= 3)
+    {
+        *sub_08069908(i) = zero;
+        *sub_08069948(i) = zero;
+        i = (u8)(i + 1);
+    }
+
+    n = 0x80;
+    n <<= 1;
+    sub_08069A60(2, 0, n, n);
+    sub_08069A60(3, 0, n, n);
 }
 
