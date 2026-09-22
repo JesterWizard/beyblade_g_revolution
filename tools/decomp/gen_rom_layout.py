@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -22,6 +23,25 @@ ROM_SIZE = 0x400000
 
 def hexaddr(value: int) -> str:
     return f"0x{value:08X}"
+
+
+SIZE_CACHE = ROOT / "build" / "asm_size_cache.json"
+
+
+def cached_text_size(asm_path: Path, cache: dict[str, list]) -> int:
+    """`asm_text_size` with a content-hash-keyed cache.
+
+    Assembling + objcopy'ing all 633 stubs costs ~13 s per call, but an
+    integration only rewrites one of them; every other size is unchanged.
+    """
+    digest = hashlib.sha1(asm_path.read_bytes()).hexdigest()
+    key = asm_path.name
+    hit = cache.get(key)
+    if hit and hit[0] == digest:
+        return hit[1]
+    size = asm_text_size(asm_path)
+    cache[key] = [digest, size]
+    return size
 
 
 def asm_text_size(asm_path: Path) -> int:
@@ -49,16 +69,27 @@ def asm_text_size(asm_path: Path) -> int:
 
 
 def write_incbin(path: Path, symbol: str, start: int, length: int, comment: str) -> None:
+    """Write a peel stub, but leave the file (and its mtime) alone when it is
+    already byte-identical.
+
+    Touching a stub makes `make` reassemble it, so rewriting all ~340 gap files
+    on every integration costs ~6 s of needless work in `make compare`. Gap
+    filenames are address-based (see `main`) precisely so untouched ranges keep
+    their identity across integrations.
+    """
     if length == 0:
-        path.write_text(f"@ {comment} (empty)\n")
+        text = f"@ {comment} (empty)\n"
+    else:
+        text = (
+            f"@ {comment}\n"
+            f"\t.section .rodata\n"
+            f"\t.global {symbol}\n"
+            f"{symbol}:\n"
+            f'\t.incbin "baserom.gba", 0x{start:X}, 0x{length:X}\n'
+        )
+    if path.is_file() and path.read_text() == text:
         return
-    path.write_text(
-        f"@ {comment}\n"
-        f"\t.section .rodata\n"
-        f"\t.global {symbol}\n"
-        f"{symbol}:\n"
-        f'\t.incbin "baserom.gba", 0x{start:X}, 0x{length:X}\n'
-    )
+    path.write_text(text)
 
 
 def main() -> int:
@@ -72,12 +103,20 @@ def main() -> int:
     data = json.loads(MANIFEST.read_text())
     functions = sorted(data.get("functions", []), key=lambda f: int(f["addr"], 16))
 
+    try:
+        cache = json.loads(SIZE_CACHE.read_text())
+    except (FileNotFoundError, json.JSONDecodeError):
+        cache = {}
+
     for fn in functions:
         asm = MATCH_DIR / f"{fn['name']}.s"
         if not asm.is_file():
             print(f"gen_rom_layout: missing {asm}", file=sys.stderr)
             return 1
-        fn["size"] = asm_text_size(asm)
+        fn["size"] = cached_text_size(asm, cache)
+
+    SIZE_CACHE.parent.mkdir(parents=True, exist_ok=True)
+    SIZE_CACHE.write_text(json.dumps(cache))
 
     for old in ASM_DIR.glob("rom_gap_*.s"):
         old.unlink()
@@ -128,16 +167,17 @@ def main() -> int:
                     print(f"gen_rom_layout: overlap after {name}", file=sys.stderr)
                     return 1
                 if gap_len > 0:
-                    gap_path = ASM_DIR / f"rom_gap_{gap_idx:03d}.s"
+                    gap_path = ASM_DIR / f"rom_gap_{gap_start:07X}.s"
+                    gap_name = f"gRomGap{gap_start:07X}"
                     write_incbin(
                         gap_path,
-                        f"gRomGap{gap_idx:03d}",
+                        gap_name,
                         gap_start,
                         gap_len,
                         f"Unmatched ROM {hexaddr(end)}..{hexaddr(next_addr - 1)}",
                     )
-                    ld_lines.append(f"    .rom_gap_{gap_idx:03d} {hexaddr(end)} : {{")
-                    ld_lines.append(f"        asm/rom_gap_{gap_idx:03d}.o(.rodata)")
+                    ld_lines.append(f"    .rom_gap_{gap_start:07X} {hexaddr(end)} : {{")
+                    ld_lines.append(f"        asm/rom_gap_{gap_start:07X}.o(.rodata)")
                     ld_lines.append("    } > ROM")
                     gap_idx += 1
             else:
