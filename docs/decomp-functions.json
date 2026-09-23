@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T19:23:50Z",
+  "generated": "2026-09-23T19:30:30Z",
   "counts": {
     "matched": 413,
     "wip": 135,
@@ -8,8 +8,8 @@
   },
   "tiers": {
     "UNKNOWN": 85,
-    "DECOMPILED": 127,
-    "UNDERSTOOD": 8,
+    "DECOMPILED": 126,
+    "UNDERSTOOD": 9,
     "MATCHING": 413
   },
   "total": 633,
@@ -69,7 +69,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "Unk75AB8Lookup"
+      "symbol": "BeybladeGetProfile"
     },
     {
       "name": "sub_0802B95C",
@@ -7194,7 +7194,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "VramSlotsInit"
     },
     {
       "name": "sub_080611F0",
@@ -7535,8 +7535,8 @@
       "score": "18/120 then 50/120",
       "source": "wip",
       "note": "Two attempts: direct global C 18/120 same-size, then r4/r5/r6/r7 global anchors 50/120 (128B). Allocation is close but the fixed r7 table did not get a saved-register prologue; retail also retains work in r2 for the VRAM copy while the candidate reloads it into r0/r1.",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "VramSlotLoad"
     },
     {
       "name": "sub_08061BAC",
@@ -7555,7 +7555,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "VramSlotsRelease"
     },
     {
       "name": "sub_08061BDC",
@@ -7612,7 +7612,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "Unk770FreeLastSlot"
+      "symbol": "VramSlotReleaseLast"
     },
     {
       "name": "sub_08061D00",
@@ -9208,7 +9208,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "Unk68020SelectByKey"
+      "symbol": "BtlEntitySelectByKey"
     },
     {
       "name": "sub_080680CC",
@@ -9227,7 +9227,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "Unk680CCSelectByKeyDefault"
+      "symbol": "BtlEntitySelectByKeyDefault"
     },
     {
       "name": "sub_08068118",
@@ -9911,7 +9911,7 @@
       "source": "wip",
       "note": "matched only with GCC asm labels; stripped DIFF",
       "tier": "UNDERSTOOD",
-      "symbol": "BtlObjAlloc"
+      "symbol": "HeapAlloc"
     },
     {
       "name": "sub_0806A434",
@@ -9930,7 +9930,7 @@
       "source": "wip",
       "note": "Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped.",
       "tier": "UNDERSTOOD",
-      "symbol": "BtlObjFree"
+      "symbol": "HeapFree"
     },
     {
       "name": "sub_0806A4D8",
