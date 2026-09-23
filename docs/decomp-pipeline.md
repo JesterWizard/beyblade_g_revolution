@@ -103,6 +103,36 @@ so `src/matched/sub_0802B8BC.c` reads as `u16 GetIndexedRecordWord(s32 a)` while
 the preprocessor still emits `sub_0802B8BC`. The ROM, the linker script, and
 `make compare` are untouched by construction.
 
+### Vocabulary
+
+This is a licensed game, and its vocabulary is evidence. Reach for the game's own
+words before inventing a mechanical one: *beyblade/blade*, *battle* (`Btl`),
+*bit-beast*, *part*, *roster*, *arena*, *team*, *spin*, alongside the system words
+already in use (`Text`, `Bg`, `Vram`, `Heap`, `Timer`, `Mem`, `Gfx`, `Sfx`).
+
+A prefix is a **claim**, not decoration. `Btl*` says "this belongs to the battle
+subsystem", and the subsystem grouping in `systems.json` and `docs/systems/` will
+be read that way by everyone afterwards. So a wrong prefix is worse than an
+honest `Unk`: `sub_0806A434` sat as `BtlObjFree` while being the *generic two-region
+heap free* (`0x03000B30` EWRAM list / `0x03003F44` IWRAM list, 25 callers spanning
+battle, VRAM teardown and text), which misfiles it for every reader. Names proven
+from callers beat names inferred from a prefix that was already there.
+
+- `Unk<ADDR>` / `Unk<OFFSET>` (e.g. `BtlUnk1694FindAndMark`) is the honest fallback
+  when the structure is known and the meaning is not. Discouraged: `Unk<STRIDE>`
+  (`Unk84FindIndexByKey`) — the number should identify *where the data is*, not how
+  wide a record is, or it cannot be looked up later.
+- Name the **type** even when the address must stay a literal
+  (`struct BeybladeDef`, not `struct Unk75AB8`). A ROM table usually cannot be
+  converted to a data symbol without changing codegen — see the note at the top of
+  `asm/data_symbols.s` — but the struct costs nothing and carries the meaning.
+- Prefer what the caller *does* with a value over what the code looks like. The
+  62-entry table at `0x08075AB8` only became a roster because `sub_08044648` walks
+  an id list and stores `obj+0xD4 = id`; and `+0x00` only became a profile id
+  because it selects which shared parameter block is used.
+- Every name needs `--confidence` and at least one `--evidence` line, ideally
+  naming the caller or the address that proves it.
+
 ### The one real hazard: string literals
 
 `symbols.py apply` rewrites source text **outside** strings, character literals,
@@ -366,6 +396,11 @@ file between `opcode_stubs.file_kind()` categories, find the semantic form first
   linker edits. A hard-rename command is explicitly out of scope.
 - A wrong name must stay cheap to revert — guaranteed by the generated-view
   design, since `symbols.json` is the only place a name lives.
+- **Prefer the game's vocabulary, and do not borrow a prefix you cannot support.**
+  A prefix is a claim: `Btl*` files a function into the battle subsystem for every
+  later reader and for `docs/systems/`. `BtlObjFree` was the *generic heap free*
+  for 25 callers across battle, VRAM and text; `Unk<ADDR>` would have been honest,
+  and `Heap*` is correct. See [Vocabulary](#vocabulary).
 - `analysis/*.json` must be idempotent.
 - Grouping in `systems.json` is seeded deterministically from objective evidence
   (hardware address ranges, specific named RAM symbols), never from guesses.

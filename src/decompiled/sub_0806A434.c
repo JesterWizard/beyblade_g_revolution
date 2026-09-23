@@ -1,6 +1,6 @@
 #include "global.h"
 
-void BtlObjFree(void *arg)
+void HeapFree(void *arg)
 {
     struct Unk6A434 *state;
     struct Unk6A4D8Node *previous;

@@ -25,7 +25,7 @@ void sub_08063104(void)
             _08073C4C(srcA, (void *)0x05000000, 0x200, (void *)d[0]);
             if (*slotB != 0)
             {
-                BtlObjFree(*slotB);
+                HeapFree(*slotB);
                 *slotB = 0;
             }
             *slotA = 0;

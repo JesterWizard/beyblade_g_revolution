@@ -13,7 +13,7 @@ void sub_08060798(void)
     p = *(void **)gUnk_03000754;
     if (p != 0)
     {
-        BtlObjFree(p);
+        HeapFree(p);
         *(void **)gUnk_03000754 = 0;
         gUnk_03000758 = 0;
     }

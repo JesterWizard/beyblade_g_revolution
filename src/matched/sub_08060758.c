@@ -18,7 +18,7 @@ void sub_08060758(void)
     *slotA = 0;
     slotB = gUnk_03000758Loc;
     *slotB = 0;
-    p = BtlObjAlloc(0x0C);
+    p = HeapAlloc(0x0C);
     *slotA = (u32)p;
     if (p != 0)
     {

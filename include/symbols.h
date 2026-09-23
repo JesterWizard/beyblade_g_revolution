@@ -12,7 +12,7 @@
  */
 
 #define GetIndexedRecordWord sub_0802B8BC
-#define Unk75AB8Lookup sub_0802B930
+#define BeybladeGetProfile sub_0802B930
 #define BtlFreeUnk1694Obj sub_0802BA4C
 #define BtlUnk1694FindAndMark sub_0802C5DC
 #define BtlSetTimer118 sub_080314FC
@@ -24,13 +24,16 @@
 #define BtlClearUnk1834 sub_080433F4
 #define BtlClearUnk1688Entry sub_08044EE8
 #define BtlSetAllUnk1710 sub_080603E0
+#define VramSlotsInit sub_080611A4
 #define TextDraw sub_08061564
 #define TextSetCursor sub_080615EC
 #define TextSetPaletteBank sub_08061610
 #define TextDrawAlign sub_0806171C
 #define TextGetAreaWidth sub_08061784
 #define TextSetActiveObject sub_080617C4
-#define Unk770FreeLastSlot sub_08061C48
+#define VramSlotLoad sub_08061AB8
+#define VramSlotsRelease sub_08061BAC
+#define VramSlotReleaseLast sub_08061C48
 #define TextRowSetPaletteBank sub_08061D68
 #define RandRange sub_080628B4
 #define Div sub_080674A0
@@ -41,12 +44,12 @@
 #define TimerAdvance sub_08067890
 #define DebugMessage sub_08067A9C
 #define DebugPrint sub_08067B98
-#define Unk68020SelectByKey sub_08068020
-#define Unk680CCSelectByKeyDefault sub_080680CC
+#define BtlEntitySelectByKey sub_08068020
+#define BtlEntitySelectByKeyDefault sub_080680CC
 #define BgGetHofsReg sub_08069908
 #define BgGetVofsReg sub_08069948
-#define BtlObjAlloc sub_0806A3A4
-#define BtlObjFree sub_0806A434
+#define HeapAlloc sub_0806A3A4
+#define HeapFree sub_0806A434
 #define Unk84FindIndexByKey sub_0806F1A0
 #define BtlObjPoolAlloc sub_0806FDD0
 #define BtlObjPoolFree sub_0806FE84

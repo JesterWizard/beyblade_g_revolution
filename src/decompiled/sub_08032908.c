@@ -9,12 +9,12 @@ void sub_08032908(void)
     sub_08062044(&gBattleWork->unk1F10);
     if (gBattleWork->unk00 != 0)
     {
-        BtlObjFree(gBattleWork->unk00);
+        HeapFree(gBattleWork->unk00);
         gBattleWork->unk00 = 0;
     }
     if (gBattleWork->unk04 != 0)
     {
-        BtlObjFree(gBattleWork->unk04);
+        HeapFree(gBattleWork->unk04);
         gBattleWork->unk04 = 0;
     }
     sub_08030D4C();

@@ -5,7 +5,7 @@
 // @ 0x08061c48
 #include "global.h"
 
-void Unk770FreeLastSlot(void)
+void VramSlotReleaseLast(void)
 {
     s32 i;
     struct Unk0770 *base;
@@ -17,7 +17,7 @@ void Unk770FreeLastSlot(void)
     base = (struct Unk0770 *)gData_03000770;
     if (base[i].unk00 != 0)
     {
-        BtlObjFree(base[i].unk00);
+        HeapFree(base[i].unk00);
         base[gData_03000794[0]].unk00 = 0;
     }
 }

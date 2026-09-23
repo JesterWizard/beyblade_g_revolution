@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0806a3a4
-void *BtlObjAlloc(u32 size)
+void *HeapAlloc(u32 size)
 {
     struct Unk6A4D8Node *node;
     void *buffer;

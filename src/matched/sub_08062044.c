@@ -8,7 +8,7 @@ void sub_08062044(struct Unk62044 *a)
         sub_0806209C(a);
         if (a->unk00 != 0)
         {
-            BtlObjFree(a->unk00);
+            HeapFree(a->unk00);
             a->unk00 = 0;
         }
         a->unk0C = 0;

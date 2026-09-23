@@ -15,7 +15,7 @@ void sub_080686F4(struct Unk68798 *a, s32 b, s32 c, s32 d, s32 e)
 
     if (a->unk74 == -1) {
         a->unk74 = 0;
-        hp = BtlObjAlloc(0x40);
+        hp = HeapAlloc(0x40);
         if (hp == 0) {
             DebugMessage((void *)0x083A94D4);
             return;

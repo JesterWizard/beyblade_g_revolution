@@ -2,7 +2,7 @@
 
 // @ 0x08061ab8
 __attribute__((naked))
-void sub_08061AB8(void)
+void VramSlotLoad(void)
 {
     asm(
         ".syntax unified\n"

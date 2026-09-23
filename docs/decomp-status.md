@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **403/633 (63.7%)** |
-| **Decompiled C (bytes)** | **27,676/90,272 (30.7%)** |
+| **Decompiled C (functions)** | **409/633 (64.6%)** |
+| **Decompiled C (bytes)** | **27,756/90,272 (30.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 230/633 (36.3%) |
+| Readable Thumb | 224/633 (35.4%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -1855,3 +1855,49 @@ agbcc picks `r2`.
   / `make check-verified` repair and gate the rest, and the five BIOS wrappers were
   backfilled. Count: **409 semantic C / 224 readable Thumb**.
 - **Named:** 43 → 49/633. `make compare` OK throughout.
+
+## 2026-09-23 — naming pass in the game's vocabulary
+
+Reminder acted on: this is a licensed game, so its own words are evidence. Audited
+the names added yesterday and re-derived them from callers instead of code shape.
+
+### The 62-entry table at ROM 0x08075AB8 is the beyblade roster
+
+`sub_08044648` walks an id list, indexes this table **by beyblade id**, and builds a
+battle entity from each record: `obj+0xD4 = id`, `obj+0xD8 = side`, `obj+0xC4 = part`,
+`obj+0x3B = type`. Record layout (0x1C bytes): `profile` (s32 +0, = -1 or 0..7),
+`id` (s16 +4, dense 0..61), `variant` (s16 +6, index into the 0x10-byte table from
+`sub_08062A14` or -1), `flags` (u16 +8 / +0xA), `type` (s32 +0xC, = -1 or 0..3),
+and three pointers: per-record `script`, per-record `part` (56 distinct), and
+`param` — only **13 distinct** pointers, one per archetype. `profile` *determines*
+which `param` block is used, which is what makes it a profile id rather than a flag.
+
+`struct Unk75AB8` is now `struct BeybladeDef` with those field names, and
+`sub_0802B930` (which returns `profile` for an id) is `BeybladeGetProfile`.
+
+### The 0x770 family is a 4-slot VRAM tile cache, not battle objects
+
+- `sub_08061AB8` → `VramSlotLoad`: if the count at `0x03000794` is not 4, heap-alloc
+  `desc->0x94 * 0x20` bytes, store at `0x03000770[count]`, LZ77 into VRAM at
+  `0x06000000 + (desc->0x5D << 14)`.
+- `sub_08061C48` → `VramSlotReleaseLast` (the function matched yesterday; its note
+  said `BtlObjFree`, which was already wrong — see below).
+- `sub_08061BAC` → `VramSlotsRelease` (frees slots 0..3), `sub_080611A4` →
+  `VramSlotsInit`. `desc` is the 0xAC-byte object at `0x03000798` that the `Text*`
+  functions also use.
+
+### `BtlObjFree` / `BtlObjAlloc` were misnomers
+
+Both were the **generic two-region heap** routines: `sub_0806A434` reads the region
+tag at `+0x00`, compares against the EWRAM end `0x0203FFFF` and pushes onto the
+`0x03000B30` (EWRAM) or `0x03003F44` (IWRAM) free list; `sub_0806A3A4` carves
+0x60-byte chunks from the same pool. 25 callers span battle, the VRAM teardown
+above and text paths. Renamed `HeapFree` / `HeapAlloc`, old names kept as aliases.
+This is the "a prefix is a claim" rule: the old names were misfiling both functions.
+
+Also renamed the keyed-table pair on the battle entity: `sub_08068020` /
+`sub_080680CC` → `BtlEntitySelectByKey` / `BtlEntitySelectByKeyDefault`.
+
+- **Named:** 49 → 52/633. `make compare` OK, `make audit` 0 failures, 633/633 compile.
+- Convention recorded in `docs/decomp-pipeline.md` § Vocabulary and in the
+  workspace mission rule, so this survives without being asked again.

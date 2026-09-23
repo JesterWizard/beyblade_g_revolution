@@ -2,7 +2,7 @@
 
 // @ 0x08068020
 
-void Unk68020SelectByKey(struct Unk680CC *a, u16 key, u16 arg2)
+void BtlEntitySelectByKey(struct Unk680CC *a, u16 key, u16 arg2)
 {
     struct Unk68014 *inner;
     struct Unk680CCRec *rec;

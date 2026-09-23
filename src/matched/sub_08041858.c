@@ -14,7 +14,7 @@ void sub_08041858(void)
     v = gData_03000508[0];
     if (v != 0)
     {
-        BtlObjFree(v);
+        HeapFree(v);
         gData_03000508[0] = 0;
     }
     gData_03000534[0] = 0;

@@ -9,7 +9,7 @@
 |----------|---------|-----------|------|-----:|--------:|
 | [`GetIndexedRecordWord`](GetIndexedRecordWord.md) | `0x0802B8BC` |  | MATCHING | 20 | 1 |
 | `sub_0802B90C` | `0x0802B90C` |  | MATCHING | 12 | 2 |
-| [`Unk75AB8Lookup`](Unk75AB8Lookup.md) | `0x0802B930` |  | MATCHING | 42 | 1 |
+| [`BeybladeGetProfile`](BeybladeGetProfile.md) | `0x0802B930` |  | MATCHING | 42 | 1 |
 | `sub_0802B95C` | `0x0802B95C` |  | MATCHING | 56 | 2 |
 | `sub_0802B994` | `0x0802B994` |  | MATCHING | 58 | 1 |
 | [`BtlFreeUnk1694Obj`](BtlFreeUnk1694Obj.md) | `0x0802BA4C` | battle | MATCHING | 48 | 0 |
@@ -384,7 +384,7 @@
 | `sub_0806105C` | `0x0806105C` |  | MATCHING | 44 | 1 |
 | `sub_080610A8` | `0x080610A8` |  | DECOMPILED | 98 | 0 |
 | `sub_0806114C` | `0x0806114C` |  | DECOMPILED | 88 | 0 |
-| `sub_080611A4` | `0x080611A4` |  | MATCHING | 74 | 1 |
+| [`VramSlotsInit`](VramSlotsInit.md) | `0x080611A4` |  | MATCHING | 74 | 1 |
 | `sub_080611F0` | `0x080611F0` |  | MATCHING | 44 | 2 |
 | `sub_0806121C` | `0x0806121C` |  | UNKNOWN | 236 | 1 |
 | `sub_08061308` | `0x08061308` |  | MATCHING | 48 | 2 |
@@ -402,11 +402,11 @@
 | `sub_080618EC` | `0x080618EC` | battle | UNKNOWN | 428 | 0 |
 | `sub_08061A98` | `0x08061A98` |  | MATCHING | 16 | 3 |
 | `sub_08061AA8` | `0x08061AA8` |  | MATCHING | 16 | 3 |
-| `sub_08061AB8` | `0x08061AB8` |  | DECOMPILED | 120 | 0 |
-| `sub_08061BAC` | `0x08061BAC` |  | MATCHING | 48 | 2 |
+| [`VramSlotLoad`](VramSlotLoad.md) | `0x08061AB8` |  | UNDERSTOOD | 120 | 0 |
+| [`VramSlotsRelease`](VramSlotsRelease.md) | `0x08061BAC` |  | MATCHING | 48 | 2 |
 | `sub_08061BDC` | `0x08061BDC` |  | MATCHING | 12 | 1 |
 | `sub_08061BE8` | `0x08061BE8` |  | MATCHING | 96 | 18 |
-| [`Unk770FreeLastSlot`](Unk770FreeLastSlot.md) | `0x08061C48` |  | MATCHING | 56 | 0 |
+| [`VramSlotReleaseLast`](VramSlotReleaseLast.md) | `0x08061C48` |  | MATCHING | 56 | 0 |
 | `sub_08061D00` | `0x08061D00` |  | DECOMPILED | 104 | 1 |
 | [`TextRowSetPaletteBank`](TextRowSetPaletteBank.md) | `0x08061D68` | graphics | UNDERSTOOD | 88 | 29 |
 | `sub_08061DC0` | `0x08061DC0` |  | MATCHING | 72 | 0 |
@@ -490,8 +490,8 @@
 | `sub_08067F98` | `0x08067F98` |  | MATCHING | 48 | 1 |
 | `sub_08067FC8` | `0x08067FC8` |  | DECOMPILED | 74 | 3 |
 | `sub_08068014` | `0x08068014` |  | MATCHING | 10 | 2 |
-| [`Unk68020SelectByKey`](Unk68020SelectByKey.md) | `0x08068020` |  | MATCHING | 78 | 2 |
-| [`Unk680CCSelectByKeyDefault`](Unk680CCSelectByKeyDefault.md) | `0x080680CC` |  | MATCHING | 76 | 11 |
+| [`BtlEntitySelectByKey`](BtlEntitySelectByKey.md) | `0x08068020` |  | MATCHING | 78 | 2 |
+| [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md) | `0x080680CC` |  | MATCHING | 76 | 11 |
 | `sub_08068118` | `0x08068118` |  | DECOMPILED | 102 | 1 |
 | `sub_08068180` | `0x08068180` |  | MATCHING | 174 | 4 |
 | `sub_0806833C` | `0x0806833C` |  | MATCHING | 156 | 2 |
@@ -527,8 +527,8 @@
 | `sub_08069DBC` | `0x08069DBC` |  | DECOMPILED | 96 | 0 |
 | `sub_08069F00` | `0x08069F00` |  | DECOMPILED | 24 | 1 |
 | `sub_0806A314` | `0x0806A314` |  | DECOMPILED | 144 | 1 |
-| [`BtlObjAlloc`](BtlObjAlloc.md) | `0x0806A3A4` |  | UNDERSTOOD | 144 | 17 |
-| [`BtlObjFree`](BtlObjFree.md) | `0x0806A434` | battle | UNDERSTOOD | 164 | 25 |
+| [`HeapAlloc`](HeapAlloc.md) | `0x0806A3A4` |  | UNDERSTOOD | 144 | 17 |
+| [`HeapFree`](HeapFree.md) | `0x0806A434` | battle | UNDERSTOOD | 164 | 25 |
 | `sub_0806A4D8` | `0x0806A4D8` |  | UNKNOWN | 168 | 2 |
 | `sub_0806A580` | `0x0806A580` |  | MATCHING | 48 | 2 |
 | `sub_0806A6F8` | `0x0806A6F8` | battle | UNKNOWN | 436 | 8 |

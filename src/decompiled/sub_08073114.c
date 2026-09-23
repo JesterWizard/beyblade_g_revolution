@@ -47,7 +47,7 @@ void BtlObjTableRemove(void *a)
     {
         if (table[i] != 0 && table[i]->next == a)
         {
-            BtlObjFree(table[i]);
+            HeapFree(table[i]);
             table[i] = 0;
             (*(u8 *)gBtlObjLiveCount)--;
             break;

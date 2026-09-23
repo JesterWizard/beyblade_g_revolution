@@ -34,7 +34,7 @@
 
 ## Callees
 
-- [`BtlObjAlloc`](BtlObjAlloc.md)
+- [`HeapAlloc`](HeapAlloc.md)
 - [`MemClear`](MemClear.md)
 
 ## Callers

@@ -37,8 +37,8 @@
 - `sub_08044FB0`
 - `sub_08056BA4`
 - `sub_0806A314`
-- [`BtlObjAlloc`](BtlObjAlloc.md)
-- [`BtlObjFree`](BtlObjFree.md)
+- [`HeapAlloc`](HeapAlloc.md)
+- [`HeapFree`](HeapFree.md)
 - `sub_0806A580`
 - `sub_0806C388`
 - `sub_0806F430`

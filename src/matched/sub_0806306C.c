@@ -18,12 +18,12 @@ void sub_0806306C(void)
         _08073C4C(gUnk_030008D8, (void *)gData_05000200, 0x200, (void *)d[0]);
         if (gUnk_030008E0 != 0)
         {
-            BtlObjFree(gUnk_030008E0);
+            HeapFree(gUnk_030008E0);
             gUnk_030008E0 = 0;
         }
         if (gUnk_030008D4 != 0)
         {
-            BtlObjFree(gUnk_030008D4);
+            HeapFree(gUnk_030008D4);
             gUnk_030008D4 = 0;
         }
         gUnk_030008DC = 0;

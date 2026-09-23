@@ -8,7 +8,7 @@ void BtlFreeUnk1694Obj(void)
     p = *(void **)gUnk_03000268;
     if (p != 0)
     {
-        BtlObjFree(p);
+        HeapFree(p);
         *(void **)gUnk_03000268 = 0;
     }
     gMainWorkPtr->unk1694 = 0;

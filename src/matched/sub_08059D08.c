@@ -18,7 +18,7 @@ void sub_08059D08(struct Unk59D08 *a)
         a->unk14 = z;
         if (a->unk0C != 0)
         {
-            BtlObjFree(a->unk0C);
+            HeapFree(a->unk0C);
             a->unk0C = z;
         }
     }

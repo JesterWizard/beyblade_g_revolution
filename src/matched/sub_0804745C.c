@@ -26,7 +26,7 @@ void sub_0804745C(void)
   }
   if ((*((void **) 0x03000638)) != 0)
   {
-    BtlObjFree(*((void **) 0x03000638));
+    HeapFree(*((void **) 0x03000638));
     *((void **) 0x03000638) = 0;
   }
   *((struct Unk473F8 **) 0x03000630) = 0;

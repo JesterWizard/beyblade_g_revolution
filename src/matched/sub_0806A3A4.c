@@ -2,7 +2,7 @@
 
 // @ 0x0806a3a4
 __attribute__((naked))
-void *BtlObjAlloc(u32 size)
+void *HeapAlloc(u32 size)
 {
     asm(
         ".syntax unified\n"

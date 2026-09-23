@@ -24,7 +24,7 @@ void sub_08059BD8(void *a, u32 b)
 
             if (node->unk0C != 0)
             {
-                BtlObjFree((void *)node->unk0C);
+                HeapFree((void *)node->unk0C);
                 node->unk0C = 0;
             }
 
@@ -48,7 +48,7 @@ void sub_08059BD8(void *a, u32 b)
                     node->unk14 = 1;
 
                     if (src->unk0C != 0)
-                        node->unk0C = (u32)BtlObjAlloc(src->unk0C);
+                        node->unk0C = (u32)HeapAlloc(src->unk0C);
 
                     return;
                 }

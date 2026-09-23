@@ -22,7 +22,7 @@ void sub_08068118(struct Unk68118 *a)
         if ((s16)state->unk2E != -1)
         {
             callback_arg = state->unk1A;
-            Unk68020SelectByKey((struct Unk680CC *)state, state->unk2E, 0xFFFF);
+            BtlEntitySelectByKey((struct Unk680CC *)state, state->unk2E, 0xFFFF);
             callback = state->unkC0;
             if (callback != 0)
                 _08073C48(state, (void *)(s32)callback_arg, callback);

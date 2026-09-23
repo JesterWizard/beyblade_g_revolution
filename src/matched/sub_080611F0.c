@@ -5,11 +5,11 @@ void sub_080611F0(void)
 {
     void *p;
 
-    sub_08061BAC();
+    VramSlotsRelease();
     p = *(void **)gUnk_03000790;
     if (p != 0)
     {
-        BtlObjFree(p);
+        HeapFree(p);
         *(void **)gUnk_03000790 = 0;
     }
     gUnk_03000798 = 0;

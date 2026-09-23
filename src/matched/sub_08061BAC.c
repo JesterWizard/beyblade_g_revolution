@@ -6,7 +6,7 @@
 #include "global.h"
 
 // @ 0x08061bac
-void sub_08061BAC(void)
+void VramSlotsRelease(void)
 {
     struct Unk0770 *p;
     s32 n;
@@ -19,7 +19,7 @@ void sub_08061BAC(void)
     {
         if (p->unk00 != 0)
         {
-            BtlObjFree(p->unk00);
+            HeapFree(p->unk00);
             p->unk00 = z;
         }
         p++;

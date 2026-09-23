@@ -32,4 +32,4 @@
 
 ## Callees
 
-- [`BtlObjFree`](BtlObjFree.md)
+- [`HeapFree`](HeapFree.md)

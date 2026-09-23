@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T19:23:49Z",
+  "generated": "2026-09-23T19:29:53Z",
   "total": 633,
   "functions": [
     {
@@ -69,7 +69,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "Unk75AB8Lookup",
+      "symbol": "BeybladeGetProfile",
       "note": "62-entry table lookup by s16 key",
       "insn_count": 19,
       "offsets": [
@@ -13584,7 +13584,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "VramSlotsInit",
       "note": "",
       "insn_count": 25,
       "offsets": [
@@ -14299,8 +14299,8 @@
       "size": 120,
       "kind": "asm",
       "status": "not_started",
-      "tier": "DECOMPILED",
-      "symbol": "",
+      "tier": "UNDERSTOOD",
+      "symbol": "VramSlotLoad",
       "note": "battle/readable-thumb",
       "insn_count": 50,
       "offsets": [
@@ -14341,7 +14341,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "VramSlotsRelease",
       "note": "",
       "insn_count": 19,
       "offsets": [
@@ -14458,7 +14458,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "Unk770FreeLastSlot",
+      "symbol": "VramSlotReleaseLast",
       "note": "semantic C: decrement gData_03000794 slot counter, free + clear gData_03000770[i]; base local keeps the table literal load ahead of the index shift",
       "insn_count": 22,
       "offsets": [
@@ -17284,7 +17284,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "Unk68020SelectByKey",
+      "symbol": "BtlEntitySelectByKey",
       "note": "walk keyed variable-stride entry table (sibling of sub_080680CC), set match state including unk2E from arg2 param",
       "insn_count": 38,
       "offsets": [
@@ -17318,7 +17318,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "Unk680CCSelectByKeyDefault",
+      "symbol": "BtlEntitySelectByKeyDefault",
       "note": "Phase 3b semantic C",
       "insn_count": 35,
       "offsets": [
@@ -18576,7 +18576,7 @@
       "kind": "asm",
       "status": "not_started",
       "tier": "UNDERSTOOD",
-      "symbol": "BtlObjAlloc",
+      "symbol": "HeapAlloc",
       "note": "arena node alloc from 0x03000B30 pool",
       "insn_count": 57,
       "offsets": [
@@ -18641,7 +18641,7 @@
       "kind": "asm",
       "status": "not_started",
       "tier": "UNDERSTOOD",
-      "symbol": "BtlObjFree",
+      "symbol": "HeapFree",
       "note": "battle/readable-thumb",
       "insn_count": 58,
       "offsets": [

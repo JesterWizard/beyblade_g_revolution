@@ -2,7 +2,7 @@
 
 // @ 0x0806a434
 __attribute__((naked))
-void BtlObjFree(void *a)
+void HeapFree(void *a)
 {
     asm(
         ".syntax unified\n"

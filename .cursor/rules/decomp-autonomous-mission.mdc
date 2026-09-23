@@ -21,6 +21,7 @@ Do **not** re-read `docs/decomp-mission.md` / roadmap each session. Start with s
 - **README.md** is tables only — no mermaid, no `decomp-progress.svg`
 - Names live in `analysis/symbols.json`; `include/symbols.h`, `[renames]`, and `analysis/*.json` are **generated** — never hand-edit
 - Rename identifiers only with `symbols.py apply` (string-literal aware). A plain text replace corrupts `asm("...")`, where macros cannot expand
+- **Name in the game's vocabulary** (beyblade/blade, `Btl` battle, bit-beast, part, roster, spin), never a borrowed prefix you cannot support: a prefix is a claim that misfiles the function in `systems.json`/`docs/systems/`. `Unk<ADDR>` is the honest fallback; every name needs `--confidence` and ≥1 `--evidence` line naming the caller or address that proves it
 
 ## Four parallel axes
 

@@ -24,7 +24,7 @@ void *BtlObjTableAdd(u32 size)
         return 0;
 
     slot = &table[i];
-    obj = BtlObjAlloc(size);
+    obj = HeapAlloc(size);
     *slot = obj;
     if (obj == 0)
         return 0;

@@ -8,7 +8,7 @@ void sub_080604A4(void)
     p = *(void **)gUnk_0300075C;
     if (p != 0)
     {
-        BtlObjFree(p);
+        HeapFree(p);
         *(void **)gUnk_0300075C = 0;
         *(void **)gUnk_03000750 = 0;
     }

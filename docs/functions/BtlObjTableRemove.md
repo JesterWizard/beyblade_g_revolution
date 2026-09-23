@@ -34,7 +34,7 @@
 ## Callees
 
 - [`DebugPrint`](DebugPrint.md)
-- [`BtlObjFree`](BtlObjFree.md)
+- [`HeapFree`](HeapFree.md)
 
 ## Callers
 

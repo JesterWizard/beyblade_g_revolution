@@ -33,7 +33,7 @@ void *sub_08059C98(struct Unk59C98Src *src, struct Unk59C98Owner *owner, void *a
             owner->unkC8 = p;
             if (src->unk0C != 0)
             {
-                q = BtlObjAlloc(src->unk0C);
+                q = HeapAlloc(src->unk0C);
                 p->unk0C = q;
                 p->unk10 = *(void **)q;
             }

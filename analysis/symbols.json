@@ -1,6 +1,6 @@
 {
-  "count": 49,
-  "generated": "2026-09-23T19:23:46Z",
+  "count": 52,
+  "generated": "2026-09-23T19:29:07Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -17,16 +17,18 @@
     },
     "0x0802B930": {
       "aliases": [
-        "sub_0802B930"
+        "sub_0802B930",
+        "Unk75AB8Lookup"
       ],
-      "confidence": 0.6,
+      "confidence": 0.7,
       "evidence": [
-        "62-entry (0x3D+1) table of 0x1C-byte records at ROM 0x08075AB8; matches signed halfword at +4 against the s16 arg and returns the u32 at +0, else -1",
-        "the table is a descriptor list: each record carries two ROM pointers at +0x10/+0x18"
+        "the table at ROM 0x08075AB8 is the 62-entry beyblade roster: sub_08044648 walks an id list and indexes it by beyblade id to build each battle entity",
+        "returns record+0x00 for the record whose self-index (s16 +0x04) matches; a value that determines the shared parameter block, so it is a profile/archetype id, not a flag",
+        "the caller stores obj->0xD4 = id and obj->0xD8 = side, then feeds this profile through sub_0802BC14 to index a runtime table"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "Unk75AB8Lookup",
+      "symbol": "BeybladeGetProfile",
       "updated": "2026-09-23"
     },
     "0x0802BA4C": {
@@ -190,6 +192,19 @@
       "symbol": "BtlSetAllUnk1710",
       "updated": "2026-09-22"
     },
+    "0x080611A4": {
+      "aliases": [
+        "sub_080611A4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "zeroes 0x03000790/0x03000794/0x03000798, heap-allocates the 0xAC-byte descriptor, stores its first word at 0x03000798, then LZ77-decompresses gData_080BB8BC into it; on allocation failure calls sub_080611F0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "VramSlotsInit",
+      "updated": "2026-09-23"
+    },
     "0x08061564": {
       "aliases": [
         "sub_08061564"
@@ -276,18 +291,47 @@
       "symbol": "TextSetActiveObject",
       "updated": "2026-09-22"
     },
-    "0x08061C48": {
+    "0x08061AB8": {
       "aliases": [
-        "sub_08061C48"
+        "sub_08061AB8"
       ],
       "confidence": 0.6,
       "evidence": [
-        "decrements the gData_03000794 slot counter, returns when it goes negative, then frees gData_03000770[i].unk00 via BtlObjFree and clears the slot",
-        "now matched semantic C in src/matched, so the structure is no longer inferred"
+        "if the slot count at 0x03000794 is not 4, heap-allocates desc->0x94 * 0x20 bytes, stores it at 0x03000770[count], then LZ77-decompresses into VRAM (dest 0x06000000 + (desc->0x5D << 14))",
+        "desc is the 0xAC-byte object pointed to by 0x03000798, the same descriptor the Text* functions use"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "Unk770FreeLastSlot",
+      "symbol": "VramSlotLoad",
+      "updated": "2026-09-23"
+    },
+    "0x08061BAC": {
+      "aliases": [
+        "sub_08061BAC"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "mirrors sub_08061AB8's teardown: frees slots 0..3 of 0x03000770 via the heap free and resets the count at 0x03000794 to 0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "VramSlotsRelease",
+      "updated": "2026-09-23"
+    },
+    "0x08061C48": {
+      "aliases": [
+        "sub_08061C48",
+        "Unk770FreeLastSlot"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "decrements the slot count at 0x03000794, then frees gData_03000770[i] with the heap free sub_0806A434 and clears the pointer",
+        "sibling sub_08061AB8 allocates slot[count] and LZ77-decompresses tile data into VRAM 0x06000000 + (desc->0x5D << 14); sub_08061BAC frees all four slots",
+        "0x03000770 holds 4 pointers, stride 8, so this is a stack-style release of the last loaded slot"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "VramSlotReleaseLast",
       "updated": "2026-09-23"
     },
     "0x08061D68": {
@@ -443,30 +487,31 @@
     },
     "0x08068020": {
       "aliases": [
-        "sub_08068020"
+        "sub_08068020",
+        "Unk68020SelectByKey"
       ],
-      "confidence": 0.6,
+      "confidence": 0.55,
       "evidence": [
-        "twin of sub_080680CC: walks the offset table at ctx->[0]->[0x18] (ctx->unk28 entries, variable stride from entry+2) to find entry[0]==key",
-        "on hit records unk1C=accumulated byte offset, unk1E=0, unk1A=key, unk2E=arg2, then calls sub_08068180 with entry+8; the twin differs only in writing 0xFFFF to unk2E"
+        "ctx is the battle entity built from a roster record; walks the variable-stride entry table at ctx->[0]->0x18 (count at ctx->0x28, next entry at entry+u16@+2) for entry->u16 == key",
+        "on hit records the accumulated byte offset at ctx+0x1C, 0 at +0x1E, the key at +0x1A and arg2 at +0x2E, then calls sub_08068180 for the entry's +0x08 field"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "Unk68020SelectByKey",
+      "symbol": "BtlEntitySelectByKey",
       "updated": "2026-09-23"
     },
     "0x080680CC": {
       "aliases": [
-        "sub_080680CC"
+        "sub_080680CC",
+        "Unk680CCSelectByKeyDefault"
       ],
-      "confidence": 0.6,
+      "confidence": 0.55,
       "evidence": [
-        "identical to sub_08068020 except unk2E is set to 0xFFFF instead of taking a third argument, so it is the clear/default variant of the same keyed selection",
-        "both pass entry+8 to sub_08068180, the 8-byte-stride placement helper operating on ctx->[0]->[0x20 + 8n]"
+        "byte-identical in shape to BtlEntitySelectByKey except +0x2E is set to the constant 0xFFFF instead of a third argument, i.e. the clear/default variant of the same keyed selection"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "Unk680CCSelectByKeyDefault",
+      "symbol": "BtlEntitySelectByKeyDefault",
       "updated": "2026-09-23"
     },
     "0x08069908": {
@@ -498,34 +543,32 @@
     },
     "0x0806A3A4": {
       "aliases": [
-        "sub_0806A3A4"
+        "sub_0806A3A4",
+        "BtlObjAlloc"
       ],
-      "confidence": 0.75,
+      "confidence": 0.8,
       "evidence": [
-        "allocates 0x60 bytes via sub_0806A580, asserting through sub_08067B98(0x083D1B00) on failure",
-        "initialises heap bookkeeping at 0x03000B30/0x03000B38/0x03000B3C from 0x03003F50",
-        "called by BtlObjTableAdd as the object constructor"
+        "generic allocator: initialises the EWRAM free-list head at 0x03000B30 from 0x03003F50, then carves 0x60-byte chunks via sub_0806A580; paired with HeapFree (sub_0806A434)"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlObjAlloc",
-      "updated": "2026-09-22"
+      "symbol": "HeapAlloc",
+      "updated": "2026-09-23"
     },
     "0x0806A434": {
       "aliases": [
-        "sub_0806A434"
+        "sub_0806A434",
+        "BtlObjFree"
       ],
-      "confidence": 0.75,
+      "confidence": 0.85,
       "evidence": [
-        "frees the block at r0, choosing the heap region by comparing the pointer against 0x0203FFFF",
-        "reads the block's link fields at +0x08 and +0x0C",
-        "asserts through sub_08067B98(0x083D1B38) when the block pointer is null",
-        "called by BtlObjTableRemove when a slot is released"
+        "reads the region tag at block+0x00, compares the address against the EWRAM end 0x0203FFFF, and pushes the block onto one of two free lists (0x03000B30 EWRAM / 0x03003F44 IWRAM) using the links at +0x08/+0x0C",
+        "25 callers across battle, graphics/VRAM teardown (sub_08061BAC) and text paths, so it is a generic two-region heap free, not battle-specific"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlObjFree",
-      "updated": "2026-09-22"
+      "symbol": "HeapFree",
+      "updated": "2026-09-23"
     },
     "0x0806F1A0": {
       "aliases": [

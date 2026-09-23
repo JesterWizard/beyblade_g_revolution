@@ -7,7 +7,7 @@
 #include "data_symbols.h"
 
 // @ 0x080611a4
-void sub_080611A4(void)
+void VramSlotsInit(void)
 {
     u32 *slotA;
     struct Unk0758 **slotB;
@@ -18,7 +18,7 @@ void sub_080611A4(void)
     slotB = gUnk_03000798Loc;
     *slotB = 0;
     gUnk_03000794 = 0;
-    p = BtlObjAlloc(0xAC);
+    p = HeapAlloc(0xAC);
     *slotA = (u32)p;
     if (p != 0)
     {

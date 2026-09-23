@@ -13,8 +13,8 @@ void sub_08062F90(void)
         return;
     e0_loc = (void **)0x030008E0;
     buffer_loc = (void **)0x030008D4;
-    *e0_loc = BtlObjAlloc(0x200);
-    *buffer_loc = BtlObjAlloc(0x200);
+    *e0_loc = HeapAlloc(0x200);
+    *buffer_loc = HeapAlloc(0x200);
     if (*e0_loc == 0 && *buffer_loc == 0)
         return;
     gUnk_030008DC = *(void **)*e0_loc;

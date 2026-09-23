@@ -2719,13 +2719,38 @@ struct Unk42390 /* >= 0x0c */
     /* 08 */ s32 unk08;
 };
 
-/* 62-entry ROM table @ 0x08075AB8, stride 0x1C. Key at +0x04, payload at +0x00.
+/* The beyblade roster: 62 records of 0x1C bytes at ROM 0x08075AB8, addressed by
+ * beyblade id. sub_08044648 walks an id list and builds a battle entity from
+ * each record, copying `id` to obj+0xD4, the side to obj+0xD8, `part` to
+ * obj+0xC4 and `type` to obj+0x3B.
+ *
+ * Field usage as read by that function:
+ *   profile  - small archetype id (-1 = none, else 0..7). Determines which of
+ *              the 13 shared parameter blocks in 0x082F9A68.. is used, so it is
+ *              a profile/archetype selector, not a flag. sub_0802B930 returns it.
+ *   id       - the record's own index, 0..61 (dense; gBeybladeDefs[id]).
+ *   variant  - index into the 0x10-byte record table returned by sub_08062A14,
+ *              or -1 for none. Read as the source of the entity's x/y.
+ *   flags    - low half compared against -1 to skip BtlEntitySelectByKey
+ *              (sub_080680CC); high half is 1 or 2.
+ *   type     - -1 or 0..3, stored as a byte at obj+0x3B.
+ *   param    - the shared parameter block (0x0806DEF4 walks its entries).
+ *   part     - per-record pointer (56 distinct), passed to sub_08059C98.
+ *   script   - per-record pointer into 0x0809B62C.. , registered with
+ *              sub_080626B8 for the record's data.
+ *
  * sub_0802B930. */
-struct Unk75AB8 /* 0x1c */
+struct BeybladeDef /* 0x1c */
 {
-    /* 00 */ s32 unk00;
-    /* 04 */ s16 unk04;
-    /* 06 */ u8 filler_06[0x16];
+    /* 00 */ s32 profile;
+    /* 04 */ s16 id;
+    /* 06 */ s16 variant;
+    /* 08 */ u16 flags;
+    /* 0a */ u16 flagsHi;
+    /* 0c */ s32 type;
+    /* 10 */ u32 script;
+    /* 14 */ u32 part;
+    /* 18 */ u32 param;
 };
 
 /* Source record copied into an Unk59AE0Node. sub_08059AE0. */

@@ -23,7 +23,7 @@ void sub_08043ADC(void)
     }
     if (*(void **)gUnk_03000550 != 0)
     {
-        BtlObjFree(*(void **)gUnk_03000550);
+        HeapFree(*(void **)gUnk_03000550);
         *(void **)gUnk_03000550 = 0;
     }
     *(struct Unk68574 **)gUnk_0300054C = 0;
