@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T19:30:30Z",
+  "generated": "2026-09-23T22:18:35Z",
   "counts": {
     "matched": 413,
     "wip": 135,
@@ -3513,7 +3513,7 @@
     {
       "name": "sub_080405A8",
       "addr": "0x080405A8",
-      "kind": "asm",
+      "kind": "semantic",
       "status": "matched",
       "display": "matched",
       "blocked": false,
@@ -3524,8 +3524,8 @@
       "compiled_bytes": 64,
       "pct": 100.0,
       "score": "64/64",
-      "source": "attempt",
-      "note": "zero Unk047C slots",
+      "source": "integrated",
+      "note": "",
       "tier": "MATCHING",
       "symbol": ""
     },

@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-23T19:23:50Z_
+_Updated: 2026-09-23T22:18:35Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 412 |
-| Still need semantic C | **221** |
-| Readable Thumb remaining | 221 |
+| Semantic C done | 413 |
+| Still need semantic C | **220** |
+| Readable Thumb remaining | 220 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
@@ -137,7 +137,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08031300` | 78 | 22/78 | `src/decompiled/sub_08031300.c` | 22/78 same-size. Permuter re-run 2026-09-22 on the semantic seed with the fixed importer: base 1245, best 790, no zero — the earlier 'best 920' figure came from a permuter that had imported the asm wrapper | Do not re-attempt by hand or by permuter. Register-destination difference: retail keeps the parameter in r2 and builds the palette value in r1, agbcc picks r1/r0; same family as the documented sub_08061308 coalescing finding |
 | `sub_08033978` | 180 | 22/180 | `src/decompiled/sub_08033978.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08037430` | 216 | 84/216 | `src/decompiled/sub_08037430.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_080405A8` | 64 | 28/64 | `src/decompiled/sub_080405A8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_080405A8` | 0 | 28/64 | `src/decompiled/sub_080405A8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08040F4C` | 336 | 319/336 | `src/decompiled/sub_08040F4C.c` | 319/336; done in r4 vs r5 | second live callee-saved across loop |
 | `sub_08043B90` | 76 | 67/76 | `src/decompiled/sub_08043B90.c` | 67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomization makes it worse — the hand-tuned seed is already the best shape. Symbols regress it to 14/76, so it must stay symbol-free. Retail's tail returns by reusing r0 == 0 from the loop test | park: do not re-run a randomising permuter on this seed. Revisit by hand-forcing the r0 == 0 loop-test reuse in the tail return |
 | `sub_080442FC` | 144 | 134/144 | `src/decompiled/sub_080442FC.c` | 134/144; a in r4 vs r5 (gData symbols fixed pool fold) | perm_refer_to_var so index takes r4 |
