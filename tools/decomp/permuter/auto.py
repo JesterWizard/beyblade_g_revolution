@@ -112,6 +112,66 @@ def _kill_group(proc: subprocess.Popen) -> None:
         pass
 
 
+def _ancestors(start: int | None = None) -> set[int]:
+    """Pids from `start` (default: us) up to pid 1."""
+    chain: set[int] = set()
+    pid = start if start is not None else os.getpid()
+    for _ in range(64):
+        if pid <= 1:
+            break
+        chain.add(pid)
+        try:
+            with open(f"/proc/{pid}/stat", "rb") as fh:
+                pid = int(fh.read().rsplit(b")", 1)[1].split()[1])
+        except (OSError, IndexError, ValueError):
+            break
+    return chain
+
+
+def reap_stale_permuters() -> int:
+    """Kill permuter processes from an earlier, already-dead batch.
+
+    A batch killed by the caller's timeout cannot run its own cleanup: we spawn
+    permuter.py with `start_new_session=True` (so `_kill_group` can reach the
+    worker pool), which also detaches it from the signal the caller got. The
+    survivors keep every core busy, and because they hold the inherited stdout
+    pipe the next piped invocation hangs on read instead of finishing.
+
+    Only processes that are unmistakably ours are touched: a permuter.py under
+    this repo whose parent is not in our ancestor chain. Returns how many were
+    killed.
+    """
+    marker = str(PERM / "permuter.py")
+    mine = _ancestors()
+    killed = 0
+    for entry in os.listdir("/proc"):
+        if not entry.isdigit():
+            continue
+        pid = int(entry)
+        try:
+            with open(f"/proc/{pid}/cmdline", "rb") as fh:
+                argv = fh.read().split(b"\0")
+            with open(f"/proc/{pid}/stat", "rb") as fh:
+                ppid = int(fh.read().rsplit(b")", 1)[1].split()[1])
+        except (OSError, IndexError, ValueError):
+            continue
+        if marker not in (arg.decode(errors="ignore") for arg in argv if arg):
+            continue
+        if ppid in mine:
+            continue
+        try:
+            os.killpg(os.getpgid(pid), signal.SIGKILL)
+        except (ProcessLookupError, PermissionError, OSError):
+            try:
+                os.kill(pid, signal.SIGKILL)
+            except OSError:
+                continue
+        killed += 1
+    if killed:
+        print(f"reaped {killed} stale permuter process(es) from an earlier batch")
+    return killed
+
+
 def run_permuter(
     workdir: Path, *, jobs: int, seconds: int, seed_score: int, strict_branches: bool
 ) -> int:
@@ -131,12 +191,33 @@ def run_permuter(
         # "score 0" that is not byte-identical (see docs/decomp-patterns.md).
         cmd.append("--no-ignore-branch-targets")
     print(f"permuting for up to {seconds}s on {jobs} jobs ...", flush=True)
+    reap_stale_permuters()
     proc = subprocess.Popen(cmd, cwd=str(ROOT), start_new_session=True)
+    # The caller owns its own timeout (`timeout 600` in a batch script, or a
+    # killed session). `start_new_session=True` means its signal never reaches
+    # the worker pool, so forward it.
+    prev = {}
+
+    def _forward(signum, _frame):
+        _kill_group(proc)
+        handler = prev.get(signum)
+        if callable(handler):
+            handler(signum, _frame)
+        else:
+            signal.signal(signum, signal.SIG_DFL)
+            os.kill(os.getpid(), signum)
+
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        prev[sig] = signal.getsignal(sig)
+        signal.signal(sig, _forward)
     try:
         proc.wait(timeout=seconds)
     except subprocess.TimeoutExpired:
         print(f"budget of {seconds}s reached")
         _kill_group(proc)
+    finally:
+        for sig, handler in prev.items():
+            signal.signal(sig, handler)
     scores = [score for score, _ in output_dirs(workdir)]
     return min(scores + [seed_score])
 

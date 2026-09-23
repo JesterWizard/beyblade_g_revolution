@@ -40,6 +40,7 @@ from match_function import (  # noqa: E402
     write_single_function_c,
 )
 from next_queue import collect  # noqa: E402
+from permuter.auto import reap_stale_permuters  # noqa: E402
 from opcode_stubs import list_readable_asm  # noqa: E402
 from progress import function_size  # noqa: E402
 from try_convert import asm_lines, candidates  # noqa: E402
@@ -452,6 +453,7 @@ def build_packet(name: str, permute_seconds: int = _AUTO_PERMUTE_SECONDS) -> str
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    reap_stale_permuters()
     parser.add_argument("function", nargs="?", help="sub_080XXXXXX")
     parser.add_argument("--next", action="store_true", help="pick cheapest remaining target")
     parser.add_argument("--battle", action="store_true", help="prefer next_queue battle ranking")

@@ -24,6 +24,7 @@ from classify_semantic_targets import classify  # noqa: E402
 from cluster_shapes import cluster, format_human  # noqa: E402
 from match_function import try_compile_and_score, write_single_function_c  # noqa: E402
 from next_queue import collect  # noqa: E402
+from permuter.auto import reap_stale_permuters  # noqa: E402
 from try_convert import asm_lines, candidates, integrate  # noqa: E402
 from unblock_symbols import format_human as format_unblock  # noqa: E402
 from unblock_symbols import guess_prototypes  # noqa: E402
@@ -164,6 +165,7 @@ def convert_one(name: str, park_near: bool, permute_seconds: int) -> str:
 
 
 def main() -> int:
+    reap_stale_permuters()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("limit", nargs="?", type=int, default=30)
     parser.add_argument("--park-near-miss", action="store_true")

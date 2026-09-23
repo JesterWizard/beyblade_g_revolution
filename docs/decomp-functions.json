@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T18:41:31Z",
+  "generated": "2026-09-23T18:55:39Z",
   "counts": {
     "matched": 413,
     "wip": 135,
@@ -69,7 +69,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "Unk75AB8Lookup"
     },
     {
       "name": "sub_0802B95C",
@@ -3166,7 +3166,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "Unk8D0FindActiveById"
     },
     {
       "name": "sub_0803E2AC",
@@ -9208,7 +9208,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "Unk68020SelectByKey"
     },
     {
       "name": "sub_080680CC",
@@ -9227,7 +9227,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "Unk680CCSelectByKeyDefault"
     },
     {
       "name": "sub_08068118",
@@ -10671,7 +10671,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "Unk84FindIndexByKey"
     },
     {
       "name": "sub_0806F430",

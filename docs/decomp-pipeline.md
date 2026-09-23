@@ -224,6 +224,29 @@ promotion is unaffected. When a directory is promoted, grep for the old path in
 `tools/` — the schema (`build/`, `analysis/`) can be migrated while one loader is
 missed, and nothing in `make compare` or `make audit` will notice.
 
+## A permuter run outlives the batch that started it
+
+`run_permuter` spawns `permuter.py` with `start_new_session=True` so that
+`_kill_group` can reach the whole worker pool on timeout. That is correct, but it
+also detaches the pool from any signal the *caller* receives: when `timeout 900`
+SIGTERMs the batch, the `except TimeoutExpired` branch never runs and eight workers
+keep permuting forever. Two such trees were found alive after ~2.7 h, holding the
+load average at 19.6 on 8 cores and slowing every later batch.
+
+They also hang the next command rather than failing it. The workers inherit the
+batch's stdout pipe, so a pipeline like `script_first.py | tail` never sees EOF:
+the shell waits on a writer that no longer has a reader. The fix is two-sided.
+
+- `reap_stale_permuters()` (called at the start of `auto.run_permuter`,
+  `script_first.main`, `agent_packet.main`) kills only processes carrying our
+  `permuter.py` path whose parent is not in the current ancestor chain.
+- `run_permuter` installs SIGTERM/SIGINT/SIGHUP handlers that `_kill_group` the
+  worker pool and then re-raise the default disposition.
+
+Rule of thumb: never launch a child into a new session without forwarding the
+signals you expect to die from. Batch output also goes to a file, not a pipe, so a
+survivor cannot wedge the shell.
+
 ## Queue state
 
 `decomp-queue.toml` is read by `agent_packet.py --next` to choose the next target,
