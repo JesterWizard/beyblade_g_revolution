@@ -21,6 +21,76 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-09-22 — the permuter had been permuting asm wrappers; sub_08038580 24 → 82/92
+
+Writing off `sub_08031300` needed a permuter verdict, and the verdict turned out to
+be worthless: `tools/decomp/permuter/import_function.py` still declared
+`WIP = ROOT / "src" / "wip"`. That directory was deleted when the drafts were
+promoted to `src/decompiled/` — `agent_packet.py` and `script_first.py` were updated
+in the same commit, the importer was missed. So `seed_c()` searched a path that no
+longer exists, fell through to `src/matched/`, and imported the **readable-Thumb
+wrapper** as the permuter's base. Three tells, all present in the run headers:
+
+- `base score 100` on a function that is ~20 bytes from matching,
+- `match-compiler: agbcc` printed for a seed whose comment asks for `old_agbcc`
+  (`match_compiler()` looked in the same dead directory),
+- `No perm macros found. Defaulting to randomization.` — an asm body has none.
+
+One-line fix. Runs recorded before the promotion stand; the two from today were
+void. `sub_08031300` was re-run properly (base 1245 → best 790, no zero), which
+confirms its documented register-destination blocker on evidence that now holds.
+
+While checking the same class of rot, three agent-facing skills
+(`gba-decomp-session`, `gba-decomp-improve`, `gba-decomp-matching`) still taught
+`src/wip/` as the drafts directory, and 38 notes in the gitignored
+`build/matched.json` still said "semantic draft from src/wip", which is what
+`analysis/functions.json` was rendering. Both corrected.
+
+**Then the actual decomp work — `sub_08038580`, 24/92 → 82/92.** Three source-shape
+wins, all legal C, none needing register pins:
+
+1. Inline the global (`if (gUnk_030003CC != 0)`) instead of hoisting it into a
+   local — the pointer lands in `r0`, matching `ldr r0,[r5]; ldrh r0,[r0,#0x20]`.
+   59/92.
+2. Hoist the deref into a local (`src = (void *)*gData_080BB8C0;`) — fixes the
+   **literal-pool order**, which came out `030003CC, 05000200, 080BB8C0` with the
+   deref inline and `030003CC, 080BB8C0, 05000200` (as retail) hoisted. 76/92. This
+   one was the permuter's idea, and it is the reason a working seed path matters.
+3. `(one = 1)` as an assignment *inside the condition* rather than a statement —
+   sinks `movs r6,#1` to after the `asrs`, as retail. 82/92.
+
+A six-shape sweep of argument and pointer orderings plateaus at 82/92 (74/92 for
+variants that split the palette pointer into its own local). The remaining 10 bytes
+are scheduler ordering only: retail materialises both address constants and
+dereferences last, agbcc sinks the dereference to its use and then reloads the
+palette base into a different register — the `sub_08061308` / `sub_08062A74`
+family. A 300 s × 8-job permuter run from the 82/92 seed (base 95, best 85) agrees.
+Parked at 82/92 with `retry = false` and a note to revisit only on a compiler change.
+
+### Queue bookkeeping made self-consistent
+
+The picker offered `sub_08031300` — a function whose notes say "do not re-attempt by
+hand or by permuter" — because `park_wip.py` only wrote a `[[wip]]` block when the
+name was *new*. Re-parking left the previous `status`/`next`/`score` in place, so the
+queue kept advertising finished work while the notes said otherwise.
+
+- `park_wip.py` now upserts via `queue_toml.upsert_block()`, rewriting only the given
+  fields; `--exhausted` writes `retry = false`.
+- `agent_packet.py --next` skips `retry = false` (override: `--force-exhausted`).
+- New `tools/decomp/queue_toml.py` owns all queue edits, splitting at line-initial
+  `[[section]]` headers. Its `--check` asserts split/join is the identity and that
+  rewriting a field with its own value is a no-op — the queue's prose is full of
+  brackets (`[r2]`, `[sp, #8]`) that a whole-text regex happily tears in half, which
+  is exactly what the first prune attempt did (restored from git, reimplemented).
+- Backfilled `retry = false` on `sub_08031300`, `sub_0803DCFC`, `sub_08061C48` with
+  the reason in `next`, so the four exhausted entries now say so in machine-readable
+  form rather than in prose the picker cannot see.
+
+Void evidence was also cleared for `sub_08038580` (queue said 24/92; the real figure
+on `old_agbcc` was 59/92) and `sub_08031300` (queue said 6/78 with an invitation to
+re-run the permuter). Result: `make compare` OK, `make audit` 633/633,
+`make signatures` 0 conflicts, MATCHING 413/633.
+
 ### 2026-09-22 — VBlankIntrWait regression recovered as semantic C; draft prune
 
 `make tier` fell 413 → 412 after the stub-arity batch. The cause was the

@@ -140,24 +140,24 @@ Run overnight on near-misses; don't babysit interactive retries.
 Park the C, then block auto-queue. See [docs/decomp-wip.md](docs/decomp-wip.md):
 
 ```bash
-python3 tools/decomp/park_wip.py sub_XXXXXXXX src/wip/sub_XXXXXXXX.c \
+python3 tools/decomp/park_wip.py sub_XXXXXXXX src/decompiled/sub_XXXXXXXX.c \
     --status "leaf branch adds push {lr}" --next "permuter or stay Thumb" --score "N/M"
 ```
 
 ```toml
 [[wip]]
 name = "sub_080XXXXXXXX"
-seed = "src/wip/sub_080XXXXXXXX.c"
-notes = "src/wip/sub_080XXXXXXXX.md"
+seed = "src/decompiled/sub_080XXXXXXXX.c"
+notes = "src/decompiled/sub_080XXXXXXXX.md"
 status = "…"
 next = "…"
 
 [[block]]
 name = "sub_080XXXXXXXX"
-reason = "leaf branch adds push {lr} / permuter score N; seed in src/wip/"
+reason = "leaf branch adds push {lr} / permuter score N; seed in src/decompiled/"
 ```
 
-Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `src/wip/`. Log in `docs/decomp-status.md` with a path to the notes.
+Leave **readable Thumb** in `src/matched/` (`--kind asm`). Keep the draft in `src/decompiled/`. Log in `docs/decomp-status.md` with a path to the notes.
 
 ## Known blocker families (this project)
 

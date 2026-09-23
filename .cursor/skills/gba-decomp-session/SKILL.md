@@ -59,7 +59,7 @@ clone family?           → cluster_shapes.py → one new c_patterns.py matcher
 
 1. Update [docs/decomp-status.md](docs/decomp-status.md)
 2. Run **gba-decomp-improve** checklist (patterns from clusters, seeds, queue)
-3. Unmatched C → `src/wip/` (`park_wip.py`)
+3. Unmatched C → `src/decompiled/` (`park_wip.py`)
 4. Commit per AGENTS.md unless user forbids
 
 ## Related skills

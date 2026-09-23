@@ -28,7 +28,7 @@ from opcode_stubs import is_opcode_stub  # noqa: E402
 
 NON = ROOT / "asm" / "nonmatchings"
 MATCHED = ROOT / "src" / "matched"
-WIP = ROOT / "src" / "wip"
+WIP = ROOT / "src" / "decompiled"
 PERM = ROOT / "tools" / "decomp-permuter"
 COMPILE_SH = ROOT / "tools" / "decomp" / "permuter" / "compile.sh"
 

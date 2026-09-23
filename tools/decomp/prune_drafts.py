@@ -27,7 +27,6 @@ kept, because they may record knowledge that never made it into the C.
 from __future__ import annotations
 
 import argparse
-import re
 import sys
 from pathlib import Path
 
@@ -35,14 +34,10 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from opcode_stubs import file_kind  # noqa: E402
+from queue_toml import read_blocks, remove_blocks  # noqa: E402
 
 DECOMPILED = ROOT / "src" / "decompiled"
 MATCHED = ROOT / "src" / "matched"
-QUEUE = ROOT / "docs" / "decomp-queue.toml"
-
-_WIP_HEADER = re.compile(r"^\[\[wip\]\]\s*$")
-_SECTION_HEADER = re.compile(r"^\[\[[^\]]+\]\]\s*$")
-_NAME_IN_BLOCK = re.compile(r'name\s*=\s*"(sub_[0-9A-Fa-f]+)"')
 
 
 def _is_stub_note(path: Path, name: str) -> bool:
@@ -61,55 +56,9 @@ def _superseded() -> list[str]:
     return out
 
 
-def _split_sections(text: str) -> list[tuple[str, str]]:
-    """Split TOML into (header line, body) segments; the preamble has a "" header.
-
-    Only line-initial `[[section]]` headers count, so a `[` inside a value (a
-    register pin like `[r2]` or a status note) cannot split a block.
-    """
-    out: list[tuple[str, str]] = []
-    header = ""
-    body: list[str] = []
-    for line in text.splitlines(keepends=True):
-        if _SECTION_HEADER.match(line):
-            out.append((header, "".join(body)))
-            header, body = line, []
-        else:
-            body.append(line)
-    out.append((header, "".join(body)))
-    return out
-
-
 def _queue_wip_names() -> list[tuple[str, str]]:
     """(name, seed) for every `[[wip]]` block, in file order."""
-    if not QUEUE.is_file():
-        return []
-    out: list[tuple[str, str]] = []
-    for header, body in _split_sections(QUEUE.read_text()):
-        if not _WIP_HEADER.match(header):
-            continue
-        name = _NAME_IN_BLOCK.search(body)
-        seed = re.search(r'seed\s*=\s*"([^"]*)"', body)
-        if name:
-            out.append((name.group(1), seed.group(1) if seed else ""))
-    return out
-
-
-def _drop_wip_blocks(names: set[str], *, apply: bool) -> int:
-    if not QUEUE.is_file():
-        return 0
-    kept: list[str] = []
-    removed = 0
-    for header, body in _split_sections(QUEUE.read_text()):
-        if _WIP_HEADER.match(header):
-            hit = _NAME_IN_BLOCK.search(body)
-            if hit and hit.group(1) in names:
-                removed += 1
-                continue
-        kept.append(header + body)
-    if apply and removed:
-        QUEUE.write_text(re.sub(r"\n{3,}", "\n\n", "".join(kept)))
-    return removed
+    return [(b["name"], b.get("seed", "")) for b in read_blocks() if b.get("name")]
 
 
 def main() -> int:
@@ -163,7 +112,7 @@ def main() -> int:
 
     for path in drafts + stub_notes:
         path.unlink(missing_ok=True)
-    removed = _drop_wip_blocks(stale_queue, apply=True)
+    removed = remove_blocks(stale_queue)
 
     print(f"pruned {len(drafts)} drafts, {len(stub_notes)} stub notes, {removed} queue blocks")
     if kept_notes:

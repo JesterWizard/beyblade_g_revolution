@@ -21,8 +21,11 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from queue_toml import QUEUE, upsert_block  # noqa: E402
+
 DECOMPILED_DIR = ROOT / "src" / "decompiled"
-QUEUE = ROOT / "docs" / "decomp-queue.toml"
 MATCHED = ROOT / "src" / "matched"
 
 _NOTES_STUB = """# {name} — WIP
@@ -58,38 +61,29 @@ def _addr(name: str) -> str:
     return f"0x{int(name.replace('sub_', ''), 16):08X}"
 
 
-def _has_wip_name(text: str, name: str) -> bool:
-    in_wip = False
-    for raw in text.splitlines():
-        line = raw.split("#", 1)[0].strip()
-        if line.startswith("[[") and line.endswith("]]"):
-            in_wip = line == "[[wip]]"
-            continue
-        if in_wip and line.startswith("name"):
-            _, _, val = line.partition("=")
-            if val.strip().strip('"') == name:
-                return True
-    return False
-
-
 def _append_wip(
-    name: str, seed_rel: str, notes_rel: str, status: str, nxt: str, score: str
-) -> None:
-    block = (
-        f"\n[[wip]]\n"
-        f'name = "{name}"\n'
-        f'seed = "{seed_rel}"\n'
-        f'notes = "{notes_rel}"\n'
-        f'status = "{status}"\n'
-        f'next = "{nxt}"\n'
-        f'score = "{score}"\n'
-    )
-    text = QUEUE.read_text() if QUEUE.is_file() else ""
-    if _has_wip_name(text, name):
-        return
-    if text and not text.endswith("\n"):
-        text += "\n"
-    QUEUE.write_text(text + block)
+    name: str,
+    seed_rel: str,
+    notes_rel: str,
+    status: str,
+    nxt: str,
+    score: str,
+    *,
+    exhausted: bool = False,
+) -> bool:
+    fields = {
+        "name": name,
+        "seed": seed_rel,
+        "notes": notes_rel,
+        "status": status,
+        "next": nxt,
+        "score": score,
+    }
+    if exhausted:
+        # Machine-readable, so agent_packet.py can stop offering a function that
+        # is documented as unreachable instead of parsing prose.
+        fields["retry"] = "false"
+    return upsert_block("wip", fields)
 
 
 def main() -> int:
@@ -99,6 +93,12 @@ def main() -> int:
     parser.add_argument("--status", default="unmatched C parked; see notes")
     parser.add_argument("--next", dest="nxt", default="read notes; match_function.py this seed")
     parser.add_argument("--score", default="unscored")
+    parser.add_argument(
+        "--exhausted",
+        action="store_true",
+        help="record retry = false: hand and permuter attempts are documented as "
+        "unreachable, so agent_packet.py --next stops offering this function",
+    )
     args = parser.parse_args()
 
     name = args.name
@@ -133,13 +133,18 @@ def main() -> int:
 
     seed_rel = dest.relative_to(ROOT).as_posix()
     notes_rel = notes.relative_to(ROOT).as_posix()
-    _append_wip(name, seed_rel, notes_rel, args.status, args.nxt, args.score)
+    inserted = _append_wip(
+        name, seed_rel, notes_rel, args.status, args.nxt, args.score,
+        exhausted=args.exhausted,
+    )
 
     matched = MATCHED / f"{name}.c"
-    print(f"parked {name}")
+    print(f"parked {name} ({'new' if inserted else 'updated'} queue block)")
     print(f"  seed  {seed_rel}")
     print(f"  notes {notes_rel}")
     print(f"  queue {QUEUE.relative_to(ROOT).as_posix()} [[wip]]")
+    if args.exhausted:
+        print("  retry = false — agent_packet.py --next will skip this until --force-exhausted")
     if matched.is_file():
         print(f"  matched still {matched.relative_to(ROOT).as_posix()} (do not leave a DIFF draft there)")
     print("  next: make queue")

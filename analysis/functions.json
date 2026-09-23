@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T22:10:23Z",
+  "generated": "2026-09-23T18:39:50Z",
   "total": 633,
   "functions": [
     {
@@ -124,7 +124,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (agbcc)",
+      "note": "semantic draft from src/decompiled (agbcc)",
       "insn_count": 23,
       "offsets": [
         "0x00",
@@ -1907,7 +1907,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (agbcc)",
+      "note": "semantic draft from src/decompiled (agbcc)",
       "insn_count": 20,
       "offsets": [
         "0x00",
@@ -2636,7 +2636,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 29,
       "offsets": [
         "0x00"
@@ -3844,7 +3844,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 57,
       "offsets": [
         "0x00"
@@ -3873,7 +3873,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 92,
       "offsets": [
         "0x00",
@@ -5522,7 +5522,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 14,
       "offsets": [
         "0x00"
@@ -5562,7 +5562,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 14,
       "offsets": [
         "0x00"
@@ -5596,7 +5596,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 14,
       "offsets": [
         "0x00"
@@ -5856,7 +5856,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 30,
       "offsets": [
         "0x00",
@@ -5891,7 +5891,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 30,
       "offsets": [
         "0x00",
@@ -6262,7 +6262,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 28,
       "offsets": [
         "0x00",
@@ -7209,7 +7209,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 56,
       "offsets": [
         "0x00"
@@ -7507,7 +7507,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 84,
       "offsets": [
         "0x00",
@@ -8190,7 +8190,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 21,
       "offsets": [
         "0x00",
@@ -8283,7 +8283,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 21,
       "offsets": [
         "0x00"
@@ -8877,7 +8877,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 21,
       "offsets": [
         "0x00"
@@ -9162,7 +9162,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 30,
       "offsets": [
         "0x00",
@@ -9810,7 +9810,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 38,
       "offsets": [
         "0x00",
@@ -11495,7 +11495,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 41,
       "offsets": [
         "0x00"
@@ -11526,7 +11526,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 29,
       "offsets": [
         "0x00"
@@ -13513,7 +13513,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 21,
       "offsets": [
         "0x00"
@@ -13703,7 +13703,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 19,
       "offsets": [
         "0x00"
@@ -14095,7 +14095,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 33,
       "offsets": [
         "0x00"
@@ -15648,7 +15648,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 20,
       "offsets": [
         "0x00",
@@ -15675,7 +15675,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 22,
       "offsets": [
         "0x00",
@@ -15702,7 +15702,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 21,
       "offsets": [
         "0x00",
@@ -15727,7 +15727,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 23,
       "offsets": [
         "0x00",
@@ -15752,7 +15752,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 128,
       "offsets": [
         "0x00",
@@ -15778,7 +15778,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 128,
       "offsets": [
         "0x00",
@@ -17206,7 +17206,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 24,
       "offsets": [
         "0x00",
@@ -17730,7 +17730,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 51,
       "offsets": [
         "0x00",
@@ -18202,7 +18202,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 37,
       "offsets": [
         "0x00"
@@ -18888,7 +18888,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 61,
       "offsets": [
         "0x00",
@@ -19882,7 +19882,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 19,
       "offsets": [
         "0x00",
@@ -21230,7 +21230,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 31,
       "offsets": [
         "0x00"
@@ -21400,7 +21400,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 38,
       "offsets": [
         "0x00",
@@ -21441,7 +21441,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 38,
       "offsets": [
         "0x00",
@@ -21484,7 +21484,7 @@
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "semantic draft from src/wip (old_agbcc)",
+      "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 28,
       "offsets": [
         "0x00",

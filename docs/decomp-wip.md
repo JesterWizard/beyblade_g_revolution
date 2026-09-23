@@ -87,6 +87,23 @@ Copy the template in `src/decompiled/README.md`. Minimum:
 - **Current state** — matched vs retail (size, prologue, remaining DIFF)
 - **Next** — one concrete action, not “try more C”
 
+## Queue state
+
+`docs/decomp-queue.toml` is machine state, not prose: `agent_packet.py --next` reads
+it to decide what to offer. Two keys matter beyond `status`/`next`/`score`:
+
+| Key | Meaning |
+|-----|---------|
+| `retry = false` | Documented as unreachable by hand *and* by permuter. `--next` skips it; `park_wip.py --exhausted` writes it. Override with `agent_packet.py --next --force-exhausted`. |
+| (none) | Still live. The default. |
+
+A `retry = false` claim must rest on evidence you would defend: a source-shape
+sweep plus a permuter run against the **semantic** seed. `make queue` /
+`next_queue.py` and `queue_toml.py --check` both refuse to work on a queue that has
+been corrupted, and `park_wip.py` now *updates* an existing block instead of
+ignoring the name — a re-park used to leave the old `status`/`next`/`score` in
+place, so the queue kept advertising work a previous session had already exhausted.
+
 ## Anti-patterns
 
 - Reverting `src/matched/` to naked asm **without** a `src/decompiled/` seed
@@ -94,3 +111,5 @@ Copy the template in `src/decompiled/README.md`. Minimum:
 - Leaving a non-matching draft in `src/matched/` (breaks the semantic audit)
 - Rewriting a parked function from disasm without reading the `.md` first
 - Hand-editing `src/decompiled/*.c` names directly instead of via `symbols.py`
+- Quoting a permuter score without checking which seed it ran on — a permuter that
+  imported the asm wrapper reports a large base score and proves nothing

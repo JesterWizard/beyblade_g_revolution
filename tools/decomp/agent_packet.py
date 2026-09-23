@@ -66,6 +66,29 @@ def _blocked_names(data: dict) -> set[str]:
     return {r["name"] for r in data.get("blocked") or [] if r.get("name")}
 
 
+def _exhausted_names() -> set[str]:
+    """WIP entries parked as `retry = false` (documented as unreachable).
+
+    Reading this from the queue instead of the prose in
+    `src/decompiled/<name>.md` matters: the notes said "do not re-attempt" for
+    `sub_08031300` while its queue block still said "rewrite without register
+    asm", because park_wip.py used to skip names it had already seen. The picker
+    read the stale half and offered a function the previous session had already
+    proved unreachable — the packet then told the agent not to re-attempt the
+    thing the packet had just asked for.
+    """
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from queue_toml import read_blocks
+    except ImportError:
+        return set()
+    return {
+        b["name"]
+        for b in read_blocks()
+        if b.get("name") and str(b.get("retry", "")).lower() == "false"
+    }
+
+
 def _row_for(name: str, data: dict) -> dict:
     for key in ("recommended", "backlog", "wip", "blocked"):
         for row in data.get(key) or []:
@@ -74,13 +97,15 @@ def _row_for(name: str, data: dict) -> dict:
     return {}
 
 
-def _pick_next(*, battle: bool, resume_wip: bool) -> str | None:
+def _pick_next(*, battle: bool, resume_wip: bool, force_exhausted: bool = False) -> str | None:
     remaining = set(list_readable_asm())
     buckets, _missing, _cse = classify()
     skip = set(buckets.get("naked_only") or [])
     data = collect()
     blocked = _blocked_names(data)
     wip_names = {p.stem for p in WIP.glob("sub_*.c")}
+    if not force_exhausted:
+        skip |= _exhausted_names()
 
     if battle:
         for row in data.get("recommended") or []:
@@ -431,6 +456,11 @@ def main() -> int:
     parser.add_argument("--next", action="store_true", help="pick cheapest remaining target")
     parser.add_argument("--battle", action="store_true", help="prefer next_queue battle ranking")
     parser.add_argument("--wip", action="store_true", help="prefer parked src/decompiled/ seeds")
+    parser.add_argument(
+        "--force-exhausted",
+        action="store_true",
+        help="also pick functions parked with retry = false (documented as unreachable)",
+    )
     parser.add_argument("--write", metavar="PATH", help="also write the packet to a file")
     parser.add_argument(
         "--permute-seconds",
@@ -445,7 +475,9 @@ def main() -> int:
 
     name = args.function
     if args.next or not name:
-        name = _pick_next(battle=args.battle, resume_wip=args.wip)
+        name = _pick_next(
+            battle=args.battle, resume_wip=args.wip, force_exhausted=args.force_exhausted
+        )
         if not name:
             print("no remaining readable-Thumb targets")
             return 0

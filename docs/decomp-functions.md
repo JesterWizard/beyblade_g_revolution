@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-22T22:08:55Z_
+_Updated: 2026-09-23T18:41:31Z_
 
 ## Legend
 
@@ -39,7 +39,8 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08040F4C` | WIP (parked C) | 94.9% | 319/336 | 319/336; done in r4 vs r5 |
 | `sub_080442FC` | WIP (parked C) | 93.1% | 134/144 | 134/144; a in r4 vs r5 (gData symbols fixed pool fold) |
 | `sub_0802C2B0` | WIP (parked C) | 92.0% | 92/100 | 92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `add… |
-| `sub_0803DCFC` | WIP (parked C) | 91.7% | 44/48 | 44/48 same-size seed (sweep_seeds); two permuter runs (120s x8 jobs, 300s x3 … |
+| `sub_0803DCFC` | WIP (parked C) | 91.7% | 44/48 | 44/48 same-size seed; permuter saturated at 30/48 after 8x120s and 3x300s jobs |
+| `sub_08038580` | WIP (parked C) | 89.1% | 82/92 | 82/92 same-size on old_agbcc (was 24/92). Three source wins: inline the globa… |
 | `sub_08043B90` | WIP (parked C) | 88.2% | 67/76 | 67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomizati… |
 | `sub_08066224` | WIP (parked C) | 85.7% | 96/112 | permuter 300 s + 900 s, no score 0 (110 → 55); 96/112 |
 | `sub_08034A68` | WIP (parked C) | 81.2% | 91/112 | permuter 300 s + 900 s, no score 0 (130 → 110); 91/112 |
@@ -91,12 +92,12 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0804AC3C` | WIP (parked C) | 30.8% | 32/104 then 38/104 | Two attempts: semantic seed 32/104 (96B), then r6/r5/r4 register-pinned data/… |
 | `sub_0803139C` | WIP (parked C) | 29.4% | 103/350 | Resource-list digit allocator/cleanup semantics reconstructed, reaching 103/3… |
 | `sub_0803DBD0` | WIP (parked C) | 28.8% | 23/80 | matched only with GCC asm labels; stripped DIFF |
+| `sub_08031300` | WIP (parked C) | 28.2% | 22/78 | 22/78 same-size. Permuter re-run 2026-09-22 on the semantic seed with the fix… |
 | `sub_08070354` | WIP (parked C) | 28.0% | 47/168 | Semantic object/flag updater reconstructed. Final verified attempt reached 47… |
 | `sub_0806E7BC` | WIP (parked C) | 27.6% | 42/152 | size_mismatch 42/152 (27.6%), compiled 148B vs retail 152B; attempted as line… |
 | `sub_0806FE84` | WIP (parked C) | 27.5% | 33/120 | Two attempts (the first run returned no status, then the retry) reached 33/12… |
 | `sub_080429CC` | WIP (parked C) | 27.3% | 84/308 then 91/308 | Two attempts: local pointer seed 84/308 (288B), then r1/r2 pointer pins 91/30… |
 | `sub_0806A314` | WIP (parked C) | 26.4% | 38/144 then 40/144 | Two semantic attempts: direct allocator/linked-list wrapper 38/144 (same size… |
-| `sub_08038580` | WIP (parked C) | 26.1% | 24/92 | best 24/92 same-size DIFF; logic and size are correct, but baseline uses dst … |
 | `sub_08069DBC` | WIP (parked C) | 26.0% | 25/96 then 63/96 | Two semantic attempts: direct tiled copy 25/96, then deferred shift load and … |
 | `sub_080444BC` | WIP (parked C) | 24.7% | 98/396 then 90/396 | Two attempts: semantic resource setup seed 98/396 (368B), then r6 MainWork pi… |
 | `sub_08036A68` | WIP (parked C) | 24.2% | 58/240 | 58/240 (24.2%), size 232 vs 240 |
@@ -159,7 +160,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0804A028` | WIP (parked C) | 8.6% | 15/174 then 55/174 | Two semantic attempts: wrong-offset seed 15/174, corrected-offset render sequ… |
 | `sub_08061564` | WIP (parked C) | 8.1% | 11/136 then 9/136 | Two semantic attempts: switch-based C 11/136 (144B), then explicit branch/got… |
 | `sub_0804188C` | WIP (parked C) | 7.8% | 19/244 then 41/244 | Two semantic attempts failed to reproduce the fixed-point table walk: direct … |
-| `sub_08031300` | WIP (parked C) | 7.7% | 6/78 | matched only with GCC asm labels; stripped DIFF |
 | `sub_0803715C` | WIP (parked C) | 7.4% | 33/444 | 33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 ins… |
 | `sub_0803114C` | WIP (parked C) | 7.1% | 13/184 | Entry-position initialization semantics reconstructed with both direction bra… |
 | `sub_0805E044` | WIP (parked C) | 7.0% | 16/228 then 15/228 | Two semantic attempts: typed table-pointer loop 16/228 (212B), then explicit … |
@@ -180,6 +180,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080442FC` | `0x080442FC` | WIP (parked C) | 93.1% | 134/144 | asm |
 | `sub_0802C2B0` | `0x0802C2B0` | WIP (parked C) | 92.0% | 92/100 | asm |
 | `sub_0803DCFC` | `0x0803DCFC` | WIP (parked C) | 91.7% | 44/48 | asm |
+| `sub_08038580` | `0x08038580` | WIP (parked C) | 89.1% | 82/92 | asm |
 | `sub_08043B90` | `0x08043B90` | WIP (parked C) | 88.2% | 67/76 | asm |
 | `sub_08066224` | `0x08066224` | WIP (parked C) | 85.7% | 96/112 | asm |
 | `sub_08034A68` | `0x08034A68` | WIP (parked C) | 81.2% | 91/112 | asm |
@@ -231,12 +232,12 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0804AC3C` | `0x0804AC3C` | WIP (parked C) | 30.8% | 32/104 then 38/104 | asm |
 | `sub_0803139C` | `0x0803139C` | WIP (parked C) | 29.4% | 103/350 | asm |
 | `sub_0803DBD0` | `0x0803DBD0` | WIP (parked C) | 28.8% | 23/80 | asm |
+| `sub_08031300` | `0x08031300` | WIP (parked C) | 28.2% | 22/78 | asm |
 | `sub_08070354` | `0x08070354` | WIP (parked C) | 28.0% | 47/168 | asm |
 | `sub_0806E7BC` | `0x0806E7BC` | WIP (parked C) | 27.6% | 42/152 | asm |
 | `sub_0806FE84` | `0x0806FE84` | WIP (parked C) | 27.5% | 33/120 | asm |
 | `sub_080429CC` | `0x080429CC` | WIP (parked C) | 27.3% | 84/308 then 91/308 | asm |
 | `sub_0806A314` | `0x0806A314` | WIP (parked C) | 26.4% | 38/144 then 40/144 | asm |
-| `sub_08038580` | `0x08038580` | WIP (parked C) | 26.1% | 24/92 | asm |
 | `sub_08069DBC` | `0x08069DBC` | WIP (parked C) | 26.0% | 25/96 then 63/96 | asm |
 | `sub_080444BC` | `0x080444BC` | WIP (parked C) | 24.7% | 98/396 then 90/396 | asm |
 | `sub_08036A68` | `0x08036A68` | WIP (parked C) | 24.2% | 58/240 | asm |
@@ -299,7 +300,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0804A028` | `0x0804A028` | WIP (parked C) | 8.6% | 15/174 then 55/174 | asm |
 | `sub_08061564` | `0x08061564` | WIP (parked C) | 8.1% | 11/136 then 9/136 | asm |
 | `sub_0804188C` | `0x0804188C` | WIP (parked C) | 7.8% | 19/244 then 41/244 | asm |
-| `sub_08031300` | `0x08031300` | WIP (parked C) | 7.7% | 6/78 | asm |
 | `sub_0803715C` | `0x0803715C` | WIP (parked C) | 7.4% | 33/444 | asm |
 | `sub_0803114C` | `0x0803114C` | WIP (parked C) | 7.1% | 13/184 | asm |
 | `sub_0805E044` | `0x0805E044` | WIP (parked C) | 7.0% | 16/228 then 15/228 | asm |

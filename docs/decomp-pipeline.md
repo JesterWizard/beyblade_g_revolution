@@ -202,6 +202,48 @@ brackets like `[r2]` that would split a block.
 The first pass retired 85 drafts, 83 stub notes and 90 stale queue blocks
 (227 → 137 `[[wip]]` entries).
 
+## The permuter's seed path
+
+The local permuter can only reshuffle correct C, so it has to be handed the parked
+draft — not the readable-Thumb wrapper in `src/matched/`. It was handed the wrapper
+for a whole day: `tools/decomp/permuter/import_function.py` still declared
+`WIP = ROOT / "src" / "wip"` after `src/wip/` was promoted to `src/decompiled/`, so
+`seed_c()`, `match_flags()` and `match_compiler()` all missed the draft and fell
+through to `src/matched/`.
+
+The failure is silent and expensive, and every symptom is visible in a run's header:
+
+| Symptom | Cause |
+|---------|-------|
+| `base score 100` on a function that scores ~20 bytes off | the base was the asm wrapper, so the permuter randomises assembly |
+| `match-compiler: agbcc` when the seed says `old_agbcc` | `match_compiler()` searched the same dead path for the sidecar comment |
+| `No perm macros found. Defaulting to randomization.` | an asm body has no perm macros to permute |
+
+Two runs recorded on 2026-09-22 were therefore void. Anything recorded *before* the
+promotion is unaffected. When a directory is promoted, grep for the old path in
+`tools/` — the schema (`build/`, `analysis/`) can be migrated while one loader is
+missed, and nothing in `make compare` or `make audit` will notice.
+
+## Queue state
+
+`decomp-queue.toml` is read by `agent_packet.py --next` to choose the next target,
+so it is machine state with prose in it. `park_wip.py` used to write a block only
+when the name was *new*, which meant re-parking a function left the previous
+`status`/`next`/`score` in place. That is how `--next` came to offer
+`sub_08031300` while its notes said "do not re-attempt by hand or by permuter": the
+picker read the stale half.
+
+- `park_wip.py` now upserts (`queue_toml.upsert_block`), rewriting only the fields
+  it is given and preserving the rest of the file byte for byte.
+- `park_wip.py --exhausted` writes `retry = false`; `agent_packet.py --next` skips
+  those names unless `--force-exhausted` is passed.
+- All queue edits go through `queue_toml.py`, which splits the file at *line-initial*
+  `[[section]]` headers. A regex over the whole text tears blocks apart on the
+  brackets in a status note (`[r2]`, `[sp, #8]`) — that produced a torn block and a
+  TOML parse error caught by `next_queue.py`.
+- `queue_toml.py --check` asserts the invariants: split/join is the identity, and
+  rewriting every field with its own parsed value is a no-op.
+
 ## Agreeing on arity
 
 Compiling is necessary but not sufficient: a file can compile perfectly while

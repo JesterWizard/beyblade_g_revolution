@@ -134,6 +134,7 @@ bash build_tools.sh
 | Signature arity | `tools/decomp/audit_signatures.py` | Prototypes vs definitions vs call sites |
 | Fix stub arity | `tools/decomp/fix_stub_arities.py` | Align asm stubs to the agreed arity |
 | Prune drafts | `tools/decomp/prune_drafts.py` | Drop drafts a semantic match superseded |
+| Queue state | `tools/decomp/queue_toml.py` | Block-wise `[[wip]]` edits + `--check` |
 | Lifecycle vocabulary | `tools/decomp/tier.py` | Single enum: has_c / named / matches → tier |
 | Analysis DB | `tools/decomp/analyze.py` | `analysis/{functions,xrefs,structs,systems}.json` |
 | Subsystems | `tools/decomp/systems.py` | Deterministic, evidence-backed membership |
