@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0803e258
-struct Unk8D0 *sub_0803E258(s16 a)
+struct Unk8D0 *Unk8D0FindActiveById(s16 a)
 {
     s32 i;
 

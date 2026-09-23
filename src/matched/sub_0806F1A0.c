@@ -2,7 +2,7 @@
 
 // @ 0x0806f1a0
 
-s32 sub_0806F1A0(struct Unk6F1A0 *a, u16 key, s16 n)
+s32 Unk84FindIndexByKey(struct Unk6F1A0 *a, u16 key, s16 n)
 {
     s16 i;
 

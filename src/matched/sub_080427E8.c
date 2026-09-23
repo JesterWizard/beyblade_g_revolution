@@ -13,22 +13,22 @@ void sub_080427E8(void)
     {
     case 0x40:
         if (main->unk0462 != 5)
-            sub_080680CC((struct Unk680CC *)&main->unk0448, 5);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk0448, 5);
         gMainWorkPtr->unk0479 = 2 & gMainWorkPtr->unk0479;
         break;
     case 0x20:
         if (main->unk0462 != 5)
-            sub_080680CC((struct Unk680CC *)&main->unk0448, 5);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk0448, 5);
         gMainWorkPtr->unk0479 = 1 | gMainWorkPtr->unk0479;
         break;
     case 0x80:
         if (main->unk0462 != 6)
-            sub_080680CC((struct Unk680CC *)&main->unk0448, 6);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk0448, 6);
         gMainWorkPtr->unk0479 = 0;
         break;
     case 0x100:
         if (main->unk0462 != 7)
-            sub_080680CC((struct Unk680CC *)&main->unk0448, 7);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk0448, 7);
         gMainWorkPtr->unk0479 = 0;
         break;
     }

@@ -18,7 +18,7 @@ void sub_08043420(void)
         main->unk039D = 0;
         main->unk1810 = 0x80;
         if (main->unk0386 != 0x0A)
-            sub_080680CC((struct Unk680CC *)&main->unk036C, 0x0A);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk036C, 0x0A);
         break;
     case 1:
         main = gMainWorkPtr;
@@ -32,7 +32,7 @@ void sub_08043420(void)
         main->unk039D = 0;
         main->unk1810 = 0x100;
         if (main->unk0386 != 0x0B)
-            sub_080680CC((struct Unk680CC *)&main->unk036C, 0x0B);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk036C, 0x0B);
         break;
     case 2:
         main = gMainWorkPtr;
@@ -46,7 +46,7 @@ void sub_08043420(void)
         main->unk039D = 1 | main->unk039D;
         main->unk1810 = 0x20;
         if (main->unk0386 != 8)
-            sub_080680CC((struct Unk680CC *)&main->unk036C, 8);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk036C, 8);
         break;
     case 3:
         main = gMainWorkPtr;
@@ -60,7 +60,7 @@ void sub_08043420(void)
         main->unk039D = 2 & main->unk039D;
         main->unk1810 = 0x40;
         if (main->unk0386 != 8)
-            sub_080680CC((struct Unk680CC *)&main->unk036C, 8);
+            Unk680CCSelectByKeyDefault((struct Unk680CC *)&main->unk036C, 8);
         break;
     }
 }

@@ -1,6 +1,6 @@
 {
-  "count": 43,
-  "generated": "2026-09-22T21:55:39Z",
+  "count": 48,
+  "generated": "2026-09-23T18:55:16Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -14,6 +14,20 @@
       "source": "ai",
       "symbol": "GetIndexedRecordWord",
       "updated": "2026-09-22"
+    },
+    "0x0802B930": {
+      "aliases": [
+        "sub_0802B930"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "62-entry (0x3D+1) table of 0x1C-byte records at ROM 0x08075AB8; matches signed halfword at +4 against the s16 arg and returns the u32 at +0, else -1",
+        "the table is a descriptor list: each record carries two ROM pointers at +0x10/+0x18"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk75AB8Lookup",
+      "updated": "2026-09-23"
     },
     "0x0802BA4C": {
       "aliases": [
@@ -102,6 +116,20 @@
       "source": "ai",
       "symbol": "BtlCaptureInput",
       "updated": "2026-09-22"
+    },
+    "0x0803E258": {
+      "aliases": [
+        "sub_0803E258"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "83 slots (0x52+1) of stride 0x28 at gMainWorkPtr+0x8D0; matches s8 id at +0x8EC and requires flag byte gMainWorkPtr[0x87C+i]==1",
+        "returns slot pointer or NULL; id is sign-extended from a halfword at the call site"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk8D0FindActiveById",
+      "updated": "2026-09-23"
     },
     "0x0803E440": {
       "aliases": [
@@ -399,6 +427,34 @@
       "symbol": "DebugPrint",
       "updated": "2026-09-22"
     },
+    "0x08068020": {
+      "aliases": [
+        "sub_08068020"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "twin of sub_080680CC: walks the offset table at ctx->[0]->[0x18] (ctx->unk28 entries, variable stride from entry+2) to find entry[0]==key",
+        "on hit records unk1C=accumulated byte offset, unk1E=0, unk1A=key, unk2E=arg2, then calls sub_08068180 with entry+8; the twin differs only in writing 0xFFFF to unk2E"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk68020SelectByKey",
+      "updated": "2026-09-23"
+    },
+    "0x080680CC": {
+      "aliases": [
+        "sub_080680CC"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "identical to sub_08068020 except unk2E is set to 0xFFFF instead of taking a third argument, so it is the clear/default variant of the same keyed selection",
+        "both pass entry+8 to sub_08068180, the 8-byte-stride placement helper operating on ctx->[0]->[0x20 + 8n]"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk680CCSelectByKeyDefault",
+      "updated": "2026-09-23"
+    },
     "0x08069908": {
       "aliases": [
         "sub_08069908"
@@ -456,6 +512,20 @@
       "source": "ai",
       "symbol": "BtlObjFree",
       "updated": "2026-09-22"
+    },
+    "0x0806F1A0": {
+      "aliases": [
+        "sub_0806F1A0"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "linear search of count (s16 arg3) records of stride 0x84 from arg1; compares the first word against a zero-extended u16 key",
+        "returns the s16 index or -1; loop counter is kept in a u16 and sign-extended back, so count is a s16 bound"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk84FindIndexByKey",
+      "updated": "2026-09-23"
     },
     "0x0806FDD0": {
       "aliases": [

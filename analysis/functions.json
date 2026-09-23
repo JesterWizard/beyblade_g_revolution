@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T18:39:50Z",
+  "generated": "2026-09-23T18:55:22Z",
   "total": 633,
   "functions": [
     {
@@ -69,7 +69,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "Unk75AB8Lookup",
       "note": "62-entry table lookup by s16 key",
       "insn_count": 19,
       "offsets": [
@@ -87,7 +87,7 @@
       "pool": [
         "0x08075AB8"
       ],
-      "system": "input"
+      "system": ""
     },
     {
       "name": "sub_0802B95C",
@@ -5759,7 +5759,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "Unk8D0FindActiveById",
       "note": "0x53-slot record search by key+flag",
       "insn_count": 35,
       "offsets": [
@@ -5779,7 +5779,7 @@
         "0x0000087C",
         "0x000008EC"
       ],
-      "system": "input"
+      "system": ""
     },
     {
       "name": "sub_0803E2AC",
@@ -6651,7 +6651,7 @@
         "0x00000322",
         "0x0000031E"
       ],
-      "system": "input"
+      "system": ""
     },
     {
       "name": "sub_080411EC",
@@ -17284,7 +17284,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "Unk68020SelectByKey",
       "note": "walk keyed variable-stride entry table (sibling of sub_080680CC), set match state including unk2E from arg2 param",
       "insn_count": 38,
       "offsets": [
@@ -17309,7 +17309,7 @@
       "ram_names": [],
       "data_refs": [],
       "pool": [],
-      "system": "input"
+      "system": ""
     },
     {
       "name": "sub_080680CC",
@@ -17318,7 +17318,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "Unk680CCSelectByKeyDefault",
       "note": "Phase 3b semantic C",
       "insn_count": 35,
       "offsets": [
@@ -19858,7 +19858,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "Unk84FindIndexByKey",
       "note": "linear search Unk6F1A0[] by unk00 key",
       "insn_count": 29,
       "offsets": [
@@ -19872,7 +19872,7 @@
       "ram_names": [],
       "data_refs": [],
       "pool": [],
-      "system": "input"
+      "system": ""
     },
     {
       "name": "sub_0806F430",

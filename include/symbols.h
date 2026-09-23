@@ -12,12 +12,14 @@
  */
 
 #define GetIndexedRecordWord sub_0802B8BC
+#define Unk75AB8Lookup sub_0802B930
 #define BtlFreeUnk1694Obj sub_0802BA4C
 #define BtlUnk1694FindAndMark sub_0802C5DC
 #define BtlSetTimer118 sub_080314FC
 #define BtlSetMode1F90 sub_080330F4
 #define BtlClearState sub_08033878
 #define BtlCaptureInput sub_08034894
+#define Unk8D0FindActiveById sub_0803E258
 #define BtlCountLiveSlots sub_0803E440
 #define BtlClearUnk1834 sub_080433F4
 #define BtlClearUnk1688Entry sub_08044EE8
@@ -38,10 +40,13 @@
 #define TimerAdvance sub_08067890
 #define DebugMessage sub_08067A9C
 #define DebugPrint sub_08067B98
+#define Unk68020SelectByKey sub_08068020
+#define Unk680CCSelectByKeyDefault sub_080680CC
 #define BgGetHofsReg sub_08069908
 #define BgGetVofsReg sub_08069948
 #define BtlObjAlloc sub_0806A3A4
 #define BtlObjFree sub_0806A434
+#define Unk84FindIndexByKey sub_0806F1A0
 #define BtlObjPoolAlloc sub_0806FDD0
 #define BtlObjPoolFree sub_0806FE84
 #define BtlObjListMoveHeadToTail sub_0806FEFC

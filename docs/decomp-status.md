@@ -1806,3 +1806,23 @@ agbcc picks `r2`.
 
 - `docs/decomp-queue.toml`: the three entries now say "do not re-attempt".
 - make compare: OK
+
+## 2026-09-22 — hint hygiene + lookup-helper naming batch
+
+- **`system` group was a false positive.** `SYSTEM_NOTE_HINTS["input"]` matched
+  bare `"key"`, so five *table/record lookup* helpers landed in `input` on the
+  strength of notes reading "lookup by key". Hints are now the device vocabulary
+  (`keyinput`, `button`, `held`, ...). `input` disappears; the five members fall
+  back to unassigned, which is honest — none of them touches `KEYINPUT`.
+- **Named the lookup cluster** (the four remaining plus their twin):
+  - `sub_0802B930` → `Unk75AB8Lookup` — 62 × 0x1C records at ROM `0x08075AB8`,
+    key is the `s16` at `+4`, returns the `u32` at `+0`, `-1` on miss.
+  - `sub_0803E258` → `Unk8D0FindActiveById` — 83 slots, stride 0x28, at
+    `gMainWorkPtr+0x8D0`, gated by a flag byte at `+0x87C`, `s8` id at `+0x8EC`.
+  - `sub_0806F1A0` → `Unk84FindIndexByKey` — stride-0x84 search, `s16` bound,
+    returns index or `-1`.
+  - `sub_08068020` / `sub_080680CC` → `Unk68020SelectByKey` /
+    `Unk680CCSelectByKeyDefault` — twin pair walking the offset table at
+    `ctx->[0]->[0x18]`; they differ only in the `unk2E` sentinel (`arg2` vs
+    `0xFFFF`), which is what makes the pair self-documenting.
+- **Named:** 43 → 48 / 633. `make compare` OK throughout.

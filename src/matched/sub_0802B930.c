@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802b930
-s32 sub_0802B930(s32 a)
+s32 Unk75AB8Lookup(s32 a)
 {
     s32 i;
     struct Unk75AB8 *p;

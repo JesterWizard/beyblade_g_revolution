@@ -9,7 +9,7 @@
 |----------|---------|-----------|------|-----:|--------:|
 | [`GetIndexedRecordWord`](GetIndexedRecordWord.md) | `0x0802B8BC` |  | MATCHING | 20 | 1 |
 | `sub_0802B90C` | `0x0802B90C` |  | MATCHING | 12 | 2 |
-| `sub_0802B930` | `0x0802B930` | input | MATCHING | 42 | 1 |
+| [`Unk75AB8Lookup`](Unk75AB8Lookup.md) | `0x0802B930` |  | MATCHING | 42 | 1 |
 | `sub_0802B95C` | `0x0802B95C` |  | MATCHING | 56 | 2 |
 | `sub_0802B994` | `0x0802B994` |  | MATCHING | 58 | 1 |
 | [`BtlFreeUnk1694Obj`](BtlFreeUnk1694Obj.md) | `0x0802BA4C` | battle | MATCHING | 48 | 0 |
@@ -172,7 +172,7 @@
 | `sub_0803DEC8` | `0x0803DEC8` |  | UNKNOWN | 514 | 1 |
 | `sub_0803E0CC` | `0x0803E0CC` |  | UNKNOWN | 296 | 1 |
 | `sub_0803E1F4` | `0x0803E1F4` |  | MATCHING | 98 | 3 |
-| `sub_0803E258` | `0x0803E258` | input | MATCHING | 82 | 0 |
+| [`Unk8D0FindActiveById`](Unk8D0FindActiveById.md) | `0x0803E258` |  | MATCHING | 82 | 0 |
 | `sub_0803E2AC` | `0x0803E2AC` |  | DECOMPILED | 124 | 1 |
 | `sub_0803E328` | `0x0803E328` |  | MATCHING | 76 | 2 |
 | `sub_0803E374` | `0x0803E374` |  | MATCHING | 76 | 2 |
@@ -198,7 +198,7 @@
 | `sub_080408C4` | `0x080408C4` |  | MATCHING | 32 | 0 |
 | `sub_08040EF4` | `0x08040EF4` |  | DECOMPILED | 88 | 1 |
 | `sub_08040F4C` | `0x08040F4C` | menu | DECOMPILED | 336 | 0 |
-| `sub_0804109C` | `0x0804109C` | input | MATCHING | 336 | 6 |
+| `sub_0804109C` | `0x0804109C` |  | MATCHING | 336 | 6 |
 | `sub_080411EC` | `0x080411EC` | battle | DECOMPILED | 346 | 3 |
 | `sub_08041348` | `0x08041348` |  | MATCHING | 76 | 0 |
 | `sub_08041394` | `0x08041394` |  | MATCHING | 38 | 2 |
@@ -490,8 +490,8 @@
 | `sub_08067F98` | `0x08067F98` |  | MATCHING | 48 | 1 |
 | `sub_08067FC8` | `0x08067FC8` |  | DECOMPILED | 74 | 3 |
 | `sub_08068014` | `0x08068014` |  | MATCHING | 10 | 2 |
-| `sub_08068020` | `0x08068020` | input | MATCHING | 78 | 2 |
-| `sub_080680CC` | `0x080680CC` |  | MATCHING | 76 | 11 |
+| [`Unk68020SelectByKey`](Unk68020SelectByKey.md) | `0x08068020` |  | MATCHING | 78 | 2 |
+| [`Unk680CCSelectByKeyDefault`](Unk680CCSelectByKeyDefault.md) | `0x080680CC` |  | MATCHING | 76 | 11 |
 | `sub_08068118` | `0x08068118` |  | DECOMPILED | 102 | 1 |
 | `sub_08068180` | `0x08068180` |  | MATCHING | 174 | 4 |
 | `sub_0806833C` | `0x0806833C` |  | MATCHING | 156 | 2 |
@@ -567,7 +567,7 @@
 | `sub_0806EEC8` | `0x0806EEC8` |  | UNKNOWN | 404 | 1 |
 | `sub_0806F05C` | `0x0806F05C` |  | UNKNOWN | 280 | 1 |
 | `sub_0806F174` | `0x0806F174` |  | MATCHING | 44 | 1 |
-| `sub_0806F1A0` | `0x0806F1A0` | input | MATCHING | 58 | 1 |
+| [`Unk84FindIndexByKey`](Unk84FindIndexByKey.md) | `0x0806F1A0` |  | MATCHING | 58 | 1 |
 | `sub_0806F430` | `0x0806F430` |  | MATCHING | 48 | 0 |
 | `sub_0806F8C4` | `0x0806F8C4` |  | MATCHING | 76 | 5 |
 | `sub_0806F910` | `0x0806F910` | battle | UNKNOWN | 624 | 0 |

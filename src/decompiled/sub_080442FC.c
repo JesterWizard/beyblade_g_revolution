@@ -24,7 +24,7 @@ void sub_080442FC(
     if (b != 0)
     {
         index = b->unk16;
-        gMainWorkPtr->unk181B = (u8)sub_0806F1A0(
+        gMainWorkPtr->unk181B = (u8)Unk84FindIndexByKey(
             (struct Unk6F1A0 *)gData_08091208,
             b->unk14,
             gData_08091204[0]);

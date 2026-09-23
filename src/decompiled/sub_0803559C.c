@@ -33,7 +33,7 @@ type_one:
 
 update:
     value = (u16)value;
-    sub_08068020(target, value, value);
+    Unk68020SelectByKey(target, value, value);
     goto done;
 
 type_two:
@@ -41,7 +41,7 @@ type_two:
         goto done;
     target = (struct Unk680CC *)&base->unk1D4;
     value = (u16)value;
-    sub_08068020(target, value, value);
+    Unk68020SelectByKey(target, value, value);
 
 done:
     return;

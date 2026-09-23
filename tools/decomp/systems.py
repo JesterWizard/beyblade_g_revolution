@@ -63,12 +63,19 @@ SYSTEM_SYMBOLS: dict[str, tuple[str, ...]] = {
 #: Notes are *weak* evidence: the field is also used for batch bookkeeping
 #: ("battle/readable-thumb", "semantic C"), so a hit only ever produces a
 #: derived assignment, never a direct one.
+#:
+#: Hints are matched as plain substrings, so they must not be words that occur in
+#: other senses. Bare `"key"` put five table-lookup helpers into `input` because
+#: their notes said "lookup by key" — a table key, not a keyboard key. Same trap:
+#: `"screen"` (a screen *buffer* is graphics), `"draw"` (sprite-draw vs. a draw
+#: *call ordering*). Prefer compounds and the game's own vocabulary.
 SYSTEM_NOTE_HINTS: dict[str, tuple[str, ...]] = {
     "battle": ("battle", "btl"),
     "audio": ("sound", "audio", "gax", "bgm", "music", "sfx"),
     "graphics": ("gfx", "graphic", "sprite", "palette", "vram", "render", "draw"),
     "save": ("save", "sram", "flash"),
-    "input": ("input", "key"),
+    # `input` requires the *device* vocabulary: KEYINPUT, buttons, held state.
+    "input": ("keyinput", "key input", "keypad", "button", "input state", "held"),
     "menu": ("menu", "ui", "screen", "title"),
 }
 

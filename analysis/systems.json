@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T18:39:50Z",
+  "generated": "2026-09-23T18:55:22Z",
   "systems": {
     "audio": {
       "functions": [
@@ -138,16 +138,6 @@
       ],
       "count": 34
     },
-    "input": {
-      "functions": [
-        "sub_0802B930",
-        "sub_0803E258",
-        "sub_0804109C",
-        "sub_08068020",
-        "sub_0806F1A0"
-      ],
-      "count": 5
-    },
     "menu": {
       "functions": [
         "sub_08040F4C"
@@ -156,13 +146,6 @@
     }
   },
   "membership": {
-    "sub_0802B930": {
-      "system": "input",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'key'"
-      ]
-    },
     "sub_0802BA4C": {
       "system": "battle",
       "origin": "note",
@@ -457,13 +440,6 @@
         "references gBattleWork"
       ]
     },
-    "sub_0803E258": {
-      "system": "input",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'key'"
-      ]
-    },
     "sub_0803E440": {
       "system": "battle",
       "origin": "note",
@@ -483,13 +459,6 @@
       "origin": "note",
       "evidence": [
         "note mentions 'menu'"
-      ]
-    },
-    "sub_0804109C": {
-      "system": "input",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'input'"
       ]
     },
     "sub_080411EC": {
@@ -926,13 +895,6 @@
         "4/4 call neighbours in battle"
       ]
     },
-    "sub_08068020": {
-      "system": "input",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'key'"
-      ]
-    },
     "sub_08068418": {
       "system": "battle",
       "origin": "derived",
@@ -966,13 +928,6 @@
       "origin": "direct",
       "evidence": [
         "references gBtlInputMask"
-      ]
-    },
-    "sub_0806F1A0": {
-      "system": "input",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'key'"
       ]
     },
     "sub_0806F910": {
@@ -1056,6 +1011,7 @@
   "unassigned": [
     "sub_0802B8BC",
     "sub_0802B90C",
+    "sub_0802B930",
     "sub_0802B95C",
     "sub_0802B994",
     "sub_0802BAD4",
@@ -1176,6 +1132,7 @@
     "sub_0803DEC8",
     "sub_0803E0CC",
     "sub_0803E1F4",
+    "sub_0803E258",
     "sub_0803E2AC",
     "sub_0803E328",
     "sub_0803E374",
@@ -1198,6 +1155,7 @@
     "sub_08040680",
     "sub_080408C4",
     "sub_08040EF4",
+    "sub_0804109C",
     "sub_08041348",
     "sub_08041394",
     "sub_080415FC",
@@ -1427,6 +1385,7 @@
     "sub_08067F98",
     "sub_08067FC8",
     "sub_08068014",
+    "sub_08068020",
     "sub_080680CC",
     "sub_08068118",
     "sub_08068180",
@@ -1498,6 +1457,7 @@
     "sub_0806EEC8",
     "sub_0806F05C",
     "sub_0806F174",
+    "sub_0806F1A0",
     "sub_0806F430",
     "sub_0806F8C4",
     "sub_0806FBF8",
@@ -1564,9 +1524,8 @@
     "audio": 1,
     "battle": 87,
     "graphics": 34,
-    "input": 5,
     "menu": 1,
-    "unassigned": 505
+    "unassigned": 510
   },
   "notes": {
     "universal_symbols_excluded": [

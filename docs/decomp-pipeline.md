@@ -325,3 +325,8 @@ file between `opcode_stubs.file_kind()` categories, find the semantic form first
   (hardware address ranges, specific named RAM symbols), never from guesses.
   Batch bookkeeping notes such as `battle/readable-thumb` are explicitly *not*
   treated as subsystem evidence.
+- Note hints are the weakest tier and are matched as plain substrings, so a hint
+  must not be a word that appears in another sense. Bare `"key"` filed five
+  table-lookup helpers under `input` because their notes read "lookup by key";
+  the hint is now `keyinput`/`button`/`held` and friends. When a hint produces a
+  subsystem whose members share nothing else, suspect the hint before the members.

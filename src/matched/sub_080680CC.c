@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080680cc
-void sub_080680CC(struct Unk680CC *a, u16 key)
+void Unk680CCSelectByKeyDefault(struct Unk680CC *a, u16 key)
 {
     struct Unk68014 *inner;
     struct Unk680CCRec *rec;
