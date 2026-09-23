@@ -172,10 +172,10 @@ def reap_stale_permuters() -> int:
     return killed
 
 
-def run_permuter(
-    workdir: Path, *, jobs: int, seconds: int, seed_score: int, strict_branches: bool
-) -> int:
-    """Run the permuter until score 0 or timeout. Returns the best score seen."""
+def _one_round(
+    workdir: Path, *, jobs: int, seconds: int, strict_branches: bool, round_no: int
+) -> None:
+    """Run one bounded permuter pass over `workdir`."""
     cmd = [
         sys.executable,
         str(PERM / "permuter.py"),
@@ -190,8 +190,7 @@ def run_permuter(
         # The permuter ignores branch targets by default, which can produce a
         # "score 0" that is not byte-identical (see docs/decomp-patterns.md).
         cmd.append("--no-ignore-branch-targets")
-    print(f"permuting for up to {seconds}s on {jobs} jobs ...", flush=True)
-    reap_stale_permuters()
+    print(f"permuting for up to {seconds}s on {jobs} jobs (round {round_no}) ...", flush=True)
     proc = subprocess.Popen(cmd, cwd=str(ROOT), start_new_session=True)
     # The caller owns its own timeout (`timeout 600` in a batch script, or a
     # killed session). `start_new_session=True` means its signal never reaches
@@ -218,8 +217,52 @@ def run_permuter(
     finally:
         for sig, handler in prev.items():
             signal.signal(sig, handler)
-    scores = [score for score, _ in output_dirs(workdir)]
-    return min(scores + [seed_score])
+
+
+#: A round that gets the best score down to at most this fraction of where the
+#: round started is making real progress and earns another round.
+ESCALATE_RATIO = 0.6
+
+#: Upper bound on rounds, so an unlucky sequence of improvements cannot spin.
+MAX_ROUNDS = 4
+
+
+def run_permuter(
+    workdir: Path,
+    *,
+    jobs: int,
+    seconds: int,
+    seed_score: int,
+    strict_branches: bool,
+    escalate: bool = True,
+) -> int:
+    """Run the permuter until score 0 or timeout. Returns the best score seen.
+
+    A single fixed budget cannot serve both failure modes. Most seeds are dead
+    ends — `randomization` (no perm macros in a hand-written seed) either finds
+    something in the first minute or never does — and spending 4 minutes on each
+    of those starves the queue. But some seeds are one round from a match:
+    `sub_08061C48` went 210 -> 10 inside its first 120s and was parked on the
+    timer. So probe once, then keep going only while the score is still
+    collapsing.
+    """
+    best = seed_score
+    rounds = MAX_ROUNDS if escalate else 1
+    for round_no in range(1, rounds + 1):
+        reap_stale_permuters()
+        _one_round(
+            workdir, jobs=jobs, seconds=seconds, strict_branches=strict_branches, round_no=round_no
+        )
+        scores = [score for score, _ in output_dirs(workdir)]
+        round_best = min(scores + [seed_score])
+        improved = round_best < best
+        best = round_best
+        if best == 0 or round_no == rounds:
+            break
+        if not (improved and best <= seed_score * ESCALATE_RATIO):
+            break
+        print(f"score {best} is still collapsing — granting another round", flush=True)
+    return best
 
 
 def extract_function(text: str, name: str) -> str | None:
@@ -365,6 +408,11 @@ def main() -> int:
         action="store_true",
         help="score branch targets too (slower, but no false score 0)",
     )
+    parser.add_argument(
+        "--no-escalate",
+        action="store_true",
+        help="single round, even if the score is still collapsing",
+    )
     args = parser.parse_args()
     name = args.function
 
@@ -398,6 +446,7 @@ def main() -> int:
             seconds=args.seconds,
             seed_score=seed_score,
             strict_branches=args.strict_branches,
+            escalate=not args.no_escalate,
         )
         found = candidate_from(workdir, name)
         if not found:
