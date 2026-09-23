@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-23T18:41:31Z_
+_Updated: 2026-09-23T19:23:50Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 411 |
-| Still need semantic C | **222** |
-| Readable Thumb remaining | 222 |
+| Semantic C done | 412 |
+| Still need semantic C | **221** |
+| Readable Thumb remaining | 221 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 80 (77 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 137 |
+| WIP (resume these first) | 136 |
 
 Ranking: **battle** · showing top **40**
 
@@ -143,7 +143,6 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080442FC` | 144 | 134/144 | `src/decompiled/sub_080442FC.c` | 134/144; a in r4 vs r5 (gData symbols fixed pool fold) | perm_refer_to_var so index takes r4 |
 | `sub_08047624` | 174 | 80/174 | `src/decompiled/sub_08047624.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_080523A4` | 112 | 71/112 | `src/decompiled/sub_080523A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08061C48` | 56 | 52/56 | `src/decompiled/sub_08061C48.c` | 52/56 seed; permuter saturated | Do not re-run the permuter. Revisit only via a hand-shaped source that forces the pool load's live range to start before the shift |
 | `sub_08066224` | 112 | 96/112 | `src/decompiled/sub_08066224.c` | permuter 300 s + 900 s, no score 0 (110 → 55); 96/112 | keep readable Thumb; duplicated callback/flag block layout |
 | `sub_0806A3A4` | 144 | 10/144 | `src/decompiled/sub_0806A3A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806B3E8` | 84 | 67/84 | `src/decompiled/sub_0806B3E8.c` | permuter 300 s + 900 s, no score 0 (95 → 10); 67/84 | keep readable Thumb; retail tracks the live pointer in two registers |

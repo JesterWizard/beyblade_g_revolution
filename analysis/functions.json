@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T18:55:22Z",
+  "generated": "2026-09-23T19:23:49Z",
   "total": 633,
   "functions": [
     {
@@ -14455,11 +14455,11 @@
       "name": "sub_08061C48",
       "addr": "0x08061C48",
       "size": 56,
-      "kind": "asm",
+      "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
-      "note": "pop Unk0770 slot at gUnk_03000794/770",
+      "symbol": "Unk770FreeLastSlot",
+      "note": "semantic C: decrement gData_03000794 slot counter, free + clear gData_03000770[i]; base local keeps the table literal load ahead of the index shift",
       "insn_count": 22,
       "offsets": [
         "0x00"

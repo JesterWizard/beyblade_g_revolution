@@ -406,7 +406,7 @@
 | `sub_08061BAC` | `0x08061BAC` |  | MATCHING | 48 | 2 |
 | `sub_08061BDC` | `0x08061BDC` |  | MATCHING | 12 | 1 |
 | `sub_08061BE8` | `0x08061BE8` |  | MATCHING | 96 | 18 |
-| `sub_08061C48` | `0x08061C48` |  | MATCHING | 56 | 0 |
+| [`Unk770FreeLastSlot`](Unk770FreeLastSlot.md) | `0x08061C48` |  | MATCHING | 56 | 0 |
 | `sub_08061D00` | `0x08061D00` |  | DECOMPILED | 104 | 1 |
 | [`TextRowSetPaletteBank`](TextRowSetPaletteBank.md) | `0x08061D68` | graphics | UNDERSTOOD | 88 | 29 |
 | `sub_08061DC0` | `0x08061DC0` |  | MATCHING | 72 | 0 |

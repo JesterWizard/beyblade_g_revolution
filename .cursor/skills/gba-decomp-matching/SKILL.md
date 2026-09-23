@@ -109,6 +109,29 @@ shifted += base;
 
 `sub_08062CC8`. Permuter invented this in 9 iterations; `match_function.py` still has to confirm against retail (permuter `target.o` can warn about pool alignment).
 
+### 7b. A table *base* local pins the literal before the index shift
+
+Retail:
+```
+str r0,[r4]; ldr r5,[pc,#36]; lsls r0,r0,#3; adds r0,r0,r5; ldr r0,[r0]
+```
+agbcc from `tbl[i].unk00`:
+```
+str r0,[r4]; lsls r0,r0,#3;  ldr r5,[pc,#32]; adds r0,r0,r5; ldr r0,[r0]
+```
+Only the two middle instructions swap (4 bytes, `same_size`). Subscripting, `(tbl + i)->unk00`, a *slot address* local (`slot = tbl + i;`) and a `u8 *` byte-offset form all stay at 52/56; `slot`/`tbl` locals assigned after the decrement also get hoisted. What works is a local for the **base only**, leaving the index inside the subscript so the scaled index stays its own operand:
+
+```c
+base = (struct Unk0770 *)gData_03000770;
+if (base[i].unk00 != 0)
+{
+    BtlObjFree(base[i].unk00);
+    base[gData_03000794[0]].unk00 = 0;
+}
+```
+
+`base` is live across the `BtlObjFree` call and reused by the second subscript, which is why one `ldr r5` serves both — and the load is now needed before the shift, so it schedules first. Win: `sub_08061C48` (52/56 -> 56/56), found by `test_variants.py` in one 7-variant sweep after the permuter's randomization stalled at 52/56. Reach for this before the permuter when a symbol base feeds an indexed field twice.
+
 ### 8. Dummy reload to pin `ands` operands
 
 Mask-first `movs r0,#N; ldrb r1,[r5]; ands r0,r1` can compile as `movs r1,#N; ldrb r0; ands r1,r0`. An extra `value = *addr` into a different u32 before a later mask test can fix the earlier tests too (`sub_0803531C`).

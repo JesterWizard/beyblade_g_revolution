@@ -30,6 +30,7 @@
 #define TextDrawAlign sub_0806171C
 #define TextGetAreaWidth sub_08061784
 #define TextSetActiveObject sub_080617C4
+#define Unk770FreeLastSlot sub_08061C48
 #define TextRowSetPaletteBank sub_08061D68
 #define RandRange sub_080628B4
 #define Div sub_080674A0

@@ -1826,3 +1826,32 @@ agbcc picks `r2`.
     `ctx->[0]->[0x18]`; they differ only in the `unk2E` sentinel (`arg2` vs
     `0xFFFF`), which is what makes the pair self-documenting.
 - **Named:** 43 → 48 / 633. `make compare` OK throughout.
+
+## 2026-09-22 — permuter leak, escalation, and a semantic counter that was lying
+
+- **Orphaned permuter trees.** Two `permuter.py -j 8` pools from earlier batches
+  were still alive (up to 2.7 h, load 19.6 on 8 cores). `start_new_session=True`
+  (needed so `_kill_group` can reach the workers) also detached them from the
+  signal the *batch* died from, and the survivors held the batch's stdout pipe, so
+  the next piped command hung instead of failing. `reap_stale_permuters()` now
+  kills our `permuter.py` processes whose parent is outside the current ancestor
+  chain, and `run_permuter` forwards SIGTERM/SIGINT/SIGHUP to the pool before
+  re-raising. Batch output goes to a file, not a pipe.
+- **Permuter escalation.** A fixed budget cannot serve both failure modes. Of five
+  120 s probes, four moved ≤11% (`sub_08043B90`: 200 → 200 across the whole
+  budget) while `sub_08061C48` went **210 → 10** and was parked on the timer.
+  `run_permuter` now probes once and grants another round only while the score is
+  still collapsing (≤60% of the starting score, max 4 rounds).
+- **`sub_08061C48` matched (56/56).** The residual was a 4-byte instruction swap
+  (`ldr r5,=table` before vs after `lsls r0,#3`). A 7-variant `test_variants.py`
+  sweep found it: a local for the table **base only**, with the index left in the
+  subscript, keeps the literal load ahead of the shift. Captured as skill pattern
+  7b. Landed via `integrate_c.py`; the stale draft and queue block were pruned.
+- **Progress was under-counting semantic C.** `build/semantic_verified.json` is the
+  allowlist `progress.py`/`tier.py` check before believing a text-based "semantic"
+  guess, and only `matched_rescore.py --write-verified` wrote it. Semantic C landed
+  by hand-editing `src/matched/` was therefore invisible: **403 counted vs 412 in
+  the manifest**. `integrate_c.py` now records what it lands, `make sync-verified`
+  / `make check-verified` repair and gate the rest, and the five BIOS wrappers were
+  backfilled. Count: **409 semantic C / 224 readable Thumb**.
+- **Named:** 43 → 49/633. `make compare` OK throughout.

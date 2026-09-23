@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-23T18:41:31Z_
+_Updated: 2026-09-23T19:23:50Z_
 
 ## Legend
 
@@ -625,7 +625,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08042C3C` | `0x08042C3C` | matched | 100.0% | 56/56 | semantic |
 | `sub_0805DA70` | `0x0805DA70` | matched | 100.0% | 56/56 | semantic |
 | `sub_0806013C` | `0x0806013C` | matched | 100.0% | 56/56 | semantic |
-| `sub_08061C48` | `0x08061C48` | matched | 100.0% | 56/56 | asm |
+| `sub_08061C48` | `0x08061C48` | matched | 100.0% | 56/56 | semantic |
 | `sub_0806209C` | `0x0806209C` | matched | 100.0% | 56/56 | semantic |
 | `sub_08062AC0` | `0x08062AC0` | matched | 100.0% | 56/56 | semantic |
 | `sub_080712CC` | `0x080712CC` | matched | 100.0% | 56/56 | semantic |

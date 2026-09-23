@@ -54,7 +54,7 @@
 - `sub_08060798`
 - `sub_080611F0`
 - `sub_08061BAC`
-- `sub_08061C48`
+- [`Unk770FreeLastSlot`](Unk770FreeLastSlot.md)
 - `sub_08062044`
 - `sub_08062960`
 - `sub_0806306C`

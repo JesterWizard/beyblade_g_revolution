@@ -16,6 +16,7 @@ MATCH = ROOT / "asm" / "matchings"
 SRC_MATCHED = ROOT / "src" / "matched"
 MATCH_SCRIPT = ROOT / "tools" / "decomp" / "match_function.py"
 GEN = ROOT / "tools" / "decomp" / "gen_rom_layout.py"
+VERIFIED = ROOT / "build" / "semantic_verified.json"
 
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 from asm_bytes import addr_from_name, retail_bytes, write_matching_bytes  # noqa: E402
@@ -37,6 +38,33 @@ def load_manifest() -> dict:
 def save_manifest(data: dict) -> None:
     MANIFEST.parent.mkdir(parents=True, exist_ok=True)
     MANIFEST.write_text(json.dumps(data, indent=2) + "\n")
+
+
+def record_semantic_verified(name: str, body: str, kind: str) -> None:
+    """Register a landed semantic function in `build/semantic_verified.json`.
+
+    `progress.py` and `tier.py` treat that file as the record of *verified*
+    semantics: `file_kind()` guesses "semantic" from the text (no `asm()`), which
+    is spoofable, so a guess is demoted to `asm` unless the name is listed here.
+    Only `matched_rescore.py --write-verified` used to write it, which meant
+    semantic C landed through `integrate_c.py` (or the permuter, which calls it)
+    stayed invisible to the progress counter — the byte-match count moved but the
+    semantic-C milestone did not.
+    """
+    if kind != "semantic":
+        return
+    if VERIFIED.is_file():
+        data = json.loads(VERIFIED.read_text())
+    else:
+        data = {"functions": {}}
+    functions = data.setdefault("functions", {})
+    functions[name] = {
+        "pct": 100.0,
+        "compiler": "old_agbcc" if "match-compiler: old_agbcc" in body else "agbcc",
+        "score": "integrated",
+    }
+    VERIFIED.parent.mkdir(parents=True, exist_ok=True)
+    VERIFIED.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
 
 
 def verify(function: str, c_path: Path) -> bool:
@@ -122,6 +150,7 @@ def main() -> int:
     data["functions"] = [f for f in data["functions"] if f["name"] != name]
     data["functions"].append(entry)
     save_manifest(data)
+    record_semantic_verified(name, body, kind)
 
     result = subprocess.run([sys.executable, str(GEN)], check=False)
     if result.returncode != 0:

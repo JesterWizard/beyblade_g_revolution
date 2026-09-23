@@ -1023,15 +1023,6 @@ next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "71/112"
 
 [[wip]]
-name = "sub_08061C48"
-seed = "src/decompiled/sub_08061C48.c"
-notes = "src/decompiled/sub_08061C48.md"
-status = "52/56 seed; permuter saturated"
-next = "Do not re-run the permuter. Revisit only via a hand-shaped source that forces the pool load's live range to start before the shift"
-score = "52/56"
-retry = "false"
-
-[[wip]]
 name = "sub_08066224"
 seed = "src/decompiled/sub_08066224.c"
 notes = "src/decompiled/sub_08066224.md"

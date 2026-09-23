@@ -150,7 +150,8 @@ The scoreboard `docs/decomp-functions.md` is unchanged and stays the
 Every stage is also directly runnable and has a `make` target:
 `make analyze`, `make symbols`, `make tier`, `make document`, `make status`,
 `make audit`, `make repair-signatures`, `make audit-drafts`, `make repair-drafts`,
-`make prune-drafts`, `make signatures`, `make fix-stub-arities`.
+`make prune-drafts`, `make signatures`, `make fix-stub-arities`,
+`make sync-verified`, `make check-verified`.
 
 ## Verifying the C corpus itself
 
@@ -183,6 +184,28 @@ These are *not* mass-fixed on purpose. Several cross-function `conflicting types
 failures mean the draft's guess at a callee's signature is better than the
 header's, so rewriting the draft to agree with the header would throw away the
 draft's information. They are triaged per file.
+
+### The semantic counter has its own allowlist
+
+`file_kind()` guesses "semantic" from the text of `src/matched/*.c` (a semantic
+body contains no `asm()`), which is trivially wrong in both directions, so
+`progress.py` and `tier.py` demote a text-guess to `asm` unless the function is
+listed in `build/semantic_verified.json`. The list is the authority.
+
+Only `matched_rescore.py --write-verified` used to write it, which meant semantic C
+that landed any other way was **invisible to the progress counter**: the byte-match
+count moved, the semantic-C milestone did not. Six functions were in that state —
+five BIOS wrappers (`sub_080674A0`..`sub_080674B4`, converted by hand-editing
+`src/matched/`) plus a permuter integration. The count was 403 when the manifest
+already said 412.
+
+- `integrate_c.py` now records every semantic function it lands, so the permuter
+  and script-first paths stay correct by construction.
+- `make sync-verified` / `make check-verified` repair and gate the list for
+  hand-edited files; `check-verified` exits 1 when it is out of step.
+
+A hand edit to `src/matched/*.c` is the one path that still bypasses the record, so
+run `make check-verified` after one.
 
 ### Retiring superseded drafts
 
