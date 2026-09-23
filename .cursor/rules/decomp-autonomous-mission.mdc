@@ -17,6 +17,7 @@ Do **not** re-read `docs/decomp-mission.md` / roadmap each session. Start with s
 - Do **not** stop for approval between batches unless escalated
 - Do **not** throw away unmatched C. Park it (`park_wip.py` → `src/decompiled/`) before restoring Thumb in `src/matched/`
 - C89 / agbcc on matching paths; RAM via `ram_map.h` / `battle.h`, not raw `0x03…`
+- Semantic C is **readable C**, not asm-shaped C — see `decomp-semantic-style.mdc` (no register-named locals, no goto labels copied from retail; struct walks, normal loops)
 - Semantic C uses struct members (`a->unkA0`), not offset-casts, `register`, `asm volatile`, GCC asm labels, or empty `asm("")`
 - **README.md** is tables only — no mermaid, no `decomp-progress.svg`
 - Names live in `analysis/symbols.json`; `include/symbols.h`, `[renames]`, and `analysis/*.json` are **generated** — never hand-edit
@@ -41,12 +42,15 @@ make document  # regenerate docs/systems/ + docs/functions/
 
 ```bash
 python3 tools/decomp/report_status.py && make compare
-python3 tools/decomp/script_first.py
-# remainder only:
-python3 tools/decomp/agent_packet.py --next
+python3 tools/decomp/script_first.py 5
+# remainder: up to 5 functions this batch
+python3 tools/decomp/agent_packet.py --next   # repeat until batch of 5 done
 ```
 
-Agent reads **one packet**, writes C, max **1** `match_function.py` attempt, then parks. Do not dump mission docs or full hex DIFFs (`match_function.py` is compact by default; `--full` if needed).
+**Batch size: 5 functions** — `script_first.py 5` first, then agent packets for the
+remainder until five are matched or attempted. One packet → max **1** C write → max
+**1** `match_function.py` attempt → park on DIFF. Do not dump mission docs or full
+hex DIFFs (`match_function.py` is compact by default; `--full` if needed).
 
 The packet runs the local permuter on near-miss/WIP seeds before asking the agent to write anything (`--permute-seconds`, default 60). If the packet says *MATCH — permuter already verified and integrated*, there is nothing to write.
 

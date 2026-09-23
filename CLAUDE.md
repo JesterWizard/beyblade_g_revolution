@@ -48,10 +48,10 @@ This installs agbcc, gbafix, Luvdis, m2c, generates `asm/nonmatchings/`, and ver
 python3 tools/decomp/report_status.py
 make compare
 
-# 2. Deterministic pass (no model)
-python3 tools/decomp/script_first.py
+# 2. Deterministic pass (no model) — batch of 5
+python3 tools/decomp/script_first.py 5
 
-# 3. Remainder: one compact packet, then C (max 1 attempt → permuter → park)
+# 3. Remainder: agent packets until 5 functions matched or attempted this batch
 python3 tools/decomp/agent_packet.py --next
 
 # 4. Naming — independent of matching, so all 633 are eligible
@@ -118,6 +118,7 @@ bash build_tools.sh
 - Hand-edit `include/symbols.h`, `[renames]`, or `analysis/*.json` — all are generated views; edit `analysis/symbols.json` via `symbols.py`
 - Rename identifiers with a plain text replace — it will corrupt `asm("...")` string literals, where the preprocessor cannot expand a macro. Use `symbols.py apply`
 - Use offset-casts (`*(u16 *)((u8 *)p + off)`), `register`, `asm volatile`, GCC asm labels, or empty `asm("")` barriers in semantic C — struct members in `unknown-types.h`. Inline `asm()` is only for BIOS `swi` and naked Thumb wrappers.
+- Mimic asm in semantic C: register-named locals (`r3`, `r5`), or `goto` labels copied from retail (`loop:`, `advance:`). Write readable struct/loop C in `src/decompiled/`; use permuter or leave Thumb when bytes differ (see `.cursor/rules/decomp-semantic-style.mdc`).
 - Enable `HACKS=1` during matching work (`make compare` must stay green)
 
 ## Matching vs hacking

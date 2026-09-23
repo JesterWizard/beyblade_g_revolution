@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T22:18:35Z",
+  "generated": "2026-09-23T22:44:19Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -155,9 +155,9 @@
       "bytes": 88,
       "seed": "src/decompiled/sub_08040EF4.c",
       "notes": "src/decompiled/sub_08040EF4.md",
-      "status": "best 34/88 size-mismatch after raw offset and full register pins; baseline was 13/88 at 72B, while retail requires r5 key, r4 byte offset, r2/r3 table cursors, and r6 base+4 without the extra saved registers",
-      "next": "try only key r5 and offset r4 pins; let agbcc allocate table cursors, while retaining an explicit second-word base to keep the adds r4+r6 shape",
-      "score": "34/88"
+      "status": "38pct size_mismatch goto seed",
+      "next": "table walk r2/r3/r4/r6 lifetimes; permuter only",
+      "score": "35/88"
     },
     {
       "name": "sub_08042BE8",
@@ -1332,9 +1332,9 @@
       "bytes": 84,
       "seed": "src/decompiled/sub_0806B3E8.c",
       "notes": "src/decompiled/sub_0806B3E8.md",
-      "status": "permuter 300 s + 900 s, no score 0 (95 \u2192 10); 67/84",
-      "next": "keep readable Thumb; retail tracks the live pointer in two registers",
-      "score": "67/84"
+      "status": "46pct size_mismatch readable rewrite",
+      "next": "permuter from readable seed; top-tested check loop",
+      "score": "39/84"
     },
     {
       "name": "sub_08070604",

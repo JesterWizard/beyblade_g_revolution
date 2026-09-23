@@ -16,14 +16,15 @@ Start with scripts. Only open a packet when scripts leave a remainder.
 ```bash
 python3 tools/decomp/report_status.py
 make compare
-python3 tools/decomp/script_first.py          # patterns + cleaned m2c; integrate MATCH
+python3 tools/decomp/script_first.py 5          # batch of 5; patterns + cleaned m2c; integrate MATCH
 ```
 
-## If scripts left work: one packet, then stop guessing
+## If scripts left work: packets until batch of 5 done
 
 ```bash
-python3 tools/decomp/agent_packet.py --next   # cheapest remaining; --battle / --wip to retarget
-# Write C from the packet seed only. Max 2 match_function.py retries, then:
+python3 tools/decomp/agent_packet.py --next   # repeat until 5 matched or attempted
+# Write readable semantic C from the packet seed (.cursor/rules/decomp-semantic-style.mdc).
+# Max 2 match_function.py retries, then:
 python3 tools/decomp/park_wip.py sub_XXXXXXXX scratch.c --status "…" --next "…" --score "N/M"
 ```
 

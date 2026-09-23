@@ -15,4 +15,8 @@ Before leaving a function that does not `match_function.py` MATCH:
 3. Restore Thumb in `src/matched/` if you replaced it
 4. `make queue` — **Resume (WIP)** must list it
 
-Resume: read the `.md` first; do not re-derive from disasm. Full policy: [docs/decomp-wip.md](docs/decomp-wip.md).
+Resume: read the `.md` first; do not re-derive from disasm. Parked `.c` seeds must stay
+**readable semantic C** (`decomp-semantic-style.mdc`) — never downgrade to register/
+goto mimicry when matching stalls.
+
+Full policy: [docs/decomp-wip.md](docs/decomp-wip.md).

@@ -1,54 +1,39 @@
 #include "global.h"
 
-// @ 0x0806b3e8
-void sub_0806B3E8(struct Unk6B3E8 *arg0)
+// @ 0x0806B3E8
+// Walk a text cursor: map each non-space byte through the font table, init matching
+// item slots; zero-fill any remaining slots when the string ends or slots run out.
+void sub_0806B3E8(struct Unk6B3E8 *work)
 {
-    u32 r0;
-    u32 r1;
-    u32 r2;
-    s32 r4;
-    struct Unk6B3E8Item *r5;
-    const u8 *r6;
+    s32 remaining;
+    const u8 *text;
+    struct Unk6B3E8Item *item;
+    u8 ch;
+    u8 glyph;
 
-    r4 = arg0->unk04;
-    r6 = arg0->unk10;
-    r5 = arg0->unk00;
-    goto check;
-loop:
-    if (r1 == 0x20)
-        goto check;
-    r0 = 0x080BB748;
-r0 = r1 + r0;
-    r2 = *(u8 *)r0;
-    r0 = (u32)r5;
-    r1 = 0;
-    sub_0806833C((void *)r0, (s32)r1, (u16)r2);
-    r0 = 1;
-    r0 = -r0;
-    r5->unk70 = (s32)r0;
-    r5++;
-    r4--;
-check:
-    if (r4 == 0)
-        goto fill;
-    r1 = *r6;
-    r6++;
-    if (r1 != 0)
-        goto loop;
-fill:
-    r0 = (u32)r4;
-    r4--;
-    if (r0 == 0)
-        goto done;
-    r1 = 0;
-fillloop:
-    r5->unk70 = (s32)r1;
-    r5++;
-    r0 = (u32)r4;
-    r4--;
-    if (r0 != 0)
-        goto fillloop;
-done:
-    return;
+    remaining = work->unk04;
+    text = work->unk10;
+    item = work->unk00;
+
+    while (remaining > 0)
+    {
+        ch = *text;
+        text++;
+        if (ch == 0)
+            break;
+        if (ch == ' ')
+            continue;
+        glyph = ((const u8 *)0x080BB748)[ch];
+        sub_0806833C((struct Unk68598 *)item, 0, glyph);
+        item->unk70 = -1;
+        item++;
+        remaining--;
+    }
+
+    while (remaining > 0)
+    {
+        item->unk70 = 0;
+        item++;
+        remaining--;
+    }
 }
-

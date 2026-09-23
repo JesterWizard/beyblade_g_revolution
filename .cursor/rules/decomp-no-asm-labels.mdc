@@ -6,6 +6,9 @@ alwaysApply: false
 
 # No `register` or GCC asm in decompiled C
 
+For overall semantic style (struct walks, no asm `goto` labels, readable locals),
+see **`decomp-semantic-style.mdc`**.
+
 Banned in semantic C:
 
 - `register` (storage class)

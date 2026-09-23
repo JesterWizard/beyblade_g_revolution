@@ -1,0 +1,54 @@
+---
+description: Write readable semantic C for decomp seeds — not asm-shaped C
+globs: src/decompiled/**,src/matched/**,src/wip/**
+alwaysApply: false
+---
+
+# Semantic C style (decomp seeds)
+
+`src/decompiled/` and agent-written drafts describe **what the game does**, not how
+the Thumb was laid out. Byte matching is a separate step (permuter, compiler flags,
+readable Thumb in `src/matched/` until MATCH).
+
+## Write like C, not disassembly
+
+**Do:**
+
+- Use struct types from `unknown-types.h` and named fields (`entry->unk04`, `a->unk1818`)
+- Use `for` / `while` / `do`/`while` and early `return` for control flow
+- Name locals for roles: `searchKey`, `index`, `entry`, `row`, not `r3`, `r4`
+- One-line role comment above the function when the algorithm is non-obvious
+- RAM via `ram_map.h` / `battle.h` (`gMainWorkPtr`, `gBattleWorkPtr`, …)
+
+**Do not mimic asm in C:**
+
+- `goto` labels copied from retail (`loop:`, `advance:`, `out_zero:`, `_08040F0A`)
+- Locals named after hardware registers (`r0`–`r7`, `ip`) to steer agbcc
+- Duplicated branches with identical bodies just to preserve label order
+- Offset arithmetic walks when a struct pointer increment is correct (`entry++` on `Unk40EF4`)
+
+`goto` is not banned everywhere — avoid it when the **only** reason is matching a
+branch target or preserving register lifetimes across labels.
+
+## Matching vs readability
+
+| Tier | Goal |
+|------|------|
+| `src/decompiled/` | Correct, readable semantics; score is informational |
+| Permuter / `integrate_c.py` | Close same-size DIFF from the readable seed |
+| `src/matched/` | Byte MATCH or readable Thumb stub until MATCH |
+
+If a readable seed DIFFs, **do not** replace it with register/goto mimicry. Run
+`permuter/auto.py`, try `/* match-compiler: old_agbcc */`, or leave Thumb in
+`src/matched/` and park the semantic seed.
+
+**Example (good):** `sub_08040EF4` — walk `struct Unk40EF4 *entry`, compare `unk00`,
+index `((u32 *)entry->unk04)[gMainWorkPtr->unk1818]`.
+
+**Example (bad):** same function with `r5`/`r3`/`loop:`/`goto advance` copied from objdump.
+
+## Still banned (see `decomp-no-asm-labels.mdc`)
+
+- `register`, `register T x asm("rN")`, empty `asm("")`, GCC asm labels in semantic C
+- Offset-casts (`*(u16 *)((u8 *)p + off)`) — add struct members instead
+- Raw IWRAM `0x03……` in semantic paths when `ram_map.h` has a name
