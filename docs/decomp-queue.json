@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-24T20:54:22Z",
+  "generated": "2026-09-24T22:11:55Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 190,
-    "semantic_done": 443,
-    "readable_asm": 190,
+    "pending": 187,
+    "semantic_done": 446,
+    "readable_asm": 187,
     "opcode": 0,
     "battle_pending": 73,
     "battle_semantic": 84,
@@ -811,8 +811,8 @@
     {
       "name": "sub_08068E54",
       "addr": "0x08068E54",
-      "kind": "asm",
-      "bytes": 108,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08068E54.c",
       "notes": "src/decompiled/sub_08068E54.md",
       "status": "Two semantic attempts: direct motion model 17/108 (112B), then pinned state/x/y/scale registers reached 70/108 with exact size. Remaining mismatch is only the flag check register order: retail forms &state->unk64 in r1, loads the halfword into r1, and masks with r0; the candidate uses r0 for the address.",
@@ -844,8 +844,8 @@
     {
       "name": "sub_0806A314",
       "addr": "0x0806A314",
-      "kind": "asm",
-      "bytes": 144,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806A314.c",
       "notes": "src/decompiled/sub_0806A314.md",
       "status": "Two semantic attempts: direct allocator/linked-list wrapper 38/144 (same size), then register-shaped pointer/marker rewrite 40/144 (140B). The allocator and node sentinel semantics are mapped; the remaining prologue issue is loading the 0x03003F40 literal after reading *0x03003F44, while the candidate loads it first, plus counter literal-pool and post-node register order.",
@@ -1306,8 +1306,8 @@
     {
       "name": "sub_0806A3A4",
       "addr": "0x0806A3A4",
-      "kind": "asm",
-      "bytes": 144,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806A3A4.c",
       "notes": "src/decompiled/sub_0806A3A4.md",
       "status": "matched only with GCC asm labels; stripped DIFF",

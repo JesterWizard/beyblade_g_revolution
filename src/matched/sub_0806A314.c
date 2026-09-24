@@ -1,77 +1,57 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806a314
-__attribute__((naked))
-void * sub_0806A314(struct Unk6A314 *state)
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
+void *sub_0806A314(struct Unk6A314 *state)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "add sp, #-0x008\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r5, _0806A38C @ =0x03003F44\n"
-        "ldr r1, [r5, #0x00]\n"
-        "ldr r2, _0806A390 @ =0x03003F40\n"
-        "cmp r1, #0x00\n"
-        "bne _0806A330\n"
-        "ldr r0, [r2, #0x00]\n"
-        "str r0, [r5, #0x00]\n"
-        "ldr r0, _0806A394 @ =0x03003F48\n"
-        "str r1, [r0, #0x00]\n"
-        "ldr r0, _0806A398 @ =0x03003F4C\n"
-        "str r1, [r0, #0x00]\n"
-        "_0806A330:\n"
-        "ldr r0, [r2, #0x00]\n"
-        "movs r1, #0x20\n"
-        "bl sub_0806A580\n"
-        "adds r4, r0, #0x0\n"
-        "cmp r4, #0x00\n"
-        "bne _0806A346\n"
-        "ldr r0, _0806A39C @ =0x083D1AC8\n"
-        "adds r1, r6, #0x0\n"
-        "bl sub_08067B98\n"
-        "_0806A346:\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x08\n"
-        "ldr r1, _0806A3A0 @ =0x03000B40\n"
-        "movs r2, #0xD0\n"
-        "lsls r2, r2, #0x06\n"
-        "ldr r3, [r5, #0x00]\n"
-        "str r4, [sp, #0x000]\n"
-        "str r5, [sp, #0x004]\n"
-        "bl sub_0806A4D8\n"
-        "adds r3, r0, #0x0\n"
-        "cmp r3, #0x00\n"
-        "beq _0806A380\n"
-        "ldr r1, _0806A394 @ =0x03003F48\n"
-        "ldr r0, [r1, #0x00]\n"
-        "adds r0, #0x01\n"
-        "str r0, [r1, #0x00]\n"
-        "ldr r0, [r3, #0x04]\n"
-        "subs r0, #0x08\n"
-        "str r0, [r3, #0x04]\n"
-        "ldr r0, [r3, #0x00]\n"
-        "adds r1, r0, #0x4\n"
-        "str r1, [r3, #0x00]\n"
-        "movs r2, #0x01\n"
-        "negs r2, r2\n"
-        "str r2, [r0, #0x00]\n"
-        "ldr r0, [r3, #0x04]\n"
-        "adds r1, r1, r0\n"
-        "str r2, [r1, #0x00]\n"
-        "_0806A380:\n"
-        "adds r0, r3, #0x0\n"
-        "add sp, #0x008\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        ".byte 0x00, 0x00\n"
-        "_0806A38C: .4byte 0x03003F44\n"
-        "_0806A390: .4byte 0x03003F40\n"
-        "_0806A394: .4byte 0x03003F48\n"
-        "_0806A398: .4byte 0x03003F4C\n"
-        "_0806A39C: .4byte 0x083D1AC8\n"
-        "_0806A3A0: .4byte 0x03000B40\n"
-    );
+    struct Unk6A4D8Node *node;
+    void *buffer;
+    void **current;
+    u32 current_value;
+    s32 *payload;
+    s32 *next_payload;
+    u32 pool;
+    u32 neg;
+
+    current = &gUnk_03003F44;
+    current_value = (u32)*current;
+    pool = 0x03003F40;
+    if (current_value == 0)
+    {
+        *current = *(void **)pool;
+        gUnk_03003F48 = current_value;
+        buffer = (void *)0x03000B40;
+        *(u32 *)0x03000B40 = *(u32 *)buffer;
+        gUnk_03003F4C = current_value;
+    }
+    buffer = sub_0806A580(*(void **)pool, 0x20);
+    if (buffer == 0)
+        DebugPrint((void *)0x083D1AC8, state);
+    node = sub_0806A4D8(
+        (void *)((u32)state + 8),
+        (void *)0x03000B40,
+        0xD0 << 6,
+        *current,
+        buffer,
+        current);
+    if (node != 0)
+    {
+        gUnk_03003F48++;
+        node->unk04 -= 8;
+        payload = node->unk00;
+        next_payload = payload + 1;
+        node->unk00 = next_payload;
+        neg = 1;
+        neg = -neg;
+        *payload = (s32)neg;
+        next_payload = (s32 *)((u32)next_payload + node->unk04);
+        *next_payload = (s32)neg;
+    }
+    return node;
 }
 

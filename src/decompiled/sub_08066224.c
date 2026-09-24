@@ -1,51 +1,43 @@
-#include "global.h"
-
-// @ 0x08066224
+/* match-compiler: old_agbcc */
 #include "global.h"
 
 void sub_08066224(struct Unk66224 *a, s32 index)
 {
-    struct Unk66224 *r6;
-    s32 r2;
-    s32 r1;
-    s32 r0;
+    struct Unk66224 *obj;
+    s32 cur;
+    s32 scaled;
+    u32 table;
     struct Unk66224Entry *current;
-    u32 obj;
-    struct Unk7069C *state;
     struct Unk66224Entry *entry;
+    struct Unk66224Object *entryObj;
+    struct Unk7069C *state;
+    s32 lookup;
+    u32 ptr;
 
-    r6 = a;
-    r2 = index;
-    r1 = r6->unk04;
-    r0 = r1 << 3;
-    r0 -= r1;
-    r0 <<= 2;
-    r1 = (s32)r6->unk28;
-    current = (struct Unk66224Entry *)(r1 + r0);
-    if (r2 < 0)
+    obj = a;
+    cur = obj->unk04;
+    scaled = (cur << 3) - cur;
+    scaled <<= 2;
+    table = (u32)obj->unk28;
+    current = (struct Unk66224Entry *)(table + scaled);
+    if (index < 0)
         return;
-    if (r2 >= r6->unk00)
+    if (index >= obj->unk00)
         return;
-    r0 = 1;
-    obj = r6->unk3C;
-    r0 &= obj;
-    if (r0 != 0)
+    if ((1 & obj->unk3C) != 0)
         return;
-    r0 = r2 << 3;
-    r0 -= r2;
-    r0 <<= 2;
-    entry = (struct Unk66224Entry *)(r1 + r0);
+    scaled = (index << 3) - index;
+    scaled <<= 2;
+    entry = (struct Unk66224Entry *)(scaled + table);
     current->unk14 = current->unk00->unk20;
-    obj = (u32)entry->unk00;
-    entry->unk14 = ((struct Unk66224Object *)obj)->unk24;
-    r6->unk14 = 0xFFFF - r2 * r6->unk0C;
-    r6->unk04 = r2;
-    state = &r6->unk40;
-    r0 = GetBtlLookupByte();
-    r0 <<= 2;
-    obj += 4;
-    obj += r0;
-    r1 = *(s32 *)obj;
-    sub_08070AD4(state, (void *)r1, r6->unk2C->unk00->unk0A);
+    entryObj = entry->unk00;
+    entry->unk14 = entryObj->unk24;
+    obj->unk14 = 0xFFFF - index * obj->unk0C;
+    obj->unk04 = index;
+    state = &obj->unk40;
+    lookup = GetBtlLookupByte();
+    lookup <<= 2;
+    ptr = (u32)entryObj + 4;
+    ptr += lookup;
+    sub_08070AD4(state, *(void **)ptr, obj->unk2C->unk00->unk0A);
 }
-

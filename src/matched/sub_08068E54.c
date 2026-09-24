@@ -1,66 +1,50 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068e54
-__attribute__((naked))
+/* match-compiler: old_agbcc */
 void sub_08068E54(struct Unk68E54 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r1, [r4, #0x14]\n"
-        "ldr r0, [r4, #0x1C]\n"
-        "adds r1, r1, r0\n"
-        "str r1, [r4, #0x14]\n"
-        "ldr r2, [r4, #0x18]\n"
-        "ldr r0, [r4, #0x20]\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r4, #0x18]\n"
-        "str r1, [r4, #0x54]\n"
-        "str r2, [r4, #0x58]\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_0806960C\n"
-        "adds r1, r4, #0x0\n"
-        "adds r1, #0x64\n"
-        "movs r0, #0x01\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08068E86\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08068EC0\n"
-        "_08068E86:\n"
-        "ldr r3, [r4, #0x24]\n"
-        "cmp r3, #0x00\n"
-        "beq _08068EBA\n"
-        "ldr r2, [r4, #0x14]\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r3\n"
-        "asrs r5, r0, #0x08\n"
-        "ldr r1, [r4, #0x18]\n"
-        "adds r0, r1, #0x0\n"
-        "muls r0, r3\n"
-        "asrs r3, r0, #0x08\n"
-        "subs r2, r2, r5\n"
-        "str r2, [r4, #0x14]\n"
-        "subs r1, r1, r3\n"
-        "str r1, [r4, #0x18]\n"
-        "cmp r5, #0x00\n"
-        "bne _08068EAE\n"
-        "cmp r2, #0x00\n"
-        "beq _08068EAE\n"
-        "str r5, [r4, #0x14]\n"
-        "_08068EAE:\n"
-        "cmp r3, #0x00\n"
-        "bne _08068EBA\n"
-        "ldr r0, [r4, #0x18]\n"
-        "cmp r0, #0x00\n"
-        "beq _08068EBA\n"
-        "str r3, [r4, #0x18]\n"
-        "_08068EBA:\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk68E54 *state;
+    s32 scale;
+    s32 delta_x;
+    s32 x;
+    s32 y;
+
+    state = a;
+    x = state->unk14;
+    x += state->unk1C;
+    state->unk14 = x;
+    y = state->unk18;
+    y += state->unk20;
+    state->unk18 = y;
+    state->unk54 = x;
+    state->unk58 = y;
+    sub_0806960C(state);
+    if ((state->unk64 & 1) != 0)
+        sub_08068EC0(state);
+    scale = state->unk24;
+    if (scale != 0)
+    {
+        y = state->unk14;
+        delta_x = (y * scale) >> 8;
+        x = state->unk18;
+        scale = (x * scale) >> 8;
+        y -= delta_x;
+        state->unk14 = y;
+        x -= scale;
+        state->unk18 = x;
+        if (delta_x == 0)
+        {
+            if (y != 0)
+                state->unk14 = delta_x;
+        }
+        if (scale == 0)
+        {
+            if (state->unk18 != 0)
+                state->unk18 = scale;
+        }
+    }
 }
 
