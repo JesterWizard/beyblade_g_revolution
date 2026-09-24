@@ -1,93 +1,47 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08066b10
-__attribute__((naked))
-void sub_08066B10(void)
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
+u8 sub_08066B10(struct Unk66BC4 *a, u32 index)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r4, r1, #0x18\n"
-        "movs r7, #0x00\n"
-        "cmp r4, #0x08\n"
-        "beq _08066B4C\n"
-        "cmp r4, #0x08\n"
-        "bgt _08066B28\n"
-        "cmp r4, #0x07\n"
-        "beq _08066B64\n"
-        "b _08066B80\n"
-        "_08066B28:\n"
-        "cmp r4, #0x09\n"
-        "bne _08066B80\n"
-        "ldr r1, _08066B48 @ =0x030009A8\n"
-        "movs r0, #0x01\n"
-        "ldrb r2, [r1, #0x00]\n"
-        "eors r0, r2\n"
-        "strb r0, [r1, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x1B\n"
-        "bl sub_08066BC4\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08066BF0\n"
-        "b _08066BB8\n"
-        ".byte 0x00, 0x00\n"
-        "_08066B48: .4byte 0x030009A8\n"
-        "_08066B4C:\n"
-        "ldr r0, _08066B60 @ =0x030009AC\n"
-        "ldr r0, [r0, #0x00]\n"
-        "bl sub_0807339C\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x1C\n"
-        "bl sub_08066BC4\n"
-        "b _08066BB8\n"
-        ".byte 0x00, 0x00\n"
-        "_08066B60: .4byte 0x030009AC\n"
-        "_08066B64:\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x1D\n"
-        "bl sub_08066BC4\n"
-        "ldr r0, _08066B7C @ =0x030009AC\n"
-        "ldr r0, [r0, #0x00]\n"
-        "bl sub_08073078\n"
-        "cmp r0, #0x00\n"
-        "ble _08066BB8\n"
-        "movs r7, #0x01\n"
-        "b _08066BB8\n"
-        "_08066B7C: .4byte 0x030009AC\n"
-        "_08066B80:\n"
-        "ldr r6, _08066BC0 @ =0x030009AC\n"
-        "ldr r0, [r6, #0x00]\n"
-        "bl sub_08073078\n"
-        "cmp r0, #0x0E\n"
-        "bgt _08066BB8\n"
-        "ldr r0, [r6, #0x00]\n"
-        "adds r1, r4, #0x0\n"
-        "movs r2, #0x20\n"
-        "bl sub_080733BC\n"
-        "movs r1, #0xC2\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r5, r1\n"
-        "ldr r1, [r0, #0x00]\n"
-        "lsls r0, r1, #0x02\n"
-        "adds r0, r0, r1\n"
-        "lsls r0, r0, #0x01\n"
-        "movs r2, #0xC1\n"
-        "lsls r2, r2, #0x02\n"
-        "adds r1, r5, r2\n"
-        "ldr r1, [r1, #0x00]\n"
-        "adds r1, r1, r0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08066BC4\n"
-        "_08066BB8:\n"
-        "adds r0, r7, #0x0\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_08066BC0: .4byte 0x030009AC\n"
-    );
+    struct Unk66BC4 *state;
+    u8 result;
+    s32 length;
+    u8 idx;
+
+    state = a;
+    idx = (u8)index;
+    result = 0;
+    switch (idx)
+    {
+    case 9:
+        gUnk_030009A8 = 1 ^ gUnk_030009A8;
+        sub_08066BC4(state, 0x1B);
+        sub_08066BF0(state);
+        break;
+    case 8:
+        sub_0807339C(gUnk_030009AC);
+        sub_08066BC4(state, 0x1C);
+        break;
+    case 7:
+        sub_08066BC4(state, 0x1D);
+        length = sub_08073078(gUnk_030009AC);
+        if (length > 0)
+            result = 1;
+        break;
+    default:
+        length = sub_08073078(gUnk_030009AC);
+        if (length > 0x0E)
+            break;
+        sub_080733BC(gUnk_030009AC, idx, 0x20);
+        sub_08066BC4(state, (u16)(state->unk308 * 10 + state->unk304));
+        break;
+    }
+    return result;
 }
 

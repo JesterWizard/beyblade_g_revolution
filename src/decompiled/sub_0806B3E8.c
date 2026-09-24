@@ -1,4 +1,5 @@
 #include "global.h"
+
 void sub_0806B3E8(struct Unk6B3E8 *a)
 {
     u32 left;
@@ -30,7 +31,7 @@ zero:
     prev = left;
     left--;
     if (prev == 0)
-        return;
+        goto done;
     do
     {
         item->unk70 = 0;
@@ -38,4 +39,6 @@ zero:
         prev = left;
         left--;
     } while (prev != 0);
+done:
+    left = prev;
 }

@@ -1,93 +1,52 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806e7bc
-__attribute__((naked))
-void sub_0806E7BC(void)
+s32 sub_0806E7BC(s32 ax, s32 ay, s32 bx, s32 by, s32 cx, s32 cy, s32 dx, s32 dy)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "mov r12, r0\n"
-        "adds r6, r1, #0x0\n"
-        "adds r5, r2, #0x0\n"
-        "adds r4, r3, #0x0\n"
-        "subs r2, r0, r5\n"
-        "subs r3, r6, r4\n"
-        "ldr r1, [sp, #0x01C]\n"
-        "subs r0, r1, r4\n"
-        "adds r1, r2, #0x0\n"
-        "muls r1, r0\n"
-        "ldr r7, [sp, #0x018]\n"
-        "subs r0, r7, r5\n"
-        "muls r0, r3\n"
-        "subs r1, r1, r0\n"
-        "mov r8, r1\n"
-        "ldr r1, [sp, #0x024]\n"
-        "subs r0, r1, r4\n"
-        "adds r1, r2, #0x0\n"
-        "muls r1, r0\n"
-        "ldr r2, [sp, #0x020]\n"
-        "subs r0, r2, r5\n"
-        "muls r0, r3\n"
-        "subs r0, r1, r0\n"
-        "mov r7, r8\n"
-        "cmp r7, #0x00\n"
-        "bgt _0806E7FE\n"
-        "cmp r0, #0x00\n"
-        "blt _0806E83C\n"
-        "cmp r7, #0x00\n"
-        "blt _0806E802\n"
-        "_0806E7FE:\n"
-        "cmp r0, #0x00\n"
-        "bgt _0806E83C\n"
-        "_0806E802:\n"
-        "ldr r0, [sp, #0x018]\n"
-        "ldr r1, [sp, #0x020]\n"
-        "subs r2, r0, r1\n"
-        "ldr r7, [sp, #0x01C]\n"
-        "ldr r0, [sp, #0x024]\n"
-        "subs r3, r7, r0\n"
-        "subs r0, r6, r0\n"
-        "adds r1, r2, #0x0\n"
-        "muls r1, r0\n"
-        "mov r6, r12\n"
-        "ldr r7, [sp, #0x020]\n"
-        "subs r0, r6, r7\n"
-        "muls r0, r3\n"
-        "subs r6, r1, r0\n"
-        "ldr r1, [sp, #0x024]\n"
-        "subs r0, r4, r1\n"
-        "adds r1, r2, #0x0\n"
-        "muls r1, r0\n"
-        "subs r0, r5, r7\n"
-        "muls r0, r3\n"
-        "subs r0, r1, r0\n"
-        "cmp r6, #0x00\n"
-        "bgt _0806E838\n"
-        "cmp r0, #0x00\n"
-        "blt _0806E83C\n"
-        "cmp r6, #0x00\n"
-        "blt _0806E840\n"
-        "_0806E838:\n"
-        "cmp r0, #0x00\n"
-        "ble _0806E840\n"
-        "_0806E83C:\n"
-        "movs r0, #0x00\n"
-        "b _0806E84A\n"
-        "_0806E840:\n"
-        "movs r0, #0x02\n"
-        "mov r2, r8\n"
-        "cmp r2, #0x00\n"
-        "blt _0806E84A\n"
-        "movs r0, #0x01\n"
-        "_0806E84A:\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s32 abx;
+    s32 aby;
+    s32 cross1;
+    s32 cdx;
+    s32 cdy;
+    s32 cross3;
+    s32 cross4;
+    s32 result;
+
+    abx = ax - bx;
+    aby = ay - by;
+    cross1 = abx * (cy - by) - (cx - bx) * aby;
+    result = abx * (dy - by) - (dx - bx) * aby;
+    if (cross1 > 0)
+        goto check_cross2_pos;
+    if (result < 0)
+        goto fail;
+    if (cross1 < 0)
+        goto second;
+check_cross2_pos:
+    if (result > 0)
+        goto fail;
+second:
+    cdx = cx - dx;
+    cdy = cy - dy;
+    cross3 = cdx * (ay - dy) - (ax - dx) * cdy;
+    cross4 = cdx * (by - dy) - (bx - dx) * cdy;
+    if (cross3 > 0)
+        goto check_cross4;
+    if (cross4 < 0)
+        goto fail;
+    if (cross3 < 0)
+        goto success;
+check_cross4:
+    if (cross4 <= 0)
+        goto success;
+fail:
+    return 0;
+success:
+    result = 2;
+    if (cross1 >= 0)
+        result = 1;
+    return result;
 }
 

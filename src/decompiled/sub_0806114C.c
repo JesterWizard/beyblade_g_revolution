@@ -1,30 +1,40 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
 
-void sub_0806114C(
-    struct Unk6114C *state,
-    u32 tile,
-    u32 palette,
-    u32 first,
-    u32 last)
+void sub_0806114C(struct Unk6114C *state, u32 tile, u32 palette, u32 first, u32 last)
 {
-    u32 temp;
-    u16 *screen;
+    u16 palBits;
+    u32 saved;
+    u16 *addr;
+    u16 mask;
+    u32 base;
+    u32 scaled;
 
+    palBits = (u16)((palette << 28) >> 16);
     tile &= 0x1F;
     first &= 0x1F;
+    saved = first;
     last &= 0x1F;
     if (last < first)
     {
-        temp = first;
         first = last;
-        last = temp;
+        last = saved;
     }
-    screen = (u16 *)(VRAM + (state->unk5C << 11) + (tile << 6));
-    palette = (palette & 0x0F) << 12;
-    for (; first <= last; first++)
+    addr = (u16 *)(state->unk5C << 11);
+    base = 0xC0;
+    base <<= 19;
+    addr = (u16 *)((u32)addr + base);
+    addr = (u16 *)((u32)addr + (tile << 6));
+    if ((s32)first <= (s32)last)
     {
-        *screen = (*screen & 0x03FF) | palette;
-        screen++;
+        mask = 0x3FF;
+        scaled = (first << 1) + (u32)addr;
+        addr = (u16 *)scaled;
+        do
+        {
+            *addr = (*addr & mask) | palBits;
+            addr++;
+            first++;
+        } while ((s32)first <= (s32)last);
     }
 }

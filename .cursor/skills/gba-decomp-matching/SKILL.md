@@ -104,6 +104,11 @@ disasm stalls at a same-size DIFF (`TextMeasureWidth`: goto seed 94/96 for month
 `switch` + `const u8 *` + `old_agbcc` → 96/96). Do not keep rewriting goto mimicry —
 try switch (or `if` ladder) with the typed-param / dual-compiler checklist first.
 
+Same-size `subs`/`adds` dest off by one register (`081a` vs `091a`): assign that
+expression to the **return local** (`result`) so agbcc keeps it in r0. Win:
+`sub_0806E7BC` (149/152 → MATCH). A newly declared temp for the same sub often
+pushes extra regs and collapses the score.
+
 ### 6. Leaf `bx lr` + `-fprologue-bugfix`
 
 Default agbcc frames a branching leaf (`push {lr}` / `pop {r1}; bx r1`). `/* match-flags: -fprologue-bugfix */` in the C file (not global `CFLAGS`) drops that frame for many `bx lr` leaves.

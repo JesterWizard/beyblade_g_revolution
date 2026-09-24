@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-24T18:14:20Z",
+  "generated": "2026-09-24T19:30:28Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 200,
-    "semantic_done": 433,
-    "readable_asm": 200,
+    "pending": 195,
+    "semantic_done": 438,
+    "readable_asm": 195,
     "opcode": 0,
     "battle_pending": 75,
     "battle_semantic": 82,
     "blocked": 20,
-    "wip": 136
+    "wip": 135
   },
   "pinned": [],
   "wip": [
@@ -114,17 +114,6 @@
       "status": "same-size DIFF 62/154 (40.3%); shared mask/inverse and r10/r5 hints did not improve post-call register scheduling",
       "next": "leave readable Thumb; revisit with targeted post-call register scheduling or permuter",
       "score": "62/154"
-    },
-    {
-      "name": "sub_0806E7BC",
-      "addr": "0x0806E7BC",
-      "kind": "asm",
-      "bytes": 152,
-      "seed": "src/decompiled/sub_0806E7BC.c",
-      "notes": "src/decompiled/sub_0806E7BC.md",
-      "status": "size_mismatch 42/152 (27.6%), compiled 148B vs retail 152B; attempted as line-segment intersection test (2D cross-product sign comparison, 8 s32 params ax,ay,bx,by,cx,cy,dx,dy) returning 0/1/2; logic direction plausible (first 8 bytes match: prologue) but overall structure/expression grouping doesn't match agbcc's register scheduling - needs more careful param/expr-order derivation from raw asm (subs order matters: check if retail computes abx=ax-bx or bx-ax first, etc)",
-      "next": "re-derive param roles more carefully from asm (r12=a0 orig, r6=a1, r5=a2, r4=a3; stack args sp0x18/1C/20/24) - do NOT assume signature guessed here is correct; trace each subs/muls instruction to exact source expr before writing C",
-      "score": "42/152"
     },
     {
       "name": "sub_08038580",
@@ -646,8 +635,8 @@
     {
       "name": "sub_0806114C",
       "addr": "0x0806114C",
-      "kind": "asm",
-      "bytes": 88,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806114C.c",
       "notes": "src/decompiled/sub_0806114C.md",
       "status": "Two attempts: explicit min/max locals 15/88 (100B), then direct parameter swap/streaming pointer 31/88 (same-size). Semantics are correct; remaining register allocation keeps state in r7 and palette in r6 instead of retail state r6, palette r2, screen pointer r1.",
@@ -734,8 +723,8 @@
     {
       "name": "sub_08066B10",
       "addr": "0x08066B10",
-      "kind": "asm",
-      "bytes": 180,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08066B10.c",
       "notes": "src/decompiled/sub_08066B10.md",
       "status": "Two attempts: u32 argument plus fixed registers 18/180 (192B), then u8 parameter with ordinary result 91/180 (same-size). Semantic cases, toggle, string handling, and offset calculation are mapped; remaining mismatch is only the entry register/source ordering (retail copies a to r5 before masking index into r4) and the result/r7 allocation shape in the first seed.",
@@ -1328,8 +1317,8 @@
     {
       "name": "sub_0806B3E8",
       "addr": "0x0806B3E8",
-      "kind": "asm",
-      "bytes": 84,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806B3E8.c",
       "notes": "src/decompiled/sub_0806B3E8.md",
       "status": "46pct size_mismatch readable rewrite",
@@ -1416,8 +1405,8 @@
     {
       "name": "sub_080699C8",
       "addr": "0x080699C8",
-      "kind": "asm",
-      "bytes": 80,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080699C8.c",
       "notes": "src/decompiled/sub_080699C8.md",
       "status": "size mismatch; shared tail not reproducible",

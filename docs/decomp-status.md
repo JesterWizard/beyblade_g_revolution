@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **430/633 (67.9%)** |
-| **Decompiled C (bytes)** | **30,254/90,272 (33.5%)** |
+| **Decompiled C (functions)** | **435/633 (68.7%)** |
+| **Decompiled C (bytes)** | **30,838/90,272 (34.2%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 203/633 (32.1%) |
+| Readable Thumb | 198/633 (31.3%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,14 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-24 — semantic batch (+5): 6114C, 699C8, 6B3E8, 66B10, 6E7BC
+
+- `sub_0806114C` — clone of matched `sub_08061D68`; `old_agbcc`.
+- `sub_080699C8` — `switch ((u8)bg)` + `REG_BG2*` / `REG_BG3*` + `-fprologue-bugfix`.
+- `sub_0806B3E8` — fill loop; extra live `left = prev` swapped r4/r5 (same coloring as `sub_0806B064`).
+- `sub_08066B10` — `old_agbcc` + switch cases 9, 8, 7.
+- `sub_0806E7BC` — segment orientation; assign the second cross to the return local so `subs` dest is r0 (149/152 → MATCH).
 
 ### 2026-09-22 — the permuter had been permuting asm wrappers; sub_08038580 24 → 82/92
 

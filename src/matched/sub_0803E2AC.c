@@ -2,7 +2,7 @@
 
 // @ 0x0803e2ac
 __attribute__((naked))
-void sub_0803E2AC(void)
+s32 sub_0803E2AC(struct Unk3E328 *a)
 {
     asm(
         ".syntax unified\n"

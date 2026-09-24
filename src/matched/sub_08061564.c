@@ -2,7 +2,7 @@
 
 // @ 0x08061564
 __attribute__((naked))
-void TextDraw(void *a)
+void TextDraw(u8 *data)
 {
     asm(
         ".syntax unified\n"

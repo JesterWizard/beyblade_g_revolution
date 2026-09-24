@@ -1,56 +1,50 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806b3e8
-__attribute__((naked))
+#include "global.h"
+
 void sub_0806B3E8(struct Unk6B3E8 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "ldrb r4, [r0, #0x04]\n"
-        "ldr r6, [r0, #0x10]\n"
-        "ldr r5, [r0, #0x00]\n"
-        "b _0806B40E\n"
-        "_0806B3F2:\n"
-        "cmp r1, #0x20\n"
-        "beq _0806B40E\n"
-        "ldr r0, _0806B438 @ =0x080BB748\n"
-        "adds r0, r1, r0\n"
-        "ldrb r2, [r0, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x00\n"
-        "bl sub_0806833C\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r5, #0x70]\n"
-        "adds r5, #0xDC\n"
-        "subs r4, #0x01\n"
-        "_0806B40E:\n"
-        "cmp r4, #0x00\n"
-        "beq _0806B41A\n"
-        "ldrb r1, [r6, #0x00]\n"
-        "adds r6, #0x01\n"
-        "cmp r1, #0x00\n"
-        "bne _0806B3F2\n"
-        "_0806B41A:\n"
-        "adds r0, r4, #0x0\n"
-        "subs r4, #0x01\n"
-        "cmp r0, #0x00\n"
-        "beq _0806B430\n"
-        "movs r1, #0x00\n"
-        "_0806B424:\n"
-        "str r1, [r5, #0x70]\n"
-        "adds r5, #0xDC\n"
-        "adds r0, r4, #0x0\n"
-        "subs r4, #0x01\n"
-        "cmp r0, #0x00\n"
-        "bne _0806B424\n"
-        "_0806B430:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0806B438: .4byte 0x080BB748\n"
-    );
+    u32 left;
+    const u8 *text;
+    struct Unk6B3E8Item *item;
+    u8 ch;
+    s32 prev;
+
+    left = a->unk04;
+    text = a->unk10;
+    item = a->unk00;
+    goto check;
+body:
+    if (ch != 0x20)
+    {
+        sub_0806833C((struct Unk68598 *)item, 0, gData_080BB748[ch]);
+        item->unk70 = -1;
+        item++;
+        left--;
+    }
+check:
+    if (left == 0)
+        goto zero;
+    ch = *text;
+    text++;
+    if (ch != 0)
+        goto body;
+zero:
+    prev = left;
+    left--;
+    if (prev == 0)
+        goto done;
+    do
+    {
+        item->unk70 = 0;
+        item++;
+        prev = left;
+        left--;
+    } while (prev != 0);
+done:
+    left = prev;
 }
 
