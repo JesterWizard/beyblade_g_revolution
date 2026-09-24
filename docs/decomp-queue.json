@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-23T22:44:19Z",
+  "generated": "2026-09-24T07:35:25Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 220,
-    "semantic_done": 413,
-    "readable_asm": 220,
+    "pending": 219,
+    "semantic_done": 414,
+    "readable_asm": 219,
     "opcode": 0,
-    "battle_pending": 80,
-    "battle_semantic": 77,
+    "battle_pending": 79,
+    "battle_semantic": 78,
     "blocked": 20,
     "wip": 136
   },
@@ -943,13 +943,13 @@
     {
       "name": "sub_0802C2B0",
       "addr": "0x0802C2B0",
-      "kind": "asm",
-      "bytes": 100,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0802C2B0.c",
       "notes": "src/decompiled/sub_0802C2B0.md",
-      "status": "92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `adds r0,r0,r4`, retail places it after `ldr r0,[r0]`; (b) final sum encodes `adds r1,r0,r1` where retail has `adds r1,r1,r0` (Rn/Rm swap). This session: 9 clean/wild variants over the tail sum order (`base + off`, `off + base` via u32 addr accumulator, struct-member `&(*loc)->unk1694[i]`) and the prologue pointer plumbing \u2014 best stays 92/100, and the order flip does not change the add encoding (GCC canonicalises the plus operands)",
-      "next": "park at 92/100: remaining deltas are allocator/scheduling choices, not source-order-reachable. Revisit only with a permuter seeded from the compact form (not the current 22-local artifact seed)",
-      "score": "92/100"
+      "status": "probe before loc save; split base local in loop",
+      "next": "1-byte ble offset in loop tail \u2014 permuter or branch scheduling",
+      "score": "99/100"
     },
     {
       "name": "sub_0802C314",

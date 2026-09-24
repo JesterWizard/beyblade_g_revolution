@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-23T22:44:19Z_
+_Updated: 2026-09-24T07:35:25Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 413 |
-| Still need semantic C | **220** |
-| Readable Thumb remaining | 220 |
+| Semantic C done | 414 |
+| Still need semantic C | **219** |
+| Readable Thumb remaining | 219 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 80 (77 already semantic) |
+| Battle pending | 79 (78 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 136 |
 
@@ -110,7 +110,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08070354` | 168 | 47/168 | `src/decompiled/sub_08070354.c` | Semantic object/flag updater reconstructed. Final verified attempt reached 47/168 (172B); control flow and flag masks match conceptually, but agbcc schedules the arg2 truncation after arg3 truncation (retail copies arg2 to r5 first), and the resulting size differs by 4 bytes. | Preserve the typed state/object model and force the prologue order: mask b, lsls arg2, lsrs r5, then mask arg3 before loading state->unk30 and state->unk10. Next tune the temporary value register so new-object mode emits object->unk08 mask/shift, 0x100 OR, then the common flags OR. |
 | `sub_08070468` | 114 | 37/114 | `src/decompiled/sub_08070468.c` | Two attempts: the semantic sorted-list reposition candidate reached 37/114 (112B); a typed-parameter/register experiment failed to compile because agbcc rejects asm-qualified parameters. Unlink, key update, predecessor search, and reinsertion logic are mapped. | Keep the first compilable candidate. To close the 2-byte size/prologue gap, make the typed node assignment emit adds r4,r0 before key truncation while retaining key in r2. Then tune head/search_head lifetimes to preserve the retail r6/r5 aliases. |
 | `sub_0802BAD4` | 320 | 50/320 | `src/decompiled/sub_0802BAD4.c` | Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation. | Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store. |
-| `sub_0802C2B0` | 100 | 92/100 | `src/decompiled/sub_0802C2B0.c` | 92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `adds r0,r0,r4`, retail places it after `ldr r0,[r0]`; (b) final sum encodes `adds r1,r0,r1` where retail has `adds r1,r1,r0` (Rn/Rm swap). This session: 9 clean/wild variants over the tail sum order (`base + off`, `off + base` via u32 addr accumulator, struct-member `&(*loc)->unk1694[i]`) and the prologue pointer plumbing — best stays 92/100, and the order flip does not change the add encoding (GCC canonicalises the plus operands) | park at 92/100: remaining deltas are allocator/scheduling choices, not source-order-reachable. Revisit only with a permuter seeded from the compact form (not the current 22-local artifact seed) |
+| `sub_0802C2B0` | 0 | 99/100 | `src/decompiled/sub_0802C2B0.c` | probe before loc save; split base local in loop | 1-byte ble offset in loop tail — permuter or branch scheduling |
 | `sub_0802C314` | 198 | 40/198 | `src/decompiled/sub_0802C314.c` | size mismatch; 40/198 bytes, compiled 196 vs retail 198; lookup logic is mapped but agbcc register/source shape differs | preserve byte-field initialization loads and reproduce r4 table-address/r1 scaled-index lifetimes |
 | `sub_0802C3DC` | 198 | 46/198 | `src/decompiled/sub_0802C3DC.c` | size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic and table indexing mapped, initialization/register lifetime still differs | force the ROM's byte-field OR loads and r0/r4/r1 lifetime before trying body permutations |
 | `sub_0802C4A4` | 182 | 27/182 | `src/decompiled/sub_0802C4A4.c` | size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup semantics mapped but callee-saved r7 and repeated output-address shape remain | use an ordinary live signed index local to force r7 save, then restore repeated table-field stores |

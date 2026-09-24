@@ -762,9 +762,9 @@ score = "50/320"
 name = "sub_0802C2B0"
 seed = "src/decompiled/sub_0802C2B0.c"
 notes = "src/decompiled/sub_0802C2B0.md"
-status = "probe before loc save; split base local in loop"
-next = "1-byte ble offset in loop tail — permuter or branch scheduling"
-score = "99/100"
+status = "integrated semantic C"
+next = "done"
+score = "100/100"
 
 [[wip]]
 name = "sub_0802C314"

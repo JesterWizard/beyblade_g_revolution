@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-23T22:44:19Z_
+_Updated: 2026-09-24T07:35:26Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 413 |
+| matched | 414 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 135 |
+| WIP (parked C) | 134 |
 | not started | 83 |
 | blocked | 2 |
 | **total** | **633** |
@@ -38,7 +38,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08073988` | WIP (parked C) | 97.9% | 94/96 | 94/96; table constant lands in r2, retail materialises it in the free r0. Re-… |
 | `sub_08040F4C` | WIP (parked C) | 94.9% | 319/336 | 319/336; done in r4 vs r5 |
 | `sub_080442FC` | WIP (parked C) | 93.1% | 134/144 | 134/144; a in r4 vs r5 (gData symbols fixed pool fold) |
-| `sub_0802C2B0` | WIP (parked C) | 92.0% | 92/100 | 92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `add… |
 | `sub_0803DCFC` | WIP (parked C) | 91.7% | 44/48 | 44/48 same-size seed; permuter saturated at 30/48 after 8x120s and 3x300s jobs |
 | `sub_08038580` | WIP (parked C) | 89.1% | 82/92 | 82/92 same-size on old_agbcc (was 24/92). Three source wins: inline the globa… |
 | `sub_08043B90` | WIP (parked C) | 88.2% | 67/76 | 67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomizati… |
@@ -178,7 +177,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08073988` | `0x08073988` | WIP (parked C) | 97.9% | 94/96 | asm |
 | `sub_08040F4C` | `0x08040F4C` | WIP (parked C) | 94.9% | 319/336 | asm |
 | `sub_080442FC` | `0x080442FC` | WIP (parked C) | 93.1% | 134/144 | asm |
-| `sub_0802C2B0` | `0x0802C2B0` | WIP (parked C) | 92.0% | 92/100 | asm |
 | `sub_0803DCFC` | `0x0803DCFC` | WIP (parked C) | 91.7% | 44/48 | asm |
 | `sub_08038580` | `0x08038580` | WIP (parked C) | 89.1% | 82/92 | asm |
 | `sub_08043B90` | `0x08043B90` | WIP (parked C) | 88.2% | 67/76 | asm |
@@ -725,6 +723,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0803E1F4` | `0x0803E1F4` | matched | 100.0% | 98/98 | semantic |
 | `sub_08042390` | `0x08042390` | matched | 100.0% | 98/98 | semantic |
 | `sub_08059B74` | `0x08059B74` | matched | 100.0% | 98/98 | semantic |
+| `sub_0802C2B0` | `0x0802C2B0` | matched | 100.0% | 100/100 | semantic |
 | `sub_08033084` | `0x08033084` | matched | 100.0% | 100/100 | semantic |
 | `sub_08037318` | `0x08037318` | matched | 100.0% | 100/100 | semantic |
 | `sub_08044A20` | `0x08044A20` | matched | 100.0% | 100/100 | semantic |

@@ -1,14 +1,17 @@
-#define sub_0802C2B0 sub_0802C2B0_old_proto
 #include "global.h"
-#undef sub_0802C2B0
+#include "ram_map.h"
+#include "battle.h"
 
-void sub_0802C2B0(u32 a, u32 b)
+// @ 0x0802c2b0
+void sub_0802C2B0(u8 a, u16 i)
 {
     u32 value;
     u32 key;
+    u32 av;
+    u32 iv;
     struct MainWork **loc;
     struct MainWork **loc_load;
-    u32 index;
+    s32 index;
     u32 offset;
     struct MainWork **loop_loc;
     u32 loop_offset;
@@ -22,10 +25,12 @@ void sub_0802C2B0(u32 a, u32 b)
     struct MainWork *final_work;
     u32 probe;
 
-    a = (a << 24) >> 24;
-    value = a;
-    b = (b << 16) >> 16;
-    key = b;
+    av = a;
+    av = (av << 24) >> 24;
+    value = av;
+    iv = i;
+    iv = (iv << 16) >> 16;
+    key = iv;
     loc_load = gMainWorkPtrLoc;
     work = *loc_load;
     offset = 0x1694;
@@ -58,3 +63,4 @@ void sub_0802C2B0(u32 a, u32 b)
     record_reg = (struct Unk1694 *)(((s32)shifted_key >> 14) + (u32)final_base);
     record_reg->unk01 = 1;
 }
+

@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-23T22:44:19Z",
+  "generated": "2026-09-24T07:35:26Z",
   "counts": {
-    "matched": 413,
-    "wip": 135,
+    "matched": 414,
+    "wip": 134,
     "not_started": 83,
     "blocked": 2
   },
   "tiers": {
     "UNKNOWN": 85,
-    "DECOMPILED": 126,
+    "DECOMPILED": 125,
     "UNDERSTOOD": 9,
-    "MATCHING": 413
+    "MATCHING": 414
   },
   "total": 633,
   "functions": [
@@ -188,20 +188,20 @@
     {
       "name": "sub_0802C2B0",
       "addr": "0x0802C2B0",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 100,
-      "matched_bytes": 92,
-      "compiled_bytes": 0,
-      "pct": 92.0,
-      "score": "92/100",
-      "source": "wip",
-      "note": "92/100 same-size; two 2-byte deltas: (a) agbcc hoists `mov r12,r1` above `adds r0,r0,r4`, retail places it after `ldr r0,[r0]`; (b) final sum encodes `adds r1,r0,r1` where retail has `adds r1,r1,r0` (Rn/Rm swap). This session: 9 clean/wild variants over the tail sum order (`base + off`, `off + base` via u32 addr accumulator, struct-member `&(*loc)->unk1694[i]`) and the prologue pointer plumbing \u2014 best stays 92/100, and the order flip does not change the add encoding (GCC canonicalises the plus operands)",
-      "tier": "DECOMPILED",
+      "matched_bytes": 100,
+      "compiled_bytes": 100,
+      "pct": 100.0,
+      "score": "100/100",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {
