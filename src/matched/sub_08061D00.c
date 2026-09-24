@@ -1,57 +1,47 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08061d00
-__attribute__((naked))
-void sub_08061D00(u16 a, u32 b)
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+#include "data_symbols.h"
+
+void sub_08061D00(u32 a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r2, r0, #0x0\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "lsls r1, r1, #0x1C\n"
-        "lsrs r5, r1, #0x10\n"
-        "orrs r5, r1\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x03\n"
-        "orrs r5, r0\n"
-        "ldr r4, _08061D5C @ =0x03000798\n"
-        "ldr r0, [r4, #0x00]\n"
-        "adds r0, #0x88\n"
-        "ldr r0, [r0, #0x00]\n"
-        "adds r1, r2, #0x0\n"
-        "bl sub_0806BB38\n"
-        "ldr r2, [r4, #0x00]\n"
-        "adds r1, r2, #0x0\n"
-        "adds r1, #0x5C\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "lsls r4, r1, #0x0B\n"
-        "movs r3, #0xC0\n"
-        "lsls r3, r3, #0x13\n"
-        "adds r4, r4, r3\n"
-        "adds r2, #0x5D\n"
-        "ldrb r2, [r2, #0x00]\n"
-        "lsls r1, r2, #0x0E\n"
-        "adds r1, r1, r3\n"
-        "ldr r2, _08061D60 @ =0x080BB8C0\n"
-        "ldr r3, [r2, #0x00]\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "ldr r0, _08061D64 @ =0x080BB8BC\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x04\n"
-        "ldr r3, [r0, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "bl _08073C4C\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08061D5C: .4byte 0x03000798\n"
-        "_08061D60: .4byte 0x080BB8C0\n"
-        "_08061D64: .4byte 0x080BB8BC\n"
-    );
+    u32 lo;
+    u32 shifted;
+    u32 packed;
+    struct Unk0798 **slot;
+    struct Unk0798 *obj;
+    void *src;
+    u32 vram;
+    u32 destA;
+    u8 bankA;
+    u8 bankB;
+    void **cpu;
+
+    lo = (u16)a;
+    shifted = b << 28;
+    packed = shifted >> 16;
+    packed |= shifted;
+    packed |= 0x80 << 3;
+
+    slot = &gData_03000798;
+    src = sub_0806BB38((struct Unk6BB38 *)(*slot)->unk88, lo);
+
+    obj = *slot;
+    bankA = obj->unk5C;
+    destA = bankA << 11;
+    vram = 0xC0;
+    vram <<= 19;
+    destA += vram;
+    bankB = obj->unk5D;
+
+    _08073C4C(src, (void *)((bankB << 14) + vram), 0x20, *(void **)gData_080BB8C0);
+
+    cpu = (void **)gData_080BB8BC;
+    _08073C4C((void *)packed, (void *)destA, 0x80 << 4, *cpu);
 }
 

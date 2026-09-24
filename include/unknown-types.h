@@ -632,9 +632,12 @@ struct BattleWork /* >= 0x208A */
     /* 1F0C */ void *unk1F0C;
     /* 1F10 */ struct Unk62044 unk1F10;
     /* 1F38 */ struct Unk62044 unk1F38;
-    /* 1F60 */ u8 filler_1F60[0x13];
+    /* 1F60 */ u8 filler_1F60[0x12];
+    /* 1F72 */ s8 unk1F72; /* sub_0803C5DC */
     /* 1F73 */ u8 unk1F73; /* sub_0803D51C */
-    /* 1F74 */ u8 filler_1F74[8];
+    /* 1F74 */ s16 unk1F74; /* sub_0803C500 */
+    /* 1F76 */ s16 unk1F76; /* sub_0803C5DC */
+    /* 1F78 */ u8 filler_1F78[4];
     /* 1F7C */ u8 unk1F7C;
     /* 1F7D */ u8 filler_1F7D[0x13];
     /* 1F90 */ s32 unk1F90; /* sub_080330F4 */

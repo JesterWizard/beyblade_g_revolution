@@ -58,6 +58,7 @@ extern u16 gData_03000504[];
 extern u8 gData_03000770[];
 extern u32 gData_03000794[];
 extern struct Unk0798 *gData_03000798;
+extern struct Unk09B0 *gData_030009B0;
 
 extern u8 gData_083A7404[];
 extern u8 gData_083A75A8[];
@@ -117,6 +118,15 @@ extern u8 gData_030001B0[];
 extern u32 gData_03000630[];
 extern u32 gData_03000638[];
 extern u32 *const gData_08094BB4[];
+extern void *gData_080971D8[];
+extern void *gData_080971EC[];
+extern u8 gData_080B72F3[];
+extern u8 gData_082BF600[];
+extern void *gData_08099710[];
+extern struct Unk40EF4 gData_0808B2E4[];
+extern struct Unk42BE8 gData_080908BC[];
+extern u8 gData_083A2CF4[];
+extern u8 gData_083A2D28[];
+extern struct Unk447CC *gData_08096794[];
 
 #endif // GUARD_DATA_SYMBOLS_H
-extern struct Unk447CC *gData_08096794[];

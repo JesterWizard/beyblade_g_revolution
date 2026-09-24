@@ -1,35 +1,41 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
+#include "ram_map.h"
 
-void TextRowSetPaletteBank(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
+void sub_08061D68(u32 a, u32 b, u32 c, u32 d)
 {
-    u32 x;
     u16 palBits;
-    u32 lo;
-    u32 hi;
-    u32 tmp;
+    u32 saved;
     u16 *addr;
-    s32 i;
+    u16 mask;
+    u32 base;
+    u32 scaled;
 
-    x = arg0 & 0x1F;
-    palBits = (arg1 & 0xF) << 12;
-    lo = arg2 & 0x1F;
-    hi = arg3 & 0x1F;
-    if (hi < lo)
+    palBits = (u16)((b << 28) >> 16);
+    a &= 0x1F;
+    c &= 0x1F;
+    saved = c;
+    d &= 0x1F;
+    if (d < c)
     {
-        tmp = lo;
-        lo = hi;
-        hi = tmp;
+        c = d;
+        d = saved;
     }
-
-    addr = (u16 *)(0x06000000 + (gUnk_03000798->unk5C << 0xB) + (x << 6));
-    if (lo <= hi)
+    addr = (u16 *)(gUnk_03000798->unk5C << 11);
+    base = 0xC0;
+    base <<= 19;
+    addr = (u16 *)((u32)addr + base);
+    addr = (u16 *)((u32)addr + (a << 6));
+    if ((s32)c <= (s32)d)
     {
-        addr += lo;
-        for (i = lo; i <= hi; i++)
+        mask = 0x3FF;
+        scaled = (c << 1) + (u32)addr;
+        addr = (u16 *)scaled;
+        do
         {
-            *addr = (*addr & 0x3FF) | palBits;
+            *addr = (*addr & mask) | palBits;
             addr++;
-        }
+            c++;
+        } while ((s32)c <= (s32)d);
     }
 }

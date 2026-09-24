@@ -1,11 +1,6 @@
 #include "global.h"
 #include "ram_map.h"
 #include "battle.h"
-
-// @ 0x0803c5dc
-#include "global.h"
-#include "ram_map.h"
-#include "battle.h"
 #include "data_symbols.h"
 
 void sub_0803C5DC(s32 a)
@@ -33,4 +28,3 @@ void sub_0803C5DC(s32 a)
     btl->unk1F76 = a;
     btl->unk1F72 = 1;
 }
-

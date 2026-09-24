@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-24T10:25:36Z",
+  "generated": "2026-09-24T16:14:37Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 217,
-    "semantic_done": 416,
-    "readable_asm": 217,
+    "pending": 205,
+    "semantic_done": 428,
+    "readable_asm": 205,
     "opcode": 0,
-    "battle_pending": 78,
-    "battle_semantic": 79,
+    "battle_pending": 76,
+    "battle_semantic": 81,
     "blocked": 20,
     "wip": 136
   },
@@ -173,8 +173,8 @@
     {
       "name": "sub_08042F4C",
       "addr": "0x08042F4C",
-      "kind": "asm",
-      "bytes": 80,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08042F4C.c",
       "notes": "src/decompiled/sub_08042F4C.md",
       "status": "33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization",
@@ -195,8 +195,8 @@
     {
       "name": "sub_08061D68",
       "addr": "0x08061D68",
-      "kind": "asm",
-      "bytes": 88,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08061D68.c",
       "notes": "src/decompiled/sub_08061D68.md",
       "status": "13/88 bytes (13.5%), size mismatch (96 vs 88); correct overall algorithm (mask args to 0x1F, build 12-bit palette-select field, swap lo/hi if needed, compute VRAM tile address from gUnk_03000798->unk5C, loop-OR the palette bits into each halfword) but agbcc allocates 4 callee-saved regs (r4-r7) vs retail's 3 (r4-r6) -- retail reuses a non-callee-saved scratch reg (r1) for the swap temp instead of a persistent local",
@@ -228,8 +228,8 @@
     {
       "name": "sub_080677A8",
       "addr": "0x080677A8",
-      "kind": "asm",
-      "bytes": 86,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080677A8.c",
       "notes": "src/decompiled/sub_080677A8.md",
       "status": "12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field",
@@ -635,8 +635,8 @@
     {
       "name": "sub_080610A8",
       "addr": "0x080610A8",
-      "kind": "asm",
-      "bytes": 98,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080610A8.c",
       "notes": "src/decompiled/sub_080610A8.md",
       "status": "Two semantic attempts: if-chain 46/98 (96B), then switch with unsigned half-shift 73/98 (same size). Guards, fields, call arguments, and comparison tree now match; remaining same-size diff is case body placement/order (retail lays out mode 0, mode 2, mode 1 before the shared sub_0806105C tail).",
@@ -679,8 +679,8 @@
     {
       "name": "sub_08061D00",
       "addr": "0x08061D00",
-      "kind": "asm",
-      "bytes": 104,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08061D00.c",
       "notes": "src/decompiled/sub_08061D00.md",
       "status": "Two same-size attempts: direct semantic C 49/104, then r2/r4/r5 register anchors 23/104 (100B). The copy semantics are mapped; remaining differences are input-mask ordering and the compiler CSE/retention of the VRAM base in r6, while retail recomputes it in caller-saved r3 between the two copies.",
@@ -866,8 +866,8 @@
     {
       "name": "sub_0806A434",
       "addr": "0x0806A434",
-      "kind": "asm",
-      "bytes": 164,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806A434.c",
       "notes": "src/decompiled/sub_0806A434.md",
       "status": "Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped.",
@@ -888,8 +888,8 @@
     {
       "name": "sub_0806FDD0",
       "addr": "0x0806FDD0",
-      "kind": "asm",
-      "bytes": 128,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806FDD0.c",
       "notes": "src/decompiled/sub_0806FDD0.md",
       "status": "Two semantic attempts: sorted-list insertion model 8/128 (120B), then corrected u16 key ABI and literal pointer lifetimes reached 21/128 (120B). The body is structurally exact, but retail saves r7 (f0b5) while agbcc emits 70b5 despite keeping the free-list address in r7 across calls; this shifts literal-pool offsets and leaves the match short.",
@@ -899,8 +899,8 @@
     {
       "name": "sub_0806FE84",
       "addr": "0x0806FE84",
-      "kind": "asm",
-      "bytes": 120,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806FE84.c",
       "notes": "src/decompiled/sub_0806FE84.md",
       "status": "Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1.",
@@ -1255,8 +1255,8 @@
       "bytes": 336,
       "seed": "src/decompiled/sub_08040F4C.c",
       "notes": "src/decompiled/sub_08040F4C.md",
-      "status": "319/336; done in r4 vs r5",
-      "next": "second live callee-saved across loop",
+      "status": "319/336 agbcc; prologue fork: 225/336 gets r5 but wrong 6639C order",
+      "next": "PERM prologue swap on done_then_early6639 seed or leave Thumb",
       "score": "319/336"
     },
     {
@@ -1361,8 +1361,8 @@
     {
       "name": "sub_08073988",
       "addr": "0x08073988",
-      "kind": "asm",
-      "bytes": 96,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08073988.c",
       "notes": "src/decompiled/sub_08073988.md",
       "status": "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) \u2014 all 94/96 or worse. This session: 12 more `default_char` shapes (`r0 = (index = C)`, `C + ch`, `index + ch`, split assignments, u32 casts) \u2014 every one 94/96 or size-mismatch; old_agbcc 90/96.",
@@ -1394,8 +1394,8 @@
     {
       "name": "sub_08069F00",
       "addr": "0x08069F00",
-      "kind": "asm",
-      "bytes": 24,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08069F00.c",
       "notes": "src/decompiled/sub_08069F00.md",
       "status": "11/24 same-size, r0/r1 coalescing: retail keeps `adds r1,r0,#0` (copy) and compares r0, agbcc coalesces the copy and emits a trailing nop. This session: 13 more shapes (2- and 3-deep copy chains, u32 copy, operator variants on the sign test, split `r = p;` statement) \u2014 every one byte-identical at 11/24, so agbcc's copy coalescing always wins",
@@ -1531,21 +1531,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803C5DC",
-      "addr": "0x0803C5DC",
-      "kind": "asm",
-      "bytes": 220,
-      "score": 106,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gMainWorkPtr",
-        "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803C500",
       "addr": "0x0803C500",
       "kind": "asm",
@@ -1581,20 +1566,6 @@
       "kind": "asm",
       "bytes": 156,
       "score": 77,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080428F0",
-      "addr": "0x080428F0",
-      "kind": "asm",
-      "bytes": 160,
-      "score": 73,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
@@ -2050,6 +2021,30 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_0804EBF0",
+      "addr": "0x0804EBF0",
+      "kind": "asm",
+      "bytes": 202,
+      "score": 105,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0807027C",
+      "addr": "0x0807027C",
+      "kind": "asm",
+      "bytes": 216,
+      "score": 106,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -2212,21 +2207,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803C5DC",
-      "addr": "0x0803C5DC",
-      "kind": "asm",
-      "bytes": 220,
-      "score": 106,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gMainWorkPtr",
-        "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803C500",
       "addr": "0x0803C500",
       "kind": "asm",
@@ -2262,20 +2242,6 @@
       "kind": "asm",
       "bytes": 156,
       "score": 77,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080428F0",
-      "addr": "0x080428F0",
-      "kind": "asm",
-      "bytes": 160,
-      "score": 73,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"

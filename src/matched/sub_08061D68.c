@@ -1,56 +1,47 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08061d68
-__attribute__((naked))
-void TextRowSetPaletteBank(u32 a, u32 b, u32 c, u32 d)
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
+void sub_08061D68(u32 a, u32 b, u32 c, u32 d)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "lsls r1, r1, #0x1C\n"
-        "lsrs r5, r1, #0x10\n"
-        "movs r0, #0x1F\n"
-        "ands r4, r0\n"
-        "ands r2, r0\n"
-        "adds r1, r2, #0x0\n"
-        "ands r3, r0\n"
-        "cmp r3, r2\n"
-        "bcs _08061D82\n"
-        "adds r2, r3, #0x0\n"
-        "adds r3, r1, #0x0\n"
-        "_08061D82:\n"
-        "ldr r0, _08061DB8 @ =0x03000798\n"
-        "ldr r0, [r0, #0x00]\n"
-        "adds r0, #0x5C\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0, #0x0B\n"
-        "movs r0, #0xC0\n"
-        "lsls r0, r0, #0x13\n"
-        "adds r1, r1, r0\n"
-        "lsls r0, r4, #0x06\n"
-        "adds r1, r1, r0\n"
-        "cmp r2, r3\n"
-        "bgt _08061DB2\n"
-        "ldr r4, _08061DBC @ =0x000003FF\n"
-        "lsls r0, r2, #0x01\n"
-        "adds r1, r0, r1\n"
-        "_08061DA0:\n"
-        "adds r0, r4, #0x0\n"
-        "ldrh r6, [r1, #0x00]\n"
-        "ands r0, r6\n"
-        "orrs r0, r5\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r1, #0x02\n"
-        "adds r2, #0x01\n"
-        "cmp r2, r3\n"
-        "ble _08061DA0\n"
-        "_08061DB2:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08061DB8: .4byte 0x03000798\n"
-        "_08061DBC: .4byte 0x000003FF\n"
-    );
+    u16 palBits;
+    u32 saved;
+    u16 *addr;
+    u16 mask;
+    u32 base;
+    u32 scaled;
+
+    palBits = (u16)((b << 28) >> 16);
+    a &= 0x1F;
+    c &= 0x1F;
+    saved = c;
+    d &= 0x1F;
+    if (d < c)
+    {
+        c = d;
+        d = saved;
+    }
+    addr = (u16 *)(gUnk_03000798->unk5C << 11);
+    base = 0xC0;
+    base <<= 19;
+    addr = (u16 *)((u32)addr + base);
+    addr = (u16 *)((u32)addr + (a << 6));
+    if ((s32)c <= (s32)d)
+    {
+        mask = 0x3FF;
+        scaled = (c << 1) + (u32)addr;
+        addr = (u16 *)scaled;
+        do
+        {
+            *addr = (*addr & mask) | palBits;
+            addr++;
+            c++;
+        } while ((s32)c <= (s32)d);
+    }
 }
 

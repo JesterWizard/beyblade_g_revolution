@@ -1,56 +1,46 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080677a8
-__attribute__((naked))
+#include "global.h"
+#include "ram_map.h"
+
 u32 sub_080677A8(u32 a, void *b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "add sp, #-0x008\n"
-        "adds r4, r1, #0x0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "movs r5, #0x00\n"
-        "ldr r0, _080677C4 @ =0x030009B0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrh r0, [r0, #0x04]\n"
-        "cmp r1, r0\n"
-        "bcc _080677CC\n"
-        "ldr r0, _080677C8 @ =0x000080FF\n"
-        "b _080677F6\n"
-        ".byte 0x00, 0x00\n"
-        "_080677C4: .4byte 0x030009B0\n"
-        "_080677C8: .4byte 0x000080FF\n"
-        "_080677CC:\n"
-        "adds r0, r1, #0x0\n"
-        "mov r1, sp\n"
-        "bl sub_08067584\n"
-        "mov r2, sp\n"
-        "movs r3, #0x00\n"
-        "b _080677E4\n"
-        "_080677DA:\n"
-        "adds r0, r3, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r3, r0, #0x18\n"
-        "cmp r3, #0x03\n"
-        "bhi _080677F4\n"
-        "_080677E4:\n"
-        "ldrh r1, [r4, #0x00]\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "adds r2, #0x02\n"
-        "adds r4, #0x02\n"
-        "cmp r1, r0\n"
-        "beq _080677DA\n"
-        "movs r5, #0x80\n"
-        "lsls r5, r5, #0x08\n"
-        "_080677F4:\n"
-        "adds r0, r5, #0x0\n"
-        "_080677F6:\n"
-        "add sp, #0x008\n"
-        "pop {r4, r5}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u16 *arg1;
+    u16 x;
+    u16 buf[4];
+    u16 *p;
+    u8 i;
+    u32 result;
+    u16 va;
+    u16 vb;
+
+    arg1 = (u16 *)b;
+    x = (u16)a;
+    result = 0;
+    if (x >= gUnk_030009B0->unk04)
+        return 0x80FF;
+
+    sub_08067584(x, buf);
+    p = buf;
+    i = 0;
+    goto compare;
+matched:
+    i = (u8)(i + 1);
+    if (i > 3)
+        goto done;
+compare:
+    va = *arg1;
+    vb = *p;
+    p++;
+    arg1++;
+    if (va == vb)
+        goto matched;
+    result = 0x80;
+    result <<= 8;
+done:
+    return result;
 }
 

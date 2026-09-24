@@ -1,29 +1,46 @@
-/* match-compiler: old_agbcc */
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
-u32 sub_080677A8(u32 arg0, void *arg1v)
+// @ 0x080677a8
+#include "global.h"
+#include "ram_map.h"
+
+u32 sub_080677A8(u32 a, void *b)
 {
     u16 *arg1;
     u16 x;
     u16 buf[4];
     u16 *p;
-    s32 i;
+    u8 i;
+    u32 result;
+    u16 va;
+    u16 vb;
 
-    arg1 = (u16 *)arg1v;
-    x = (u16)arg0;
-    if (x >= (*(struct Unk09B0 **)gUnk_030009B0)->unk04)
+    arg1 = (u16 *)b;
+    x = (u16)a;
+    result = 0;
+    if (x >= gUnk_030009B0->unk04)
         return 0x80FF;
 
     sub_08067584(x, buf);
-
     p = buf;
-    for (i = 0; i <= 3; i++)
-    {
-        if (*arg1 != *p)
-            return 0x8000;
-        p++;
-        arg1++;
-    }
-
-    return 0;
+    i = 0;
+    goto compare;
+matched:
+    i = (u8)(i + 1);
+    if (i > 3)
+        goto done;
+compare:
+    va = *arg1;
+    vb = *p;
+    p++;
+    arg1++;
+    if (va == vb)
+        goto matched;
+    result = 0x80;
+    result <<= 8;
+done:
+    return result;
 }
+
