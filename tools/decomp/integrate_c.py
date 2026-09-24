@@ -138,6 +138,15 @@ def main() -> int:
         else:
             kind = "semantic"
 
+    if kind == "semantic" and (
+        "__attribute__((naked))" in body and "asm(" in body
+    ):
+        print(
+            f"refusing --kind semantic for {name}: naked inline asm is not semantic C",
+            file=sys.stderr,
+        )
+        return 2
+
     entry = {
         "name": name,
         "addr": f"0x{addr_from_name(name):08X}",

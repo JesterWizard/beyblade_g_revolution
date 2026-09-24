@@ -50,5 +50,8 @@ index `((u32 *)entry->unk04)[gMainWorkPtr->unk1818]`.
 ## Still banned (see `decomp-no-asm-labels.mdc`)
 
 - `register`, `register T x asm("rN")`, empty `asm("")`, GCC asm labels in semantic C
+- **`__attribute__((naked))` + inline `asm()` in `src/matched/`** — byte-match only; never
+  `--kind semantic` or semantic progress (`sub_08074144` / `mov pc, lr` is blocked in
+  `docs/decomp-queue.toml`; agbcc emits `bx lr`, not `mov pc, lr`)
 - Offset-casts (`*(u16 *)((u8 *)p + off)`) — add struct members instead
 - Raw IWRAM `0x03……` in semantic paths when `ram_map.h` has a name

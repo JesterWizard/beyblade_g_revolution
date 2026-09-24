@@ -20,6 +20,7 @@ void sub_0802C2B0(u32 a, u32 b)
     struct Unk1694 *record_reg;
     struct MainWork *work;
     struct MainWork *final_work;
+    u32 probe;
 
     a = (a << 24) >> 24;
     value = a;
@@ -28,8 +29,9 @@ void sub_0802C2B0(u32 a, u32 b)
     loc_load = gMainWorkPtrLoc;
     work = *loc_load;
     offset = 0x1694;
+    probe = (u32)work->unk1694;
     loc = loc_load;
-    if (work->unk1694 != 0)
+    if (probe != 0)
     {
         index = 0;
         shifted_value = value << 24;
@@ -40,11 +42,11 @@ void sub_0802C2B0(u32 a, u32 b)
         zero = 0;
         do
         {
-            record_reg = *(struct Unk1694 **)(
-                (u8 *)(*loop_loc) + loop_offset);
+            struct Unk1694 *base;
+
+            base = *(struct Unk1694 **)((u8 *)(*loop_loc) + loop_offset);
             scaled_index = index << 2;
-            record_reg = (struct Unk1694 *)(
-                scaled_index + (u32)record_reg);
+            record_reg = (struct Unk1694 *)(scaled_index + (u32)base);
             if (record_reg->unk03 == value)
                 record_reg->unk01 = zero;
             index++;
@@ -53,7 +55,6 @@ void sub_0802C2B0(u32 a, u32 b)
     final_work = *loc;
     shifted_key = key << 16;
     final_base = final_work->unk1694;
-    record_reg = (struct Unk1694 *)(
-        ((s32)shifted_key >> 14) + (u32)final_base);
+    record_reg = (struct Unk1694 *)(((s32)shifted_key >> 14) + (u32)final_base);
     record_reg->unk01 = 1;
 }
