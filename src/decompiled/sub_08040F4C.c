@@ -1,29 +1,25 @@
 #include "global.h"
 
 // @ 0x08040f4c
+/* match-compiler: agbcc */
 void sub_08040F4C(void)
 {
     struct Unk40F4C state;
+    struct Unk4109CInput *setupArg;
+    u32 *clearSym;
     s32 done;
-    s16 blend;
     u32 r0;
     u32 r1;
     u32 r2;
     u32 r3;
 
-    blend = 0;
     done = 0;
-    r0 = 0x080BB8BC;
+    clearSym = gData_080BB8BC;
     r2 = 0xCA;
     r2 <<= 2;
-    r3 = *(u32 *)r0;
-    r0 = 0;
-    r1 = (u32)&state;
-    _08073C4C((void *)r0, (void *)r1, r2, (void *)r3);
-    r0 = (u32)sub_0806639C();
-    r1 = r0;
-    r0 = (u32)&state;
-    sub_0804109C((struct Unk40F4C *)r0, (struct Unk4109CInput *)r1);
+    _08073C4C(0, &state, r2, (void *)clearSym[0]);
+    setupArg = sub_0806639C();
+    sub_0804109C(&state, setupArg);
     sub_08060468();
     sub_08060758();
 loop:
@@ -37,12 +33,9 @@ loop:
     r0 &= r1;
     if (r0 != 0)
         goto after_vblank;
-    r0 = 0x080BB888;
-    r0 = *(u32 *)r0;
-    _08073C40((void *)r0);
+    _08073C40((void *)gData_080BB888[0]);
 after_vblank:
-    r2 = 0x2D7;
-    r2 += (u32)&state;
+    r2 = (u32)&state.unk2D7;
     r0 = *(u8 *)r2;
     if (r0 != 1)
         goto after_blend;
@@ -118,11 +111,9 @@ mode1:
     r1 = *(u32 *)r0;
     if (r1 == 0)
         goto mode1_update;
-    r0 = (u32)&state;
-    _08073C44((void *)r0, (void *)r1);
+    _08073C44(&state, (void *)r1);
 mode1_update:
-    r0 = (u32)&state;
-    sub_080411EC((void *)r0);
+    sub_080411EC(&state);
     goto after_mode;
 mode2:
     r0 = (u32)&state.unk254;
@@ -130,8 +121,7 @@ mode_shared:
     r1 = *(u32 *)r0;
     if (r1 == 0)
         goto after_mode;
-    r0 = (u32)&state;
-    _08073C44((void *)r0, (void *)r1);
+    _08073C44(&state, (void *)r1);
     goto after_mode;
 mode3:
     done = 1;
@@ -140,16 +130,13 @@ after_mode:
     r1 = *(u32 *)r0;
     if (r1 == 0)
         goto check_done;
-    r0 = (u32)&state;
-    _08073C44((void *)r0, (void *)r1);
+    _08073C44(&state, (void *)r1);
 check_done:
     if (done != 0)
         goto exit_loop;
     goto loop;
 exit_loop:
-    r0 = (u32)&state;
-    sub_08041394((struct Unk41394 *)r0);
+    sub_08041394((struct Unk41394 *)&state);
     sub_080604A4();
     sub_08060798();
 }
-

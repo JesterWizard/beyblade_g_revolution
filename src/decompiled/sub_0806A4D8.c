@@ -8,6 +8,7 @@ void *sub_0806A4D8(void *minGap, void *regionStart, u32 allocSize, void *hdr, vo
     struct Unk6A4D8Node *hdrNode;
     struct Unk6A4D8Node *outNode;
     u32 gap;
+    u32 regionEnd;
     u8 *insertAt;
     u32 tailRoom;
 
@@ -31,6 +32,7 @@ void *sub_0806A4D8(void *minGap, void *regionStart, u32 allocSize, void *hdr, vo
     tailRoom = allocSize;
     if (walk != 0)
     {
+        regionEnd = (u32)regionStart + allocSize;
         for (;;)
         {
             next = walk->unk0C;
@@ -53,7 +55,7 @@ void *sub_0806A4D8(void *minGap, void *regionStart, u32 allocSize, void *hdr, vo
                 if (walk->unk00 != 0)
                 {
                     insertAt = (u8 *)walk->unk00 + walk->unk04;
-                    tailRoom = (u32)(regionStart + allocSize) - (u32)insertAt;
+                    tailRoom = regionEnd - (u32)insertAt;
                 }
                 else
                 {

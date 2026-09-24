@@ -34,7 +34,7 @@ void BtlObjPoolFree(void *arg)
     }
     if (state->unk30 != 0)
     {
-        BtlObjListMoveToHead((struct BtlObj *)state);
+        BtlObjListMoveToHead((struct BtlObj *)state->unk30);
         state->unk30 = 0;
     }
     gUnk_030040B4++;

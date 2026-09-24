@@ -1,63 +1,33 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080610a8
-__attribute__((naked))
-void sub_080610A8(void)
+#include "global.h"
+
+void sub_080610A8(
+    struct Unk610A8 *base,
+    u8 *text,
+    u32 index,
+    u32 mode)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "adds r7, r1, #0x0\n"
-        "adds r6, r2, #0x0\n"
-        "adds r5, r3, #0x0\n"
-        "cmp r4, #0x00\n"
-        "beq _08061104\n"
-        "adds r0, #0x98\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r6, r0\n"
-        "bcs _08061104\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x8C\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, #0x14\n"
-        "ldrh r2, [r0, #0x00]\n"
-        "subs r0, #0x04\n"
-        "ldrh r3, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08073988\n"
-        "cmp r5, #0x01\n"
-        "beq _080610F4\n"
-        "cmp r5, #0x01\n"
-        "bcc _080610E0\n"
-        "cmp r5, #0x02\n"
-        "beq _080610EC\n"
-        "b _080610FC\n"
-        "_080610E0:\n"
-        "lsrs r0, r0, #0x01\n"
-        "subs r0, r6, r0\n"
-        "adds r1, r4, #0x0\n"
-        "adds r1, #0x90\n"
-        "strh r0, [r1, #0x00]\n"
-        "b _080610FC\n"
-        "_080610EC:\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x90\n"
-        "strh r6, [r0, #0x00]\n"
-        "b _080610FC\n"
-        "_080610F4:\n"
-        "subs r1, r6, r0\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x90\n"
-        "strh r1, [r0, #0x00]\n"
-        "_080610FC:\n"
-        "adds r0, r4, #0x0\n"
-        "adds r1, r7, #0x0\n"
-        "bl sub_0806105C\n"
-        "_08061104:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 value;
+
+    if (base == 0 || index >= base->unk98)
+        return;
+    value = TextMeasureWidth(text, base->unk8C, base->unkA0, base->unk9C);
+    switch (mode)
+    {
+    case 0:
+        base->unk90 = index - ((u32)value >> 1);
+        break;
+    case 2:
+        base->unk90 = index;
+        break;
+    case 1:
+        base->unk90 = index - value;
+        break;
+    }
+    sub_0806105C(base, text);
 }
 

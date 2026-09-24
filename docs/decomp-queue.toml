@@ -986,8 +986,8 @@ score = "28/64"
 name = "sub_08040F4C"
 seed = "src/decompiled/sub_08040F4C.c"
 notes = "src/decompiled/sub_08040F4C.md"
-status = "319/336; done in r4 vs r5"
-next = "second live callee-saved across loop"
+status = "319/336 agbcc; prologue fork: 225/336 gets r5 but wrong 6639C order"
+next = "PERM prologue swap on done_then_early6639 seed or leave Thumb"
 score = "319/336"
 
 [[wip]]

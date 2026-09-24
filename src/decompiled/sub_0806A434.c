@@ -1,33 +1,34 @@
 #include "global.h"
-
+#include "ram_map.h"
 void HeapFree(void *arg)
 {
     struct Unk6A434 *state;
     struct Unk6A4D8Node *previous;
     struct Unk6A4D8Node *next;
-    u32 key;
 
     state = arg;
     previous = state->unk0C;
     next = state->unk08;
-    key = state->unk00;
-    if (key == 0)
+    if (state->unk00 == 0)
         DebugPrint((void *)0x083D1B38);
     if (next == 0)
     {
         if (previous == 0)
         {
-            if (key <= 0x0203FFFF)
+            if (state->unk00 <= 0x0203FFFF)
                 gUnk_03000B30 = previous;
             else
                 gUnk_03003F44 = previous;
-            goto finish;
         }
-        if (key <= 0x0203FFFF)
-            gUnk_03000B30 = previous;
         else
-            gUnk_03003F44 = previous;
-        previous->unk08 = 0;
+        {
+            if (state->unk00 <= 0x0203FFFF)
+                gUnk_03000B30 = previous;
+            else
+                gUnk_03003F44 = previous;
+            if (previous != 0)
+                previous->unk08 = 0;
+        }
     }
     else
     {
@@ -35,8 +36,7 @@ void HeapFree(void *arg)
         if (previous != 0)
             previous->unk08 = next;
     }
-finish:
-    if (key <= 0x0203FFFF)
+    if (state->unk00 <= 0x0203FFFF)
         gUnk_03000B3C--;
     else
         gUnk_03003F48--;

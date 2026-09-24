@@ -7,7 +7,7 @@ void sub_0803370C(void);
 void sub_08033084(void *a, u32 b);
 void sub_080302E0(void *a);
 void sub_08035D68(void *a, void *b);
-void sub_0803531C(void *a);
+void sub_0803531C(struct Unk35258 *a);
 void sub_080353A0(void *a);
 void sub_08030F38(void);
 void sub_08033DD4(void);
@@ -71,8 +71,8 @@ void sub_08032DC4(
                 (struct Unk302A8 *)((u8 *)gBattleWork + 0x37C),
                 (struct Unk302A8Src *)((u8 *)gBattleWork + 0xAA8),
                 (struct Unk302A8 *)gBattleWork->unk0AD8[1]);
-            sub_0803531C(state_a);
-            sub_0803531C(state_b);
+            sub_0803531C((struct Unk35258 *)state_a);
+            sub_0803531C((struct Unk35258 *)state_b);
             sub_080353A0(state_a);
             sub_080353A0(state_b);
             sub_08030F38();

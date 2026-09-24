@@ -1,4 +1,6 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08074144
 __attribute__((naked))

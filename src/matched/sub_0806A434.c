@@ -1,91 +1,53 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806a434
-__attribute__((naked))
-void HeapFree(void *a)
+#include "global.h"
+#include "ram_map.h"
+void HeapFree(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r4, [r6, #0x0C]\n"
-        "ldr r5, [r6, #0x08]\n"
-        "ldr r0, [r6, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _0806A448\n"
-        "ldr r0, _0806A460 @ =0x083D1B38\n"
-        "bl sub_08067B98\n"
-        "_0806A448:\n"
-        "cmp r5, #0x00\n"
-        "bne _0806A4A0\n"
-        "cmp r4, #0x00\n"
-        "bne _0806A478\n"
-        "ldr r0, _0806A464 @ =0x0203FFFF\n"
-        "ldr r1, [r6, #0x00]\n"
-        "cmp r1, r0\n"
-        "bhi _0806A46C\n"
-        "ldr r0, _0806A468 @ =0x03000B30\n"
-        "str r4, [r0, #0x00]\n"
-        "b _0806A4AA\n"
-        ".byte 0x00, 0x00\n"
-        "_0806A460: .4byte 0x083D1B38\n"
-        "_0806A464: .4byte 0x0203FFFF\n"
-        "_0806A468: .4byte 0x03000B30\n"
-        "_0806A46C:\n"
-        "ldr r0, _0806A474 @ =0x03003F44\n"
-        "str r4, [r0, #0x00]\n"
-        "b _0806A4AA\n"
-        ".byte 0x00, 0x00\n"
-        "_0806A474: .4byte 0x03003F44\n"
-        "_0806A478:\n"
-        "ldr r0, _0806A484 @ =0x0203FFFF\n"
-        "ldr r1, [r6, #0x00]\n"
-        "cmp r1, r0\n"
-        "bhi _0806A48C\n"
-        "ldr r0, _0806A488 @ =0x03000B30\n"
-        "b _0806A48E\n"
-        "_0806A484: .4byte 0x0203FFFF\n"
-        "_0806A488: .4byte 0x03000B30\n"
-        "_0806A48C:\n"
-        "ldr r0, _0806A49C @ =0x03003F44\n"
-        "_0806A48E:\n"
-        "str r4, [r0, #0x00]\n"
-        "cmp r4, #0x00\n"
-        "beq _0806A4AA\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x08]\n"
-        "b _0806A4AA\n"
-        ".byte 0x00, 0x00\n"
-        "_0806A49C: .4byte 0x03003F44\n"
-        "_0806A4A0:\n"
-        "str r4, [r5, #0x0C]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "cmp r4, #0x00\n"
-        "beq _0806A4AA\n"
-        "str r5, [r4, #0x08]\n"
-        "_0806A4AA:\n"
-        "ldr r0, _0806A4B4 @ =0x0203FFFF\n"
-        "cmp r1, r0\n"
-        "bhi _0806A4BC\n"
-        "ldr r1, _0806A4B8 @ =0x03000B3C\n"
-        "b _0806A4BE\n"
-        "_0806A4B4: .4byte 0x0203FFFF\n"
-        "_0806A4B8: .4byte 0x03000B3C\n"
-        "_0806A4BC:\n"
-        "ldr r1, _0806A4D4 @ =0x03003F48\n"
-        "_0806A4BE:\n"
-        "ldr r0, [r1, #0x00]\n"
-        "subs r0, #0x01\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x00\n"
-        "str r0, [r6, #0x04]\n"
-        "str r0, [r6, #0x00]\n"
-        "str r0, [r6, #0x0C]\n"
-        "str r0, [r6, #0x08]\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_0806A4D4: .4byte 0x03003F48\n"
-    );
+    struct Unk6A434 *state;
+    struct Unk6A4D8Node *previous;
+    struct Unk6A4D8Node *next;
+
+    state = arg;
+    previous = state->unk0C;
+    next = state->unk08;
+    if (state->unk00 == 0)
+        DebugPrint((void *)0x083D1B38);
+    if (next == 0)
+    {
+        if (previous == 0)
+        {
+            if (state->unk00 <= 0x0203FFFF)
+                gUnk_03000B30 = previous;
+            else
+                gUnk_03003F44 = previous;
+        }
+        else
+        {
+            if (state->unk00 <= 0x0203FFFF)
+                gUnk_03000B30 = previous;
+            else
+                gUnk_03003F44 = previous;
+            if (previous != 0)
+                previous->unk08 = 0;
+        }
+    }
+    else
+    {
+        next->unk0C = previous;
+        if (previous != 0)
+            previous->unk08 = next;
+    }
+    if (state->unk00 <= 0x0203FFFF)
+        gUnk_03000B3C--;
+    else
+        gUnk_03003F48--;
+    state->unk04 = 0;
+    state->unk00 = 0;
+    state->unk0C = 0;
+    state->unk08 = 0;
 }
 

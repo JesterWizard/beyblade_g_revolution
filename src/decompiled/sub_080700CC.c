@@ -22,10 +22,10 @@ void sub_080700CC(void *a)
     tail = (struct Unk700CCNode *)batch->unk04;
     headLink = head->unk00;
     tailLink = tail->unk04;
-    gUnk_030040B4 -= count;
-    minusOne = -1;
+    gUnk_030040B4 += count;
     node = head;
     count--;
+    minusOne = -1;
     while (count != minusOne)
     {
         if (node->unk30 != 0)

@@ -1,6 +1,5 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
-
 void sub_08068E54(struct Unk68E54 *a)
 {
     struct Unk68E54 *state;
@@ -10,11 +9,9 @@ void sub_08068E54(struct Unk68E54 *a)
     s32 y;
 
     state = a;
-    x = state->unk14;
-    x += state->unk1C;
+    x = state->unk14 + state->unk1C;
     state->unk14 = x;
-    y = state->unk18;
-    y += state->unk20;
+    y = state->unk18 + state->unk20;
     state->unk18 = y;
     state->unk54 = x;
     state->unk58 = y;
@@ -24,7 +21,6 @@ void sub_08068E54(struct Unk68E54 *a)
     scale = state->unk24;
     if (scale != 0)
     {
-        scale = state->unk24;
         x = state->unk14;
         delta_x = (x * scale) >> 8;
         y = state->unk18;
@@ -33,9 +29,9 @@ void sub_08068E54(struct Unk68E54 *a)
         state->unk14 = x;
         y -= scale;
         state->unk18 = y;
-        if (delta_x == 0 && x != 0)
+        if (delta_x == 0 && state->unk14 != 0)
             state->unk14 = 0;
-        if (scale == 0 && y != 0)
+        if (scale == 0 && state->unk18 != 0)
             state->unk18 = 0;
     }
 }

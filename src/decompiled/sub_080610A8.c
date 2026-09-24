@@ -13,14 +13,14 @@ void sub_080610A8(
     value = TextMeasureWidth(text, base->unk8C, base->unkA0, base->unk9C);
     switch (mode)
     {
-    case 1:
-        base->unk90 = index - value;
-        break;
     case 0:
         base->unk90 = index - ((u32)value >> 1);
         break;
     case 2:
         base->unk90 = index;
+        break;
+    case 1:
+        base->unk90 = index - value;
         break;
     }
     sub_0806105C(base, text);

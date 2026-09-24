@@ -1,11 +1,9 @@
+#define sub_0806C78C sub_0806C78C_hide
 #include "global.h"
+#undef sub_0806C78C
+s32 sub_0806C78C(s32 a, void *b, s32 c);
 
-// @ 0x080442fc
-void sub_080442FC(
-    struct Unk442FC *a,
-    struct Unk442FCInput *b,
-    u32 c,
-    u32 d)
+void sub_080442FC(struct Unk442FC *a, struct Unk442FCInput *b, u32 c, u32 d)
 {
     u32 flag;
     u32 arg4;
@@ -14,9 +12,9 @@ void sub_080442FC(
     u32 slot;
     u32 p181b;
     u32 arg2;
-    u32 r0;
-    u32 r1;
-    u32 r3;
+    u32 base;
+    u32 scaled;
+    u32 byte;
 
     index = 0;
     flag = c;
@@ -34,18 +32,18 @@ void sub_080442FC(
     mw = *(u32 *)gMainWorkPtrLoc;
     slot = mw + 0x1690;
     p181b = mw + 0x181B;
-    r3 = *(u8 *)p181b;
-    r1 = r3 << 5;
-    r1 += r3;
-    r1 <<= 2;
-    r0 = (u32)gData_08091208;
-    r1 += r0;
-    *(u32 *)slot = r1;
+    byte = *(u8 *)p181b;
+    scaled = byte << 5;
+    scaled += byte;
+    scaled <<= 2;
+    base = (u32)gData_08091208;
+    scaled += base;
+    *(u32 *)slot = scaled;
     arg2 = 0x82;
     arg2 <<= 5;
     index <<= 16;
-    r3 = index >> 16;
-    sub_08043C70(a, (void *)r1, arg2, r3, arg4);
+    byte = index >> 16;
+    sub_08043C70(a, (void *)scaled, arg2, byte, arg4);
     if (flag != 0)
         sub_0806C78C((s32)sub_08062A14(), a, (s32)index >> 16);
 }

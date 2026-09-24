@@ -1,70 +1,48 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806fe84
-__attribute__((naked))
-void BtlObjPoolFree(void *a)
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+void BtlObjPoolFree(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r6, [r4, #0x00]\n"
-        "ldr r5, [r4, #0x04]\n"
-        "ldr r2, [r4, #0x24]\n"
-        "cmp r2, #0x00\n"
-        "blt _0806FEAA\n"
-        "movs r1, #0x01\n"
-        "adds r0, r1, #0x0\n"
-        "ldrh r3, [r4, #0x20]\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "bne _0806FEAA\n"
-        "ldrh r0, [r4, #0x16]\n"
-        "subs r0, #0x05\n"
-        "lsls r1, r0\n"
-        "adds r0, r2, #0x0\n"
-        "bl sub_0806FBF8\n"
-        "_0806FEAA:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r4, #0x24]\n"
-        "cmp r6, #0x00\n"
-        "beq _0806FEB8\n"
-        "str r5, [r6, #0x04]\n"
-        "b _0806FEBC\n"
-        "_0806FEB8:\n"
-        "ldr r0, _0806FEF0 @ =0x030040A4\n"
-        "str r5, [r0, #0x00]\n"
-        "_0806FEBC:\n"
-        "cmp r5, #0x00\n"
-        "beq _0806FEC2\n"
-        "str r6, [r5, #0x00]\n"
-        "_0806FEC2:\n"
-        "ldr r1, _0806FEF4 @ =0x030040AC\n"
-        "ldr r0, [r1, #0x00]\n"
-        "str r0, [r4, #0x04]\n"
-        "str r4, [r1, #0x00]\n"
-        "ldr r0, [r4, #0x30]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806FED8\n"
-        "bl sub_0806FF28\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x30]\n"
-        "_0806FED8:\n"
-        "ldr r1, _0806FEF8 @ =0x030040B4\n"
-        "ldr r0, [r1, #0x00]\n"
-        "adds r0, #0x01\n"
-        "str r0, [r1, #0x00]\n"
-        "ldr r0, _0806FEF0 @ =0x030040A4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "bl sub_0806F8C4\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0806FEF0: .4byte 0x030040A4\n"
-        "_0806FEF4: .4byte 0x030040AC\n"
-        "_0806FEF8: .4byte 0x030040B4\n"
-    );
+    struct Unk6FE84 *state;
+    struct Unk6FE84 *previous;
+    struct Unk6FE84 *next;
+    s32 status;
+    s32 bit;
+
+    state = arg;
+    previous = state->unk00;
+    next = state->unk04;
+    status = state->unk24;
+    if (status >= 0 && (state->unk20 & 1) == 0)
+    {
+        bit = 1 << (state->unk16 - 5);
+        sub_0806FBF8(status, bit);
+    }
+    state->unk24 = -1;
+    if (previous != 0)
+        previous->unk04 = next;
+    else
+        *(struct Unk6FE84 **)(void *)&gUnk_030040A4 = next;
+    if (next != 0)
+        next->unk00 = previous;
+    {
+        struct Unk6FE84 **free_loc;
+
+        free_loc = (struct Unk6FE84 **)(void *)&gUnk_030040AC;
+        state->unk04 = *free_loc;
+        *free_loc = state;
+    }
+    if (state->unk30 != 0)
+    {
+        BtlObjListMoveToHead((struct BtlObj *)state->unk30);
+        state->unk30 = 0;
+    }
+    gUnk_030040B4++;
+    sub_0806F8C4((struct Unk6F8C4 *)(*(void **)(void *)&gUnk_030040A4));
 }
 

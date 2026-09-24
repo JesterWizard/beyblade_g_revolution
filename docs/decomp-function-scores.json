@@ -436,24 +436,26 @@
       "updated": "2026-09-24T11:42:37Z"
     },
     "sub_080428F0": {
-      "matched_bytes": 10,
+      "matched_bytes": 154,
       "retail_bytes": 160,
-      "compiled_bytes": 152,
-      "pct": 6.2,
-      "diff_bytes": 150,
-      "status": "size_mismatch",
-      "score": "10/160",
-      "updated": "2026-09-24T11:42:37Z"
+      "compiled_bytes": 160,
+      "pct": 96.2,
+      "diff_bytes": 6,
+      "status": "same_size",
+      "score": "154/160",
+      "updated": "2026-09-24T13:45:15Z",
+      "note": "same-size switch; hoisted step/ring"
     },
     "sub_08041B74": {
-      "matched_bytes": 13,
+      "matched_bytes": 23,
       "retail_bytes": 162,
-      "compiled_bytes": 168,
-      "pct": 7.7,
-      "diff_bytes": 155,
+      "compiled_bytes": 160,
+      "pct": 14.2,
+      "diff_bytes": 139,
       "status": "size_mismatch",
-      "score": "13/162",
-      "updated": "2026-09-24T11:14:33Z"
+      "score": "23/162",
+      "updated": "2026-09-24T13:58:17Z",
+      "note": "160/162 prologue matches; missing ldsh zero"
     },
     "sub_08073AEC": {
       "matched_bytes": 17,
@@ -466,14 +468,15 @@
       "updated": "2026-09-24T11:42:38Z"
     },
     "sub_0806A4D8": {
-      "matched_bytes": 44,
+      "matched_bytes": 37,
       "retail_bytes": 168,
-      "compiled_bytes": 164,
-      "pct": 26.2,
-      "diff_bytes": 124,
-      "status": "size_mismatch",
-      "score": "44/168",
-      "updated": "2026-09-24T11:42:37Z"
+      "compiled_bytes": 168,
+      "pct": 22.0,
+      "diff_bytes": 131,
+      "status": "same_size",
+      "score": "37/168",
+      "updated": "2026-09-24T13:44:17Z",
+      "note": "same-size after regionEnd hoist"
     },
     "sub_080419B0": {
       "matched_bytes": 19,
@@ -506,14 +509,15 @@
       "updated": "2026-09-24T11:42:37Z"
     },
     "sub_080700CC": {
-      "matched_bytes": 86,
+      "matched_bytes": 96,
       "retail_bytes": 188,
-      "compiled_bytes": 176,
-      "pct": 45.7,
-      "diff_bytes": 102,
+      "compiled_bytes": 180,
+      "pct": 51.1,
+      "diff_bytes": 92,
       "status": "size_mismatch",
-      "score": "86/188",
-      "updated": "2026-09-24T11:42:37Z"
+      "score": "96/188",
+      "updated": "2026-09-24T13:48:14Z",
+      "note": "180/188; counter add; r8-r10 prologue matches"
     },
     "sub_080688C8": {
       "matched_bytes": 0,
