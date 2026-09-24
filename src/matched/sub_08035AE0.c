@@ -2,7 +2,7 @@
 
 // @ 0x08035ae0
 __attribute__((naked))
-void sub_08035AE0(void *a, void *b)
+s32 sub_08035AE0(struct Unk346C0Inner *a, struct Unk346C0Inner *b)
 {
     asm(
         ".syntax unified\n"

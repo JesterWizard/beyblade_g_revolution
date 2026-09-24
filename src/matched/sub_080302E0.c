@@ -2,7 +2,7 @@
 
 // @ 0x080302e0
 __attribute__((naked))
-void sub_080302E0(void *a)
+void sub_080302E0(struct Unk346C0 *a)
 {
     asm(".syntax unified\npush {r4, r5, r6, lr}\nadds r6, r0, #0x0\nldr r4, _08030324 @ =0x03000290\nldr r1, [r4, #0x00]\nmovs r2, #0xC3\nlsls r2, r2, #0x02\nadds r0, r6, r2\nldrb r0, [r0, #0x00]\nlsls r2, r0, #0x02\nmovs r3, #0x9E\nlsls r3, r3, #0x01\nadds r0, r1, r3\nadds r0, r0, r2\nldr r0, [r0, #0x00]\nldr r3, _08030328 @ =0x00000AE8\nadds r1, r1, r3\nadds r1, r1, r2\nldr r5, [r1, #0x00]\nlsls r0, r0, #0x10\nmovs r1, #0x90\nlsls r1, r1, #0x04\nbl _080740B0\nadds r2, r0, #0x0\nldr r0, [r6, #0x04]\nldr r1, [r0, #0x28]\nmovs r0, #0x40\nldrb r1, [r1, #0x1F]\nands r0, r1\ncmp r0, #0x00\nbeq _0803032C\nsubs r5, r5, r2\nb _0803032E\n.byte 0x00, 0x00\n_08030324: .4byte 0x03000290\n_08030328: .4byte 0x00000AE8\n_0803032C:\nadds r5, r5, r2\n_0803032E:\nldr r0, [r4, #0x00]\nmovs r3, #0xC3\nlsls r3, r3, #0x02\nadds r1, r6, r3\nldrb r1, [r1, #0x00]\nlsls r1, r1, #0x02\nldr r3, _08030364 @ =0x00000AE8\nadds r0, r0, r3\nadds r0, r0, r1\nstr r5, [r0, #0x00]\nasrs r5, r5, #0x08\nmovs r0, #0xFF\nands r5, r0\nldr r0, [r6, #0x00]\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030382\nasrs r0, r2, #0x08\ncmp r0, #0x1F\nble _08030368\nmovs r0, #0x02\nbl sub_080628B4\nldr r1, [r6, #0x00]\nldr r1, [r1, #0x00]\nb _0803036A\n.byte 0x00, 0x00\n_08030364: .4byte 0x00000AE8\n_08030368:\nmovs r0, #0x02\n_0803036A:\nstrh r0, [r1, #0x18]\nldr r0, [r6, #0x00]\nldr r0, [r0, #0x00]\nldr r2, [r0, #0x30]\ncmp r2, #0x00\nbeq _08030382\nldrh r1, [r2, #0x14]\nldrh r2, [r2, #0x16]\nlsls r3, r5, #0x18\nlsrs r3, r3, #0x18\nbl sub_08070354\n_08030382:\npop {r4, r5, r6}\npop {r0}\nbx r0");
 }

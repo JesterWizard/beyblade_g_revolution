@@ -1,36 +1,23 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
+#include "ram_map.h"
 
-/*
- * WIP — not byte-matched (best clean rewrite was 92/108 bytes).
- * Retail uses an explicit `>` table-call path followed by a separate
- * `<` zero-call comparison; straightforward C reproduces the logic but
- * still produces a different literal-pool/layout in this build.
- *
- * This function is the asm-wrapper style micro-`if/else-if` idiom seen
- * near the "systemic agbcc leaf-function register-allocation quirk"
- * dead-end list; likely needs a permuter run targeting instruction-order/
- * dead-code retention rather than hand-C changes.
- *
- * Table lookup notes (verified correct, safe to reuse):
- *   table = ((s8 **)0x0807741C)[gMainWorkPtr->unk15C8];
- *   table += (s32)gMainWorkPtr->unk15CA * 16;
- *   compares gMainWorkPtr->unk15D0 vs ->unk15D2 (s16)
- *   calls _0802D058((u16)table[1]) or _0802D058(0)
- * @ 0x0802d2c0
- */
-void sub_0802D2C0(void)
+s32 sub_0802D2C0(void)
 {
+    s8 **bases;
     s8 *table;
-    struct MainWork *w1;
-    struct MainWork *w2;
+    struct MainWork *mw;
+    s16 left;
+    s16 right;
 
-    w1 = gMainWorkPtr;
-    table = ((s8 **)0x0807741C)[w1->unk15C8];
-    w2 = gMainWorkPtr;
-    table += (s32)w2->unk15CA * 16;
-
-    if (gMainWorkPtr->unk15D0 > gMainWorkPtr->unk15D2)
+    bases = gData_0807741C;
+    mw = gMainWorkPtr;
+    table = bases[mw->unk15C8];
+    table += (s32)mw->unk15CA * 16;
+    left = mw->unk15D0;
+    right = mw->unk15D2;
+    if (left > right)
         _0802D058((u16)table[1]);
-    else if (gMainWorkPtr->unk15D0 < gMainWorkPtr->unk15D2)
+    else if (left < right)
         _0802D058(0);
 }

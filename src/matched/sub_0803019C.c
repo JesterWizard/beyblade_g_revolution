@@ -4,10 +4,7 @@
 
 void sub_08030F38(void);
 void sub_0803D4C4(void);
-void sub_080302E0(void *a);
-void sub_08035D68(void *a, void *b);
 void sub_080353A0(void *a);
-s32 sub_08035AE0(void *a, void *b);
 void sub_080361A8(void *a);
 
 struct Unk3019CWork
@@ -36,9 +33,9 @@ void sub_0803019C(void)
     sub_08030F38();
     sub_0803D4C4();
     sub_080302E0(
-        ((struct Unk3019CWork *)gBattleWork)->unk478);
+        (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk478);
     sub_080302E0(
-        ((struct Unk3019CWork *)gBattleWork)->unk790);
+        (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk790);
     sub_08035D68(
         ((struct Unk3019CWork *)gBattleWork)->unk328,
         ((struct Unk3019CWork *)gBattleWork)->unkAA8);
@@ -68,8 +65,8 @@ void sub_0803019C(void)
     sub_080353A0(
         ((struct Unk3019CWork *)gBattleWork)->unk790);
     ((struct Unk3019CWork *)gBattleWork)->unk789 = (u8)sub_08035AE0(
-        ((struct Unk3019CWork *)gBattleWork)->unk328,
-        ((struct Unk3019CWork *)gBattleWork)->unk37C);
+        (struct Unk346C0Inner *)((struct Unk3019CWork *)gBattleWork)->unk328,
+        (struct Unk346C0Inner *)((struct Unk3019CWork *)gBattleWork)->unk37C);
     ((struct Unk3019CWork *)gBattleWork)->unkAA1 =
         ((struct Unk3019CWork *)gBattleWork)->unk789;
     sub_08036264(

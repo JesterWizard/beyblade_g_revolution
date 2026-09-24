@@ -1,54 +1,41 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0804ac3c
-__attribute__((naked))
-void sub_0804AC3C(void)
+#include "global.h"
+#include "data_symbols.h"
+
+void sub_0804AC3C(struct Unk2F520 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r1, _0804AC9C @ =0x000002D5\n"
-        "adds r0, r6, r1\n"
-        "ldrb r5, [r0, #0x00]\n"
-        "adds r1, #0x27\n"
-        "adds r0, r6, r1\n"
-        "ldrb r4, [r0, #0x00]\n"
-        "bl sub_08061BE8\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_0804AAF0\n"
-        "lsls r4, r4, #0x18\n"
-        "asrs r4, r4, #0x08\n"
-        "movs r0, #0xE0\n"
-        "lsls r0, r0, #0x0B\n"
-        "adds r4, r4, r0\n"
-        "lsrs r4, r4, #0x10\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x19\n"
-        "bl sub_08061D68\n"
-        "lsls r5, r5, #0x18\n"
-        "asrs r5, r5, #0x08\n"
-        "movs r1, #0xE0\n"
-        "lsls r1, r1, #0x0B\n"
-        "adds r5, r5, r1\n"
-        "lsrs r5, r5, #0x10\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x19\n"
-        "bl sub_08061D68\n"
-        "bl sub_080674B4\n"
-        "ldr r0, _0804ACA0 @ =0x080BB888\n"
-        "ldr r0, [r0, #0x00]\n"
-        "bl _08073C40\n"
-        "bl sub_0804AE94\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_0804AC9C: .4byte 0x000002D5\n"
-        "_0804ACA0: .4byte 0x080BB888\n"
-    );
+    struct Unk2F520 *obj;
+    u32 pal;
+    u32 cur;
+    u32 base;
+    void **fn;
+
+    obj = a;
+    pal = *(u8 *)&obj->unk2D5;
+    cur = *(u8 *)&obj->unk2FC;
+    sub_08061BE8();
+    sub_0804AAF0(obj);
+    cur <<= 24;
+    cur = (u32)((s32)cur >> 8);
+    base = 0xE0;
+    base <<= 11;
+    cur += base;
+    cur >>= 16;
+    TextRowSetPaletteBank(cur, 0xF, 4, 0x19);
+    pal <<= 24;
+    pal = (u32)((s32)pal >> 8);
+    base = 0xE0;
+    base <<= 11;
+    pal += base;
+    pal >>= 16;
+    TextRowSetPaletteBank(pal, 0xE, 4, 0x19);
+    VBlankIntrWait();
+    fn = (void **)gData_080BB888;
+    _08073C40(*fn);
+    sub_0804AE94();
 }
 

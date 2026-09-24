@@ -3,25 +3,29 @@
 
 void sub_080523A4(struct Unk2F520 *a)
 {
+    struct Unk2F520 *obj;
+    struct Unk2F520Inner *slot;
+    s8 *flag;
     s32 v;
-    s32 base;
-    struct Unk2F520Inner *obj;
+    u32 base;
 
+    obj = a;
     sub_08061BE8();
-    sub_0805264C(a, 0);
-    sub_0805264C(a, 1);
-    sub_0805264C(a, 2);
-    sub_0805264C(a, 3);
-    sub_0805264C(a, 4);
-    sub_0805264C(a, 5);
-    obj = a->unk288;
-    v = a->unk2D5;
+    sub_0805264C(obj, 0);
+    sub_0805264C(obj, 1);
+    sub_0805264C(obj, 2);
+    sub_0805264C(obj, 3);
+    sub_0805264C(obj, 4);
+    sub_0805264C(obj, 5);
+    slot = obj->unk288;
+    flag = &obj->unk2D5;
+    v = *flag;
     v <<= 12;
     base = 0xB0;
     base <<= 6;
-    obj->unk0C = v + base;
-    obj = a->unk28C;
-    v = a->unk2D5;
+    slot->unk0C = v + base;
+    slot = obj->unk28C;
+    v = *flag;
     v <<= 12;
-    obj->unk0C = v + base;
+    slot->unk0C = v + base;
 }

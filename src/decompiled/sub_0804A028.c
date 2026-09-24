@@ -1,36 +1,42 @@
 #include "global.h"
+#include "ram_map.h"
 
-void sub_0804A028(u8 *data)
+void sub_0804A028(struct Unk2F520 *a)
 {
-    u8 first;
-    u8 second;
-    s32 position;
-    u16 coordinate;
+    u8 pal;
+    u8 cur;
+    s16 doubled;
+    u32 tmp;
+    u32 base;
 
-    first = data[0x2D5];
-    second = data[0x2FC];
-    if (gMainWorkPtr->unk1855 != 0)
-    {
-        position = ((s32)(s8)second << 16) + 0x50000;
-        coordinate = (u16)((u32)position >> 16);
-        TextRowSetPaletteBank(coordinate, 0x0F, 9, 0x14);
-        position = ((s32)(s8)first << 16) + 0x50000;
-        coordinate = (u16)((u32)position >> 16);
-        TextRowSetPaletteBank(coordinate, 0x0E, 9, 0x14);
-    }
-    else
-    {
-        position = ((s32)(s8)second << 1) + 5;
-        coordinate = (u16)position;
-        TextRowSetPaletteBank(coordinate, 0x0F, 9, 0x14);
-        position += 6;
-        coordinate = (u16)position;
-        TextRowSetPaletteBank(coordinate, 0x0F, 9, 0x14);
-        position = ((s32)(s8)first << 1) + 5;
-        coordinate = (u16)position;
-        TextRowSetPaletteBank(coordinate, 0x0E, 9, 0x14);
-        position += 6;
-        coordinate = (u16)position;
-        TextRowSetPaletteBank(coordinate, 0x0E, 9, 0x14);
-    }
+    pal = *(u8 *)&a->unk2D5;
+    cur = *(u8 *)&a->unk2FC;
+    if (gMainWorkPtr->unk1855 == 0)
+        goto low;
+    tmp = (u32)cur << 24;
+    tmp = (u32)((s32)tmp >> 8);
+    base = 0xA0;
+    base <<= 11;
+    tmp += base;
+    tmp >>= 16;
+    TextRowSetPaletteBank(tmp, 0xF, 9, 0x14);
+    tmp = (u32)pal << 24;
+    tmp = (u32)((s32)tmp >> 8);
+    base = 0xA0;
+    base <<= 11;
+    tmp += base;
+    tmp >>= 16;
+    TextRowSetPaletteBank(tmp, 0xE, 9, 0x14);
+    goto done;
+low:
+    doubled = ((s32)cur << 24) >> 23;
+    TextRowSetPaletteBank((u16)(doubled + 5), 0xF, 9, 0x14);
+    doubled = doubled + 6;
+    TextRowSetPaletteBank((u16)doubled, 0xF, 9, 0x14);
+    doubled = ((s32)pal << 24) >> 23;
+    TextRowSetPaletteBank((u16)(doubled + 5), 0xE, 9, 0x14);
+    doubled = doubled + 6;
+    TextRowSetPaletteBank((u16)doubled, 0xE, 9, 0x14);
+done:
+    return;
 }

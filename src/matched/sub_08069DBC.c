@@ -2,7 +2,7 @@
 
 // @ 0x08069dbc
 __attribute__((naked))
-void sub_08069DBC(void)
+void sub_08069DBC(struct Unk69DBC *state, u32 unused, u32 count, u32 dest, u32 shift, u32 source)
 {
     asm(
         ".syntax unified\n"

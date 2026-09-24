@@ -2,7 +2,7 @@
 
 // @ 0x08056f84
 __attribute__((naked))
-void sub_08056F84(void)
+s32 sub_08056F84(void)
 {
     asm(".syntax unified\npush {r4, r5, lr}\nadd sp, #-0x004\nbl sub_08043B90\ncmp r0, #0x00\nblt _0805701A\nlsls r0, r0, #0x18\nlsrs r0, r0, #0x18\nmovs r1, #0x04\nmov r2, sp\nbl sub_08045D3C\nldr r5, [sp, #0x000]\ncmp r5, #0x00\nbeq _08056FB8\nldr r0, _08056FB0 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r1, _08056FB4 @ =0x000017FC\nadds r0, r0, r1\nmovs r1, #0x01\nstr r1, [r0, #0x00]\nb _0805701A\n_08056FB0: .4byte 0x03000198\n_08056FB4: .4byte 0x000017FC\n_08056FB8:\nmovs r0, #0x02\nmovs r1, #0x01\nbl sub_0802D52C\nldr r4, _08056FFC @ =0x03000198\nldr r0, [r4, #0x00]\nldr r2, _08057000 @ =0x0000181D\nadds r0, r0, r2\nmovs r1, #0x02\nstrb r1, [r0, #0x00]\nldr r0, [r4, #0x00]\nldr r3, _08057004 @ =0x000017FC\nadds r1, r0, r3\nstr r5, [r1, #0x00]\nldr r1, _08057008 @ =0x000016C8\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nbl sub_0802B95C\nadds r2, r0, #0x0\ncmp r2, #0x00\nbeq _08057010\nldr r0, [r4, #0x00]\nldrh r1, [r2, #0x00]\nldr r3, _0805700C @ =0x000017E4\nadds r0, r0, r3\nstrh r1, [r0, #0x00]\nldr r1, [r2, #0x08]\ncmp r1, #0x00\nbeq _0805701A\nmovs r0, #0x00\nbl sub_08059DC8\nb _0805701A\n_08056FFC: .4byte 0x03000198\n_08057000: .4byte 0x0000181D\n_08057004: .4byte 0x000017FC\n_08057008: .4byte 0x000016C8\n_0805700C: .4byte 0x000017E4\n_08057010:\nldr r0, [r4, #0x00]\nldr r1, _08057024 @ =0x000017E4\nadds r0, r0, r1\nldr r1, _08057028 @ =0x0000FFFF\nstrh r1, [r0, #0x00]\n_0805701A:\nadd sp, #0x004\npop {r4, r5}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08057024: .4byte 0x000017E4\n_08057028: .4byte 0x0000FFFF");
 }

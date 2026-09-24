@@ -1,20 +1,35 @@
 #include "global.h"
-#include "ram_map.h"
-#include "battle.h"
+#include "data_symbols.h"
 
-// @ 0x0804ac3c
-void sub_0804AC3C(void *arg0) {
-    u8 temp_r4;
-    u8 temp_r5;
+void sub_0804AC3C(struct Unk2F520 *a)
+{
+    struct Unk2F520 *obj;
+    u32 pal;
+    u32 cur;
+    u32 base;
+    void **fn;
 
-    temp_r5 = arg0->unk2D5;
-    temp_r4 = arg0->unk2FC;
+    obj = a;
+    pal = *(u8 *)&obj->unk2D5;
+    cur = *(u8 *)&obj->unk2FC;
     sub_08061BE8();
-    sub_0804AAF0(arg0);
-    sub_08061D68((u32) (((s32) (temp_r4 << 0x18) >> 8) + 0x70000) >> 0x10, 0xF, 4, 0x19);
-    sub_08061D68((u32) (((s32) (temp_r5 << 0x18) >> 8) + 0x70000) >> 0x10, 0xE, 4, 0x19);
-    sub_080674B4();
-    _08073C40(*(s32 *)0x080BB888);
+    sub_0804AAF0(obj);
+    cur <<= 24;
+    cur = (u32)((s32)cur >> 8);
+    base = 0xE0;
+    base <<= 11;
+    cur += base;
+    cur >>= 16;
+    TextRowSetPaletteBank(cur, 0xF, 4, 0x19);
+    pal <<= 24;
+    pal = (u32)((s32)pal >> 8);
+    base = 0xE0;
+    base <<= 11;
+    pal += base;
+    pal >>= 16;
+    TextRowSetPaletteBank(pal, 0xE, 4, 0x19);
+    VBlankIntrWait();
+    fn = (void **)gData_080BB888;
+    _08073C40(*fn);
     sub_0804AE94();
 }
-

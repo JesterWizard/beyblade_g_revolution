@@ -1,100 +1,52 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035c64
-__attribute__((naked))
+#include "global.h"
+
+// @ 0x08035c64
 u8 sub_08035C64(struct Unk346C0Inner *a, s32 x, s32 y, s32 z, s32 threshold)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r5, r0, #0x0\n"
-        "ldr r0, [r5, #0x0C]\n"
-        "subs r1, r1, r0\n"
-        "asrs r6, r1, #0x08\n"
-        "ldr r0, [r5, #0x10]\n"
-        "subs r2, r2, r0\n"
-        "asrs r7, r2, #0x08\n"
-        "adds r4, r3, #0x0\n"
-        "muls r4, r3\n"
-        "ldr r0, [r5, #0x38]\n"
-        "subs r4, r4, r0\n"
-        "adds r1, r6, #0x0\n"
-        "muls r1, r6\n"
-        "adds r0, r7, #0x0\n"
-        "muls r0, r7\n"
-        "adds r1, r1, r0\n"
-        "mov r8, r1\n"
-        "movs r0, #0x80\n"
-        "bl sub_080628B4\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r1, r1, r0\n"
-        "mov r9, r1\n"
-        "cmp r8, r4\n"
-        "ble _08035D00\n"
-        "ldr r1, [r5, #0x14]\n"
-        "ldr r0, [sp, #0x01C]\n"
-        "cmp r1, r0\n"
-        "bge _08035D04\n"
-        "mov r0, r8\n"
-        "bl sub_080674B0\n"
-        "adds r4, r0, #0x0\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "lsls r0, r6, #0x08\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080674A0\n"
-        "adds r6, r0, #0x0\n"
-        "lsls r0, r7, #0x08\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080674A0\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r0, [r5, #0x18]\n"
-        "adds r2, r0, #0x0\n"
-        "muls r2, r0\n"
-        "adds r0, r2, #0x0\n"
-        "ldr r1, [r5, #0x1C]\n"
-        "adds r2, r1, #0x0\n"
-        "muls r2, r1\n"
-        "adds r1, r2, #0x0\n"
-        "adds r0, r0, r1\n"
-        "bl sub_080674B0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "mov r0, r9\n"
-        "muls r0, r1\n"
-        "asrs r1, r0, #0x08\n"
-        "adds r0, r6, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r6, r0, #0x08\n"
-        "adds r0, r4, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r4, r0, #0x08\n"
-        "ldr r0, [r5, #0x18]\n"
-        "adds r0, r0, r6\n"
-        "str r0, [r5, #0x18]\n"
-        "ldr r0, [r5, #0x1C]\n"
-        "adds r0, r0, r4\n"
-        "str r0, [r5, #0x1C]\n"
-        "_08035D00:\n"
-        "movs r0, #0x01\n"
-        "b _08035D0E\n"
-        "_08035D04:\n"
-        "movs r0, #0x00\n"
-        "str r0, [r5, #0x2C]\n"
-        "str r0, [r5, #0x20]\n"
-        "str r0, [r5, #0x1C]\n"
-        "str r0, [r5, #0x18]\n"
-        "_08035D0E:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s32 dx;
+    s32 dy;
+    s32 distSq;
+    s32 sumSq;
+    s32 randScale;
+    u16 speed;
+    s32 vx;
+    s32 vy;
+    u16 curSpeed;
+    s32 scale;
+
+    dx = (x - a->unk0C) >> 8;
+    dy = (y - a->unk10) >> 8;
+    distSq = (z * z) - a->unk38;
+    sumSq = (dx * dx) + (dy * dy);
+    randScale = RandRange(0x80) + 0x100;
+    if (sumSq <= distSq)
+        goto ret1;
+    if (a->unk14 >= threshold)
+        goto ret0;
+    speed = Sqrt(sumSq);
+    vx = Div(dx << 8, speed);
+    vy = Div(dy << 8, speed);
+    curSpeed = Sqrt((a->unk18 * a->unk18) + (a->unk1C * a->unk1C));
+    do { } while (0);
+    curSpeed = (scale = curSpeed);
+    scale = (randScale * scale) >> 8;
+    vx = (vx * scale) >> 8;
+    vy = (vy * scale) >> 8;
+
+    a->unk18 += vx;
+    a->unk1C += vy;
+ret1:
+    return 1;
+ret0:
+    a->unk2C = 0;
+    a->unk20 = 0;
+    a->unk1C = 0;
+    a->unk18 = 0;
+    return 0;
 }
 

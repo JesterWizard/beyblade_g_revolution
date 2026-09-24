@@ -141,5 +141,10 @@ extern u8 gData_080BAF61[];
 extern u8 gData_080BAF64[];
 extern u8 gData_080BAF67[];
 extern struct Unk65560Source gData_080BAF00[];
+extern u32 gData_080BB110[];
+extern s8 *gData_0807741C[];
+extern u8 gData_0833BE30[];
+extern s16 gData_083C9544[];
+extern u8 gData_083C97C4[];
 
 #endif // GUARD_DATA_SYMBOLS_H

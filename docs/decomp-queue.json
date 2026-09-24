@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-24T19:30:28Z",
+  "generated": "2026-09-24T20:54:22Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 195,
-    "semantic_done": 438,
-    "readable_asm": 195,
+    "pending": 190,
+    "semantic_done": 443,
+    "readable_asm": 190,
     "opcode": 0,
-    "battle_pending": 75,
-    "battle_semantic": 82,
+    "battle_pending": 73,
+    "battle_semantic": 84,
     "blocked": 20,
     "wip": 135
   },
@@ -41,8 +41,8 @@
     {
       "name": "sub_0802D2C0",
       "addr": "0x0802D2C0",
-      "kind": "asm",
-      "bytes": 108,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0802D2C0.c",
       "notes": "src/decompiled/sub_0802D2C0.md",
       "status": "DIFF; corrected retail branch semantics, but best current compile is 46/108 and 104 bytes due pool/register layout",
@@ -74,8 +74,8 @@
     {
       "name": "sub_08035C64",
       "addr": "0x08035C64",
-      "kind": "asm",
-      "bytes": 182,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08035C64.c",
       "notes": "src/decompiled/sub_08035C64.md",
       "status": "same_size DIFF 85/182 (46.7%); logic fully correct (repulsion physics on Unk346C0Inner, dx/dy/distSq/threshold gate) but agbcc always emits the early-return (zero) block first regardless of if/else source order \u2014 branch layout inverted vs retail which keeps compute as fallthrough and zero-block at function end",
@@ -525,8 +525,8 @@
     {
       "name": "sub_0804A028",
       "addr": "0x0804A028",
-      "kind": "asm",
-      "bytes": 174,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0804A028.c",
       "notes": "src/decompiled/sub_0804A028.md",
       "status": "Two semantic attempts: wrong-offset seed 15/174, corrected-offset render sequence 55/174 (172B). Correct fields are +0x2D5 and +0x2FC, global flag is MainWork +0x1855, and all four draw calls/constants are mapped; remaining differences are register allocation (retail keeps r4/r5 byte values and uses r1 for 0x50000) plus a two-byte branch/layout delta.",
@@ -547,8 +547,8 @@
     {
       "name": "sub_0804AC3C",
       "addr": "0x0804AC3C",
-      "kind": "asm",
-      "bytes": 104,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0804AC3C.c",
       "notes": "src/decompiled/sub_0804AC3C.md",
       "status": "Two attempts: semantic seed 32/104 (96B), then r6/r5/r4 register-pinned data/first/second 38/104 (96B). Field offsets, transition calls, fixed-point positions, and cleanup are correct; remaining mismatch is retail's constant/coordinate register layout (r0/r1 and r4/r5) and an 8-byte size delta.",
@@ -1416,8 +1416,8 @@
     {
       "name": "sub_08067FC8",
       "addr": "0x08067FC8",
-      "kind": "asm",
-      "bytes": 74,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08067FC8.c",
       "notes": "src/decompiled/sub_08067FC8.md",
       "status": "43/74 same-size; total=0 must precede the call, entry check uses r8",

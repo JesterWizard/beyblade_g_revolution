@@ -1,50 +1,36 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08067fc8
-__attribute__((naked))
+#include "global.h"
+
 u32 sub_08067FC8(void *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "adds r7, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "movs r0, #0x00\n"
-        "mov r8, r0\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08067F98\n"
-        "adds r5, r0, #0x0\n"
-        "cmp r5, #0x00\n"
-        "bne _08067FE8\n"
-        "movs r0, #0x00\n"
-        "b _08068008\n"
-        "_08067FE8:\n"
-        "movs r6, #0x00\n"
-        "ldrh r0, [r5, #0x04]\n"
-        "cmp r8, r0\n"
-        "bcs _08068006\n"
-        "adds r4, r5, #0x0\n"
-        "_08067FF2:\n"
-        "ldrh r1, [r4, #0x08]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08067F3C\n"
-        "add r8, r0\n"
-        "adds r4, #0x02\n"
-        "adds r6, #0x01\n"
-        "ldrh r0, [r5, #0x04]\n"
-        "cmp r6, r0\n"
-        "bcc _08067FF2\n"
-        "_08068006:\n"
-        "mov r0, r8\n"
-        "_08068008:\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    void *obj;
+    u16 key;
+    u32 total;
+    struct Unk680CCRec *p;
+    u32 i;
+    struct Unk680CCRec *cursor;
+
+    obj = a;
+    key = (u16)b;
+    total = 0;
+    p = sub_08067F98(obj, key);
+    if (p == 0)
+        return 0;
+    i = 0;
+    if (total >= p->unk04)
+        goto done;
+    cursor = p;
+    do
+    {
+        total += sub_08067F3C(obj, cursor->unk08);
+        cursor = (struct Unk680CCRec *)((u16 *)cursor + 1);
+        i++;
+    } while (i < p->unk04);
+done:
+    return total;
 }
 
