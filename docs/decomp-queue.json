@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-24T07:35:25Z",
+  "generated": "2026-09-24T10:25:36Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 219,
-    "semantic_done": 414,
-    "readable_asm": 219,
+    "pending": 217,
+    "semantic_done": 416,
+    "readable_asm": 217,
     "opcode": 0,
-    "battle_pending": 79,
-    "battle_semantic": 78,
+    "battle_pending": 78,
+    "battle_semantic": 79,
     "blocked": 20,
     "wip": 136
   },
@@ -947,9 +947,9 @@
       "bytes": 0,
       "seed": "src/decompiled/sub_0802C2B0.c",
       "notes": "src/decompiled/sub_0802C2B0.md",
-      "status": "probe before loc save; split base local in loop",
-      "next": "1-byte ble offset in loop tail \u2014 permuter or branch scheduling",
-      "score": "99/100"
+      "status": "integrated semantic C",
+      "next": "done",
+      "score": "100/100"
     },
     {
       "name": "sub_0802C314",
@@ -1196,8 +1196,8 @@
     {
       "name": "sub_0802E048",
       "addr": "0x0802E048",
-      "kind": "asm",
-      "bytes": 228,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0802E048.c",
       "notes": "src/decompiled/sub_0802E048.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1339,8 +1339,8 @@
     {
       "name": "sub_08070604",
       "addr": "0x08070604",
-      "kind": "asm",
-      "bytes": 92,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08070604.c",
       "notes": "src/decompiled/sub_08070604.md",
       "status": "permuter 300 s, no score 0 (140 \u2192 10); 73/92",

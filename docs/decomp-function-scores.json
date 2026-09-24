@@ -404,6 +404,840 @@
       "status": "same_size",
       "score": "94/96",
       "updated": "2026-09-21T14:18:09Z"
+    },
+    "sub_08041C8C": {
+      "matched_bytes": 6,
+      "retail_bytes": 142,
+      "compiled_bytes": 132,
+      "pct": 4.2,
+      "diff_bytes": 136,
+      "status": "size_mismatch",
+      "score": "6/142",
+      "updated": "2026-09-24T11:14:33Z"
+    },
+    "sub_0806E31C": {
+      "matched_bytes": 29,
+      "retail_bytes": 148,
+      "compiled_bytes": 164,
+      "pct": 17.7,
+      "diff_bytes": 135,
+      "status": "size_mismatch",
+      "score": "29/148",
+      "updated": "2026-09-24T11:14:33Z"
+    },
+    "sub_08044FB0": {
+      "matched_bytes": 0,
+      "retail_bytes": 156,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/156",
+      "updated": "2026-09-24T10:56:38Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080428F0": {
+      "matched_bytes": 0,
+      "retail_bytes": 160,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/160",
+      "updated": "2026-09-24T10:56:40Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08041B74": {
+      "matched_bytes": 13,
+      "retail_bytes": 162,
+      "compiled_bytes": 168,
+      "pct": 7.7,
+      "diff_bytes": 155,
+      "status": "size_mismatch",
+      "score": "13/162",
+      "updated": "2026-09-24T11:14:33Z"
+    },
+    "sub_08073AEC": {
+      "matched_bytes": 0,
+      "retail_bytes": 162,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/162",
+      "updated": "2026-09-24T10:56:43Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806A4D8": {
+      "matched_bytes": 0,
+      "retail_bytes": 168,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/168",
+      "updated": "2026-09-24T10:56:44Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080419B0": {
+      "matched_bytes": 0,
+      "retail_bytes": 172,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/172",
+      "updated": "2026-09-24T10:56:46Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080416C4": {
+      "matched_bytes": 25,
+      "retail_bytes": 176,
+      "compiled_bytes": 196,
+      "pct": 12.8,
+      "diff_bytes": 171,
+      "status": "size_mismatch",
+      "score": "25/176",
+      "updated": "2026-09-24T11:14:33Z"
+    },
+    "sub_0806FF58": {
+      "matched_bytes": 0,
+      "retail_bytes": 180,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/180",
+      "updated": "2026-09-24T10:56:49Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080700CC": {
+      "matched_bytes": 0,
+      "retail_bytes": 188,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/188",
+      "updated": "2026-09-24T10:56:51Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080688C8": {
+      "matched_bytes": 0,
+      "retail_bytes": 190,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/190",
+      "updated": "2026-09-24T10:56:52Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08062358": {
+      "matched_bytes": 0,
+      "retail_bytes": 192,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/192",
+      "updated": "2026-09-24T10:56:54Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0807000C": {
+      "matched_bytes": 0,
+      "retail_bytes": 192,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/192",
+      "updated": "2026-09-24T10:56:55Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08054494": {
+      "matched_bytes": 0,
+      "retail_bytes": 196,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/196",
+      "updated": "2026-09-24T10:56:57Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806FBF8": {
+      "matched_bytes": 0,
+      "retail_bytes": 196,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/196",
+      "updated": "2026-09-24T10:56:59Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0804EBF0": {
+      "matched_bytes": 0,
+      "retail_bytes": 202,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/202",
+      "updated": "2026-09-24T10:57:00Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0803FFB0": {
+      "matched_bytes": 0,
+      "retail_bytes": 216,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/216",
+      "updated": "2026-09-24T10:57:02Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08063D68": {
+      "matched_bytes": 0,
+      "retail_bytes": 216,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/216",
+      "updated": "2026-09-24T10:57:03Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0807027C": {
+      "matched_bytes": 0,
+      "retail_bytes": 216,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/216",
+      "updated": "2026-09-24T10:57:05Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0803C500": {
+      "matched_bytes": 0,
+      "retail_bytes": 220,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/220",
+      "updated": "2026-09-24T10:57:07Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_0803C5DC": {
+      "matched_bytes": 0,
+      "retail_bytes": 220,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/220",
+      "updated": "2026-09-24T10:57:09Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806DF38": {
+      "matched_bytes": 0,
+      "retail_bytes": 228,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/228",
+      "updated": "2026-09-24T10:57:10Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_0806121C": {
+      "matched_bytes": 0,
+      "retail_bytes": 236,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/236",
+      "updated": "2026-09-24T10:57:15Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_08062790": {
+      "matched_bytes": 0,
+      "retail_bytes": 236,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/236",
+      "updated": "2026-09-24T10:57:16Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08060D58": {
+      "matched_bytes": 0,
+      "retail_bytes": 240,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/240",
+      "updated": "2026-09-24T10:57:18Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08061628": {
+      "matched_bytes": 0,
+      "retail_bytes": 244,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/244",
+      "updated": "2026-09-24T10:57:20Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08069270": {
+      "matched_bytes": 0,
+      "retail_bytes": 244,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/244",
+      "updated": "2026-09-24T10:57:21Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08070188": {
+      "matched_bytes": 0,
+      "retail_bytes": 244,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/244",
+      "updated": "2026-09-24T10:57:23Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08060C30": {
+      "matched_bytes": 0,
+      "retail_bytes": 248,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/248",
+      "updated": "2026-09-24T10:57:26Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_08068EC0": {
+      "matched_bytes": 0,
+      "retail_bytes": 248,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/248",
+      "updated": "2026-09-24T10:57:27Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806B2F0": {
+      "matched_bytes": 0,
+      "retail_bytes": 248,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/248",
+      "updated": "2026-09-24T10:57:29Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08072A38": {
+      "matched_bytes": 0,
+      "retail_bytes": 250,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/250",
+      "updated": "2026-09-24T10:57:30Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080593A4": {
+      "matched_bytes": 18,
+      "retail_bytes": 256,
+      "compiled_bytes": 4,
+      "pct": 7.0,
+      "diff_bytes": 238,
+      "status": "size_mismatch",
+      "score": "18/256",
+      "updated": "2026-09-24T10:57:32Z",
+      "note": "initial seed via m2c-clean"
+    },
+    "sub_08068418": {
+      "matched_bytes": 0,
+      "retail_bytes": 272,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/272",
+      "updated": "2026-09-24T10:57:33Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806B5C8": {
+      "matched_bytes": 0,
+      "retail_bytes": 274,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/274",
+      "updated": "2026-09-24T10:57:35Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08069A60": {
+      "matched_bytes": 0,
+      "retail_bytes": 280,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/280",
+      "updated": "2026-09-24T10:57:37Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806F05C": {
+      "matched_bytes": 0,
+      "retail_bytes": 280,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/280",
+      "updated": "2026-09-24T10:57:38Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806211C": {
+      "matched_bytes": 0,
+      "retail_bytes": 284,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/284",
+      "updated": "2026-09-24T10:57:40Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0803E0CC": {
+      "matched_bytes": 0,
+      "retail_bytes": 296,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/296",
+      "updated": "2026-09-24T10:57:41Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_0803D284": {
+      "matched_bytes": 27,
+      "retail_bytes": 298,
+      "compiled_bytes": 4,
+      "pct": 9.1,
+      "diff_bytes": 271,
+      "status": "size_mismatch",
+      "score": "27/298",
+      "updated": "2026-09-24T10:57:43Z",
+      "note": "initial seed via m2c-clean"
+    },
+    "sub_0804AE94": {
+      "matched_bytes": 0,
+      "retail_bytes": 300,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/300",
+      "updated": "2026-09-24T10:57:44Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08056250": {
+      "matched_bytes": 0,
+      "retail_bytes": 302,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/302",
+      "updated": "2026-09-24T10:57:46Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08040680": {
+      "matched_bytes": 0,
+      "retail_bytes": 308,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/308",
+      "updated": "2026-09-24T10:57:47Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08065CD0": {
+      "matched_bytes": 0,
+      "retail_bytes": 316,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/316",
+      "updated": "2026-09-24T10:57:49Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08043C70": {
+      "matched_bytes": 0,
+      "retail_bytes": 324,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/324",
+      "updated": "2026-09-24T10:57:51Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_0804BD38": {
+      "matched_bytes": 0,
+      "retail_bytes": 328,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/328",
+      "updated": "2026-09-24T10:57:54Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_08061EF8": {
+      "matched_bytes": 0,
+      "retail_bytes": 332,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/332",
+      "updated": "2026-09-24T10:57:55Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080737C0": {
+      "matched_bytes": 0,
+      "retail_bytes": 336,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/336",
+      "updated": "2026-09-24T10:57:57Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0804D420": {
+      "matched_bytes": 0,
+      "retail_bytes": 362,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/362",
+      "updated": "2026-09-24T10:57:58Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08044648": {
+      "matched_bytes": 0,
+      "retail_bytes": 364,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/364",
+      "updated": "2026-09-24T10:58:01Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_080447E8": {
+      "matched_bytes": 0,
+      "retail_bytes": 372,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/372",
+      "updated": "2026-09-24T10:58:03Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_0804C8BC": {
+      "matched_bytes": 0,
+      "retail_bytes": 372,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/372",
+      "updated": "2026-09-24T10:58:04Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_0806314C": {
+      "matched_bytes": 0,
+      "retail_bytes": 404,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/404",
+      "updated": "2026-09-24T10:58:06Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806EEC8": {
+      "matched_bytes": 0,
+      "retail_bytes": 404,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/404",
+      "updated": "2026-09-24T10:58:07Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08070AF8": {
+      "matched_bytes": 0,
+      "retail_bytes": 416,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/416",
+      "updated": "2026-09-24T10:58:08Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08068BD4": {
+      "matched_bytes": 0,
+      "retail_bytes": 420,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/420",
+      "updated": "2026-09-24T10:58:10Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08070930": {
+      "matched_bytes": 0,
+      "retail_bytes": 420,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/420",
+      "updated": "2026-09-24T10:58:12Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080618EC": {
+      "matched_bytes": 0,
+      "retail_bytes": 428,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/428",
+      "updated": "2026-09-24T10:58:14Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08048DB8": {
+      "matched_bytes": 0,
+      "retail_bytes": 440,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/440",
+      "updated": "2026-09-24T10:58:15Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08056BA4": {
+      "matched_bytes": 0,
+      "retail_bytes": 450,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/450",
+      "updated": "2026-09-24T10:58:17Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08068A08": {
+      "matched_bytes": 0,
+      "retail_bytes": 460,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/460",
+      "updated": "2026-09-24T10:58:18Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806E060": {
+      "matched_bytes": 0,
+      "retail_bytes": 492,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/492",
+      "updated": "2026-09-24T10:58:19Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0803DEC8": {
+      "matched_bytes": 65,
+      "retail_bytes": 514,
+      "compiled_bytes": 4,
+      "pct": 12.6,
+      "diff_bytes": 449,
+      "status": "size_mismatch",
+      "score": "65/514",
+      "updated": "2026-09-24T10:58:20Z",
+      "note": "initial seed via m2c-clean"
+    },
+    "sub_0806EC20": {
+      "matched_bytes": 0,
+      "retail_bytes": 516,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/516",
+      "updated": "2026-09-24T10:58:22Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_08053690": {
+      "matched_bytes": 0,
+      "retail_bytes": 528,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/528",
+      "updated": "2026-09-24T10:58:24Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08060E48": {
+      "matched_bytes": 0,
+      "retail_bytes": 532,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/532",
+      "updated": "2026-09-24T10:58:25Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08067CE8": {
+      "matched_bytes": 0,
+      "retail_bytes": 548,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/548",
+      "updated": "2026-09-24T10:58:26Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806B764": {
+      "matched_bytes": 0,
+      "retail_bytes": 588,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/588",
+      "updated": "2026-09-24T10:58:28Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08054120": {
+      "matched_bytes": 0,
+      "retail_bytes": 594,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/594",
+      "updated": "2026-09-24T10:58:30Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806960C": {
+      "matched_bytes": 0,
+      "retail_bytes": 600,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/600",
+      "updated": "2026-09-24T10:58:31Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806F910": {
+      "matched_bytes": 0,
+      "retail_bytes": 624,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/624",
+      "updated": "2026-09-24T10:58:32Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_080706B0": {
+      "matched_bytes": 0,
+      "retail_bytes": 626,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/626",
+      "updated": "2026-09-24T10:58:34Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08044A8C": {
+      "matched_bytes": 0,
+      "retail_bytes": 672,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/672",
+      "updated": "2026-09-24T10:58:36Z",
+      "note": "initial m2c seed (m2c-fallback); does not compile"
+    },
+    "sub_0806C388": {
+      "matched_bytes": 0,
+      "retail_bytes": 710,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/710",
+      "updated": "2026-09-24T10:58:38Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08046E7C": {
+      "matched_bytes": 0,
+      "retail_bytes": 872,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/872",
+      "updated": "2026-09-24T10:58:40Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0804DB28": {
+      "matched_bytes": 93,
+      "retail_bytes": 900,
+      "compiled_bytes": 4,
+      "pct": 10.3,
+      "diff_bytes": 807,
+      "status": "size_mismatch",
+      "score": "93/900",
+      "updated": "2026-09-24T10:58:42Z",
+      "note": "initial seed via m2c-clean"
+    },
+    "sub_08045198": {
+      "matched_bytes": 0,
+      "retail_bytes": 1016,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/1016",
+      "updated": "2026-09-24T10:58:44Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08045590": {
+      "matched_bytes": 0,
+      "retail_bytes": 1256,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/1256",
+      "updated": "2026-09-24T10:58:48Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0806C7D4": {
+      "matched_bytes": 0,
+      "retail_bytes": 1302,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/1302",
+      "updated": "2026-09-24T10:58:49Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08043DB4": {
+      "matched_bytes": 0,
+      "retail_bytes": 1352,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/1352",
+      "updated": "2026-09-24T10:58:51Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_0804FFCC": {
+      "matched_bytes": 0,
+      "retail_bytes": 1504,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/1504",
+      "updated": "2026-09-24T10:58:52Z",
+      "note": "m2c failed; initial seed attempt"
+    },
+    "sub_08039BD4": {
+      "matched_bytes": 0,
+      "retail_bytes": 1552,
+      "compiled_bytes": 0,
+      "pct": 0.0,
+      "status": "size_mismatch",
+      "score": "0/1552",
+      "updated": "2026-09-24T10:58:53Z",
+      "note": "m2c failed; initial seed attempt"
     }
   }
 }

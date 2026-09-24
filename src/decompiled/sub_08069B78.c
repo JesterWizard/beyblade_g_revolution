@@ -1,19 +1,21 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08069b78
-void sub_08069B78(u32 a, u32 b, u32 c, u32 d)
-{
-    u8 *p;
+void sub_08069B78(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
+    u8 *temp_r0;
+    u8 *temp_r0_2;
+    u8 *temp_r0_3;
+    u8 *temp_r0_4;
 
-    p = sub_08069988(0);
-    *p = (*p & ~3) | (a & 3);
-
-    p = sub_08069988(1);
-    *p = (*p & ~3) | (b & 3);
-
-    p = sub_08069988(2);
-    *p = (*p & ~3) | (c & 3);
-
-    p = sub_08069988(3);
-    *p = (*p & ~3) | (d & 3);
+    temp_r0 = sub_08069988(0);
+    *temp_r0 = (-4 & *temp_r0) | (arg0 & 3);
+    temp_r0_2 = sub_08069988(1);
+    *temp_r0_2 = (-4 & *temp_r0_2) | (arg1 & 3);
+    temp_r0_3 = sub_08069988(2);
+    *temp_r0_3 = (-4 & *temp_r0_3) | (arg2 & 3);
+    temp_r0_4 = sub_08069988(3);
+    *temp_r0_4 = (-4 & *temp_r0_4) | (arg3 & 3);
 }
+

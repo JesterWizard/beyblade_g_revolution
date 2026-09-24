@@ -1,24 +1,20 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
-void sub_0804AC3C(u8 *data)
-{
-    u8 *ptr;
-    u8 first;
-    u8 second;
-    u32 coordinate;
+// @ 0x0804ac3c
+void sub_0804AC3C(void *arg0) {
+    u8 temp_r4;
+    u8 temp_r5;
 
-    ptr = data;
-    first = ptr[0x2D5];
-    second = ptr[0x2FC];
+    temp_r5 = arg0->unk2D5;
+    temp_r4 = arg0->unk2FC;
     sub_08061BE8();
-    sub_0804AAF0(ptr);
-
-    coordinate = (u32)(((s32)(s8)second << 16) + 0x70000) >> 16;
-    TextRowSetPaletteBank(coordinate, 0x0F, 4, 0x19);
-    coordinate = (u32)(((s32)(s8)first << 16) + 0x70000) >> 16;
-    TextRowSetPaletteBank(coordinate, 0x0E, 4, 0x19);
-
-    VBlankIntrWait();
-    _08073C40(*(void **)0x080BB888);
+    sub_0804AAF0(arg0);
+    sub_08061D68((u32) (((s32) (temp_r4 << 0x18) >> 8) + 0x70000) >> 0x10, 0xF, 4, 0x19);
+    sub_08061D68((u32) (((s32) (temp_r5 << 0x18) >> 8) + 0x70000) >> 0x10, 0xE, 4, 0x19);
+    sub_080674B4();
+    _08073C40(*(s32 *)0x080BB888);
     sub_0804AE94();
 }
+

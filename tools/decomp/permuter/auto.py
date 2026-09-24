@@ -45,8 +45,44 @@ def workdir_for(name: str) -> Path:
     return WORKROOT / name
 
 
+def clean_output_dirs(workdir: Path) -> int:
+    """Remove stale permuter output-* dirs so scores reflect this run only."""
+    removed = 0
+    if not workdir.is_dir():
+        return removed
+    for child in workdir.iterdir():
+        if _OUT_DIR_RE.match(child.name) and child.is_dir():
+            import shutil
+
+            shutil.rmtree(child, ignore_errors=True)
+            removed += 1
+    if removed:
+        print(f"cleared {removed} stale output dir(s) in {workdir.relative_to(ROOT)}")
+    return removed
+
+
+def byte_match_summary(name: str) -> str | None:
+    """Best-effort byte-match line from the decompiled seed."""
+    seed = ROOT / "src" / "decompiled" / f"{name}.c"
+    if not seed.is_file():
+        return None
+    result = subprocess.run(
+        [sys.executable, str(MATCH_SCRIPT), name, str(seed)],
+        cwd=str(ROOT),
+        capture_output=True,
+        text=True,
+    )
+    for line in reversed((result.stdout or "").splitlines()):
+        line = line.strip()
+        if line and ("bytes matched" in line or "MATCH" in line):
+            return line
+    return None
+
+
 def ensure_import(name: str, *, force: bool) -> int:
     workdir = workdir_for(name)
+    if force and workdir.is_dir():
+        clean_output_dirs(workdir)
     if workdir.is_dir() and not force:
         return 0
     result = subprocess.run(
@@ -172,10 +208,62 @@ def reap_stale_permuters() -> int:
     return killed
 
 
+def kill_permuter_tree(workdir: Path, proc: subprocess.Popen | None = None) -> None:
+    """Stop a permuter and any worker processes for this workdir."""
+    if proc is not None and proc.poll() is None:
+        try:
+            os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
+        except (ProcessLookupError, PermissionError, OSError):
+            proc.kill()
+    marker = f"permuter.py.*{workdir.name}"
+    subprocess.run(
+        ["pkill", "-9", "-f", marker],
+        cwd=str(ROOT),
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+
+
+def promote_best_to_base(workdir: Path, name: str) -> int | None:
+    """Replace base.c with the best permuter output if it improved the seed."""
+    rows = output_dirs(workdir)
+    if not rows:
+        return None
+    best_score, best_dir = rows[0]
+    current = base_score(workdir)
+    if current is not None and best_score >= current:
+        return None
+    source = best_dir / "source.c"
+    base_path = workdir / "base.c"
+    if not source.is_file() or not base_path.is_file():
+        return None
+    new_fn = extract_function(source.read_text(), name)
+    old_fn = extract_function(base_path.read_text(), name)
+    if not new_fn or not old_fn:
+        return None
+    base_path.write_text(base_path.read_text().replace(old_fn, new_fn, 1))
+    promoted = base_score(workdir)
+    if promoted is not None:
+        print(
+            f"promoted output-{best_score}-* to base.c (score {current} -> {promoted})",
+            flush=True,
+        )
+    return promoted
+
+
 def _one_round(
-    workdir: Path, *, jobs: int, seconds: int, strict_branches: bool, round_no: int
-) -> None:
-    """Run one bounded permuter pass over `workdir`."""
+    workdir: Path,
+    *,
+    jobs: int,
+    seconds: int,
+    strict_branches: bool,
+    round_no: int,
+    dashboard: bool = False,
+    only_if_below: int | None = None,
+    dash_state=None,
+) -> bool:
+    """Run one bounded permuter pass. Returns True if the user interrupted."""
     cmd = [
         sys.executable,
         str(PERM / "permuter.py"),
@@ -183,22 +271,43 @@ def _one_round(
         "-j",
         str(jobs),
         "--stop-on-zero",
-        "--quiet",
         "--no-context-output",
     ]
+    if not dashboard:
+        cmd.append("--quiet")
     if strict_branches:
         # The permuter ignores branch targets by default, which can produce a
         # "score 0" that is not byte-identical (see docs/decomp-patterns.md).
         cmd.append("--no-ignore-branch-targets")
-    print(f"permuting for up to {seconds}s on {jobs} jobs (round {round_no}) ...", flush=True)
-    proc = subprocess.Popen(cmd, cwd=str(ROOT), start_new_session=True)
+    if only_if_below is not None:
+        cmd.extend(["--only-if-below", str(only_if_below)])
+        cmd.append("--better-only")
+    print(
+        f"permuting for up to {seconds}s on {jobs} jobs (round {round_no}) ...",
+        flush=True,
+    )
+    if dashboard:
+        if str(ROOT) not in sys.path:
+            sys.path.insert(0, str(ROOT))
+        from tools.decomp.permuter.dashboard.runner import run_round_with_dashboard
+
+        round_result = run_round_with_dashboard(
+            workdir=workdir,
+            cmd=cmd,
+            seconds=seconds,
+            jobs=jobs,
+            round_no=round_no,
+            state=dash_state,
+        )
+        return round_result.interrupted
+    proc = subprocess.Popen(cmd, cwd=str(ROOT))
     # The caller owns its own timeout (`timeout 600` in a batch script, or a
     # killed session). `start_new_session=True` means its signal never reaches
     # the worker pool, so forward it.
     prev = {}
 
     def _forward(signum, _frame):
-        _kill_group(proc)
+        kill_permuter_tree(workdir, proc)
         handler = prev.get(signum)
         if callable(handler):
             handler(signum, _frame)
@@ -213,10 +322,11 @@ def _one_round(
         proc.wait(timeout=seconds)
     except subprocess.TimeoutExpired:
         print(f"budget of {seconds}s reached")
-        _kill_group(proc)
+        kill_permuter_tree(workdir, proc)
     finally:
         for sig, handler in prev.items():
             signal.signal(sig, handler)
+    return False
 
 
 #: A round that gets the best score down to at most this fraction of where the
@@ -235,7 +345,10 @@ def run_permuter(
     seed_score: int,
     strict_branches: bool,
     escalate: bool = True,
-) -> int:
+    dashboard: bool = False,
+    dash_state=None,
+    function_name: str = "",
+) -> tuple[int, bool]:
     """Run the permuter until score 0 or timeout. Returns the best score seen.
 
     A single fixed budget cannot serve both failure modes. Most seeds are dead
@@ -248,21 +361,37 @@ def run_permuter(
     """
     best = seed_score
     rounds = MAX_ROUNDS if escalate else 1
+    interrupted = False
     for round_no in range(1, rounds + 1):
         reap_stale_permuters()
-        _one_round(
-            workdir, jobs=jobs, seconds=seconds, strict_branches=strict_branches, round_no=round_no
+        only_if_below = best if round_no > 1 and best < seed_score else None
+        if round_no > 1 and function_name and only_if_below is not None:
+            promoted = promote_best_to_base(workdir, function_name)
+            if promoted is not None:
+                best = min(best, promoted)
+                only_if_below = best
+        interrupted = _one_round(
+            workdir,
+            jobs=jobs,
+            seconds=seconds,
+            strict_branches=strict_branches,
+            round_no=round_no,
+            dashboard=dashboard,
+            only_if_below=only_if_below,
+            dash_state=dash_state,
         )
         scores = [score for score, _ in output_dirs(workdir)]
         round_best = min(scores + [seed_score])
         improved = round_best < best
         best = round_best
+        if interrupted:
+            break
         if best == 0 or round_no == rounds:
             break
         if not (improved and best <= seed_score * ESCALATE_RATIO):
             break
         print(f"score {best} is still collapsing — granting another round", flush=True)
-    return best
+    return best, interrupted
 
 
 def extract_function(text: str, name: str) -> str | None:
@@ -409,9 +538,24 @@ def main() -> int:
         help="score branch targets too (slower, but no false score 0)",
     )
     parser.add_argument(
+        "--no-strict-branches",
+        action="store_true",
+        help="do not score branch targets (default unless seed is >=90%% byte match)",
+    )
+    parser.add_argument(
         "--no-escalate",
         action="store_true",
         help="single round, even if the score is still collapsing",
+    )
+    parser.add_argument(
+        "--dashboard",
+        action="store_true",
+        help="open a live web dashboard at http://127.0.0.1:8765/ while permuting",
+    )
+    parser.add_argument(
+        "--no-browser",
+        action="store_true",
+        help="with --dashboard, do not auto-open the browser",
     )
     args = parser.parse_args()
     name = args.function
@@ -424,6 +568,17 @@ def main() -> int:
     if rc != 0:
         return 2
     workdir = workdir_for(name)
+
+    byte_line = byte_match_summary(name)
+    if byte_line:
+        print(f"{name}: {byte_line}")
+
+    strict_branches = args.strict_branches
+    if not strict_branches and not args.no_strict_branches and byte_line:
+        m = re.search(r"(\d+(?:\.\d+)?)%", byte_line)
+        if m and float(m.group(1)) >= 90.0:
+            strict_branches = True
+            print(f"{name}: auto-enabling --strict-branches (seed >= 90% byte match)")
 
     seed_score = base_score(workdir)
     if seed_score is None:
@@ -440,14 +595,41 @@ def main() -> int:
             print(f"{name}: base scores 0 but verification failed", file=sys.stderr)
             return 1
     else:
-        best = run_permuter(
+        if args.dashboard:
+            if str(ROOT) not in sys.path:
+                sys.path.insert(0, str(ROOT))
+            from tools.decomp.permuter.dashboard.runner import (
+                finalize_dashboard_state,
+                start_dashboard_server,
+            )
+
+            dash, dash_state = start_dashboard_server(
+                function=name,
+                workdir=workdir,
+                budget_sec=args.seconds,
+                jobs=args.jobs,
+                open_browser=not args.no_browser,
+            )
+        else:
+            dash = None
+            dash_state = None
+        best, interrupted = run_permuter(
             workdir,
             jobs=args.jobs,
             seconds=args.seconds,
             seed_score=seed_score,
-            strict_branches=args.strict_branches,
+            strict_branches=strict_branches,
             escalate=not args.no_escalate,
+            dashboard=args.dashboard,
+            dash_state=dash_state,
+            function_name=name,
         )
+        if dash is not None and dash_state is not None:
+            finalize_dashboard_state(dash_state, interrupted=interrupted)
+            dash.stop()
+        if interrupted:
+            print(f"{name}: interrupted — best score {best}")
+            return 130
         found = candidate_from(workdir, name)
         if not found:
             zeros = [d for score, d in output_dirs(workdir) if score == 0]

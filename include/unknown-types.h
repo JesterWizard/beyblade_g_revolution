@@ -2144,7 +2144,8 @@ struct Unk41394 /* >= 0x240 */
 /* Local state assembled by sub_08040F4C. */
 struct Unk40F4C /* >= 0x328 */
 {
-    /* 000 */ u8 filler_000[0x240];
+    /* 000 */ u8 filler_000[0x220];
+    /* 220 */ void *unk220[8];
     /* 240 */ void *unk240;
     /* 244 */ void *unk244;
     /* 248 */ void *unk248;

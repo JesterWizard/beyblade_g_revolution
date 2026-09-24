@@ -4,6 +4,7 @@
 #   tools/decomp/permuter/permute.sh import <function>
 #   tools/decomp/permuter/permute.sh run nonmatchings/<function> [-j N] [--stop-on-zero]
 #   tools/decomp/permuter/permute.sh bg  nonmatchings/<function> [-j N] [--stop-on-zero]
+#   tools/decomp/permuter/permute.sh dashboard <function> [--seconds N] [--jobs N]
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 PERM="$ROOT/tools/decomp-permuter"
@@ -32,8 +33,13 @@ case "$cmd" in
     echo "  watch: tail -f $log"
     echo "  stop:  pkill -f 'permuter.py.*$(basename "${dir%/}")'"
     ;;
+  dashboard)
+    fn="${1:?usage: $0 dashboard <function> [--seconds N] [--jobs N]}"
+    shift || true
+    exec python3 "$ROOT/tools/decomp/permuter/run_dashboard.py" "$fn" "$@"
+    ;;
   *)
-    echo "usage: $0 {import <function> | run <dir> [-j N] [--stop-on-zero] | bg <dir> ...}" >&2
+    echo "usage: $0 {import <function> | run <dir> [-j N] [--stop-on-zero] | bg <dir> ... | dashboard <function> [--seconds N] [--jobs N]}" >&2
     exit 1
     ;;
 esac

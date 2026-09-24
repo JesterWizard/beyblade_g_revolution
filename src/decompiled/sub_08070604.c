@@ -1,11 +1,9 @@
 #include "global.h"
 
 // @ 0x08070604
+/* match-compiler: old_agbcc */
 void sub_08070604(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 x, s16 y, u16 unk0C, u16 unk08)
 {
-    u32 val;
-    u8 *p;
-
     dst->unk00 = (s32)x << 8;
     dst->unk04 = (s32)y << 8;
     dst->unk0C = unk0C;
@@ -23,12 +21,6 @@ void sub_08070604(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 
     dst->unk0F = 0;
     dst->unk2B = 0;
     dst->unk28 = 5;
-
-    p = &dst->unk29;
-    *p = 0;
-    val = src->unk05;
-    val += 4;
-    p += 1;
-    *(s8 *)p = val;
+    dst->unk29 = 0;
+    dst->unk2A = (s8)(src->unk05 + 4);
 }
-

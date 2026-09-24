@@ -5,12 +5,13 @@ void sub_08040F4C(void)
 {
     struct Unk40F4C state;
     s32 done;
+    s16 blend;
     u32 r0;
     u32 r1;
     u32 r2;
     u32 r3;
-    u32 r4;
 
+    blend = 0;
     done = 0;
     r0 = 0x080BB8BC;
     r2 = 0xCA;
@@ -60,14 +61,13 @@ blend1:
     r3 = *(u16 *)r1;
     r0 = *(u16 *)r0;
     r0 = r3 - r0;
-    r4 = 0;
     r3 = 0;
     *(u16 *)r1 = (u16)r0;
     r0 <<= 16;
     if ((s32)r0 >= 0)
         goto blend_hw;
     *(u16 *)r1 = (u16)r3;
-    *(u8 *)r2 = (u8)r4;
+    *(u8 *)r2 = (u8)r3;
     goto blend_hw;
 blend2:
     r1 = (u32)&state.unk31C;

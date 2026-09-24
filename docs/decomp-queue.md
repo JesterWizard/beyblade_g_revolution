@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-24T07:35:25Z_
+_Updated: 2026-09-24T10:25:36Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 414 |
-| Still need semantic C | **219** |
-| Readable Thumb remaining | 219 |
+| Semantic C done | 416 |
+| Still need semantic C | **217** |
+| Readable Thumb remaining | 217 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 79 (78 already semantic) |
+| Battle pending | 78 (79 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 136 |
 
@@ -110,7 +110,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08070354` | 168 | 47/168 | `src/decompiled/sub_08070354.c` | Semantic object/flag updater reconstructed. Final verified attempt reached 47/168 (172B); control flow and flag masks match conceptually, but agbcc schedules the arg2 truncation after arg3 truncation (retail copies arg2 to r5 first), and the resulting size differs by 4 bytes. | Preserve the typed state/object model and force the prologue order: mask b, lsls arg2, lsrs r5, then mask arg3 before loading state->unk30 and state->unk10. Next tune the temporary value register so new-object mode emits object->unk08 mask/shift, 0x100 OR, then the common flags OR. |
 | `sub_08070468` | 114 | 37/114 | `src/decompiled/sub_08070468.c` | Two attempts: the semantic sorted-list reposition candidate reached 37/114 (112B); a typed-parameter/register experiment failed to compile because agbcc rejects asm-qualified parameters. Unlink, key update, predecessor search, and reinsertion logic are mapped. | Keep the first compilable candidate. To close the 2-byte size/prologue gap, make the typed node assignment emit adds r4,r0 before key truncation while retaining key in r2. Then tune head/search_head lifetimes to preserve the retail r6/r5 aliases. |
 | `sub_0802BAD4` | 320 | 50/320 | `src/decompiled/sub_0802BAD4.c` | Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation. | Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store. |
-| `sub_0802C2B0` | 0 | 99/100 | `src/decompiled/sub_0802C2B0.c` | probe before loc save; split base local in loop | 1-byte ble offset in loop tail — permuter or branch scheduling |
+| `sub_0802C2B0` | 0 | 100/100 | `src/decompiled/sub_0802C2B0.c` | integrated semantic C | done |
 | `sub_0802C314` | 198 | 40/198 | `src/decompiled/sub_0802C314.c` | size mismatch; 40/198 bytes, compiled 196 vs retail 198; lookup logic is mapped but agbcc register/source shape differs | preserve byte-field initialization loads and reproduce r4 table-address/r1 scaled-index lifetimes |
 | `sub_0802C3DC` | 198 | 46/198 | `src/decompiled/sub_0802C3DC.c` | size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic and table indexing mapped, initialization/register lifetime still differs | force the ROM's byte-field OR loads and r0/r4/r1 lifetime before trying body permutations |
 | `sub_0802C4A4` | 182 | 27/182 | `src/decompiled/sub_0802C4A4.c` | size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup semantics mapped but callee-saved r7 and repeated output-address shape remain | use an ordinary live signed index local to force r7 save, then restore repeated table-field stores |
@@ -133,7 +133,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08035468` | 308 | 41/308 | `src/decompiled/sub_08035468.c` | Rotation/projection math reconstructed through both angle frames, depth correction, output coordinates, and sub_08070354; natural candidate reached 41/308 bytes, while fixed-register tuning regressed to 31/308. | Retain the natural baseline and tune the signed fixed-point expression grouping; target keeps the root in r7/table in r9 only after the null check, with input coordinates reused across both transforms. |
 | `sub_08035AE0` | 388 | 179/388 | `src/decompiled/sub_08035AE0.c` | Collision/overlap response semantics reconstructed: squared separation threshold, normalized separation vector, midpoint separation, velocity-distance scaling, and weighted velocity updates. Natural candidate reached 75/388 bytes; register-pinned candidate reached 179/388 bytes but remained size-mismatched. | Start from the pinned seed and tune stack/local lifetimes. Target keeps separation deltas in r8/r9/r10, velocity deltas in r3/r1/r2, velocity length in r0, threshold at sp+4, scale at sp+8, and uses sp+0xc for the first midpoint offset. |
 | `sub_08035D68` | 196 | 19/196 | `src/decompiled/sub_08035D68.c` | Rotation/projection helper semantics reconstructed: table sine/cosine lookup, depth-scaled coordinate rotation, perspective correction, output writes, flag extraction, and sub_08070354 dispatch. Natural baseline is 19/196 bytes and size-mismatched at 208 bytes; a second fixed-register attempt reached 50/196 but aliased the source pointer with a pinned delta and was discarded. | Use the natural seed and introduce register constraints only after preserving the source pointer in ip. Target uses sine r8, dx r7, dy r5, dz r4, output x r6, output y r2, and flag r9; do not pin dx to r7 unless source is explicitly pinned to r12. |
-| `sub_0802E048` | 228 | 112/228 | `src/decompiled/sub_0802E048.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_0802E048` | 0 | 112/228 | `src/decompiled/sub_0802E048.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08031300` | 78 | 22/78 | `src/decompiled/sub_08031300.c` | 22/78 same-size. Permuter re-run 2026-09-22 on the semantic seed with the fixed importer: base 1245, best 790, no zero — the earlier 'best 920' figure came from a permuter that had imported the asm wrapper | Do not re-attempt by hand or by permuter. Register-destination difference: retail keeps the parameter in r2 and builds the palette value in r1, agbcc picks r1/r0; same family as the documented sub_08061308 coalescing finding |
 | `sub_08033978` | 180 | 22/180 | `src/decompiled/sub_08033978.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08037430` | 216 | 84/216 | `src/decompiled/sub_08037430.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
@@ -146,7 +146,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08066224` | 112 | 96/112 | `src/decompiled/sub_08066224.c` | permuter 300 s + 900 s, no score 0 (110 → 55); 96/112 | keep readable Thumb; duplicated callback/flag block layout |
 | `sub_0806A3A4` | 144 | 10/144 | `src/decompiled/sub_0806A3A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806B3E8` | 84 | 39/84 | `src/decompiled/sub_0806B3E8.c` | 46pct size_mismatch readable rewrite | permuter from readable seed; top-tested check loop |
-| `sub_08070604` | 92 | 73/92 | `src/decompiled/sub_08070604.c` | permuter 300 s, no score 0 (140 → 10); 73/92 | keep readable Thumb; store ordering and the 0x100 pair |
+| `sub_08070604` | 0 | 73/92 | `src/decompiled/sub_08070604.c` | permuter 300 s, no score 0 (140 → 10); 73/92 | keep readable Thumb; store ordering and the 0x100 pair |
 | `sub_08071BA0` | 148 | 32/148 | `src/decompiled/sub_08071BA0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08073988` | 96 | 94/96 | `src/decompiled/sub_08073988.c` | 94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) — all 94/96 or worse. This session: 12 more `default_char` shapes (`r0 = (index = C)`, `C + ch`, `index + ch`, split assignments, u32 casts) — every one 94/96 or size-mismatch; old_agbcc 90/96. | park: the load-into-destination-register choice is an allocator heuristic agbcc does not reproduce. Leave the readable Thumb wrapper unless a permuter run over old_agbcc finds it |
 | `sub_0803DBD0` | 80 | 23/80 | `src/decompiled/sub_0803DBD0.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |

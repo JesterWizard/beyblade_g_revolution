@@ -1,22 +1,11 @@
 #include "global.h"
 
 // @ 0x08041c8c
-// Find the battle object with unkD4 == a and unkD8 == b in the gUnk_03000480
-// pool (count at gUnk_03000504); if found and its unkC8/unkC8->unk10 are set,
-// record c on that node and copy the two payload words of c into the node's
-// unk30 record (byte at +0, byte at +4, halfword at +6).
-// PARKED: structure lines up instruction-for-instruction with retail, but agbcc
-// keeps the count address in a rematerialised literal and the pool base in ip,
-// while retail pushes r6/r7 for r8 = &count and r9 = pool (142 vs 136 bytes).
-// Permuter (150s) did not close the gap. Needs a source shape that raises
-// register pressure across the loop.
 void sub_08041C8C(u32 a, u32 b, u32 c)
 {
-
-
-    struct Unk68574 **pool;
     s16 i;
     s16 count;
+    struct Unk68574 **pool;
     struct Unk68574 *p;
     struct Unk41E14Node *node;
     u32 *src;
@@ -46,7 +35,6 @@ void sub_08041C8C(u32 a, u32 b, u32 c)
                 break;
             }
             i++;
-        } while (i < *(s16 *)gUnk_03000504);
+        } while (i < count);
     }
-
 }
