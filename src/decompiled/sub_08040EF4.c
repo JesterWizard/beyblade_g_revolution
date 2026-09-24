@@ -1,28 +1,39 @@
 #include "global.h"
 #include "ram_map.h"
 
-// @ 0x08040EF4
-// Keyed lookup in the 8-byte ROM table at 0x0808B2E4 (rows end at key 0xFFFFFFFF).
-// On hit, returns the gMainWorkPtr->unk1818-th u32 from the row's value pointer.
 s32 sub_08040EF4(void *key)
 {
-    struct Unk40EF4 *entry;
     u32 searchKey;
+    u32 *cursor;
+    u32 *keyp;
+    u32 *valp;
+    u32 off;
+    u32 *vals;
+    struct MainWork *mw;
     u8 index;
 
     searchKey = (u32)key;
-    entry = (struct Unk40EF4 *)0x0808B2E4;
-    if (entry->unk00 == (u32)-1)
+    cursor = (u32 *)0x0808B2E4;
+    if (*cursor == (u32)-1)
         return 0;
 
-    index = gMainWorkPtr->unk1818;
-    do
+    off = 0;
+    keyp = cursor;
+    valp = cursor + 1;
+    for (;;)
     {
-        if (entry->unk00 == searchKey)
-            return (s32)((u32 *)entry->unk04)[index];
-        entry++;
+        if (*keyp == searchKey)
+        {
+            vals = *(u32 **)((u8 *)valp + off);
+            mw = *(struct MainWork **)0x03000198;
+            index = *(u8 *)((u32)mw + 0x1818);
+            return (s32)*(u32 *)((u8 *)vals + (index << 2));
+        }
+        cursor += 2;
+        off += 8;
+        keyp += 2;
+        if (*cursor == (u32)-1)
+            break;
     }
-    while (entry->unk00 != (u32)-1);
-
     return 0;
 }

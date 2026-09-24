@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-24T22:11:55Z_
+_Updated: 2026-09-24T23:06:04Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 446 |
-| Still need semantic C | **187** |
-| Readable Thumb remaining | 187 |
+| Semantic C done | 450 |
+| Still need semantic C | **183** |
+| Readable Thumb remaining | 183 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 73 (84 already semantic) |
+| Battle pending | 72 (85 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 135 |
 
@@ -59,7 +59,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08038D68` | 112 | 37/112 | `src/decompiled/sub_08038D68.c` | two attempts: direct semantic seed 15/112 (108B); pinned base/table registers 37/112 but expanded to 120B. Data flow and both Unk705DC output writes are correct; register pressure/order remains | Use the direct field algorithm with a targeted r5 base/r2 table search; avoid the current over-constraining dual register pins and preserve the 112-byte retail size |
 | `sub_08038F30` | 316 | 56/316 | `src/decompiled/sub_08038F30.c` | two attempts: direct loop/if seed 32/316 (304B); goto plus r5/r6/r7 register pins reached 56/316 but expanded to 352B. Algorithm, mode branches, and global fields are mapped; source shape over-expands the branch bodies | Use the first compact seed as baseline; force only global-location reloads or use a permuter for branch layout, not all three register pins. Preserve Unk38F30Entry and signed record selector |
 | `sub_0803D51C` | 304 | 63/304 then 38/304 | `src/decompiled/sub_0803D51C.c` | Two same-size attempts did not match: direct semantic seed compiled 288/304 with result in r6; r5 pin expanded to 280/304 and forced extra registers. Logic and Unk2C314 result fields are identified. | Use a targeted register-layout/permuter search to reproduce retail push {r4,r5,lr}, r4 main-work location, and r5 result; preserve two repeated sub_0802C314/sub_0802C55C blocks. |
-| `sub_0803E2AC` | 124 | 67/124 then 72/124 | `src/decompiled/sub_0803E2AC.c` | Two semantic attempts are same-size but differ in table literal/index scheduling: 67/124 direct seed, 72/124 with r3 base and r0/r1/r2 pins. RGB table classification logic is identified. | Use a targeted permuter/source-order search to force retail's table1 literal load before the signed 0x1E index, then preserve table2/table3 RGB accumulation and threshold branches. |
+| `sub_0803E2AC` | 0 | 67/124 then 72/124 | `src/decompiled/sub_0803E2AC.c` | Two semantic attempts are same-size but differ in table literal/index scheduling: 67/124 direct seed, 72/124 with r3 base and r0/r1/r2 pins. RGB table classification logic is identified. | Use a targeted permuter/source-order search to force retail's table1 literal load before the signed 0x1E index, then preserve table2/table3 RGB accumulation and threshold branches. |
 | `sub_080411EC` | 346 | 36/346 then 35/346 | `src/decompiled/sub_080411EC.c` | Two semantic attempts failed to preserve the retail dispatcher shape: direct struct logic 36/346 (332B), then r2 key pin plus volatile mode reload 35/346 (328B). The state pointer fields, two callback modes, key masks, and sub_08045C5C flag path are modeled. | Use the original direct seed with a targeted literal/register-order search: force a separate 0x2D9 offset pool load, keys in r1/r2, and preserve the callback fallthrough labels; avoid fixed pins that shrink the branch layout. |
 | `sub_080415FC` | 200 | 38/200 then 127/200 | `src/decompiled/sub_080415FC.c` | Two semantic attempts: cached-main/state seed 38/200 (180B), direct state-address seed 127/200 (192B). The latter matches the core dispatch logic but agbcc caches main in r4 and uses different offset materialization than retail's r1 main pointer/reloaded locations. | Try direct gMainWorkPtr field expressions (no persistent main local) or targeted register-layout/permuter work to retain main in r1, state at +0x530, and r4 as the pointer-location only. |
 | `sub_0804188C` | 244 | 19/244 then 41/244 | `src/decompiled/sub_0804188C.c` | Two semantic attempts failed to reproduce the fixed-point table walk: direct loop 19/244 (208B), then pinned r4/r5/r6/r7 and explicit fixed-point/color locals 41/244 (224B). Object fields and update/callback roles are identified. | Use a targeted register/permuter search for the retail fixed-point index expression (r4=i<<16, r0=asr #14), r5 object slot, r6 table base, and r7 loop index; preserve separate signed count loads. |
@@ -139,10 +139,10 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_080405A8` | 0 | 28/64 | `src/decompiled/sub_080405A8.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_08040F4C` | 336 | 319/336 | `src/decompiled/sub_08040F4C.c` | 319/336 agbcc; prologue fork: 225/336 gets r5 but wrong 6639C order | PERM prologue swap on done_then_early6639 seed or leave Thumb |
 | `sub_08043B90` | 76 | 67/76 | `src/decompiled/sub_08043B90.c` | 67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomization makes it worse — the hand-tuned seed is already the best shape. Symbols regress it to 14/76, so it must stay symbol-free. Retail's tail returns by reusing r0 == 0 from the loop test | park: do not re-run a randomising permuter on this seed. Revisit by hand-forcing the r0 == 0 loop-test reuse in the tail return |
-| `sub_080442FC` | 144 | 134/144 | `src/decompiled/sub_080442FC.c` | 134/144; a in r4 vs r5 (gData symbols fixed pool fold) | perm_refer_to_var so index takes r4 |
+| `sub_080442FC` | 0 | 134/144 | `src/decompiled/sub_080442FC.c` | 134/144; a in r4 vs r5 (gData symbols fixed pool fold) | perm_refer_to_var so index takes r4 |
 | `sub_08047624` | 174 | 80/174 | `src/decompiled/sub_08047624.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_080523A4` | 112 | 71/112 | `src/decompiled/sub_080523A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
-| `sub_08066224` | 112 | 96/112 | `src/decompiled/sub_08066224.c` | permuter 300 s + 900 s, no score 0 (110 → 55); 96/112 | keep readable Thumb; duplicated callback/flag block layout |
+| `sub_080523A4` | 0 | 71/112 | `src/decompiled/sub_080523A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
+| `sub_08066224` | 0 | 96/112 | `src/decompiled/sub_08066224.c` | permuter 300 s + 900 s, no score 0 (110 → 55); 96/112 | keep readable Thumb; duplicated callback/flag block layout |
 | `sub_0806A3A4` | 0 | 10/144 | `src/decompiled/sub_0806A3A4.c` | matched only with GCC asm labels; stripped DIFF | rewrite without register asm / empty asm(); permuter if same-size |
 | `sub_0806B3E8` | 0 | 39/84 | `src/decompiled/sub_0806B3E8.c` | 46pct size_mismatch readable rewrite | permuter from readable seed; top-tested check loop |
 | `sub_08070604` | 0 | 73/92 | `src/decompiled/sub_08070604.c` | permuter 300 s, no score 0 (140 → 10); 73/92 | keep readable Thumb; store ordering and the 0x100 pair |
@@ -154,7 +154,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08042784` | 100 | 35/100 | `src/decompiled/sub_08042784.c` | 35/100 same-size; retail keeps the ring pointer in r12 | permuter |
 | `sub_080699C8` | 0 | 25/80 | `src/decompiled/sub_080699C8.c` | size mismatch; shared tail not reproducible | permuter |
 | `sub_08067FC8` | 0 | 43/74 | `src/decompiled/sub_08067FC8.c` | 43/74 same-size; total=0 must precede the call, entry check uses r8 | permuter |
-| `sub_08073114` | 112 | 18/112 | `src/decompiled/sub_08073114.c` | 18/112 (108B); i=0 must precede count=...; table pseudo wants r1 not r0 | permuter |
+| `sub_08073114` | 112 | 104/112 | `src/decompiled/sub_08073114.c` | 104/112 same_size; a/table/count register layout | PERM macros on table_loc/count_addr loads; keep score-45 body |
 | `sub_080739E8` | 36 | 11/36 | `src/decompiled/sub_080739E8.c` | 11/36; rotated bottom test + separate entry guard, agbcc merges them | permuter |
 | `sub_0803715C` | 444 | 33/444 | `src/decompiled/sub_0803715C.c` | 33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 instead of r8 and about 20 bytes of reloads are folded | do not hand-chase registers; only revisit if a same-size seed appears, then permuter |
 | `sub_08067F3C` | 92 | 58/92 | `src/decompiled/sub_08067F3C.c` | 58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs | s32 counter and mask-first flag both scored worse; permuter only if a same-size seed appears |

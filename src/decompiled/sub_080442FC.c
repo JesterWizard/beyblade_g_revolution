@@ -1,13 +1,13 @@
-#define sub_0806C78C sub_0806C78C_hide
 #include "global.h"
-#undef sub_0806C78C
-s32 sub_0806C78C(s32 a, void *b, s32 c);
+#include "ram_map.h"
+#include "data_symbols.h"
 
 void sub_080442FC(struct Unk442FC *a, struct Unk442FCInput *b, u32 c, u32 d)
 {
+    u32 index;
     u32 flag;
     u32 arg4;
-    u32 index;
+    struct Unk442FC *obj;
     u32 mw;
     u32 slot;
     u32 p181b;
@@ -19,6 +19,7 @@ void sub_080442FC(struct Unk442FC *a, struct Unk442FCInput *b, u32 c, u32 d)
     index = 0;
     flag = c;
     arg4 = d;
+    obj = a;
     if (b != 0)
     {
         index = b->unk16;
@@ -27,8 +28,8 @@ void sub_080442FC(struct Unk442FC *a, struct Unk442FCInput *b, u32 c, u32 d)
             b->unk14,
             gData_08091204[0]);
     }
-    if (a->unk84 >= 0)
-        sub_0806D958((struct Unk6D958 *)a);
+    if (obj->unk84 >= 0)
+        sub_0806D958((struct Unk6D958 *)obj);
     mw = *(u32 *)gMainWorkPtrLoc;
     slot = mw + 0x1690;
     p181b = mw + 0x181B;
@@ -43,7 +44,7 @@ void sub_080442FC(struct Unk442FC *a, struct Unk442FCInput *b, u32 c, u32 d)
     arg2 <<= 5;
     index <<= 16;
     byte = index >> 16;
-    sub_08043C70(a, (void *)scaled, arg2, byte, arg4);
+    sub_08043C70(obj, (void *)scaled, arg2, byte, arg4);
     if (flag != 0)
-        sub_0806C78C((s32)sub_08062A14(), a, (s32)index >> 16);
+        sub_0806C78C((void *)sub_08062A14(), obj, (s32)index >> 16);
 }

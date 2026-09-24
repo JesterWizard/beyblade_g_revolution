@@ -419,6 +419,12 @@ struct Unk62D50 /* >= 0x03 */
     /* 02 */ u8 unk02;
 };
 
+struct Unk62358Anim /* 0x04 */
+{
+    /* 00 */ s16 unk00;
+    /* 02 */ s16 unk02;
+};
+
 struct Unk62634 /* >= 0x64 */
 {
     /* 00 */ void *unk00;
@@ -436,7 +442,12 @@ struct Unk62634 /* >= 0x64 */
     /* 38 */ s32 unk38;
     /* 3c */ s32 unk3C;
     /* 40 */ s32 unk40;
-    /* 44 */ u8 filler_44[0x1C];
+    /* 44 */ u8 filler_44[0xC];
+    /* 50 */ u16 unk50;
+    /* 52 */ u16 unk52;
+    /* 54 */ u16 unk54;
+    /* 56 */ u16 unk56;
+    /* 58 */ u8 filler_58[8];
     /* 60 */ u8 unk60;
     /* 61 */ u8 filler_61[3];
 };

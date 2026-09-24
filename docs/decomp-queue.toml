@@ -1115,9 +1115,9 @@ score = "43/74"
 name = "sub_08073114"
 seed = "src/decompiled/sub_08073114.c"
 notes = "src/decompiled/sub_08073114.md"
-status = "18/112 (108B); i=0 must precede count=...; table pseudo wants r1 not r0"
-next = "permuter"
-score = "18/112"
+status = "104/112 same_size; a/table/count register layout"
+next = "PERM macros on table_loc/count_addr loads; keep score-45 body"
+score = "104/112"
 
 [[wip]]
 name = "sub_080739E8"

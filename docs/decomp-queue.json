@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-24T22:11:55Z",
+  "generated": "2026-09-24T23:06:04Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 187,
-    "semantic_done": 446,
-    "readable_asm": 187,
+    "pending": 183,
+    "semantic_done": 450,
+    "readable_asm": 183,
     "opcode": 0,
-    "battle_pending": 73,
-    "battle_semantic": 84,
+    "battle_pending": 72,
+    "battle_semantic": 85,
     "blocked": 20,
     "wip": 135
   },
@@ -382,8 +382,8 @@
     {
       "name": "sub_0803E2AC",
       "addr": "0x0803E2AC",
-      "kind": "asm",
-      "bytes": 124,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0803E2AC.c",
       "notes": "src/decompiled/sub_0803E2AC.md",
       "status": "Two semantic attempts are same-size but differ in table literal/index scheduling: 67/124 direct seed, 72/124 with r3 base and r0/r1/r2 pins. RGB table classification logic is identified.",
@@ -1262,8 +1262,8 @@
     {
       "name": "sub_080442FC",
       "addr": "0x080442FC",
-      "kind": "asm",
-      "bytes": 144,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080442FC.c",
       "notes": "src/decompiled/sub_080442FC.md",
       "status": "134/144; a in r4 vs r5 (gData symbols fixed pool fold)",
@@ -1284,8 +1284,8 @@
     {
       "name": "sub_080523A4",
       "addr": "0x080523A4",
-      "kind": "asm",
-      "bytes": 112,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080523A4.c",
       "notes": "src/decompiled/sub_080523A4.md",
       "status": "matched only with GCC asm labels; stripped DIFF",
@@ -1295,8 +1295,8 @@
     {
       "name": "sub_08066224",
       "addr": "0x08066224",
-      "kind": "asm",
-      "bytes": 112,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08066224.c",
       "notes": "src/decompiled/sub_08066224.md",
       "status": "permuter 300 s + 900 s, no score 0 (110 \u2192 55); 96/112",
@@ -1431,9 +1431,9 @@
       "bytes": 112,
       "seed": "src/decompiled/sub_08073114.c",
       "notes": "src/decompiled/sub_08073114.md",
-      "status": "18/112 (108B); i=0 must precede count=...; table pseudo wants r1 not r0",
-      "next": "permuter",
-      "score": "18/112"
+      "status": "104/112 same_size; a/table/count register layout",
+      "next": "PERM macros on table_loc/count_addr loads; keep score-45 body",
+      "score": "104/112"
     },
     {
       "name": "sub_080739E8",

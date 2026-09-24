@@ -2,10 +2,6 @@
 #include "global.h"
 
 // @ 0x080739e8
-// Best agbcc: 35/36 (97.2%). Null-path beq offset 0c vs retail 0d (1 byte).
-// Dead tail required for loop body; without it score drops to 9/36.
-// old_agbcc (no -fprologue-bugfix) can fix the beq (0d) with out/goto/finish
-// shape but regresses to 32/36 (+4B epilogue, newline uses r2 not r0).
 s32 sub_080739E8(u8 *s)
 {
     u8 c;

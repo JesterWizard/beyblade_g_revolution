@@ -1,75 +1,50 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803e2ac
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "data_symbols.h"
+
 s32 sub_0803E2AC(struct Unk3E328 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r3, r0, #0x0\n"
-        "cmp r3, #0x00\n"
-        "beq _0803E2FA\n"
-        "ldr r0, _0803E300 @ =0x0807BDB8\n"
-        "movs r1, #0x1E\n"
-        "ldsb r1, [r3, r1]\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r1, r1, r0\n"
-        "ldr r2, _0803E304 @ =0x0807BB80\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x20\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r2\n"
-        "ldrb r4, [r0, #0x00]\n"
-        "ldrb r5, [r1, #0x00]\n"
-        "adds r2, r4, r5\n"
-        "ldrb r6, [r0, #0x01]\n"
-        "ldrb r5, [r1, #0x01]\n"
-        "adds r4, r6, r5\n"
-        "ldrb r0, [r0, #0x02]\n"
-        "ldrb r1, [r1, #0x02]\n"
-        "adds r5, r0, r1\n"
-        "ldr r1, _0803E308 @ =0x0807B6F0\n"
-        "movs r0, #0x1D\n"
-        "ldsb r0, [r3, r0]\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r1\n"
-        "ldrb r6, [r0, #0x00]\n"
-        "adds r2, r6, r2\n"
-        "ldrb r1, [r0, #0x01]\n"
-        "adds r4, r1, r4\n"
-        "ldrb r0, [r0, #0x02]\n"
-        "adds r5, r0, r5\n"
-        "cmp r2, #0x08\n"
-        "ble _0803E30C\n"
-        "_0803E2FA:\n"
-        "movs r0, #0x00\n"
-        "b _0803E322\n"
-        ".byte 0x00, 0x00\n"
-        "_0803E300: .4byte 0x0807BDB8\n"
-        "_0803E304: .4byte 0x0807BB80\n"
-        "_0803E308: .4byte 0x0807B6F0\n"
-        "_0803E30C:\n"
-        "cmp r4, #0x08\n"
-        "ble _0803E314\n"
-        "movs r0, #0x01\n"
-        "b _0803E322\n"
-        "_0803E314:\n"
-        "cmp r4, #0x05\n"
-        "ble _0803E320\n"
-        "cmp r5, #0x05\n"
-        "ble _0803E320\n"
-        "movs r0, #0x02\n"
-        "b _0803E322\n"
-        "_0803E320:\n"
-        "movs r0, #0x03\n"
-        "_0803E322:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    const u8 *t1;
+    u32 i1;
+    u32 v1;
+    u32 v2;
+    s32 red;
+    s32 green;
+    s32 blue;
+
+    if (a == 0)
+        return 0;
+
+    t1 = gData_0807BDB8;
+    i1 = a->unk1E * 4;
+    red = ((struct Unk3E374Row *)(t1 + i1))->unk00;
+    v2 = gData_0807BB80[(s8)a->unk20 * 4];
+    red += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->unk20 * 4))->unk00;
+
+    green = ((struct Unk3E374Row *)(t1 + i1))->unk01;
+    v2 = gData_0807BB80[(s8)a->unk20 * 4];
+    green += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->unk20 * 4))->unk01;
+
+    blue = ((struct Unk3E374Row *)(t1 + i1))->unk02;
+    v2 = gData_0807BB80[(s8)a->unk20 * 4];
+    blue += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->unk20 * 4))->unk02;
+
+    v2 = gData_0807B6F0[a->unk1D * 4];
+    red += ((struct Unk3E374Row *)(gData_0807B6F0 + a->unk1D * 4))->unk00;
+    green += ((struct Unk3E374Row *)(gData_0807B6F0 + a->unk1D * 4))->unk01;
+    blue += ((struct Unk3E374Row *)(gData_0807B6F0 + a->unk1D * 4))->unk02;
+
+    if (red > 8)
+        return 0;
+    if (green > 8)
+        return 1;
+    if (green > 5 && blue > 5)
+        return 2;
+    return 3;
 }
 
