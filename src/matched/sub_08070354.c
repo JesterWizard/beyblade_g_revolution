@@ -1,97 +1,59 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08070354
-__attribute__((naked))
-void sub_08070354(void *a, u16 b, u16 c, u8 d)
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+void sub_08070354(struct Unk70354 *state, u16 b, u16 c, u8 d)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r5, r2, #0x10\n"
-        "lsls r3, r3, #0x18\n"
-        "lsrs r3, r3, #0x18\n"
-        "ldr r2, [r6, #0x30]\n"
-        "ldr r4, [r6, #0x10]\n"
-        "cmp r2, #0x00\n"
-        "beq _08070390\n"
-        "adds r0, r2, #0x0\n"
-        "adds r2, r5, #0x0\n"
-        "bl sub_0807027C\n"
-        "str r0, [r6, #0x30]\n"
-        "adds r2, r0, #0x0\n"
-        "cmp r2, #0x00\n"
-        "bne _080703BA\n"
-        "ldr r0, _0807038C @ =0xC1FFFCFF\n"
-        "ands r4, r0\n"
-        "movs r0, #0x03\n"
-        "ldrh r1, [r6, #0x1C]\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x1C\n"
-        "b _080703B4\n"
-        ".byte 0x00, 0x00\n"
-        "_0807038C: .4byte 0xC1FFFCFF\n"
-        "_08070390:\n"
-        "movs r0, #0x00\n"
-        "adds r2, r5, #0x0\n"
-        "bl sub_0807027C\n"
-        "str r0, [r6, #0x30]\n"
-        "adds r2, r0, #0x0\n"
-        "cmp r2, #0x00\n"
-        "beq _080703F0\n"
-        "ldr r0, _080703D0 @ =0xC1FFFDFF\n"
-        "ands r4, r0\n"
-        "ldr r0, [r2, #0x08]\n"
-        "movs r1, #0xF8\n"
-        "lsls r1, r1, #0x02\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x14\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x01\n"
-        "orrs r0, r1\n"
-        "_080703B4:\n"
-        "orrs r4, r0\n"
-        "cmp r2, #0x00\n"
-        "beq _080703F0\n"
-        "_080703BA:\n"
-        "ldrb r0, [r2, #0x18]\n"
-        "cmp r0, #0x00\n"
-        "beq _080703D4\n"
-        "ldrh r0, [r2, #0x14]\n"
-        "cmp r0, #0xB0\n"
-        "bhi _080703E4\n"
-        "ldrh r2, [r2, #0x16]\n"
-        "cmp r2, #0xB0\n"
-        "bhi _080703E4\n"
-        "b _080703EC\n"
-        ".byte 0x00, 0x00\n"
-        "_080703D0: .4byte 0xC1FFFDFF\n"
-        "_080703D4:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x01\n"
-        "ldrh r1, [r2, #0x14]\n"
-        "cmp r1, r0\n"
-        "bhi _080703E4\n"
-        "ldrh r2, [r2, #0x16]\n"
-        "cmp r2, r0\n"
-        "bls _080703EC\n"
-        "_080703E4:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x02\n"
-        "orrs r4, r0\n"
-        "b _080703F0\n"
-        "_080703EC:\n"
-        "ldr r0, _080703F8 @ =0xFFFFFDFF\n"
-        "ands r4, r0\n"
-        "_080703F0:\n"
-        "str r4, [r6, #0x10]\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_080703F8: .4byte 0xFFFFFDFF\n"
-    );
+    u16 count = (u16)c;
+    u8 mode = d;
+    u32 flags;
+    struct Unk70354Object *object;
+    u32 value;
+
+    object = state->unk30;
+    flags = state->unk10;
+    if (object != 0)
+    {
+        object = state->unk30 = sub_0807027C(object, b, count, mode);
+        if (object == 0)
+        {
+            flags &= 0xC1FFFCFF;
+            flags |= (u32)(state->unk1C & 3) << 28;
+        }
+    }
+    else
+    {
+        object = state->unk30 = sub_0807027C(0, b, count, mode);
+        if (object != 0)
+        {
+            flags &= 0xC1FFFDFF;
+            value = object->unk08 & (0xF8 << 2);
+            value <<= 20;
+            value |= 0x80 << 1;
+            flags |= value;
+        }
+    }
+    if (object != 0)
+    {
+        if (object->unk18 != 0)
+        {
+            if (object->unk14 > 0xB0 || object->unk16 > 0xB0)
+                flags |= 0x200;
+            else
+                flags &= 0xFFFFFDFF;
+        }
+        else
+        {
+            if (object->unk14 > 0x100 || object->unk16 > 0x100)
+                flags |= 0x200;
+            else
+                flags &= 0xFFFFFDFF;
+        }
+    }
+    state->unk10 = flags;
 }
 

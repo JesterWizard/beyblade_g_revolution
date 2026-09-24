@@ -8,7 +8,7 @@
  */
 
 s32 sub_08042BE8(s32 a);
-u16 sub_0806DF38(void *a, struct UnkDF38Entry *out, s32 matchVal, u32 maxCount);
+u16 sub_0806DF38(void *a, struct UnkDF38Entry *out, s32 matchVal, u32 maxCount, s32 fifth);
 void sub_0806C704(void *a, void *b, s32 c, s32 d);
 void sub_0806833C(struct Unk68598 *a, s32 b, u16 c);
 void sub_0806B3E8(struct Unk6B3E8 *a);
@@ -434,7 +434,9 @@ u8 sub_08070AD4(struct Unk7069C *a, void *b, u8 c);
 u8 sub_08070DF4(struct Unk7069C *a, void *b, u8 c);
 u8 sub_08070930(struct Unk7069C *a, void *b, u8 c);
 u8 sub_08070D44(struct Unk7069C *a, s32 b, u8 c);
-void sub_08070354(void *a, u16 b, u16 c, u8 d);
+struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d);
+void sub_0806114C(struct Unk6114C *state, u32 tile, u32 palette, u32 first, u32 last);
+void sub_08070354(struct Unk70354 *a, u16 b, u16 c, u8 d);
 s32 sub_08040EF4(void *a);
 void sub_0804109C(struct Unk40F4C *a, struct Unk4109CInput *b);
 void sub_080411EC(void *a);

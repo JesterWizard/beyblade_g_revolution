@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-24T16:14:37Z",
+  "generated": "2026-09-24T18:14:20Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 205,
-    "semantic_done": 428,
-    "readable_asm": 205,
+    "pending": 200,
+    "semantic_done": 433,
+    "readable_asm": 200,
     "opcode": 0,
-    "battle_pending": 76,
-    "battle_semantic": 81,
+    "battle_pending": 75,
+    "battle_semantic": 82,
     "blocked": 20,
     "wip": 136
   },
@@ -217,8 +217,8 @@
     {
       "name": "sub_08062B9C",
       "addr": "0x08062B9C",
-      "kind": "asm",
-      "bytes": 76,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08062B9C.c",
       "notes": "src/decompiled/sub_08062B9C.md",
       "status": "34/76 bytes (44.7%), same size; correct algorithm (clear bitmask bit + slot pointer for idx in [lo,hi] after swap, reusing struct Unk62A74 from sub_08062A74) with the full loop/branch shape matching retail (confirmed via manual disassembly comparison -- only the register chosen for arg1/hi differs: retail keeps it in r4 from function entry, agbcc here picks r5)",
@@ -239,8 +239,8 @@
     {
       "name": "sub_0806C78C",
       "addr": "0x0806C78C",
-      "kind": "asm",
-      "bytes": 70,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0806C78C.c",
       "notes": "src/decompiled/sub_0806C78C.md",
       "status": "12/70 bytes (17.1%), size mismatch (68 vs 70); partial model \u2014 calls sub_0806DF38(arg0, &out[1], 0, 1) writing a search-result array (struct UnkDF38Entry, 0x14 stride, added), checks out[0] fields, computes a stride, calls sub_0806C704. Declared both previously-naked callees' signatures from their own bodies. Uncertain: retail writes arg2 to sp+0 before the call but that slot is never read back in this function -- may be an unused stack reservation, a hidden 5th arg to sub_0806DF38, or a struct field I'm misplacing",
@@ -305,8 +305,8 @@
     {
       "name": "sub_08034A68",
       "addr": "0x08034A68",
-      "kind": "asm",
-      "bytes": 112,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08034A68.c",
       "notes": "src/decompiled/sub_08034A68.md",
       "status": "permuter 300 s + 900 s, no score 0 (130 \u2192 110); 91/112",
@@ -910,8 +910,8 @@
     {
       "name": "sub_08070354",
       "addr": "0x08070354",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08070354.c",
       "notes": "src/decompiled/sub_08070354.md",
       "status": "Semantic object/flag updater reconstructed. Final verified attempt reached 47/168 (172B); control flow and flag masks match conceptually, but agbcc schedules the arg2 truncation after arg3 truncation (retail copies arg2 to r5 first), and the resulting size differs by 4 bytes.",
@@ -1531,21 +1531,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803C500",
-      "addr": "0x0803C500",
-      "kind": "asm",
-      "bytes": 220,
-      "score": 108,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gMainWorkPtr",
-        "gBattleWork"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0806F910",
       "addr": "0x0806F910",
       "kind": "asm",
@@ -2045,6 +2030,18 @@
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
+    },
+    {
+      "name": "sub_0806DF38",
+      "addr": "0x0806DF38",
+      "kind": "asm",
+      "bytes": 228,
+      "score": 116,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
     }
   ],
   "blocked": [
@@ -2201,21 +2198,6 @@
         "gMainWorkPtr",
         "gBtlInputMask",
         "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803C500",
-      "addr": "0x0803C500",
-      "kind": "asm",
-      "bytes": 220,
-      "score": 108,
-      "battle_refs": 2,
-      "battle_syms": [
-        "gMainWorkPtr",
-        "gBattleWork"
       ],
       "has_pool": true,
       "blocked": false,

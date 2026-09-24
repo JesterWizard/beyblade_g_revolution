@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-24T16:14:37Z",
+  "generated": "2026-09-24T18:14:20Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "tiers": {
-    "generated": "2026-09-24T16:14:37Z",
+    "generated": "2026-09-24T18:14:20Z",
     "total": 633,
     "tiers": {
       "UNKNOWN": {
@@ -11,22 +11,22 @@
         "pct": 8.8
       },
       "DECOMPILED": {
-        "functions": 147,
-        "pct": 23.2
+        "functions": 141,
+        "pct": 22.3
       },
       "UNDERSTOOD": {
         "functions": 4,
         "pct": 0.6
       },
       "MATCHING": {
-        "functions": 426,
-        "pct": 67.3
+        "functions": 432,
+        "pct": 68.2
       }
     },
     "flags": {
       "has_c": 574,
       "named": 52,
-      "matches": 426
+      "matches": 432
     },
     "pct_named": 8.2
   },
@@ -36,16 +36,16 @@
   "missing_size": 0,
   "kinds": {
     "semantic": {
-      "functions": 425,
-      "bytes": 29608,
-      "pct_functions": 67.1,
-      "pct_bytes": 32.8
+      "functions": 430,
+      "bytes": 30254,
+      "pct_functions": 67.9,
+      "pct_bytes": 33.5
     },
     "readable_asm": {
-      "functions": 208,
-      "bytes": 60664,
-      "pct_functions": 32.9,
-      "pct_bytes": 67.2
+      "functions": 203,
+      "bytes": 60018,
+      "pct_functions": 32.1,
+      "pct_bytes": 66.5
     },
     "opcode": {
       "functions": 0,
@@ -56,10 +56,10 @@
   },
   "decomp": {
     "headline": "semantic C vs original function code",
-    "functions": 425,
-    "bytes": 29608,
-    "pct_functions": 67.1,
-    "pct_bytes": 32.8
+    "functions": 430,
+    "bytes": 30254,
+    "pct_functions": 67.9,
+    "pct_bytes": 33.5
   },
   "non_blob": {
     "note": "semantic C + readable Thumb (no .byte retail paste)",
@@ -69,8 +69,8 @@
     "pct_bytes": 100.0
   },
   "readable_asm": {
-    "functions": 208,
-    "bytes": 60664
+    "functions": 203,
+    "bytes": 60018
   },
   "opcode": {
     "functions": 0,
@@ -78,13 +78,13 @@
   },
   "battle": {
     "functions": 160,
-    "semantic": 79,
-    "readable_asm": 81,
+    "semantic": 80,
+    "readable_asm": 80,
     "opcode": 0,
     "bytes": 37974,
-    "semantic_bytes": 7956,
-    "pct_functions": 49.4,
-    "pct_bytes": 21.0
+    "semantic_bytes": 8176,
+    "pct_functions": 50.0,
+    "pct_bytes": 21.5
   },
   "largest_opcode": [],
   "history": [
@@ -1979,7 +1979,7 @@
       "pct_bytes": 32.6
     },
     {
-      "generated": "2026-09-24T16:14:37Z",
+      "generated": "2026-09-24T16:16:44Z",
       "semantic": 425,
       "readable_asm": 208,
       "opcode": 0,
@@ -1987,6 +1987,56 @@
       "total_bytes": 90272,
       "pct_functions": 67.1,
       "pct_bytes": 32.8
+    },
+    {
+      "generated": "2026-09-24T16:18:53Z",
+      "semantic": 426,
+      "readable_asm": 207,
+      "opcode": 0,
+      "semantic_bytes": 29828,
+      "total_bytes": 90272,
+      "pct_functions": 67.3,
+      "pct_bytes": 33.0
+    },
+    {
+      "generated": "2026-09-24T16:22:13Z",
+      "semantic": 427,
+      "readable_asm": 206,
+      "opcode": 0,
+      "semantic_bytes": 29898,
+      "total_bytes": 90272,
+      "pct_functions": 67.5,
+      "pct_bytes": 33.1
+    },
+    {
+      "generated": "2026-09-24T16:37:36Z",
+      "semantic": 428,
+      "readable_asm": 205,
+      "opcode": 0,
+      "semantic_bytes": 30010,
+      "total_bytes": 90272,
+      "pct_functions": 67.6,
+      "pct_bytes": 33.2
+    },
+    {
+      "generated": "2026-09-24T16:42:24Z",
+      "semantic": 429,
+      "readable_asm": 204,
+      "opcode": 0,
+      "semantic_bytes": 30178,
+      "total_bytes": 90272,
+      "pct_functions": 67.8,
+      "pct_bytes": 33.4
+    },
+    {
+      "generated": "2026-09-24T18:14:20Z",
+      "semantic": 430,
+      "readable_asm": 203,
+      "opcode": 0,
+      "semantic_bytes": 30254,
+      "total_bytes": 90272,
+      "pct_functions": 67.9,
+      "pct_bytes": 33.5
     }
   ]
 }

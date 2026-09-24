@@ -13,5 +13,5 @@ void sub_080302A8(struct Unk302A8 *a, struct Unk302A8Src *b, struct Unk302A8 *ds
     dst->unk08 = inner->unk08 + half + 0x400;
     dst->unk0C = inner->unk0C + half + 0x400;
     neg = (u32)(neg << 8) >> 16;
-    sub_08070354(dst, neg, neg, 0);
+    sub_08070354((struct Unk70354 *)dst, neg, neg, 0);
 }

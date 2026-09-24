@@ -2,7 +2,7 @@
 
 // @ 0x0806114c
 __attribute__((naked))
-void sub_0806114C(void)
+void sub_0806114C(struct Unk6114C *state, u32 tile, u32 palette, u32 first, u32 last)
 {
     asm(
         ".syntax unified\n"

@@ -1,6 +1,11 @@
 #include "global.h"
 #include "ram_map.h"
 #include "battle.h"
+
+// @ 0x0803c500
+#include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 #include "data_symbols.h"
 
 void sub_0803C500(s32 a)
@@ -23,7 +28,8 @@ void sub_0803C500(s32 a)
     sub_08061EF8(&(*btl_loc)->unk1F10, buf_a, 0, 0x3E, 0, 0xFFFF, 0);
     sub_08073114(buf_a);
     sub_08073114(buf_b);
-    DebugPrint((void *)0x0833C79C, remain);
+    DebugPrint((void *)gData_0833C79C, remain);
     btl = *btl_loc;
-    btl->unk1F74 = remain;
+    btl->unk1F74 = 0x64 - a;
 }
+

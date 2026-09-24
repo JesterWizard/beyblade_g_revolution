@@ -128,5 +128,6 @@ extern struct Unk42BE8 gData_080908BC[];
 extern u8 gData_083A2CF4[];
 extern u8 gData_083A2D28[];
 extern struct Unk447CC *gData_08096794[];
+extern u8 gData_0833C79C[];
 
 #endif // GUARD_DATA_SYMBOLS_H

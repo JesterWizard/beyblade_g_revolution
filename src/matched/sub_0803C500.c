@@ -1,8 +1,35 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803c500
-__attribute__((naked))
-void sub_0803C500(void)
+#include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+#include "data_symbols.h"
+
+void sub_0803C500(s32 a)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nmov r6, r10\nmov r5, r9\nmov r4, r8\npush {r4, r5, r6}\nadd sp, #-0x00C\nmov r10, r0\nmovs r0, #0x20\nbl sub_0807309C\nadds r6, r0, #0x0\nmovs r0, #0x20\nbl sub_0807309C\nadds r5, r0, #0x0\nldr r0, _0803C5B4 @ =0x03000290\nmov r8, r0\nldr r0, [r0, #0x00]\nldr r1, _0803C5B8 @ =0x00001F10\nmov r9, r1\nadd r0, r9\nldr r1, _0803C5BC @ =0x080B72F3\nldr r2, _0803C5C0 @ =0x082BF600\nmovs r3, #0x78\nstr r3, [sp, #0x000]\nmovs r3, #0xF0\nbl sub_08061E8C\nmovs r4, #0x64\nmov r2, r10\nsubs r4, r4, r2\nadds r0, r4, #0x0\nadds r1, r5, #0x0\nmovs r2, #0x20\nbl sub_080735DC\nldr r1, _0803C5C4 @ =0x080971EC\nldr r0, _0803C5C8 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r2, _0803C5CC @ =0x00001818\nadds r0, r0, r2\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x20\nstr r1, [sp, #0x000]\nadds r1, r6, #0x0\nadds r2, r5, #0x0\nmovs r3, #0x40\nbl sub_08073AEC\nmov r1, r8\nldr r0, [r1, #0x00]\nadd r0, r9\nmovs r2, #0x00\nstr r2, [sp, #0x000]\nldr r1, _0803C5D0 @ =0x0000FFFF\nstr r1, [sp, #0x004]\nstr r2, [sp, #0x008]\nadds r1, r6, #0x0\nmovs r3, #0x3E\nbl sub_08061EF8\nadds r0, r6, #0x0\nbl sub_08073114\nadds r0, r5, #0x0\nbl sub_08073114\nldr r0, _0803C5D4 @ =0x0833C79C\nadds r1, r4, #0x0\nbl sub_08067B98\nmov r2, r8\nldr r1, [r2, #0x00]\nmovs r0, #0x64\nmov r2, r10\nsubs r0, r0, r2\nldr r2, _0803C5D8 @ =0x00001F74\nadds r1, r1, r2\nstrh r0, [r1, #0x00]\nadd sp, #0x00C\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6}\npop {r0}\nbx r0\n_0803C5B4: .4byte 0x03000290\n_0803C5B8: .4byte 0x00001F10\n_0803C5BC: .4byte 0x080B72F3\n_0803C5C0: .4byte 0x082BF600\n_0803C5C4: .4byte 0x080971EC\n_0803C5C8: .4byte 0x03000198\n_0803C5CC: .4byte 0x00001818\n_0803C5D0: .4byte 0x0000FFFF\n_0803C5D4: .4byte 0x0833C79C\n_0803C5D8: .4byte 0x00001F74");
+    struct BattleWork **btl_loc;
+    struct BattleWork *btl;
+    s32 remain;
+    void *buf_a;
+    void *buf_b;
+    void **table;
+
+    buf_a = sub_0807309C(0x20);
+    buf_b = sub_0807309C(0x20);
+    btl_loc = gBattleWorkPtrLoc;
+    sub_08061E8C((struct Unk61E8C *)&(*btl_loc)->unk1F10, (void *)gData_080B72F3, (struct Unk61E8CSrc *)gData_082BF600, 0xF0, 0x78);
+    remain = 0x64 - a;
+    sub_080735DC(remain, buf_b, 0x20);
+    table = gData_080971EC;
+    sub_08073AEC(table[gMainWorkPtr->unk1818], buf_a, buf_b, 0x40, 0x20);
+    sub_08061EF8(&(*btl_loc)->unk1F10, buf_a, 0, 0x3E, 0, 0xFFFF, 0);
+    sub_08073114(buf_a);
+    sub_08073114(buf_b);
+    DebugPrint((void *)gData_0833C79C, remain);
+    btl = *btl_loc;
+    btl->unk1F74 = 0x64 - a;
 }
+

@@ -20,6 +20,6 @@ void sub_08030F00(struct Unk30F00 *a, struct Unk30F00Src *b)
     leaf = inner->unk30;
     if (leaf == 0)
         return;
-    sub_08070354(a, leaf->unk14, leaf->unk16, 0);
+    sub_08070354((struct Unk70354 *)a, leaf->unk14, leaf->unk16, 0);
 }
 

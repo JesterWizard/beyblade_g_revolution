@@ -40,6 +40,7 @@ SET_DATA gData_0808B2E4, 0x0808B2E4
 SET_DATA gData_080908BC, 0x080908BC
 SET_DATA gData_083A2CF4, 0x083A2CF4
 SET_DATA gData_083A2D28, 0x083A2D28
+SET_DATA gData_0833C79C, 0x0833C79C
 
 @ IWRAM (kept separate from the ram_map_pool.h numeric macros, which are for
 @ C that matches retail with literal addressing)

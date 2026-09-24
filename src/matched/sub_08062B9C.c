@@ -1,51 +1,33 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08062b9c
-__attribute__((naked))
-void sub_08062B9C(u32 a, u32 b)
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+void sub_08062B9C(u32 arg0, u32 arg1)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r2, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "movs r0, #0x0F\n"
-        "ands r2, r0\n"
-        "ands r4, r0\n"
-        "adds r0, r4, #0x0\n"
-        "cmp r2, r4\n"
-        "bls _08062BB2\n"
-        "adds r4, r2, #0x0\n"
-        "adds r2, r0, #0x0\n"
-        "_08062BB2:\n"
-        "adds r3, r2, #0x0\n"
-        "cmp r3, r4\n"
-        "bgt _08062BDE\n"
-        "ldr r6, _08062BE4 @ =0x030008D0\n"
-        "movs r0, #0x01\n"
-        "mov r12, r0\n"
-        "movs r5, #0x00\n"
-        "_08062BC0:\n"
-        "ldr r1, [r6, #0x00]\n"
-        "adds r2, r1, #0x0\n"
-        "adds r2, #0x40\n"
-        "mov r0, r12\n"
-        "lsls r0, r3\n"
-        "ldrh r7, [r2, #0x00]\n"
-        "bics r7, r0\n"
-        "adds r0, r7, #0x0\n"
-        "strh r0, [r2, #0x00]\n"
-        "lsls r0, r3, #0x02\n"
-        "adds r1, r1, r0\n"
-        "str r5, [r1, #0x00]\n"
-        "adds r3, #0x01\n"
-        "cmp r3, r4\n"
-        "ble _08062BC0\n"
-        "_08062BDE:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08062BE4: .4byte 0x030008D0\n"
-    );
+    s32 hi;
+    s32 lo;
+    s32 i;
+    s32 tmp;
+    struct Unk62A74 *slot;
+
+    lo = arg0 & 0xF;
+    hi = arg1 & 0xF;
+    tmp = hi;
+    if ((u32)lo > (u32)hi)
+    {
+        hi = lo;
+        lo = tmp;
+    }
+
+    for (i = lo; i <= hi; i++)
+    {
+        slot = gUnk_030008D0;
+        slot->unk40 &= ~(1 << i);
+        slot->unk00[i] = 0;
+    }
 }
 
