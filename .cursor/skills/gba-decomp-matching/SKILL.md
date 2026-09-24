@@ -61,6 +61,30 @@ Thumb args: `r0`, `r1`, `r2`, `r3`. Keep using the C parameter names so `assign_
 
 If retail `bl fn; lsls r0, r0, #2` with no caller zero-extend, change the callee from `u8` to `u32` and re-check that callee still MATCH.
 
+### 3b. Pointer parameter types (prototype = codegen)
+
+`void *` in the prototype is not interchangeable with `const u8 *` for matching. agbcc's
+`assign_parms` emits different prologue copies depending on the declared type, and adding
+`text = text_arg; base = base_arg;` locals on top makes it worse.
+
+| Prototype + body | Typical score (`TextMeasureWidth`) |
+|------------------|-------------------------------------|
+| `void *` + locals, `old_agbcc` | 89/96 — wrong save order from byte 2 |
+| `const u8 *` direct use, `old_agbcc` | **96/96 MATCH** |
+
+When retail opens `adds r4,r0; adds r7,r1; …` on pointer args, try **`const u8 *` /
+`u8 *` in both the definition and `include/unknown-functions.h`** before goto chains or
+`index = (r0 = pool)` side-effect tricks. `match_function.py` preprocesses through
+`global.h`, so a prototype mismatch silently rescores the same body.
+
+Workflow when the first mismatch is in the prologue (+0x2..+0x8):
+
+1. Refine `void *` → `const u8 *` (or `u32` when retail skips `lsls/lsrs`).
+2. Drop param-copy locals; use parameter names in the loop body.
+3. Score with **both** `agbcc` and `old_agbcc` (`test_variants.py` defaults to both).
+4. Update `unknown-functions.h` when the refined prototype is the fix — callers pass
+   pointers and remain ABI-compatible.
+
 ### 4. Struct members (required)
 
 ```c
@@ -74,6 +98,11 @@ Not: `*(u16 *)((u8 *)a + 0x302) = …`. Add fields to `include/unknown-types.h` 
 `if (a >= b) goto label` keeps `cmp; bge`. Nested if/else often inverts to `blt` and moves the pool. Put shared `return N` labels in retail fallthrough order. Win: `sub_08042390`.
 
 Loop that exits with `0` already in `r0`: `while ((r0 = p->unk00) != 0) { call(p->unk00, …); } return (s32)r0`. Plain `return 0` adds `movs r0,#0`.
+
+A readable **`switch` on the scanned byte** can match where a goto chain copied from
+disasm stalls at a same-size DIFF (`TextMeasureWidth`: goto seed 94/96 for months;
+`switch` + `const u8 *` + `old_agbcc` → 96/96). Do not keep rewriting goto mimicry —
+try switch (or `if` ladder) with the typed-param / dual-compiler checklist first.
 
 ### 6. Leaf `bx lr` + `-fprologue-bugfix`
 
@@ -92,7 +121,11 @@ Wins that stay MATCH without asm labels: null-check stores (`sub_0802D8C4`, `sub
 /* match-compiler: old_agbcc */
 ```
 
-`match_function.py` parses it (`MATCH_COMPILER_RE`), `import_function.py` writes a `compiler` sidecar (the permuter preprocesses `base.c`, so `compile.sh` cannot read the comment itself) and `permuter/compile.sh` swaps `CC`. Wins: `sub_08061308` (48/48 vs 46/48), `sub_08062A74` (76/76 vs 74/76). `build/dual_compiler_sweep.py` scores the whole `src/wip` backlog with both.
+`match_function.py` parses it (`MATCH_COMPILER_RE`), `import_function.py` writes a `compiler` sidecar (the permuter preprocesses `base.c`, so `compile.sh` cannot read the comment itself) and `permuter/compile.sh` swaps `CC`. Wins: `sub_08061308` (48/48 vs 46/48), `sub_08062A74` (76/76 vs 74/76), `sub_08073988` / `TextMeasureWidth` (96/96 vs 94/96 on goto+side-effect seeds). `build/dual_compiler_sweep.py` scores the whole `src/decompiled` backlog with both.
+
+For ROM-table lookups, prefer a **symbol subscript** (`base[gData_080BB748[ch]]`) over
+manual `ch + 0x080BB748` / `index = (r0 = pool)` chains — with `old_agbcc` and typed
+pointer params the compiler emits retail's `ldr r0,=pool; adds r0,ch` without asm-shaped C.
 
 ### 7. Schedule a pool load between two ops on one local
 

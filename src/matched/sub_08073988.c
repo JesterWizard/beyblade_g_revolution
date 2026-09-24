@@ -1,66 +1,43 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08073988
-__attribute__((naked))
-s32 TextMeasureWidth(void *a, const void *b, u32 c, u32 d)
-{
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "adds r7, r1, #0x0\n"
-        "adds r6, r2, #0x0\n"
-        "adds r5, r3, #0x0\n"
-        "movs r2, #0x00\n"
-        "movs r3, #0x00\n"
-        "cmp r4, #0x00\n"
-        "bne _0807399E\n"
-        "movs r0, #0x00\n"
-        "b _080739DE\n"
-        "_0807399E:\n"
-        "adds r0, r4, r2\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "adds r2, #0x01\n"
-        "cmp r1, #0x00\n"
-        "beq _080739DC\n"
-        "cmp r1, #0x08\n"
-        "beq _080739C6\n"
-        "cmp r1, #0x08\n"
-        "bhi _080739B6\n"
-        "cmp r1, #0x07\n"
-        "beq _080739C2\n"
-        "b _080739CA\n"
-        "_080739B6:\n"
-        "cmp r1, #0x0A\n"
-        "beq _080739D8\n"
-        "cmp r1, #0x20\n"
-        "bne _080739CA\n"
-        "adds r3, r3, r5\n"
-        "b _080739D8\n"
-        "_080739C2:\n"
-        "adds r2, #0x02\n"
-        "b _080739D8\n"
-        "_080739C6:\n"
-        "adds r2, #0x01\n"
-        "b _080739D8\n"
-        "_080739CA:\n"
-        "ldr r0, _080739E4 @ =0x080BB748\n"
-        "adds r0, r1, r0\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "adds r0, r0, r7\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "subs r0, r6, r0\n"
-        "adds r3, r3, r0\n"
-        "_080739D8:\n"
-        "cmp r1, #0x00\n"
-        "bne _0807399E\n"
-        "_080739DC:\n"
-        "adds r0, r3, #0x0\n"
-        "_080739DE:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_080739E4: .4byte 0x080BB748\n"
-    );
-}
+/* match-compiler: old_agbcc */
 
+s32 TextMeasureWidth(const u8 *text_arg, const u8 *base_arg, u32 delta_arg, u32 space_arg)
+{
+    u32 index;
+    u32 total;
+    u32 ch;
+
+    index = 0;
+    total = 0;
+    if (!text_arg)
+        return 0;
+    while (1) {
+        ch = text_arg[index];
+        index++;
+        if (!ch)
+            return total;
+        switch (ch) {
+        case 32:
+            total += space_arg;
+            break;
+        case 7:
+            index += 2;
+            break;
+        case 8:
+            index += 1;
+            break;
+        case 10:
+            break;
+        default:
+            total += delta_arg - base_arg[gData_080BB748[ch]];
+            break;
+        }
+        if (!ch)
+            return total;
+    }
+    return total;
+}

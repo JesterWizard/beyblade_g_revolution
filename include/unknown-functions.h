@@ -35,7 +35,7 @@ void sub_08033878(void);
 void sub_08033F48(struct Unk33F30 *a);
 void sub_080314FC(void);
 void sub_0803114C(void *a, u32 b, u32 c, u32 d);
-s32 sub_08073988(void *a, const void *b, u32 c, u32 d);
+s32 sub_08073988(const u8 *a, const u8 *b, u32 c, u32 d);
 void sub_08033978(struct Unk33A5C *a, struct Unk346C0 *b, struct Unk346C0 *c, u8 d);
 void sub_08037318(struct Unk346C0 *a, u32 b);
 void sub_08069894(void);

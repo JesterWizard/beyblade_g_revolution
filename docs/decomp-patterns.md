@@ -118,7 +118,15 @@ A loop that both `i++` and `count--` then `cmp count, i` is not `while (count > 
 
 Keep a struct pointer across a store cluster: `gUnk->a = …; gUnk->b = …` reloads from the IWRAM loc after the first add clobbers the pointer. `w = gUnk; w->a = …; w->b = …` matches retail. Win: `sub_0802D6D4` tail.
 
-Add operand order is a real Thumb encoding: `r0 = ch + table` emits `adds r0, r1, r0`; `r0 = table + ch` emits `adds r0, r0, r1`. Win: `sub_08073988`.
+Add operand order is a real Thumb encoding: `r0 = ch + table` emits `adds r0, r1, r0`;
+`r0 = table + ch` emits `adds r0, r0, r1`. For table walks, **`base[gData_080BB748[ch]]`**
+with `old_agbcc` and `const u8 *` params can match without that side-effect chain — win:
+`TextMeasureWidth` (`sub_08073988`).
+
+**Pointer prototype precision:** `void *` + param-copy locals often breaks the prologue even
+when the loop logic is correct (`TextMeasureWidth`: 89/96). Refine to `const u8 *` in both
+the `.c` and `unknown-functions.h`, use params directly, then rescore with both compilers
+before register/goto tricks.
 
 `if (a >= b) goto label` emits `cmp; bge` as fallthrough-false. Nested `if/else` often inverts to `blt` and moves the literal pool. Place shared `return N` labels in retail order. Win: `sub_08042390`.
 
@@ -159,8 +167,9 @@ True `bx lr` leaves with a branch: default agbcc emits extra `push {lr}` / `pop 
 |----------|-------------------|
 | `sub_08061308` | un-coalesced `ldrb r0,[r0]; lsls r1,r0` (48/48, `agbcc` 46/48 in 4,000 variants) |
 | `sub_08062A74` | `lsls r1,r4,#5` with the handler pool held in `r2` (76/76, `agbcc` 74/76) |
+| `sub_08073988` (`TextMeasureWidth`) | pool constant in `r0` not `r2`; needs `const u8 *` params + `switch` (96/96; goto seed 94/96) |
 
-Before parking a seed whose DIFF is a register *destination* on a load, score it with both compilers (`build/dual_compiler_sweep.py` does the whole `src/decompiled` backlog).
+Before parking a seed whose DIFF is a register *destination* on a load, score it with both compilers (`build/dual_compiler_sweep.py` does the whole `src/decompiled` backlog). Also try refining `void *` → typed pointer in the prototype — the body can be unchanged but the prologue moves.
 
 Clamp helpers take `u32` args so the callee has no `lsls/lsrs` (`sub_080615EC`). Head/tail IWRAM 0x10 apart and BG I/O switch trees still need honest C (parked: `sub_0806FEFC`, `sub_08061E40`, `sub_08069908`).
 
@@ -207,6 +216,7 @@ python3 tools/decomp/function_scores.py --close
 | Pool in middle of fn | `sub_08042B78` | Permuter or readable Thumb |
 | Branchy leaf | `sub_080615EC` | Readable Thumb until types clear |
 | Load coalesced into its consumer | `sub_08061308` family | Compile that file with `old_agbcc` (see below) |
+| Prologue wrong, logic right | `sub_08073988` | `const u8 *` prototype (not `void *`); drop param-copy locals; `old_agbcc` |
 | BIOS `swi` with pass-through registers | `sub_080674B4` | Parameterised `swi` operands (see below) |
 
 ### `/* match-compiler: old_agbcc */` (load/coalesce family)
@@ -251,6 +261,24 @@ void sub_080674B4(const void *src, void *dest)
 `src`/`dest` are already live in `r0`/`r1`, so only `movs r2, #0` is emitted. The
 prototype in `include/unknown-functions.h` uses an empty parameter list (`void f();`)
 because the repo's C callers invoke it with no arguments.
+
+---
+
+## Case study: `TextMeasureWidth` (`sub_08073988`)
+
+Long-standing 94/96 WIP. What finally closed it:
+
+1. **Readable `switch`** on control bytes — not a goto chain copied from objdump.
+2. **`const u8 *text_arg, const u8 *base_arg`** — `void *` + locals scored 89/96; typed params let agbcc keep retail's `adds r4,r0; adds r7,r1` order.
+3. **`/* match-compiler: old_agbcc */`** — newer agbcc puts `gData_080BB748` in `r2`; retail uses `r0`.
+4. **Symbol subscript** `base_arg[gData_080BB748[ch]]` — no `index = (r0 = pool)` side-effect chain.
+5. **Prototype sync** — `unknown-functions.h` updated to match; `match_function.py` scores through `global.h`.
+
+Anti-patterns that wasted permuter cycles: register-named locals, goto labels from retail,
+`r0 = ch + table` operand-order sweeps without fixing the prototype first.
+
+Checklist for similar string/table walkers: typed pointer params → switch → both compilers →
+then permuter.
 
 ---
 

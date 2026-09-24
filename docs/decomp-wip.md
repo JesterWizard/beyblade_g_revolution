@@ -41,6 +41,25 @@ MATCHING     byte-identical to retail
 Because the flags are independent, a hard-to-match function never blocks naming,
 and an unnamed function never blocks matching. `make tier` reports the spread.
 
+## Prologue / pointer-param playbook (before parking)
+
+When logic is right but bytes differ in the first 8–16 bytes (save order, wrong pool
+register), try this **before** goto mimicry or register-named locals:
+
+1. **Refine the prototype** — `const u8 *` / `u8 *` instead of `void *`; update
+   `include/unknown-functions.h` so `match_function.py` (via `global.h`) scores the same
+   binary you hand-tested standalone.
+2. **Use parameters directly** — no `text = text_arg` copies unless retail spills to
+   callee-saved regs before the first use.
+3. **Readable control flow** — `switch` on scanned bytes often beats a goto chain from
+   objdump (`TextMeasureWidth`: 94/96 goto → 96/96 switch).
+4. **Dual-compiler score** — `python3 tools/decomp/try_compilers.sh sub_XXXXXXXX` or
+   `test_variants.py` (defaults to both `agbcc` and `old_agbcc`).
+5. **Symbol subscript for ROM tables** — `base[gData_080BB748[i]]` before
+   `index = (r0 = pool)` side-effect tricks.
+
+Details: [decomp-patterns.md](decomp-patterns.md) case study `TextMeasureWidth`.
+
 ## When to park (stop guessing)
 
 After 1–2 serious hand attempts, or a short permuter run that does not hit score 0:

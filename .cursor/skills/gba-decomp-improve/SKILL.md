@@ -27,7 +27,9 @@ Copy checklist:
 
 - [ ] `integrate_c.py --kind semantic` + `make compare` OK
 - [ ] Field types in `unknown-types.h` if new offsets used
-- [ ] Prototype in `unknown-functions.h` if others call it
+- [ ] Prototype in `unknown-functions.h` if others call it — use the **winning** types
+      (`const u8 *` not `void *` when that fixed the prologue; see `TextMeasureWidth`)
+- [ ] `/* match-compiler: old_agbcc */` in the file if only `old_agbcc` reached MATCH
 - [ ] **Reusable body?** → add to `BATTLE_SEEDS` in [tools/decomp/battle_semantic_batch.py](tools/decomp/battle_semantic_batch.py)
 - [ ] **Repeating asm shape?** → add pattern to [tools/decomp/c_patterns.py](tools/decomp/c_patterns.py) + note in [docs/decomp-patterns.md](docs/decomp-patterns.md)
 - [ ] Log in [docs/decomp-status.md](docs/decomp-status.md) batch section
@@ -49,6 +51,12 @@ Copy checklist:
 Verify with `battle_semantic_batch.sh 1 --seeds-only` before relying on it.
 
 ## On near-miss (DIFF, especially same-size)
+
+Before parking, if the first mismatch is in the **prologue** (+0x2..+0x8):
+
+- [ ] Try `void *` → `const u8 *` / `u8 *` in prototype **and** drop param-copy locals
+- [ ] Score with **both** compilers (`test_variants.py` or `try_compilers.sh`)
+- [ ] Try readable `switch` instead of goto chain (win: `TextMeasureWidth`)
 
 - [ ] **Park the C** — `python3 tools/decomp/park_wip.py sub_XXXXXXXX src/decompiled/sub_XXXXXXXX.c --status "…" --next "…" --score "N/M"` (see [docs/decomp-wip.md](docs/decomp-wip.md))
 - [ ] Write `src/decompiled/sub_XXXXXXXX.md`: role, process (what was tried), current state, **one** next step

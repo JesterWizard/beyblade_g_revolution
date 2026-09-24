@@ -2234,7 +2234,7 @@ struct Unk67F3C /* >= 0x99 */
     /* 98 */ u8 unk98;
 };
 
-struct Unk705DC /* >= 0x1a */
+struct Unk705DC /* >= 0x30 */
 {
     /* 00 */ u8 filler_00[4];
     /* 04 */ struct Unk705DC *unk04;
@@ -2244,10 +2244,36 @@ struct Unk705DC /* >= 0x1a */
     /* 14 */ u16 unk14;
     /* 16 */ u16 unk16;
     /* 18 */ u16 unk18;
-    /* 1a */ u8 filler_1A[8];
+    /* 1a */ u16 unk1A;
+    /* 1c */ u16 unk1C;
+    /* 1e */ u16 unk1E;
+    /* 20 */ u16 unk20;
     /* 22 */ u16 unk22; /* sub_08035624, sub_08070468 */
-    /* 24 */ u8 filler_24[0xC];
+    /* 24 */ s32 unk24;
+    /* 28 */ void *unk28;
+    /* 2c */ void *unk2C;
     /* 30 */ struct Unk705DC *unk30;
+};
+
+/* Pending battle-object batch released by sub_080700CC. */
+struct Unk700CCHdr /* >= 0x0c */
+{
+    /* 00 */ struct Unk6FDB4 *unk00;
+    /* 04 */ struct Unk6FDB4 *unk04;
+    /* 08 */ u32 unk08;
+};
+
+/* Extended battle object node touched by sub_080700CC. */
+struct Unk700CCNode /* >= 0x34 */
+{
+    /* 00 */ struct Unk700CCNode *unk00;
+    /* 04 */ struct Unk700CCNode *unk04;
+    /* 08 */ u8 filler_08[0x0E];
+    /* 16 */ u16 unk16;
+    /* 18 */ u8 filler_18[0x0C];
+    /* 24 */ s32 unk24;
+    /* 28 */ u8 filler_28[8];
+    /* 30 */ void *unk30;
 };
 
 /* 0x84-stride records. sub_0806F1A0. */
