@@ -8,6 +8,7 @@ void sub_08040F4C(void)
     struct Unk4109CInput *setupArg;
     u32 *clearSym;
     s32 done;
+    s32 pad;
     u32 r0;
     u32 r1;
     u32 r2;
@@ -54,13 +55,14 @@ blend1:
     r3 = *(u16 *)r1;
     r0 = *(u16 *)r0;
     r0 = r3 - r0;
-    r3 = 0;
+    pad = 0;
+    r3 = pad;
     *(u16 *)r1 = (u16)r0;
     r0 <<= 16;
     if ((s32)r0 >= 0)
         goto blend_hw;
     *(u16 *)r1 = (u16)r3;
-    *(u8 *)r2 = (u8)r3;
+    *(u8 *)r2 = (u8)pad;
     goto blend_hw;
 blend2:
     r1 = (u32)&state.unk31C;
@@ -132,7 +134,7 @@ after_mode:
         goto check_done;
     _08073C44(&state, (void *)r1);
 check_done:
-    if (done != 0)
+    if (done != pad)
         goto exit_loop;
     goto loop;
 exit_loop:

@@ -149,15 +149,6 @@ next = "leave readable Thumb; revisit with targeted post-call register schedulin
 score = "62/154"
 
 [[wip]]
-name = "sub_0803DCFC"
-seed = "src/decompiled/sub_0803DCFC.c"
-notes = "src/decompiled/sub_0803DCFC.md"
-status = "44/48 same-size seed; permuter saturated at 30/48 after 8x120s and 3x300s jobs"
-next = "Do not re-run the permuter. Revisit only with a hand-restructured error-path layout that keeps `index` and a separate `offset`"
-score = "44/48"
-retry = "false"
-
-[[wip]]
 name = "sub_08040EF4"
 seed = "src/decompiled/sub_08040EF4.c"
 notes = "src/decompiled/sub_08040EF4.md"
@@ -262,8 +253,8 @@ score = "20/114"
 name = "sub_08035984"
 seed = "src/decompiled/sub_08035984.c"
 notes = "src/decompiled/sub_08035984.md"
-status = "direct seed 232/348 (344B) retained. Loading both velocities before squaring either dropped score or added an extra adds r6,r0 copy"
-next = "keep 232/348 seed; force ldr r5,[r4,#0x1C] immediately after ldr r0,[r4,#0x18] without a second pointer copy"
+status = "232/348 size_mismatch 344B; dual vx/vy load steals r4"
+next = "keep 232/348 seed; dual-load with a in r4"
 score = "232/348"
 [[wip]]
 name = "sub_08038D68"
@@ -552,14 +543,6 @@ next = "Pin selector to r0 and copy selector = value immediately after the >>30;
 score = "15/138 then 20/138"
 
 [[wip]]
-name = "sub_08069DBC"
-seed = "src/decompiled/sub_08069DBC.c"
-notes = "src/decompiled/sub_08069DBC.md"
-status = "69/96 same_size after asrs fix; source ptr in r2 vs r5"
-next = "permuter got to score 100; register destination for source base"
-score = "69/96"
-
-[[wip]]
 name = "sub_0806BC0C"
 seed = "src/decompiled/sub_0806BC0C.c"
 notes = "src/decompiled/sub_0806BC0C.md"
@@ -786,16 +769,16 @@ score = "84/216"
 name = "sub_08040F4C"
 seed = "src/decompiled/sub_08040F4C.c"
 notes = "src/decompiled/sub_08040F4C.md"
-status = "319/336 agbcc; prologue fork: 225/336 gets r5 but wrong 6639C order"
-next = "PERM prologue swap on done_then_early6639 seed or leave Thumb"
-score = "319/336"
+status = "322/336 same_size; blend1 missing movs r3,#0"
+next = "keep pad live without cmp r5,r4; emit independent movs r3,#0"
+score = "322/336"
 
 [[wip]]
 name = "sub_08043B90"
 seed = "src/decompiled/sub_08043B90.c"
 notes = "src/decompiled/sub_08043B90.md"
-status = "60s permuter, no score 0 (67/76)"
-next = "Do not re-attempt by hand or by permuter until a new seed exists."
+status = "67/76 extra movs r0,#0 on return 0"
+next = "do not randomize permuter; need fall-through r0=0"
 score = "67/76"
 retry = "false"
 
@@ -844,8 +827,8 @@ score = "35/100"
 name = "sub_08073114"
 seed = "src/decompiled/sub_08073114.c"
 notes = "src/decompiled/sub_08073114.md"
-status = "104/112 same_size; a/table/count register layout"
-next = "PERM macros on table_loc/count_addr loads; keep score-45 body"
+status = "104/112 same_size; a in r1 table in r0 vs r3/r1"
+next = "table ldr r1,[r0] at 112B with a in r3"
 score = "104/112"
 
 [[wip]]
@@ -902,8 +885,8 @@ score = "16/136"
 name = "sub_0807000C"
 seed = "src/decompiled/sub_0807000C.c"
 notes = "src/decompiled/sub_0807000C.md"
-status = "163/192 same_size; early A4 load uses ldr r1 vs r0; insert==0 path CSE AC-8"
-next = "need active_loc in r3 like BtlObjPoolAlloc without extra saved regs; permuter best score 345"
+status = "163/192 same_size; ldr r1 vs r0 for 0x030040A4"
+next = "first-call addr in r0 without shrinking 4B"
 score = "163/192"
 
 [[wip]]
@@ -921,14 +904,6 @@ notes = "src/decompiled/sub_0807027C.md"
 status = "size_mismatch 208 vs 216; retail keeps c in r8"
 next = "need more reg pressure or permuter; try forcing c live across calls"
 score = "11/216"
-
-[[wip]]
-name = "sub_0804EBF0"
-seed = "src/decompiled/sub_0804EBF0.c"
-notes = "src/decompiled/sub_0804EBF0.md"
-status = "same-size 198/202; only DIFF is ldr/adds dest r0 vs r1 after sub_080615EC"
-next = "keep fieldOff in r0 across *baseLoc load so idx lands in r1; permuter stuck at score 30"
-score = "198/202"
 
 [[wip]]
 name = "sub_080688C8"

@@ -1,108 +1,59 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0804ebf0
-__attribute__((naked))
+/* match-compiler: old_agbcc */
 void sub_0804EBF0(void *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "bl sub_08061784\n"
-        "ldr r0, _0804EC5C @ =0x030006A8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0804ECB0\n"
-        "movs r4, #0x00\n"
-        "ldr r7, _0804EC60 @ =0x0300069C\n"
-        "ldr r6, _0804EC64 @ =0x030006A0\n"
-        "movs r5, #0x80\n"
-        "lsls r5, r5, #0x0C\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "mov r8, r0\n"
-        "_0804EC12:\n"
-        "ldr r0, [r7, #0x00]\n"
-        "adds r0, r0, r4\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r1, r0, r1\n"
-        "movs r0, #0x0C\n"
-        "ldsb r0, [r1, r0]\n"
-        "cmp r0, r8\n"
-        "bgt _0804EC2A\n"
-        "ldrb r1, [r1, #0x0D]\n"
-        "cmp r1, #0x07\n"
-        "bne _0804ECA4\n"
-        "_0804EC2A:\n"
-        "lsls r1, r4, #0x03\n"
-        "adds r1, #0x20\n"
-        "movs r0, #0x00\n"
-        "bl sub_080615EC\n"
-        "ldr r1, [r7, #0x00]\n"
-        "adds r1, r1, r4\n"
-        "ldr r0, [r6, #0x00]\n"
-        "lsls r1, r1, #0x04\n"
-        "adds r1, r1, r0\n"
-        "movs r0, #0x0D\n"
-        "ldsb r0, [r1, r0]\n"
-        "ldrb r1, [r1, #0x0C]\n"
-        "lsls r1, r1, #0x18\n"
-        "asrs r1, r1, #0x18\n"
-        "bl _080563A8\n"
-        "cmp r0, #0x00\n"
-        "beq _0804EC68\n"
-        "movs r1, #0xCC\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "b _0804EC7C\n"
-        ".byte 0x00, 0x00\n"
-        "_0804EC5C: .4byte 0x030006A8\n"
-        "_0804EC60: .4byte 0x0300069C\n"
-        "_0804EC64: .4byte 0x030006A0\n"
-        "_0804EC68:\n"
-        "ldr r0, [r7, #0x00]\n"
-        "adds r0, r0, r4\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x04]\n"
-        "movs r1, #0x4A\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "_0804EC7C:\n"
-        "ldr r0, _0804EC94 @ =0x030006A4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r4, r0\n"
-        "bne _0804EC98\n"
-        "lsrs r0, r5, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "b _0804ECA4\n"
-        ".byte 0x00, 0x00\n"
-        "_0804EC94: .4byte 0x030006A4\n"
-        "_0804EC98:\n"
-        "lsrs r0, r5, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0B\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "_0804ECA4:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x09\n"
-        "adds r5, r5, r0\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x05\n"
-        "ble _0804EC12\n"
-        "_0804ECB0:\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 index;
+    u32 cursorX;
+    struct Unk4EBF0Entry *entry;
+    s32 text;
+    s32 *baseLoc;
+    struct Unk4EBF0Entry **tableLoc;
+    s32 negOne;
+    s32 idx;
+    struct Unk4EBF0Entry *table;
+
+    sub_08061784();
+    if (gUnk_030006A8 == 0)
+        return;
+
+    index = 0;
+    baseLoc = (s32 *)0x0300069C;
+    tableLoc = (struct Unk4EBF0Entry **)0x030006A0;
+    cursorX = 0x80000;
+    negOne = -1;
+    do
+    {
+        idx = *baseLoc + index;
+        table = *tableLoc;
+        entry = (struct Unk4EBF0Entry *)((idx << 4) + (u32)table);
+        if (entry->unk0C > negOne || entry->unk0D == 7)
+        {
+            sub_080615EC(0, (index << 3) + 0x20);
+            entry = (struct Unk4EBF0Entry *)*baseLoc;
+            entry = (struct Unk4EBF0Entry *)((u32)entry + index);
+            text = (s32)*tableLoc;
+            entry = (struct Unk4EBF0Entry *)((u32)entry << 4);
+            entry = (struct Unk4EBF0Entry *)((u32)entry + text);
+            text = _080563A8(((s8 *)entry)[0xD], entry->unk0C);
+            if (text != 0)
+                sub_0806171C((void *)text, 0xCC, 1);
+            else
+            {
+                idx = *baseLoc + index;
+                table = *tableLoc;
+                sub_0806171C(((struct Unk4EBF0Entry *)((idx << 4) + (u32)table))->unk04, 0x4A, 2);
+            }
+            if (index == gUnk_030006A4)
+                sub_08061D68(cursorX >> 16, 0xE, 0xB, 0x1A);
+            else
+                sub_08061D68(cursorX >> 16, 0xF, 0xB, 0x1A);
+        }
+        cursorX += 0x10000;
+        index++;
+    } while (index <= 5);
 }
 

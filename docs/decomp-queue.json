@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-25T11:47:14Z",
+  "generated": "2026-09-25T17:25:16Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 178,
-    "semantic_done": 455,
-    "readable_asm": 178,
+    "pending": 177,
+    "semantic_done": 456,
+    "readable_asm": 177,
     "opcode": 0,
     "battle_pending": 70,
     "battle_semantic": 87,
     "blocked": 20,
-    "wip": 107
+    "wip": 105
   },
   "pinned": [],
   "wip": [
@@ -92,17 +92,6 @@
       "status": "same-size DIFF 62/154 (40.3%); shared mask/inverse and r10/r5 hints did not improve post-call register scheduling",
       "next": "leave readable Thumb; revisit with targeted post-call register scheduling or permuter",
       "score": "62/154"
-    },
-    {
-      "name": "sub_0803DCFC",
-      "addr": "0x0803DCFC",
-      "kind": "missing",
-      "bytes": 0,
-      "seed": "src/decompiled/sub_0803DCFC.c",
-      "notes": "src/decompiled/sub_0803DCFC.md",
-      "status": "44/48 same-size seed; permuter saturated at 30/48 after 8x120s and 3x300s jobs",
-      "next": "Do not re-run the permuter. Revisit only with a hand-restructured error-path layout that keeps `index` and a separate `offset`",
-      "score": "44/48"
     },
     {
       "name": "sub_08040EF4",
@@ -243,8 +232,8 @@
       "bytes": 348,
       "seed": "src/decompiled/sub_08035984.c",
       "notes": "src/decompiled/sub_08035984.md",
-      "status": "direct seed 232/348 (344B) retained. Loading both velocities before squaring either dropped score or added an extra adds r6,r0 copy",
-      "next": "keep 232/348 seed; force ldr r5,[r4,#0x1C] immediately after ldr r0,[r4,#0x18] without a second pointer copy",
+      "status": "232/348 size_mismatch 344B; dual vx/vy load steals r4",
+      "next": "keep 232/348 seed; dual-load with a in r4",
       "score": "232/348"
     },
     {
@@ -644,17 +633,6 @@
       "score": "15/138 then 20/138"
     },
     {
-      "name": "sub_08069DBC",
-      "addr": "0x08069DBC",
-      "kind": "missing",
-      "bytes": 0,
-      "seed": "src/decompiled/sub_08069DBC.c",
-      "notes": "src/decompiled/sub_08069DBC.md",
-      "status": "69/96 same_size after asrs fix; source ptr in r2 vs r5",
-      "next": "permuter got to score 100; register destination for source base",
-      "score": "69/96"
-    },
-    {
       "name": "sub_0806BC0C",
       "addr": "0x0806BC0C",
       "kind": "asm",
@@ -969,9 +947,9 @@
       "bytes": 336,
       "seed": "src/decompiled/sub_08040F4C.c",
       "notes": "src/decompiled/sub_08040F4C.md",
-      "status": "319/336 agbcc; prologue fork: 225/336 gets r5 but wrong 6639C order",
-      "next": "PERM prologue swap on done_then_early6639 seed or leave Thumb",
-      "score": "319/336"
+      "status": "322/336 same_size; blend1 missing movs r3,#0",
+      "next": "keep pad live without cmp r5,r4; emit independent movs r3,#0",
+      "score": "322/336"
     },
     {
       "name": "sub_08043B90",
@@ -980,8 +958,8 @@
       "bytes": 76,
       "seed": "src/decompiled/sub_08043B90.c",
       "notes": "src/decompiled/sub_08043B90.md",
-      "status": "60s permuter, no score 0 (67/76)",
-      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
+      "status": "67/76 extra movs r0,#0 on return 0",
+      "next": "do not randomize permuter; need fall-through r0=0",
       "score": "67/76"
     },
     {
@@ -1046,8 +1024,8 @@
       "bytes": 112,
       "seed": "src/decompiled/sub_08073114.c",
       "notes": "src/decompiled/sub_08073114.md",
-      "status": "104/112 same_size; a/table/count register layout",
-      "next": "PERM macros on table_loc/count_addr loads; keep score-45 body",
+      "status": "104/112 same_size; a in r1 table in r0 vs r3/r1",
+      "next": "table ldr r1,[r0] at 112B with a in r3",
       "score": "104/112"
     },
     {
@@ -1123,8 +1101,8 @@
       "bytes": 192,
       "seed": "src/decompiled/sub_0807000C.c",
       "notes": "src/decompiled/sub_0807000C.md",
-      "status": "163/192 same_size; early A4 load uses ldr r1 vs r0; insert==0 path CSE AC-8",
-      "next": "need active_loc in r3 like BtlObjPoolAlloc without extra saved regs; permuter best score 345",
+      "status": "163/192 same_size; ldr r1 vs r0 for 0x030040A4",
+      "next": "first-call addr in r0 without shrinking 4B",
       "score": "163/192"
     },
     {
@@ -1148,17 +1126,6 @@
       "status": "size_mismatch 208 vs 216; retail keeps c in r8",
       "next": "need more reg pressure or permuter; try forcing c live across calls",
       "score": "11/216"
-    },
-    {
-      "name": "sub_0804EBF0",
-      "addr": "0x0804EBF0",
-      "kind": "asm",
-      "bytes": 202,
-      "seed": "src/decompiled/sub_0804EBF0.c",
-      "notes": "src/decompiled/sub_0804EBF0.md",
-      "status": "same-size 198/202; only DIFF is ldr/adds dest r0 vs r1 after sub_080615EC",
-      "next": "keep fieldOff in r0 across *baseLoc load so idx lands in r1; permuter stuck at score 30",
-      "score": "198/202"
     },
     {
       "name": "sub_080688C8",
@@ -1192,6 +1159,17 @@
       "status": "same-size 158/240; body matches after VRAM bank idiom; stuck on add sp #-0x14 vs retail #-0x18 (widthU stack home)",
       "next": "force widthU stack slot without extra early store; or permuter with perm macros",
       "score": "158/240"
+    },
+    {
+      "name": "sub_08039BD4",
+      "addr": "0x08039BD4",
+      "kind": "asm",
+      "bytes": 1552,
+      "seed": "src/decompiled/sub_08039BD4.c",
+      "notes": "src/decompiled/sub_08039BD4.md",
+      "status": "inlined draft 282/1552 (peaked 344/1552); 180s permuter best 22665, still 364 bytes short",
+      "next": "Compiled body is 1188 vs 1552. Stack is sub sp,#0x24 vs retail #0x20. Recover the missing kind==1/2/3 text before another permuter run.",
+      "score": "282/1552"
     }
   ],
   "recommended": [
@@ -1479,20 +1457,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08039BD4",
-      "addr": "0x08039BD4",
-      "kind": "asm",
-      "bytes": 1552,
-      "score": 842,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08041C8C",
       "addr": "0x08041C8C",
       "kind": "asm",
@@ -1717,6 +1681,18 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08072A38",
+      "addr": "0x08072A38",
+      "kind": "asm",
+      "bytes": 250,
+      "score": 127,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     }
@@ -2139,20 +2115,6 @@
       "kind": "asm",
       "bytes": 1504,
       "score": 778,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08039BD4",
-      "addr": "0x08039BD4",
-      "kind": "asm",
-      "bytes": 1552,
-      "score": 842,
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
