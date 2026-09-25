@@ -10,13 +10,13 @@ void sub_08044A8C(void) {
 
     (gMainWorkPtr)->unk185B = 0;
     (gMainWorkPtr)->unk185C = 1;
-    temp_r5 = sub_0806A3A4(0x18);
-    temp_r0 = sub_0806A3A4(0x1F60);
+    temp_r5 = HeapAlloc(0x18);
+    temp_r0 = HeapAlloc(0x1F60);
     temp_r1 = gMainWorkPtr;
     temp_r1->unk1688 = (s32) *temp_r5;
     temp_r1->unk168C = (s32) *temp_r0;
     sub_080674BC(0x40);
-    sub_080674B4();
+    VBlankIntrWait();
     sub_08071B4C();
     *(s16 *)0x04000208 = 0;
 }

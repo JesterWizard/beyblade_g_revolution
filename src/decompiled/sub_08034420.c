@@ -1,6 +1,6 @@
 #include "global.h"
 
-void sub_08034420(
+void Unk346C0Init(
     struct Unk346C0 *out_arg, struct Unk346C0Inner *state_a_arg,
     struct Unk346C0Inner *state_b, u32 mode)
 {

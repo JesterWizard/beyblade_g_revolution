@@ -2,7 +2,7 @@
 
 // @ 0x08031300
 __attribute__((naked))
-void sub_08031300(struct Unk312EC *a)
+void TextRowPulsePalette(struct Unk312EC *a)
 {
     asm(
         ".syntax unified\n"

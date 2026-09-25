@@ -26,7 +26,7 @@ void sub_08033188(void) {
     sp0 = 0x50;
     sp4 = 0xF0;
     sp8 = 2;
-    sub_08070604(&spC, 0x082BF600, 0x080B72F3, -0xF0);
+    Unk70604Init(&spC, 0x082BF600, 0x080B72F3, -0xF0);
     sub_08070AD4(&spC, *(0x080780EC + ((gMainWorkPtr)->unk1818 * 4)), 0);
     sub_0807179C(&spC);
     sub_080312EC((s32)gBattleWork + 0xB84);

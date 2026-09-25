@@ -57,7 +57,7 @@ void sub_08056D68(struct Unk56D68 *event)
     case 0xE319:
         event = (struct Unk56D68 *)((u8 *)event + 8);
         gMainWorkPtr->unk16C8 = event;
-        sub_08059DC8(0, sub_08043BDC());
+        sub_08059DC8(0, BtlFindUnk16E4());
         break;
     }
 }

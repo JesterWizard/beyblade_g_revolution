@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0803715c
-s32 sub_0803715C(u8 a, u8 b)
+s32 BtlApplyClampedScore(u8 a, u8 b)
 {
     struct Unk002A0Record *rec;
     struct Unk3715C *slot;

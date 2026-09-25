@@ -2,7 +2,7 @@
 
 // @ 0x080739e8
 __attribute__((naked))
-s32 sub_080739E8(u8 *s)
+s32 TextHasNewline(u8 *s)
 {
     asm(
         ".syntax unified\n"

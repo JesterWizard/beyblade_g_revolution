@@ -9,7 +9,7 @@
 // `return (s32)node->unk00` reloads; `while ((key=...)!=0) return (s32)key`
 // bloats to 80B. Do not use gMainWorkPtr symbols here (14/76). Permuter
 // randomization regresses this seed (best score 200).
-s32 sub_08043B90(void)
+s32 BtlFindUnk16E0(void)
 {
     struct Unk16E0 *node = gMainWorkPtr->unk16E0;
 

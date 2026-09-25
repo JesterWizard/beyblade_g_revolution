@@ -46,7 +46,7 @@ void sub_08066224(struct Unk66224 *a, s32 index)
     obj->unk14 = 0xFFFF - (index * (*unk0Cp));
     obj->unk04 = index;
     state = &obj->unk40;
-    lookup = sub_08072F94();
+    lookup = GetBtlLookupByte();
     lookup <<= 2;
     ptr = ((u32)entryObj) + 4;
     ptr += lookup;

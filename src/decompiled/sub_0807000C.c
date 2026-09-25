@@ -4,7 +4,7 @@
 /* match-compiler: old_agbcc */
 // @ 0x0807000c
 // Allocate `count` linked battle-object pool nodes with the given key.
-struct Unk6FDB4 *sub_0807000C(struct Unk700CCHdr *hdr, u32 count_arg, u32 key_arg)
+struct Unk6FDB4 *BtlObjPoolAllocChain(struct Unk700CCHdr *hdr, u32 count_arg, u32 key_arg)
 {
     u16 count;
     u16 key;

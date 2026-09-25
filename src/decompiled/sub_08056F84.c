@@ -7,7 +7,7 @@ void sub_08056F84(void)
     struct Unk2B95C *entry;
     struct MainWork **main_loc;
 
-    index = sub_08043B90();
+    index = BtlFindUnk16E0();
     if (index < 0)
         return;
     sub_08045D3C((u8)index, 4, &result);

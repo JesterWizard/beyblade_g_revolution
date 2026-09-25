@@ -20,7 +20,7 @@ void sub_080361A8(void *a);
 void sub_08068EC0(void *a);
 void sub_08030F00(struct Unk30F00 *a, struct Unk30F00Src *b);
 
-void sub_08032DC4(
+void BtlFrameUpdate(
     s32 frame_arg, struct Unk346C0 *state_a_arg,
     struct Unk346C0 *state_b_arg)
 {
@@ -86,8 +86,8 @@ void sub_08032DC4(
                 gBattleWork->unk1F98);
             sub_080302E0(state_a);
             sub_080302E0(state_b);
-            sub_08031300((struct Unk312EC *)gBattleWork->unkB84);
-            sub_08031300((struct Unk312EC *)gBattleWork->unkB94);
+            TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB84);
+            TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB94);
             _08073C40(*(void **)0x080BB888);
             sub_08036264(
                 (struct Unk36264 *)((u8 *)gBattleWork + 0xAA8),

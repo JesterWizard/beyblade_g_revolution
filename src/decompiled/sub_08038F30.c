@@ -37,7 +37,7 @@ negative:
         }
     }
     else
-        sub_080620D4(&(*battle_loc)->unk2FC, 0, -4);
+        Unk62044OffsetPoints(&(*battle_loc)->unk2FC, 0, -4);
     goto done;
 
 positive:
@@ -63,7 +63,7 @@ positive:
         }
     }
     else
-        sub_080620D4(&(*battle_loc)->unk2FC, 0, 4);
+        Unk62044OffsetPoints(&(*battle_loc)->unk2FC, 0, 4);
 
 done:
     return;

@@ -2,7 +2,7 @@
 
 // @ 0x08068014
 
-void *sub_08068014(struct Unk68014 **slot, u32 i)
+void *AnimRecAt(struct Unk68014 **slot, u32 i)
 {
     struct Unk68014Rec *p;
 

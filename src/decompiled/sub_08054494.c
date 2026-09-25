@@ -5,7 +5,7 @@
 /* match-compiler: old_agbcc */
 
 void sub_08054454(void);
-void sub_08070604(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 x, s16 y, u16 unk0C, u16 unk08);
+void Unk70604Init(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 x, s16 y, u16 unk0C, u16 unk08);
 
 // @ 0x08054494
 void sub_08054494(s32 x, s32 y)
@@ -51,7 +51,7 @@ void sub_08054494(s32 x, s32 y)
     }
 
     p = *loc;
-    sub_08070604((struct Unk70604 *)&p->unk34, (struct Unk70604Src *)0x082BB648,
+    Unk70604Init((struct Unk70604 *)&p->unk34, (struct Unk70604Src *)0x082BB648,
                  (s32)0x080B7258, (s16)xEnd, (s16)yEnd, 0xF0, 0);
     p = *loc;
     sub_080712CC((struct Unk712CC *)&p->unk34, 1);

@@ -10,11 +10,11 @@ void sub_080444BC(void)
     sub_08062AC0();
     main = gMainWorkPtr;
     if ((u32)main->unk036C == 0x083147C8)
-        sub_08062A74(0, (void *)0x083002E0);
+        ObjPalLoadSlot(0, (void *)0x083002E0);
     else
-        sub_08062A74(0, (void *)0x083006E0);
-    sub_08062A74(1, (void *)0x082FDEE0);
-    sub_08062A74(2, (void *)0x0826E320);
+        ObjPalLoadSlot(0, (void *)0x083006E0);
+    ObjPalLoadSlot(1, (void *)0x082FDEE0);
+    ObjPalLoadSlot(2, (void *)0x0826E320);
     if (p == 0)
     {
         main->unk16E0 = 0;

@@ -2,7 +2,7 @@
 
 // @ 0x0807000c
 __attribute__((naked))
-void sub_0807000C(void)
+void BtlObjPoolAllocChain(void)
 {
     asm(
         ".syntax unified\n"

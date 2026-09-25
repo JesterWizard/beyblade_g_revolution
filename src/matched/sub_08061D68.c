@@ -7,7 +7,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-void sub_08061D68(u32 a, u32 b, u32 c, u32 d)
+void TextRowSetPaletteBank(u32 a, u32 b, u32 c, u32 d)
 {
     u16 palBits;
     u32 saved;

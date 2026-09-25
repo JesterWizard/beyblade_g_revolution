@@ -8,7 +8,7 @@
 /* match-compiler: old_agbcc */
 // @ 0x08069dbc
 // Copy `count` halfwords from a source map into VRAM with row/column strides.
-void sub_08069DBC(struct Unk69DBC *state, u32 unused, u32 count_arg, u32 destination_arg, u32 shift_arg, u32 source_arg)
+void VramCopyStrided(struct Unk69DBC *state, u32 unused, u32 count_arg, u32 destination_arg, u32 shift_arg, u32 source_arg)
 {
     u8 count;
     s32 source_index;

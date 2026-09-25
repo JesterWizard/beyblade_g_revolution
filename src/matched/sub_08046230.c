@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08046230
-void sub_08046230(s32 a)
+void BtlResetUnk16B0(s32 a)
 {
     if ((u32)a > 1)
         return;

@@ -26,7 +26,7 @@ u32 sub_08067FC8(void *a, u32 b)
     cursor = p;
     do
     {
-        total += sub_08067F3C(obj, cursor->unk08);
+        total += AnimHalfwordSum(obj, cursor->unk08);
         cursor = (struct Unk680CCRec *)((u16 *)cursor + 1);
         i++;
     } while (i < p->unk04);

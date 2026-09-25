@@ -2,7 +2,7 @@
 
 // @ 0x08040f4c
 __attribute__((naked))
-void sub_08040F4C(void)
+void MenuDispatchLoop(void)
 {
     asm(
         ".syntax unified\n"

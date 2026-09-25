@@ -30,7 +30,7 @@ void sub_080700CC(void *a)
     {
         if (node->unk30 != 0)
         {
-            sub_0806FF28(node->unk30);
+            BtlObjListMoveToHead(node->unk30);
             node->unk30 = 0;
         }
         if (node->unk24 >= 0)

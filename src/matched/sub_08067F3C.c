@@ -2,7 +2,7 @@
 
 // @ 0x08067f3c
 __attribute__((naked))
-s32 sub_08067F3C(void *a, u32 v)
+s32 AnimHalfwordSum(void *a, u32 v)
 {
     asm(
         ".syntax unified\n"

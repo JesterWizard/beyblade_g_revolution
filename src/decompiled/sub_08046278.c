@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08046278
-void sub_08046278(void) {
+void BtlInitUnk16B0Slots(void) {
 
 }
 

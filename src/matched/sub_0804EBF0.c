@@ -16,7 +16,7 @@ void sub_0804EBF0(void *a)
     s32 idx;
     struct Unk4EBF0Entry *table;
 
-    sub_08061784();
+    TextGetAreaWidth();
     if (gUnk_030006A8 == 0)
         return;
 
@@ -32,7 +32,7 @@ void sub_0804EBF0(void *a)
         entry = (struct Unk4EBF0Entry *)((idx << 4) + (u32)table);
         if (entry->unk0C > negOne || entry->unk0D == 7)
         {
-            sub_080615EC(0, (index << 3) + 0x20);
+            TextSetCursor(0, (index << 3) + 0x20);
             entry = (struct Unk4EBF0Entry *)*baseLoc;
             entry = (struct Unk4EBF0Entry *)((u32)entry + index);
             text = (s32)*tableLoc;
@@ -40,17 +40,17 @@ void sub_0804EBF0(void *a)
             entry = (struct Unk4EBF0Entry *)((u32)entry + text);
             text = _080563A8(((s8 *)entry)[0xD], entry->unk0C);
             if (text != 0)
-                sub_0806171C((void *)text, 0xCC, 1);
+                TextDrawAlign((void *)text, 0xCC, 1);
             else
             {
                 idx = *baseLoc + index;
                 table = *tableLoc;
-                sub_0806171C(((struct Unk4EBF0Entry *)((idx << 4) + (u32)table))->unk04, 0x4A, 2);
+                TextDrawAlign(((struct Unk4EBF0Entry *)((idx << 4) + (u32)table))->unk04, 0x4A, 2);
             }
             if (index == gUnk_030006A4)
-                sub_08061D68(cursorX >> 16, 0xE, 0xB, 0x1A);
+                TextRowSetPaletteBank(cursorX >> 16, 0xE, 0xB, 0x1A);
             else
-                sub_08061D68(cursorX >> 16, 0xF, 0xB, 0x1A);
+                TextRowSetPaletteBank(cursorX >> 16, 0xF, 0xB, 0x1A);
         }
         cursorX += 0x10000;
         index++;

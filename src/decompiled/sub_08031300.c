@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08031300
-void sub_08031300(struct Unk312EC *a)
+void TextRowPulsePalette(struct Unk312EC *a)
 {
     s32 t;
     struct Unk705DC *p;

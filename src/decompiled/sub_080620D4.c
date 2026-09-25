@@ -16,7 +16,7 @@
 // the loop is still 4 bytes off (size mismatch) and the snapshot scheduling differs.
 // Also tried a do-while form with the counter at the bottom (19/72, same size).
 // Next: permuter.
-void sub_080620D4(struct Unk62044 *a, s32 dx, s32 dy)
+void Unk62044OffsetPoints(struct Unk62044 *a, s32 dx, s32 dy)
 {
     struct Unk620D4Entry **p;
     struct Unk620D4Entry **q;

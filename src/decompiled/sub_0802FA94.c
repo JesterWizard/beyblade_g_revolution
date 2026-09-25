@@ -4,7 +4,7 @@
 
 // @ 0x0802fa94
 void sub_0802FA94(void) {
-    sub_08061784();
-    sub_0807309C(0x10);
+    TextGetAreaWidth();
+    BtlObjTableAdd(0x10);
 }
 

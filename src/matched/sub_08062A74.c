@@ -4,7 +4,7 @@
 
 // @ 0x08062a74
 /* match-compiler: old_agbcc */
-void sub_08062A74(u32 a, void *src)
+void ObjPalLoadSlot(u32 a, void *src)
 {
     u32 r0;
     u32 r1;

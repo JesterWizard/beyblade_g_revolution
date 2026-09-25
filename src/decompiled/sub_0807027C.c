@@ -23,7 +23,7 @@ struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
             return (struct Unk70354Object *)(u32)obj->unk19;
         if (special != 0)
         {
-            sub_0806FF28((struct BtlObj *)obj);
+            BtlObjListMoveToHead((struct BtlObj *)obj);
             return NULL;
         }
     }
@@ -31,7 +31,7 @@ struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
     {
         if (special != 0)
             return NULL;
-        obj = (struct Unk70354Object *)sub_0806FEFC();
+        obj = (struct Unk70354Object *)BtlObjListMoveHeadToTail();
         if (obj == NULL)
             return NULL;
     }

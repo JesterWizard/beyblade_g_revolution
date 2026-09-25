@@ -4,7 +4,7 @@
 // 104/112 same_size. Retail: a in r3, table value in r1 (ldr r0,=loc; ldr r1,[r0]),
 // count via ldr r0,=; adds r2,r0. Score-45 permuter seed; early target=a gets r3
 // but drops to 108B. Next: permuter with PERM macros on table/count loads.
-void sub_08073114(void *a)
+void BtlObjTableRemove(void *a)
 {
     struct BtlObj **table;
     u8 *count;
@@ -21,7 +21,7 @@ void sub_08073114(void *a)
     {
         if ((table[i] != 0) && (table[i]->next == new_var))
         {
-            sub_0806A434(table[i]);
+            HeapFree(table[i]);
             table[i] = 0;
             (*((u8 *)0x03004158))--;
             break;
@@ -30,5 +30,5 @@ void sub_08073114(void *a)
     }
 
     if (i == (*((u8 *)0x03004154)))
-        sub_08067B98((void *)0x083D2690);
+        DebugPrint((void *)0x083D2690);
 }

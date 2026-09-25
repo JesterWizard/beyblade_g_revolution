@@ -2,7 +2,7 @@
 
 // @ 0x08040f4c
 /* match-compiler: agbcc */
-void sub_08040F4C(void)
+void MenuDispatchLoop(void)
 {
     struct Unk40F4C state;
     struct Unk4109CInput *setupArg;

@@ -3,7 +3,7 @@
 #include "ram_map.h"
 #include "data_symbols.h"
 
-s32 sub_08040EF4(void *keyArg)
+s32 GetPlayerKeyedWord(void *keyArg)
 {
     u32 key;
     struct Unk40EF4 *table;

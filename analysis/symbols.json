@@ -1,6 +1,6 @@
 {
-  "count": 52,
-  "generated": "2026-09-23T19:29:07Z",
+  "count": 73,
+  "generated": "2026-09-25T17:35:58Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -61,6 +61,19 @@
       "symbol": "BtlUnk1694FindAndMark",
       "updated": "2026-09-22"
     },
+    "0x08031300": {
+      "aliases": [
+        "sub_08031300"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "caller sub_08032DC4; decrements a->unk04 and recolors the row through TextRowSetPaletteBank (sub_080705DC)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextRowPulsePalette",
+      "updated": "2026-09-25"
+    },
     "0x080314FC": {
       "aliases": [
         "sub_080314FC"
@@ -74,6 +87,19 @@
       "source": "ai",
       "symbol": "BtlSetTimer118",
       "updated": "2026-09-22"
+    },
+    "0x08032DC4": {
+      "aliases": [
+        "sub_08032DC4"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "0x08032DC4 battle system; per-frame motion plus mode handlers, including TextRowPulsePalette (sub_08031300)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlFrameUpdate",
+      "updated": "2026-09-25"
     },
     "0x080330F4": {
       "aliases": [
@@ -104,6 +130,19 @@
       "symbol": "BtlClearState",
       "updated": "2026-09-22"
     },
+    "0x08034420": {
+      "aliases": [
+        "sub_08034420"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "0x08034420 stores two Unk346C0Inner pointers and the mode byte into a new Unk346C0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk346C0Init",
+      "updated": "2026-09-25"
+    },
     "0x08034894": {
       "aliases": [
         "sub_08034894"
@@ -118,6 +157,32 @@
       "source": "ai",
       "symbol": "BtlCaptureInput",
       "updated": "2026-09-22"
+    },
+    "0x0803715C": {
+      "aliases": [
+        "sub_0803715C"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "0x0803715C clamps a score to 20..100, then adds it to gMainWorkPtr->unk0874 and the per-slot counter"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlApplyClampedScore",
+      "updated": "2026-09-25"
+    },
+    "0x08039BD4": {
+      "aliases": [
+        "sub_08039BD4"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "caller sub_0803A1E4; frees the screen text slots then redraws the eight-row part menu at gUnk_0300040C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PartMenuRebuild",
+      "updated": "2026-09-25"
     },
     "0x0803E258": {
       "aliases": [
@@ -148,6 +213,32 @@
       "symbol": "BtlCountLiveSlots",
       "updated": "2026-09-22"
     },
+    "0x08040EF4": {
+      "aliases": [
+        "sub_08040EF4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "caller sub_08040618; finds the gData_0808B2E4 row for the key and returns the word at gMainWorkPtr->unk1818"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GetPlayerKeyedWord",
+      "updated": "2026-09-25"
+    },
+    "0x08040F4C": {
+      "aliases": [
+        "sub_08040F4C"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "menu system at 0x08040F4C; CpuSet-clears a stack state, then dispatches until done around VBlankIntrWait"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MenuDispatchLoop",
+      "updated": "2026-09-25"
+    },
     "0x080433F4": {
       "aliases": [
         "sub_080433F4"
@@ -161,6 +252,32 @@
       "source": "ai",
       "symbol": "BtlClearUnk1834",
       "updated": "2026-09-22"
+    },
+    "0x08043B90": {
+      "aliases": [
+        "sub_08043B90"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "caller sub_08056F84; walks gMainWorkPtr->unk16E0 until sub_08073440 matches unk16C8 and returns unk04"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlFindUnk16E0",
+      "updated": "2026-09-25"
+    },
+    "0x08043BDC": {
+      "aliases": [
+        "sub_08043BDC"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "caller sub_08056D68; same walk as BtlFindUnk16E0 but on gMainWorkPtr->unk16E4"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlFindUnk16E4",
+      "updated": "2026-09-25"
     },
     "0x08044EE8": {
       "aliases": [
@@ -176,6 +293,32 @@
       "source": "ai",
       "symbol": "BtlClearUnk1688Entry",
       "updated": "2026-09-22"
+    },
+    "0x08046230": {
+      "aliases": [
+        "sub_08046230"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "0x08046230 clears one gMainWorkPtr->unk16B0 slot to {0, -1, -1} when unk00 is 1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlResetUnk16B0",
+      "updated": "2026-09-25"
+    },
+    "0x08046278": {
+      "aliases": [
+        "sub_08046278"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "0x08046278 unconditionally inits both unk16B0 slots to {0, -1, -1}; sibling of BtlResetUnk16B0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlInitUnk16B0Slots",
+      "updated": "2026-09-25"
     },
     "0x080603E0": {
       "aliases": [
@@ -351,6 +494,19 @@
       "symbol": "TextRowSetPaletteBank",
       "updated": "2026-09-22"
     },
+    "0x080620D4": {
+      "aliases": [
+        "sub_080620D4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "callers sub_08038F30 and sub_080392D0; adds (dx, dy) in 8.8 fixed point to each point at unk0C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk62044OffsetPoints",
+      "updated": "2026-09-25"
+    },
     "0x080628B4": {
       "aliases": [
         "sub_080628B4"
@@ -366,6 +522,19 @@
       "source": "ai",
       "symbol": "RandRange",
       "updated": "2026-09-22"
+    },
+    "0x08062A74": {
+      "aliases": [
+        "sub_08062A74"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "caller sub_080444BC; sets a used-bit at gUnk_030008D0+0x40 and CpuSet 0x20 bytes to OBJ palette 0x05000200+slot*32"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ObjPalLoadSlot",
+      "updated": "2026-09-25"
     },
     "0x080674A0": {
       "aliases": [
@@ -485,6 +654,32 @@
       "symbol": "DebugPrint",
       "updated": "2026-09-22"
     },
+    "0x08067F3C": {
+      "aliases": [
+        "sub_08067F3C"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "caller sub_08067FC8; sums rec->unk02 halfwords from the animation base, or returns 0 when v is past unk08"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimHalfwordSum",
+      "updated": "2026-09-25"
+    },
+    "0x08068014": {
+      "aliases": [
+        "sub_08068014"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "caller sub_08067F3C; returns the Unk68014 record at unk20[i]"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimRecAt",
+      "updated": "2026-09-25"
+    },
     "0x08068020": {
       "aliases": [
         "sub_08068020",
@@ -514,6 +709,19 @@
       "symbol": "BtlEntitySelectByKeyDefault",
       "updated": "2026-09-23"
     },
+    "0x08068884": {
+      "aliases": [
+        "sub_08068884"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "caller sub_08067F3C; returns the halfword base after unk08, or 0 when that address equals unk18"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimHalfwordBase",
+      "updated": "2026-09-25"
+    },
     "0x08069908": {
       "aliases": [
         "sub_08069908"
@@ -540,6 +748,19 @@
       "source": "ai",
       "symbol": "BgGetVofsReg",
       "updated": "2026-09-22"
+    },
+    "0x08069DBC": {
+      "aliases": [
+        "sub_08069DBC"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "0x08069DBC copies count halfwords from a source map into VRAM using row and column strides"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "VramCopyStrided",
+      "updated": "2026-09-25"
     },
     "0x0806A3A4": {
       "aliases": [
@@ -569,6 +790,19 @@
       "source": "ai",
       "symbol": "HeapFree",
       "updated": "2026-09-23"
+    },
+    "0x0806E7BC": {
+      "aliases": [
+        "sub_0806E7BC"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "0x0806E7BC; two endpoint cross products, returns 0 when the segments do not properly intersect else 1 or 2"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SegCrossSide",
+      "updated": "2026-09-25"
     },
     "0x0806F1A0": {
       "aliases": [
@@ -644,6 +878,19 @@
       "symbol": "BtlObjListMoveToHead",
       "updated": "2026-09-22"
     },
+    "0x0807000C": {
+      "aliases": [
+        "sub_0807000C"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "caller sub_08070188; takes count linked nodes from the same pool as BtlObjPoolAlloc (sub_0806FDD0)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjPoolAllocChain",
+      "updated": "2026-09-25"
+    },
     "0x080705DC": {
       "aliases": [
         "sub_080705DC"
@@ -659,6 +906,19 @@
       "source": "ai",
       "symbol": "TextEntrySetPaletteBank",
       "updated": "2026-09-22"
+    },
+    "0x08070604": {
+      "aliases": [
+        "sub_08070604"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "callers sub_08033188 and sub_08054494; stores spawn x/y and src->unk05+4 into struct Unk70604"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Unk70604Init",
+      "updated": "2026-09-25"
     },
     "0x08070678": {
       "aliases": [
@@ -763,6 +1023,19 @@
       "source": "ai",
       "symbol": "TextMeasureWidth",
       "updated": "2026-09-22"
+    },
+    "0x080739E8": {
+      "aliases": [
+        "sub_080739E8"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "caller sub_080737C0; returns 1 when a byte string contains 0x0A, else 0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextHasNewline",
+      "updated": "2026-09-25"
     }
   }
 }

@@ -5,7 +5,7 @@
 // 35/36: sole DIFF is null-check beq target (0cd0→0dd0). Null must share the
 // return-1 `bx lr` (r0 already 0) while empty/loop use `movs r0,#0`. Fallthrough
 // `s=0; return s` gets 0dd0 but swaps r1/r2 (30/36).
-s32 sub_080739E8(u8 *s)
+s32 TextHasNewline(u8 *s)
 {
     u8 *orig;
     u8 c;

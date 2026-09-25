@@ -3,7 +3,7 @@
 #include "data_symbols.h"
 
 extern s32 sub_08067584(u16 a, void *b);
-extern void sub_08044EE8(u32 a);
+extern void BtlClearUnk1688Entry(u32 a);
 
 // @ 0x08044fb0
 /* match-compiler: old_agbcc */
@@ -33,8 +33,8 @@ s32 sub_08044FB0(u32 index)
         } while (streak != 0);
         if (streak == 8)
         {
-            sub_08067B98((void *)0x083A2E30);
-            sub_08044EE8(index);
+            DebugPrint((void *)0x083A2E30);
+            BtlClearUnk1688Entry(index);
             sub_08044F64(index);
             return 0;
         }

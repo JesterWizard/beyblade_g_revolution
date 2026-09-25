@@ -36,7 +36,7 @@ void sub_080416C4(struct Unk40F4C *a)
         sub_080679A4(desc->unk40);
     if (desc->unk44 != 0)
         sub_080679C0(desc->unk44);
-    sub_080674B4();
+    VBlankIntrWait();
     REG_DISPCNT = dispFlags | 0x4100;
     sub_08069B78(0, 1, 2, 3);
 }

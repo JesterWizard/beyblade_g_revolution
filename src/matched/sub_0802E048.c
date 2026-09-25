@@ -20,14 +20,14 @@ void sub_0802E048(void)
   {
     goto skip_free;
   }
-  sub_0806FE84((void *) r0);
+  BtlObjPoolFree((void *) r0);
   r1 = *((u32 *) r4);
   r0 = 0;
   *((u32 *) (r1 + 0x0C)) = r0;
   skip_free:
   r0 = 0;
 
-  rec = sub_0806FDD0((u16) r0);
+  rec = BtlObjPoolAlloc((u16) r0);
   r5 = rec;
   r0 = *((u32 *) r4);
   *((struct Unk705DC **) (r0 + 0x0C)) = r5;
@@ -59,7 +59,7 @@ void sub_0802E048(void)
   r0 = *((u32 *) r4);
   r0 = *((u32 *) (r0 + 0x0C));
   r1 = 2;
-  sub_080705DC((struct Unk705DC *) r0, (s32) r1);
+  TextEntrySetPaletteBank((struct Unk705DC *) r0, (s32) r1);
   r3 = *((u32 *) r4);
   obj = (struct Unk026C *) r3;
   r0 = (u32) obj->unk0C;

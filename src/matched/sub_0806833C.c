@@ -16,7 +16,7 @@ void sub_0806833C(struct Unk68598 *a, s32 b, u16 c)
     u8 f;
     u8 g;
 
-    rec = sub_08068014((struct Unk68014 **)a, b);
+    rec = AnimRecAt((struct Unk68014 **)a, b);
     p = a->unk00;
     m = p->unk00 << 1;
     if (m & 2)

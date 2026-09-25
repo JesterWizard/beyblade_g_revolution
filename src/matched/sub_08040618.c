@@ -12,7 +12,7 @@ s32 sub_08040618(void)
     v = (s32)p->unk00[n];
     p->unk808 = n + 1;
     if (v >= 0)
-        return sub_08040EF4((void *)v);
+        return GetPlayerKeyedWord((void *)v);
     return 0;
 }
 

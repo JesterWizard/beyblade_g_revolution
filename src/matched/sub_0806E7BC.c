@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x0806e7bc
-s32 sub_0806E7BC(s32 ax, s32 ay, s32 bx, s32 by, s32 cx, s32 cy, s32 dx, s32 dy)
+s32 SegCrossSide(s32 ax, s32 ay, s32 bx, s32 by, s32 cx, s32 cy, s32 dx, s32 dy)
 {
     s32 abx;
     s32 aby;

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08043bdc
-void *sub_08043BDC(void)
+void *BtlFindUnk16E4(void)
 {
     struct Unk16E0 *p;
 

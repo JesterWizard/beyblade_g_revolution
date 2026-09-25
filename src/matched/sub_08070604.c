@@ -4,7 +4,7 @@
 
 // @ 0x08070604
 /* match-compiler: old_agbcc */
-void sub_08070604(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 x, s16 y, u16 unk0C, u16 unk08)
+void Unk70604Init(struct Unk70604 *dst, struct Unk70604Src *src, s32 unk20, s16 x, s16 y, u16 unk0C, u16 unk08)
 {
     dst->unk00 = (s32)x << 8;
     dst->unk04 = (s32)y << 8;

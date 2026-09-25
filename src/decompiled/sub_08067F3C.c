@@ -5,7 +5,7 @@
 // 61/92 same_size. Remaining DIFF is muls operand regs (retail muls r2,r3;
 // compiled muls r3,r2) after ldrh of unk02/unk04. Permuter 75/92 with broken
 // while(rec->unk02) keeps muls matched but loop wrong.
-s32 sub_08067F3C(void *a, u32 v)
+s32 AnimHalfwordSum(void *a, u32 v)
 {
     struct Unk67F3C *obj;
     struct Unk68014 *inner;
@@ -18,8 +18,8 @@ s32 sub_08067F3C(void *a, u32 v)
 
     obj = a;
     inner = obj->unk00;
-    rec = sub_08068014((struct Unk68014 **)obj, v);
-    base = sub_08068884(inner);
+    rec = AnimRecAt((struct Unk68014 **)obj, v);
+    base = AnimHalfwordBase(inner);
     n = rec->unk02;
     sum = rec->unk04;
     sum *= n;
