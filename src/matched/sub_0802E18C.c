@@ -1,12 +1,12 @@
 #include "global.h"
 
 // @ 0x0802e18c
-void sub_0802E18C(struct Unk310F0b *a, struct Unk310F0b *b, s32 c)
+void HudWriteDigits(struct Unk310F0b *tens, struct Unk310F0b *ones, s32 value)
 {
-    if (c <= 99)
+    if (value <= 99)
     {
-        a->unk18 = Div(c, 10);
-        b->unk18 = DivRemainder(c, 10);
+        tens->shown = Div(value, 10);
+        ones->shown = DivRemainder(value, 10);
     }
 }
 

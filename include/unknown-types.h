@@ -924,9 +924,9 @@ struct MainWork /* >= 0x18B4 */
     /* 0868 */ u32 unk0868;
     /* 086C */ u32 unk086C;
     /* 0870 */ u8 filler_0870[4];
-    /* 0874 */ s16 unk0874;
+    /* 0874 */ s16 expPoints; /* cumulative experience; level curve at 0x080908BC */
     /* 0876 */ u8 filler_0876[2];
-    /* 0878 */ s8 unk0878;
+    /* 0878 */ s8 strength; /* 0..99, shown as two HUD digits */
     /* 0879 */ u8 filler_0879[3];
     /* 087C */ u8 unk087C[0x53]; /* sub_0803E258 */
     /* 08CF */ u8 filler_08CF[1];
@@ -1269,18 +1269,18 @@ struct Unk026C /* >= 0x50 */
     /* 08 */ struct Unk705DC *unk08;
     /* 0c */ struct Unk705DC *unk0C;
     /* 10 */ struct Unk705DC *unk10;
-    /* 14 */ struct Unk705DC *unk14;
-    /* 18 */ struct Unk705DC *unk18;
-    /* 1c */ struct Unk705DC *unk1C;
-    /* 20 */ struct Unk705DC *unk20;
-    /* 24 */ struct Unk705DC *unk24;
+    /* 14 */ struct Unk705DC *playerLevelTens;
+    /* 18 */ struct Unk705DC *playerLevelOnes;
+    /* 1c */ struct Unk705DC *playerStrengthTens;
+    /* 20 */ struct Unk705DC *playerStrengthOnes;
+    /* 24 */ struct Unk705DC *playerExpBar;
     /* 28 */ struct Unk705DC *unk28;
     /* 2c */ struct Unk705DC *unk2C;
-    /* 30 */ struct Unk705DC *unk30;
-    /* 34 */ struct Unk705DC *unk34;
-    /* 38 */ struct Unk705DC *unk38;
-    /* 3c */ struct Unk705DC *unk3C;
-    /* 40 */ struct Unk705DC *unk40;
+    /* 30 */ struct Unk705DC *bitBeastLevelTens;
+    /* 34 */ struct Unk705DC *bitBeastLevelOnes;
+    /* 38 */ struct Unk705DC *bladeStrengthTens;
+    /* 3c */ struct Unk705DC *bladeStrengthOnes;
+    /* 40 */ struct Unk705DC *bitBeastExpBar;
     /* 44 */ void *unk44;
     /* 48 */ u8 unk48;
     /* 49 */ u8 filler_49[3];
@@ -1977,12 +1977,13 @@ struct Unk0380 /* >= 0x1c */
     /* 0c */ struct Unk35878 unk0C;
 };
 
-/* Table row returned by sub_08042E78. */
+/* Beyblade row returned by sub_08042E78. 48 bytes apart. +0 is the bit-beast
+ * experience (level via ExpBracket); +3 is the strength the HUD digits show. */
 struct Unk42E78 /* >= 0x04 */
 {
-    /* 00 */ s16 unk00;
+    /* 00 */ s16 bitBeastExp;
     /* 02 */ u8 filler_02;
-    /* 03 */ u8 unk03;
+    /* 03 */ u8 strength;
 };
 
 /* Lookup result. sub_080447CC. */
@@ -2179,10 +2180,11 @@ struct Unk310F0a /* >= 0x08 */
     /* 04 */ struct Unk310F0Inner1 *unk04;
 };
 
+/* Digit or bar sprite. +0x18 is the value HudWriteDigits / ExpBarFill store. */
 struct Unk310F0b /* >= 0x1a */
 {
     /* 00 */ u8 filler_00[0x18];
-    /* 18 */ s16 unk18;
+    /* 18 */ s16 shown;
 };
 
 /* Pointer array at +0x220. sub_08041394. */

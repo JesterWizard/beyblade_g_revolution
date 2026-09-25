@@ -15,6 +15,12 @@
 #define BeybladeGetProfile sub_0802B930
 #define BtlFreeUnk1694Obj sub_0802BA4C
 #define BtlUnk1694FindAndMark sub_0802C5DC
+#define HudRefreshStats sub_0802D8DC
+#define HudWriteDigits sub_0802E18C
+#define ExpBarFill sub_0802E1B4
+#define ExpLevel sub_0802E1EC
+#define BitBeastLevel sub_0802E210
+#define ScaleRatio sub_08031124
 #define TextRowPulsePalette sub_08031300
 #define BtlSetTimer118 sub_080314FC
 #define BtlFrameUpdate sub_08032DC4
@@ -28,6 +34,9 @@
 #define BtlCountLiveSlots sub_0803E440
 #define GetPlayerKeyedWord sub_08040EF4
 #define MenuDispatchLoop sub_08040F4C
+#define ExpBracketTop sub_08042B78
+#define ExpBracketBase sub_08042BB0
+#define ExpBracket sub_08042BE8
 #define BtlClearUnk1834 sub_080433F4
 #define BtlFindUnk16E0 sub_08043B90
 #define BtlFindUnk16E4 sub_08043BDC

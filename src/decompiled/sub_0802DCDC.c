@@ -4,9 +4,9 @@ void *sub_08042B00(s16 a);
 
 struct Unk42E78Result
 {
-    s16 unk00;
+    s16 bitBeastExp;
     u8 filler_02;
-    s8 unk03;
+    s8 strength;
 };
 
 void sub_0802DCDC(void *arg)
@@ -83,13 +83,13 @@ void sub_0802DCDC(void *arg)
         resource, (void *)0x05000380, 0x20,
         *(void **)0x080BB8C0);
     TextEntrySetPaletteBank(state->unk28, 0x0C);
-    sub_0802E18C(
-        (struct Unk310F0b *)state->unk38,
-        (struct Unk310F0b *)state->unk3C, (s32)(s8)result->unk03);
-    value = (s8)sub_0802E210();
-    sub_0802E18C(
-        (struct Unk310F0b *)state->unk30,
-        (struct Unk310F0b *)state->unk34, value);
-    value = sub_0802E1B4((s16)result->unk00);
-    state->unk40->unk18 = (s16)(s8)value;
+    HudWriteDigits(
+        (struct Unk310F0b *)state->bladeStrengthTens,
+        (struct Unk310F0b *)state->bladeStrengthOnes, (s32)(s8)result->strength);
+    value = (s8)BitBeastLevel();
+    HudWriteDigits(
+        (struct Unk310F0b *)state->bitBeastLevelTens,
+        (struct Unk310F0b *)state->bitBeastLevelOnes, value);
+    value = ExpBarFill((s16)result->bitBeastExp);
+    state->bitBeastExpBar->unk18 = (s16)(s8)value;
 }

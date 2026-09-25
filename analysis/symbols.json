@@ -1,6 +1,6 @@
 {
-  "count": 73,
-  "generated": "2026-09-25T17:35:58Z",
+  "count": 82,
+  "generated": "2026-09-25T17:57:38Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -60,6 +60,85 @@
       "source": "ai",
       "symbol": "BtlUnk1694FindAndMark",
       "updated": "2026-09-22"
+    },
+    "0x0802D8DC": {
+      "aliases": [
+        "sub_0802D8DC"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "caller sub_08046E7C; writes the two-digit strength, the experience level, and the 14-tick bar for both the player and the selected blade"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "HudRefreshStats",
+      "updated": "2026-09-25"
+    },
+    "0x0802E18C": {
+      "aliases": [
+        "sub_0802E18C"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "called from HudRefreshStats; splits a value <= 99 into tens and ones on two text objects"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "HudWriteDigits",
+      "updated": "2026-09-25"
+    },
+    "0x0802E1B4": {
+      "aliases": [
+        "sub_0802E1B4"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "called from HudRefreshStats; maps a point total onto a 14-segment bar between the current and next curve bounds"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ExpBarFill",
+      "updated": "2026-09-25"
+    },
+    "0x0802E1EC": {
+      "aliases": [
+        "sub_0802E1EC"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "called from HudRefreshStats; level index of gMainWorkPtr->unk0874 through the 0x080908BC curve"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ExpLevel",
+      "updated": "2026-09-25"
+    },
+    "0x0802E210": {
+      "aliases": [
+        "sub_0802E210",
+        "BladeExpLevel"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "HudRefreshStats writes this return value into Unk026C.bitBeastLevelTens/Ones; it is ExpBracket of Unk42E78.bitBeastExp"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BitBeastLevel",
+      "updated": "2026-09-25"
+    },
+    "0x08031124": {
+      "aliases": [
+        "sub_08031124"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "caller ExpBarFill and the part menu; clamps a/b and returns a*c/b"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ScaleRatio",
+      "updated": "2026-09-25"
     },
     "0x08031300": {
       "aliases": [
@@ -237,6 +316,45 @@
       "kind": "function",
       "source": "ai",
       "symbol": "MenuDispatchLoop",
+      "updated": "2026-09-25"
+    },
+    "0x08042B78": {
+      "aliases": [
+        "sub_08042B78"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "caller ExpBarFill; upper bound of a level in the 0x080908BC table"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ExpBracketTop",
+      "updated": "2026-09-25"
+    },
+    "0x08042BB0": {
+      "aliases": [
+        "sub_08042BB0"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "caller ExpBarFill; lower bound of a level in the 0x080908BC table"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ExpBracketBase",
+      "updated": "2026-09-25"
+    },
+    "0x08042BE8": {
+      "aliases": [
+        "sub_08042BE8"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "callers ExpLevel, BladeExpLevel, and ExpBarFill; returns the level whose bound range contains the point total"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ExpBracket",
       "updated": "2026-09-25"
     },
     "0x080433F4": {

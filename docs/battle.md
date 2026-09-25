@@ -2,6 +2,8 @@
 
 _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`._
 
+How experience, level, strength, and the Attack / Defense / Endurance stats become RPM and clash damage is written up in [mechanics.md](mechanics.md).
+
 ## IWRAM map (provisional)
 
 | Symbol | Address | Role |
@@ -40,8 +42,8 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | Offset | Member | Role |
 |--------|--------|------|
 | `+0x0424` | `unk0424` | `Unk705DC *` overlay source (`sub_0802D52C`) |
-| `+0x0874` | `unk0874` | `s16` thunk arg (`sub_0802E1EC` / `sub_0802D8DC`) |
-| `+0x0878` | `unk0878` | `s8` overlay index (`sub_0802D8DC`) |
+| `+0x0874` | `expPoints` | `s16` cumulative experience (`ExpLevel` / `HudRefreshStats`) |
+| `+0x0878` | `strength` | `s8` 0..99, two HUD digits (`HudRefreshStats`) |
 | `+0x15C8`–`+0x15D2` | `unk15C8`–`unk15D2` | `s8` flags / `s16` pair (`sub_0802C6AC`) |
 | `+0x1688` | `unk1688` | `Unk1688Entry *` (24-byte records) |
 | `+0x1694` | `unk1694` | `Unk1694 *` (4-byte records) |
@@ -67,7 +69,7 @@ _Agent-maintained. RAM names live in `asm/ram_map_iwram.s` / `include/battle.h`.
 | `sub_080628B4` | **semantic C** — LCG on `unk1800` |
 | `sub_080314FC` | **semantic C** — `gBattleWork->unk118` |
 | `sub_080433F4` | **semantic C** — `unk1834` / `unk1808` |
-| `sub_0802E1EC` | **semantic C** — `sub_08042BE8(unk0874)` |
+| `sub_0802E1EC` | **semantic C** — `ExpBracket(expPoints)` |
 | `sub_0802BA4C` | **semantic C** — free `*gUnk_03000268`, clear `unk1694` |
 | `sub_08044EE8` | **semantic C** — zero `unk1688[idx]` |
 | `sub_0803E440` | **semantic C** — count positive `unk1861[]` |

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08031124
-s16 sub_08031124(s32 a, s32 b, s32 c)
+s16 ScaleRatio(s32 a, s32 b, s32 c)
 {
     if (b <= 0)
         return -1;

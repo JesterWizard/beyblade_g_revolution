@@ -27,35 +27,35 @@ void sub_0802D3F0(void)
             BtlObjPoolFree(q);
             gUnk_0300026C->unk10 = 0;
         }
-        q = gUnk_0300026C->unk14;
+        q = gUnk_0300026C->playerLevelTens;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk14 = 0;
+            gUnk_0300026C->playerLevelTens = 0;
         }
-        q = gUnk_0300026C->unk18;
+        q = gUnk_0300026C->playerLevelOnes;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk18 = 0;
+            gUnk_0300026C->playerLevelOnes = 0;
         }
-        q = gUnk_0300026C->unk1C;
+        q = gUnk_0300026C->playerStrengthTens;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk1C = 0;
+            gUnk_0300026C->playerStrengthTens = 0;
         }
-        q = gUnk_0300026C->unk20;
+        q = gUnk_0300026C->playerStrengthOnes;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk20 = 0;
+            gUnk_0300026C->playerStrengthOnes = 0;
         }
-        q = gUnk_0300026C->unk24;
+        q = gUnk_0300026C->playerExpBar;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk24 = 0;
+            gUnk_0300026C->playerExpBar = 0;
         }
         q = gUnk_0300026C->unk28;
         if (q != 0)
@@ -69,35 +69,35 @@ void sub_0802D3F0(void)
             BtlObjPoolFree(q);
             gUnk_0300026C->unk2C = 0;
         }
-        q = gUnk_0300026C->unk30;
+        q = gUnk_0300026C->bitBeastLevelTens;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk30 = 0;
+            gUnk_0300026C->bitBeastLevelTens = 0;
         }
-        q = gUnk_0300026C->unk34;
+        q = gUnk_0300026C->bitBeastLevelOnes;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk34 = 0;
+            gUnk_0300026C->bitBeastLevelOnes = 0;
         }
-        q = gUnk_0300026C->unk38;
+        q = gUnk_0300026C->bladeStrengthTens;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk38 = 0;
+            gUnk_0300026C->bladeStrengthTens = 0;
         }
-        q = gUnk_0300026C->unk3C;
+        q = gUnk_0300026C->bladeStrengthOnes;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk3C = 0;
+            gUnk_0300026C->bladeStrengthOnes = 0;
         }
-        q = gUnk_0300026C->unk40;
+        q = gUnk_0300026C->bitBeastExpBar;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk40 = 0;
+            gUnk_0300026C->bitBeastExpBar = 0;
         }
         slot = *(void **)0x03000270;
         if (slot != 0)

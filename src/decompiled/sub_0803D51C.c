@@ -11,7 +11,7 @@ s32 sub_0803D51C(void)
         return result;
 
     sub_0802C314(3, 1, &out);
-    out.unk02 -= (u8)out.unk00 + (u8)gMainWorkPtr->unk0878;
+    out.unk02 -= (u8)out.unk00 + (u8)gMainWorkPtr->strength;
     if ((s8)out.unk02 <= 0)
     {
         gUnk_030002A0.records[0].unk0C = 0;
@@ -23,7 +23,7 @@ s32 sub_0803D51C(void)
     }
 
     sub_0802C314(2, 1, &out);
-    out.unk02 -= (u8)out.unk00 + (u8)gMainWorkPtr->unk0878;
+    out.unk02 -= (u8)out.unk00 + (u8)gMainWorkPtr->strength;
     if ((s8)out.unk02 <= 0)
     {
         gUnk_030002A0.records[0].unk0C = 0;

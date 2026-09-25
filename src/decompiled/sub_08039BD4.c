@@ -79,7 +79,7 @@ extern void *BtlObjPoolAlloc(u16 a);
 extern void TextEntrySetPaletteBank(struct Unk705DC *a, s32 b);
 extern void _08073C4C(void *a, void *b, u32 c, void *d);
 extern s16 _0803DE00(void *a);
-extern s16 sub_08031124(s32 a, s32 b, s32 c);
+extern s16 ScaleRatio(s32 a, s32 b, s32 c);
 extern void TextGetAreaWidth(void);
 extern void TextDrawAlign(void *a, u32 b, u32 c);
 extern void TextSetCursor(u32 x, u32 y);
@@ -214,7 +214,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
                 text = BtlObjPoolAlloc(0);
                 screen->unk28C = text;
                 { u16 stat; stat = (u16)part->unk24; sub_0806FF58(text, gData_080F3C9C, 0x800, 0x2400, kind, zero, zero, stat); }
-                text->unk18 = sub_08031124(part->unk24, 0x64, 0xB6);
+                text->unk18 = ScaleRatio(part->unk24, 0x64, 0xB6);
                 TextEntrySetPaletteBank(text, 0x0E);
 
                 text = BtlObjPoolAlloc(0);
@@ -238,7 +238,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
             text = BtlObjPoolAlloc(0);
             screen->unk2B0 = text;
             sub_0806FF58(text, gData_080F3C9C, 0x800, 0x2400, 1, zero, zero, zero);
-            text->unk18 = sub_08031124(0x64 - (s8)gMainWorkPtr->unk1694[row->unk0E].unk02, 0x64, 0xB6);
+            text->unk18 = ScaleRatio(0x64 - (s8)gMainWorkPtr->unk1694[row->unk0E].unk02, 0x64, 0xB6);
             _08073C4C(gData_08113B80, (void *)OBJ_PALETTE_3E0, 0x20, (void *)gData_080BB8C0[0]);
             TextEntrySetPaletteBank(text, 0x0F);
 
@@ -256,7 +256,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
             text = BtlObjPoolAlloc(0);
             screen->unk2B0 = text;
             sub_0806FF58(text, gData_080F3C9C, 0x800, 0x2400, 1, zero, zero, zero);
-            text->unk18 = sub_08031124(0x64 - (s8)gMainWorkPtr->unk1694[row->unk0E].unk02, 0x64, 0xB6);
+            text->unk18 = ScaleRatio(0x64 - (s8)gMainWorkPtr->unk1694[row->unk0E].unk02, 0x64, 0xB6);
             _08073C4C(gData_08113B80, (void *)OBJ_PALETTE_3E0, 0x20, (void *)gData_080BB8C0[0]);
             TextEntrySetPaletteBank(text, 0x0F);
 

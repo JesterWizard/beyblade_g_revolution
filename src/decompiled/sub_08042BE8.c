@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08042BE8
-s32 sub_08042BE8(s32 a)
+s32 ExpBracket(s32 points)
 {
     s32 key;
     u32 i;
@@ -11,7 +11,7 @@ s32 sub_08042BE8(s32 a)
     u32 off;
     u32 next;
 
-    key = a;
+    key = points;
     i = 0;
     base = (const u8 *)0x080908BC;
     if (*(const s32 *)base != -1)

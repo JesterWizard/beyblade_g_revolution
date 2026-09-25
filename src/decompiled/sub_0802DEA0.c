@@ -16,34 +16,34 @@ void sub_0802DEA0(void)
         p->unk10->unk0C = 0xFFFFC000;
     }
     p = gUnk_0300026C;
-    if (p->unk14 != 0)
+    if (p->playerLevelTens != 0)
     {
-        p->unk14->unk08 = 0xFFFFC000;
-        p->unk14->unk0C = 0xFFFFC000;
+        p->playerLevelTens->unk08 = 0xFFFFC000;
+        p->playerLevelTens->unk0C = 0xFFFFC000;
     }
     p = gUnk_0300026C;
-    if (p->unk18 != 0)
+    if (p->playerLevelOnes != 0)
     {
-        p->unk18->unk08 = 0xFFFFC000;
-        p->unk18->unk0C = 0xFFFFC000;
+        p->playerLevelOnes->unk08 = 0xFFFFC000;
+        p->playerLevelOnes->unk0C = 0xFFFFC000;
     }
     p = gUnk_0300026C;
-    if (p->unk1C != 0)
+    if (p->playerStrengthTens != 0)
     {
-        p->unk1C->unk08 = 0xFFFFC000;
-        p->unk1C->unk0C = 0xFFFFC000;
+        p->playerStrengthTens->unk08 = 0xFFFFC000;
+        p->playerStrengthTens->unk0C = 0xFFFFC000;
     }
     p = gUnk_0300026C;
-    if (p->unk20 != 0)
+    if (p->playerStrengthOnes != 0)
     {
-        p->unk20->unk08 = 0xFFFFC000;
-        p->unk20->unk0C = 0xFFFFC000;
+        p->playerStrengthOnes->unk08 = 0xFFFFC000;
+        p->playerStrengthOnes->unk0C = 0xFFFFC000;
     }
     p = gUnk_0300026C;
-    if (p->unk24 != 0)
+    if (p->playerExpBar != 0)
     {
-        p->unk24->unk08 = 0xFFFFC000;
-        p->unk24->unk0C = 0xFFFFC000;
+        p->playerExpBar->unk08 = 0xFFFFC000;
+        p->playerExpBar->unk0C = 0xFFFFC000;
     }
     p = gUnk_0300026C;
     if (p->unk28 != 0)
@@ -58,34 +58,34 @@ void sub_0802DEA0(void)
         p->unk2C->unk0C = 0xF800;
     }
     p = gUnk_0300026C;
-    if (p->unk40 != 0)
+    if (p->bitBeastExpBar != 0)
     {
-        p->unk40->unk08 = 0xF800;
-        p->unk40->unk0C = 0xF800;
+        p->bitBeastExpBar->unk08 = 0xF800;
+        p->bitBeastExpBar->unk0C = 0xF800;
     }
     p = gUnk_0300026C;
-    if (p->unk30 != 0)
+    if (p->bitBeastLevelTens != 0)
     {
-        p->unk30->unk08 = 0xF800;
-        p->unk30->unk0C = 0xF800;
+        p->bitBeastLevelTens->unk08 = 0xF800;
+        p->bitBeastLevelTens->unk0C = 0xF800;
     }
     p = gUnk_0300026C;
-    if (p->unk34 != 0)
+    if (p->bitBeastLevelOnes != 0)
     {
-        p->unk34->unk08 = 0xF800;
-        p->unk34->unk0C = 0xF800;
+        p->bitBeastLevelOnes->unk08 = 0xF800;
+        p->bitBeastLevelOnes->unk0C = 0xF800;
     }
     p = gUnk_0300026C;
-    if (p->unk38 != 0)
+    if (p->bladeStrengthTens != 0)
     {
-        p->unk38->unk08 = 0xF800;
-        p->unk38->unk0C = 0xF800;
+        p->bladeStrengthTens->unk08 = 0xF800;
+        p->bladeStrengthTens->unk0C = 0xF800;
     }
     p = gUnk_0300026C;
-    if (p->unk3C != 0)
+    if (p->bladeStrengthOnes != 0)
     {
-        p->unk3C->unk08 = 0xF800;
-        p->unk3C->unk0C = 0xF800;
+        p->bladeStrengthOnes->unk08 = 0xF800;
+        p->bladeStrengthOnes->unk0C = 0xF800;
     }
 
     p = gUnk_0300026C;
@@ -101,34 +101,34 @@ void sub_0802DEA0(void)
         gUnk_0300026C->unk2C = 0;
     }
     p = gUnk_0300026C;
-    if (p->unk30 != 0)
+    if (p->bitBeastLevelTens != 0)
     {
-        BtlObjPoolFree(p->unk30);
-        gUnk_0300026C->unk30 = 0;
+        BtlObjPoolFree(p->bitBeastLevelTens);
+        gUnk_0300026C->bitBeastLevelTens = 0;
     }
     p = gUnk_0300026C;
-    if (p->unk34 != 0)
+    if (p->bitBeastLevelOnes != 0)
     {
-        BtlObjPoolFree(p->unk34);
-        gUnk_0300026C->unk34 = 0;
+        BtlObjPoolFree(p->bitBeastLevelOnes);
+        gUnk_0300026C->bitBeastLevelOnes = 0;
     }
     p = gUnk_0300026C;
-    if (p->unk38 != 0)
+    if (p->bladeStrengthTens != 0)
     {
-        BtlObjPoolFree(p->unk38);
-        gUnk_0300026C->unk38 = 0;
+        BtlObjPoolFree(p->bladeStrengthTens);
+        gUnk_0300026C->bladeStrengthTens = 0;
     }
     p = gUnk_0300026C;
-    if (p->unk3C != 0)
+    if (p->bladeStrengthOnes != 0)
     {
-        BtlObjPoolFree(p->unk3C);
-        gUnk_0300026C->unk3C = 0;
+        BtlObjPoolFree(p->bladeStrengthOnes);
+        gUnk_0300026C->bladeStrengthOnes = 0;
     }
     p = gUnk_0300026C;
-    if (p->unk40 != 0)
+    if (p->bitBeastExpBar != 0)
     {
-        BtlObjPoolFree(p->unk40);
-        gUnk_0300026C->unk40 = 0;
+        BtlObjPoolFree(p->bitBeastExpBar);
+        gUnk_0300026C->bitBeastExpBar = 0;
     }
 
     VBlankIntrWait();

@@ -7,7 +7,7 @@
  * Named replacements belong in [renames] (Phase 4), then this entry drops.
  */
 
-s32 sub_08042BE8(s32 a);
+s32 sub_08042BE8(s32 points);
 s32 sub_0806E7BC(s32 ax, s32 ay, s32 bx, s32 by, s32 cx, s32 cy, s32 dx, s32 dy);
 u16 sub_0806DF38(void *a, struct UnkDF38Entry *out, s32 matchVal, u32 maxCount, s32 fifth);
 void sub_0806C704(void *a, void *b, s32 c, s32 d);
@@ -44,8 +44,8 @@ void sub_08069894(void);
 void *sub_08042E78(u32 i);
 s16 sub_08031124(s32 a, s32 b, s32 c);
 void sub_080310F0(struct Unk310F0a *a, struct Unk310F0b *b);
-void sub_0802E18C(struct Unk310F0b *a, struct Unk310F0b *b, s32 c);
-s8 sub_0802E1B4(s32 a);
+void sub_0802E18C(struct Unk310F0b *tens, struct Unk310F0b *ones, s32 value);
+s8 sub_0802E1B4(s32 points);
 s8 sub_0802E1EC(void);
 void sub_08031094(struct Unk346A8 *a, s32 b, s32 c, struct Unk310F0b *d);
 void sub_0806A434(void *a);
@@ -135,8 +135,8 @@ void sub_08035878(struct Unk35878 *a, u32 v1, u32 v2, u32 v3);
 void sub_080358CC(struct Unk35878 *a);
 s32 sub_080674A0(s32 a, s32 b);
 s32 sub_080674B0(s32 a);
-s32 sub_08042BB0(s32 a);
-s32 sub_08042B78(s32 a);
+s32 sub_08042BB0(s32 level);
+s32 sub_08042B78(s32 level);
 void sub_080346A8(struct Unk346A8 *a, u32 v);
 /* `swi 5` pass-through: r0/r1 reach the swi untouched, r2 is zeroed. Declared with an
  * empty parameter list because the C callers in this repo invoke it with no arguments
@@ -363,7 +363,7 @@ void sub_08071B4C(void);
 void sub_080473F8(void);
 u8 sub_0806D748(struct Unk6D748 *a, void *b, u32 c, u16 d);
 u8 sub_08073568(void **dest, u8 n, u32 size);
-void sub_08042F4C(s32 a, s32 b, s32 c, s32 d);
+void sub_08042F4C(s32 expBase, s32 strengthBase, s32 bladeId, s32 gained);
 void sub_080302A8(struct Unk302A8 *a, struct Unk302A8Src *b, struct Unk302A8 *dst);
 void sub_08030D4C(void);
 void sub_08031204(void);

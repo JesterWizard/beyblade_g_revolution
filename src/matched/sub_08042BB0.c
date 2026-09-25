@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08042bb0
-s32 sub_08042BB0(s32 a)
+s32 ExpBracketBase(s32 level)
 {
   s32 key;
   s32 minusOne;
@@ -12,7 +12,7 @@ s32 sub_08042BB0(s32 a)
   const u32 *entry;
   const u32 *valueEntry;
   u32 first;
-  key = a;
+  key = level;
   base = (const u32 *) 0x080908BC;
   first = base[0];
   minusOne = -1;

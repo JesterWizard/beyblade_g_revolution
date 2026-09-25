@@ -9,7 +9,7 @@ s32 BtlApplyClampedScore(u8 a, u8 b)
     s32 key;
 
     if (b == 0)
-        score = (s16)_080740B0(gMainWorkPtr->unk0874, 10);
+        score = (s16)_080740B0(gMainWorkPtr->expPoints, 10);
     else
     {
         rec = &gUnk_030002A0.records[b];
@@ -27,15 +27,15 @@ s32 BtlApplyClampedScore(u8 a, u8 b)
         slot = gUnk_030002A0.records[b].unk24;
         if (slot->unk04 > 0)
             score = Div(score, slot->unk04);
-        if (gMainWorkPtr->unk0874 < key || key == -1)
+        if (gMainWorkPtr->expPoints < key || key == -1)
         {
-            gMainWorkPtr->unk0874 += score;
+            gMainWorkPtr->expPoints += score;
             gUnk_030002A0.records[0].unk28->unk26 += 5;
         }
         else
             score = RandRange(10) + 1;
-        if (gMainWorkPtr->unk0874 > 0x3FFF)
-            gMainWorkPtr->unk0874 = 0x3FFF;
+        if (gMainWorkPtr->expPoints > 0x3FFF)
+            gMainWorkPtr->expPoints = 0x3FFF;
         slot = gUnk_030002A0.records[b].unk24;
         if (slot != 0)
         {
@@ -58,10 +58,10 @@ s32 BtlApplyClampedScore(u8 a, u8 b)
             if (slot->unk00 > 0x3FFF)
                 slot->unk00 = 0x3FFF;
         }
-        gMainWorkPtr->unk0874 += score >> 2;
+        gMainWorkPtr->expPoints += score >> 2;
         gUnk_030002A0.records[0].unk28->unk26 += 5;
-        if (gMainWorkPtr->unk0874 > 0x3FFF)
-            gMainWorkPtr->unk0874 = 0x3FFF;
+        if (gMainWorkPtr->expPoints > 0x3FFF)
+            gMainWorkPtr->expPoints = 0x3FFF;
     }
     return score;
 }

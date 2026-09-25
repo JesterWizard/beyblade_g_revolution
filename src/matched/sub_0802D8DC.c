@@ -1,11 +1,11 @@
 #include "global.h"
 
 // @ 0x0802d8dc
-void sub_0802D8DC(void)
+void HudRefreshStats(void)
 {
     struct Unk026C *p;
-    struct Unk310F0b *a;
-    struct Unk310F0b *b;
+    struct Unk310F0b *tens;
+    struct Unk310F0b *ones;
     struct Unk42E78 *row;
     s8 t;
 
@@ -13,15 +13,15 @@ void sub_0802D8DC(void)
     p = gUnk_0300026C;
     if (p->unk0C != 0)
     {
-        sub_0802E18C((struct Unk310F0b *)p->unk1C, (struct Unk310F0b *)p->unk20, gMainWorkPtr->unk0878);
-        a = (struct Unk310F0b *)gUnk_0300026C->unk14;
-        b = (struct Unk310F0b *)gUnk_0300026C->unk18;
-        t = sub_0802E1EC();
-        sub_0802E18C(a, b, t);
-        if (gUnk_0300026C->unk24 != 0)
+        HudWriteDigits((struct Unk310F0b *)p->playerStrengthTens, (struct Unk310F0b *)p->playerStrengthOnes, gMainWorkPtr->strength);
+        tens = (struct Unk310F0b *)gUnk_0300026C->playerLevelTens;
+        ones = (struct Unk310F0b *)gUnk_0300026C->playerLevelOnes;
+        t = ExpLevel();
+        HudWriteDigits(tens, ones, t);
+        if (gUnk_0300026C->playerExpBar != 0)
         {
-            t = sub_0802E1B4(gMainWorkPtr->unk0874);
-            gUnk_0300026C->unk24->unk18 = t;
+            t = ExpBarFill(gMainWorkPtr->expPoints);
+            gUnk_0300026C->playerExpBar->unk18 = t;
         }
     }
     p = gUnk_0300026C;
@@ -29,15 +29,15 @@ void sub_0802D8DC(void)
     {
         row = (struct Unk42E78 *)sub_08042E78(p->unk4E);
         p = gUnk_0300026C;
-        sub_0802E18C((struct Unk310F0b *)p->unk38, (struct Unk310F0b *)p->unk3C, (s8)row->unk03);
-        a = (struct Unk310F0b *)gUnk_0300026C->unk30;
-        b = (struct Unk310F0b *)gUnk_0300026C->unk34;
-        t = sub_0802E210();
-        sub_0802E18C(a, b, t);
-        if (gUnk_0300026C->unk40 != 0)
+        HudWriteDigits((struct Unk310F0b *)p->bladeStrengthTens, (struct Unk310F0b *)p->bladeStrengthOnes, (s8)row->strength);
+        tens = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelTens;
+        ones = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelOnes;
+        t = BitBeastLevel();
+        HudWriteDigits(tens, ones, t);
+        if (gUnk_0300026C->bitBeastExpBar != 0)
         {
-            t = sub_0802E1B4(row->unk00);
-            gUnk_0300026C->unk40->unk18 = t;
+            t = ExpBarFill(row->bitBeastExp);
+            gUnk_0300026C->bitBeastExpBar->unk18 = t;
         }
     }
 }

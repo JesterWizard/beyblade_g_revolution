@@ -8,3 +8,70 @@
 // WORD $46C04778 $E59FC000 $E12FFF1C
 // POIN MyFunction__Replacement
 // POP
+
+// sub_0803EAC0 — ±16 on Unk42E78.bitBeastExp, then AND 0x3FFF.
+// File offset of 0x0803EAC0. apply_lynjump.py treats ORG as a ROM file offset.
+PUSH
+ORG $3EAC0
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN BitBeastAdjustExp__Replacement
+POP
+
+// sub_0803CECC — player launch RPM. Resumes at file offset 0x3CEDC.
+PUSH
+ORG $3CECC
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN StartRpm__Replacement
+POP
+
+// sub_08031094 — bit-beast gauge fill for both players. Player 0 is forced.
+PUSH
+ORG $31094
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN BitBeastGaugeFill__Replacement
+POP
+
+// sub_08044E54 — save commit zeros the record, then unpacks it over live RAM.
+PUSH
+ORG $44E54
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN SavePrepare__Replacement
+POP
+
+// sub_080302E0 — spin step. (rpm << 16) / 0x900 is signed, so rpm >= 32768
+// steps backward.
+PUSH
+ORG $302E0
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN SpinStep__Replacement
+POP
+
+// sub_08037F98 — post-match blade exchange. The cmp at file $380E0 decides
+// a loss. The next 16 bytes are this stub; retail resumes at $380F0.
+PUSH
+ORG $380E0
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN KeepBladeOnLoss__Replacement
+POP
+
+// sub_0803D51C — equipped launcher (type 3) and ripcord (type 2) health.
+PUSH
+ORG $3D51C
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN PartHealth__Replacement
+POP
+
+// sub_08041E88 — overworld step. Resumes at 0x08041E98 with the cmp flags set.
+PUSH
+ORG $41E88
+ALIGN 4
+WORD $46C04778 $E59FC000 $E12FFF1C
+POIN OverworldSpeed__Replacement
+POP

@@ -2,7 +2,7 @@
 
 // @ 0x08042be8
 __attribute__((naked))
-s32 sub_08042BE8(s32 a)
+s32 ExpBracket(s32 a)
 {
     asm(
         ".syntax unified\n"
