@@ -4,7 +4,7 @@ After the retail launch formula in `sub_0803CECC`, player 0's launch RPM and spi
 
 `0` leaves the retail formula (the usual cap is 9216). `1`..`99999` is written as the starting RPM. Anything above `99999` is clamped to `99999`.
 
-`configs/runtime.c`: `setRPMTo`. Word at offset 4 of `RuntimeConfig` in `include/runtime.h`. The two bytes in front of it (`_padSetRpm`) exist so the word stays 4-aligned. Do not reorder the struct; the assembly loads this offset directly.
+`configs/runtime.c`: `setRPMTo`. Word at offset 4 of `RuntimeConfig` in `include/runtime.h`. The three bytes in front of it (`_padSetRpm`) exist so the word stays 4-aligned. Do not reorder the struct; the assembly loads this offset directly.
 
 ## Files
 

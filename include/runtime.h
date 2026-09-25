@@ -13,12 +13,11 @@
  * Edit configs/runtime.c, then rebuild.
  */
 typedef struct {
-    u8 placeholder; /* Add toggles as hacks are implemented. */
     /* sub_0803EAC0 masks bit-beast experience with 0x3FFF after each ±16.
      * The pool word 0x00003FFF disassembles as `subs r7, #255`. */
     u8 uncapBitBeastExp;
-    /* Two bytes so setRPMTo stays a 4-aligned word at offset 4. */
-    u16 _padSetRpm;
+    /* Three bytes so setRPMTo stays a 4-aligned word at offset 4. */
+    u8 _padSetRpm[3];
     /* After sub_0803CECC, player 0's launch RPM and spin cap are replaced.
      * 0 leaves the retail formula. 1..99999 is the forced value. Above
      * 99999 is clamped to 99999. */

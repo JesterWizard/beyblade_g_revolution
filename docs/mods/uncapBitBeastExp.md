@@ -4,7 +4,7 @@ Retail `sub_0803EAC0` adds or subtracts 16 from a blade's bit-beast experience, 
 
 With the flag set, that mask is skipped. The result is clamped to 0..32767, which is the range of the signed halfword `Unk42E78.bitBeastExp`.
 
-`configs/runtime.c`: `uncapBitBeastExp`. `FALSE` is retail. Byte 1 of `RuntimeConfig` in `include/runtime.h`.
+`configs/runtime.c`: `uncapBitBeastExp`. `FALSE` is retail. Byte 0 of `RuntimeConfig` in `include/runtime.h`.
 
 ## Files
 
