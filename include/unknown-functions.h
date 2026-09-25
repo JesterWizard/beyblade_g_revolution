@@ -410,6 +410,7 @@ void sub_08062C38(u16 a);
 void sub_080611A4(void);
 void sub_08061308(void);
 void sub_08060D28(struct Unk0798 *a);
+void sub_08060D58(struct Unk0798 *a, u32 b, u32 c, u32 d, u32 e, u32 f);
 void sub_08062C80(void);
 void sub_0806184C(u16 a, u16 b);
 void sub_08061DC0(u16 a, u16 b);

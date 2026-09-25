@@ -1,9 +1,7 @@
 #include "global.h"
-
-// @ 0x08073910
+/* match-compiler: old_agbcc */
 s32 sub_08073910(const u8 *src, u8 *dst, s32 size)
 {
-
     s32 si;
     s32 di;
     u8 c;
@@ -17,13 +15,12 @@ s32 sub_08073910(const u8 *src, u8 *dst, s32 size)
     {
         c = src[si];
         if (c != ' ')
-            goto skip_done;
+            break;
         si++;
     }
-skip_done:
 
     if (c == 0)
-        goto done;
+        return si;
     end = dst + size - 1;
     do
     {
@@ -33,21 +30,17 @@ skip_done:
         if (c == 0)
             break;
         if (di >= size)
-        {
             *end = 0;
-        }
         else
         {
             dst[di] = c;
             di++;
             si++;
         }
-    } while (c != ' ' && c != 0 && c != '
-');
+    } while (c != ' ' && c != 0 && c != 0x0A);
     if (di < size)
         dst[di] = 0;
     else
         *end = 0;
-done:
     return si;
 }

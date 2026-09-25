@@ -1,61 +1,48 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08069dbc
-__attribute__((naked))
-void sub_08069DBC(struct Unk69DBC *state, u32 unused, u32 count, u32 dest, u32 shift, u32 source)
+#include "global.h"
+
+/* match-compiler: old_agbcc */
+// @ 0x08069dbc
+// Copy `count` halfwords from a source map into VRAM with row/column strides.
+void sub_08069DBC(struct Unk69DBC *state, u32 unused, u32 count_arg, u32 destination_arg, u32 shift_arg, u32 source_arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "ldr r4, [sp, #0x014]\n"
-        "ldr r5, [sp, #0x018]\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r6, r2, #0x18\n"
-        "movs r1, #0x1F\n"
-        "ands r1, r5\n"
-        "lsls r1, r1, #0x01\n"
-        "ldr r2, [r0, #0x70]\n"
-        "adds r2, r2, r1\n"
-        "asrs r5, r5, #0x05\n"
-        "ldr r7, [r0, #0x00]\n"
-        "lsls r1, r7, #0x02\n"
-        "muls r1, r5\n"
-        "adds r5, r2, r1\n"
-        "adds r1, r0, #0x0\n"
-        "adds r1, #0x5C\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "lsls r2, r1, #0x0B\n"
-        "movs r1, #0xC0\n"
-        "lsls r1, r1, #0x13\n"
-        "adds r2, r2, r1\n"
-        "adds r0, #0x5F\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "lsls r4, r1\n"
-        "adds r4, r4, r3\n"
-        "lsls r4, r4, #0x01\n"
-        "adds r2, r2, r4\n"
-        "cmp r6, #0x00\n"
-        "beq _08069E16\n"
-        "lsls r1, r7, #0x01\n"
-        "adds r3, r0, #0x0\n"
-        "movs r4, #0x02\n"
-        "_08069DFE:\n"
-        "ldrh r0, [r5, #0x00]\n"
-        "strh r0, [r2, #0x00]\n"
-        "adds r5, r5, r1\n"
-        "adds r0, r4, #0x0\n"
-        "ldrb r7, [r3, #0x00]\n"
-        "lsls r0, r7\n"
-        "adds r2, r2, r0\n"
-        "subs r0, r6, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r6, r0, #0x18\n"
-        "cmp r6, #0x00\n"
-        "bne _08069DFE\n"
-        "_08069E16:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    u8 count;
+    s32 source_index;
+    u32 stride;
+    u16 *source;
+    u16 *destination;
+    u8 *shift_ptr;
+    u32 off;
+    u32 source_step;
+    u32 two;
+
+    count = (u8)count_arg;
+    source_index = (s32)source_arg;
+    destination = (u16 *)(state->unk70 + ((source_index & 0x1F) << 1));
+    source = destination;
+    source_index >>= 5;
+    stride = state->unk00;
+    source = (u16 *)((u8 *)source + ((stride << 2) * source_index));
+    off = state->unk5C << 11;
+    off += 0x6000000;
+    off += ((shift_arg << state->unk5F) + destination_arg) << 1;
+    destination = (u16 *)off;
+    if (count != 0)
+    {
+        source_step = stride << 1;
+        shift_ptr = &state->unk5F;
+        two = 2;
+        do
+        {
+            *destination = *source;
+            source = (u16 *)((u8 *)source + source_step);
+            destination = (u16 *)((u8 *)destination + (two << *shift_ptr));
+            count--;
+        } while (count != 0);
+    }
 }
 

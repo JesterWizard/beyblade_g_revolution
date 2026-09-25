@@ -36,6 +36,10 @@
 #undef gUnk_030006B8
 #undef gUnk_03000674
 #undef gUnk_03000678
+#undef gUnk_0300069C
+#undef gUnk_030006A0
+#undef gUnk_030006A4
+#undef gUnk_030006A8
 #undef gUnk_03000758
 #undef gUnk_03000770
 #undef gUnk_03000794
@@ -91,6 +95,10 @@
 #define gUnk_030006B8 (*(u16 *)0x030006B8)
 #define gUnk_03000674 (*(u32 *)0x03000674)
 #define gUnk_03000678 (*(u32 *)0x03000678)
+#define gUnk_0300069C (*(s32 *)0x0300069C)
+#define gUnk_030006A0 (*(struct Unk4EBF0Entry **)0x030006A0)
+#define gUnk_030006A4 (*(s32 *)0x030006A4)
+#define gUnk_030006A8 (*(u32 *)0x030006A8)
 #define gUnk_03000758Loc ((struct Unk0758 **)0x03000758)
 #define gUnk_03000798Loc ((struct Unk0758 **)0x03000798)
 #define gUnk_03000758 (*(struct Unk0758 **)0x03000758)

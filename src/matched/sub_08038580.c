@@ -1,55 +1,34 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08038580
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+#include "data_symbols.h"
+
+// @ 0x08038580
 s32 sub_08038580(void *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r2, r0, #0x0\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r4, r1, #0x18\n"
-        "adds r7, r4, #0x0\n"
-        "ldr r5, _080385D0 @ =0x030003CC\n"
-        "ldr r0, [r5, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _080385CA\n"
-        "ldrh r0, [r0, #0x20]\n"
-        "asrs r0, r4\n"
-        "movs r6, #0x01\n"
-        "ands r0, r6\n"
-        "cmp r0, #0x00\n"
-        "bne _080385BC\n"
-        "ldr r0, _080385D4 @ =0x080BB8C0\n"
-        "lsls r1, r4, #0x05\n"
-        "ldr r3, _080385D8 @ =0x05000200\n"
-        "adds r1, r1, r3\n"
-        "ldr r3, [r0, #0x00]\n"
-        "adds r0, r2, #0x0\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "ldr r1, [r5, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "lsls r0, r4\n"
-        "ldrh r2, [r1, #0x20]\n"
-        "orrs r0, r2\n"
-        "strh r0, [r1, #0x20]\n"
-        "_080385BC:\n"
-        "ldr r0, [r5, #0x00]\n"
-        "lsls r1, r7, #0x01\n"
-        "adds r0, #0x22\n"
-        "adds r0, r0, r1\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "adds r1, #0x01\n"
-        "strh r1, [r0, #0x00]\n"
-        "_080385CA:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_080385D0: .4byte 0x030003CC\n"
-        "_080385D4: .4byte 0x080BB8C0\n"
-        "_080385D8: .4byte 0x05000200\n"
-    );
+    u32 idx = (u8)b;
+    u32 idx2 = idx;
+    u32 one;
+    u32 off;
+    u8 *dst;
+    void **srcLoc;
+    void *src;
+
+    if (gUnk_030003CC != 0) {
+            if (((gUnk_030003CC->unk20 >> idx) & (one = 1)) == 0) {
+                srcLoc = (void **)gData_080BB8C0;
+                off = idx << 5;
+                dst = (u8 *)0x05000200 + off;
+                src = *srcLoc;
+                _08073C4C(a, dst, 0x20, src);
+                gUnk_030003CC->unk20 |= one << idx;
+            }
+        gUnk_030003CC->unk22[idx2] += 1;
+    }
 }
 

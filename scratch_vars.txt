@@ -1,0 +1,221 @@
+    u32 x = (u8)x_arg;
+    u32 y = (u8)y_arg;
+    u32 width = (u8)w_arg;
+    u32 height = (u8)h_arg;
+    u32 tilePacked = tile_arg << 16;
+    u32 tileId = 0;
+    u16 baseTile = state->unk96;
+    u32 vramBase = 0xC0;
+    u8 *vram;
+    void **cpuLoc;
+    u32 row, col, rowNext;
+    u32 widthShifted, widthU;
+    u16 *cell;
+
+    vramBase <<= 19;
+    vram = (u8 *)((state->unk5C << 11) + vramBase);
+    cpuLoc = (void **)gData_080BB8BC;
+    _08073C4C((void *)((tilePacked >> 16) | tilePacked | baseTile), vram, 0x80 << 4, *cpuLoc);
+    vram += ((y << 5) + x) << 1;
+    row = 0;
+    if (row < height) {
+        widthShifted = width << 16;
+        widthU = widthShifted >> 16;
+        do {
+            col = 0;
+            rowNext = row + 1;
+            if (col < widthU) {
+                do {
+                    cell = (u16 *)(vram + (((row << 5) + col) << 1));
+                    *cell = (u16)(tileId | baseTile);
+                    tileId = (u16)(tileId + 1);
+                    col = (u16)(col + 1);
+                } while (col < (widthShifted >> 16));
+            }
+            row = (u16)rowNext;
+        } while (row < height);
+    }
+    state->unk98 = (u16)(width << 3);
+    state->unk9A = (u16)(height << 3);
+    state->unkA4 = (u16)x;
+    state->unkA6 = (u16)y;
+---
+    u8 x = (u8)x_arg;
+    u8 y = (u8)y_arg;
+    u8 width = (u8)w_arg;
+    u8 height = (u8)h_arg;
+    u32 tilePacked = tile_arg << 16;
+    u16 tileId = 0;
+    u16 baseTile;
+    u8 *vram;
+    void **cpuLoc;
+    void *cpu;
+    u32 row, col, rowNext;
+    u16 widthU;
+    u32 widthShifted;
+    u16 *cell;
+    u32 vramBase;
+    struct Unk0798 *s = state;
+
+    baseTile = s->unk96;
+    vramBase = 0xC0;
+    vramBase <<= 19;
+    vram = (u8 *)((s->unk5C << 11) + vramBase);
+    cpuLoc = (void **)gData_080BB8BC;
+    cpu = *cpuLoc;
+    _08073C4C((void *)((tilePacked >> 16) | tilePacked | baseTile), vram, 0x80 << 4, cpu);
+    vram += ((y << 5) + x) << 1;
+    row = 0;
+    if (row < height) {
+        widthShifted = (u32)width << 16;
+        widthU = (u16)(widthShifted >> 16);
+        do {
+            col = 0;
+            rowNext = row + 1;
+            if (col < widthU) {
+                do {
+                    cell = (u16 *)(vram + (((row << 5) + col) << 1));
+                    *cell = tileId | s->unk96;
+                    tileId = (u16)(tileId + 1);
+                    col = (u16)(col + 1);
+                } while (col < (u16)(widthShifted >> 16));
+            }
+            row = (u16)rowNext;
+        } while (row < height);
+    }
+    s->unk98 = width << 3;
+    s->unk9A = height << 3;
+    s->unkA4 = x;
+    s->unkA6 = y;
+---
+    u8 x = (u8)x_arg;
+    u8 y = (u8)y_arg;
+    u8 width = (u8)w_arg;
+    u8 height = (u8)h_arg;
+    u32 tilePacked = tile_arg << 16;
+    u16 tileId = 0;
+    u16 baseTile = state->unk96;
+    u8 *vram;
+    void **cpuLoc;
+    u32 row, col;
+    u16 widthU;
+    u32 widthShifted;
+    u32 vramBase = 0xC0;
+
+    vramBase <<= 19;
+    vram = (u8 *)((state->unk5C << 11) + vramBase);
+    cpuLoc = (void **)gData_080BB8BC;
+    _08073C4C((void *)((tilePacked >> 16) | tilePacked | baseTile), vram, 0x80 << 4, *cpuLoc);
+    vram = vram + (((y << 5) + x) << 1);
+    for (row = 0; row < height; row = (u16)(row + 1)) {
+        widthShifted = width << 16;
+        widthU = (u16)(widthShifted >> 16);
+        for (col = 0; col < widthU; col = (u16)(col + 1)) {
+            ((u16 *)(vram + (((row << 5) + col) << 1)))[0] = tileId | baseTile;
+            tileId = (u16)(tileId + 1);
+        }
+    }
+    state->unk98 = width << 3;
+    state->unk9A = height << 3;
+    state->unkA4 = x;
+    state->unkA6 = y;
+---
+    u32 spX = (u8)x_arg;
+    u32 spY = (u8)y_arg;
+    u32 spW = (u8)w_arg;
+    u32 spH = (u8)h_arg;
+    u32 tilePacked = tile_arg << 16;
+    u32 tileId = 0;
+    u16 baseTile = state->unk96;
+    u8 *vram;
+    void **cpuLoc;
+    void *cpu;
+    u32 row, col, rowNext;
+    u32 widthShifted;
+    u32 widthU;
+    u32 heightCopy;
+    u16 *cell;
+    u32 vramBase;
+
+    vramBase = 0xC0 << 19;
+    vram = (u8 *)((state->unk5C << 11) + vramBase);
+    cpuLoc = (void **)gData_080BB8BC;
+    cpu = *cpuLoc;
+    _08073C4C((void *)((tilePacked >> 16) | tilePacked | baseTile), vram, 0x800, cpu);
+    vram += ((spY << 5) + spX) << 1;
+    row = 0;
+    if (row < spH) {
+        widthShifted = spW << 16;
+        widthU = widthShifted >> 16;
+        heightCopy = spH;
+        do {
+            col = 0;
+            rowNext = row + 1;
+            if (col < widthU) {
+                widthShifted = spW << 16;
+                do {
+                    cell = (u16 *)(vram + (((row << 5) + col) << 1));
+                    *cell = (u16)(tileId | baseTile);
+                    tileId = (u16)(tileId + 1);
+                    col = (u16)(col + 1);
+                } while (col < (widthShifted >> 16));
+            }
+            row = (u16)rowNext;
+        } while (row < heightCopy);
+    }
+    state->unk98 = (u16)(spW << 3);
+    state->unk9A = (u16)(spH << 3);
+    state->unkA4 = (u16)spX;
+    state->unkA6 = (u16)spY;
+---
+    u8 x = (u8)x_arg;
+    u8 y = (u8)y_arg;
+    u8 width = (u8)w_arg;
+    u8 height = (u8)h_arg;
+    u32 tilePacked = tile_arg << 16;
+    u16 tileId = 0;
+    u16 baseTile = state->unk96;
+    u8 *vram;
+    void **cpuLoc;
+    void *cpu;
+    u32 row = 0;
+    u32 col;
+    u32 rowNext;
+    u16 widthU;
+    u32 widthShifted;
+    u16 *cell;
+    u32 vramBase;
+    u32 size;
+
+    vramBase = 0xC0;
+    vramBase <<= 19;
+    vram = (u8 *)((state->unk5C << 11) + vramBase);
+    cpuLoc = (void **)gData_080BB8BC;
+    cpu = *cpuLoc;
+    size = 0x80;
+    size <<= 4;
+    _08073C4C((void *)((tilePacked >> 16) | tilePacked | baseTile), vram, size, cpu);
+    vram += ((y << 5) + x) << 1;
+    if (row < height) {
+        widthShifted = width << 16;
+        widthU = (u16)(widthShifted >> 16);
+        do {
+            col = 0;
+            rowNext = row + 1;
+            if (col < widthU) {
+                do {
+                    cell = (u16 *)((u32)vram + (((row << 5) + col) << 1));
+                    *cell = (u16)(tileId | baseTile);
+                    tileId += 1;
+                    tileId = (u16)tileId;
+                    col += 1;
+                    col = (u16)col;
+                } while (col < (u16)(widthShifted >> 16));
+            }
+            row = (u16)rowNext;
+        } while (row < height);
+    }
+    state->unk98 = (u16)(width * 8);
+    state->unk9A = (u16)(height * 8);
+    state->unkA4 = x;
+    state->unkA6 = y;

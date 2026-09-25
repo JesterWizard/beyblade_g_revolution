@@ -3,6 +3,9 @@
 #include "data_symbols.h"
 #include "ram_map.h"
 
+// @ 0x0803dcfc
+// 44/48 same_size: index lands in r1 (retail r2). pin_pool_live gets r2 + perfect
+// ok-path but inserts early ldr before cmp. Permuter best valid 44/48.
 void *sub_0803DCFC(u32 a)
 {
     u32 index;

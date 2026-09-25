@@ -108,14 +108,6 @@ next = "fix table indexing to byte-offset (see note), re-add Unk338F0Table struc
 score = "20/104"
 
 [[wip]]
-name = "sub_0802D2C0"
-seed = "src/decompiled/sub_0802D2C0.c"
-notes = "src/decompiled/sub_0802D2C0.md"
-status = "DIFF; corrected retail branch semantics, but best current compile is 46/108 and 104 bytes due pool/register layout"
-next = "permuter run targeting corrected branch shape and literal-pool/register order"
-score = "46/108"
-
-[[wip]]
 name = "sub_0802BC14"
 seed = "src/decompiled/sub_0802BC14.c"
 notes = "src/decompiled/sub_0802BC14.md"
@@ -130,14 +122,6 @@ notes = "src/decompiled/sub_0802BF04.md"
 status = "best 55/140 size-mismatch; s16 comparison and explicit r8 zero-register hints did not recover retail setup/order"
 next = "leave readable Thumb; revisit with targeted constant/pointer reuse or permuter"
 score = "55/140"
-
-[[wip]]
-name = "sub_08035C64"
-seed = "src/decompiled/sub_08035C64.c"
-notes = "src/decompiled/sub_08035C64.md"
-status = "same_size DIFF 85/182 (46.7%); logic fully correct (repulsion physics on Unk346C0Inner, dx/dy/distSq/threshold gate) but agbcc always emits the early-return (zero) block first regardless of if/else source order — branch layout inverted vs retail which keeps compute as fallthrough and zero-block at function end"
-next = "try computing zero-branch via explicit goto label placed after compute code, or split into two functions/permuter branch-order search"
-score = "85/182"
 
 [[wip]]
 name = "sub_080385DC"
@@ -162,15 +146,6 @@ notes = "src/decompiled/sub_08069B78.md"
 status = "same-size DIFF 62/154 (40.3%); shared mask/inverse and r10/r5 hints did not improve post-call register scheduling"
 next = "leave readable Thumb; revisit with targeted post-call register scheduling or permuter"
 score = "62/154"
-
-[[wip]]
-name = "sub_08038580"
-seed = "src/decompiled/sub_08038580.c"
-notes = "src/decompiled/sub_08038580.md"
-status = "82/92 same-size on old_agbcc (was 24/92). Three source wins: inline the global (pointer -> r0), hoist the gData_080BB8C0 deref into a local (fixes pool order), and `(one = 1)` inside the condition (sinks movs r6,#1 after the asrs). Plateau across a six-shape argument/pointer sweep; permuter from this seed base 95 best 85"
-next = "Do not re-attempt by hand or by permuter at this seed. The last 10 bytes are scheduler ordering of the deref vs the 0x05000200 base load; revisit only with a different compiler build"
-score = "82/92"
-retry = "false"
 
 [[wip]]
 name = "sub_0803DCFC"
@@ -198,14 +173,6 @@ next = "force r7 as an ordinary live callee-saved local rather than only a fixed
 score = "37/82"
 
 [[wip]]
-name = "sub_08042F4C"
-seed = "src/decompiled/sub_08042F4C.c"
-notes = "src/decompiled/sub_08042F4C.md"
-status = "33/80 size-mismatch; row update and six-argument notification logic are correct, but the s16 parameter c is normalized before sub_08042E78 while retail passes r2 directly; casted call did not alter the caller normalization"
-next = "verify whether sub_08042E78's prototype should accept s32 for this caller (without changing its own matching definition), then retry the same source shape"
-score = "33/80"
-
-[[wip]]
 name = "sub_08059DC8"
 seed = "src/decompiled/sub_08059DC8.c"
 notes = "src/decompiled/sub_08059DC8.md"
@@ -214,43 +181,12 @@ next = "may need inline asm (not just register-pinned var) to force the r4 load 
 score = "27/72"
 
 [[wip]]
-name = "sub_08061D68"
-seed = "src/decompiled/sub_08061D68.c"
-notes = "src/decompiled/sub_08061D68.md"
-status = "13/88 bytes (13.5%), size mismatch (96 vs 88); correct overall algorithm (mask args to 0x1F, build 12-bit palette-select field, swap lo/hi if needed, compute VRAM tile address from gUnk_03000798->unk5C, loop-OR the palette bits into each halfword) but agbcc allocates 4 callee-saved regs (r4-r7) vs retail's 3 (r4-r6) -- retail reuses a non-callee-saved scratch reg (r1) for the swap temp instead of a persistent local"
-next = "drop the explicit 'tmp' local and do the swap via a compound/ternary expression, or restructure so the swap temp doesn't need to outlive the swap statement (matching retail's transient r1 use)"
-score = "13/88"
-
-[[wip]]
 name = "sub_080620D4"
 seed = "src/decompiled/sub_080620D4.c"
 notes = "src/decompiled/sub_080620D4.md"
 status = "10/72 bytes (12.5%), size mismatch (80 vs 72); correct algorithm (walk a->unk0C[0..0x7F] entries, shift each entry's unk08/unk0C by dx<<8/dy<<8, and on the first non-null entry snapshot entries[0]->unk08/unk0C into a->unk10/unk14). Discovered/reused existing struct Unk62044 (already matched by sub_08062044.c/sub_0806209C.c) and added struct Unk620D4Entry for the array elements. Retail copies raw dy into r3 immediately after push, before the null checks; agbcc here defers the dy shift and ends up spilling through an 'ip' register (extra mov), needing one more callee-saved register than retail"
 next = "try computing shiftedDy as the FIRST statement (before the two null checks) so agbcc materializes it early like retail does with raw dy, or split shiftedDx/shiftedDy computation into the loop body itself rather than hoisting both before the null checks"
 score = "10/72"
-[[wip]]
-name = "sub_08062B9C"
-seed = "src/decompiled/sub_08062B9C.c"
-notes = "src/decompiled/sub_08062B9C.md"
-status = "34/76 bytes (44.7%), same size; correct algorithm (clear bitmask bit + slot pointer for idx in [lo,hi] after swap, reusing struct Unk62A74 from sub_08062A74) with the full loop/branch shape matching retail (confirmed via manual disassembly comparison -- only the register chosen for arg1/hi differs: retail keeps it in r4 from function entry, agbcc here picks r5)"
-next = "try passing arg1 as the first declared local or via a temp assigned before arg0's, or check if reversing argument order in a wrapper affects register choice"
-score = "34/76"
-
-[[wip]]
-name = "sub_080677A8"
-seed = "src/decompiled/sub_080677A8.c"
-notes = "src/decompiled/sub_080677A8.md"
-status = "12/86 bytes (14%), size mismatch (80 vs 86); correct algorithm (bounds-check arg0 against gUnk_030009B0->unk04, fill a 4-halfword stack buffer via sub_08067584, compare against arg1[0..3], return 0x80FF/0x8000/0 accordingly) with pointer-increment loop matching retail's shape (arg1 and buf cursors both incrementing, not indexed) but agbcc only needs 1 callee-saved register (r4) where retail uses 2 (r4,r5) -- added struct Unk09B0 for the count field"
-next = "try keeping 'x' (masked arg0) live past the sub_08067584 call by referencing it again afterward (e.g. in a debug/dead comparison), or check if retail's extra register holds the original 'arg1' start pointer separately from the incrementing cursor"
-score = "12/86"
-[[wip]]
-name = "sub_0806C78C"
-seed = "src/decompiled/sub_0806C78C.c"
-notes = "src/decompiled/sub_0806C78C.md"
-status = "12/70 bytes (17.1%), size mismatch (68 vs 70); partial model — calls sub_0806DF38(arg0, &out[1], 0, 1) writing a search-result array (struct UnkDF38Entry, 0x14 stride, added), checks out[0] fields, computes a stride, calls sub_0806C704. Declared both previously-naked callees' signatures from their own bodies. Uncertain: retail writes arg2 to sp+0 before the call but that slot is never read back in this function -- may be an unused stack reservation, a hidden 5th arg to sub_0806DF38, or a struct field I'm misplacing"
-next = "re-derive sub_0806DF38's full parameter list (it may take 5 args via an implicit stack arg) before retrying this caller; check other call sites of sub_0806DF38 for the sp+0 slot's purpose"
-score = "12/70"
-
 [[wip]]
 name = "sub_0802DEA0"
 seed = "src/decompiled/sub_0802DEA0.c"
@@ -290,14 +226,6 @@ notes = "src/decompiled/sub_080348E8.md"
 status = "two semantic attempts: 208/384 same-size first draft; second fixed-register attempt 222/384 but grew to 392B; control flow and field roles are reconstructed, remaining difference is register/pointer allocation in the state/cleanup tail"
 next = "Start from the 208/384 seed; try source-shape or permuter work for state pointer r2 and final flag/pointer r7/r6 allocation without fixed 8-bit register pins"
 score = "208/384"
-
-[[wip]]
-name = "sub_08034A68"
-seed = "src/decompiled/sub_08034A68.c"
-notes = "src/decompiled/sub_08034A68.md"
-status = "permuter 300 s + 900 s, no score 0 (130 → 110); 91/112"
-next = "keep readable Thumb; r0 vs r1 on the entry pointer"
-score = "91/112"
 
 [[wip]]
 name = "sub_08035258"
@@ -353,14 +281,6 @@ notes = "src/decompiled/sub_0803D51C.md"
 status = "Two same-size attempts did not match: direct semantic seed compiled 288/304 with result in r6; r5 pin expanded to 280/304 and forced extra registers. Logic and Unk2C314 result fields are identified."
 next = "Use a targeted register-layout/permuter search to reproduce retail push {r4,r5,lr}, r4 main-work location, and r5 result; preserve two repeated sub_0802C314/sub_0802C55C blocks."
 score = "63/304 then 38/304"
-
-[[wip]]
-name = "sub_0803E2AC"
-seed = "src/decompiled/sub_0803E2AC.c"
-notes = "src/decompiled/sub_0803E2AC.md"
-status = "Two semantic attempts are same-size but differ in table literal/index scheduling: 67/124 direct seed, 72/124 with r3 base and r0/r1/r2 pins. RGB table classification logic is identified."
-next = "Use a targeted permuter/source-order search to force retail's table1 literal load before the signed 0x1E index, then preserve table2/table3 RGB accumulation and threshold branches."
-score = "67/124 then 72/124"
 
 [[wip]]
 name = "sub_080411EC"
@@ -457,28 +377,12 @@ status = "Two semantic attempts: local pool physics seed 24/232 (200B), then r3-
 next = "Restore the baseline; use a targeted register/permuter search for MainWork r3, pool-location r4, pool pointer r2, and ldm/stm slot iteration while preserving 0x1825/0x1827 gates and random updates."
 score = "24/232 then 25/232"
 [[wip]]
-name = "sub_0804A028"
-seed = "src/decompiled/sub_0804A028.c"
-notes = "src/decompiled/sub_0804A028.md"
-status = "Two semantic attempts: wrong-offset seed 15/174, corrected-offset render sequence 55/174 (172B). Correct fields are +0x2D5 and +0x2FC, global flag is MainWork +0x1855, and all four draw calls/constants are mapped; remaining differences are register allocation (retail keeps r4/r5 byte values and uses r1 for 0x50000) plus a two-byte branch/layout delta."
-next = "Restore corrected semantic seed and use targeted register/source-order/permuter search; preserve the exact fixed-point forms and seek retail r4/r5 values with the 0x50000 temporary in r1."
-score = "15/174 then 55/174"
-
-[[wip]]
 name = "sub_0804AAF0"
 seed = "src/decompiled/sub_0804AAF0.c"
 notes = "src/decompiled/sub_0804AAF0.md"
 status = "Two semantic attempts: initial 145/332 (324B), then early current-global address ordering 151/332 (324B). All menu entry fields, allocator, resource lookups, draw calls, flags, decompression, and cleanup are mapped; remaining mismatch is compiler ordering/literal-pool/register shape around the 0x03000660/0x03000658 setup."
 next = "Restore the semantic seed and use targeted source-order/permuter work to force retail r4=0x03000660 before the signed index lookup, while retaining the resource call sequence and final reload."
 score = "145/332 then 151/332"
-
-[[wip]]
-name = "sub_0804AC3C"
-seed = "src/decompiled/sub_0804AC3C.c"
-notes = "src/decompiled/sub_0804AC3C.md"
-status = "Two attempts: semantic seed 32/104 (96B), then r6/r5/r4 register-pinned data/first/second 38/104 (96B). Field offsets, transition calls, fixed-point positions, and cleanup are correct; remaining mismatch is retail's constant/coordinate register layout (r0/r1 and r4/r5) and an 8-byte size delta."
-next = "Use a scoped r6 data pointer so it expires after sub_0804AAF0, make coordinate u16 to force retail lsr-to-r4 then adds r0, and preserve the direct fixed-point expression."
-score = "32/104 then 38/104"
 
 [[wip]]
 name = "sub_08051BBC"
@@ -529,22 +433,6 @@ next = "Use local submode/delay/current/amount temporaries: submode=unk07, delay
 score = "26/128 then 36/128"
 
 [[wip]]
-name = "sub_080610A8"
-seed = "src/decompiled/sub_080610A8.c"
-notes = "src/decompiled/sub_080610A8.md"
-status = "Two semantic attempts: if-chain 46/98 (96B), then switch with unsigned half-shift 73/98 (same size). Guards, fields, call arguments, and comparison tree now match; remaining same-size diff is case body placement/order (retail lays out mode 0, mode 2, mode 1 before the shared sub_0806105C tail)."
-next = "Keep the switch comparison and unsigned shift; reorder source case bodies to case 0, case 2, case 1 (or use gotos) to reproduce retail labels _080610E0/_080610EC/_080610F4 and shared tail."
-score = "46/98 then 73/98"
-
-[[wip]]
-name = "sub_0806114C"
-seed = "src/decompiled/sub_0806114C.c"
-notes = "src/decompiled/sub_0806114C.md"
-status = "Two attempts: explicit min/max locals 15/88 (100B), then direct parameter swap/streaming pointer 31/88 (same-size). Semantics are correct; remaining register allocation keeps state in r7 and palette in r6 instead of retail state r6, palette r2, screen pointer r1."
-next = "Move palette masking/shift before the VRAM screen-address calculation and retain direct first/last swap plus streaming *screen loop; this should reproduce retail r6 state, r5 tile, r4 stack end, r1 screen, r2 palette and eliminate r7."
-score = "15/88 then 31/88"
-
-[[wip]]
 name = "sub_08061564"
 seed = "src/decompiled/sub_08061564.c"
 notes = "src/decompiled/sub_08061564.md"
@@ -559,14 +447,6 @@ notes = "src/decompiled/sub_08061AB8.md"
 status = "Two attempts: direct global C 18/120 same-size, then r4/r5/r6/r7 global anchors 50/120 (128B). Allocation is close but the fixed r7 table did not get a saved-register prologue; retail also retains work in r2 for the VRAM copy while the candidate reloads it into r0/r1."
 next = "Make table an ordinary local so agbcc saves normal r7, and introduce a work pointer anchored in r2 after allocation (work=*work_loc) for the bank and +0x94 copy-size expressions. Preserve count_loc r6, work_loc r5, buffer r4."
 score = "18/120 then 50/120"
-
-[[wip]]
-name = "sub_08061D00"
-seed = "src/decompiled/sub_08061D00.c"
-notes = "src/decompiled/sub_08061D00.md"
-status = "Two same-size attempts: direct semantic C 49/104, then r2/r4/r5 register anchors 23/104 (100B). The copy semantics are mapped; remaining differences are input-mask ordering and the compiler CSE/retention of the VRAM base in r6, while retail recomputes it in caller-saved r3 between the two copies."
-next = "Compute the u16 arg0 mask and encoded r5 value before loading work_loc r4. Use separate base1/base2 address statements (or a source shape that recomputes VRAM after the first _08073C4C) so the constant stays in r3 and the second destination replaces r4."
-score = "49/104 then 23/104"
 
 [[wip]]
 name = "sub_08062988"
@@ -599,14 +479,6 @@ notes = "src/decompiled/sub_08065560.md"
 status = "Two attempts: semantic switch/loop 58/120 (116B), then r2/r1/r3/r4/r5 register anchors 66/120 (same-size). Field selection and three writes match; remaining differences are the loop’s initial for-condition (retail enters directly and checks only after decrement) and the retail cursor copy: after computing table base, retail copies selected ROM pointer into r2 and uses r1 only as the byte scratch."
 next = "Change the for loop to do-while with i initialized to 2. Leave selected indices as an ordinary pointer so agbcc can copy it into r2 after table-base calculation; keep data initially r2, table r4, source r3, and counter r5."
 score = "58/120 then 66/120"
-
-[[wip]]
-name = "sub_08066B10"
-seed = "src/decompiled/sub_08066B10.c"
-notes = "src/decompiled/sub_08066B10.md"
-status = "Two attempts: u32 argument plus fixed registers 18/180 (192B), then u8 parameter with ordinary result 91/180 (same-size). Semantic cases, toggle, string handling, and offset calculation are mapped; remaining mismatch is only the entry register/source ordering (retail copies a to r5 before masking index into r4) and the result/r7 allocation shape in the first seed."
-next = "Use a u32 index_arg with a local index pinned to r4 and state pinned to r5; assign state before index. Keep result ordinary so agbcc saves/uses retail r7, with length as the remaining temporary."
-score = "18/180 then 91/180"
 
 [[wip]]
 name = "sub_08066FB8"
@@ -665,14 +537,6 @@ next = "Use a compact pointer/state formulation: pin work r2 and record r4, avoi
 score = "27/284 then 20/284"
 
 [[wip]]
-name = "sub_08068E54"
-seed = "src/decompiled/sub_08068E54.c"
-notes = "src/decompiled/sub_08068E54.md"
-status = "Two semantic attempts: direct motion model 17/108 (112B), then pinned state/x/y/scale registers reached 70/108 with exact size. Remaining mismatch is only the flag check register order: retail forms &state->unk64 in r1, loads the halfword into r1, and masks with r0; the candidate uses r0 for the address."
-next = "Use a register u16 pointer flag_ptr pinned to r1 and assign it with &state->unk64 before the bit test. Keep state r4, scale/delta_y r3, x r1, y r2, and delta_x r5; this should reproduce the remaining flag-check bytes."
-score = "17/108 then 70/108"
-
-[[wip]]
 name = "sub_080691E4"
 seed = "src/decompiled/sub_080691E4.c"
 notes = "src/decompiled/sub_080691E4.md"
@@ -684,25 +548,9 @@ score = "15/138 then 20/138"
 name = "sub_08069DBC"
 seed = "src/decompiled/sub_08069DBC.c"
 notes = "src/decompiled/sub_08069DBC.md"
-status = "Two semantic attempts: direct tiled copy 25/96, then deferred shift load and matching size reached 63/96. Source addressing now matches retail; remaining mismatch is destination/loop register shape (retail keeps destination in r2, source in r5, destination increment in r4, and state +0x5F pointer in r3)."
-next = "Pin destination r2, source r5, source stride r1, destination stride r4, and a state +0x5F byte pointer r3. Build the VRAM base in r2 before adding the shifted destination offset, then use pointer increments matching the retail loop."
-score = "25/96 then 63/96"
-
-[[wip]]
-name = "sub_0806A314"
-seed = "src/decompiled/sub_0806A314.c"
-notes = "src/decompiled/sub_0806A314.md"
-status = "Two semantic attempts: direct allocator/linked-list wrapper 38/144 (same size), then register-shaped pointer/marker rewrite 40/144 (140B). The allocator and node sentinel semantics are mapped; the remaining prologue issue is loading the 0x03003F40 literal after reading *0x03003F44, while the candidate loads it first, plus counter literal-pool and post-node register order."
-next = "Clone the matched sub_0806A3A4 shape: current_value then r2=0x03003F40; IWRAM +r barrier between 0x03003F48 and 0x03003F4C; set r0=work+8, r1=*0x03000B40, r2=0x3400, r3=*current before the stack args"
-score = "38/144 then 40/144"
-
-[[wip]]
-name = "sub_0806A434"
-seed = "src/decompiled/sub_0806A434.c"
-notes = "src/decompiled/sub_0806A434.md"
-status = "Two semantic attempts: register-pinned key version 31/164 (156B), then normal key lifetime 29/164 (156B). Retail loads state->unk00 into r0 initially and reloads it into r1 only at the branch/counter sites, avoiding an r7 save; the node unlink and counter semantics are mapped."
-next = "Avoid keeping key live across control-flow/calls: use state->unk00 directly for the initial zero check and reload it into r1 immediately before each pool/counter comparison. Keep state r6, previous r4, next r5 so the prologue remains 70b5."
-score = "31/164 then 29/164"
+status = "69/96 same_size after asrs fix; source ptr in r2 vs r5"
+next = "permuter got to score 100; register destination for source base"
+score = "69/96"
 
 [[wip]]
 name = "sub_0806BC0C"
@@ -711,30 +559,6 @@ notes = "src/decompiled/sub_0806BC0C.md"
 status = "Two semantic attempts: direct bounded index loop 46/116 (104B), then an explicit fixed-point loop shape 43/116 (112B). The state/source layout and cap callback match; the remaining register issue is keeping the capped count in r4 so retail emits movs r4,#0x40, then transferring count<<16 into r6. The final scratch revision applies that shape but was not retried under the two-attempt limit."
 next = "Compile the final revision with current/count pinned to r4 and limit pinned to r6. Preserve the source count halfword load, cap callback, and fixed-point loop; verify the post-loop +0x114/+0x10/+0x118 stores."
 score = "46/116 then 43/116"
-
-[[wip]]
-name = "sub_0806FDD0"
-seed = "src/decompiled/sub_0806FDD0.c"
-notes = "src/decompiled/sub_0806FDD0.md"
-status = "Two semantic attempts: sorted-list insertion model 8/128 (120B), then corrected u16 key ABI and literal pointer lifetimes reached 21/128 (120B). The body is structurally exact, but retail saves r7 (f0b5) while agbcc emits 70b5 despite keeping the free-list address in r7 across calls; this shifts literal-pool offsets and leaves the match short."
-next = "Force a normal callee-saved local live across sub_0806FDB4/sub_0806F8C4 so agbcc emits the r7 save/restore, while retaining key as u16, free-list address r7, head address r5, and node r4. Then verify the sorted predecessor/successor insertion and counter decrement."
-score = "8/128 then 21/128"
-
-[[wip]]
-name = "sub_0806FE84"
-seed = "src/decompiled/sub_0806FE84.c"
-notes = "src/decompiled/sub_0806FE84.md"
-status = "Two attempts (the first run returned no status, then the retry) reached 33/120 (124B). List unlink/free-list behavior is mapped; the first mismatch is the status/flag precheck register order, with retail using status r2, mask r0, flags r3, and shifted bit value r1."
-next = "Pin status r2, flags r3, and bit r1 in the precheck. Preserve the exact sequence: movs r1,#1; adds r0,r1; load unk20 into r3; and; then load unk16, subtract 5, shift r1, and call sub_0806FBF8(status, bit)."
-score = "33/120"
-
-[[wip]]
-name = "sub_08070354"
-seed = "src/decompiled/sub_08070354.c"
-notes = "src/decompiled/sub_08070354.md"
-status = "Semantic object/flag updater reconstructed. Final verified attempt reached 47/168 (172B); control flow and flag masks match conceptually, but agbcc schedules the arg2 truncation after arg3 truncation (retail copies arg2 to r5 first), and the resulting size differs by 4 bytes."
-next = "Preserve the typed state/object model and force the prologue order: mask b, lsls arg2, lsrs r5, then mask arg3 before loading state->unk30 and state->unk10. Next tune the temporary value register so new-object mode emits object->unk08 mask/shift, 0x100 OR, then the common flags OR."
-score = "47/168"
 
 [[wip]]
 name = "sub_08070468"
@@ -750,14 +574,6 @@ notes = "src/decompiled/sub_0802BAD4.md"
 status = "Two semantic attempts. The final candidate reached 50/320 bytes (15.6%, 264B); it reconstructs argument normalization, sentinel scan, signed-range checks, optional sub_0802C3DC/sub_0803DEC8 path, error callback, record writes, and 0x80-entry search. Remaining mismatch is high-register/stack allocation and repeated main-work table address formation."
 next = "Preserve the 0xC-byte frame and exact normalized argument spills. Then force target registers: r7 must remain the 0x03000198 location, r3 the 0x1694 offset saved at sp+8 across sub_0802C3DC, r2 the current 4-byte slot, r5 the index offset, and r0 the table base. Reproduce repeated reloads of main_loc + offset for each byte store."
 score = "50/320"
-
-[[wip]]
-name = "sub_0802C2B0"
-seed = "src/decompiled/sub_0802C2B0.c"
-notes = "src/decompiled/sub_0802C2B0.md"
-status = "integrated semantic C"
-next = "done"
-score = "100/100"
 
 [[wip]]
 name = "sub_0802C314"
@@ -935,14 +751,6 @@ next = "Use the natural seed and introduce register constraints only after prese
 score = "19/196"
 
 [[wip]]
-name = "sub_0802E048"
-seed = "src/decompiled/sub_0802E048.c"
-notes = "src/decompiled/sub_0802E048.md"
-status = "matched only with GCC asm labels; stripped DIFF"
-next = "rewrite without register asm / empty asm(); permuter if same-size"
-score = "112/228"
-
-[[wip]]
 name = "sub_08031300"
 seed = "src/decompiled/sub_08031300.c"
 notes = "src/decompiled/sub_08031300.md"
@@ -968,14 +776,6 @@ next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "84/216"
 
 [[wip]]
-name = "sub_080405A8"
-seed = "src/decompiled/sub_080405A8.c"
-notes = "src/decompiled/sub_080405A8.md"
-status = "matched only with GCC asm labels; stripped DIFF"
-next = "rewrite without register asm / empty asm(); permuter if same-size"
-score = "28/64"
-
-[[wip]]
 name = "sub_08040F4C"
 seed = "src/decompiled/sub_08040F4C.c"
 notes = "src/decompiled/sub_08040F4C.md"
@@ -992,14 +792,6 @@ next = "park: do not re-run a randomising permuter on this seed. Revisit by hand
 score = "67/76"
 
 [[wip]]
-name = "sub_080442FC"
-seed = "src/decompiled/sub_080442FC.c"
-notes = "src/decompiled/sub_080442FC.md"
-status = "134/144; a in r4 vs r5 (gData symbols fixed pool fold)"
-next = "perm_refer_to_var so index takes r4"
-score = "134/144"
-
-[[wip]]
 name = "sub_08047624"
 seed = "src/decompiled/sub_08047624.c"
 notes = "src/decompiled/sub_08047624.md"
@@ -1008,60 +800,12 @@ next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "80/174"
 
 [[wip]]
-name = "sub_080523A4"
-seed = "src/decompiled/sub_080523A4.c"
-notes = "src/decompiled/sub_080523A4.md"
-status = "matched only with GCC asm labels; stripped DIFF"
-next = "rewrite without register asm / empty asm(); permuter if same-size"
-score = "71/112"
-
-[[wip]]
-name = "sub_08066224"
-seed = "src/decompiled/sub_08066224.c"
-notes = "src/decompiled/sub_08066224.md"
-status = "permuter 300 s + 900 s, no score 0 (110 → 55); 96/112"
-next = "keep readable Thumb; duplicated callback/flag block layout"
-score = "96/112"
-
-[[wip]]
-name = "sub_0806A3A4"
-seed = "src/decompiled/sub_0806A3A4.c"
-notes = "src/decompiled/sub_0806A3A4.md"
-status = "matched only with GCC asm labels; stripped DIFF"
-next = "rewrite without register asm / empty asm(); permuter if same-size"
-score = "10/144"
-
-[[wip]]
-name = "sub_0806B3E8"
-seed = "src/decompiled/sub_0806B3E8.c"
-notes = "src/decompiled/sub_0806B3E8.md"
-status = "46pct size_mismatch readable rewrite"
-next = "permuter from readable seed; top-tested check loop"
-score = "39/84"
-
-[[wip]]
-name = "sub_08070604"
-seed = "src/decompiled/sub_08070604.c"
-notes = "src/decompiled/sub_08070604.md"
-status = "permuter 300 s, no score 0 (140 → 10); 73/92"
-next = "keep readable Thumb; store ordering and the 0x100 pair"
-score = "73/92"
-
-[[wip]]
 name = "sub_08071BA0"
 seed = "src/decompiled/sub_08071BA0.c"
 notes = "src/decompiled/sub_08071BA0.md"
 status = "matched only with GCC asm labels; stripped DIFF"
 next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "32/148"
-
-[[wip]]
-name = "sub_08073988"
-seed = "src/decompiled/sub_08073988.c"
-notes = "src/decompiled/sub_08073988.md"
-status = "94/96; table constant lands in r2, retail materialises it in the free r0. Re-swept with old_agbcc too (flag matrix, 30 register-named forms, 46 tmp-reuse forms, 38 chain forms modelled on matched sibling sub_0806B3E8) — all 94/96 or worse. This session: 12 more `default_char` shapes (`r0 = (index = C)`, `C + ch`, `index + ch`, split assignments, u32 casts) — every one 94/96 or size-mismatch; old_agbcc 90/96."
-next = "park: the load-into-destination-register choice is an allocator heuristic agbcc does not reproduce. Leave the readable Thumb wrapper unless a permuter run over old_agbcc finds it"
-score = "94/96"
 
 [[wip]]
 name = "sub_0803DBD0"
@@ -1080,36 +824,12 @@ next = "permuter or force high-reg live ranges"
 score = "58/240"
 
 [[wip]]
-name = "sub_08069F00"
-seed = "src/decompiled/sub_08069F00.c"
-notes = "src/decompiled/sub_08069F00.md"
-status = "11/24 same-size, r0/r1 coalescing: retail keeps `adds r1,r0,#0` (copy) and compares r0, agbcc coalesces the copy and emits a trailing nop. This session: 13 more shapes (2- and 3-deep copy chains, u32 copy, operator variants on the sign test, split `r = p;` statement) — every one byte-identical at 11/24, so agbcc's copy coalescing always wins"
-next = "park: the extra copy is a pre-coalescing compiler artifact; not source-reachable with this agbcc. Leave the readable Thumb wrapper"
-score = "11/24"
-
-[[wip]]
 name = "sub_08042784"
 seed = "src/decompiled/sub_08042784.c"
 notes = "src/decompiled/sub_08042784.md"
 status = "35/100 same-size; retail keeps the ring pointer in r12"
 next = "permuter"
 score = "35/100"
-
-[[wip]]
-name = "sub_080699C8"
-seed = "src/decompiled/sub_080699C8.c"
-notes = "src/decompiled/sub_080699C8.md"
-status = "size mismatch; shared tail not reproducible"
-next = "permuter"
-score = "25/80"
-
-[[wip]]
-name = "sub_08067FC8"
-seed = "src/decompiled/sub_08067FC8.c"
-notes = "src/decompiled/sub_08067FC8.md"
-status = "43/74 same-size; total=0 must precede the call, entry check uses r8"
-next = "permuter"
-score = "43/74"
 
 [[wip]]
 name = "sub_08073114"
@@ -1123,9 +843,9 @@ score = "104/112"
 name = "sub_080739E8"
 seed = "src/decompiled/sub_080739E8.c"
 notes = "src/decompiled/sub_080739E8.md"
-status = "11/36; rotated bottom test + separate entry guard, agbcc merges them"
-next = "permuter"
-score = "11/36"
+status = "35/36 same_size; null beq 0cd0 vs retail 0dd0"
+next = "shared exit that emits movs r0,#0 for empty/loop but leaves null branching to bx lr; permuter on v1 30/36 0dd0 seed did not help"
+score = "35/36"
 
 [[wip]]
 name = "sub_0803715C"
@@ -1139,9 +859,9 @@ score = "33/444"
 name = "sub_08067F3C"
 seed = "src/decompiled/sub_08067F3C.c"
 notes = "src/decompiled/sub_08067F3C.md"
-status = "58/92 size mismatch (96 vs 92); product in r3 not r2, u16 countdown is lsls/lsrs"
-next = "s32 counter and mask-first flag both scored worse; permuter only if a same-size seed appears"
-score = "58/92"
+status = "61/92 same_size; muls r2,r3 vs r3,r2 after ldrh unk02/unk04"
+next = "PERM around multiply; or leave Thumb"
+score = "61/92"
 
 [[wip]]
 name = "sub_08038438"
@@ -1167,3 +887,59 @@ status = "same_size 16/136"
 next = "no w local needs to stay (same-size); retail keeps frame w/ r7 (5 pushes) and materialises &mask via r0 then copies to r4; agbcc loads pool straight to r4 and swaps mask/const regs"
 score = "16/136"
 
+
+[[wip]]
+name = "sub_0807000C"
+seed = "src/decompiled/sub_0807000C.c"
+notes = "src/decompiled/sub_0807000C.md"
+status = "163/192 same_size; early A4 load uses ldr r1 vs r0; insert==0 path CSE AC-8"
+next = "need active_loc in r3 like BtlObjPoolAlloc without extra saved regs; permuter best score 345"
+score = "163/192"
+
+[[wip]]
+name = "sub_08062358"
+seed = "src/decompiled/sub_08062358.c"
+notes = "src/decompiled/sub_08062358.md"
+status = "size_mismatch 208 vs 192; retail mov r12 early"
+next = "agbcc unlikely to emit r12 object; leave Thumb or find CSE trick"
+score = "32/192"
+
+[[wip]]
+name = "sub_0807027C"
+seed = "src/decompiled/sub_0807027C.c"
+notes = "src/decompiled/sub_0807027C.md"
+status = "size_mismatch 208 vs 216; retail keeps c in r8"
+next = "need more reg pressure or permuter; try forcing c live across calls"
+score = "11/216"
+
+[[wip]]
+name = "sub_0804EBF0"
+seed = "src/decompiled/sub_0804EBF0.c"
+notes = "src/decompiled/sub_0804EBF0.md"
+status = "same-size 198/202; only DIFF is ldr/adds dest r0 vs r1 after sub_080615EC"
+next = "keep fieldOff in r0 across *baseLoc load so idx lands in r1; permuter stuck at score 30"
+score = "198/202"
+
+[[wip]]
+name = "sub_080688C8"
+seed = "src/decompiled/sub_080688C8.c"
+notes = "src/decompiled/sub_080688C8.md"
+status = "22/190 size 188; mode r8 scheduling"
+next = "match retail: ldr mode to r8 before u8-extend index; then permuter"
+score = "22/190"
+
+[[wip]]
+name = "sub_08054494"
+seed = "src/decompiled/sub_08054494.c"
+notes = "src/decompiled/sub_08054494.md"
+status = "79/196 same_size; y in r5 vs r4"
+next = "permuter or force y in r4 like retail adds r4,r1"
+score = "79/196"
+
+[[wip]]
+name = "sub_08060D58"
+seed = "src/decompiled/sub_08060D58.c"
+notes = "src/decompiled/sub_08060D58.md"
+status = "same-size 158/240; body matches after VRAM bank idiom; stuck on add sp #-0x14 vs retail #-0x18 (widthU stack home)"
+next = "force widthU stack slot without extra early store; or permuter with perm macros"
+score = "158/240"

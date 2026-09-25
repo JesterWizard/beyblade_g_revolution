@@ -1,0 +1,53 @@
+#include "global.h"
+#include "data_symbols.h"
+
+/* match-compiler: old_agbcc */
+// @ 0x08061628
+void sub_08061628(u32 x_arg, u32 y_arg, u32 w_arg, u32 h_arg, u32 tile_arg)
+{
+    u32 x = (u8)x_arg;
+    u32 y = (u8)y_arg;
+    u32 width = (u8)w_arg;
+    u32 height = (u8)h_arg;
+    u32 tilePacked = tile_arg << 16;
+    u32 tileId = 0;
+    struct Unk0798 *tmp;
+    u16 baseTile;
+    u32 vramBase = 0xC0;
+    u8 *vram;
+    void **cpuLoc;
+    u32 row, col, rowNext;
+    u32 widthShifted, widthU;
+    u16 *cell;
+
+    tmp = gData_03000798;
+    baseTile = tmp->unk96;
+    vramBase <<= 19;
+    vram = (u8 *)((tmp->unk5C << 11) + vramBase);
+    cpuLoc = (void **)gData_080BB8BC;
+    _08073C4C((void *)((tilePacked >> 16) | tilePacked | baseTile), vram, 0x80 << 4, *cpuLoc);
+    vram += ((y << 5) + x) << 1;
+    row = 0;
+    if (row < height) {
+        widthShifted = width << 16;
+        widthU = widthShifted >> 16;
+        do {
+            col = 0;
+            rowNext = row + 1;
+            if (col < widthU) {
+                do {
+                    cell = (u16 *)(vram + (((row << 5) + col) << 1));
+                    *cell = (u16)(tileId | baseTile);
+                    tileId = (u16)(tileId + 1);
+                    col = (u16)(col + 1);
+                } while (col < (widthShifted >> 16));
+            }
+            row = (u16)rowNext;
+        } while (row < height);
+    }
+    tmp = gData_03000798;
+    tmp->unk98 = (u16)(width << 3);
+    tmp->unk9A = (u16)(height << 3);
+    tmp->unkA4 = (u16)x;
+    tmp->unkA6 = (u16)y;
+}

@@ -6,6 +6,7 @@ void sub_08031300(struct Unk312EC *a)
     s32 t;
     struct Unk705DC *p;
     u32 v;
+    u32 mask;
 
     if (a->unk08 == 0)
         return;
@@ -20,7 +21,9 @@ void sub_08031300(struct Unk312EC *a)
     if (p == 0)
         return;
     v = p->unk14 >> 12;
-    if ((t & 5) != 0)
+    mask = 5;
+    mask &= t;
+    if (mask != 0)
         return;
     if (v == (s32)a->unk01)
         TextEntrySetPaletteBank(p, (u8)a->unk00);

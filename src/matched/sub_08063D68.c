@@ -1,8 +1,68 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08063d68
-__attribute__((naked))
-void sub_08063D68(void)
+#include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+#include "data_symbols.h"
+
+// @ 0x08063d68
+/* match-compiler: old_agbcc */
+void sub_08063D68(struct MainWork *a, s32 b)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r8\npush {r7}\nadd sp, #-0x010\nadds r7, r0, #0x0\nldr r0, _08063E24 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r2, _08063E28 @ =0x00001829\nadds r0, r0, r2\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08063E16\nsubs r1, #0x01\nmovs r4, #0x84\nmov r8, r4\ncmp r1, #0x00\nbne _08063D8E\nmovs r0, #0x74\nmov r8, r0\n_08063D8E:\nldr r0, _08063E2C @ =0x030008E4\nldr r0, [r0, #0x00]\nlsls r1, r1, #0x02\nmovs r2, #0x98\nlsls r2, r2, #0x02\nadds r0, r0, r2\nadds r0, r0, r1\nldr r6, [r0, #0x00]\nbl sub_08061A98\nadds r5, r0, #0x0\nbl sub_08061AA8\nadds r4, r0, #0x0\nlsls r4, r4, #0x10\nlsrs r4, r4, #0x10\nbl sub_080617B4\nadds r3, r0, #0x0\nlsls r3, r3, #0x10\nlsrs r3, r3, #0x10\nadds r0, r6, #0x0\nadds r1, r5, #0x0\nadds r2, r4, #0x0\nbl sub_08073988\nadds r5, r0, #0x0\nasrs r0, r5, #0x01\nadds r5, r0, #0x0\nadds r5, #0x7A\nmovs r0, #0x9D\nlsls r0, r0, #0x02\nadds r4, r7, r0\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08063DDE\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08063DDE:\nmovs r0, #0x00\nbl sub_0806FDD0\nstr r0, [r4, #0x00]\nldr r1, _08063E30 @ =0x08118CF0\nlsls r2, r5, #0x08\nmov r4, r8\nlsls r3, r4, #0x08\nmovs r4, #0x01\nstr r4, [sp, #0x000]\nmovs r4, #0x00\nstr r4, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nbl sub_0806FF58\nmovs r0, #0xC1\nlsls r0, r0, #0x02\nadds r1, r7, r0\nmovs r0, #0x04\nstr r0, [r1, #0x00]\nldr r2, _08063E34 @ =0x080BB8C0\nldr r0, _08063E38 @ =0x0826E320\nldr r1, _08063E3C @ =0x05000200\nldr r3, [r2, #0x00]\nmovs r2, #0x20\nbl _08073C4C\n_08063E16:\nadd sp, #0x010\npop {r3}\nmov r8, r3\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08063E24: .4byte 0x03000198\n_08063E28: .4byte 0x00001829\n_08063E2C: .4byte 0x030008E4\n_08063E30: .4byte 0x08118CF0\n_08063E34: .4byte 0x080BB8C0\n_08063E38: .4byte 0x0826E320\n_08063E3C: .4byte 0x05000200");
+    s32 ypos;
+    u8 *base;
+    u32 off;
+    void *str;
+    u32 t0;
+    u16 t1;
+    u16 t2;
+    s32 x;
+    struct Unk40088Target **slot;
+    void **srcLoc;
+    void *src;
+    void *graphic;
+    void *dst;
+
+    if (gMainWorkPtr->unk1829 == 0)
+        return;
+
+    b = b - 1;
+    ypos = 0x84;
+    if (b == 0)
+        ypos = 0x74;
+
+    base = *(u8 **)0x030008E4;
+    b = b << 2;
+    off = 0x98;
+    off <<= 2;
+    base = base + off;
+    str = *(void **)(base + b);
+
+    t0 = sub_08061A98();
+    t1 = sub_08061AA8();
+    t2 = sub_080617B4();
+    x = sub_08073988((const u8 *)str, (const u8 *)t0, t1, t2);
+    x = (x >> 1) + 0x7A;
+
+    slot = &a->unk0274;
+    if (*slot != 0)
+    {
+        BtlObjPoolFree(*slot);
+        *slot = 0;
+    }
+    *slot = BtlObjPoolAlloc(0);
+
+    sub_0806FF58(*slot, (void *)0x08118CF0, x << 8, ypos << 8, 1, 0, 0, 0);
+
+    a->unk0304 = 4;
+
+    srcLoc = (void **)gData_080BB8C0;
+    graphic = (void *)0x0826E320;
+    dst = (void *)0x05000200;
+    src = *srcLoc;
+    _08073C4C(graphic, dst, 0x20, src);
 }
+
