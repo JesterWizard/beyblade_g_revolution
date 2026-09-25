@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-25T10:08:25Z",
+  "generated": "2026-09-25T11:47:14Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 179,
-    "semantic_done": 454,
-    "readable_asm": 179,
+    "pending": 178,
+    "semantic_done": 455,
+    "readable_asm": 178,
     "opcode": 0,
     "battle_pending": 70,
     "battle_semantic": 87,
     "blocked": 20,
-    "wip": 106
+    "wip": 107
   },
   "pinned": [],
   "wip": [
@@ -45,9 +45,9 @@
       "bytes": 112,
       "seed": "src/decompiled/sub_0802BC14.c",
       "notes": "src/decompiled/sub_0802BC14.md",
-      "status": "same-size DIFF (58/112, 51.8%) after signed-call and r0-pointer hints; remaining pool/register layout differs",
-      "next": "leave readable Thumb; revisit with a verified signed-argument prototype or targeted pool/register permutation",
-      "score": "58/112"
+      "status": "size_mismatch 5/112; u32 prototype, 60s permuter no score 0",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
+      "score": "5/112"
     },
     {
       "name": "sub_0802BF04",
@@ -96,8 +96,8 @@
     {
       "name": "sub_0803DCFC",
       "addr": "0x0803DCFC",
-      "kind": "asm",
-      "bytes": 48,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0803DCFC.c",
       "notes": "src/decompiled/sub_0803DCFC.md",
       "status": "44/48 same-size seed; permuter saturated at 30/48 after 8x120s and 3x300s jobs",
@@ -111,9 +111,9 @@
       "bytes": 88,
       "seed": "src/decompiled/sub_08040EF4.c",
       "notes": "src/decompiled/sub_08040EF4.md",
-      "status": "38pct size_mismatch goto seed",
-      "next": "table walk r2/r3/r4/r6 lifetimes; permuter only",
-      "score": "35/88"
+      "status": "60s permuter, no score 0 (19/88)",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
+      "score": "19/88"
     },
     {
       "name": "sub_08042BE8",
@@ -122,9 +122,9 @@
       "bytes": 82,
       "seed": "src/decompiled/sub_08042BE8.c",
       "notes": "src/decompiled/sub_08042BE8.md",
-      "status": "best 37/82 size-mismatch; explicit r4/r5/r6/r7/r3/r2 shaping reproduces the loop body, but agbcc emits push r4-r6 while retail saves r7 as well and retains a longer branch layout",
-      "next": "force r7 as an ordinary live callee-saved local rather than only a fixed register pointer; then preserve the current byte-offset table cursors",
-      "score": "37/82"
+      "status": "60s permuter, no score 0 (17/82)",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
+      "score": "17/82"
     },
     {
       "name": "sub_08059DC8",
@@ -133,8 +133,8 @@
       "bytes": 72,
       "seed": "src/decompiled/sub_08059DC8.c",
       "notes": "src/decompiled/sub_08059DC8.md",
-      "status": "27/72 bytes (37.5%); this is a state-machine dispatcher that calls a fixed bx-r4 trampoline (_08073C50 at 0x08073C50: 'bx r4') with the actual handler loaded from a jump table at 0x08099710[list->field0] into r4 right before each bl. agbcc dead-code-eliminates the register(r4)-pinned handler assignment since it's never read in C (only consumed implicitly via the trampoline's bx r4), so the table lookup vanishes from output",
-      "next": "may need inline asm (not just register-pinned var) to force the r4 load to survive codegen immediately before the bl _08073C50 call, or split into two statements bridged by a volatile-style barrier; check other _08073C50 callers (sub_08069270, sub_0806C7D4, sub_0806D748) for the same pattern once one is solved",
+      "status": "60s permuter, no score 0 (27/72)",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
       "score": "27/72"
     },
     {
@@ -144,9 +144,9 @@
       "bytes": 72,
       "seed": "src/decompiled/sub_080620D4.c",
       "notes": "src/decompiled/sub_080620D4.md",
-      "status": "10/72 bytes (12.5%), size mismatch (80 vs 72); correct algorithm (walk a->unk0C[0..0x7F] entries, shift each entry's unk08/unk0C by dx<<8/dy<<8, and on the first non-null entry snapshot entries[0]->unk08/unk0C into a->unk10/unk14). Discovered/reused existing struct Unk62044 (already matched by sub_08062044.c/sub_0806209C.c) and added struct Unk620D4Entry for the array elements. Retail copies raw dy into r3 immediately after push, before the null checks; agbcc here defers the dy shift and ends up spilling through an 'ip' register (extra mov), needing one more callee-saved register than retail",
-      "next": "try computing shiftedDy as the FIRST statement (before the two null checks) so agbcc materializes it early like retail does with raw dy, or split shiftedDx/shiftedDy computation into the loop body itself rather than hoisting both before the null checks",
-      "score": "10/72"
+      "status": "60s permuter, no score 0 (37/72)",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
+      "score": "37/72"
     },
     {
       "name": "sub_0802DEA0",
@@ -155,8 +155,8 @@
       "bytes": 424,
       "seed": "src/decompiled/sub_0802DEA0.c",
       "notes": "src/decompiled/sub_0802DEA0.md",
-      "status": "66/424 bytes (15.6%), size mismatch (400 vs 424); correct algorithm fully derived (16 near-identical blocks: for each of struct Unk026C's linked-list fields unk0C..unk40, if non-null set the node's unk08/unk0C to a color constant (0xFFFFC000 for the first 6, 0xF800 for the rest); then free+null 7 of those same fields via sub_0806FE84; finally vsync, set unk48=0xFF, and OR 0xFFFF into gMainWorkPtr's unk1838/unk183A). Reused existing structs Unk026C/Unk705DC. agbcc's CSE merges the repeated 'gUnk_0300026C' pointer dereference across adjacent blocks (r1 cached, reused via a spare register) even when each block is written as a fresh 'p = gUnk_0300026C' assignment, since no intervening write invalidates it -- retail instead reloads fresh every single block",
-      "next": "try inserting a genuinely-opaque side effect between blocks (unlikely to be legitimate semantic C), or accept this as CSE the compiler correctly performs and retail's source simply repeated the full expression per block in a way this agbcc snapshot doesn't reproduce; may need per-block dummy calls or accept as permanently DIFF",
+      "status": "size_mismatch 66/424 after 60s permuter; CSE reload",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
       "score": "66/424"
     },
     {
@@ -166,9 +166,9 @@
       "bytes": 168,
       "seed": "src/decompiled/sub_080302E0.c",
       "notes": "src/decompiled/sub_080302E0.md",
-      "status": "two semantic attempts: 66/168 size_mismatch (148B), then 63/168 size_mismatch (176B); logic and field layouts are identified, but register/literal-pool layout still differs",
-      "next": "Use the first candidate's cached battle/target locals as the base for a decomp-permuter or targeted register-layout search; do not hand-loop match retries",
-      "score": "63/168"
+      "status": "seed does not compile: Unk battle struct has no unk13C/unkAE8",
+      "next": "Do not re-attempt until those struct members exist.",
+      "score": "compile-fail"
     },
     {
       "name": "sub_08031C98",
@@ -980,8 +980,8 @@
       "bytes": 76,
       "seed": "src/decompiled/sub_08043B90.c",
       "notes": "src/decompiled/sub_08043B90.md",
-      "status": "67/76 seed (sweep_seeds). Permuter (120s, x8 jobs) best 200, i.e. randomization makes it worse \u2014 the hand-tuned seed is already the best shape. Symbols regress it to 14/76, so it must stay symbol-free. Retail's tail returns by reusing r0 == 0 from the loop test",
-      "next": "park: do not re-run a randomising permuter on this seed. Revisit by hand-forcing the r0 == 0 loop-test reuse in the tail return",
+      "status": "60s permuter, no score 0 (67/76)",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
       "score": "67/76"
     },
     {
@@ -1013,8 +1013,8 @@
       "bytes": 80,
       "seed": "src/decompiled/sub_0803DBD0.c",
       "notes": "src/decompiled/sub_0803DBD0.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
+      "status": "same_size 23/80 after 60s permuter; leaf prologue regalloc",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
       "score": "23/80"
     },
     {
@@ -1057,8 +1057,8 @@
       "bytes": 36,
       "seed": "src/decompiled/sub_080739E8.c",
       "notes": "src/decompiled/sub_080739E8.md",
-      "status": "35/36 same_size; null beq 0cd0 vs retail 0dd0",
-      "next": "shared exit that emits movs r0,#0 for empty/loop but leaves null branching to bx lr; permuter on v1 30/36 0dd0 seed did not help",
+      "status": "35/36 beq displacement; 60s permuter no score 0",
+      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
       "score": "35/36"
     },
     {
@@ -1156,9 +1156,9 @@
       "bytes": 202,
       "seed": "src/decompiled/sub_0804EBF0.c",
       "notes": "src/decompiled/sub_0804EBF0.md",
-      "status": "same_size 195/202 old_agbcc; post-call reg alloc (r0 vs r1 index path)",
-      "next": "PERM macros or leave Thumb; permuter best 40",
-      "score": "195/202"
+      "status": "same-size 198/202; only DIFF is ldr/adds dest r0 vs r1 after sub_080615EC",
+      "next": "keep fieldOff in r0 across *baseLoc load so idx lands in r1; permuter stuck at score 30",
+      "score": "198/202"
     },
     {
       "name": "sub_080688C8",
@@ -1181,6 +1181,17 @@
       "status": "79/196 same_size; y in r5 vs r4",
       "next": "permuter or force y in r4 like retail adds r4,r1",
       "score": "79/196"
+    },
+    {
+      "name": "sub_08060D58",
+      "addr": "0x08060D58",
+      "kind": "asm",
+      "bytes": 240,
+      "seed": "src/decompiled/sub_08060D58.c",
+      "notes": "src/decompiled/sub_08060D58.md",
+      "status": "same-size 158/240; body matches after VRAM bank idiom; stuck on add sp #-0x14 vs retail #-0x18 (widthU stack home)",
+      "next": "force widthU stack slot without extra early store; or permuter with perm macros",
+      "score": "158/240"
     }
   ],
   "recommended": [
@@ -1638,18 +1649,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08060D58",
-      "addr": "0x08060D58",
-      "kind": "asm",
-      "bytes": 240,
-      "score": 120,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08061628",
       "addr": "0x08061628",
       "kind": "asm",
@@ -1703,6 +1702,18 @@
       "kind": "asm",
       "bytes": 248,
       "score": 129,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08060C30",
+      "addr": "0x08060C30",
+      "kind": "asm",
+      "bytes": 248,
+      "score": 130,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
@@ -2300,18 +2311,6 @@
       "kind": "asm",
       "bytes": 236,
       "score": 125,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08060D58",
-      "addr": "0x08060D58",
-      "kind": "asm",
-      "bytes": 240,
-      "score": 120,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,

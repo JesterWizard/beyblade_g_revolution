@@ -8,10 +8,10 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **451/633 (71.2%)** |
-| **Decompiled C (bytes)** | **32,988/90,272 (36.5%)** |
+| **Decompiled C (functions)** | **452/633 (71.4%)** |
+| **Decompiled C (bytes)** | **33,036/90,272 (36.6%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 182/633 (28.8%) |
+| Readable Thumb | 181/633 (28.6%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
@@ -20,6 +20,18 @@ _Agent-maintained log. Updated after each batch run._
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-25 — 60s budget, no new match
+
+- Five fresh functions, one round each, then `retry = false`: `sub_0803DBD0` 23/80, `sub_080739E8` 35/36, `sub_0802BC14` 5/112, `sub_0802DEA0` 66/424, `sub_080302E0` does not compile (`unk13C` / `unkAE8` missing).
+- `script_first` now skips `retry = false` so a spent 60s seed is not permuted again.
+- `make compare` OK. Still 452/633.
+
+### 2026-09-25 — 60s budget (+1): sub_0803DCFC
+
+- `sub_0803DCFC` — permuter, `old_agbcc`, 48/48. `make compare` OK.
+- Parked after one 60s round, no second pass: `sub_08043B90` (67/76), `sub_08040EF4` (19/88), `sub_08042BE8` (17/82), `sub_08059DC8` (27/72), `sub_080620D4` (37/72).
+- Permuter timeout now uses its own session, and batch runners pass `--no-escalate`, so one function stays inside 60s.
 
 ### 2026-09-24 — semantic batch (+5): 6114C, 699C8, 6B3E8, 66B10, 6E7BC
 
@@ -1483,7 +1495,6 @@ First 4 functions + `src/stubs.c`.
 | `tools/decomp/cursor_batch.sh` | Triage + m2c seeds |
 | `tools/decomp/integrate_match.py` | Link match into ROM peel |
 | `tools/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP; patches Thumb BL relocs) |
-| `tools/decomp/worddiff.py` | Word-aligned retail-vs-compiled table for hand matching (wraps `match_function.py --full`) |
 | `tools/decomp/test_variants.py` | Batch a `@@BODY@@` template against a list of source variants |
 | `tools/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
 | `tools/decomp/permuter/` | decomp-permuter wrappers (agbcc pool/order search) |

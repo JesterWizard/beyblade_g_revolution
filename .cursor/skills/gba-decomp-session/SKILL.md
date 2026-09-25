@@ -24,7 +24,7 @@ python3 tools/decomp/script_first.py 5          # batch of 5; patterns + cleaned
 ```bash
 python3 tools/decomp/agent_packet.py --next   # repeat until 5 matched or attempted
 # Write readable semantic C from the packet seed (.cursor/rules/decomp-semantic-style.mdc).
-# Max 2 match_function.py retries, then:
+# One match_function.py attempt, then:
 python3 tools/decomp/park_wip.py sub_XXXXXXXX scratch.c --status "…" --next "…" --score "N/M"
 ```
 
@@ -59,9 +59,7 @@ clone family?           → cluster_shapes.py → one new c_patterns.py matcher
 ## After each green batch
 
 1. Update [docs/decomp-status.md](docs/decomp-status.md)
-2. Run **gba-decomp-improve** checklist (patterns from clusters, seeds, queue)
-3. Unmatched C → `src/decompiled/` (`park_wip.py`)
-4. Commit per AGENTS.md unless user forbids
+2. Unmatched C → `src/decompiled/` (`park_wip.py`)
 
 ## Related skills
 

@@ -2929,4 +2929,42 @@ struct Unk37508Work /* >= 0x210c */
     /* 20a4 */ struct Unk33F30 unk20A4;
 };
 
+/* 16-byte menu row. sub_08039BD4 indexes gUnk_0300040C by gUnk_03000400. */
+struct Unk39BD4Row /* 0x10 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u32 unk08;
+    /* 0c */ s8 unk0C;
+    /* 0d */ s8 unk0D;
+    /* 0e */ s8 unk0E;
+    /* 0f */ u8 unk0F;
+};
+
+/* Part record returned by sub_0803E1F4. sub_08039BD4. */
+struct Unk39BD4Part /* >= 0x25 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ u32 unk14;
+    /* 18 */ u32 unk18;
+    /* 1c */ u8 filler_1C[8];
+    /* 24 */ s8 unk24;
+};
+
+/* Screen object holding the text slots this function frees and refills. */
+struct Unk39BD4 /* >= 0x2b4 */
+{
+    /* 000 */ u8 filler_000[0x284];
+    /* 284 */ struct Unk705DC *unk284;
+    /* 288 */ struct Unk705DC *unk288;
+    /* 28c */ struct Unk705DC *unk28C;
+    /* 290 */ struct Unk705DC *unk290;
+    /* 294 */ struct Unk705DC *unk294;
+    /* 298 */ struct Unk705DC *unk298;
+    /* 29c */ struct Unk705DC *unk29C;
+    /* 2a0 */ struct Unk705DC *unk2A0;
+    /* 2a4 */ u8 filler_2A4[0xC];
+    /* 2b0 */ struct Unk705DC *unk2B0;
+};
+
 #endif /* GUARD_UNKNOWN_TYPES_H */

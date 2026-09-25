@@ -1,0 +1,16 @@
+---
+description: 60-second wall clock to match each function, then park and move on
+alwaysApply: true
+---
+
+# Match budget: 60 seconds per function
+
+Each function gets **60 seconds** of matching work. When the clock hits 60s, stop and take the next function.
+
+- Start the clock when work on that function starts (packet, permuter, or a C write).
+- Pass `--permute-seconds 60` to `script_first.py` and `agent_packet.py`. Pass `--seconds 60 --no-escalate` to `permuter/auto.py` (one round; the clock does not reset).
+- Inside the window: at most one C write and one `match_function.py` attempt.
+- Score 0 → `integrate_c.py`. DIFF, or the clock expires → `park_wip.py` and move on.
+- Do not extend the permuter, sweep variants, or open a second packet on the same function in that batch.
+
+`make compare` stays once per batch and is outside this clock.

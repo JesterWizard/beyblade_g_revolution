@@ -122,6 +122,7 @@ def run_round_with_dashboard(
         stderr=subprocess.STDOUT,
         text=True,
         bufsize=1,
+        start_new_session=True,
     )
     assert proc.stdout is not None
 

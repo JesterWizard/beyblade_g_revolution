@@ -300,7 +300,7 @@ def _one_round(
             state=dash_state,
         )
         return round_result.interrupted
-    proc = subprocess.Popen(cmd, cwd=str(ROOT))
+    proc = subprocess.Popen(cmd, cwd=str(ROOT), start_new_session=True)
     # The caller owns its own timeout (`timeout 600` in a batch script, or a
     # killed session). `start_new_session=True` means its signal never reaches
     # the worker pool, so forward it.

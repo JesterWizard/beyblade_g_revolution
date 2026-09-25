@@ -35,7 +35,7 @@ reason, and every function has a symbols.json entry (or a recorded reason it has
 | **ROM linked** | 633/633 functions in peel; `make compare` OK | `match_batch.sh`, `integrate_match.py` |
 | **Analysis DB** | `analysis/*.json` complete and idempotent | `analyze.py`, `make analyze` |
 | **C decomp** | Every *convertible* function has verified C in `src/matched/` | `script_first.py`, `match_function.py`, `integrate_c.py` |
-| **Drafts** | Unmatched C parked in `src/decompiled/` (DECOMPILED tier), indexed | `park_wip.py`, `promote_wip.py` |
+| **Drafts** | Unmatched C parked in `src/decompiled/` (DECOMPILED tier), indexed | `park_wip.py` |
 | **RAM map** | Battle/menu IWRAM named; pool rescanned periodically | `ram_map_pass.sh`, `battle_scan.py` |
 | **Names** | Every function has an evidenced `analysis/symbols.json` entry | `symbols.py`, [decomp-pipeline.md](decomp-pipeline.md) |
 | **Docs** | `docs/systems/` and `docs/functions/` regenerate clean | `document.py`, `make document` |
@@ -65,23 +65,9 @@ python3 tools/decomp/script_first.py
 
 # 3. Remainder — one packet, not a doc dump
 python3 tools/decomp/agent_packet.py --next
-# Write C from that packet only. Max 1 match_function.py retry, then park_wip.py.
+# Write C from that packet only. One match_function.py attempt, then park_wip.py.
 
-# 4. Grow zero-token path from clones
-python3 tools/decomp/cluster_shapes.py
-
-# 5. Naming — independent of matching, so all 633 are eligible
-make analyze
-make tier
-python3 tools/decomp/symbols.py set sub_XXXXXXXX --symbol Name \
-    --confidence 0.8 --source ai --evidence "..."
-python3 tools/decomp/symbols.py apply
-
-# 6. Refresh derived views + RAM map (every 3–5 conversion batches)
-tools/decomp/ram_map_pass.sh
-make analyze && make document
-
-# 7. Report + commit
+# 4. Report
 python3 tools/decomp/report_status.py
 ```
 
@@ -101,12 +87,6 @@ When multiple approaches exist, try in this order. **Never break `make compare`.
 ├─ Literal-pool / agbcc ordering mismatch?
 │    Keep asm matching in `src/matched/`; **park** unmatched C in `src/decompiled/`
 │    (see docs/decomp-wip.md). Do not revert a reconstruction without a seed.
-│    Promote RAM symbols if tracing clarified globals
-├─ Clip-on family in cluster_shapes.py?
-│    Add one matcher to c_patterns.py; re-run script_first.py
-├─ Role understood while reading asm?
-│    Name it: symbols.py set (AI provenance + evidence); promote gUnk_* in
-│    asm/ram_map_*.s; ram_map_pass.sh. Naming does NOT require a MATCH.
 └─ ≥80% in C + check_shiftable gates met?
      Begin Phase 5 shiftable ROM migration (see decomp-roadmap.md)
 ```
@@ -119,17 +99,7 @@ When multiple approaches exist, try in this order. **Never break `make compare`.
 4. **Audio (Gax)** — if distinct cluster appears in scans
 5. **Remaining** — triage by size + call graph
 
-Naming is **not gated on matching**. Once a function's role is understood — from
-its callees, its RAM references, or the disassembly — record it immediately:
-
-```bash
-python3 tools/decomp/symbols.py set sub_XXXXXXXX --symbol BtlFoo \
-    --confidence 0.8 --source ai --evidence "why you believe this"
-python3 tools/decomp/symbols.py apply
-```
-
-Names live in `analysis/symbols.json` and reach the compiler as `#define` macros,
-so naming cannot break `make compare`. See [decomp-pipeline.md](decomp-pipeline.md).
+Naming is a separate pass (`symbols.py`). It is not part of a match batch.
 
 ---
 

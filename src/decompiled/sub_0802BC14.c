@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802bc14
-s32 sub_0802BC14(u16 a)
+s32 sub_0802BC14(u32 a)
 {
     s32 count;
     s32 limit;

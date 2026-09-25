@@ -321,7 +321,7 @@ void sub_08070678(struct Unk7069C *a);
 void sub_0806209C(struct Unk62044 *a);
 void sub_08062044(struct Unk62044 *a);
 void sub_080620D4(struct Unk62044 *a, s32 dx, s32 dy);
-void sub_08039BD4(void *a);
+void sub_08039BD4(struct Unk39BD4 *a);
 void sub_0803A1E4(void *a);
 void sub_08061BAC(void);
 void sub_080611F0(void);

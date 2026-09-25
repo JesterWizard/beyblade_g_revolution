@@ -1,33 +1,21 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803dcfc
-__attribute__((naked))
-void *sub_0803DCFC(u32 i)
+/* match-compiler: old_agbcc */
+void *sub_0803DCFC(u32 a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {lr}\n"
-        "adds r2, r0, #0x0\n"
-        "cmp r2, #0x52\n"
-        "bls _0803DD18\n"
-        "ldr r0, _0803DD10 @ =0x0833D1E0\n"
-        "ldr r1, _0803DD14 @ =0x0833D1F4\n"
-        "bl sub_08067B98\n"
-        "movs r0, #0x00\n"
-        "b _0803DD22\n"
-        "_0803DD10: .4byte 0x0833D1E0\n"
-        "_0803DD14: .4byte 0x0833D1F4\n"
-        "_0803DD18:\n"
-        "lsls r0, r2, #0x02\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x03\n"
-        "ldr r1, _0803DD28 @ =0x0807A1F4\n"
-        "adds r0, r0, r1\n"
-        "_0803DD22:\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        ".byte 0x00, 0x00\n"
-        "_0803DD28: .4byte 0x0807A1F4\n"
-    );
+  u32 new_var3[2];
+  u32 off;
+  u8 *new_var2;
+  u8 *base;
+  new_var3[0] = 0;
+  new_var3[1] = a;
+  if (new_var3[1] <= 0x52)
+  {
+ do { off = new_var3[1] << 2; off += new_var3[1]; off <<= 3; base = gData_0807A1F4; new_var2 = base + off; return (void *) new_var2; } while (new_var3[0]);
+  }
+  sub_08067B98((void *) gData_0833D1E0, (void *) gData_0833D1F4);
+  return 0;
 }
-

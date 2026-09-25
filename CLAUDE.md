@@ -19,7 +19,7 @@ gates the others:
 | Axis | Output | Tool |
 |------|--------|------|
 | Matching C | `src/matched/*.c` | `script_first.py`, `match_function.py`, `integrate_c.py` |
-| Drafts (DECOMPILED tier) | `src/decompiled/*.c` | `park_wip.py`, `promote_wip.py` |
+| Drafts (DECOMPILED tier) | `src/decompiled/*.c` | `park_wip.py` |
 | Analysis DB | `analysis/*.json` | `analyze.py` (`make analyze`) |
 | Names | `analysis/symbols.json` | `symbols.py` (`make symbols`) |
 | Docs | `docs/systems/`, `docs/functions/` | `document.py` (`make document`) |
@@ -54,17 +54,7 @@ python3 tools/decomp/script_first.py 5
 # 3. Remainder: agent packets until 5 functions matched or attempted this batch
 python3 tools/decomp/agent_packet.py --next
 
-# 4. Naming — independent of matching, so all 633 are eligible
-make analyze
-python3 tools/decomp/symbols.py set sub_XXXXXXXX --symbol Name \
-    --confidence 0.8 --source ai --evidence "why you believe this"
-python3 tools/decomp/symbols.py apply
-
-# 5. Every 3–5 batches: RAM map pass, then refresh derived views
-tools/decomp/ram_map_pass.sh
-make analyze && make document
-
-# 6. Report
+# 4. Report
 python3 tools/decomp/report_status.py
 ```
 
@@ -75,8 +65,7 @@ shim over all of the above.
 
 ### Commit policy
 
-**Commit after every successful semantic batch** (`script_first.py` or `integrate_c.py`) — do not ask the user. Message:
-`decomp: C batch (+N functions, M/633 in src/matched)`. Never commit if `make compare` fails.
+Commit only when the user asks. Never commit if `make compare` fails.
 
 If `asm/nonmatchings/` is empty:
 
@@ -140,7 +129,6 @@ bash build_tools.sh
 | Analysis DB | `tools/decomp/analyze.py` | `analysis/{functions,xrefs,structs,systems}.json` |
 | Subsystems | `tools/decomp/systems.py` | Deterministic, evidence-backed membership |
 | Symbols | `tools/decomp/symbols.py` | `symbols.json` CRUD + alias header generation |
-| Promote tier | `tools/decomp/promote_wip.py` | One-time legacy `src/wip/` → `src/decompiled/` migration |
 | Documentation | `tools/decomp/document.py` | `docs/systems/`, `docs/functions/` |
 | Pipeline CLI | `tools/decomp/cli.py` | `./decomp <stage>` dispatch shim |
 | Script-first | `tools/decomp/script_first.py` | Patterns + cleaned m2c; integrate MATCH |
@@ -152,7 +140,6 @@ bash build_tools.sh
 | Verify C | `tools/decomp/match_function.py` | Compile + compact DIFF vs retail |
 | C compile audit | `tools/decomp/audit_c_compiles.py` | `make audit` — find matched C that will not compile |
 | Signature repair | `tools/decomp/repair_naked_signatures.py` | `make repair-signatures` — align defs with prototypes |
-| Word diff | `tools/decomp/worddiff.py` | Word-aligned retail-vs-compiled table (16-bit words, DIFF flagged) |
 | Variant sweep | `tools/decomp/test_variants.py` | Test many `@@BODY@@` source variants against one function |
 | Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |
 | Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/decompiled/`) |

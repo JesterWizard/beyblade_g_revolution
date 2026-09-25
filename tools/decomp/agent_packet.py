@@ -271,7 +271,7 @@ def _auto_permute(name: str, seconds: int) -> tuple[bool, str | None]:
     if not script.is_file():
         return False, None
     proc = subprocess.Popen(
-        [sys.executable, str(script), name, "--seconds", str(seconds)],
+        [sys.executable, str(script), name, "--seconds", str(seconds), "--no-escalate"],
         cwd=str(ROOT),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,

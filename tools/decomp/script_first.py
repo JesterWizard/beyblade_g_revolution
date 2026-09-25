@@ -38,7 +38,9 @@ def _blocked() -> set[str]:
 def _targets() -> list[str]:
     buckets, _missing, _cse = classify()
     blocked = _blocked()
-    skip = set(buckets.get("naked_only") or []) | blocked
+    from agent_packet import _exhausted_names  # noqa: WPS433
+
+    skip = set(buckets.get("naked_only") or []) | blocked | _exhausted_names()
     ordered: list[str] = []
     seen: set[str] = set()
     for key in ("small_clean", "unblock_first", "large", "high_reg_pressure"):
@@ -89,6 +91,7 @@ def _permute(name: str, seconds: int) -> bool:
             name,
             "--seconds",
             str(seconds),
+            "--no-escalate",
             "--skip-compare",
         ],
         cwd=str(ROOT),
@@ -172,8 +175,8 @@ def main() -> int:
     parser.add_argument(
         "--permute-seconds",
         type=int,
-        default=120,
-        help="local permuter budget per near-miss (0 disables; default 120)",
+        default=60,
+        help="local permuter budget per near-miss (0 disables; default 60)",
     )
     parser.add_argument("--cluster-only", action="store_true")
     parser.add_argument("--skip-unblock", action="store_true")
