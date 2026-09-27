@@ -1,8 +1,51 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08034420
-__attribute__((naked))
-void Unk346C0Init(void)
+void Unk346C0Init(struct Unk346C0 *out, struct Unk346C0Inner *a, struct Unk346C0Inner *b, u8 mode)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r8\npush {r7}\nadds r6, r0, #0x0\nadds r7, r1, #0x0\nstr r2, [r6, #0x04]\nstr r7, [r6, #0x00]\nmovs r1, #0x00\nstrb r1, [r6, #0x19]\nstrb r1, [r6, #0x18]\nldr r4, _08034554 @ =0x000002C5\nadds r0, r6, r4\nstrb r1, [r0, #0x00]\nmovs r5, #0xB2\nlsls r5, r5, #0x02\nadds r0, r6, r5\nstr r1, [r0, #0x00]\nadds r4, #0x07\nadds r0, r6, r4\nstr r1, [r0, #0x00]\nadds r5, #0x08\nadds r5, r5, r6\nmov r8, r5\nstr r1, [r5, #0x00]\nsubs r4, #0x1C\nadds r0, r6, r4\nstr r1, [r0, #0x00]\nmovs r5, #0xAD\nlsls r5, r5, #0x02\nadds r0, r6, r5\nstr r1, [r0, #0x00]\nadds r4, #0x34\nadds r0, r6, r4\nmovs r4, #0x80\nlsls r4, r4, #0x09\nstr r4, [r0, #0x00]\nadds r5, #0x34\nadds r0, r6, r5\nstr r4, [r0, #0x00]\nmovs r4, #0xBB\nlsls r4, r4, #0x02\nadds r0, r6, r4\nstr r1, [r0, #0x00]\nadds r5, #0x08\nadds r0, r6, r5\nstr r1, [r0, #0x00]\nadds r4, #0x08\nadds r0, r6, r4\nstr r1, [r0, #0x00]\nadds r5, #0x08\nadds r4, r6, r5\nmovs r0, #0x01\nnegs r0, r0\nstr r0, [r4, #0x00]\nmovs r0, #0xC3\nlsls r0, r0, #0x02\nadds r5, r6, r0\nstrb r3, [r5, #0x00]\nmovs r3, #0xC0\nlsls r3, r3, #0x02\nadds r0, r6, r3\nmovs r3, #0x00\nstrh r1, [r0, #0x00]\nldr r4, _08034558 @ =0x00000302\nadds r0, r6, r4\nstrh r1, [r0, #0x00]\nadds r4, #0x02\nadds r0, r6, r4\nstrh r1, [r0, #0x00]\nldr r0, _0803455C @ =0x0000030E\nadds r4, r6, r0\nmovs r0, #0x01\nstrb r0, [r4, #0x00]\nldr r4, _08034560 @ =0x0000030D\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nadds r4, #0x02\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nadds r4, #0x01\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nadds r4, #0x01\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nadds r4, #0x01\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nadds r4, #0x01\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nadds r4, #0x01\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nsubs r4, #0x5C\nadds r0, r6, r4\nstr r1, [r0, #0x00]\nadds r4, #0x0C\nadds r0, r6, r4\nstrb r3, [r0, #0x00]\nmovs r3, #0xAF\nlsls r3, r3, #0x02\nadds r0, r6, r3\nstr r1, [r0, #0x00]\nsubs r4, #0x04\nadds r1, r6, r4\nldr r2, [r2, #0x28]\nadds r2, #0x24\nmovs r0, #0x00\nldsb r0, [r2, r0]\nstr r0, [r1, #0x00]\nldr r0, _08034564 @ =0x0833C5AC\nldrb r1, [r5, #0x00]\nldrb r2, [r2, #0x00]\nlsls r2, r2, #0x18\nasrs r2, r2, #0x18\nbl sub_08067B98\nldr r0, [r6, #0x00]\ncmp r0, #0x00\nbeq _08034548\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08034520\nldrh r0, [r0, #0x14]\nlsrs r0, r0, #0x0C\nmov r5, r8\nstr r0, [r5, #0x00]\n_08034520:\nmovs r0, #0xB7\nlsls r0, r0, #0x02\nadds r1, r6, r0\nldr r0, [r7, #0x30]\nstr r0, [r1, #0x00]\nmovs r3, #0xB6\nlsls r3, r3, #0x02\nadds r1, r6, r3\nldr r0, [r7, #0x4C]\nstr r0, [r1, #0x00]\nmovs r4, #0xB5\nlsls r4, r4, #0x02\nadds r1, r6, r4\nldr r0, [r7, #0x48]\nstr r0, [r1, #0x00]\nmovs r5, #0xB8\nlsls r5, r5, #0x02\nadds r1, r6, r5\nldr r0, [r7, #0x34]\nstr r0, [r1, #0x00]\n_08034548:\npop {r3}\nmov r8, r3\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08034554: .4byte 0x000002C5\n_08034558: .4byte 0x00000302\n_0803455C: .4byte 0x0000030E\n_08034560: .4byte 0x0000030D\n_08034564: .4byte 0x0833C5AC");
+    out->unk04 = b;
+    out->unk00 = a;
+    out->unk19 = 0;
+    out->unk18 = 0;
+    out->unk2C5 = 0;
+    out->unk2C8 = 0;
+    out->unk2CC = 0;
+    out->unk2D0 = 0;
+    out->unk2B0 = 0;
+    out->unk2B4 = 0;
+    out->unk2E4 = 0x10000;
+    out->unk2E8 = 0x10000;
+    out->unk2EC = 0;
+    out->unk2F0 = 0;
+    out->unk2F4 = 0;
+    out->unk2F8 = -1;
+    out->unk30C = mode;
+    out->unk300 = 0;
+    out->unk302 = 0;
+    out->unk304 = 0;
+    out->unk30E = 1;
+    out->unk30D = 0;
+    out->unk30F = 0;
+    out->unk310 = 0;
+    out->unk311 = 0;
+    out->unk312 = 0;
+    out->unk313 = 0;
+    out->unk314 = 0;
+    out->unk2B8 = 0;
+    out->unk2C4 = 0;
+    out->unk2BC = 0;
+    out->unk2C0 = b->unk28->unk24;
+    DebugPrint((void *)0x0833C5AC, out->unk30C, b->unk28->unk24);
+    if (out->unk00 != NULL)
+    {
+        if (out->unk00->unk00 != NULL)
+            out->unk2D0 = out->unk00->unk00->unk14 >> 12;
+        out->unk2DC = a->unk30;
+        out->unk2D8 = a->unk4C;
+        out->unk2D4 = a->unk48;
+        out->unk2E0 = a->unk34;
+    }
 }
+

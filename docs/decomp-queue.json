@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-27T08:20:31Z",
+  "generated": "2026-09-27T08:33:17Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 145,
-    "semantic_done": 488,
-    "readable_asm": 145,
+    "pending": 136,
+    "semantic_done": 497,
+    "readable_asm": 136,
     "opcode": 0,
-    "battle_pending": 56,
-    "battle_semantic": 102,
+    "battle_pending": 50,
+    "battle_semantic": 108,
     "blocked": 20,
-    "wip": 74
+    "wip": 65
   },
   "pinned": [],
   "wip": [
@@ -48,17 +48,6 @@
       "status": "size_mismatch 5/112; u32 prototype, 60s permuter no score 0",
       "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
       "score": "5/112"
-    },
-    {
-      "name": "sub_080385DC",
-      "addr": "0x080385DC",
-      "kind": "asm",
-      "bytes": 80,
-      "seed": "src/decompiled/sub_080385DC.c",
-      "notes": "src/decompiled/sub_080385DC.md",
-      "status": "same_size DIFF 18/80; shared masks and r12/r6/r1 pointer/register hints did not improve the baseline",
-      "next": "leave readable Thumb; revisit with targeted pointer-cache/permuter technique",
-      "score": "18/80"
     },
     {
       "name": "sub_080733E4",
@@ -270,17 +259,6 @@
       "score": "25/114 then 78/114"
     },
     {
-      "name": "sub_080429CC",
-      "addr": "0x080429CC",
-      "kind": "asm",
-      "bytes": 308,
-      "seed": "src/decompiled/sub_080429CC.c",
-      "notes": "src/decompiled/sub_080429CC.md",
-      "status": "Two attempts: local pointer seed 84/308 (288B), then r1/r2 pointer pins 91/308 (320B, wrong prologue). Semantic behavior is mapped: copy MainWork+0x1810 to ring command, dispatch by MainWork+0x1828, update 0x17B4/0x17B8 from 0x036C/0x0370/0x0374, then call sub_080428F0.",
-      "next": "Restore the 84/308 seed; use targeted register/permuter work to keep main in ordinary r2 without forcing callee-saved pins, and preserve retail case-specific constant materialization.",
-      "score": "84/308 then 91/308"
-    },
-    {
       "name": "sub_08043420",
       "addr": "0x08043420",
       "kind": "asm",
@@ -312,17 +290,6 @@
       "status": "Two semantic attempts: baseline 56/304 (292B), then signed value plus r5 DISPCNT base/explicit IO stores 54/304 (288B). Fade behavior is mapped for mode -1 and mode 1, including VRAM clear, brightness loops, blend register resets, DISPCNT writes, and final display setup; register allocation/condition-code scheduling remains.",
       "next": "Restore baseline; use targeted register/permuter work to keep loop counter r4 and DISPCNT base r5 without introducing r6, and reproduce signed ble/bgt brightness branches.",
       "score": "56/304 then 54/304"
-    },
-    {
-      "name": "sub_080444BC",
-      "addr": "0x080444BC",
-      "kind": "asm",
-      "bytes": 396,
-      "seed": "src/decompiled/sub_080444BC.c",
-      "notes": "src/decompiled/sub_080444BC.md",
-      "status": "Two attempts: semantic resource setup seed 98/396 (368B), then r6 MainWork pin 90/396 (372B, wrong prologue). Semantics are mapped: resource selection, optional descriptor callbacks, MainWork pointer transfers/flags, optional 10-argument sub_08060C30 path, and final palette upload.",
-      "next": "Restore the 98/396 baseline; use selective register/source-order work to reproduce retail r4 descriptor, r5 MainWork-location/constant lifetime, r6 mask/stack argument, and shared no-descriptor tail.",
-      "score": "98/396 then 90/396"
     },
     {
       "name": "sub_08045D3C",
@@ -523,39 +490,6 @@
       "score": "50/320"
     },
     {
-      "name": "sub_0802C314",
-      "addr": "0x0802C314",
-      "kind": "asm",
-      "bytes": 198,
-      "seed": "src/decompiled/sub_0802C314.c",
-      "notes": "src/decompiled/sub_0802C314.md",
-      "status": "size mismatch; 40/198 bytes, compiled 196 vs retail 198; lookup logic is mapped but agbcc register/source shape differs",
-      "next": "preserve byte-field initialization loads and reproduce r4 table-address/r1 scaled-index lifetimes",
-      "score": "40/198"
-    },
-    {
-      "name": "sub_0802C3DC",
-      "addr": "0x0802C3DC",
-      "kind": "asm",
-      "bytes": 198,
-      "seed": "src/decompiled/sub_0802C3DC.c",
-      "notes": "src/decompiled/sub_0802C3DC.md",
-      "status": "size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic and table indexing mapped, initialization/register lifetime still differs",
-      "next": "force the ROM's byte-field OR loads and r0/r4/r1 lifetime before trying body permutations",
-      "score": "46/198"
-    },
-    {
-      "name": "sub_0802C4A4",
-      "addr": "0x0802C4A4",
-      "kind": "asm",
-      "bytes": 182,
-      "seed": "src/decompiled/sub_0802C4A4.c",
-      "notes": "src/decompiled/sub_0802C4A4.md",
-      "status": "size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup semantics mapped but callee-saved r7 and repeated output-address shape remain",
-      "next": "use an ordinary live signed index local to force r7 save, then restore repeated table-field stores",
-      "score": "27/182"
-    },
-    {
       "name": "sub_0802DCDC",
       "addr": "0x0802DCDC",
       "kind": "asm",
@@ -655,17 +589,6 @@
       "score": "21/362"
     },
     {
-      "name": "sub_08034420",
-      "addr": "0x08034420",
-      "kind": "asm",
-      "bytes": 328,
-      "seed": "src/decompiled/sub_08034420.c",
-      "notes": "src/decompiled/sub_08034420.md",
-      "status": "76/328 same-size; prologue matches (r6 out, r7 state_a, r8 unk2D0). Remaining: store 0 through r5 after mov r8,r5 vs reload from r8",
-      "next": "keep r5 live for the unk2D0 zero-store after mov r8,r5; preserve u32 mode and ldsb then ldrb+extend for unk24",
-      "score": "76/328"
-    },
-    {
       "name": "sub_08035054",
       "addr": "0x08035054",
       "kind": "asm",
@@ -699,17 +622,6 @@
       "score": "19/196"
     },
     {
-      "name": "sub_08031300",
-      "addr": "0x08031300",
-      "kind": "asm",
-      "bytes": 78,
-      "seed": "src/decompiled/sub_08031300.c",
-      "notes": "src/decompiled/sub_08031300.md",
-      "status": "22/78 same-size. Permuter re-run 2026-09-22 on the semantic seed with the fixed importer: base 1245, best 790, no zero \u2014 the earlier 'best 920' figure came from a permuter that had imported the asm wrapper",
-      "next": "Do not re-attempt by hand or by permuter. Register-destination difference: retail keeps the parameter in r2 and builds the palette value in r1, agbcc picks r1/r0; same family as the documented sub_08061308 coalescing finding",
-      "score": "22/78"
-    },
-    {
       "name": "sub_08033978",
       "addr": "0x08033978",
       "kind": "asm",
@@ -730,17 +642,6 @@
       "status": "matched only with GCC asm labels; stripped DIFF",
       "next": "rewrite without register asm / empty asm(); permuter if same-size",
       "score": "32/148"
-    },
-    {
-      "name": "sub_08036A68",
-      "addr": "0x08036A68",
-      "kind": "asm",
-      "bytes": 240,
-      "seed": "src/decompiled/sub_08036A68.c",
-      "notes": "src/decompiled/sub_08036A68.md",
-      "status": "58/240 (24.2%), size 232 vs 240",
-      "next": "permuter or force high-reg live ranges",
-      "score": "58/240"
     },
     {
       "name": "sub_080739E8",

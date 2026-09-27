@@ -117,14 +117,6 @@ score = "5/112"
 retry = "false"
 
 [[wip]]
-name = "sub_080385DC"
-seed = "src/decompiled/sub_080385DC.c"
-notes = "src/decompiled/sub_080385DC.md"
-status = "same_size DIFF 18/80; shared masks and r12/r6/r1 pointer/register hints did not improve the baseline"
-next = "leave readable Thumb; revisit with targeted pointer-cache/permuter technique"
-score = "18/80"
-
-[[wip]]
 name = "sub_080733E4"
 seed = "src/decompiled/sub_080733E4.c"
 notes = "src/decompiled/sub_080733E4.md"
@@ -282,14 +274,6 @@ next = "Use a targeted source/permuter search to reproduce lsls index,#16; asrs,
 score = "25/114 then 78/114"
 
 [[wip]]
-name = "sub_080429CC"
-seed = "src/decompiled/sub_080429CC.c"
-notes = "src/decompiled/sub_080429CC.md"
-status = "Two attempts: local pointer seed 84/308 (288B), then r1/r2 pointer pins 91/308 (320B, wrong prologue). Semantic behavior is mapped: copy MainWork+0x1810 to ring command, dispatch by MainWork+0x1828, update 0x17B4/0x17B8 from 0x036C/0x0370/0x0374, then call sub_080428F0."
-next = "Restore the 84/308 seed; use targeted register/permuter work to keep main in ordinary r2 without forcing callee-saved pins, and preserve retail case-specific constant materialization."
-score = "84/308 then 91/308"
-
-[[wip]]
 name = "sub_08043420"
 seed = "src/decompiled/sub_08043420.c"
 notes = "src/decompiled/sub_08043420.md"
@@ -311,14 +295,6 @@ notes = "src/decompiled/sub_0804438C.md"
 status = "Two semantic attempts: baseline 56/304 (292B), then signed value plus r5 DISPCNT base/explicit IO stores 54/304 (288B). Fade behavior is mapped for mode -1 and mode 1, including VRAM clear, brightness loops, blend register resets, DISPCNT writes, and final display setup; register allocation/condition-code scheduling remains."
 next = "Restore baseline; use targeted register/permuter work to keep loop counter r4 and DISPCNT base r5 without introducing r6, and reproduce signed ble/bgt brightness branches."
 score = "56/304 then 54/304"
-
-[[wip]]
-name = "sub_080444BC"
-seed = "src/decompiled/sub_080444BC.c"
-notes = "src/decompiled/sub_080444BC.md"
-status = "Two attempts: semantic resource setup seed 98/396 (368B), then r6 MainWork pin 90/396 (372B, wrong prologue). Semantics are mapped: resource selection, optional descriptor callbacks, MainWork pointer transfers/flags, optional 10-argument sub_08060C30 path, and final palette upload."
-next = "Restore the 98/396 baseline; use selective register/source-order work to reproduce retail r4 descriptor, r5 MainWork-location/constant lifetime, r6 mask/stack argument, and shared no-descriptor tail."
-score = "98/396 then 90/396"
 
 [[wip]]
 name = "sub_08045D3C"
@@ -464,30 +440,6 @@ next = "Preserve the 0xC-byte frame and exact normalized argument spills. Then f
 score = "50/320"
 
 [[wip]]
-name = "sub_0802C314"
-seed = "src/decompiled/sub_0802C314.c"
-notes = "src/decompiled/sub_0802C314.md"
-status = "size mismatch; 40/198 bytes, compiled 196 vs retail 198; lookup logic is mapped but agbcc register/source shape differs"
-next = "preserve byte-field initialization loads and reproduce r4 table-address/r1 scaled-index lifetimes"
-score = "40/198"
-
-[[wip]]
-name = "sub_0802C3DC"
-seed = "src/decompiled/sub_0802C3DC.c"
-notes = "src/decompiled/sub_0802C3DC.md"
-status = "size mismatch; 46/198 bytes, compiled 192 vs retail 198; sibling lookup logic and table indexing mapped, initialization/register lifetime still differs"
-next = "force the ROM's byte-field OR loads and r0/r4/r1 lifetime before trying body permutations"
-score = "46/198"
-
-[[wip]]
-name = "sub_0802C4A4"
-seed = "src/decompiled/sub_0802C4A4.c"
-notes = "src/decompiled/sub_0802C4A4.md"
-status = "size mismatch; 27/182 bytes, compiled 152 vs retail 182; indexed lookup semantics mapped but callee-saved r7 and repeated output-address shape remain"
-next = "use an ordinary live signed index local to force r7 save, then restore repeated table-field stores"
-score = "27/182"
-
-[[wip]]
 name = "sub_0802DCDC"
 seed = "src/decompiled/sub_0802DCDC.c"
 notes = "src/decompiled/sub_0802DCDC.md"
@@ -559,14 +511,6 @@ status = "Battle animation-position update semantics reconstructed (timer/counte
 next = "Recover the target's duplicated register-driven loops: retain gBattleWork pointer in r3/r6, use direct B54/B74/B7C aliases, and preserve separate B00/B20 sub_08031368 blocks."
 score = "21/362"
 [[wip]]
-name = "sub_08034420"
-seed = "src/decompiled/sub_08034420.c"
-notes = "src/decompiled/sub_08034420.md"
-status = "76/328 same-size; prologue matches (r6 out, r7 state_a, r8 unk2D0). Remaining: store 0 through r5 after mov r8,r5 vs reload from r8"
-next = "keep r5 live for the unk2D0 zero-store after mov r8,r5; preserve u32 mode and ldsb then ldrb+extend for unk24"
-score = "76/328"
-
-[[wip]]
 name = "sub_08035054"
 seed = "src/decompiled/sub_08035054.c"
 notes = "src/decompiled/sub_08035054.md"
@@ -591,15 +535,6 @@ next = "Use the natural seed and introduce register constraints only after prese
 score = "19/196"
 
 [[wip]]
-name = "sub_08031300"
-seed = "src/decompiled/sub_08031300.c"
-notes = "src/decompiled/sub_08031300.md"
-status = "22/78 same-size. Permuter re-run 2026-09-22 on the semantic seed with the fixed importer: base 1245, best 790, no zero — the earlier 'best 920' figure came from a permuter that had imported the asm wrapper"
-next = "Do not re-attempt by hand or by permuter. Register-destination difference: retail keeps the parameter in r2 and builds the palette value in r1, agbcc picks r1/r0; same family as the documented sub_08061308 coalescing finding"
-score = "22/78"
-retry = "false"
-
-[[wip]]
 name = "sub_08033978"
 seed = "src/decompiled/sub_08033978.c"
 notes = "src/decompiled/sub_08033978.md"
@@ -614,14 +549,6 @@ notes = "src/decompiled/sub_08071BA0.md"
 status = "matched only with GCC asm labels; stripped DIFF"
 next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "32/148"
-
-[[wip]]
-name = "sub_08036A68"
-seed = "src/decompiled/sub_08036A68.c"
-notes = "src/decompiled/sub_08036A68.md"
-status = "58/240 (24.2%), size 232 vs 240"
-next = "permuter or force high-reg live ranges"
-score = "58/240"
 
 [[wip]]
 name = "sub_080739E8"

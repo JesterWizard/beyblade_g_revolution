@@ -8,18 +8,30 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **485/633 (76.6%)** |
-| **Decompiled C (bytes)** | **40,202/90,272 (44.5%)** |
+| **Decompiled C (functions)** | **494/633 (78.0%)** |
+| **Decompiled C (bytes)** | **42,210/90,272 (46.8%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 148/633 (23.4%) |
+| Readable Thumb | 139/633 (22.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 100/160 (62.5% fn, 31.9% bytes) |
+| Battle semantic C | 106/160 (66.2% fn, 35.9% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-27 — parked-WIP sweep 5 (+9): 31300, 385DC, 2C3DC, 2C4A4, 2C314, 36A68, 34420, 429CC, 444BC
+
+- `sub_08031300` — `if (t >= 0) {...} else sub_080312D8(a);` and an `if/else` into one `bank` var before the call.
+- `sub_080385DC` — `old_agbcc`; `Unk3CC.unk22` retyped `u16` (keeps the `orr 0xFFFF`); `sub_08038638` gets `(s16)` casts to stay matched.
+- `sub_0802C3DC` / `sub_0802C4A4` / `sub_0802C314` — one semantic shape, `old_agbcc`; `Unk2C314.unk00/unk03` are `u8`;
+  `sub_0802C314` prototype takes `struct Unk2C314 *` (`sub_080408C4` casts its buffer).
+- `sub_08036A68` — `gData_030002A0` retyped `struct Unk002A0Record[]`; symbols for all ROM tables.
+- `sub_08034420` — plain field-by-field init in retail order (`unk2BC` was missing from the draft).
+- `sub_080429CC` — `x = main->unk17B4 = ...; y = main->unk17B8 = ...;` (LHS address before RHS).
+- `sub_080444BC` — `Unk1690.unk74` split into 2/2/4-bit fields; `if (p != NULL) ... else ...`.
+- Still parked: `sub_08038D68`, `sub_08067504`, `sub_08059DC8` (both compilers retried).
 
 ### 2026-09-27 — parked-WIP sweep 4 (+7/10): 54494, 3DBD0, 32604, 70468, 333E4, 3139C, 66FB8
 

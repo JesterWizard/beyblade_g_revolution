@@ -53,7 +53,7 @@ extern u32 gData_030003CC[];
 extern u16 gData_05000200[];
 extern u32 gData_08079068[];
 extern u32 gData_08079358[];
-extern u8 gData_030002A0[];
+extern struct Unk002A0Record gData_030002A0[];
 extern void *gData_03000508[];
 extern u32 gData_03000534[];
 extern u16 gData_03000504[];

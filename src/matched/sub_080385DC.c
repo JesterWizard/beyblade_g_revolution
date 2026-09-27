@@ -1,51 +1,21 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080385dc
-__attribute__((naked))
-void sub_080385DC(u16 a, u16 b)
+/* match-compiler: old_agbcc */
+/* Release palette slots lo..hi: clear their in-use bits and reset key/refcount to 0xFFFF. */
+void sub_080385DC(u16 lo, u16 hi)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "lsls r0, r0, #0x10\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r5, r1, #0x10\n"
-        "lsrs r4, r0, #0x10\n"
-        "cmp r4, r5\n"
-        "bgt _0803861C\n"
-        "ldr r7, _08038624 @ =0x030003CC\n"
-        "movs r0, #0x01\n"
-        "mov r12, r0\n"
-        "ldr r2, _08038628 @ =0x0000FFFF\n"
-        "adds r6, r2, #0x0\n"
-        "_080385F4:\n"
-        "ldr r1, [r7, #0x00]\n"
-        "mov r0, r12\n"
-        "lsls r0, r4\n"
-        "ldrh r2, [r1, #0x20]\n"
-        "bics r2, r0\n"
-        "adds r0, r2, #0x0\n"
-        "strh r0, [r1, #0x20]\n"
-        "lsls r3, r4, #0x01\n"
-        "adds r2, r1, r3\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "orrs r0, r6\n"
-        "strh r0, [r2, #0x00]\n"
-        "adds r1, #0x22\n"
-        "adds r1, r1, r3\n"
-        "ldrh r0, [r1, #0x00]\n"
-        "orrs r0, r6\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r4, #0x01\n"
-        "cmp r4, r5\n"
-        "ble _080385F4\n"
-        "_0803861C:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08038624: .4byte 0x030003CC\n"
-        "_08038628: .4byte 0x0000FFFF\n"
-    );
+    s32 i;
+    struct Unk3CC *slots;
+
+    for (i = lo; i <= hi; i++)
+    {
+        slots = gUnk_030003CC;
+        slots->unk20 &= ~(1 << i);
+        slots->unk00[i] |= 0xFFFF;
+        slots->unk22[i] |= 0xFFFF;
+    }
 }
 

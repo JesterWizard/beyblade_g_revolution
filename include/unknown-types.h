@@ -703,10 +703,10 @@ struct Unk1694 /* 0x04 */
 /* Out-param for Unk1694 lookup. sub_0802C314 / 2C3DC / 2C4A4. */
 struct Unk2C314 /* 0x0c */
 {
-    /* 00 */ s8 unk00;
+    /* 00 */ u8 unk00;
     /* 01 */ u8 unk01;
     /* 02 */ u8 unk02;
-    /* 03 */ s8 unk03;
+    /* 03 */ u8 unk03;
     /* 04 */ s32 unk04;
     /* 08 */ struct Unk1694 *unk08;
 };
@@ -2015,7 +2015,9 @@ struct Unk1690 /* >= 0x78 */
 {
     /* 00 */ u32 unk00;
     /* 04 */ u8 filler_04[0x70];
-    /* 74 */ u8 unk74;
+    /* 74 */ u8 unk74_0 : 2;
+    /* 74 */ u8 unk74_2 : 2;
+    /* 74 */ u8 unk74_4 : 4;
 };
 
 /* Pointer + byte at +0x2D0. sub_0803484C. */
@@ -2764,7 +2766,7 @@ struct Unk3CC /* >= 0x32 */
 {
     /* 00 */ u16 unk00[16];
     /* 20 */ u16 unk20;
-    /* 22 */ s16 unk22[16];
+    /* 22 */ u16 unk22[16];
 };
 
 /* *gUnk_03000554 target: byte array at +0x08, u8 field at +0x02. sub_080435D8, sub_080436B0. */

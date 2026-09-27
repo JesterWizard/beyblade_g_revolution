@@ -1,8 +1,55 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080444bc
-__attribute__((naked))
 void sub_080444BC(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nadd sp, #-0x018\nbl sub_08043B58\nadds r4, r0, #0x0\nbl sub_08062AC0\nldr r0, _080444E8 @ =0x03000198\nldr r0, [r0, #0x00]\nmovs r1, #0xDB\nlsls r1, r1, #0x02\nadds r0, r0, r1\nldr r1, [r0, #0x00]\nldr r0, _080444EC @ =0x083147C8\ncmp r1, r0\nbne _080444F4\nldr r1, _080444F0 @ =0x083002E0\nmovs r0, #0x00\nbl sub_08062A74\nb _080444FC\n.byte 0x00, 0x00\n_080444E8: .4byte 0x03000198\n_080444EC: .4byte 0x083147C8\n_080444F0: .4byte 0x083002E0\n_080444F4:\nldr r1, _0804458C @ =0x083006E0\nmovs r0, #0x00\nbl sub_08062A74\n_080444FC:\nldr r1, _08044590 @ =0x082FDEE0\nmovs r0, #0x01\nbl sub_08062A74\nldr r1, _08044594 @ =0x0826E320\nmovs r0, #0x02\nbl sub_08062A74\ncmp r4, #0x00\nbne _08044512\nb _08044614\n_08044512:\nldr r1, [r4, #0x14]\ncmp r1, #0x00\nbeq _0804451E\nmovs r0, #0x00\nbl sub_08059DC8\n_0804451E:\nldr r0, [r4, #0x04]\ncmp r0, #0x00\nbeq _08044528\nbl sub_080447E8\n_08044528:\nldr r0, [r4, #0x08]\ncmp r0, #0x00\nbeq _08044532\nbl sub_08044648\n_08044532:\nldr r0, [r4, #0x0C]\ncmp r0, #0x00\nbeq _0804453C\nbl sub_08062A1C\n_0804453C:\nldr r0, [r4, #0x10]\ncmp r0, #0x00\nbeq _08044546\nbl sub_080447B4\n_08044546:\nldr r3, _08044598 @ =0x03000198\nldr r1, [r3, #0x00]\nmovs r0, #0xB7\nlsls r0, r0, #0x05\nadds r2, r1, r0\nldr r0, [r4, #0x1C]\nstr r0, [r2, #0x00]\nldr r0, _0804459C @ =0x000016E8\nadds r2, r1, r0\nldr r0, [r4, #0x20]\nstr r0, [r2, #0x00]\nldr r0, _080445A0 @ =0x000016E4\nadds r2, r1, r0\nldr r0, [r4, #0x24]\nstr r0, [r2, #0x00]\nldr r2, _080445A4 @ =0x00001825\nadds r1, r1, r2\nmovs r0, #0x00\nstrb r0, [r1, #0x00]\nldr r0, [r4, #0x28]\nmovs r1, #0x01\nands r0, r1\ncmp r0, #0x00\nbeq _0804457C\nldr r0, [r3, #0x00]\nadds r0, r0, r2\nstrb r1, [r0, #0x00]\n_0804457C:\nldr r0, [r4, #0x28]\nmovs r1, #0x02\nands r0, r1\ncmp r0, #0x00\nbeq _080445A8\nbl sub_0802DEA0\nb _080445AC\n_0804458C: .4byte 0x083006E0\n_08044590: .4byte 0x082FDEE0\n_08044594: .4byte 0x0826E320\n_08044598: .4byte 0x03000198\n_0804459C: .4byte 0x000016E8\n_080445A0: .4byte 0x000016E4\n_080445A4: .4byte 0x00001825\n_080445A8:\nbl sub_0802E048\n_080445AC:\nldr r0, [r4, #0x28]\nmovs r6, #0x04\nands r0, r6\ncmp r0, #0x00\nbeq _08044632\nldr r5, _08044600 @ =0x03000198\nldr r0, [r5, #0x00]\nldr r1, _08044604 @ =0x000015DC\nadds r0, r0, r1\nldr r1, _08044608 @ =0x082BCD00\nldr r2, _0804460C @ =0x080B738E\nmovs r3, #0xE0\nlsls r3, r3, #0x01\nmovs r4, #0x1C\nstr r4, [sp, #0x000]\nmovs r4, #0x10\nstr r4, [sp, #0x004]\nmovs r4, #0x01\nstr r4, [sp, #0x008]\nstr r6, [sp, #0x00C]\nmovs r4, #0x0D\nstr r4, [sp, #0x010]\nmovs r4, #0x02\nstr r4, [sp, #0x014]\nbl sub_08060C30\nldr r0, [r5, #0x00]\nldr r2, _08044610 @ =0x00001690\nadds r0, r0, r2\nldr r0, [r0, #0x00]\nadds r0, #0x74\nldrb r1, [r0, #0x00]\nlsls r0, r1, #0x1E\nlsrs r0, r0, #0x1E\nlsls r1, r1, #0x1C\nlsrs r1, r1, #0x1E\nmovs r2, #0x01\nmovs r3, #0x00\nbl sub_08069B78\nb _08044632\n.byte 0x00, 0x00\n_08044600: .4byte 0x03000198\n_08044604: .4byte 0x000015DC\n_08044608: .4byte 0x082BCD00\n_0804460C: .4byte 0x080B738E\n_08044610: .4byte 0x00001690\n_08044614:\nldr r0, _08044640 @ =0x03000198\nldr r1, [r0, #0x00]\nmovs r2, #0xB7\nlsls r2, r2, #0x05\nadds r0, r1, r2\nstr r4, [r0, #0x00]\nadds r2, #0x08\nadds r0, r1, r2\nstr r4, [r0, #0x00]\nsubs r2, #0x04\nadds r0, r1, r2\nstr r4, [r0, #0x00]\nldr r0, _08044644 @ =0x00001825\nadds r1, r1, r0\nstrb r4, [r1, #0x00]\n_08044632:\nbl sub_0804495C\nadd sp, #0x018\npop {r4, r5, r6}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08044640: .4byte 0x03000198\n_08044644: .4byte 0x00001825");
+    struct Unk447CC *p;
+
+    p = sub_08043B58();
+    sub_08062AC0();
+    if ((u32)gMainWorkPtr->unk036C == 0x083147C8)
+        ObjPalLoadSlot(0, (void *)0x083002E0);
+    else
+        ObjPalLoadSlot(0, (void *)0x083006E0);
+    ObjPalLoadSlot(1, (void *)0x082FDEE0);
+    ObjPalLoadSlot(2, (void *)0x0826E320);
+    if (p != NULL)
+    {
+        if (p->unk14 != NULL)
+            sub_08059DC8(0, p->unk14);
+        if (p->unk04 != NULL)
+            sub_080447E8(p->unk04);
+        if (p->unk08 != NULL)
+            sub_08044648(p->unk08);
+        if (p->unk0C != NULL)
+            sub_08062A1C((u32)p->unk0C);
+        if (p->unk10 != NULL)
+            sub_080447B4(p->unk10);
+        gMainWorkPtr->unk16E0 = p->unk1C;
+        gMainWorkPtr->unk16E8 = p->unk20;
+        gMainWorkPtr->unk16E4 = p->unk24;
+        gMainWorkPtr->unk1825 = 0;
+        if (p->unk28 & 1)
+            gMainWorkPtr->unk1825 = 1;
+        if (p->unk28 & 2)
+            sub_0802DEA0();
+        else
+            sub_0802E048();
+        if (p->unk28 & 4)
+        {
+            sub_08060C30(gMainWorkPtr->unk15DC, (void *)0x082BCD00, (void *)0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0D, 2);
+            sub_08069B78(gMainWorkPtr->unk1690->unk74_0, gMainWorkPtr->unk1690->unk74_2, 1, 0);
+        }
+    }
+    else
+    {
+        gMainWorkPtr->unk16E0 = NULL;
+        gMainWorkPtr->unk16E8 = NULL;
+        gMainWorkPtr->unk16E4 = NULL;
+        gMainWorkPtr->unk1825 = 0;
+    }
+    sub_0804495C();
 }
+

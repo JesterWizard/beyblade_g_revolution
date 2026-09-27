@@ -1,8 +1,40 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080429cc
-__attribute__((naked))
 void sub_080429CC(void)
 {
-    asm(".syntax unified\npush {r4, lr}\nldr r0, _080429F4 @ =0x03000538\nldr r1, [r0, #0x00]\nldr r0, _080429F8 @ =0x03000198\nldr r2, [r0, #0x00]\nldr r3, _080429FC @ =0x00001810\nadds r0, r2, r3\nldr r0, [r0, #0x00]\nstrh r0, [r1, #0x02]\nldr r4, _08042A00 @ =0x00001828\nadds r0, r2, r4\nldrb r0, [r0, #0x00]\ncmp r0, #0x01\nbeq _08042A48\ncmp r0, #0x01\nbgt _08042A04\ncmp r0, #0x00\nbeq _08042A0E\nb _08042AEC\n.byte 0x00, 0x00\n_080429F4: .4byte 0x03000538\n_080429F8: .4byte 0x03000198\n_080429FC: .4byte 0x00001810\n_08042A00: .4byte 0x00001828\n_08042A04:\ncmp r0, #0x02\nbeq _08042A84\ncmp r0, #0x03\nbeq _08042AC0\nb _08042AEC\n_08042A0E:\nldr r0, _08042A40 @ =0x000017B4\nadds r1, r2, r0\nmovs r3, #0xDC\nlsls r3, r3, #0x02\nadds r0, r2, r3\nldr r0, [r0, #0x00]\nmovs r4, #0x80\nlsls r4, r4, #0x05\nadds r0, r0, r4\nstr r0, [r1, #0x00]\nadds r3, r0, #0x0\nldr r0, _08042A44 @ =0x000017B8\nadds r1, r2, r0\nmovs r4, #0xDD\nlsls r4, r4, #0x02\nadds r0, r2, r4\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x00]\nadds r1, r0, #0x0\nadds r0, r3, #0x0\nmovs r2, #0x00\nmovs r3, #0x01\nbl sub_080428F0\nb _08042AEC\n_08042A40: .4byte 0x000017B4\n_08042A44: .4byte 0x000017B8\n_08042A48:\nldr r0, _08042A78 @ =0x000017B4\nadds r1, r2, r0\nmovs r3, #0xDC\nlsls r3, r3, #0x02\nadds r0, r2, r3\nldr r0, [r0, #0x00]\nldr r4, _08042A7C @ =0xFFFFF000\nadds r0, r0, r4\nstr r0, [r1, #0x00]\nadds r3, r0, #0x0\nldr r0, _08042A80 @ =0x000017B8\nadds r1, r2, r0\nmovs r4, #0xDD\nlsls r4, r4, #0x02\nadds r0, r2, r4\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x00]\nadds r1, r0, #0x0\nadds r0, r3, #0x0\nmovs r2, #0x01\nmovs r3, #0x02\nbl sub_080428F0\nb _08042AEC\n_08042A78: .4byte 0x000017B4\n_08042A7C: .4byte 0xFFFFF000\n_08042A80: .4byte 0x000017B8\n_08042A84:\nldr r0, _08042AB8 @ =0x000017B4\nadds r1, r2, r0\nmovs r3, #0xDC\nlsls r3, r3, #0x02\nadds r0, r2, r3\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x00]\nadds r3, r0, #0x0\nldr r4, _08042ABC @ =0x000017B8\nadds r1, r2, r4\nmovs r4, #0xDD\nlsls r4, r4, #0x02\nadds r0, r2, r4\nldr r0, [r0, #0x00]\nmovs r2, #0x80\nlsls r2, r2, #0x05\nadds r0, r0, r2\nstr r0, [r1, #0x00]\nadds r1, r0, #0x0\nadds r0, r3, #0x0\nmovs r2, #0x02\nmovs r3, #0x04\nbl sub_080428F0\nb _08042AEC\n.byte 0x00, 0x00\n_08042AB8: .4byte 0x000017B4\n_08042ABC: .4byte 0x000017B8\n_08042AC0:\nldr r3, _08042AF4 @ =0x000017B4\nadds r1, r2, r3\nmovs r4, #0xDC\nlsls r4, r4, #0x02\nadds r0, r2, r4\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x00]\nadds r3, r0, #0x0\nldr r0, _08042AF8 @ =0x000017B8\nadds r1, r2, r0\nadds r4, #0x04\nadds r0, r2, r4\nldr r0, [r0, #0x00]\nldr r2, _08042AFC @ =0xFFFFF000\nadds r0, r0, r2\nstr r0, [r1, #0x00]\nadds r1, r0, #0x0\nadds r0, r3, #0x0\nmovs r2, #0x03\nmovs r3, #0x08\nbl sub_080428F0\n_08042AEC:\npop {r4}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08042AF4: .4byte 0x000017B4\n_08042AF8: .4byte 0x000017B8\n_08042AFC: .4byte 0xFFFFF000");
+    struct Unk0538 *ring;
+    struct MainWork *main;
+    u32 x;
+    u32 y;
+
+    ring = gUnk_03000538;
+    main = gMainWorkPtr;
+    ring->unk02 = main->unk1810;
+    switch (main->unk1828)
+    {
+    case 0:
+        x = main->unk17B4 = main->unk0370 + 0x1000;
+        y = main->unk17B8 = main->unk0374;
+        sub_080428F0(x, y, 0, 1);
+        break;
+    case 1:
+        x = main->unk17B4 = main->unk0370 - 0x1000;
+        y = main->unk17B8 = main->unk0374;
+        sub_080428F0(x, y, 1, 2);
+        break;
+    case 2:
+        x = main->unk17B4 = main->unk0370;
+        y = main->unk17B8 = main->unk0374 + 0x1000;
+        sub_080428F0(x, y, 2, 4);
+        break;
+    case 3:
+        x = main->unk17B4 = main->unk0370;
+        y = main->unk17B8 = main->unk0374 - 0x1000;
+        sub_080428F0(x, y, 3, 8);
+        break;
+    }
 }
+
