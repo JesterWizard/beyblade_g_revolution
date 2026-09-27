@@ -28,12 +28,12 @@ void sub_0804188C(void)
             if (obj->unkD8 == (void *)1)
             {
                 obj->unkBC = 0xFFFF;
-                sub_08070468(obj->unkB8, obj->unkBC);
+                sub_08070468((struct Unk6FDB4 *)obj->unkB8, obj->unkBC);
             }
             else
             {
                 obj->unkBC = ~(obj->unk08 >> 8);
-                sub_08070468(obj->unkB8, obj->unkBC);
+                sub_08070468((struct Unk6FDB4 *)obj->unkB8, obj->unkBC);
             }
             if (obj->unkD8 == 0)
                 value = sub_08062AF8((void *)0x080775CC, obj->unkD4);

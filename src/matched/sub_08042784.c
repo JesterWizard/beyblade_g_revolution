@@ -1,8 +1,23 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08042784
-__attribute__((naked))
+// Push {a, cursor x, cursor y} onto the 32-slot history ring at *gUnk_03000538
+// while recording is enabled (MainWork.unk182C).
 void sub_08042784(u32 a)
 {
-    asm(".syntax unified\npush {r4, r5, lr}\nadds r2, r0, #0x0\nldr r0, _080427DC @ =0x03000538\nldr r0, [r0, #0x00]\nmov r12, r0\nmovs r3, #0x01\nldsb r3, [r0, r3]\nldr r0, _080427E0 @ =0x03000198\nldr r4, [r0, #0x00]\nldr r1, _080427E4 @ =0x0000182C\nadds r0, r4, r1\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _080427D6\nlsls r1, r3, #0x01\nmov r0, r12\nadds r0, #0x04\nadds r0, r0, r1\nstrh r2, [r0, #0x00]\nlsls r2, r3, #0x02\nmov r0, r12\nadds r0, #0x44\nadds r0, r0, r2\nmovs r5, #0xDC\nlsls r5, r5, #0x02\nadds r1, r4, r5\nldr r1, [r1, #0x00]\nstr r1, [r0, #0x00]\nmov r0, r12\nadds r0, #0xC4\nadds r0, r0, r2\nmovs r2, #0xDD\nlsls r2, r2, #0x02\nadds r1, r4, r2\nldr r1, [r1, #0x00]\nstr r1, [r0, #0x00]\nadds r3, #0x01\nmovs r0, #0x1F\nands r3, r0\nmov r5, r12\nstrb r3, [r5, #0x01]\n_080427D6:\npop {r4, r5}\npop {r0}\nbx r0\n_080427DC: .4byte 0x03000538\n_080427E0: .4byte 0x03000198\n_080427E4: .4byte 0x0000182C");
+    struct Unk0538 *ring = gUnk_03000538;
+    s32 i = (s8)ring->unk01;
+    struct MainWork *work = gMainWorkPtr;
+
+    if (work->unk182C != 0)
+    {
+        ring->unk04[i] = a;
+        ring->unk44[i] = work->unk0370;
+        ring->unkC4[i] = work->unk0374;
+        i++;
+        ring->unk01 = i & 0x1F;
+    }
 }
+

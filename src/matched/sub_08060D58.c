@@ -1,133 +1,42 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08060d58
-__attribute__((naked))
-void sub_08060D58(struct Unk0798 *a, u32 b, u32 c, u32 d, u32 e, u32 f)
+/* match-compiler: old_agbcc */
+// Fill the BG screen block with the fill pattern, then lay a width x height
+// run of consecutive tile ids (| baseTile) at (x, y) and record the window.
+void sub_08060D58(struct Unk0798 *state, u32 x_arg, u32 y_arg, u32 w_arg, u32 h_arg, u32 tile_arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x018\n"
-        "mov r10, r0\n"
-        "ldr r0, [sp, #0x038]\n"
-        "ldr r4, [sp, #0x03C]\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "str r1, [sp, #0x000]\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "str r2, [sp, #0x004]\n"
-        "lsls r3, r3, #0x18\n"
-        "lsrs r3, r3, #0x18\n"
-        "str r3, [sp, #0x008]\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x00C]\n"
-        "lsls r4, r4, #0x10\n"
-        "movs r0, #0x00\n"
-        "mov r8, r0\n"
-        "mov r0, r10\n"
-        "adds r0, #0x96\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "mov r9, r0\n"
-        "mov r0, r10\n"
-        "adds r0, #0x5C\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0, #0x0B\n"
-        "movs r0, #0xC0\n"
-        "lsls r0, r0, #0x13\n"
-        "adds r7, r1, r0\n"
-        "ldr r1, _08060E44 @ =0x080BB8BC\n"
-        "lsrs r0, r4, #0x10\n"
-        "orrs r0, r4\n"
-        "mov r2, r9\n"
-        "orrs r0, r2\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x04\n"
-        "ldr r3, [r1, #0x00]\n"
-        "adds r1, r7, #0x0\n"
-        "bl _08073C4C\n"
-        "ldr r6, [sp, #0x004]\n"
-        "lsls r0, r6, #0x05\n"
-        "ldr r1, [sp, #0x000]\n"
-        "adds r0, r0, r1\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r7, r7, r0\n"
-        "movs r0, #0x00\n"
-        "ldr r1, [sp, #0x00C]\n"
-        "cmp r0, r1\n"
-        "bcs _08060E0E\n"
-        "ldr r2, [sp, #0x008]\n"
-        "lsls r2, r2, #0x10\n"
-        "str r2, [sp, #0x014]\n"
-        "lsrs r6, r2, #0x10\n"
-        "str r6, [sp, #0x010]\n"
-        "mov r12, r1\n"
-        "_08060DD4:\n"
-        "movs r2, #0x00\n"
-        "adds r5, r0, #0x1\n"
-        "ldr r1, [sp, #0x010]\n"
-        "cmp r2, r1\n"
-        "bcs _08060E06\n"
-        "lsls r4, r0, #0x05\n"
-        "ldr r6, [sp, #0x014]\n"
-        "lsrs r3, r6, #0x10\n"
-        "_08060DE4:\n"
-        "adds r1, r4, r2\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r1, r1, r7\n"
-        "mov r0, r8\n"
-        "mov r6, r9\n"
-        "orrs r0, r6\n"
-        "strh r0, [r1, #0x00]\n"
-        "mov r0, r8\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r8, r0\n"
-        "adds r0, r2, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r2, r0, #0x10\n"
-        "cmp r2, r3\n"
-        "bcc _08060DE4\n"
-        "_08060E06:\n"
-        "lsls r0, r5, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "cmp r0, r12\n"
-        "bcc _08060DD4\n"
-        "_08060E0E:\n"
-        "ldr r0, [sp, #0x008]\n"
-        "lsls r1, r0, #0x03\n"
-        "mov r0, r10\n"
-        "adds r0, #0x98\n"
-        "strh r1, [r0, #0x00]\n"
-        "ldr r1, [sp, #0x00C]\n"
-        "lsls r0, r1, #0x03\n"
-        "mov r1, r10\n"
-        "adds r1, #0x9A\n"
-        "strh r0, [r1, #0x00]\n"
-        "mov r0, r10\n"
-        "adds r0, #0xA4\n"
-        "mov r2, sp\n"
-        "ldrh r2, [r2, #0x00]\n"
-        "strh r2, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "mov r6, sp\n"
-        "ldrh r6, [r6, #0x04]\n"
-        "strh r6, [r0, #0x00]\n"
-        "add sp, #0x018\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08060E44: .4byte 0x080BB8BC\n"
-    );
+    u8 x = x_arg;
+    u8 y = y_arg;
+    u8 width = w_arg;
+    u8 height = h_arg;
+    u16 tile = tile_arg;
+    u16 tileId;
+    u16 baseTile;
+    u16 *vram;
+    u16 row;
+    u16 col;
+    u32 *fillSrc;
+
+    tileId = 0;
+    baseTile = state->unk96;
+    vram = (u16 *)(VRAM + (state->unk5C << 11));
+    fillSrc = gData_080BB8BC;
+    _08073C4C((void *)(tile | (tile << 16) | baseTile), vram, 0x800, (void *)*fillSrc);
+    vram += (y << 5) + x;
+    for (row = 0; row < height; row++)
+    {
+        for (col = 0; col < width; col++)
+        {
+            vram[row * 32 + col] = tileId | baseTile;
+            tileId++;
+        }
+    }
+    state->unk98 = width << 3;
+    state->unk9A = height << 3;
+    state->unkA4 = x;
+    state->unkA6 = y;
 }
 

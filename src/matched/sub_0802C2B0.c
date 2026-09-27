@@ -52,7 +52,7 @@ void sub_0802C2B0(u8 a, u16 i)
             base = *(struct Unk1694 **)((u8 *)(*loop_loc) + loop_offset);
             scaled_index = index << 2;
             record_reg = (struct Unk1694 *)(scaled_index + (u32)base);
-            if (record_reg->unk03 == value)
+            if ((s8)record_reg->unk03 == value)
                 record_reg->unk01 = zero;
             index++;
         } while (index <= 0x7F);

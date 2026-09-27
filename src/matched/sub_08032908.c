@@ -1,8 +1,67 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08032908
-__attribute__((naked))
+// Battle teardown: free work buffers, release pooled objects and entries.
 void sub_08032908(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nldr r5, _08032A60 @ =0x03000290\nldr r0, [r5, #0x00]\nldr r1, _08032A64 @ =0x00001F38\nadds r0, r0, r1\nbl sub_08062044\nldr r0, [r5, #0x00]\nldr r1, _08032A68 @ =0x00001F10\nadds r0, r0, r1\nbl sub_08062044\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08032932\nbl sub_0806A434\nldr r1, [r5, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x00]\n_08032932:\nldr r0, [r5, #0x00]\nldr r0, [r0, #0x04]\ncmp r0, #0x00\nbeq _08032944\nbl sub_0806A434\nldr r1, [r5, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x04]\n_08032944:\nbl sub_08030D4C\nldr r0, [r5, #0x00]\nmovs r1, #0xC9\nlsls r1, r1, #0x02\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08032966\nbl sub_0806FE84\nldr r0, [r5, #0x00]\nmovs r1, #0xC9\nlsls r1, r1, #0x02\nadds r0, r0, r1\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_08032966:\nldr r0, [r5, #0x00]\nldr r1, _08032A6C @ =0x00001F0C\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08032980\nbl sub_0806FE84\nldr r0, [r5, #0x00]\nldr r1, _08032A6C @ =0x00001F0C\nadds r0, r0, r1\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_08032980:\nmovs r4, #0x00\nadds r6, r5, #0x0\n_08032984:\nldr r0, [r6, #0x00]\nlsls r5, r4, #0x02\nldr r1, _08032A70 @ =0x00000AC8\nadds r0, r0, r1\nadds r0, r0, r5\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _080329A4\nbl sub_0806FE84\nldr r0, [r6, #0x00]\nldr r1, _08032A70 @ =0x00000AC8\nadds r0, r0, r1\nadds r0, r0, r5\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_080329A4:\nadds r4, #0x01\ncmp r4, #0x03\nble _08032984\nmovs r4, #0x00\nldr r6, _08032A60 @ =0x03000290\n_080329AE:\nldr r0, [r6, #0x00]\nlsls r5, r4, #0x02\nldr r1, _08032A74 @ =0x00000AD8\nadds r0, r0, r1\nadds r0, r0, r5\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _080329CE\nbl sub_0806FE84\nldr r0, [r6, #0x00]\nldr r1, _08032A74 @ =0x00000AD8\nadds r0, r0, r1\nadds r0, r0, r5\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_080329CE:\nadds r4, #0x01\ncmp r4, #0x03\nble _080329AE\nmovs r4, #0x00\nldr r6, _08032A60 @ =0x03000290\nldr r5, _08032A78 @ =0x00000BCC\n_080329DA:\nldr r0, [r6, #0x00]\nadds r0, r0, r5\nbl sub_08062238\nadds r5, #0x64\nadds r4, #0x01\ncmp r4, #0x2F\nble _080329DA\nmovs r4, #0x00\nldr r6, _08032A7C @ =0x03000198\n_080329EE:\nldr r0, [r6, #0x00]\nlsls r5, r4, #0x02\nldr r1, _08032A80 @ =0x000007A4\nadds r0, r0, r1\nadds r0, r0, r5\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08032A0E\nbl sub_0806FE84\nldr r0, [r6, #0x00]\nldr r1, _08032A80 @ =0x000007A4\nadds r0, r0, r1\nadds r0, r0, r5\nmovs r1, #0x00\nstr r1, [r0, #0x00]\n_08032A0E:\nadds r4, #0x01\ncmp r4, #0x17\nble _080329EE\nldr r6, _08032A60 @ =0x03000290\nmovs r5, #0x8F\nlsls r5, r5, #0x02\nmovs r4, #0x03\n_08032A1C:\nldr r0, [r6, #0x00]\nadds r0, r0, r5\nbl sub_08070678\nadds r5, #0x30\nsubs r4, #0x01\ncmp r4, #0x00\nbge _08032A1C\nldr r4, _08032A60 @ =0x03000290\nldr r0, [r4, #0x00]\nmovs r1, #0xBF\nlsls r1, r1, #0x02\nadds r0, r0, r1\nbl sub_08062044\nldr r0, [r4, #0x00]\nmovs r1, #0xA6\nlsls r1, r1, #0x01\nadds r0, r0, r1\nbl sub_08062044\nldr r0, [r4, #0x00]\nmovs r1, #0xBA\nlsls r1, r1, #0x01\nadds r0, r0, r1\nbl sub_08062044\nldr r0, _08032A84 @ =0x080BB888\nldr r0, [r0, #0x00]\nbl _08073C40\npop {r4, r5, r6}\npop {r0}\nbx r0\n_08032A60: .4byte 0x03000290\n_08032A64: .4byte 0x00001F38\n_08032A68: .4byte 0x00001F10\n_08032A6C: .4byte 0x00001F0C\n_08032A70: .4byte 0x00000AC8\n_08032A74: .4byte 0x00000AD8\n_08032A78: .4byte 0x00000BCC\n_08032A7C: .4byte 0x03000198\n_08032A80: .4byte 0x000007A4\n_08032A84: .4byte 0x080BB888");
+    s32 i;
+
+    sub_08062044(&gBattleWork->unk1F38);
+    sub_08062044(&gBattleWork->unk1F10);
+    if (gBattleWork->unk00 != 0)
+    {
+        HeapFree(gBattleWork->unk00);
+        gBattleWork->unk00 = 0;
+    }
+    if (gBattleWork->unk04 != 0)
+    {
+        HeapFree(gBattleWork->unk04);
+        gBattleWork->unk04 = 0;
+    }
+    sub_08030D4C();
+    if (gBattleWork->unk324 != 0)
+    {
+        BtlObjPoolFree(gBattleWork->unk324);
+        gBattleWork->unk324 = 0;
+    }
+    if (gBattleWork->unk1F0C != 0)
+    {
+        BtlObjPoolFree(gBattleWork->unk1F0C);
+        gBattleWork->unk1F0C = 0;
+    }
+    for (i = 0; i <= 3; i++)
+    {
+        if (gBattleWork->unk0AC8[i] != 0)
+        {
+            BtlObjPoolFree(gBattleWork->unk0AC8[i]);
+            gBattleWork->unk0AC8[i] = 0;
+        }
+    }
+    for (i = 0; i <= 3; i++)
+    {
+        if (gBattleWork->unk0AD8[i] != 0)
+        {
+            BtlObjPoolFree(gBattleWork->unk0AD8[i]);
+            gBattleWork->unk0AD8[i] = 0;
+        }
+    }
+    for (i = 0; i <= 0x2F; i++)
+        sub_08062238(&gBattleWork->unk0BCC[i]);
+    for (i = 0; i <= 0x17; i++)
+    {
+        if (gMainWorkPtr->unk07A4[i] != 0)
+        {
+            BtlObjPoolFree(gMainWorkPtr->unk07A4[i]);
+            gMainWorkPtr->unk07A4[i] = 0;
+        }
+    }
+    for (i = 0; i <= 3; i++)
+        BtlReleaseEntry(&gBattleWork->unk023C[i]);
+    sub_08062044(&gBattleWork->unk2FC);
+    sub_08062044(&gBattleWork->unk013C.fields.unk14C);
+    sub_08062044(&gBattleWork->unk013C.fields.unk174);
+    _08073C40((void *)gData_080BB888[0]);
 }
+

@@ -1,139 +1,42 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08066fb8
-__attribute__((naked))
 void sub_08066FB8(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "bl sub_080674B4\n"
-        "bl sub_08061BE8\n"
-        "movs r0, #0x05\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x06\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x07\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x08\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x09\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x0A\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "bl sub_080674B4\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x08\n"
-        "bl sub_080615EC\n"
-        "ldr r5, _08067098 @ =0x080BB110\n"
-        "ldr r6, _0806709C @ =0x03000674\n"
-        "ldr r0, [r6, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r5, #0x0C\n"
-        "adds r0, r0, r5\n"
-        "ldr r4, [r0, #0x00]\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r4, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x18\n"
-        "bl sub_080615EC\n"
-        "ldr r0, [r6, #0x00]\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r0, r0, r5\n"
-        "ldr r4, [r0, #0x00]\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r4, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x28\n"
-        "bl sub_080615EC\n"
-        "ldr r0, [r6, #0x00]\n"
-        "adds r0, #0x02\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r0, r0, r5\n"
-        "ldr r4, [r0, #0x00]\n"
-        "bl sub_08061784\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x11\n"
-        "adds r0, r4, #0x0\n"
-        "movs r2, #0x00\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _080670A0 @ =0x03000678\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _080670A4\n"
-        "movs r0, #0x05\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x06\n"
-        "b _080670B6\n"
-        ".byte 0x00, 0x00\n"
-        "_08067098: .4byte 0x080BB110\n"
-        "_0806709C: .4byte 0x03000674\n"
-        "_080670A0: .4byte 0x03000678\n"
-        "_080670A4:\n"
-        "cmp r0, #0x01\n"
-        "bne _080670C2\n"
-        "movs r0, #0x07\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x08\n"
-        "_080670B6:\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "b _080670DE\n"
-        "_080670C2:\n"
-        "cmp r0, #0x02\n"
-        "bne _080670DE\n"
-        "movs r0, #0x09\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "movs r0, #0x0A\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x03\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "_080670DE:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    VBlankIntrWait();
+    sub_08061BE8();
+    TextRowSetPaletteBank(5, 0x0F, 3, 0x1A);
+    TextRowSetPaletteBank(6, 0x0F, 3, 0x1A);
+    TextRowSetPaletteBank(7, 0x0F, 3, 0x1A);
+    TextRowSetPaletteBank(8, 0x0F, 3, 0x1A);
+    TextRowSetPaletteBank(9, 0x0F, 3, 0x1A);
+    TextRowSetPaletteBank(10, 0x0F, 3, 0x1A);
+    VBlankIntrWait();
+
+    TextSetCursor(0, 0x08);
+    TextDrawAlign(gData_080BB110[gUnk_03000674].unk0C, TextGetAreaWidth() / 2, 0);
+    TextSetCursor(0, 0x18);
+    TextDrawAlign(gData_080BB110[gUnk_03000674 + 1].unk0C, TextGetAreaWidth() / 2, 0);
+    TextSetCursor(0, 0x28);
+    TextDrawAlign(gData_080BB110[gUnk_03000674 + 2].unk0C, TextGetAreaWidth() / 2, 0);
+
+    if (gUnk_03000678 == 0)
+    {
+        TextRowSetPaletteBank(5, 0x0E, 3, 0x1A);
+        TextRowSetPaletteBank(6, 0x0E, 3, 0x1A);
+    }
+    else if (gUnk_03000678 == 1)
+    {
+        TextRowSetPaletteBank(7, 0x0E, 3, 0x1A);
+        TextRowSetPaletteBank(8, 0x0E, 3, 0x1A);
+    }
+    else if (gUnk_03000678 == 2)
+    {
+        TextRowSetPaletteBank(9, 0x0E, 3, 0x1A);
+        TextRowSetPaletteBank(10, 0x0E, 3, 0x1A);
+    }
 }
+
 

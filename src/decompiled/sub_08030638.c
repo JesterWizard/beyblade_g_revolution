@@ -51,7 +51,7 @@ void sub_08030638(struct Unk346C0 *a, s32 b)
 
     if ((a->unk302 & 0xF0) != 0)
     {
-        gBattleWork->unk340 += rotated_x;
-        gBattleWork->unk344 += rotated_y;
+        gBattleWork->unk328.unk18 += rotated_x;
+        gBattleWork->unk328.unk1C += rotated_y;
     }
 }

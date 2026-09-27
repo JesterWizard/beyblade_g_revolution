@@ -1,148 +1,42 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0804aaf0
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Select the record at the browser cursor and print its detail lines.
 void sub_0804AAF0(void *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "movs r0, #0x10\n"
-        "bl sub_0807309C\n"
-        "adds r5, r0, #0x0\n"
-        "ldr r4, _0804AB84 @ =0x03000660\n"
-        "ldr r0, _0804AB88 @ =0x03000654\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "ldr r1, _0804AB8C @ =0x03000658\n"
-        "ldr r1, [r1, #0x00]\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "str r0, [r4, #0x00]\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x18\n"
-        "bl sub_080615EC\n"
-        "ldr r0, [r4, #0x00]\n"
-        "ldrb r0, [r0, #0x1D]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "bl sub_0803EBB0\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x20\n"
-        "bl sub_080615EC\n"
-        "ldr r0, [r4, #0x00]\n"
-        "ldrb r0, [r0, #0x1E]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "bl sub_0803ECB8\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x28\n"
-        "bl sub_080615EC\n"
-        "ldr r0, [r4, #0x00]\n"
-        "adds r0, #0x20\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "bl sub_0803EC34\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "ldr r1, [r4, #0x00]\n"
-        "movs r0, #0x40\n"
-        "ldrb r1, [r1, #0x1F]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0804AB94\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x30\n"
-        "bl sub_080615EC\n"
-        "ldr r0, _0804AB90 @ =0x083A74F0\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "b _0804ABA6\n"
-        "_0804AB84: .4byte 0x03000660\n"
-        "_0804AB88: .4byte 0x03000654\n"
-        "_0804AB8C: .4byte 0x03000658\n"
-        "_0804AB90: .4byte 0x083A74F0\n"
-        "_0804AB94:\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x30\n"
-        "bl sub_080615EC\n"
-        "ldr r0, _0804ABD0 @ =0x083A74FC\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "_0804ABA6:\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x38\n"
-        "bl sub_080615EC\n"
-        "ldr r0, _0804ABD4 @ =0x03000660\n"
-        "ldr r0, [r0, #0x00]\n"
-        "adds r2, r0, #0x0\n"
-        "adds r2, #0x21\n"
-        "movs r1, #0x00\n"
-        "ldsb r1, [r2, r1]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "bne _0804ABDC\n"
-        "ldr r0, _0804ABD8 @ =0x083A7508\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "b _0804ABEC\n"
-        ".byte 0x00, 0x00\n"
-        "_0804ABD0: .4byte 0x083A74FC\n"
-        "_0804ABD4: .4byte 0x03000660\n"
-        "_0804ABD8: .4byte 0x083A7508\n"
-        "_0804ABDC:\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r2, r0]\n"
-        "bl sub_0803DBD0\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "_0804ABEC:\n"
-        "ldr r4, _0804AC38 @ =0x03000660\n"
-        "ldr r0, [r4, #0x00]\n"
-        "movs r1, #0x26\n"
-        "ldsh r0, [r0, r1]\n"
-        "adds r1, r5, #0x0\n"
-        "movs r2, #0x10\n"
-        "bl sub_080735DC\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x40\n"
-        "bl sub_080615EC\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x48\n"
-        "bl sub_080615EC\n"
-        "ldr r1, [r4, #0x00]\n"
-        "movs r0, #0x03\n"
-        "ldrb r1, [r1, #0x1F]\n"
-        "ands r0, r1\n"
-        "bl sub_0803DD60\n"
-        "movs r1, #0xC4\n"
-        "movs r2, #0x01\n"
-        "bl sub_0806171C\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08073114\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0804AC38: .4byte 0x03000660\n"
-    );
+    void *buffer;
+
+    buffer = BtlObjTableAdd(0x10);
+    gUnk_03000660 = gData_03000658[gData_03000654];
+    TextSetCursor(0, 0x18);
+    TextDrawAlign((void *)sub_0803EBB0(gUnk_03000660->unk1D), 0xC4, 1);
+    TextSetCursor(0, 0x20);
+    TextDrawAlign((void *)sub_0803ECB8(gUnk_03000660->unk1E), 0xC4, 1);
+    TextSetCursor(0, 0x28);
+    TextDrawAlign((void *)sub_0803EC34((s8)gUnk_03000660->unk20), 0xC4, 1);
+    if (gUnk_03000660->unk1F & 0x40)
+    {
+        TextSetCursor(0, 0x30);
+        TextDrawAlign((void *)0x083A74F0, 0xC4, 1);
+    }
+    else
+    {
+        TextSetCursor(0, 0x30);
+        TextDrawAlign((void *)0x083A74FC, 0xC4, 1);
+    }
+    TextSetCursor(0, 0x38);
+    if (gUnk_03000660->unk21 == -1)
+        TextDrawAlign((void *)0x083A7508, 0xC4, 1);
+    else
+        TextDrawAlign((void *)sub_0803DBD0(gUnk_03000660->unk21), 0xC4, 1);
+    TextFormatInt(gUnk_03000660->unk26, buffer, 0x10);
+    TextSetCursor(0, 0x40);
+    TextDrawAlign(buffer, 0xC4, 1);
+    TextSetCursor(0, 0x48);
+    TextDrawAlign((void *)sub_0803DD60(gUnk_03000660->unk1F & 3), 0xC4, 1);
+    BtlObjTableRemove(buffer);
 }
 

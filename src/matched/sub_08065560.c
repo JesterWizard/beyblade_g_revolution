@@ -1,72 +1,44 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08065560
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Copy three {unk08, unk0C} presets into the objects picked by the per-mode
+// index triple. BUG: modes other than 0-2 leave `indices` unset.
 void sub_08065560(struct Unk65560 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r2, r0, #0x0\n"
-        "ldr r3, _0806557C @ =0x000002D5\n"
-        "adds r0, r2, r3\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "cmp r0, #0x01\n"
-        "beq _08065590\n"
-        "cmp r0, #0x01\n"
-        "bgt _08065580\n"
-        "cmp r0, #0x00\n"
-        "beq _08065586\n"
-        "b _0806559A\n"
-        "_0806557C: .4byte 0x000002D5\n"
-        "_08065580:\n"
-        "cmp r0, #0x02\n"
-        "beq _08065598\n"
-        "b _0806559A\n"
-        "_08065586:\n"
-        "ldr r1, _0806558C @ =0x080BAF61\n"
-        "b _0806559A\n"
-        ".byte 0x00, 0x00\n"
-        "_0806558C: .4byte 0x080BAF61\n"
-        "_08065590:\n"
-        "ldr r1, _08065594 @ =0x080BAF64\n"
-        "b _0806559A\n"
-        "_08065594: .4byte 0x080BAF64\n"
-        "_08065598:\n"
-        "ldr r1, _080655D0 @ =0x080BAF67\n"
-        "_0806559A:\n"
-        "movs r0, #0x9D\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r4, r2, r0\n"
-        "adds r2, r1, #0x0\n"
-        "ldr r3, _080655D4 @ =0x080BAF00\n"
-        "movs r5, #0x02\n"
-        "_080655A6:\n"
-        "ldrb r1, [r2, #0x00]\n"
-        "lsls r0, r1, #0x02\n"
-        "adds r0, r4, r0\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r0, [r3, #0x00]\n"
-        "str r0, [r1, #0x08]\n"
-        "ldrb r1, [r2, #0x00]\n"
-        "lsls r0, r1, #0x02\n"
-        "adds r0, r4, r0\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r0, [r3, #0x04]\n"
-        "str r0, [r1, #0x0C]\n"
-        "adds r2, #0x01\n"
-        "adds r3, #0x08\n"
-        "subs r5, #0x01\n"
-        "cmp r5, #0x00\n"
-        "bge _080655A6\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_080655D0: .4byte 0x080BAF67\n"
-        "_080655D4: .4byte 0x080BAF00\n"
-    );
+    const u8 *indices;
+    struct Unk65560Source *source;
+    s32 i;
+    struct Unk705DC **table;
+    const u8 *p;
+    struct Unk705DC **slot;
+    struct Unk705DC **slot2;
+
+    switch (a->unk2D5)
+    {
+    case 0:
+        indices = gData_080BAF61;
+        break;
+    case 1:
+        indices = gData_080BAF64;
+        break;
+    case 2:
+        indices = gData_080BAF67;
+        break;
+    }
+    table = a->unk274;
+    p = indices;
+    source = gData_080BAF00;
+    for (i = 2; i >= 0; i--)
+    {
+        slot = &table[*p];
+        (*slot)->unk08 = source->unk00;
+        slot2 = &table[*p];
+        (*slot2)->unk0C = source->unk04;
+        p++;
+        source++;
+    }
 }
 

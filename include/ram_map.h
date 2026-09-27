@@ -92,6 +92,8 @@
 #define gUnk_03000654 (*(s16 *)0x03000654)
 #define gUnk_03000658 (*(struct Unk4AAF0 ***)0x03000658)
 #define gUnk_03000660 (*(struct Unk4AAF0 **)0x03000660)
+#undef gUnk_0300070C
+#define gUnk_0300070C (*(struct Unk070C **)0x0300070C)
 #define gUnk_030006B8 (*(u16 *)0x030006B8)
 #define gUnk_03000674 (*(u32 *)0x03000674)
 #define gUnk_03000678 (*(u32 *)0x03000678)

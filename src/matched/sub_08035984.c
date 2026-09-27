@@ -1,198 +1,101 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035984
-__attribute__((naked))
+// Per-frame motion step: heading byte from the velocity angle, clamp velocity,
+// integrate position/velocity/accel, apply damping, advance the sine wobble.
 void sub_08035984(struct Unk35984 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r0, [r4, #0x18]\n"
-        "ldr r5, [r4, #0x1C]\n"
-        "adds r1, r0, #0x0\n"
-        "muls r1, r0\n"
-        "adds r0, r1, #0x0\n"
-        "adds r1, r5, #0x0\n"
-        "muls r1, r5\n"
-        "adds r0, r0, r1\n"
-        "bl sub_080674B0\n"
-        "adds r1, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "lsls r0, r5, #0x08\n"
-        "bl sub_080674A0\n"
-        "adds r5, r0, #0x0\n"
-        "asrs r1, r5, #0x01\n"
-        "cmp r1, #0x7F\n"
-        "ble _080359B2\n"
-        "movs r1, #0x7F\n"
-        "_080359B2:\n"
-        "movs r0, #0x80\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "bge _080359BC\n"
-        "adds r1, r0, #0x0\n"
-        "_080359BC:\n"
-        "ldr r0, _08035A4C @ =0x083C97C4\n"
-        "lsls r1, r1, #0x18\n"
-        "asrs r1, r1, #0x18\n"
-        "adds r1, #0x80\n"
-        "adds r1, r1, r0\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "adds r2, r4, #0x0\n"
-        "adds r2, #0x52\n"
-        "strh r1, [r2, #0x00]\n"
-        "ldr r0, [r4, #0x18]\n"
-        "cmp r0, #0x00\n"
-        "ble _080359DA\n"
-        "movs r0, #0xFF\n"
-        "subs r0, r0, r1\n"
-        "strh r0, [r2, #0x00]\n"
-        "_080359DA:\n"
-        "ldr r0, [r4, #0x18]\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x05\n"
-        "cmp r0, r2\n"
-        "ble _080359E6\n"
-        "str r2, [r4, #0x18]\n"
-        "_080359E6:\n"
-        "ldr r0, [r4, #0x18]\n"
-        "ldr r1, _08035A50 @ =0xFFFFF000\n"
-        "cmp r0, r1\n"
-        "bge _080359F0\n"
-        "str r1, [r4, #0x18]\n"
-        "_080359F0:\n"
-        "ldr r0, [r4, #0x1C]\n"
-        "cmp r0, r2\n"
-        "ble _080359F8\n"
-        "str r2, [r4, #0x1C]\n"
-        "_080359F8:\n"
-        "ldr r0, [r4, #0x1C]\n"
-        "cmp r0, r1\n"
-        "bge _08035A00\n"
-        "str r1, [r4, #0x1C]\n"
-        "_08035A00:\n"
-        "ldr r0, [r4, #0x0C]\n"
-        "ldr r1, [r4, #0x18]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r4, #0x0C]\n"
-        "ldr r0, [r4, #0x10]\n"
-        "ldr r3, [r4, #0x1C]\n"
-        "adds r0, r0, r3\n"
-        "str r0, [r4, #0x10]\n"
-        "ldr r0, [r4, #0x14]\n"
-        "ldr r2, [r4, #0x20]\n"
-        "adds r0, r0, r2\n"
-        "str r0, [r4, #0x14]\n"
-        "ldr r0, [r4, #0x24]\n"
-        "adds r5, r1, r0\n"
-        "str r5, [r4, #0x18]\n"
-        "ldr r0, [r4, #0x28]\n"
-        "adds r3, r3, r0\n"
-        "str r3, [r4, #0x1C]\n"
-        "ldr r0, [r4, #0x2C]\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r4, #0x20]\n"
-        "ldr r1, [r4, #0x30]\n"
-        "adds r0, r5, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r6, r0, #0x08\n"
-        "adds r0, r3, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r3, r0, #0x08\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r2, r0, #0x08\n"
-        "cmp r1, #0x00\n"
-        "beq _08035A9C\n"
-        "cmp r6, #0x00\n"
-        "beq _08035A54\n"
-        "subs r0, r5, r6\n"
-        "b _08035A62\n"
-        ".byte 0x00, 0x00\n"
-        "_08035A4C: .4byte 0x083C97C4\n"
-        "_08035A50: .4byte 0xFFFFF000\n"
-        "_08035A54:\n"
-        "cmp r5, #0x00\n"
-        "beq _08035A64\n"
-        "cmp r5, #0x00\n"
-        "ble _08035A60\n"
-        "subs r0, r5, #0x1\n"
-        "b _08035A62\n"
-        "_08035A60:\n"
-        "adds r0, r5, #0x1\n"
-        "_08035A62:\n"
-        "str r0, [r4, #0x18]\n"
-        "_08035A64:\n"
-        "cmp r3, #0x00\n"
-        "beq _08035A6E\n"
-        "ldr r0, [r4, #0x1C]\n"
-        "subs r0, r0, r3\n"
-        "b _08035A7E\n"
-        "_08035A6E:\n"
-        "ldr r0, [r4, #0x1C]\n"
-        "cmp r0, #0x00\n"
-        "beq _08035A80\n"
-        "cmp r0, #0x00\n"
-        "ble _08035A7C\n"
-        "subs r0, #0x01\n"
-        "b _08035A7E\n"
-        "_08035A7C:\n"
-        "adds r0, #0x01\n"
-        "_08035A7E:\n"
-        "str r0, [r4, #0x1C]\n"
-        "_08035A80:\n"
-        "cmp r2, #0x00\n"
-        "beq _08035A8A\n"
-        "ldr r0, [r4, #0x20]\n"
-        "subs r0, r0, r2\n"
-        "b _08035A9A\n"
-        "_08035A8A:\n"
-        "ldr r0, [r4, #0x20]\n"
-        "cmp r0, #0x00\n"
-        "beq _08035A9C\n"
-        "cmp r0, #0x00\n"
-        "ble _08035A98\n"
-        "subs r0, #0x01\n"
-        "b _08035A9A\n"
-        "_08035A98:\n"
-        "adds r0, #0x01\n"
-        "_08035A9A:\n"
-        "str r0, [r4, #0x20]\n"
-        "_08035A9C:\n"
-        "ldr r0, [r4, #0x44]\n"
-        "ldr r1, [r4, #0x48]\n"
-        "adds r0, r0, r1\n"
-        "ldr r1, _08035AD8 @ =0x0000FFFF\n"
-        "ands r0, r1\n"
-        "str r0, [r4, #0x44]\n"
-        "ldr r2, _08035ADC @ =0x083C9544\n"
-        "lsrs r0, r0, #0x08\n"
-        "lsls r1, r0, #0x01\n"
-        "adds r1, r1, r2\n"
-        "movs r5, #0x00\n"
-        "ldsh r3, [r1, r5]\n"
-        "adds r0, #0x40\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r2\n"
-        "movs r1, #0x00\n"
-        "ldsh r2, [r0, r1]\n"
-        "ldr r1, [r4, #0x4C]\n"
-        "adds r0, r3, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "str r0, [r4, #0x3C]\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "str r0, [r4, #0x40]\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08035AD8: .4byte 0x0000FFFF\n"
-        "_08035ADC: .4byte 0x083C9544\n"
-    );
+    s32 speed;
+    s32 sn;
+    s32 cs;
+    u32 idx;
+    s32 vx;
+    s32 vy;
+    s32 speed16;
+    s32 half;
+    s32 table_value;
+    s32 factor;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 index;
+    const u8 *table8;
+
+    vx = a->unk18;
+    vy = a->unk1C;
+    speed = Sqrt(vx * vx + vy * vy);
+    speed16 = (u16)speed;
+    vy = Div(vy << 8, speed16); // vy now holds the angle
+    half = vy >> 1;
+    if (half > 0x7F)
+        half = 0x7F;
+    if (half < -0x80)
+        half = -0x80;
+    table8 = gData_083C97C4;
+    index = (s8)half + 0x80;
+    table_value = table8[index];
+    a->unk52 = table_value;
+    if (a->unk18 > 0)
+        a->unk52 = 0xFF - table_value;
+
+    if (a->unk18 > 0x1000)
+        a->unk18 = 0x1000;
+    if (a->unk18 < -0x1000)
+        a->unk18 = -0x1000;
+    if (a->unk1C > 0x1000)
+        a->unk1C = 0x1000;
+    if (a->unk1C < -0x1000)
+        a->unk1C = -0x1000;
+
+    a->unk0C += a->unk18;
+    a->unk10 += a->unk1C;
+    a->unk14 += a->unk20;
+    a->unk18 += a->unk24;
+    a->unk1C += a->unk28;
+    a->unk20 += a->unk2C;
+
+    factor = a->unk30;
+    x = (a->unk18 * factor) >> 8;
+    y = (a->unk1C * factor) >> 8;
+    z = (a->unk20 * factor) >> 8;
+    if (factor != 0)
+    {
+        if (x != 0)
+            a->unk18 -= x;
+        else if (a->unk18 != 0)
+        {
+            if (a->unk18 > 0)
+                a->unk18--;
+            else
+                a->unk18++;
+        }
+        if (y != 0)
+            a->unk1C -= y;
+        else if (a->unk1C != 0)
+        {
+            if (a->unk1C > 0)
+                a->unk1C--;
+            else
+                a->unk1C++;
+        }
+        if (z != 0)
+            a->unk20 -= z;
+        else if (a->unk20 != 0)
+        {
+            if (a->unk20 > 0)
+                a->unk20--;
+            else
+                a->unk20++;
+        }
+    }
+
+    idx = (a->unk44 + a->unk48) & 0xFFFF;
+    a->unk44 = idx;
+    sn = gData_083C9544[idx >> 8];
+    cs = gData_083C9544[(idx >> 8) + 0x40];
+    a->unk3C = (sn * a->unk4C) >> 8;
+    a->unk40 = (cs * a->unk4C) >> 8;
 }
 

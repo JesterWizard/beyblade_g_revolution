@@ -8,18 +8,87 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **453/633 (71.6%)** |
-| **Decompiled C (bytes)** | **33,238/90,272 (36.8%)** |
+| **Decompiled C (functions)** | **485/633 (76.6%)** |
+| **Decompiled C (bytes)** | **40,202/90,272 (44.5%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 180/633 (28.4%) |
+| Readable Thumb | 148/633 (23.4%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 85/160 (53.1% fn, 23.8% bytes) |
+| Battle semantic C | 100/160 (62.5% fn, 31.9% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-27 — parked-WIP sweep 4 (+7/10): 54494, 3DBD0, 32604, 70468, 333E4, 3139C, 66FB8
+
+- `sub_08054494` — the x coordinate is per-iteration `(x + i * 16) << 8`; loop strength
+  reduction places its init after the hoisted invariants and fixes the r6/r7 swap.
+- `sub_0803DBD0` — `u8 *table` + byte offset `idx * 4 + row * 40`; idx loaded into the result var.
+- `sub_08032604` — new symbol `gData_0807800C` (`struct Unk32604Mode[]`); field defaults via a `work` local.
+- `sub_08070468` — list head through the existing `gData_030040A4` symbol; prototype retyped
+  to `struct Unk6FDB4 *` (only unlinked drafts call it; casts added there).
+- `sub_080333E4` — `old_agbcc`; new symbol `gData_08078108` for the resource table.
+- `sub_0803139C` — duplicated alloc blocks written inline on `array[index]`, one shared `palette`
+  local, and the tail-free loop runs on `index` with the return value saved in `digits`.
+- `sub_08066FB8` — `gData_080BB110` retyped to `struct Unk66FB8Table[]`; plain if/else-if chain.
+- Parked: `sub_08038D68` (86/112, 2FC/300 address order), `sub_08067504` (DMA wait test
+  duplication/cross-jump), `sub_08059DC8` (gcse hoists `sp+4/sp+8`). Notes in `src/decompiled/*.md`.
+- Lesson: when retail loads a ROM table base *before* the index math, try a `gData_*` symbol first.
+
+### 2026-09-27 — parked-WIP sweep 3 (+7): 42784, 6BC0C, 73910, 2BF04, 57274, 37430, 67BB8
+
+- `sub_08042784` — `(s8)` ring index, `MainWork *work` local, guarded body; param is `u32` (stored with `strh`).
+- `sub_0806BC0C` — plain `s16 count` / `s16 i` loop with warning clamp.
+- `sub_08073910` — `u32` bounds; the space skip is `do { c = src[si]; if (c == ' ') si++; } while (c == ' ');` (a `for(;;)`/`while` gets rotated).
+- `sub_0802BF04` — `old_agbcc`; sibling of `sub_0802C55C` (u8 `Unk1694` fields).
+- `sub_08057274` — `old_agbcc`; direct `gMainWorkPtr` in every case.
+- `sub_08037430` — `old_agbcc`; new `gData_08096ECC` name-table symbol.
+- `sub_08067BB8` — `old_agbcc`; plain field-by-field constructor with `struct Unk67BB8Source`.
+- Rule of thumb confirmed again: a "mask constant loaded before the `ldrh`/`ldrb`" `and` pattern means `old_agbcc`.
+- Parked: `sub_08054494` 177/196 (r6/r7 swap), `sub_08059DC8` (function-pointer dispatch; sp-offset hoist), `sub_08067504` (DMA busy-wait loop layout).
+- `make compare` OK. 478/633 semantic C.
+
+### 2026-09-27 — parked-WIP sweep 2 (+9): 700CC, 62AF8, 56F84, 35AE0, 47624, 2C55C, 4AAF0, 69B78, 65560
+
+- `sub_080700CC` — `gData_030040A4/AC/B4` (sibling of `sub_0807000C`) + a separate `u32 i` loop counter so `count` stays in r2.
+- `sub_08062AF8` — `old_agbcc`; drop the cached pool pointer in loop 1, init order `i`, `loc`, `one`, `dst` before loop 2.
+- `sub_08056F84` — returns nothing: prototype `s32` → `void`; copy the out-param into a local once.
+- `sub_08035AE0` — `(s32)` casts on the `u32 unk34` mass (`asr` not `lsr`); permuter found a `do { } while (0)` around the first two statements (loop-depth weighting in gcc 2.x register allocation).
+- `sub_08047624` — `old_agbcc`; four "steps to the next 8-px boundary" loops with a separate `pos`; default case has **no return** (`#ifdef BUGFIX`).
+- `sub_0802C55C` — `old_agbcc`; prototype `(u16, u8, s16)`; `Unk1694.unk00/unk03` are `u8` (0xFF = free, `|= 0xFF` isn't folded), with `(s8)` casts added in the three matched siblings (all still 100%).
+- `sub_0804AAF0` — `old_agbcc`; `TextSetCursor(0, 0x30)` sits inside both branches; `gData_03000654/58` for the table/index load order.
+- `sub_08069B78` — `old_agbcc`; `struct BgCnt` `priority` bitfield store on the four BGxCNT pointers.
+- `sub_08065560` — `old_agbcc`; no `default: return` (original bug), `&a->unk274` table, separate `slot`/`slot2` pointers per store.
+- `sub_080348E8` still parked at 376/384 (else-branch register choice).
+- `make compare` OK. 471/633 semantic C.
+
+### 2026-09-27 — parked-WIP sweep 2 (+8): 700CC, 62AF8, 56F84, 47624, 2C55C, 4AAF0, 69B78, 35AE0
+
+- `sub_080700CC` — sibling of `sub_0807000C`: `gData_030040A4/AC/B4` + a separate `u32 i` loop counter (`while (i-- != 0)`).
+- `sub_08062AF8` — `old_agbcc`; no cached pool pointer, loop-2 init order `i`, `loc`, `one`, `dst`.
+- `sub_08056F84` — prototype is `void` (was `s32`); out-param copied to a local once.
+- `sub_08047624` — `old_agbcc`; separate `pos` loop variable; original has no return for modes > 3 (`BUGFIX` guard).
+- `sub_0802C55C` — `old_agbcc`; `Unk1694` fields are `u8` (`|= 0xFF` is not folded) with `(s8)` casts at the three matched compares; prototype `(u16, u8, s16)`.
+- `sub_0804AAF0` — `old_agbcc`; `TextSetCursor(0, 0x30)` sits in both branches; new `gData_03000654/58/60` symbols for index/table order.
+- `sub_08069B78` — `old_agbcc`; `struct BgCnt` `priority` bitfield stores (constants live in callee-saved regs because of the bitfield).
+- `sub_08035AE0` — `(s32)` casts on `unk34` (signed `asr`), reused `(u16)Sqrt` shape; permuter found the last piece: a `do { } while (0)` scope around the setup.
+- Parked: `sub_080348E8` 376/384 (else-branch regs), `sub_08065560` 118/120 (one `add` operand order; permuter output kept in the draft).
+- `make compare` OK. 470/633 semantic C.
+
+### 2026-09-26 — parked-WIP sweep (+9): 40F4C, 73114, 43B90, 7000C, 35984, 67F3C, 60D58, 32DC4, 32908
+
+- `sub_08073114`, `sub_0807000C` — literal RAM addresses let agbcc fold `0x03004154` into `table+4` (`sub r0,#8` etc.); new `gData_03004150/54/58` and `gData_030040A4/AC/B4` symbols fix it. Clean structured C.
+- `sub_08043B90` — original has **no return** when the list is exhausted (r0 still holds the 0 from the loop test); `old_agbcc`, `#ifdef BUGFIX return 0;`.
+- `sub_08040F4C` — structured `do/switch` rewrite of the goto draft gets `done` in r5 and two zero registers; then matches under `old_agbcc` (earlier `old_agbcc` tests were on the goto draft only).
+- `sub_08035984` — cache `vx`/`vy`, `gData_083C97C4`/`gData_083C9544` tables, `s32` trig temps (not `s16`), index via masked local.
+- `sub_08067F3C` — `old_agbcc` + guarded `do { } while (--i)` with `n != 0` folded into the outer `if`.
+- `sub_08060D58` — `old_agbcc`; `fillSrc = gData_080BB8BC` local before the CpuSet call fixes pool-load order.
+- `sub_08032908` — last loop is a plain index loop `&gBattleWork->unk023C[i]`, not a walking pointer.
+- `sub_08032DC4` — draft had three semantic bugs: combo hits set `frame = 60`, `&gBattleWork->unk2094` passed by address, `sub_08033958` result tested as `u8`. `old_agbcc`. Added `BattleWork.unk328`/`unk37C` (`struct Unk360BC`, whose +0x18/+0x1C were `unk340`/`unk344`) and `unk478` so no offset casts remain; `gData_03004060` for held keys.
+- `sub_080348E8` parked 208 → 376/384 (else-branch register choice only; see its notes). Permuter 400s: no gain.
+- `make compare` OK. 462/633 semantic C.
 
 ### 2026-09-25 — 60s budget, no new match
 

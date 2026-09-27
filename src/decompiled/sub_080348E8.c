@@ -1,10 +1,10 @@
-/* match-compiler: old_agbcc */
+
 #include "global.h"
 
 void sub_080348E8(struct Unk346C0 *a, u32 b)
 {
     s32 *counter;
-    u8 flag;
+    u32 flag;
     u8 *flag_ptr;
 
     a->unk30E = sub_08035C64(a->unk00, 0x10000, 0x10000, 0xC8, 0x8000);
@@ -28,7 +28,7 @@ void sub_080348E8(struct Unk346C0 *a, u32 b)
         counter = &a->unk2FC;
         if (*counter >= 0)
         {
-            sub_08034810(a, 0);
+            sub_08034810(a, *counter);
             (*counter)--;
         }
         else

@@ -1,8 +1,30 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08037430
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Draw the name + count line (count capped at 3) into the battle text box
+// unless MainWork.unk1808 bit 1 suppresses it.
 void sub_08037430(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nadd sp, #-0x00C\nmovs r0, #0x40\nbl sub_0807309C\nadds r7, r0, #0x0\nmovs r0, #0x40\nbl sub_0807309C\nadds r6, r0, #0x0\nldr r0, _08037470 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r1, _08037474 @ =0x00001808\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x02\nands r0, r1\ncmp r0, #0x00\nbne _080374DA\nldr r0, _08037478 @ =0x03000290\nldr r0, [r0, #0x00]\nldr r2, _0803747C @ =0x00000133\nadds r0, r0, r2\nldrb r1, [r0, #0x00]\ncmp r1, #0x03\nbls _08037480\nmovs r0, #0x03\nadds r1, r6, #0x0\nmovs r2, #0x40\nbl sub_080735DC\nb _0803748A\n_08037470: .4byte 0x03000198\n_08037474: .4byte 0x00001808\n_08037478: .4byte 0x03000290\n_0803747C: .4byte 0x00000133\n_08037480:\nldrb r0, [r0, #0x00]\nadds r1, r6, #0x0\nmovs r2, #0x40\nbl sub_080735DC\n_0803748A:\nldr r1, _080374F0 @ =0x08096ECC\nldr r0, _080374F4 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r2, _080374F8 @ =0x00001818\nadds r0, r0, r2\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x40\nstr r1, [sp, #0x000]\nadds r1, r7, #0x0\nadds r2, r6, #0x0\nmovs r3, #0x23\nbl sub_08073AEC\nldr r5, _080374FC @ =0x03000290\nldr r0, [r5, #0x00]\nmovs r4, #0xBA\nlsls r4, r4, #0x01\nadds r0, r0, r4\nldr r1, _08037500 @ =0x080B72F3\nldr r2, _08037504 @ =0x082BF600\nmovs r3, #0xB8\nlsls r3, r3, #0x01\nstr r3, [sp, #0x000]\nmovs r3, #0xB0\nbl sub_08061E8C\nldr r0, [r5, #0x00]\nadds r0, r0, r4\nmovs r2, #0x00\nstr r2, [sp, #0x000]\nmovs r1, #0xC8\nstr r1, [sp, #0x004]\nstr r2, [sp, #0x008]\nadds r1, r7, #0x0\nmovs r3, #0x28\nbl sub_08061EF8\n_080374DA:\nadds r0, r7, #0x0\nbl sub_08073114\nadds r0, r6, #0x0\nbl sub_08073114\nadd sp, #0x00C\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_080374F0: .4byte 0x08096ECC\n_080374F4: .4byte 0x03000198\n_080374F8: .4byte 0x00001818\n_080374FC: .4byte 0x03000290\n_08037500: .4byte 0x080B72F3\n_08037504: .4byte 0x082BF600");
+    void *text;
+    void *num;
+
+    text = BtlObjTableAdd(0x40);
+    num = BtlObjTableAdd(0x40);
+    if (!(gMainWorkPtr->unk1808 & 2))
+    {
+        if (gBattleWork->unk133 > 3)
+            TextFormatInt(3, num, 0x40);
+        else
+            TextFormatInt(gBattleWork->unk133, num, 0x40);
+        sub_08073AEC(gData_08096ECC[gMainWorkPtr->unk1818], text, num, 0x23, 0x40);
+        sub_08061E8C((struct Unk61E8C *)&gBattleWork->unk013C.fields.unk174, gData_080B72F3,
+                     (struct Unk61E8CSrc *)gData_082BF600, 0xB0, 0x170);
+        sub_08061EF8(&gBattleWork->unk013C.fields.unk174, text, 0, 0x28, 0, 0xC8, 0);
+    }
+    BtlObjTableRemove(text);
+    BtlObjTableRemove(num);
 }
+

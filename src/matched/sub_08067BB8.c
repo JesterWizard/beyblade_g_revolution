@@ -1,158 +1,73 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08067bb8
-__attribute__((naked))
-void sub_08067BB8(void *a, void *b, s32 c, s32 d, s32 e, s32 f, s32 g)
+/* match-compiler: old_agbcc */
+// Construct an animated object from its template: position (x, y, z in pixels,
+// stored 24.8), defaults for every state field, then frame/palette setup.
+void sub_08067BB8(struct Unk67BB8 *obj, struct Unk67BB8Source *src, s32 arg2, s32 x, s32 y, s32 z, s32 arg6)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "add sp, #-0x004\n"
-        "adds r7, r0, #0x0\n"
-        "ldr r4, [sp, #0x018]\n"
-        "ldr r5, [sp, #0x01C]\n"
-        "ldr r6, [sp, #0x020]\n"
-        "str r1, [r7, #0x00]\n"
-        "ldr r0, _08067CE0 @ =0x03000180\n"
-        "ldr r0, [r0, #0x00]\n"
-        "str r0, [r7, #0x58]\n"
-        "str r2, [r7, #0x3C]\n"
-        "str r6, [r7, #0x70]\n"
-        "lsls r3, r3, #0x08\n"
-        "str r3, [r7, #0x04]\n"
-        "lsls r4, r4, #0x08\n"
-        "str r4, [r7, #0x08]\n"
-        "lsls r5, r5, #0x08\n"
-        "str r5, [r7, #0x0C]\n"
-        "movs r5, #0x00\n"
-        "movs r4, #0x00\n"
-        "strh r4, [r7, #0x16]\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x01\n"
-        "strh r0, [r7, #0x12]\n"
-        "strh r0, [r7, #0x14]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0xA0\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strb r5, [r0, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strb r5, [r0, #0x00]\n"
-        "str r4, [r7, #0x40]\n"
-        "str r4, [r7, #0x44]\n"
-        "str r4, [r7, #0x48]\n"
-        "str r4, [r7, #0x4C]\n"
-        "str r4, [r7, #0x50]\n"
-        "str r4, [r7, #0x54]\n"
-        "movs r0, #0x10\n"
-        "str r0, [r7, #0x68]\n"
-        "strh r4, [r7, #0x18]\n"
-        "str r4, [r7, #0x64]\n"
-        "strh r4, [r7, #0x22]\n"
-        "adds r3, r7, #0x0\n"
-        "adds r3, #0x60\n"
-        "ldr r0, _08067CE4 @ =0x0000FFFF\n"
-        "adds r2, r0, #0x0\n"
-        "ldrh r0, [r3, #0x00]\n"
-        "orrs r0, r2\n"
-        "strh r0, [r3, #0x00]\n"
-        "ldrh r0, [r7, #0x1A]\n"
-        "orrs r0, r2\n"
-        "strh r0, [r7, #0x1A]\n"
-        "strh r4, [r7, #0x1C]\n"
-        "strh r4, [r7, #0x1E]\n"
-        "strh r4, [r7, #0x20]\n"
-        "strh r4, [r7, #0x2C]\n"
-        "ldrh r0, [r7, #0x2E]\n"
-        "orrs r2, r0\n"
-        "strh r2, [r7, #0x2E]\n"
-        "ldrb r0, [r1, #0x04]\n"
-        "strb r0, [r7, #0x10]\n"
-        "ldrb r0, [r1, #0x05]\n"
-        "strb r0, [r7, #0x11]\n"
-        "ldrb r2, [r1, #0x06]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x30\n"
-        "strb r2, [r0, #0x00]\n"
-        "ldr r0, [r1, #0x08]\n"
-        "strh r0, [r7, #0x2A]\n"
-        "ldrb r2, [r1, #0x07]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x38\n"
-        "strb r2, [r0, #0x00]\n"
-        "ldr r0, [r1, #0x14]\n"
-        "strh r0, [r7, #0x28]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x31\n"
-        "strb r5, [r0, #0x00]\n"
-        "adds r0, #0x08\n"
-        "strb r5, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strb r5, [r0, #0x00]\n"
-        "ldrb r0, [r1, #0x0C]\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0x3A\n"
-        "strb r0, [r1, #0x00]\n"
-        "str r4, [r7, #0x6C]\n"
-        "movs r1, #0x01\n"
-        "negs r1, r1\n"
-        "str r1, [r7, #0x74]\n"
-        "str r4, [r7, #0x78]\n"
-        "str r4, [r7, #0x7C]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x80\n"
-        "str r4, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "str r1, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "str r4, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "strb r5, [r0, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strb r5, [r0, #0x00]\n"
-        "adds r0, #0x0B\n"
-        "strb r5, [r0, #0x00]\n"
-        "subs r0, #0x08\n"
-        "str r4, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "str r4, [r0, #0x00]\n"
-        "adds r0, #0x1C\n"
-        "str r4, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "str r4, [r0, #0x00]\n"
-        "ldrb r0, [r7, #0x10]\n"
-        "lsrs r1, r0, #0x01\n"
-        "ldrb r2, [r7, #0x11]\n"
-        "adds r0, r7, #0x0\n"
-        "movs r3, #0x00\n"
-        "bl sub_08068574\n"
-        "ldrb r3, [r7, #0x10]\n"
-        "ldrb r0, [r7, #0x11]\n"
-        "str r0, [sp, #0x000]\n"
-        "adds r0, r7, #0x0\n"
-        "movs r1, #0x00\n"
-        "movs r2, #0x00\n"
-        "bl sub_08068558\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0xB8\n"
-        "str r4, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "movs r1, #0x00\n"
-        "bl sub_08068180\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0xC0\n"
-        "str r4, [r0, #0x00]\n"
-        "add sp, #0x004\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08067CE0: .4byte 0x03000180\n"
-        "_08067CE4: .4byte 0x0000FFFF\n"
-    );
+    obj->unk00 = src;
+    obj->unk58 = gUnk_03000180.unk00;
+    obj->unk3C = arg2;
+    obj->unk70 = arg6;
+    obj->unk04 = x << 8;
+    obj->unk08 = y << 8;
+    obj->unk0C = z << 8;
+    obj->unk16 = 0;
+    obj->unk12 = 0x100;
+    obj->unk14 = 0x100;
+    obj->unkA0 = 0;
+    obj->unkA2 = 0;
+    obj->unkA4 = 0;
+    obj->unkA5 = 0;
+    obj->unk40 = 0;
+    obj->unk44 = 0;
+    obj->unk48 = 0;
+    obj->unk4C = 0;
+    obj->unk50 = 0;
+    obj->unk54 = 0;
+    obj->unk68 = 0x10;
+    obj->unk18 = 0;
+    obj->unk64 = 0;
+    obj->unk22 = 0;
+    obj->unk60 |= 0xFFFF;
+    obj->unk1A |= 0xFFFF;
+    obj->unk1C = 0;
+    obj->unk1E = 0;
+    obj->unk20 = 0;
+    obj->unk2C = 0;
+    obj->unk2E |= 0xFFFF;
+    obj->unk10 = src->unk04;
+    obj->unk11 = src->unk05;
+    obj->unk30 = src->unk06;
+    obj->unk2A = src->unk08;
+    obj->unk38 = src->unk07;
+    obj->unk28 = src->unk14;
+    obj->unk31 = 0;
+    obj->unk39 = 0;
+    obj->unk3B = 0;
+    obj->unk3A = src->unk0C;
+    obj->unk6C = 0;
+    obj->unk74 = -1;
+    obj->unk78 = 0;
+    obj->unk7C = 0;
+    obj->unk80 = 0;
+    obj->unk84 = -1;
+    obj->unk88 = 0;
+    obj->unk8C = 0;
+    obj->unk8D = 0;
+    obj->unk98 = 0;
+    obj->unk90 = 0;
+    obj->unk94 = 0;
+    obj->unkB0 = 0;
+    obj->unkB4 = 0;
+    sub_08068574((struct Unk68574 *)obj, obj->unk10 >> 1, obj->unk11, 0);
+    sub_08068558((struct Unk68574 *)obj, 0, 0, obj->unk10, obj->unk11);
+    obj->unkB8 = 0;
+    obj->unkBC = 0;
+    sub_08068180((struct Unk68598 *)obj, 0);
+    obj->unkC0 = 0;
 }
 

@@ -56,6 +56,9 @@ python3 tools/decomp/agent_packet.py --next
 
 # 4. Report
 python3 tools/decomp/report_status.py
+
+# 5. Last step of the session: ping + desktop notification
+tools/notify_done.sh "Beyblade decomp" "Session finished: N matched, make compare OK"
 ```
 
 Optional: `python3 tools/decomp/cluster_shapes.py` to grow `c_patterns.py` from clone families.

@@ -1,8 +1,131 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08032dc4
-__attribute__((naked))
-void BtlFrameUpdate(void)
+void sub_080338E4(void *dst, void *src);
+void sub_08032D5C(struct Unk346C0 *a, struct Unk346C0 *b);
+void sub_08033188(void);
+void sub_0803370C(void);
+void sub_08033084(void *a, u32 b);
+void sub_080353A0(void *a);
+void sub_08030F38(void);
+void sub_08033DD4(void);
+void sub_080338F0(struct Unk33958 *a, u16 b);
+void sub_080333E4(s32 a, s32 b, s32 c, s32 d);
+void sub_08032DB8(struct Unk346C0 *a);
+u8 sub_08033A94(u8 *a);
+void sub_080361A8(void *a);
+
+/* match-compiler: old_agbcc */
+// Battle main loop: run `frame + 1` frames of input, physics, drawing and the
+// three combo checks; a combo hit re-arms the countdown to 60 frames.
+void BtlFrameUpdate(
+    s32 frame_arg, struct Unk346C0 *state_a_arg,
+    struct Unk346C0 *state_b_arg)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x018\nadds r6, r1, #0x0\nmov r9, r2\nmov r8, r0\nmovs r0, #0x80\nlsls r0, r0, #0x01\nbl sub_080628B4\nldr r1, _0803301C @ =0x03000290\nldr r1, [r1, #0x00]\nldr r2, _08033020 @ =0x00000AC4\nadds r1, r1, r2\nlsls r0, r0, #0x08\nstr r0, [r1, #0x00]\nldr r1, _08033024 @ =0x0807811C\nmov r0, sp\nbl sub_080338E4\nadd r5, sp, #0x008\nldr r1, _08033028 @ =0x08078130\nadds r0, r5, #0x0\nbl sub_080338E4\nadd r4, sp, #0x010\nldr r1, _0803302C @ =0x08078144\nadds r0, r4, #0x0\nbl sub_080338E4\nadds r0, r6, #0x0\nmov r1, r9\nbl sub_08032D5C\nmov r3, r8\ncmp r3, #0x00\nbge _08032E16\nb _08033006\n_08032E16:\nldr r0, _08033030 @ =0x00000AA8\nmov r10, r0\n_08032E1A:\nbl sub_080674B4\nbl sub_08067890\nbl sub_0806A6F8\nldr r1, _08033034 @ =0x03004060\nmovs r0, #0x08\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _08032E36\nbl sub_08033188\n_08032E36:\nldr r5, _0803301C @ =0x03000290\nldr r1, [r5, #0x00]\nmov r2, r10\nadds r0, r1, r2\nadds r1, #0x08\nbl sub_080361CC\nldr r1, [r5, #0x00]\nmov r3, r10\nadds r0, r1, r3\nadds r1, #0x90\nbl sub_080361CC\nldr r0, [r5, #0x00]\nadds r0, #0x08\nbl sub_08068EC0\nldr r0, [r5, #0x00]\nadds r0, #0x90\nbl sub_08068EC0\nldr r1, [r5, #0x00]\nmovs r2, #0xCA\nlsls r2, r2, #0x02\nadds r0, r1, r2\nadd r1, r10\nbl sub_08035D68\nldr r1, [r5, #0x00]\nmovs r3, #0xDF\nlsls r3, r3, #0x02\nadds r0, r1, r3\nadd r1, r10\nbl sub_08035D68\nldr r2, [r5, #0x00]\nmovs r1, #0xCA\nlsls r1, r1, #0x02\nadds r0, r2, r1\nmov r3, r10\nadds r1, r2, r3\nldr r3, _08033038 @ =0x00000AD8\nadds r2, r2, r3\nldr r2, [r2, #0x00]\nbl sub_080302A8\nldr r2, [r5, #0x00]\nmovs r1, #0xDF\nlsls r1, r1, #0x02\nadds r0, r2, r1\nmov r3, r10\nadds r1, r2, r3\nldr r3, _0803303C @ =0x00000ADC\nadds r2, r2, r3\nldr r2, [r2, #0x00]\nbl sub_080302A8\nadds r0, r6, #0x0\nbl sub_0803531C\nmov r0, r9\nbl sub_0803531C\nadds r0, r6, #0x0\nbl sub_080353A0\nmov r0, r9\nbl sub_080353A0\nbl sub_08030F38\nldr r1, [r5, #0x00]\nmovs r2, #0xB5\nlsls r2, r2, #0x04\nadds r0, r1, r2\nldr r0, [r0, #0x00]\nmovs r3, #0x8F\nlsls r3, r3, #0x03\nadds r1, r1, r3\nbl sub_08030F00\nbl sub_08033530\nbl sub_0803370C\nldr r1, [r5, #0x00]\nldr r2, _08033040 @ =0x00001F7C\nadds r0, r1, r2\nldr r3, _08033044 @ =0x00001F98\nadds r1, r1, r3\nldrb r1, [r1, #0x00]\nbl sub_08033084\nadds r0, r6, #0x0\nbl sub_080302E0\nmov r0, r9\nbl sub_080302E0\nldr r0, [r5, #0x00]\nldr r1, _08033048 @ =0x00000B84\nadds r0, r0, r1\nbl sub_08031300\nldr r0, [r5, #0x00]\nldr r2, _0803304C @ =0x00000B94\nadds r0, r0, r2\nbl sub_08031300\nldr r0, _08033050 @ =0x080BB888\nldr r0, [r0, #0x00]\nbl _08073C40\nldr r2, [r5, #0x00]\nmov r3, r10\nadds r0, r2, r3\nmovs r3, #0xCA\nlsls r3, r3, #0x02\nadds r1, r2, r3\nadds r3, #0x54\nadds r2, r2, r3\nmovs r3, #0x66\nbl sub_08036264\nldr r0, [r5, #0x00]\nadd r0, r10\nbl sub_080361A8\nadds r0, r6, #0x0\nbl sub_08034894\nmovs r1, #0xC3\nlsls r1, r1, #0x02\nadds r0, r6, r1\nldrb r0, [r0, #0x00]\ncmp r0, #0x01\nbne _08032F4C\nbl sub_08033DD4\n_08032F4C:\nldr r0, [r5, #0x00]\nldr r7, _08033054 @ =0x00002094\nadds r0, r0, r7\nbl sub_08033A94\nlsls r0, r0, #0x18\ncmp r0, #0x00\nbne _08032FF8\nmovs r2, #0xC0\nlsls r2, r2, #0x02\nadds r4, r6, r2\nldrh r1, [r4, #0x00]\nmov r0, sp\nbl sub_080338F0\nadd r0, sp, #0x008\nldrh r1, [r4, #0x00]\nbl sub_080338F0\nadd r0, sp, #0x010\nldrh r1, [r4, #0x00]\nbl sub_080338F0\nmov r0, sp\nbl sub_08033958\nlsls r0, r0, #0x18\ncmp r0, #0x00\nbeq _08032FA4\nldr r0, [r5, #0x00]\nadds r0, r0, r7\nadds r1, r6, #0x0\nmov r2, r9\nmovs r3, #0x00\nbl sub_08033978\nmovs r3, #0x3C\nmov r8, r3\nmovs r0, #0x78\nmovs r1, #0x50\nmovs r2, #0x00\nmovs r3, #0x03\nbl sub_080333E4\n_08032FA4:\nadd r0, sp, #0x008\nbl sub_08033958\nlsls r0, r0, #0x18\ncmp r0, #0x00\nbeq _08032FCE\nldr r0, [r5, #0x00]\nadds r0, r0, r7\nadds r1, r6, #0x0\nmov r2, r9\nmovs r3, #0x01\nbl sub_08033978\nmovs r0, #0x3C\nmov r8, r0\nmovs r0, #0x78\nmovs r1, #0x50\nmovs r2, #0x00\nmovs r3, #0x03\nbl sub_080333E4\n_08032FCE:\nadd r0, sp, #0x010\nbl sub_08033958\nlsls r0, r0, #0x18\ncmp r0, #0x00\nbeq _08032FF8\nldr r0, [r5, #0x00]\nadds r0, r0, r7\nadds r1, r6, #0x0\nmov r2, r9\nmovs r3, #0x02\nbl sub_08033978\nmovs r1, #0x3C\nmov r8, r1\nmovs r0, #0x78\nmovs r1, #0x50\nmovs r2, #0x00\nmovs r3, #0x03\nbl sub_080333E4\n_08032FF8:\nmovs r2, #0x01\nnegs r2, r2\nadd r8, r2\nmov r3, r8\ncmp r3, #0x00\nblt _08033006\nb _08032E1A\n_08033006:\nadds r0, r6, #0x0\nbl sub_08032DB8\nadd sp, #0x018\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_0803301C: .4byte 0x03000290\n_08033020: .4byte 0x00000AC4\n_08033024: .4byte 0x0807811C\n_08033028: .4byte 0x08078130\n_0803302C: .4byte 0x08078144\n_08033030: .4byte 0x00000AA8\n_08033034: .4byte 0x03004060\n_08033038: .4byte 0x00000AD8\n_0803303C: .4byte 0x00000ADC\n_08033040: .4byte 0x00001F7C\n_08033044: .4byte 0x00001F98\n_08033048: .4byte 0x00000B84\n_0803304C: .4byte 0x00000B94\n_08033050: .4byte 0x080BB888\n_08033054: .4byte 0x00002094");
+    s32 frame;
+    struct Unk346C0 *state_a;
+    struct Unk346C0 *state_b;
+    struct Unk33958 temp_a;
+    struct Unk33958 temp_b;
+    struct Unk33958 temp_c;
+
+    state_a = state_a_arg;
+    state_b = state_b_arg;
+    frame = frame_arg;
+    gBattleWork->unkAC4 = RandRange(0x100) << 8;
+    sub_080338E4(&temp_a, (void *)0x0807811C);
+    sub_080338E4(&temp_b, (void *)0x08078130);
+    sub_080338E4(&temp_c, (void *)0x08078144);
+    sub_08032D5C(state_a, state_b);
+    if (frame >= 0)
+    {
+        do
+        {
+            VBlankIntrWait();
+            TimerAdvance();
+            sub_0806A6F8();
+            if ((gData_03004060 & 8) != 0)
+                sub_08033188();
+            sub_080361CC(
+                (struct Unk36190 *)&gBattleWork->unkAA8,
+                (struct Unk361CCDst *)gBattleWork->filler_0008);
+            sub_080361CC(
+                (struct Unk36190 *)&gBattleWork->unkAA8,
+                (struct Unk361CCDst *)gBattleWork->unk090);
+            sub_08068EC0(gBattleWork->filler_0008);
+            sub_08068EC0(gBattleWork->unk090);
+            sub_08035D68(
+                &gBattleWork->unk328,
+                &gBattleWork->unkAA8);
+            sub_08035D68(
+                &gBattleWork->unk37C,
+                &gBattleWork->unkAA8);
+            sub_080302A8(
+                (struct Unk302A8 *)&gBattleWork->unk328,
+                (struct Unk302A8Src *)&gBattleWork->unkAA8,
+                (struct Unk302A8 *)gBattleWork->unk0AD8[0]);
+            sub_080302A8(
+                (struct Unk302A8 *)&gBattleWork->unk37C,
+                (struct Unk302A8Src *)&gBattleWork->unkAA8,
+                (struct Unk302A8 *)gBattleWork->unk0AD8[1]);
+            sub_0803531C((struct Unk35258 *)state_a);
+            sub_0803531C((struct Unk35258 *)state_b);
+            sub_080353A0(state_a);
+            sub_080353A0(state_b);
+            sub_08030F38();
+            sub_08030F00(
+                (struct Unk30F00 *)gBattleWork->unk0AE8.fields.unkB50,
+                (struct Unk30F00Src *)gBattleWork->unk478);
+            sub_08033530();
+            sub_0803370C();
+            sub_08033084(
+                &gBattleWork->unk1F7C,
+                gBattleWork->unk1F98);
+            sub_080302E0(state_a);
+            sub_080302E0(state_b);
+            TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB84);
+            TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB94);
+            _08073C40((void *)gData_080BB888[0]);
+            sub_08036264(
+                (struct Unk36264 *)&gBattleWork->unkAA8,
+                &gBattleWork->unk328,
+                &gBattleWork->unk37C, 0x66);
+            sub_080361A8(&gBattleWork->unkAA8);
+            BtlCaptureInput(state_a);
+            if (state_a->unk30C == 1)
+                sub_08033DD4();
+            if (sub_08033A94((u8 *)&gBattleWork->unk2094) == 0)
+            {
+                sub_080338F0(&temp_a, state_a->unk300);
+                sub_080338F0(&temp_b, state_a->unk300);
+                sub_080338F0(&temp_c, state_a->unk300);
+                if ((u8)sub_08033958(&temp_a) != 0)
+                {
+                    sub_08033978(
+                        (struct Unk33A5C *)&gBattleWork->unk2094, state_a, state_b, 0);
+                    frame = 60;
+                    sub_080333E4(0x78, 0x50, 0, 3);
+                }
+                if ((u8)sub_08033958(&temp_b) != 0)
+                {
+                    sub_08033978(
+                        (struct Unk33A5C *)&gBattleWork->unk2094, state_a, state_b, 1);
+                    frame = 60;
+                    sub_080333E4(0x78, 0x50, 0, 3);
+                }
+                if ((u8)sub_08033958(&temp_c) != 0)
+                {
+                    sub_08033978(
+                        (struct Unk33A5C *)&gBattleWork->unk2094, state_a, state_b, 2);
+                    frame = 60;
+                    sub_080333E4(0x78, 0x50, 0, 3);
+                }
+            }
+            frame--;
+        } while (frame >= 0);
+    }
+    sub_08032DB8(state_a);
 }
+

@@ -1,21 +1,25 @@
 #include "global.h"
 
-void sub_08059DC8(u32 arg0, void *list)
+typedef u32 *(*ScriptCmdFunc)(u32 *cmd, u32 *a, u32 *b, u32 *done);
+
+void sub_08059DC8(u32 arg0, void *script)
 {
-    u32 a = 1;
-    u32 c = 0;
-    u32 b = 0;
-    void **table;
-    void *handler;
+    u32 a;
+    u32 b;
+    u32 done;
+    u32 *cmd;
+    ScriptCmdFunc *table;
 
-    if (list == 0)
+    a = 1;
+    done = 0;
+    b = 0;
+    cmd = script;
+    if (cmd == 0)
         return;
-
-    *(u32 *)gUnk_03000734 = arg0;
-    table = (void **)0x08099710;
+    *(u32 *)0x03000734 = arg0;
+    table = (ScriptCmdFunc *)0x08099710;
     do
     {
-        handler = table[*(u32 *)list];
-        list = (void *)_08073C50(list, &a, &b, &c);
-    } while (c != 0);
+        cmd = table[*cmd](cmd, &a, &b, &done);
+    } while (done == 0);
 }

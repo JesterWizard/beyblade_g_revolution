@@ -1,201 +1,69 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035ae0
-__attribute__((naked))
-s32 sub_08035AE0(struct Unk346C0Inner *a, struct Unk346C0Inner *b)
+// Sphere overlap response between two motion objects: if closer than the summed
+// radii, push both apart along the contact normal and exchange velocity scaled
+// by each mass (unk34) and a random 1.0-2.0 factor. Returns 1 on contact.
+// (The do/while(0) scope around the setup is needed for register allocation.)
+s32 sub_08035AE0(
+    struct Unk346C0Inner *a, struct Unk346C0Inner *b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x010\n"
-        "adds r6, r0, #0x0\n"
-        "adds r7, r1, #0x0\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x000]\n"
-        "ldr r0, [r7, #0x38]\n"
-        "ldr r1, [r6, #0x38]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [sp, #0x004]\n"
-        "ldr r0, [r7, #0x0C]\n"
-        "ldr r1, [r6, #0x0C]\n"
-        "subs r0, r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "mov r8, r0\n"
-        "ldr r0, [r7, #0x10]\n"
-        "ldr r1, [r6, #0x10]\n"
-        "subs r0, r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "mov r9, r0\n"
-        "ldr r0, [r7, #0x14]\n"
-        "ldr r1, [r6, #0x14]\n"
-        "subs r0, r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "mov r10, r0\n"
-        "mov r2, r8\n"
-        "mov r0, r8\n"
-        "muls r0, r2\n"
-        "mov r3, r9\n"
-        "mov r1, r9\n"
-        "muls r1, r3\n"
-        "adds r0, r0, r1\n"
-        "mov r4, r10\n"
-        "mov r1, r10\n"
-        "muls r1, r4\n"
-        "adds r5, r0, r1\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x01\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_080628B4\n"
-        "adds r0, r0, r4\n"
-        "str r0, [sp, #0x008]\n"
-        "ldr r0, [sp, #0x004]\n"
-        "cmp r5, r0\n"
-        "blt _08035B46\n"
-        "b _08035C52\n"
-        "_08035B46:\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_080674B0\n"
-        "adds r4, r0, #0x0\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "mov r1, r8\n"
-        "lsls r0, r1, #0x08\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080674A0\n"
-        "mov r8, r0\n"
-        "mov r2, r9\n"
-        "lsls r0, r2, #0x08\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080674A0\n"
-        "mov r9, r0\n"
-        "mov r3, r10\n"
-        "lsls r0, r3, #0x08\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_080674A0\n"
-        "mov r10, r0\n"
-        "ldr r3, [r6, #0x18]\n"
-        "ldr r0, [r7, #0x18]\n"
-        "subs r3, r3, r0\n"
-        "ldr r1, [r6, #0x1C]\n"
-        "ldr r0, [r7, #0x1C]\n"
-        "subs r1, r1, r0\n"
-        "ldr r2, [r6, #0x20]\n"
-        "ldr r0, [r7, #0x20]\n"
-        "subs r2, r2, r0\n"
-        "adds r0, r3, #0x0\n"
-        "muls r0, r3\n"
-        "adds r4, r1, #0x0\n"
-        "muls r4, r1\n"
-        "adds r1, r4, #0x0\n"
-        "adds r0, r0, r1\n"
-        "adds r1, r2, #0x0\n"
-        "muls r1, r2\n"
-        "adds r0, r0, r1\n"
-        "bl sub_080674B0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "ldr r3, [r6, #0x0C]\n"
-        "ldr r1, [r7, #0x0C]\n"
-        "adds r3, r3, r1\n"
-        "asrs r3, r3, #0x01\n"
-        "ldr r1, [r6, #0x10]\n"
-        "ldr r2, [r7, #0x10]\n"
-        "adds r1, r1, r2\n"
-        "asrs r1, r1, #0x01\n"
-        "mov r2, r8\n"
-        "lsls r2, r2, #0x04\n"
-        "str r2, [sp, #0x00C]\n"
-        "subs r2, r3, r2\n"
-        "str r2, [r6, #0x0C]\n"
-        "mov r2, r9\n"
-        "lsls r4, r2, #0x04\n"
-        "subs r2, r1, r4\n"
-        "str r2, [r6, #0x10]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "adds r3, r3, r2\n"
-        "str r3, [r7, #0x0C]\n"
-        "adds r1, r1, r4\n"
-        "str r1, [r7, #0x10]\n"
-        "mov r1, r8\n"
-        "muls r1, r0\n"
-        "asrs r1, r1, #0x08\n"
-        "mov r8, r1\n"
-        "mov r1, r9\n"
-        "muls r1, r0\n"
-        "asrs r1, r1, #0x08\n"
-        "mov r9, r1\n"
-        "mov r3, r10\n"
-        "muls r3, r0\n"
-        "adds r0, r3, #0x0\n"
-        "asrs r0, r0, #0x08\n"
-        "mov r10, r0\n"
-        "ldr r2, [r6, #0x34]\n"
-        "mov r0, r8\n"
-        "muls r0, r2\n"
-        "ldr r4, [sp, #0x008]\n"
-        "adds r1, r0, #0x0\n"
-        "muls r1, r4\n"
-        "asrs r1, r1, #0x10\n"
-        "ldr r0, [r6, #0x18]\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r6, #0x18]\n"
-        "mov r0, r9\n"
-        "muls r0, r2\n"
-        "adds r1, r0, #0x0\n"
-        "muls r1, r4\n"
-        "asrs r1, r1, #0x10\n"
-        "ldr r0, [r6, #0x1C]\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r6, #0x1C]\n"
-        "mov r0, r10\n"
-        "muls r0, r2\n"
-        "adds r1, r0, #0x0\n"
-        "muls r1, r4\n"
-        "asrs r1, r1, #0x10\n"
-        "ldr r0, [r6, #0x20]\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r6, #0x20]\n"
-        "ldr r2, [r7, #0x34]\n"
-        "mov r0, r8\n"
-        "muls r0, r2\n"
-        "adds r1, r0, #0x0\n"
-        "muls r1, r4\n"
-        "asrs r1, r1, #0x10\n"
-        "ldr r0, [r7, #0x18]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r7, #0x18]\n"
-        "mov r0, r9\n"
-        "muls r0, r2\n"
-        "adds r1, r0, #0x0\n"
-        "muls r1, r4\n"
-        "asrs r1, r1, #0x10\n"
-        "ldr r0, [r7, #0x1C]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r7, #0x1C]\n"
-        "mov r0, r10\n"
-        "muls r0, r2\n"
-        "adds r1, r0, #0x0\n"
-        "muls r1, r4\n"
-        "asrs r1, r1, #0x10\n"
-        "ldr r0, [r7, #0x20]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r7, #0x20]\n"
-        "movs r0, #0x01\n"
-        "str r0, [sp, #0x000]\n"
-        "_08035C52:\n"
-        "ldr r0, [sp, #0x000]\n"
-        "add sp, #0x010\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s32 result;
+    s32 threshold;
+    s32 dx;
+    s32 dy;
+    s32 dz;
+    s32 distance;
+    s32 length;
+    s32 velocity_x;
+    s32 velocity_y;
+    s32 velocity_z;
+    s32 velocity_distance;
+    s32 midpoint_x;
+    s32 midpoint_y;
+    s32 offset_x;
+    s32 offset_y;
+    s32 scale;
+
+    do
+    {
+        result = 0;
+        threshold = a->unk38 + b->unk38;
+    } while (0);
+    dx = (b->unk0C - a->unk0C) >> 8;
+    dy = (b->unk10 - a->unk10) >> 8;
+    dz = (b->unk14 - a->unk14) >> 8;
+    distance = dx * dx + dy * dy + dz * dz;
+    scale = RandRange(0x100) + 0x100;
+    if (distance < threshold)
+    {
+        length = (u16)Sqrt(distance);
+        dx = Div(dx << 8, length);
+        dy = Div(dy << 8, length);
+        dz = Div(dz << 8, length);
+        velocity_x = a->unk18 - b->unk18;
+        velocity_y = a->unk1C - b->unk1C;
+        velocity_z = a->unk20 - b->unk20;
+        velocity_distance = (u16)Sqrt(velocity_x * velocity_x + velocity_y * velocity_y + velocity_z * velocity_z);
+        midpoint_x = (a->unk0C + b->unk0C) >> 1;
+        midpoint_y = (a->unk10 + b->unk10) >> 1;
+        a->unk0C = midpoint_x - (dx << 4);
+        a->unk10 = midpoint_y - (dy << 4);
+        b->unk0C = midpoint_x + (dx << 4);
+        b->unk10 = midpoint_y + (dy << 4);
+        dx = (dx * velocity_distance) >> 8;
+        dy = (dy * velocity_distance) >> 8;
+        dz = (dz * velocity_distance) >> 8;
+        a->unk18 -= (dx * (s32)a->unk34 * scale) >> 16;
+        a->unk1C -= (dy * (s32)a->unk34 * scale) >> 16;
+        a->unk20 -= (dz * (s32)a->unk34 * scale) >> 16;
+        b->unk18 += (dx * (s32)b->unk34 * scale) >> 16;
+        b->unk1C += (dy * (s32)b->unk34 * scale) >> 16;
+        b->unk20 += (dz * (s32)b->unk34 * scale) >> 16;
+        result = 1;
+    }
+    return result;
 }
 

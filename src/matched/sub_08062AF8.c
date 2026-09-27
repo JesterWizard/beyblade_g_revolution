@@ -1,8 +1,52 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08062af8
-__attribute__((naked))
-s32 sub_08062AF8(void *a, void *b)
+/* match-compiler: old_agbcc */
+// Find `table[key]` in the 16-slot palette pool, or claim a free slot, upload
+// the 32-byte palette to OBJ palette RAM and return the slot index (-1 if full).
+s32 sub_08062AF8(void *table, void *key)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nadds r3, r0, #0x0\ncmp r3, #0x00\nbeq _08062B90\nldr r0, _08062B74 @ =0x030008D0\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbeq _08062B90\nlsls r0, r1, #0x02\nadds r0, r0, r3\nldr r5, [r0, #0x00]\nadds r1, r2, #0x0\nmovs r4, #0x00\n_08062B12:\nldr r0, [r1, #0x00]\ncmp r0, r5\nbeq _08062B6C\nadds r1, #0x04\nadds r4, #0x01\ncmp r4, #0x0F\nble _08062B12\nmovs r4, #0x00\nldr r7, _08062B74 @ =0x030008D0\nmovs r3, #0x01\nldr r6, _08062B78 @ =0x05000200\n_08062B28:\nldr r0, [r7, #0x00]\nadds r2, r0, #0x0\nadds r2, #0x40\nldrh r1, [r2, #0x00]\nadds r0, r1, #0x0\nasrs r0, r4\nands r0, r3\ncmp r0, #0x00\nbne _08062B88\nadds r0, r3, #0x0\nlsls r0, r4\norrs r1, r0\nstrh r1, [r2, #0x00]\nldr r0, _08062B7C @ =0x03000198\nldr r0, [r0, #0x00]\nldr r1, _08062B80 @ =0x00001808\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x80\nlsls r1, r1, #0x04\nands r0, r1\ncmp r0, #0x00\nbne _08062B64\nldr r0, _08062B84 @ =0x080BB8C0\nldr r3, [r0, #0x00]\nadds r0, r5, #0x0\nadds r1, r6, #0x0\nmovs r2, #0x20\nbl _08073C4C\n_08062B64:\nldr r0, [r7, #0x00]\nlsls r1, r4, #0x02\nadds r0, r0, r1\nstr r5, [r0, #0x00]\n_08062B6C:\nlsls r0, r4, #0x18\nasrs r0, r0, #0x18\nb _08062B94\n.byte 0x00, 0x00\n_08062B74: .4byte 0x030008D0\n_08062B78: .4byte 0x05000200\n_08062B7C: .4byte 0x03000198\n_08062B80: .4byte 0x00001808\n_08062B84: .4byte 0x080BB8C0\n_08062B88:\nadds r6, #0x20\nadds r4, #0x01\ncmp r4, #0x0F\nble _08062B28\n_08062B90:\nmovs r0, #0x01\nnegs r0, r0\n_08062B94:\npop {r4, r5, r6, r7}\npop {r1}\nbx r1");
+    void **slot;
+    void *entry;
+    s32 i;
+    u32 one;
+    struct Unk62A74 **loc;
+    u16 mask;
+    u8 *dst;
+
+    if (table == 0)
+        return -1;
+    if (gUnk_030008D0 == 0)
+        return -1;
+    entry = ((void **)table)[(u32)key];
+
+    slot = gUnk_030008D0->unk00;
+    for (i = 0; i <= 0x0F; i++)
+    {
+        if (*slot == entry)
+            return (s8)i;
+        slot++;
+    }
+
+    i = 0;
+    loc = &gUnk_030008D0;
+    one = 1;
+    dst = (u8 *)0x05000200;
+    for (; i <= 0x0F; i++)
+    {
+        mask = (*loc)->unk40;
+        if (((mask >> i) & one) == 0)
+        {
+            (*loc)->unk40 = mask | (one << i);
+            if ((gMainWorkPtr->unk1808 & 0x800) == 0)
+                _08073C4C(entry, dst, 0x20, (void *)gData_080BB8C0[0]);
+            (*loc)->unk00[i] = entry;
+            return (s8)i;
+        }
+        dst += 0x20;
+    }
+    return -1;
 }
+

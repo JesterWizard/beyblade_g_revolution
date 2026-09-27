@@ -141,11 +141,38 @@ extern u8 gData_080BAF61[];
 extern u8 gData_080BAF64[];
 extern u8 gData_080BAF67[];
 extern struct Unk65560Source gData_080BAF00[];
-extern u32 gData_080BB110[];
+extern struct Unk66FB8Table gData_080BB110[];
 extern s8 *gData_0807741C[];
 extern u8 gData_0833BE30[];
 extern s16 gData_083A9544[];
 extern s16 gData_083C9544[];
 extern u8 gData_083C97C4[];
+
+// BtlObj table (IWRAM)
+extern struct BtlObj **gData_03004150;
+extern u8 gData_03004154;
+extern u8 gData_03004158;
+
+// Battle-object pool (IWRAM): active list, free list, free count
+extern struct Unk6FDB4 *gData_030040A4;
+extern struct Unk6FDB4 *gData_030040AC;
+extern u32 gData_030040B4;
+
+// Held-keys word (IWRAM, gBtlKeysHeld)
+extern u16 gData_03004060;
+
+// Record browser (IWRAM): cursor index, record table, current record
+extern s16 gData_03000654;
+extern struct Unk4AAF0 **gData_03000658;
+extern struct Unk4AAF0 *gData_03000660;
+
+// Name string table indexed by MainWork.unk1818 (sub_08037430)
+extern void *gData_08096ECC[];
+
+// Battle mode resource table indexed by (s8)_08032458() (sub_08032604)
+extern struct Unk32604Mode gData_0807800C[];
+
+// Battle mode resource pointers indexed by mode 0..4 (sub_080333E4)
+extern void *gData_08078108[];
 
 #endif // GUARD_DATA_SYMBOLS_H

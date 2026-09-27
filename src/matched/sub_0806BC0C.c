@@ -1,69 +1,31 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806bc0c
-__attribute__((naked))
-void sub_0806BC0C(void *a, void *b)
+// Bind a resource header: resolve its three section offsets, then build up to
+// 64 entry pointers (warns and clamps when the header asks for more).
+void sub_0806BC0C(void *arg, void *source_arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "str r1, [r5, #0x00]\n"
-        "ldr r0, [r1, #0x10]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r5, #0x04]\n"
-        "ldr r0, [r1, #0x14]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r5, #0x08]\n"
-        "ldr r0, [r1, #0x18]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r5, #0x0C]\n"
-        "ldrh r4, [r1, #0x04]\n"
-        "movs r2, #0x04\n"
-        "ldsh r0, [r1, r2]\n"
-        "cmp r0, #0x40\n"
-        "ble _0806BC36\n"
-        "movs r4, #0x40\n"
-        "ldr r0, _0806BC7C @ =0x083D1D3C\n"
-        "bl sub_08067A9C\n"
-        "_0806BC36:\n"
-        "lsls r0, r4, #0x10\n"
-        "movs r1, #0x00\n"
-        "adds r6, r0, #0x0\n"
-        "cmp r6, #0x00\n"
-        "ble _0806BC60\n"
-        "_0806BC40:\n"
-        "lsls r4, r1, #0x10\n"
-        "asrs r4, r4, #0x10\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_0806DEC8\n"
-        "lsls r2, r4, #0x02\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x14\n"
-        "adds r1, r1, r2\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r4, #0x01\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r1, r4, #0x10\n"
-        "cmp r4, r6\n"
-        "blt _0806BC40\n"
-        "_0806BC60:\n"
-        "movs r1, #0x8A\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r0, r5, r1\n"
-        "movs r1, #0x00\n"
-        "str r1, [r0, #0x00]\n"
-        "str r1, [r5, #0x10]\n"
-        "movs r2, #0x8C\n"
-        "lsls r2, r2, #0x01\n"
-        "adds r0, r5, r2\n"
-        "strh r1, [r0, #0x00]\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0806BC7C: .4byte 0x083D1D3C\n"
-    );
+    struct Unk6BC0C *state = arg;
+    struct Unk6BC0CSource *source = source_arg;
+    s16 count;
+    s16 i;
+
+    state->unk00 = source;
+    state->unk04 = (u8 *)source + source->unk10;
+    state->unk08 = (u8 *)source + source->unk14;
+    state->unk0C = (u8 *)source + source->unk18;
+    count = source->unk04;
+    if (count > 0x40)
+    {
+        count = 0x40;
+        DebugMessage((void *)0x083D1D3C, source);
+    }
+    for (i = 0; i < count; i++)
+        state->unk14[i] = sub_0806DEC8((struct UnkDEC8 *)state, i);
+    state->unk114 = 0;
+    state->unk10 = 0;
+    state->unk118 = 0;
 }
 

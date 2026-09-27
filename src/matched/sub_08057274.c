@@ -1,8 +1,35 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08057274
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Map the current input direction (MainWork.unk1810) to the cursor entity
+// animation (keys 5/6/7) and update its facing flags.
 void sub_08057274(void)
 {
-    asm(".syntax unified\npush {r4, lr}\nldr r4, _08057290 @ =0x03000198\nldr r2, [r4, #0x00]\nldr r1, _08057294 @ =0x00001810\nadds r0, r2, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x40\nbeq _080572A6\ncmp r1, #0x40\nbhi _08057298\ncmp r1, #0x20\nbeq _080572D4\nb _08057336\n.byte 0x00, 0x00\n_08057290: .4byte 0x03000198\n_08057294: .4byte 0x00001810\n_08057298:\ncmp r1, #0x80\nbeq _08057300\nmovs r0, #0x80\nlsls r0, r0, #0x01\ncmp r1, r0\nbeq _08057318\nb _08057336\n_080572A6:\nldr r1, _080572CC @ =0x00000386\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x05\nbeq _080572BA\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x05\nbl sub_080680CC\n_080572BA:\nldr r1, [r4, #0x00]\nldr r2, _080572D0 @ =0x0000039D\nadds r1, r1, r2\nmovs r0, #0x02\nldrb r2, [r1, #0x00]\nands r0, r2\nstrb r0, [r1, #0x00]\nb _08057336\n.byte 0x00, 0x00\n_080572CC: .4byte 0x00000386\n_080572D0: .4byte 0x0000039D\n_080572D4:\nldr r1, _080572F8 @ =0x00000386\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x05\nbeq _080572E8\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x05\nbl sub_080680CC\n_080572E8:\nldr r0, [r4, #0x00]\nldr r2, _080572FC @ =0x0000039D\nadds r0, r0, r2\nmovs r1, #0x01\nldrb r2, [r0, #0x00]\norrs r1, r2\nb _08057334\n.byte 0x00, 0x00\n_080572F8: .4byte 0x00000386\n_080572FC: .4byte 0x0000039D\n_08057300:\nldr r1, _08057314 @ =0x00000386\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x06\nbeq _0805732C\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x06\nb _08057328\n.byte 0x00, 0x00\n_08057314: .4byte 0x00000386\n_08057318:\nldr r1, _0805733C @ =0x00000386\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x07\nbeq _0805732C\nsubs r1, #0x1A\nadds r0, r2, r1\nmovs r1, #0x07\n_08057328:\nbl sub_080680CC\n_0805732C:\nldr r0, [r4, #0x00]\nldr r2, _08057340 @ =0x0000039D\nadds r0, r0, r2\nmovs r1, #0x00\n_08057334:\nstrb r1, [r0, #0x00]\n_08057336:\npop {r4}\npop {r0}\nbx r0\n_0805733C: .4byte 0x00000386\n_08057340: .4byte 0x0000039D");
+    switch (gMainWorkPtr->unk1810)
+    {
+    case 0x40:
+        if (gMainWorkPtr->unk0386 != 5)
+            BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 5);
+        gMainWorkPtr->unk039D &= 2;
+        break;
+    case 0x20:
+        if (gMainWorkPtr->unk0386 != 5)
+            BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 5);
+        gMainWorkPtr->unk039D |= 1;
+        break;
+    case 0x80:
+        if (gMainWorkPtr->unk0386 != 6)
+            BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 6);
+        gMainWorkPtr->unk039D = 0;
+        break;
+    case 0x100:
+        if (gMainWorkPtr->unk0386 != 7)
+            BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 7);
+        gMainWorkPtr->unk039D = 0;
+        break;
+    }
 }
+

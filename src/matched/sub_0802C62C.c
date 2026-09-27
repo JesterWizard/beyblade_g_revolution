@@ -21,7 +21,7 @@ s32 sub_0802C62C(s8 a)
     {
         for (i = 0; i <= 0x7F; i++)
         {
-            if (gMainWorkPtr->unk1694[i].unk03 == val)
+            if ((s8)gMainWorkPtr->unk1694[i].unk03 == val)
                 count++;
         }
     }

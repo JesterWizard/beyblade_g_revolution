@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T19:29:53Z",
+  "generated": "2026-09-26T23:47:30Z",
   "structs": {
     "BattleWork": {
       "functions": [
@@ -152,28 +152,22 @@
           "name": "filler_0134"
         },
         {
-          "offset": "0x328",
-          "width": 1,
-          "ctype": "u8",
-          "name": "filler_0328"
-        },
-        {
-          "offset": "0x340",
-          "width": 4,
-          "ctype": "s32",
-          "name": "unk340"
-        },
-        {
-          "offset": "0x344",
-          "width": 4,
-          "ctype": "s32",
-          "name": "unk344"
-        },
-        {
           "offset": "0x348",
           "width": 1,
           "ctype": "u8",
           "name": "filler_0348"
+        },
+        {
+          "offset": "0x39C",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_039C"
+        },
+        {
+          "offset": "0x478",
+          "width": 1,
+          "ctype": "u8",
+          "name": "unk478"
         },
         {
           "offset": "0xAC0",
@@ -296,6 +290,12 @@
           "name": "filler_1F60"
         },
         {
+          "offset": "0x1F72",
+          "width": 1,
+          "ctype": "s8",
+          "name": "unk1F72"
+        },
+        {
           "offset": "0x1F73",
           "width": 1,
           "ctype": "u8",
@@ -303,9 +303,21 @@
         },
         {
           "offset": "0x1F74",
+          "width": 2,
+          "ctype": "s16",
+          "name": "unk1F74"
+        },
+        {
+          "offset": "0x1F76",
+          "width": 2,
+          "ctype": "s16",
+          "name": "unk1F76"
+        },
+        {
+          "offset": "0x1F78",
           "width": 1,
           "ctype": "u8",
-          "name": "filler_1F74"
+          "name": "filler_1F78"
         },
         {
           "offset": "0x1F7C",
@@ -664,22 +676,10 @@
           "name": "filler_0870"
         },
         {
-          "offset": "0x874",
-          "width": 2,
-          "ctype": "s16",
-          "name": "unk0874"
-        },
-        {
           "offset": "0x876",
           "width": 1,
           "ctype": "u8",
           "name": "filler_0876"
-        },
-        {
-          "offset": "0x878",
-          "width": 1,
-          "ctype": "s8",
-          "name": "unk0878"
         },
         {
           "offset": "0x879",
@@ -1081,7 +1081,13 @@
           "offset": "0x1829",
           "width": 1,
           "ctype": "u8",
-          "name": "filler_1829"
+          "name": "unk1829"
+        },
+        {
+          "offset": "0x182A",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_182A"
         },
         {
           "offset": "0x182C",
@@ -1148,6 +1154,18 @@
           "width": 1,
           "ctype": "u8",
           "name": "filler_184E"
+        },
+        {
+          "offset": "0x184F",
+          "width": 1,
+          "ctype": "s8",
+          "name": "unk184F"
+        },
+        {
+          "offset": "0x1850",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_1850"
         },
         {
           "offset": "0x1855",
@@ -2254,6 +2272,26 @@
         }
       ]
     },
+    "Unk39BD4": {
+      "functions": [
+        "sub_08039BD4"
+      ],
+      "function_count": 1,
+      "fields": [
+        {
+          "offset": "0x00",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_000"
+        },
+        {
+          "offset": "0x2A4",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_2A4"
+        }
+      ]
+    },
     "Unk3E328": {
       "functions": [
         "sub_0803E328"
@@ -2567,22 +2605,10 @@
       "function_count": 1,
       "fields": [
         {
-          "offset": "0x00",
-          "width": 2,
-          "ctype": "s16",
-          "name": "unk00"
-        },
-        {
           "offset": "0x02",
           "width": 1,
           "ctype": "u8",
           "name": "filler_02"
-        },
-        {
-          "offset": "0x03",
-          "width": 1,
-          "ctype": "u8",
-          "name": "unk03"
         }
       ]
     },
@@ -3501,6 +3527,36 @@
           "width": 1,
           "ctype": "u8",
           "name": "filler_44"
+        },
+        {
+          "offset": "0x50",
+          "width": 2,
+          "ctype": "u16",
+          "name": "unk50"
+        },
+        {
+          "offset": "0x52",
+          "width": 2,
+          "ctype": "u16",
+          "name": "unk52"
+        },
+        {
+          "offset": "0x54",
+          "width": 2,
+          "ctype": "u16",
+          "name": "unk54"
+        },
+        {
+          "offset": "0x56",
+          "width": 2,
+          "ctype": "u16",
+          "name": "unk56"
+        },
+        {
+          "offset": "0x58",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_58"
         },
         {
           "offset": "0x60",
@@ -4778,10 +4834,40 @@
           "name": "unk04"
         },
         {
-          "offset": "0x08",
+          "offset": "0x0C",
+          "width": 4,
+          "ctype": "s32",
+          "name": "unk0C"
+        },
+        {
+          "offset": "0x10",
+          "width": 4,
+          "ctype": "s32",
+          "name": "unk10"
+        },
+        {
+          "offset": "0x14",
           "width": 1,
           "ctype": "u8",
-          "name": "filler_08"
+          "name": "filler_14"
+        },
+        {
+          "offset": "0x40",
+          "width": 4,
+          "ctype": "s32",
+          "name": "unk40"
+        },
+        {
+          "offset": "0x44",
+          "width": 4,
+          "ctype": "s32",
+          "name": "unk44"
+        },
+        {
+          "offset": "0x48",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_48"
         },
         {
           "offset": "0x5F",
@@ -6023,7 +6109,7 @@
       ]
     }
   },
-  "count": 117,
+  "count": 118,
   "by_offset": {
     "0x00": {
       "functions": [

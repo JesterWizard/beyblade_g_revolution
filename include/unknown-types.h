@@ -576,6 +576,25 @@ struct Unk30638AA8 /* >= 0x18 */
 };
 
 /* Battle work block (*gBattleWork). sub_080314FC, sub_08033530, sub_08033574. */
+/* Position + scaled velocity. sub_080360BC. */
+struct Unk360BC /* >= 0x20 */
+{
+    /* 00 */ u8 filler_00[0xC];
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 unk10;
+    /* 14 */ u8 filler_14[4];
+    /* 18 */ s32 unk18;
+    /* 1c */ s32 unk1C;
+};
+
+/* Battle mode resource triple, 12-byte entries at 0x0807800C. sub_08032604. */
+struct Unk32604Mode /* 0x0c */
+{
+    /* 00 */ void *layer0;
+    /* 04 */ void *layer1;
+    /* 08 */ void *palette;
+};
+
 struct BattleWork /* >= 0x208A */
 {
     /* 0000 */ void *unk00;
@@ -609,10 +628,11 @@ struct BattleWork /* >= 0x208A */
     /* 023C */ struct Unk7069C unk023C[4]; /* sub_08038D10 */
     /* 02FC */ struct Unk62044 unk2FC;
     /* 0324 */ struct Unk38F30Entry *unk324; /* sub_08038F30 */
-    /* 0328 */ u8 filler_0328[0x18];
-    /* 0340 */ s32 unk340;
-    /* 0344 */ s32 unk344;
-    /* 0348 */ u8 filler_0348[0x760];
+    /* 0328 */ struct Unk360BC unk328; /* battler A motion; sub_08032DC4 */
+    /* 0348 */ u8 filler_0348[0x34];
+    /* 037C */ struct Unk360BC unk37C; /* battler B motion; sub_08032DC4 */
+    /* 039C */ u8 filler_039C[0xDC];
+    /* 0478 */ u8 unk478[0x630]; /* sub_08030F00 source */
     /* 0aa8 */ struct Unk30638AA8 unkAA8;
     /* 0ac0 */ u8 filler_0AC0[4];
     /* 0ac4 */ u32 unkAC4;
@@ -674,10 +694,10 @@ struct BattleWork /* >= 0x208A */
 /* 4-byte records pointed to by MainWork.unk1694. sub_0802C62C. */
 struct Unk1694 /* 0x04 */
 {
-    /* 00 */ s8 unk00;
+    /* 00 */ u8 unk00; /* 0xFF = free */
     /* 01 */ u8 unk01;
     /* 02 */ u8 unk02;
-    /* 03 */ s8 unk03;
+    /* 03 */ u8 unk03; /* 0xFF = free */
 };
 
 /* Out-param for Unk1694 lookup. sub_0802C314 / 2C3DC / 2C4A4. */
@@ -1846,17 +1866,6 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 312 */ u8 unk312; /* sub_08034568 */
     /* 313 */ u8 unk313; /* sub_08034568 */
     /* 314 */ u8 unk314;
-};
-
-/* Position + scaled velocity. sub_080360BC. */
-struct Unk360BC /* >= 0x20 */
-{
-    /* 00 */ u8 filler_00[0xC];
-    /* 0c */ s32 unk0C;
-    /* 10 */ s32 unk10;
-    /* 14 */ u8 filler_14[4];
-    /* 18 */ s32 unk18;
-    /* 1c */ s32 unk1C;
 };
 
 /* Word at +0xC, then *a +8. sub_0806BE08. */

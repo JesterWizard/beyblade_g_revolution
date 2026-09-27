@@ -1,8 +1,29 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08032604
-__attribute__((naked))
 void sub_08032604(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nmov r6, r9\nmov r5, r8\npush {r5, r6}\nadd sp, #-0x004\nbl _08032458\nadds r4, r0, #0x0\nlsls r4, r4, #0x18\nlsrs r4, r4, #0x18\nbl sub_08069894\nldr r0, _080326BC @ =0x03000290\nmov r8, r0\nldr r0, [r0, #0x00]\nadds r0, #0x08\nldr r6, _080326C0 @ =0x0807800C\nlsls r4, r4, #0x18\nasrs r4, r4, #0x18\nlsls r5, r4, #0x01\nadds r5, r5, r4\nlsls r5, r5, #0x02\nadds r1, r5, r6\nldr r2, [r1, #0x00]\nmovs r1, #0x80\nlsls r1, r1, #0x08\nmov r9, r1\nmovs r4, #0x00\nstr r4, [sp, #0x000]\nmovs r1, #0x02\nmov r3, r9\nbl sub_08065E0C\nadds r1, r0, #0x0\nmov r2, r8\nldr r0, [r2, #0x00]\nstr r1, [r0, #0x00]\nadds r0, #0x90\nadds r1, r6, #0x4\nadds r1, r5, r1\nldr r2, [r1, #0x00]\nstr r4, [sp, #0x000]\nmovs r1, #0x03\nmov r3, r9\nbl sub_08065E0C\nmov r2, r8\nldr r1, [r2, #0x00]\nstr r0, [r1, #0x04]\nadds r6, #0x08\nadds r5, r5, r6\nldr r0, [r5, #0x00]\nbl sub_080679A4\nmovs r0, #0x01\nmovs r1, #0x02\nmovs r2, #0x03\nmovs r3, #0x00\nbl sub_08069B78\nmovs r1, #0x80\nlsls r1, r1, #0x13\nldr r2, _080326C4 @ =0x00001C42\nadds r0, r2, #0x0\nstrh r0, [r1, #0x00]\nmov r0, r8\nldr r3, [r0, #0x00]\nmovs r1, #0x80\nlsls r1, r1, #0x09\nstr r1, [r3, #0x54]\nstr r1, [r3, #0x58]\nadds r0, r3, #0x0\nadds r0, #0x50\nmovs r2, #0x3C\nstrh r2, [r0, #0x00]\nadds r0, #0x02\nstrh r2, [r0, #0x00]\nadds r0, #0x8A\nstr r1, [r0, #0x00]\nadds r0, #0x04\nstr r1, [r0, #0x00]\nsubs r0, #0x08\nstrh r2, [r0, #0x00]\nadds r0, #0x02\nstrh r2, [r0, #0x00]\nadd sp, #0x004\npop {r3, r4}\nmov r8, r3\nmov r9, r4\npop {r4, r5, r6}\npop {r0}\nbx r0\n_080326BC: .4byte 0x03000290\n_080326C0: .4byte 0x0807800C\n_080326C4: .4byte 0x00001C42");
+    u8 mode;
+    struct BattleWork *work;
+
+    mode = _08032458();
+    sub_08069894();
+    gBattleWork->unk00 = sub_08065E0C(gBattleWork->filler_0008, 2, gData_0807800C[(s8)mode].layer0, 0x8000, 0);
+    gBattleWork->unk04 = sub_08065E0C(gBattleWork->unk090, 3, gData_0807800C[(s8)mode].layer1, 0x8000, 0);
+    sub_080679A4(gData_0807800C[(s8)mode].palette);
+    sub_08069B78(1, 2, 3, 0);
+    REG_DISPCNT = 0x1C42;
+    work = gBattleWork;
+    work->unk054 = 0x10000;
+    work->unk058 = 0x10000;
+    work->unk050 = 60;
+    work->unk052 = 60;
+    work->unkDC = 0x10000;
+    work->unkE0 = 0x10000;
+    work->unkD8 = 60;
+    work->unkDA = 60;
 }
+
+

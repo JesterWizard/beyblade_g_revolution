@@ -1,72 +1,38 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08070468
-__attribute__((naked))
-void sub_08070468(struct Unk705DC *a, u16 b)
+/* Move a node to its sorted position in the gData_030040A4 list after its key changes. */
+void sub_08070468(struct Unk6FDB4 *node, u16 key)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r2, r1, #0x10\n"
-        "ldrh r0, [r4, #0x22]\n"
-        "cmp r0, r2\n"
-        "beq _080704D4\n"
-        "ldr r1, [r4, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _08070488\n"
-        "ldr r0, [r4, #0x04]\n"
-        "str r0, [r1, #0x04]\n"
-        "ldr r6, _08070484 @ =0x030040A4\n"
-        "b _08070490\n"
-        "_08070484: .4byte 0x030040A4\n"
-        "_08070488:\n"
-        "ldr r1, _080704C0 @ =0x030040A4\n"
-        "ldr r0, [r4, #0x04]\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r6, r1, #0x0\n"
-        "_08070490:\n"
-        "ldr r1, [r4, #0x04]\n"
-        "cmp r1, #0x00\n"
-        "beq _0807049A\n"
-        "ldr r0, [r4, #0x00]\n"
-        "str r0, [r1, #0x00]\n"
-        "_0807049A:\n"
-        "strh r2, [r4, #0x22]\n"
-        "adds r5, r6, #0x0\n"
-        "ldr r0, [r5, #0x00]\n"
-        "adds r1, r2, #0x0\n"
-        "bl sub_0806FDB4\n"
-        "adds r1, r0, #0x0\n"
-        "cmp r1, #0x00\n"
-        "bne _080704C4\n"
-        "ldr r0, [r5, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _080704B4\n"
-        "str r4, [r0, #0x00]\n"
-        "_080704B4:\n"
-        "ldr r0, [r6, #0x00]\n"
-        "str r0, [r4, #0x04]\n"
-        "str r1, [r4, #0x00]\n"
-        "str r4, [r6, #0x00]\n"
-        "b _080704D4\n"
-        ".byte 0x00, 0x00\n"
-        "_080704C0: .4byte 0x030040A4\n"
-        "_080704C4:\n"
-        "ldr r0, [r1, #0x04]\n"
-        "cmp r0, #0x00\n"
-        "beq _080704CC\n"
-        "str r4, [r0, #0x00]\n"
-        "_080704CC:\n"
-        "ldr r0, [r1, #0x04]\n"
-        "str r0, [r4, #0x04]\n"
-        "str r1, [r4, #0x00]\n"
-        "str r4, [r1, #0x04]\n"
-        "_080704D4:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk6FDB4 *found;
+
+    if (node->unk22 == key)
+        return;
+    if (node->unk00 != NULL)
+        node->unk00->unk04 = node->unk04;
+    else
+        gData_030040A4 = node->unk04;
+    if (node->unk04 != NULL)
+        node->unk04->unk00 = node->unk00;
+    node->unk22 = key;
+    found = sub_0806FDB4(gData_030040A4, key);
+    if (found == NULL)
+    {
+        if (gData_030040A4 != NULL)
+            gData_030040A4->unk00 = node;
+        node->unk04 = gData_030040A4;
+        node->unk00 = found;
+        gData_030040A4 = node;
+    }
+    else
+    {
+        if (found->unk04 != NULL)
+            found->unk04->unk00 = node;
+        node->unk04 = found->unk04;
+        node->unk00 = found;
+        found->unk04 = node;
+    }
 }
 

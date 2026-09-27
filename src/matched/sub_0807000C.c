@@ -1,105 +1,56 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0807000c
-__attribute__((naked))
-void BtlObjPoolAllocChain(void)
+// Allocate `count` linked battle-object pool nodes tagged with `key` from the
+// free list and splice the chain into the active list after the key's run.
+struct Unk6FDB4 *BtlObjPoolAllocChain(struct Unk700CCHdr *hdr, u16 count, u16 key)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "mov r8, r0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r5, r1, #0x10\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r7, r2, #0x10\n"
-        "ldr r2, _08070030 @ =0x030040B4\n"
-        "ldr r1, [r2, #0x00]\n"
-        "cmp r1, r5\n"
-        "bcs _08070038\n"
-        "ldr r0, _08070034 @ =0x083D2244\n"
-        "adds r2, r5, #0x0\n"
-        "bl sub_08067B98\n"
-        "movs r0, #0x00\n"
-        "b _080700BE\n"
-        "_08070030: .4byte 0x030040B4\n"
-        "_08070034: .4byte 0x083D2244\n"
-        "_08070038:\n"
-        "subs r0, r1, r5\n"
-        "str r0, [r2, #0x00]\n"
-        "ldr r0, _0807005C @ =0x030040AC\n"
-        "ldr r6, [r0, #0x00]\n"
-        "adds r4, r6, #0x0\n"
-        "ldr r0, _08070060 @ =0x030040A4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "adds r1, r7, #0x0\n"
-        "bl sub_0806FDB4\n"
-        "adds r2, r0, #0x0\n"
-        "adds r1, r6, #0x0\n"
-        "mov r0, r8\n"
-        "str r5, [r0, #0x08]\n"
-        "str r6, [r0, #0x00]\n"
-        "strh r7, [r6, #0x22]\n"
-        "b _0807006C\n"
-        ".byte 0x00, 0x00\n"
-        "_0807005C: .4byte 0x030040AC\n"
-        "_08070060: .4byte 0x030040A4\n"
-        "_08070064:\n"
-        "ldr r4, [r4, #0x04]\n"
-        "strh r7, [r4, #0x22]\n"
-        "str r1, [r4, #0x00]\n"
-        "adds r1, r4, #0x0\n"
-        "_0807006C:\n"
-        "subs r0, r5, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r5, r0, #0x10\n"
-        "cmp r5, #0x00\n"
-        "bne _08070064\n"
-        "mov r0, r8\n"
-        "str r4, [r0, #0x04]\n"
-        "ldr r1, _0807009C @ =0x030040AC\n"
-        "ldr r0, [r4, #0x04]\n"
-        "str r0, [r1, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "bne _080700A4\n"
-        "ldr r0, _080700A0 @ =0x030040A4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r3, r0, #0x0\n"
-        "cmp r1, #0x00\n"
-        "beq _08070090\n"
-        "str r4, [r1, #0x00]\n"
-        "_08070090:\n"
-        "ldr r0, [r3, #0x00]\n"
-        "str r0, [r4, #0x04]\n"
-        "str r2, [r6, #0x00]\n"
-        "str r6, [r3, #0x00]\n"
-        "b _080700B6\n"
-        ".byte 0x00, 0x00\n"
-        "_0807009C: .4byte 0x030040AC\n"
-        "_080700A0: .4byte 0x030040A4\n"
-        "_080700A4:\n"
-        "ldr r0, [r2, #0x04]\n"
-        "cmp r0, #0x00\n"
-        "beq _080700AC\n"
-        "str r4, [r0, #0x00]\n"
-        "_080700AC:\n"
-        "ldr r0, [r2, #0x04]\n"
-        "str r0, [r4, #0x04]\n"
-        "str r2, [r6, #0x00]\n"
-        "str r6, [r2, #0x04]\n"
-        "ldr r3, _080700C8 @ =0x030040A4\n"
-        "_080700B6:\n"
-        "ldr r0, [r3, #0x00]\n"
-        "bl sub_0806F8C4\n"
-        "adds r0, r6, #0x0\n"
-        "_080700BE:\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_080700C8: .4byte 0x030040A4\n"
-    );
+    struct Unk6FDB4 *head;
+    struct Unk6FDB4 *cur;
+    struct Unk6FDB4 *prev;
+    struct Unk6FDB4 *after;
+
+    if (gData_030040B4 < count)
+    {
+        DebugPrint((void *)0x083D2244, gData_030040B4, count);
+        return 0;
+    }
+    gData_030040B4 -= count;
+    head = gData_030040AC;
+    cur = head;
+    after = sub_0806FDB4(gData_030040A4, key);
+    prev = head;
+    hdr->unk08 = count;
+    hdr->unk00 = head;
+    head->unk22 = key;
+    while (--count != 0)
+    {
+        cur = cur->unk04;
+        cur->unk22 = key;
+        cur->unk00 = prev;
+        prev = cur;
+    }
+    hdr->unk04 = cur;
+    gData_030040AC = cur->unk04;
+    if (after == 0)
+    {
+        if (gData_030040A4 != 0)
+            gData_030040A4->unk00 = cur;
+        cur->unk04 = gData_030040A4;
+        head->unk00 = after;
+        gData_030040A4 = head;
+    }
+    else
+    {
+        if (after->unk04 != 0)
+            after->unk04->unk00 = cur;
+        cur->unk04 = after->unk04;
+        head->unk00 = after;
+        after->unk04 = head;
+    }
+    sub_0806F8C4((struct Unk6F8C4 *)gData_030040A4);
+    return head;
 }
 

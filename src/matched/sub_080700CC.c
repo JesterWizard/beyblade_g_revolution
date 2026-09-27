@@ -1,106 +1,56 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080700cc
-__attribute__((naked))
+// Release a pending battle-object batch: return its nodes to the free list,
+// unlink the run from the active list and clear the batch header.
 void sub_080700CC(void *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x004\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r2, [r6, #0x08]\n"
-        "cmp r2, #0x00\n"
-        "beq _08070170\n"
-        "ldr r0, [r6, #0x00]\n"
-        "mov r10, r0\n"
-        "ldr r1, [r6, #0x04]\n"
-        "str r1, [sp, #0x000]\n"
-        "ldr r3, [r0, #0x00]\n"
-        "mov r9, r3\n"
-        "ldr r7, [r1, #0x04]\n"
-        "ldr r1, _08070140 @ =0x030040B4\n"
-        "ldr r0, [r1, #0x00]\n"
-        "adds r0, r0, r2\n"
-        "str r0, [r1, #0x00]\n"
-        "mov r4, r10\n"
-        "subs r5, r2, #0x1\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r5, r0\n"
-        "beq _08070132\n"
-        "mov r8, r0\n"
-        "_08070104:\n"
-        "ldr r0, [r4, #0x30]\n"
-        "cmp r0, #0x00\n"
-        "beq _08070112\n"
-        "bl sub_0806FF28\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x30]\n"
-        "_08070112:\n"
-        "ldr r2, [r4, #0x24]\n"
-        "cmp r2, #0x00\n"
-        "blt _08070126\n"
-        "ldrh r0, [r4, #0x16]\n"
-        "subs r0, #0x05\n"
-        "movs r1, #0x01\n"
-        "lsls r1, r0\n"
-        "adds r0, r2, #0x0\n"
-        "bl sub_0806FBF8\n"
-        "_08070126:\n"
-        "mov r0, r8\n"
-        "str r0, [r4, #0x24]\n"
-        "ldr r4, [r4, #0x04]\n"
-        "subs r5, #0x01\n"
-        "cmp r5, r8\n"
-        "bne _08070104\n"
-        "_08070132:\n"
-        "mov r1, r9\n"
-        "cmp r1, #0x00\n"
-        "beq _08070148\n"
-        "str r7, [r1, #0x04]\n"
-        "ldr r2, _08070144 @ =0x030040A4\n"
-        "b _0807014E\n"
-        ".byte 0x00, 0x00\n"
-        "_08070140: .4byte 0x030040B4\n"
-        "_08070144: .4byte 0x030040A4\n"
-        "_08070148:\n"
-        "ldr r0, _08070180 @ =0x030040A4\n"
-        "str r7, [r0, #0x00]\n"
-        "adds r2, r0, #0x0\n"
-        "_0807014E:\n"
-        "cmp r7, #0x00\n"
-        "beq _08070156\n"
-        "mov r3, r9\n"
-        "str r3, [r7, #0x00]\n"
-        "_08070156:\n"
-        "ldr r1, _08070184 @ =0x030040AC\n"
-        "ldr r0, [r1, #0x00]\n"
-        "ldr r3, [sp, #0x000]\n"
-        "str r0, [r3, #0x04]\n"
-        "mov r0, r10\n"
-        "str r0, [r1, #0x00]\n"
-        "movs r0, #0x00\n"
-        "str r0, [r6, #0x08]\n"
-        "str r0, [r6, #0x00]\n"
-        "str r0, [r6, #0x04]\n"
-        "ldr r0, [r2, #0x00]\n"
-        "bl sub_0806F8C4\n"
-        "_08070170:\n"
-        "add sp, #0x004\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08070180: .4byte 0x030040A4\n"
-        "_08070184: .4byte 0x030040AC\n"
-    );
+    struct Unk700CCHdr *batch;
+    struct Unk700CCNode *node;
+    struct Unk700CCNode *head;
+    struct Unk700CCNode *tail;
+    struct Unk700CCNode *prev;
+    struct Unk700CCNode *next;
+    u32 count;
+    u32 i;
+
+    batch = a;
+    count = batch->unk08;
+    if (count == 0)
+        return;
+    head = (struct Unk700CCNode *)batch->unk00;
+    tail = (struct Unk700CCNode *)batch->unk04;
+    prev = head->unk00;
+    next = tail->unk04;
+    gData_030040B4 += count;
+    node = head;
+    i = count;
+    while (i-- != 0)
+    {
+        if (node->unk30 != 0)
+        {
+            BtlObjListMoveToHead(node->unk30);
+            node->unk30 = 0;
+        }
+        if (node->unk24 >= 0)
+            sub_0806FBF8(node->unk24, 1 << (node->unk16 - 5));
+        node->unk24 = -1;
+        node = node->unk04;
+    }
+
+    if (prev != 0)
+        prev->unk04 = next;
+    else
+        gData_030040A4 = (struct Unk6FDB4 *)next;
+    if (next != 0)
+        next->unk00 = prev;
+    tail->unk04 = (struct Unk700CCNode *)gData_030040AC;
+    gData_030040AC = (struct Unk6FDB4 *)head;
+    batch->unk08 = 0;
+    batch->unk00 = 0;
+    batch->unk04 = 0;
+    sub_0806F8C4((struct Unk6F8C4 *)gData_030040A4);
 }
 

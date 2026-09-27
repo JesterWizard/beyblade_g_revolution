@@ -1,170 +1,80 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08040f4c
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Menu main loop: clear + set up the stack state, then per frame run the blend
+// fade and dispatch on the mode byte until mode 3 ends the loop.
 void MenuDispatchLoop(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "ldr r4, _08040FB8 @ =0xFFFFFCD8\n"
-        "add sp, r4\n"
-        "movs r5, #0x00\n"
-        "ldr r0, _08040FBC @ =0x080BB8BC\n"
-        "movs r2, #0xCA\n"
-        "lsls r2, r2, #0x02\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "mov r1, sp\n"
-        "bl _08073C4C\n"
-        "bl sub_0806639C\n"
-        "adds r1, r0, #0x0\n"
-        "mov r0, sp\n"
-        "bl sub_0804109C\n"
-        "bl sub_08060468\n"
-        "bl sub_08060758\n"
-        "_08040F78:\n"
-        "bl sub_080604C8\n"
-        "bl sub_080607BC\n"
-        "bl sub_080674B4\n"
-        "bl sub_0806A6F8\n"
-        "add r0, sp, #0x324\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r1, #0x01\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _08040F9C\n"
-        "ldr r0, _08040FC0 @ =0x080BB888\n"
-        "ldr r0, [r0, #0x00]\n"
-        "bl _08073C40\n"
-        "_08040F9C:\n"
-        "ldr r2, _08040FC4 @ =0x000002D7\n"
-        "add r2, sp\n"
-        "ldrb r0, [r2, #0x00]\n"
-        "cmp r0, #0x01\n"
-        "bne _0804101E\n"
-        "ldr r0, _08040FC8 @ =0x00000322\n"
-        "add r0, sp\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r0, #0x01\n"
-        "beq _08040FCC\n"
-        "cmp r0, #0x02\n"
-        "beq _08040FF0\n"
-        "b _0804100E\n"
-        ".byte 0x00, 0x00\n"
-        "_08040FB8: .4byte 0xFFFFFCD8\n"
-        "_08040FBC: .4byte 0x080BB8BC\n"
-        "_08040FC0: .4byte 0x080BB888\n"
-        "_08040FC4: .4byte 0x000002D7\n"
-        "_08040FC8: .4byte 0x00000322\n"
-        "_08040FCC:\n"
-        "add r1, sp, #0x31C\n"
-        "ldr r0, _08040FEC @ =0x0000031E\n"
-        "add r0, sp\n"
-        "ldrh r3, [r1, #0x00]\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "subs r0, r3, r0\n"
-        "movs r4, #0x00\n"
-        "movs r3, #0x00\n"
-        "strh r0, [r1, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "cmp r0, #0x00\n"
-        "bge _0804100E\n"
-        "strh r3, [r1, #0x00]\n"
-        "strb r4, [r2, #0x00]\n"
-        "b _0804100E\n"
-        ".byte 0x00, 0x00\n"
-        "_08040FEC: .4byte 0x0000031E\n"
-        "_08040FF0:\n"
-        "add r1, sp, #0x31C\n"
-        "ldr r0, _08041030 @ =0x0000031E\n"
-        "add r0, sp\n"
-        "ldrh r3, [r1, #0x00]\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "adds r0, r3, r0\n"
-        "movs r3, #0x00\n"
-        "strh r0, [r1, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, #0x1F\n"
-        "ble _0804100E\n"
-        "movs r0, #0x1F\n"
-        "strh r0, [r1, #0x00]\n"
-        "strb r3, [r2, #0x00]\n"
-        "_0804100E:\n"
-        "ldr r1, _08041034 @ =0x04000050\n"
-        "add r0, sp, #0x320\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r1, #0x04\n"
-        "add r0, sp, #0x31C\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "strh r0, [r1, #0x00]\n"
-        "_0804101E:\n"
-        "add r0, sp, #0x2D4\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "cmp r0, #0x01\n"
-        "beq _08041046\n"
-        "cmp r0, #0x01\n"
-        "bgt _08041038\n"
-        "cmp r0, #0x00\n"
-        "beq _08041042\n"
-        "b _0804106E\n"
-        "_08041030: .4byte 0x0000031E\n"
-        "_08041034: .4byte 0x04000050\n"
-        "_08041038:\n"
-        "cmp r0, #0x02\n"
-        "beq _0804105C\n"
-        "cmp r0, #0x03\n"
-        "beq _0804106C\n"
-        "b _0804106E\n"
-        "_08041042:\n"
-        "add r0, sp, #0x24C\n"
-        "b _0804105E\n"
-        "_08041046:\n"
-        "add r0, sp, #0x250\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _08041054\n"
-        "mov r0, sp\n"
-        "bl _08073C44\n"
-        "_08041054:\n"
-        "mov r0, sp\n"
-        "bl sub_080411EC\n"
-        "b _0804106E\n"
-        "_0804105C:\n"
-        "add r0, sp, #0x254\n"
-        "_0804105E:\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _0804106E\n"
-        "mov r0, sp\n"
-        "bl _08073C44\n"
-        "b _0804106E\n"
-        "_0804106C:\n"
-        "movs r5, #0x01\n"
-        "_0804106E:\n"
-        "add r0, sp, #0x258\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _0804107C\n"
-        "mov r0, sp\n"
-        "bl _08073C44\n"
-        "_0804107C:\n"
-        "cmp r5, #0x00\n"
-        "bne _08041082\n"
-        "b _08040F78\n"
-        "_08041082:\n"
-        "mov r0, sp\n"
-        "bl sub_08041394\n"
-        "bl sub_080604A4\n"
-        "bl sub_08060798\n"
-        "movs r3, #0xCA\n"
-        "lsls r3, r3, #0x02\n"
-        "add sp, r3\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk40F4C state;
+    s32 done;
+
+    done = 0;
+    {
+        u32 *src = gData_080BB8BC;
+        _08073C4C(0, &state, sizeof(state), (void *)*src);
+    }
+    sub_0804109C(&state, sub_0806639C());
+    sub_08060468();
+    sub_08060758();
+    do
+    {
+        sub_080604C8();
+        sub_080607BC();
+        VBlankIntrWait();
+        sub_0806A6F8();
+        if (!(state.unk324 & 1))
+            _08073C40((void *)gData_080BB888[0]);
+        if (state.unk2D7 == 1)
+        {
+            switch (state.unk322)
+            {
+            case 1:
+                state.unk31C -= state.unk31E;
+                if ((s16)state.unk31C < 0)
+                {
+                    state.unk31C = 0;
+                    state.unk2D7 = 0;
+                }
+                break;
+            case 2:
+                state.unk31C += state.unk31E;
+                if ((s16)state.unk31C > 0x1F)
+                {
+                    state.unk31C = 0x1F;
+                    state.unk2D7 = 0;
+                }
+                break;
+            }
+            REG_BLDCNT = state.unk320;
+            REG_BLDY = state.unk31C;
+        }
+        switch (state.unk2D4)
+        {
+        case 0:
+            if (state.unk24C)
+                _08073C44(&state, state.unk24C);
+            break;
+        case 1:
+            if (state.unk250)
+                _08073C44(&state, state.unk250);
+            sub_080411EC(&state);
+            break;
+        case 2:
+            if (state.unk254)
+                _08073C44(&state, state.unk254);
+            break;
+        case 3:
+            done = 1;
+            break;
+        }
+        if (state.unk258)
+            _08073C44(&state, state.unk258);
+    } while (!done);
+    sub_08041394((struct Unk41394 *)&state);
+    sub_080604A4();
+    sub_08060798();
 }
 

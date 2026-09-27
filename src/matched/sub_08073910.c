@@ -1,80 +1,48 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08073910
-__attribute__((naked))
-void sub_08073910(void)
+// Copy the next whitespace-delimited word of `src` into `dst` (at most `size`
+// bytes incl. the terminator). Returns the index in `src` after the word.
+s32 sub_08073910(const u8 *src, u8 *dst, s32 size_arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "adds r6, r2, #0x0\n"
-        "movs r2, #0x00\n"
-        "movs r1, #0x00\n"
-        "cmp r5, #0x00\n"
-        "beq _08073924\n"
-        "cmp r4, #0x00\n"
-        "bne _08073928\n"
-        "_08073924:\n"
-        "movs r0, #0x00\n"
-        "b _08073980\n"
-        "_08073928:\n"
-        "adds r0, r5, r2\n"
-        "ldrb r3, [r0, #0x00]\n"
-        "cmp r3, #0x20\n"
-        "bne _08073934\n"
-        "adds r2, #0x01\n"
-        "b _08073928\n"
-        "_08073934:\n"
-        "cmp r3, #0x00\n"
-        "beq _0807397E\n"
-        "adds r0, r6, r4\n"
-        "subs r7, r0, #0x1\n"
-        "movs r0, #0x00\n"
-        "mov r12, r0\n"
-        "_08073940:\n"
-        "adds r0, r5, r2\n"
-        "ldrb r3, [r0, #0x00]\n"
-        "cmp r3, #0x20\n"
-        "beq _0807396A\n"
-        "cmp r3, #0x00\n"
-        "beq _0807395E\n"
-        "cmp r1, r6\n"
-        "bcs _0807395A\n"
-        "adds r0, r4, r1\n"
-        "strb r3, [r0, #0x00]\n"
-        "adds r1, #0x01\n"
-        "adds r2, #0x01\n"
-        "b _0807395E\n"
-        "_0807395A:\n"
-        "mov r0, r12\n"
-        "strb r0, [r7, #0x00]\n"
-        "_0807395E:\n"
-        "cmp r3, #0x20\n"
-        "beq _0807396A\n"
-        "cmp r3, #0x00\n"
-        "beq _0807396A\n"
-        "cmp r3, #0x0A\n"
-        "bne _08073940\n"
-        "_0807396A:\n"
-        "cmp r1, r6\n"
-        "bcs _08073976\n"
-        "adds r1, r4, r1\n"
-        "movs r0, #0x00\n"
-        "strb r0, [r1, #0x00]\n"
-        "b _0807397E\n"
-        "_08073976:\n"
-        "adds r0, r6, r4\n"
-        "subs r0, #0x01\n"
-        "movs r1, #0x00\n"
-        "strb r1, [r0, #0x00]\n"
-        "_0807397E:\n"
-        "adds r0, r2, #0x0\n"
-        "_08073980:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u32 size = size_arg;
+    u32 si;
+    u32 di;
+    u8 c;
+
+    si = 0;
+    di = 0;
+    if (src == 0 || dst == 0)
+        return 0;
+    do
+    {
+        c = src[si];
+        if (c == ' ')
+            si++;
+    } while (c == ' ');
+    if (c == 0)
+        return si;
+    do
+    {
+        c = src[si];
+        if (c != ' ' && c != 0)
+        {
+            if (di < size)
+            {
+                dst[di] = c;
+                di++;
+                si++;
+            }
+            else
+                dst[size - 1] = 0;
+        }
+    } while (c != ' ' && c != 0 && c != '\n');
+    if (di < size)
+        dst[di] = 0;
+    else
+        dst[size - 1] = 0;
+    return si;
 }
 

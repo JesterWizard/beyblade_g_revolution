@@ -1,59 +1,40 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08067f3c
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Sum `rec->unk02` halfwords from the animation's halfword table starting at
+// `rec->unk00`, on top of the base value `rec->unk04 * rec->unk02`.
 s32 AnimHalfwordSum(void *a, u32 v)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r7, r0, #0x0\n"
-        "adds r6, r1, #0x0\n"
-        "ldr r5, [r7, #0x00]\n"
-        "bl sub_08068014\n"
-        "adds r4, r0, #0x0\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08068884\n"
-        "mov r12, r0\n"
-        "ldrh r3, [r4, #0x02]\n"
-        "ldrh r0, [r4, #0x04]\n"
-        "adds r2, r0, #0x0\n"
-        "muls r2, r3\n"
-        "ldrh r4, [r4, #0x00]\n"
-        "ldr r0, [r5, #0x08]\n"
-        "cmp r6, r0\n"
-        "blt _08067F66\n"
-        "movs r0, #0x00\n"
-        "b _08067F92\n"
-        "_08067F66:\n"
-        "mov r0, r12\n"
-        "cmp r0, #0x00\n"
-        "beq _08067F90\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0x98\n"
-        "movs r0, #0x04\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _08067F90\n"
-        "cmp r3, #0x00\n"
-        "beq _08067F90\n"
-        "lsls r0, r4, #0x01\n"
-        "add r0, r12\n"
-        "adds r1, r3, #0x0\n"
-        "_08067F84:\n"
-        "ldrh r3, [r0, #0x00]\n"
-        "adds r2, r3, r2\n"
-        "adds r0, #0x02\n"
-        "subs r1, #0x01\n"
-        "cmp r1, #0x00\n"
-        "bne _08067F84\n"
-        "_08067F90:\n"
-        "adds r0, r2, #0x0\n"
-        "_08067F92:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk67F3C *obj = a;
+    struct Unk68014 *inner;
+    struct Unk68014Rec *rec;
+    u16 *base;
+    u16 *p;
+    u32 n;
+    s32 sum;
+    u32 start;
+    u32 i;
+
+    inner = obj->unk00;
+    rec = AnimRecAt(&obj->unk00, v);
+    base = AnimHalfwordBase(inner);
+    n = rec->unk02;
+    sum = rec->unk04 * n;
+    start = rec->unk00;
+    if ((s32)v >= (s32)inner->unk08)
+        return 0;
+    if (base != 0 && !(obj->unk98 & 4) && n != 0)
+    {
+        p = &base[start];
+        i = n;
+        do
+        {
+            sum += *p++;
+        } while (--i != 0);
+    }
+    return sum;
 }
 

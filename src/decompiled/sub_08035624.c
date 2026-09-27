@@ -36,7 +36,7 @@ type_one:
 update:
     if (target == 0)
         goto done;
-    sub_08070468(target, (u16)value);
+    sub_08070468((struct Unk6FDB4 *)target, (u16)value);
     goto done;
 
 type_two:
@@ -44,7 +44,7 @@ type_two:
     target = a->unk28C;
     if (target == 0)
         goto done;
-    sub_08070468(target, (u16)value);
+    sub_08070468((struct Unk6FDB4 *)target, (u16)value);
 
 done:
     return;

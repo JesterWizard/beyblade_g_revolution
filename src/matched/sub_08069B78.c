@@ -1,84 +1,20 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08069b78
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Set the priority of BG0-BG3 (sub_08069988 returns the BGxCNT register).
 void sub_08069B78(u32 a, u32 b, u32 c, u32 d)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "mov r6, r10\n"
-        "mov r5, r9\n"
-        "mov r4, r8\n"
-        "push {r4, r5, r6}\n"
-        "adds r4, r0, #0x0\n"
-        "adds r6, r1, #0x0\n"
-        "mov r8, r2\n"
-        "mov r9, r3\n"
-        "lsls r4, r4, #0x18\n"
-        "lsrs r4, r4, #0x18\n"
-        "lsls r6, r6, #0x18\n"
-        "lsrs r6, r6, #0x18\n"
-        "mov r0, r8\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r8, r0\n"
-        "mov r1, r9\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "mov r9, r1\n"
-        "movs r0, #0x00\n"
-        "bl sub_08069988\n"
-        "movs r2, #0x03\n"
-        "mov r10, r2\n"
-        "mov r1, r10\n"
-        "ands r4, r1\n"
-        "movs r5, #0x04\n"
-        "negs r5, r5\n"
-        "adds r1, r5, #0x0\n"
-        "ldrb r2, [r0, #0x00]\n"
-        "ands r1, r2\n"
-        "orrs r1, r4\n"
-        "strb r1, [r0, #0x00]\n"
-        "movs r0, #0x01\n"
-        "bl sub_08069988\n"
-        "mov r1, r10\n"
-        "ands r6, r1\n"
-        "adds r1, r5, #0x0\n"
-        "ldrb r2, [r0, #0x00]\n"
-        "ands r1, r2\n"
-        "orrs r1, r6\n"
-        "strb r1, [r0, #0x00]\n"
-        "movs r0, #0x02\n"
-        "bl sub_08069988\n"
-        "mov r1, r8\n"
-        "mov r2, r10\n"
-        "ands r1, r2\n"
-        "mov r8, r1\n"
-        "adds r1, r5, #0x0\n"
-        "ldrb r2, [r0, #0x00]\n"
-        "ands r1, r2\n"
-        "mov r2, r8\n"
-        "orrs r1, r2\n"
-        "strb r1, [r0, #0x00]\n"
-        "movs r0, #0x03\n"
-        "bl sub_08069988\n"
-        "mov r1, r9\n"
-        "mov r2, r10\n"
-        "ands r1, r2\n"
-        "mov r9, r1\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "ands r5, r1\n"
-        "mov r2, r9\n"
-        "orrs r5, r2\n"
-        "strb r5, [r0, #0x00]\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    u8 bg0 = a;
+    u8 bg1 = b;
+    u8 bg2 = c;
+    u8 bg3 = d;
+
+    ((struct BgCnt *)sub_08069988(0))->priority = bg0;
+    ((struct BgCnt *)sub_08069988(1))->priority = bg1;
+    ((struct BgCnt *)sub_08069988(2))->priority = bg2;
+    ((struct BgCnt *)sub_08069988(3))->priority = bg3;
 }
 
