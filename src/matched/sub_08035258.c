@@ -1,105 +1,43 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035258
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Stops animation block `type` (0..2) if its active bit in unk2C5 is set:
+// notifies sub_08038638, releases the block and clears the bit.
 void sub_08035258(struct Unk35258 *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r5, r1, #0x18\n"
-        "cmp r5, #0x01\n"
-        "beq _080352B4\n"
-        "cmp r5, #0x01\n"
-        "bgt _0803526E\n"
-        "cmp r5, #0x00\n"
-        "beq _08035274\n"
-        "b _0803530C\n"
-        "_0803526E:\n"
-        "cmp r5, #0x02\n"
-        "beq _080352E0\n"
-        "b _0803530C\n"
-        "_08035274:\n"
-        "ldr r0, _080352B0 @ =0x000002C5\n"
-        "adds r6, r4, r0\n"
-        "movs r0, #0x01\n"
-        "ldrb r1, [r6, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0803530C\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x56\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsrs r0, r0, #0x01\n"
-        "bl sub_08038638\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x1C\n"
-        "bl sub_08068808\n"
-        "movs r1, #0xAC\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r4, r1\n"
-        "str r5, [r0, #0x00]\n"
-        "adds r1, #0x04\n"
-        "adds r0, r4, r1\n"
-        "str r5, [r0, #0x00]\n"
-        "movs r0, #0xFE\n"
-        "ldrb r1, [r6, #0x00]\n"
-        "ands r0, r1\n"
-        "strb r0, [r6, #0x00]\n"
-        "b _0803530C\n"
-        ".byte 0x00, 0x00\n"
-        "_080352B0: .4byte 0x000002C5\n"
-        "_080352B4:\n"
-        "ldr r0, _080352DC @ =0x000002C5\n"
-        "adds r5, r4, r0\n"
-        "movs r0, #0x02\n"
-        "ldrb r1, [r5, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0803530C\n"
-        "movs r1, #0x99\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r0, r4, r1\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsrs r0, r0, #0x01\n"
-        "bl sub_08038638\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0xF8\n"
-        "bl sub_08068808\n"
-        "movs r0, #0xFD\n"
-        "b _08035306\n"
-        "_080352DC: .4byte 0x000002C5\n"
-        "_080352E0:\n"
-        "ldr r0, _08035314 @ =0x000002C5\n"
-        "adds r5, r4, r0\n"
-        "movs r0, #0x04\n"
-        "ldrb r1, [r5, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0803530C\n"
-        "ldr r1, _08035318 @ =0x0000020E\n"
-        "adds r0, r4, r1\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsrs r0, r0, #0x01\n"
-        "bl sub_08038638\n"
-        "movs r1, #0xEA\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r0, r4, r1\n"
-        "bl sub_08068808\n"
-        "movs r0, #0xFB\n"
-        "_08035306:\n"
-        "ldrb r1, [r5, #0x00]\n"
-        "ands r0, r1\n"
-        "strb r0, [r5, #0x00]\n"
-        "_0803530C:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08035314: .4byte 0x000002C5\n"
-        "_08035318: .4byte 0x0000020E\n"
-    );
+    u8 type = b;
+
+    switch (type)
+    {
+    case 0:
+        if (a->unk2C5 & 1)
+        {
+            sub_08038638(a->unk1C.unk3A >> 1);
+            sub_08068808(&a->unk1C);
+            a->unk2B0 = 0;
+            a->unk2B4 = 0;
+            a->unk2C5 &= ~1;
+        }
+        break;
+    case 1:
+        if (a->unk2C5 & 2)
+        {
+            sub_08038638(a->unkF8.unk3A >> 1);
+            sub_08068808(&a->unkF8);
+            a->unk2C5 &= ~2;
+        }
+        break;
+    case 2:
+        if (a->unk2C5 & 4)
+        {
+            sub_08038638(a->unk1D4.unk3A >> 1);
+            sub_08068808(&a->unk1D4);
+            a->unk2C5 &= ~4;
+        }
+        break;
+    }
 }
 

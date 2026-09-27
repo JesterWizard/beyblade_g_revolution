@@ -1,73 +1,35 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08062988
-__attribute__((naked))
-void sub_08062988(void)
+// ROM copy/fill routines at gData_080BB8BC/C0 (reached via _call_via_r3).
+typedef void (*BlockFunc)(const void *src, void *dst, u32 size);
+
+/* match-compiler: old_agbcc */
+// Loads a 0x2000-byte block into the buffer at gUnk_030007A4: LZ77-decompresses
+// it when the header says so (mode 1, variant 1 or 2, non-zero group), otherwise
+// runs the ROM block routine at gData_080BB8BC with a NULL source and then copies
+// `a` with the one at gData_080BB8C0; then hands the buffer to sub_0806BC0C.
+void sub_08062988(struct Unk62988 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r0, [r6, #0x00]\n"
-        "lsrs r3, r0, #0x08\n"
-        "lsrs r1, r0, #0x04\n"
-        "movs r0, #0x0F\n"
-        "ands r1, r0\n"
-        "movs r2, #0x03\n"
-        "ldrb r0, [r6, #0x04]\n"
-        "ands r2, r0\n"
-        "ldr r0, _080629C8 @ =0x030007A0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _080629FC\n"
-        "cmp r1, #0x01\n"
-        "bne _080629D0\n"
-        "subs r0, r2, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "cmp r0, #0x01\n"
-        "bhi _080629D0\n"
-        "cmp r3, #0x00\n"
-        "beq _080629D0\n"
-        "bl sub_080674B4\n"
-        "ldr r0, _080629CC @ =0x030007A4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_080674AC\n"
-        "b _080629F2\n"
-        ".byte 0x00, 0x00\n"
-        "_080629C8: .4byte 0x030007A0\n"
-        "_080629CC: .4byte 0x030007A4\n"
-        "_080629D0:\n"
-        "ldr r0, _08062A04 @ =0x080BB8BC\n"
-        "ldr r4, _08062A08 @ =0x030007A4\n"
-        "ldr r1, [r4, #0x00]\n"
-        "movs r5, #0x80\n"
-        "lsls r5, r5, #0x06\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "adds r2, r5, #0x0\n"
-        "bl _08073C4C\n"
-        "ldr r0, _08062A0C @ =0x080BB8C0\n"
-        "ldr r1, [r4, #0x00]\n"
-        "ldr r3, [r0, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r2, r5, #0x0\n"
-        "bl _08073C4C\n"
-        "_080629F2:\n"
-        "ldr r0, _08062A10 @ =0x030007B0\n"
-        "ldr r1, _08062A08 @ =0x030007A4\n"
-        "ldr r1, [r1, #0x00]\n"
-        "bl sub_0806BC0C\n"
-        "_080629FC:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08062A04: .4byte 0x080BB8BC\n"
-        "_08062A08: .4byte 0x030007A4\n"
-        "_08062A0C: .4byte 0x080BB8C0\n"
-        "_08062A10: .4byte 0x030007B0\n"
-    );
+    u32 flags = a->unk00;
+    u32 group = flags >> 8;
+    u32 mode = (flags >> 4) & 0x0F;
+    u32 variant = a->unk04 & 3;
+
+    if (gUnk_030007A0 == 0)
+        return;
+    if (mode == 1 && (u8)(variant - 1) <= 1 /* variant 1 or 2 */ && group != 0)
+    {
+        VBlankIntrWait();
+        LZ77UnCompWram(a, gUnk_030007A4);
+    }
+    else
+    {
+        ((BlockFunc)gData_080BB8BC[0])(NULL, gUnk_030007A4, 0x2000);
+        ((BlockFunc)gData_080BB8C0[0])(a, gUnk_030007A4, 0x2000);
+    }
+    sub_0806BC0C(gUnk_030007B0, gUnk_030007A4);
 }
 

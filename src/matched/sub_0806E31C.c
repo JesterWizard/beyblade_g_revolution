@@ -1,83 +1,31 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806e31c
-__attribute__((naked))
+// Samples keyframe track `b` of `a` at time `d` (22.10 fixed point, clamped to
+// the last key): linearly interpolates the x/y/z of the two surrounding keys into
+// out[0..2], and stores the fraction and key index in out[3], out[4]. Returns out.
 u32 sub_0806E31C(void *a, void *b, s32 *out, s32 d)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r6, r0, #0x0\n"
-        "mov r8, r2\n"
-        "adds r7, r3, #0x0\n"
-        "bl sub_0806DEC8\n"
-        "adds r1, r0, #0x0\n"
-        "adds r2, r1, #0x0\n"
-        "adds r2, #0x20\n"
-        "cmp r7, #0x00\n"
-        "bge _0806E33A\n"
-        "movs r7, #0x00\n"
-        "_0806E33A:\n"
-        "asrs r0, r7, #0x0A\n"
-        "ldr r1, [r1, #0x00]\n"
-        "cmp r0, r1\n"
-        "blt _0806E34C\n"
-        "subs r0, r1, #0x1\n"
-        "lsls r0, r0, #0x0A\n"
-        "ldr r1, _0806E3AC @ =0x000003FF\n"
-        "ands r7, r1\n"
-        "orrs r7, r0\n"
-        "_0806E34C:\n"
-        "asrs r0, r7, #0x0A\n"
-        "mov r9, r0\n"
-        "lsls r4, r0, #0x02\n"
-        "adds r4, r4, r2\n"
-        "ldr r1, [r4, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_0806DEF4\n"
-        "adds r5, r0, #0x0\n"
-        "ldr r1, [r4, #0x04]\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_0806DEF4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r2, [r5, #0x00]\n"
-        "subs r1, r1, r2\n"
-        "ldr r3, _0806E3AC @ =0x000003FF\n"
-        "ands r3, r7\n"
-        "muls r1, r3\n"
-        "asrs r1, r1, #0x0A\n"
-        "adds r2, r2, r1\n"
-        "mov r1, r8\n"
-        "str r2, [r1, #0x00]\n"
-        "ldr r1, [r0, #0x04]\n"
-        "ldr r2, [r5, #0x04]\n"
-        "subs r1, r1, r2\n"
-        "muls r1, r3\n"
-        "asrs r1, r1, #0x0A\n"
-        "adds r2, r2, r1\n"
-        "mov r1, r8\n"
-        "str r2, [r1, #0x04]\n"
-        "ldr r0, [r0, #0x08]\n"
-        "ldr r1, [r5, #0x08]\n"
-        "subs r0, r0, r1\n"
-        "muls r0, r3\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r1, r1, r0\n"
-        "mov r0, r8\n"
-        "str r1, [r0, #0x08]\n"
-        "str r3, [r0, #0x0C]\n"
-        "mov r1, r9\n"
-        "str r1, [r0, #0x10]\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_0806E3AC: .4byte 0x000003FF\n"
-    );
+    struct Unk6E31CTrack *track = (struct Unk6E31CTrack *)sub_0806DEC8(a, (s32)b);
+    u32 *keys = track->unk20;
+    s32 idx;
+    s32 *p0;
+    s32 *p1;
+
+    if (d < 0)
+        d = 0;
+    if ((d >> 10) >= track->unk00)
+        d = ((track->unk00 - 1) << 10) | (d & 0x3FF);
+    idx = d >> 10;
+    p0 = (s32 *)sub_0806DEF4(a, keys[idx]);
+    p1 = (s32 *)sub_0806DEF4(a, keys[idx + 1]);
+    out[0] = p0[0] + (((p1[0] - p0[0]) * (d & 0x3FF)) >> 10);
+    out[1] = p0[1] + (((p1[1] - p0[1]) * (d & 0x3FF)) >> 10);
+    out[2] = p0[2] + (((p1[2] - p0[2]) * (d & 0x3FF)) >> 10);
+    out[3] = d & 0x3FF;
+    out[4] = idx;
+    return (u32)out;
 }
 

@@ -1,8 +1,51 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0802bad4
-__attribute__((naked))
-void sub_0802BAD4(void)
+// Claims the first free Unk1694 slot (word 0xFF0000FF) for (kind, group, c, d),
+// if the group still has room. Group 1 first registers the entry through
+// sub_0802C3DC/sub_0803DEC8 (logging and skipping the slot on failure). Retail
+// has a separate copy of the slot writes in each branch. Returns 1 once a free
+// slot was found, else 0.
+s32 sub_0802BAD4(u8 kind, u8 group, u8 c, u8 d)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x00C\nlsls r0, r0, #0x18\nlsrs r0, r0, #0x18\nmov r9, r0\nlsls r1, r1, #0x18\nlsrs r1, r1, #0x18\nmov r10, r1\nlsls r2, r2, #0x18\nlsrs r2, r2, #0x18\nstr r2, [sp, #0x000]\nlsls r3, r3, #0x18\nlsrs r3, r3, #0x18\nstr r3, [sp, #0x004]\nldr r7, _0802BBAC @ =0x03000198\nldr r0, [r7, #0x00]\nldr r1, _0802BBB0 @ =0x00001694\nadds r0, r0, r1\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbne _0802BB08\nb _0802BC02\n_0802BB08:\nmov r2, r10\nlsls r6, r2, #0x18\nasrs r4, r6, #0x18\nadds r0, r4, #0x0\nbl sub_0802C62C\nadds r5, r0, #0x0\nadds r0, r4, #0x0\nbl _0802BA7C\ncmp r5, r0\nbge _0802BC02\nmovs r0, #0x00\nmov r8, r0\nldr r3, _0802BBB0 @ =0x00001694\n_0802BB26:\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nmov r1, r8\nlsls r5, r1, #0x02\nadds r2, r5, r0\nldr r1, [r2, #0x00]\nldr r0, _0802BBB4 @ =0xFF0000FF\ncmp r1, r0\nbne _0802BBF8\nasrs r0, r6, #0x18\ncmp r0, #0x01\nbne _0802BBC8\nmov r2, r9\nlsls r0, r2, #0x18\nasrs r4, r0, #0x18\nmovs r0, #0x01\nadds r1, r4, #0x0\nmovs r2, #0x00\nstr r3, [sp, #0x008]\nbl sub_0802C3DC\nadds r6, r0, #0x0\ncmp r6, #0x00\nbne _0802BBB8\nldr r0, [sp, #0x004]\nlsls r1, r0, #0x18\nmov r0, r8\nlsls r2, r0, #0x18\nlsrs r2, r2, #0x18\nadds r0, r4, #0x0\nasrs r1, r1, #0x18\nbl sub_0803DEC8\nldr r0, [r7, #0x00]\nldr r3, [sp, #0x008]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nstrb r6, [r0, #0x02]\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nmov r1, r9\nstrb r1, [r0, #0x00]\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nmov r2, r10\nstrb r2, [r0, #0x03]\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nmov r1, sp\nldrb r1, [r1, #0x00]\nstrb r1, [r0, #0x01]\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nmov r2, sp\nldrb r2, [r2, #0x04]\nstrb r2, [r0, #0x02]\nb _0802BBF4\n_0802BBAC: .4byte 0x03000198\n_0802BBB0: .4byte 0x00001694\n_0802BBB4: .4byte 0xFF0000FF\n_0802BBB8:\nldr r0, _0802BBC4 @ =0x0833BE1C\nadds r1, r4, #0x0\nbl sub_08067B98\nb _0802BBF4\n.byte 0x00, 0x00\n_0802BBC4: .4byte 0x0833BE1C\n_0802BBC8:\nmov r0, r9\nstrb r0, [r2, #0x00]\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nmov r1, r10\nstrb r1, [r0, #0x03]\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nmov r2, sp\nldrb r2, [r2, #0x00]\nstrb r2, [r0, #0x01]\nldr r0, [r7, #0x00]\nadds r0, r0, r3\nldr r0, [r0, #0x00]\nadds r0, r5, r0\nmov r1, sp\nldrb r1, [r1, #0x04]\nstrb r1, [r0, #0x02]\n_0802BBF4:\nmovs r0, #0x01\nb _0802BC04\n_0802BBF8:\nmovs r2, #0x01\nadd r8, r2\nmov r0, r8\ncmp r0, #0x7F\nble _0802BB26\n_0802BC02:\nmovs r0, #0x00\n_0802BC04:\nadd sp, #0x00C\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r1}\nbx r1");
+    s32 i;
+    s32 err;
+
+    if (gMainWorkPtr->unk1694 == NULL)
+        return 0;
+    if (sub_0802C62C(group) >= _0802BA7C(group))
+        return 0;
+    for (i = 0; i <= 0x7F; i++)
+    {
+        if (((u32 *)gMainWorkPtr->unk1694)[i] == 0xFF0000FF)
+        {
+            if ((s8)group == 1)
+            {
+                err = sub_0802C3DC(1, kind, NULL);
+                if (err == 0)
+                {
+                    sub_0803DEC8(kind, d, i);
+                    gMainWorkPtr->unk1694[i].unk02 = err;
+                    gMainWorkPtr->unk1694[i].unk00 = kind;
+                    gMainWorkPtr->unk1694[i].unk03 = group;
+                    gMainWorkPtr->unk1694[i].unk01 = c;
+                    gMainWorkPtr->unk1694[i].unk02 = d;
+                }
+                else
+                    DebugPrint((void *)0x0833BE1C, (s8)kind);
+            }
+            else
+            {
+                gMainWorkPtr->unk1694[i].unk00 = kind;
+                gMainWorkPtr->unk1694[i].unk03 = group;
+                gMainWorkPtr->unk1694[i].unk01 = c;
+                gMainWorkPtr->unk1694[i].unk02 = d;
+            }
+            return 1;
+        }
+    }
+    return 0;
 }
+

@@ -8,18 +8,36 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **515/633 (81.4%)** |
-| **Decompiled C (bytes)** | **47,034/90,272 (52.1%)** |
+| **Decompiled C (functions)** | **524/633 (82.8%)** |
+| **Decompiled C (bytes)** | **48,932/90,272 (54.2%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 118/633 (18.6%) |
+| Readable Thumb | 109/633 (17.2%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 115/160 (71.9% fn, 44.6% bytes) |
+| Battle semantic C | 118/160 (73.8% fn, 47.4% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-27 — parked-WIP sweep 8 (+9/10): 620D4, 62988, 6E31C, 733E4, 62358, 35258, 2BAD4, 2DEA0, 38F30
+
+- `sub_0802DEA0` / `sub_08038F30` — retail re-reads `gUnk_0300026C` / `gMainWorkPtr` after every store, even
+  stores that cannot alias it; only a read through a volatile location
+  (`*(T *volatile *)addr`) reproduces that (both `old_agbcc` for DEA0). 38F30 also holds the battle/table/main
+  locations in locals set before the loop.
+- `sub_0802BAD4` — the group-1 path has its own copy of the slot writes (retail writes `unk02` twice); with
+  one shared block loop.c strength-reduces `i * 4`, which retail does not.
+- `sub_080620D4` — `old_agbcc`; declared non-void (retail epilogue `pop {r1}`) but returns nothing.
+- `sub_080733E4` — strcat-like append; the terminator is `dst[size - 1] = 0` inside the loop (loop.c hoists
+  the address), and the return is `i--; return i;`.
+- `sub_08062358` — `Unk62634.unk00` typed as the frame list, `unk50`/`unk56` as `s16`.
+- `sub_08062988` (`old_agbcc`), `sub_0806E31C` (new `Unk6E31CTrack`), `sub_08035258` (`old_agbcc`) — direct.
+- Headers: prototypes for `sub_08038F30`, `sub_0803DEC8`, `sub_0802BAD4`, `sub_080733E4`;
+  `sub_080620D4` returns `s32`; `sub_08035624` takes `(a, u8 type, s32 delta)`;
+  `gData_03000198` / `gData_03000290` typed as pointer arrays.
+- Not matched: `sub_08035624` 38/114 (112 B; retail keeps `type` in r4 with a copy in r5).
 
 ### 2026-09-27 — parked-WIP sweep 7 (+10/10): 59DC8, 3D51C, 3559C, 607BC, 51BBC, 338F0, 415FC, 4438C, 39BD4, 43420
 

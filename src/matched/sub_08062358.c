@@ -1,112 +1,49 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08062358
-__attribute__((naked))
+// Frame-list animation tick: when the frame timer runs out, advances to the
+// next frame (looping for mode 1, stopping for mode 2 at the -1 terminator)
+// and pushes the current frame to the attached text entry.
 void sub_08062358(struct Unk62634 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "mov r12, r0\n"
-        "cmp r0, #0x00\n"
-        "beq _08062412\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08062412\n"
-        "mov r4, r12\n"
-        "adds r4, #0x56\n"
-        "ldrh r0, [r4, #0x00]\n"
-        "subs r0, #0x01\n"
-        "movs r5, #0x00\n"
-        "strh r0, [r4, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "cmp r0, #0x00\n"
-        "bgt _08062412\n"
-        "mov r0, r12\n"
-        "ldr r3, [r0, #0x00]\n"
-        "adds r0, #0x52\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r0, #0x01\n"
-        "beq _0806238A\n"
-        "cmp r0, #0x02\n"
-        "beq _080623B6\n"
-        "b _08062404\n"
-        "_0806238A:\n"
-        "mov r2, r12\n"
-        "adds r2, #0x50\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strh r0, [r2, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "asrs r0, r0, #0x0E\n"
-        "adds r0, r0, r3\n"
-        "movs r6, #0x02\n"
-        "ldsh r1, [r0, r6]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "bne _080623E8\n"
-        "ldrh r0, [r3, #0x00]\n"
-        "mov r1, r12\n"
-        "adds r1, #0x54\n"
-        "strh r0, [r1, #0x00]\n"
-        "ldrh r0, [r3, #0x02]\n"
-        "strh r0, [r4, #0x00]\n"
-        "strh r5, [r2, #0x00]\n"
-        "b _08062404\n"
-        "_080623B6:\n"
-        "mov r2, r12\n"
-        "adds r2, #0x50\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strh r0, [r2, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "asrs r0, r0, #0x0E\n"
-        "adds r0, r0, r3\n"
-        "movs r6, #0x02\n"
-        "ldsh r1, [r0, r6]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "bne _080623E8\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r2, r1]\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r3\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "mov r0, r12\n"
-        "adds r0, #0x54\n"
-        "strh r1, [r0, #0x00]\n"
-        "mov r6, r12\n"
-        "str r5, [r6, #0x00]\n"
-        "b _08062404\n"
-        "_080623E8:\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r2, r1]\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r3\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "mov r0, r12\n"
-        "adds r0, #0x54\n"
-        "strh r1, [r0, #0x00]\n"
-        "movs r6, #0x00\n"
-        "ldsh r0, [r2, r6]\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r3\n"
-        "ldrh r0, [r0, #0x02]\n"
-        "strh r0, [r4, #0x00]\n"
-        "_08062404:\n"
-        "mov r0, r12\n"
-        "ldr r1, [r0, #0x08]\n"
-        "cmp r1, #0x00\n"
-        "beq _08062412\n"
-        "adds r0, #0x54\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "strh r0, [r1, #0x18]\n"
-        "_08062412:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk62358Anim *anim;
+
+    if (a == NULL || a->unk00 == NULL)
+        return;
+    if (--a->unk56 > 0)
+        return;
+    anim = a->unk00;
+    switch (a->unk52)
+    {
+    case 1:
+        if (anim[++a->unk50].unk02 == -1)
+        {
+            a->unk54 = anim[0].unk00;
+            a->unk56 = anim[0].unk02;
+            a->unk50 = 0;
+        }
+        else
+        {
+            a->unk54 = anim[a->unk50].unk00;
+            a->unk56 = anim[a->unk50].unk02;
+        }
+        break;
+    case 2:
+        if (anim[++a->unk50].unk02 == -1)
+        {
+            a->unk54 = anim[a->unk50].unk00;
+            a->unk00 = NULL;
+        }
+        else
+        {
+            a->unk54 = anim[a->unk50].unk00;
+            a->unk56 = anim[a->unk50].unk02;
+        }
+        break;
+    }
+    if (a->unk08 != NULL)
+        a->unk08->unk18 = a->unk54;
 }
 

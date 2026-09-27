@@ -427,7 +427,7 @@ struct Unk62358Anim /* 0x04 */
 
 struct Unk62634 /* >= 0x64 */
 {
-    /* 00 */ void *unk00;
+    /* 00 */ struct Unk62358Anim *unk00; /* frame list, ends at unk02 == -1 */
     /* 04 */ struct Unk6225CSource *unk04;
     /* 08 */ struct Unk705DC *unk08;
     /* 0c */ u8 filler_0C[0xC];
@@ -443,10 +443,10 @@ struct Unk62634 /* >= 0x64 */
     /* 3c */ s32 unk3C;
     /* 40 */ s32 unk40;
     /* 44 */ u8 filler_44[0xC];
-    /* 50 */ u16 unk50;
-    /* 52 */ u16 unk52;
-    /* 54 */ u16 unk54;
-    /* 56 */ u16 unk56;
+    /* 50 */ s16 unk50; /* frame index */
+    /* 52 */ u16 unk52; /* 1 loop, 2 play once */
+    /* 54 */ u16 unk54; /* current frame */
+    /* 56 */ s16 unk56; /* frames left */
     /* 58 */ u8 filler_58[8];
     /* 60 */ u8 unk60;
     /* 61 */ u8 filler_61[3];
@@ -2114,6 +2114,15 @@ struct Unk6B3E8 /* >= 0x2c */
 };
 
 /* Indexed byte-chain walk. sub_0806DEC8. */
+/* Keyframe track returned by sub_0806DEC8: key count, then key ids at +0x20.
+ * sub_0806E31C. */
+struct Unk6E31CTrack /* >= 0x24 */
+{
+    /* 00 */ s32 unk00; /* key count */
+    /* 04 */ u8 filler_04[0x1C];
+    /* 20 */ u32 unk20[1]; /* key ids for sub_0806DEF4 */
+};
+
 struct UnkDEC8Head /* >= 0x08 */
 {
     /* 00 */ u32 unk00;

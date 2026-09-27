@@ -47,8 +47,8 @@ extern u8 gData_082BCD00[];
 extern u8 gData_080B738E[];
 
 // IWRAM
-extern u32 gData_03000198[];
-extern u8 gData_03000290[];
+extern struct MainWork *gData_03000198[];
+extern struct BattleWork *gData_03000290[];
 extern u32 gData_030003CC[];
 extern u16 gData_05000200[];
 extern u32 gData_08079068[];

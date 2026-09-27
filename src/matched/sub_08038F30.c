@@ -1,8 +1,53 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08038f30
-__attribute__((naked))
-void sub_08038F30(void)
+// Shifts the battle scene by one step (dir -1 or 1): moves
+// the four MainWork.unk07A4 entries and BattleWork.unk324 by 0x400, then either
+// the four unk023C objects (sub_08070C98) or the unk2FC point set by 4.
+// gMainWorkPtr is read through a volatile location: retail reloads it on every
+// loop iteration.
+void sub_08038F30(s32 dir)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nadds r1, r0, #0x0\nmovs r0, #0x01\nnegs r0, r0\ncmp r1, r0\nbeq _08038F42\ncmp r1, #0x01\nbeq _08038FD6\nb _08039066\n_08038F42:\nmovs r4, #0x00\nldr r6, _08038FAC @ =0x03000290\nldr r7, _08038FB0 @ =0x030002A0\nldr r5, _08038FB4 @ =0x03000198\nldr r3, _08038FB8 @ =0x000007A4\nldr r2, _08038FBC @ =0xFFFFFC00\n_08038F4E:\nldr r0, [r5, #0x00]\nlsls r1, r4, #0x02\nadds r0, r0, r3\nadds r0, r0, r1\nldr r1, [r0, #0x00]\nldr r0, [r1, #0x0C]\nadds r0, r0, r2\nstr r0, [r1, #0x0C]\nadds r4, #0x01\ncmp r4, #0x03\nble _08038F4E\nldr r2, [r6, #0x00]\nmovs r1, #0xC9\nlsls r1, r1, #0x02\nadds r0, r2, r1\nldr r1, [r0, #0x00]\nldr r0, [r1, #0x0C]\nldr r3, _08038FBC @ =0xFFFFFC00\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\nldr r1, _08038FC0 @ =0x0000012F\nadds r0, r2, r1\nmovs r1, #0x00\nldsb r1, [r0, r1]\nmovs r0, #0x2C\nmuls r0, r1\nadds r0, r0, r7\nldrb r0, [r0, #0x1C]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x00\nbne _08038FC4\nmovs r5, #0x8F\nlsls r5, r5, #0x02\nmovs r4, #0x03\n_08038F94:\nldr r0, [r6, #0x00]\nadds r0, r0, r5\nmovs r1, #0x00\nmovs r2, #0x04\nnegs r2, r2\nbl sub_08070C98\nadds r5, #0x30\nsubs r4, #0x01\ncmp r4, #0x00\nbge _08038F94\nb _08039066\n_08038FAC: .4byte 0x03000290\n_08038FB0: .4byte 0x030002A0\n_08038FB4: .4byte 0x03000198\n_08038FB8: .4byte 0x000007A4\n_08038FBC: .4byte 0xFFFFFC00\n_08038FC0: .4byte 0x0000012F\n_08038FC4:\nmovs r3, #0xBF\nlsls r3, r3, #0x02\nadds r0, r2, r3\nmovs r2, #0x04\nnegs r2, r2\nmovs r1, #0x00\nbl sub_080620D4\nb _08039066\n_08038FD6:\nmovs r4, #0x00\nldr r6, _08039044 @ =0x03000290\nldr r7, _08039048 @ =0x030002A0\nldr r5, _0803904C @ =0x03000198\nldr r3, _08039050 @ =0x000007A4\nmovs r2, #0x80\nlsls r2, r2, #0x03\n_08038FE4:\nldr r0, [r5, #0x00]\nlsls r1, r4, #0x02\nadds r0, r0, r3\nadds r0, r0, r1\nldr r1, [r0, #0x00]\nldr r0, [r1, #0x0C]\nadds r0, r0, r2\nstr r0, [r1, #0x0C]\nadds r4, #0x01\ncmp r4, #0x03\nble _08038FE4\nldr r2, [r6, #0x00]\nmovs r1, #0xC9\nlsls r1, r1, #0x02\nadds r0, r2, r1\nldr r1, [r0, #0x00]\nldr r0, [r1, #0x0C]\nmovs r3, #0x80\nlsls r3, r3, #0x03\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\nldr r1, _08039054 @ =0x0000012F\nadds r0, r2, r1\nmovs r1, #0x00\nldsb r1, [r0, r1]\nmovs r0, #0x2C\nmuls r0, r1\nadds r0, r0, r7\nldrb r0, [r0, #0x1C]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x00\nbne _08039058\nmovs r5, #0x8F\nlsls r5, r5, #0x02\nmovs r4, #0x03\n_0803902C:\nldr r0, [r6, #0x00]\nadds r0, r0, r5\nmovs r1, #0x00\nmovs r2, #0x04\nbl sub_08070C98\nadds r5, #0x30\nsubs r4, #0x01\ncmp r4, #0x00\nbge _0803902C\nb _08039066\n.byte 0x00, 0x00\n_08039044: .4byte 0x03000290\n_08039048: .4byte 0x030002A0\n_0803904C: .4byte 0x03000198\n_08039050: .4byte 0x000007A4\n_08039054: .4byte 0x0000012F\n_08039058:\nmovs r3, #0xBF\nlsls r3, r3, #0x02\nadds r0, r2, r3\nmovs r1, #0x00\nmovs r2, #0x04\nbl sub_080620D4\n_08039066:\npop {r4, r5, r6, r7}\npop {r0}\nbx r0");
+    struct BattleWork **battle;
+    struct Unk002A0Record *table;
+    struct MainWork *volatile *work;
+    s32 i;
+
+    switch (dir)
+    {
+    case -1:
+                i = 0;
+        battle = gBattleWorkPtrLoc;
+        table = gUnk_030002A0.records;
+        work = (struct MainWork *volatile *)gMainWorkPtrLoc;
+        for (; i <= 3; i++)
+            (*work)->unk07A4[i]->unk0C -= 0x400;
+        (*battle)->unk324->unk0C -= 0x400;
+        if (table[(*battle)->unk12F].unk1C == 0)
+        {
+            for (i = 0; i <= 3; i++)
+                sub_08070C98((struct Unk70C98 *)&(*battle)->unk023C[i], 0, -4);
+        }
+        else
+            Unk62044OffsetPoints(&(*battle)->unk2FC, 0, -4);
+        break;
+    case 1:
+                i = 0;
+        battle = gBattleWorkPtrLoc;
+        table = gUnk_030002A0.records;
+        work = (struct MainWork *volatile *)gMainWorkPtrLoc;
+        for (; i <= 3; i++)
+            (*work)->unk07A4[i]->unk0C += 0x400;
+        (*battle)->unk324->unk0C += 0x400;
+        if (table[(*battle)->unk12F].unk1C == 0)
+        {
+            for (i = 0; i <= 3; i++)
+                sub_08070C98((struct Unk70C98 *)&(*battle)->unk023C[i], 0, 4);
+        }
+        else
+            Unk62044OffsetPoints(&(*battle)->unk2FC, 0, 4);
+        break;
+    }
 }

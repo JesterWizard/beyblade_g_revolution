@@ -1,51 +1,30 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
-void sub_08035624(struct Unk346C0 *a, u32 type_arg, s32 delta_arg)
+void sub_08035624(struct Unk346C0 *a, u8 type, s32 delta)
 {
-    u8 type;
-    u8 type_copy;
-    s32 delta;
-    s32 value;
-    struct Unk705DC *target;
+    s32 value = a->unk00->unk00->unk22 + (s8)delta;
 
-    type = type_arg;
-    type_copy = type;
-    delta = (s8)delta_arg;
-    value = a->unk00->unk00->unk22 + delta;
-    if (type == 1)
-        goto type_one;
-    if (type > 1)
+    switch (type)
     {
-        if (type_copy == 2)
-            goto type_two;
-        goto done;
+    case 0:
+        a->unkD8 = value;
+        if (a->unkD4 == NULL)
+            break;
+        sub_08070468((struct Unk6FDB4 *)a->unkD4, value);
+        break;
+    case 1:
+        a->unk1B4 = value;
+        if (a->unk1B0 == NULL)
+            break;
+        sub_08070468((struct Unk6FDB4 *)a->unk1B0, value);
+        break;
+    case 2:
+        a->unk290 = value;
+        if (a->unk28C == NULL)
+            break;
+        sub_08070468((struct Unk6FDB4 *)a->unk28C, value);
+        break;
     }
-    if (type == 0)
-        goto type_zero;
-    goto done;
-
-type_zero:
-    a->unkD8 = value;
-    target = a->unkD4;
-    goto update;
-
-type_one:
-    a->unk1B4 = value;
-    target = a->unk1B0;
-
-update:
-    if (target == 0)
-        goto done;
-    sub_08070468((struct Unk6FDB4 *)target, (u16)value);
-    goto done;
-
-type_two:
-    a->unk290 = value;
-    target = a->unk28C;
-    if (target == 0)
-        goto done;
-    sub_08070468((struct Unk6FDB4 *)target, (u16)value);
-
-done:
-    return;
 }

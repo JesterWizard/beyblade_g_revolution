@@ -1,50 +1,33 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080620d4
-__attribute__((naked))
-void Unk62044OffsetPoints(struct Unk62044 *a, s32 dx, s32 dy)
+/* match-compiler: old_agbcc */
+// Offsets every entry of the pointer array a->unk0C by (dx, dy) in 8.8 fixed
+// point and snapshots the first entry's position into a->unk10/unk14.
+// Declared non-void (retail epilogue is pop {r1}) but never returns a value.
+s32 Unk62044OffsetPoints(struct Unk62044 *a, s32 dx, s32 dy)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "adds r3, r2, #0x0\n"
-        "cmp r4, #0x00\n"
-        "beq _08062116\n"
-        "ldr r0, [r4, #0x0C]\n"
-        "cmp r0, #0x00\n"
-        "beq _08062116\n"
-        "movs r2, #0x00\n"
-        "adds r5, r0, #0x0\n"
-        "lsls r7, r1, #0x08\n"
-        "lsls r6, r3, #0x08\n"
-        "adds r3, r5, #0x0\n"
-        "_080620EE:\n"
-        "ldr r1, [r3, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _08062116\n"
-        "ldr r0, [r1, #0x08]\n"
-        "adds r0, r0, r7\n"
-        "str r0, [r1, #0x08]\n"
-        "ldr r0, [r1, #0x0C]\n"
-        "adds r0, r0, r6\n"
-        "str r0, [r1, #0x0C]\n"
-        "cmp r2, #0x00\n"
-        "bne _0806210E\n"
-        "ldr r0, [r5, #0x00]\n"
-        "ldr r1, [r0, #0x08]\n"
-        "str r1, [r4, #0x10]\n"
-        "ldr r0, [r0, #0x0C]\n"
-        "str r0, [r4, #0x14]\n"
-        "_0806210E:\n"
-        "adds r3, #0x04\n"
-        "adds r2, #0x01\n"
-        "cmp r2, #0x7F\n"
-        "ble _080620EE\n"
-        "_08062116:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
-}
+    struct Unk620D4Entry **p;
+    struct Unk620D4Entry *e;
+    s32 i;
 
+    if (a == NULL)
+        return;
+    if (a->unk0C == NULL)
+        return;
+    for (i = 0, p = a->unk0C; i <= 0x7F; i++)
+    {
+        e = p[i];
+        if (e == NULL)
+            return;
+        e->unk08 += dx << 8;
+        e->unk0C += dy << 8;
+        if (i == 0)
+        {
+            a->unk10 = p[0]->unk08;
+            a->unk14 = p[0]->unk0C;
+        }
+    }
+}

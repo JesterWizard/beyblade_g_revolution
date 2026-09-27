@@ -1,8 +1,152 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0802dea0
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// gUnk_0300026C read through a volatile pointer: retail re-reads it for every
+// entry, even across stores that cannot alias it.
+#define HUD_PTR (*(struct Unk026C *volatile *)0x0300026C)
+
+// Tears down the HUD: moves every HUD text entry off-screen (player entries to
+// -0x4000, bit-beast/blade entries to 0xF800), frees the second group, waits a
+// frame and runs the frame callback, then resets unk48 and MainWork unk1838/183A.
 void sub_0802DEA0(void)
 {
-    asm(".syntax unified\npush {r4, lr}\nldr r4, _0802E02C @ =0x0300026C\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x0C]\ncmp r1, #0x00\nbeq _0802DEB2\nldr r0, _0802E030 @ =0xFFFFC000\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DEB2:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x10]\ncmp r1, #0x00\nbeq _0802DEC0\nldr r0, _0802E030 @ =0xFFFFC000\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DEC0:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x14]\ncmp r1, #0x00\nbeq _0802DECE\nldr r0, _0802E030 @ =0xFFFFC000\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DECE:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x18]\ncmp r1, #0x00\nbeq _0802DEDC\nldr r0, _0802E030 @ =0xFFFFC000\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DEDC:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x1C]\ncmp r1, #0x00\nbeq _0802DEEA\nldr r0, _0802E030 @ =0xFFFFC000\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DEEA:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x20]\ncmp r1, #0x00\nbeq _0802DEF8\nldr r0, _0802E030 @ =0xFFFFC000\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DEF8:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x24]\ncmp r1, #0x00\nbeq _0802DF06\nldr r0, _0802E030 @ =0xFFFFC000\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF06:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x28]\ncmp r1, #0x00\nbeq _0802DF16\nmovs r0, #0xF8\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF16:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x2C]\ncmp r1, #0x00\nbeq _0802DF26\nmovs r0, #0xF8\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF26:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x40]\ncmp r1, #0x00\nbeq _0802DF36\nmovs r0, #0xF8\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF36:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x30]\ncmp r1, #0x00\nbeq _0802DF46\nmovs r0, #0xF8\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF46:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x34]\ncmp r1, #0x00\nbeq _0802DF56\nmovs r0, #0xF8\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF56:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x38]\ncmp r1, #0x00\nbeq _0802DF66\nmovs r0, #0xF8\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF66:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x3C]\ncmp r1, #0x00\nbeq _0802DF76\nmovs r0, #0xF8\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nstr r0, [r1, #0x0C]\n_0802DF76:\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x28]\ncmp r0, #0x00\nbeq _0802DF88\nbl sub_0806FE84\nldr r1, [r4, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x28]\n_0802DF88:\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x2C]\ncmp r0, #0x00\nbeq _0802DF9A\nbl sub_0806FE84\nldr r1, [r4, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x2C]\n_0802DF9A:\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x30]\ncmp r0, #0x00\nbeq _0802DFAC\nbl sub_0806FE84\nldr r1, [r4, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x30]\n_0802DFAC:\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x34]\ncmp r0, #0x00\nbeq _0802DFBE\nbl sub_0806FE84\nldr r1, [r4, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x34]\n_0802DFBE:\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x38]\ncmp r0, #0x00\nbeq _0802DFD0\nbl sub_0806FE84\nldr r1, [r4, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x38]\n_0802DFD0:\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x3C]\ncmp r0, #0x00\nbeq _0802DFE2\nbl sub_0806FE84\nldr r1, [r4, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x3C]\n_0802DFE2:\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x40]\ncmp r0, #0x00\nbeq _0802DFF4\nbl sub_0806FE84\nldr r1, [r4, #0x00]\nmovs r0, #0x00\nstr r0, [r1, #0x40]\n_0802DFF4:\nbl sub_080674B4\nldr r0, _0802E034 @ =0x080BB888\nldr r0, [r0, #0x00]\nbl _08073C40\nldr r0, [r4, #0x00]\nadds r0, #0x48\nmovs r1, #0xFF\nstrb r1, [r0, #0x00]\nldr r0, _0802E038 @ =0x03000198\nldr r2, [r0, #0x00]\nldr r0, _0802E03C @ =0x00001838\nadds r3, r2, r0\nldr r1, _0802E040 @ =0x0000FFFF\nadds r0, r1, #0x0\nldrh r1, [r3, #0x00]\norrs r1, r0\nstrh r1, [r3, #0x00]\nldr r1, _0802E044 @ =0x0000183A\nadds r2, r2, r1\nldrh r1, [r2, #0x00]\norrs r0, r1\nstrh r0, [r2, #0x00]\npop {r4}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_0802E02C: .4byte 0x0300026C\n_0802E030: .4byte 0xFFFFC000\n_0802E034: .4byte 0x080BB888\n_0802E038: .4byte 0x03000198\n_0802E03C: .4byte 0x00001838\n_0802E040: .4byte 0x0000FFFF\n_0802E044: .4byte 0x0000183A");
+    struct Unk705DC *e;
+    struct Unk705DC *obj;
+    struct MainWork *work;
+
+    e = HUD_PTR->unk0C;
+    if (e != NULL)
+    {
+        e->unk08 = -0x4000;
+        e->unk0C = -0x4000;
+    }
+    e = HUD_PTR->unk10;
+    if (e != NULL)
+    {
+        e->unk08 = -0x4000;
+        e->unk0C = -0x4000;
+    }
+    e = HUD_PTR->playerLevelTens;
+    if (e != NULL)
+    {
+        e->unk08 = -0x4000;
+        e->unk0C = -0x4000;
+    }
+    e = HUD_PTR->playerLevelOnes;
+    if (e != NULL)
+    {
+        e->unk08 = -0x4000;
+        e->unk0C = -0x4000;
+    }
+    e = HUD_PTR->playerStrengthTens;
+    if (e != NULL)
+    {
+        e->unk08 = -0x4000;
+        e->unk0C = -0x4000;
+    }
+    e = HUD_PTR->playerStrengthOnes;
+    if (e != NULL)
+    {
+        e->unk08 = -0x4000;
+        e->unk0C = -0x4000;
+    }
+    e = HUD_PTR->playerExpBar;
+    if (e != NULL)
+    {
+        e->unk08 = -0x4000;
+        e->unk0C = -0x4000;
+    }
+    e = HUD_PTR->unk28;
+    if (e != NULL)
+    {
+        e->unk08 = 0xF800;
+        e->unk0C = 0xF800;
+    }
+    e = HUD_PTR->unk2C;
+    if (e != NULL)
+    {
+        e->unk08 = 0xF800;
+        e->unk0C = 0xF800;
+    }
+    e = HUD_PTR->bitBeastExpBar;
+    if (e != NULL)
+    {
+        e->unk08 = 0xF800;
+        e->unk0C = 0xF800;
+    }
+    e = HUD_PTR->bitBeastLevelTens;
+    if (e != NULL)
+    {
+        e->unk08 = 0xF800;
+        e->unk0C = 0xF800;
+    }
+    e = HUD_PTR->bitBeastLevelOnes;
+    if (e != NULL)
+    {
+        e->unk08 = 0xF800;
+        e->unk0C = 0xF800;
+    }
+    e = HUD_PTR->bladeStrengthTens;
+    if (e != NULL)
+    {
+        e->unk08 = 0xF800;
+        e->unk0C = 0xF800;
+    }
+    e = HUD_PTR->bladeStrengthOnes;
+    if (e != NULL)
+    {
+        e->unk08 = 0xF800;
+        e->unk0C = 0xF800;
+    }
+    obj = HUD_PTR->unk28;
+    if (obj != NULL)
+    {
+        BtlObjPoolFree(obj);
+        HUD_PTR->unk28 = NULL;
+    }
+    obj = HUD_PTR->unk2C;
+    if (obj != NULL)
+    {
+        BtlObjPoolFree(obj);
+        HUD_PTR->unk2C = NULL;
+    }
+    obj = HUD_PTR->bitBeastLevelTens;
+    if (obj != NULL)
+    {
+        BtlObjPoolFree(obj);
+        HUD_PTR->bitBeastLevelTens = NULL;
+    }
+    obj = HUD_PTR->bitBeastLevelOnes;
+    if (obj != NULL)
+    {
+        BtlObjPoolFree(obj);
+        HUD_PTR->bitBeastLevelOnes = NULL;
+    }
+    obj = HUD_PTR->bladeStrengthTens;
+    if (obj != NULL)
+    {
+        BtlObjPoolFree(obj);
+        HUD_PTR->bladeStrengthTens = NULL;
+    }
+    obj = HUD_PTR->bladeStrengthOnes;
+    if (obj != NULL)
+    {
+        BtlObjPoolFree(obj);
+        HUD_PTR->bladeStrengthOnes = NULL;
+    }
+    obj = HUD_PTR->bitBeastExpBar;
+    if (obj != NULL)
+    {
+        BtlObjPoolFree(obj);
+        HUD_PTR->bitBeastExpBar = NULL;
+    }
+    VBlankIntrWait();
+    ((void (*)(void))gData_080BB888[0])();
+    HUD_PTR->unk48 = 0xFF;
+    work = gMainWorkPtr;
+    work->unk1838 |= 0xFFFF;
+    work->unk183A |= 0xFFFF;
 }

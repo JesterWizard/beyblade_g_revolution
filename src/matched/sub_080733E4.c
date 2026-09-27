@@ -1,64 +1,39 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080733e4
-__attribute__((naked))
-void sub_080733E4(void)
+// Appends string src to the end of string dst, a buffer of `size` bytes. A '\n'
+// in src is not copied (that byte of dst is left as it was); bytes past the
+// buffer are dropped and the last byte is forced to 0. Returns strlen(src), or
+// -1 for a NULL argument or an already-full buffer.
+s32 sub_080733E4(const u8 *src, u8 *dst, s32 size)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "adds r5, r2, #0x0\n"
-        "movs r2, #0x00\n"
-        "cmp r6, #0x00\n"
-        "beq _080733F6\n"
-        "cmp r4, #0x00\n"
-        "bne _08073400\n"
-        "_080733F6:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "b _08073438\n"
-        "_080733FC:\n"
-        "subs r5, #0x01\n"
-        "adds r4, #0x01\n"
-        "_08073400:\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _080733FC\n"
-        "cmp r5, #0x00\n"
-        "ble _08073434\n"
-        "adds r0, r5, r4\n"
-        "subs r7, r0, #0x1\n"
-        "movs r0, #0x00\n"
-        "mov r12, r0\n"
-        "_08073412:\n"
-        "cmp r2, r5\n"
-        "bcs _08073426\n"
-        "adds r0, r6, r2\n"
-        "ldrb r3, [r0, #0x00]\n"
-        "adds r1, r0, #0x0\n"
-        "cmp r3, #0x0A\n"
-        "beq _0807342C\n"
-        "adds r0, r4, r2\n"
-        "strb r3, [r0, #0x00]\n"
-        "b _0807342C\n"
-        "_08073426:\n"
-        "mov r0, r12\n"
-        "strb r0, [r7, #0x00]\n"
-        "adds r1, r6, r2\n"
-        "_0807342C:\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "adds r2, #0x01\n"
-        "cmp r0, #0x00\n"
-        "bne _08073412\n"
-        "_08073434:\n"
-        "subs r2, #0x01\n"
-        "adds r0, r2, #0x0\n"
-        "_08073438:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u8 ch;
+    u32 i = 0;
+
+    if (src == NULL || dst == NULL)
+        return -1;
+    while (*dst != 0)
+    {
+        size--;
+        dst++;
+    }
+    if (size > 0)
+    {
+        do
+        {
+            if (i < size)
+            {
+                ch = src[i];
+                if (ch != '\n')
+                    dst[i] = ch;
+            }
+            else
+                dst[size - 1] = 0;
+        } while (src[i++] != 0);
+    }
+    i--;
+    return i;
 }
 
