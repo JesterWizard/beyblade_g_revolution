@@ -1,108 +1,46 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035d68
-__attribute__((naked))
-void sub_08035D68(void *a, void *b)
+/* match-compiler: old_agbcc */
+// Project `source` (world x/y/z) into screen space relative to camera `state`:
+// rotate by the camera angle, scale by depth, then place and scale the
+// source's sprite (sub_08070354 with the depth as zoom).
+void sub_08035D68(struct Unk35D68Source *source, struct Unk35D68State *state)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "mov r12, r0\n"
-        "movs r0, #0x00\n"
-        "mov r9, r0\n"
-        "ldr r3, _08035E24 @ =0x083C9544\n"
-        "ldrh r4, [r1, #0x14]\n"
-        "lsrs r2, r4, #0x08\n"
-        "lsls r0, r2, #0x01\n"
-        "adds r0, r0, r3\n"
-        "movs r4, #0x00\n"
-        "ldsh r5, [r0, r4]\n"
-        "mov r8, r5\n"
-        "adds r2, #0x40\n"
-        "lsls r2, r2, #0x01\n"
-        "adds r2, r2, r3\n"
-        "movs r5, #0x00\n"
-        "ldsh r3, [r2, r5]\n"
-        "mov r0, r12\n"
-        "ldr r2, [r0, #0x0C]\n"
-        "ldr r0, [r1, #0x00]\n"
-        "subs r7, r2, r0\n"
-        "mov r4, r12\n"
-        "ldr r2, [r4, #0x10]\n"
-        "ldr r0, [r1, #0x04]\n"
-        "subs r5, r2, r0\n"
-        "ldr r0, [r4, #0x14]\n"
-        "ldr r2, [r1, #0x08]\n"
-        "subs r0, r0, r2\n"
-        "asrs r4, r0, #0x08\n"
-        "adds r0, r7, #0x0\n"
-        "muls r0, r4\n"
-        "asrs r7, r0, #0x08\n"
-        "adds r0, r5, #0x0\n"
-        "muls r0, r4\n"
-        "asrs r5, r0, #0x08\n"
-        "adds r2, r7, #0x0\n"
-        "muls r2, r3\n"
-        "asrs r2, r2, #0x08\n"
-        "mov r0, r8\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x08\n"
-        "adds r2, r2, r0\n"
-        "ldr r0, [r1, #0x0C]\n"
-        "adds r6, r2, r0\n"
-        "adds r2, r5, #0x0\n"
-        "muls r2, r3\n"
-        "asrs r2, r2, #0x08\n"
-        "mov r0, r8\n"
-        "muls r0, r7\n"
-        "asrs r0, r0, #0x08\n"
-        "subs r2, r2, r0\n"
-        "ldr r0, [r1, #0x10]\n"
-        "adds r2, r2, r0\n"
-        "mov r5, r12\n"
-        "ldr r1, [r5, #0x04]\n"
-        "subs r6, r6, r1\n"
-        "ldr r3, [r5, #0x08]\n"
-        "subs r2, r2, r3\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x01\n"
-        "cmp r4, r0\n"
-        "ble _08035DFA\n"
-        "ldr r5, _08035E28 @ =0xFFFFFF00\n"
-        "adds r0, r4, r5\n"
-        "muls r1, r0\n"
-        "asrs r1, r1, #0x08\n"
-        "subs r6, r6, r1\n"
-        "muls r0, r3\n"
-        "asrs r0, r0, #0x08\n"
-        "subs r2, r2, r0\n"
-        "_08035DFA:\n"
-        "mov r1, r12\n"
-        "ldr r0, [r1, #0x00]\n"
-        "str r6, [r0, #0x08]\n"
-        "str r2, [r0, #0x0C]\n"
-        "ldr r1, [r0, #0x30]\n"
-        "cmp r1, #0x00\n"
-        "beq _08035E0C\n"
-        "ldrb r1, [r1, #0x18]\n"
-        "mov r9, r1\n"
-        "_08035E0C:\n"
-        "lsls r2, r4, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "mov r3, r9\n"
-        "adds r1, r2, #0x0\n"
-        "bl sub_08070354\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08035E24: .4byte 0x083C9544\n"
-        "_08035E28: .4byte 0xFFFFFF00\n"
-    );
+    s16 index;
+    s32 sine;
+    s32 cosine;
+    s32 dx;
+    s32 dy;
+    s32 dz;
+    s32 x;
+    s32 y;
+    s32 flag;
+
+    flag = 0;
+    index = state->unk14 >> 8;
+    sine = gData_083C9544[index];
+    cosine = gData_083C9544[index + 0x40];
+    dx = source->unk0C - state->unk00;
+    dy = source->unk10 - state->unk04;
+    dz = (source->unk14 - state->unk08) >> 8;
+    dx = (dx * dz) >> 8;
+    dy = (dy * dz) >> 8;
+    x = ((dx * cosine) >> 8) + ((sine * dy) >> 8) + state->unk0C;
+    y = ((dy * cosine) >> 8) - ((sine * dx) >> 8) + state->unk10;
+    x -= source->unk04;
+    y -= source->unk08;
+    if (dz > 0x100)
+    {
+        x -= (source->unk04 * (dz - 0x100)) >> 8;
+        y -= ((dz - 0x100) * source->unk08) >> 8;
+    }
+    source->unk00->unk08 = x;
+    source->unk00->unk0C = y;
+    if (source->unk00->unk30 != NULL)
+        flag = source->unk00->unk30->unk18;
+    sub_08070354((struct Unk70354 *)source->unk00, dz, dz, flag);
 }
 

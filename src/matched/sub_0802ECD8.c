@@ -1,8 +1,72 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0802ecd8
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Built against an (s8, s8, s32) prototype of sub_0802E2F8; its definition
+// takes (u16, u16, s32).
+#define sub_0802E2F8(a, b, c) ((s32 (*)(s32, s32, s32))sub_0802E2F8)(a, b, c)
+
+// Draw the three visible rows of the gData_03000278 list: name (highlighted
+// with palette 14 on the cursor row, else 15) and, for all but the last
+// entry, its right-aligned value from sub_0802E2F8.
 void sub_0802ECD8(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x00C\nbl sub_08061784\nmovs r0, #0x10\nbl sub_0807309C\nadds r7, r0, #0x0\nmovs r6, #0x00\nldr r0, _0802ED70 @ =0x03000278\nmov r8, r0\nmovs r1, #0xD0\nlsls r1, r1, #0x0C\nmov r10, r1\nmovs r2, #0xC0\nlsls r2, r2, #0x0C\nmov r9, r2\n_0802ED02:\nmov r3, r8\nldr r1, [r3, #0x00]\nmovs r2, #0x9A\nlsls r2, r2, #0x01\nadds r0, r1, r2\nldr r0, [r0, #0x00]\nadds r0, r0, r6\nldr r1, [r1, #0x0C]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0C]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x00\nbge _0802ED22\nb _0802EEA4\n_0802ED22:\nlsls r1, r6, #0x04\nadds r1, #0x40\nmovs r0, #0x00\nbl sub_080615EC\nmov r3, r8\nldr r2, [r3, #0x00]\nmovs r1, #0x9C\nlsls r1, r1, #0x01\nadds r0, r2, r1\nldr r0, [r0, #0x00]\ncmp r6, r0\nbne _0802EDB8\nmovs r3, #0x9A\nlsls r3, r3, #0x01\nadds r0, r2, r3\nldr r1, [r0, #0x00]\nadds r1, r1, r6\nldr r0, [r2, #0x0C]\nlsls r1, r1, #0x04\nadds r1, r1, r0\nmovs r0, #0x0D\nldsb r0, [r1, r0]\nldrb r1, [r1, #0x0C]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nbl _080563A8\nadds r1, r0, #0x0\ncmp r1, #0x00\nbeq _0802ED74\nmov r2, r8\nldr r0, [r2, #0x00]\nadds r0, #0xF8\nmovs r2, #0x0F\nbl sub_08070AD4\nb _0802ED94\n.byte 0x00, 0x00\n_0802ED70: .4byte 0x03000278\n_0802ED74:\nmov r3, r8\nldr r2, [r3, #0x00]\nadds r0, r2, #0x0\nadds r0, #0xF8\nmovs r3, #0x9A\nlsls r3, r3, #0x01\nadds r1, r2, r3\nldr r1, [r1, #0x00]\nadds r1, r1, r6\nldr r2, [r2, #0x0C]\nlsls r1, r1, #0x04\nadds r1, r1, r2\nldr r1, [r1, #0x04]\nmovs r2, #0x0F\nbl sub_08070AD4\n_0802ED94:\nmovs r0, #0x0E\nbl sub_08061610\nmov r1, r9\nlsrs r0, r1, #0x10\nmovs r1, #0x0E\nmovs r2, #0x02\nmovs r3, #0x1B\nbl sub_08061D68\nmov r2, r10\nlsrs r0, r2, #0x10\nmovs r1, #0x0E\nmovs r2, #0x02\nmovs r3, #0x1B\nbl sub_08061D68\nb _0802EDDA\n_0802EDB8:\nmovs r0, #0x0F\nbl sub_08061610\nmov r3, r9\nlsrs r0, r3, #0x10\nmovs r1, #0x0F\nmovs r2, #0x02\nmovs r3, #0x1B\nbl sub_08061D68\nmov r1, r10\nlsrs r0, r1, #0x10\nmovs r1, #0x0F\nmovs r2, #0x02\nmovs r3, #0x1B\nbl sub_08061D68\n_0802EDDA:\nldr r4, _0802EE4C @ =0x03000278\nldr r1, [r4, #0x00]\nmovs r5, #0x9A\nlsls r5, r5, #0x01\nadds r0, r1, r5\nldr r2, [r0, #0x00]\nadds r2, r2, r6\nmovs r3, #0x98\nlsls r3, r3, #0x01\nadds r1, r1, r3\nldr r0, [r1, #0x00]\nsubs r0, #0x01\ncmp r2, r0\nbge _0802EE86\nadds r0, r7, #0x0\nbl sub_080731F4\nldr r1, [r4, #0x00]\nadds r0, r1, r5\nldr r0, [r0, #0x00]\nadds r0, r0, r6\nldr r1, [r1, #0x0C]\nlsls r0, r0, #0x04\nadds r1, r0, r1\nldrb r0, [r1, #0x0D]\ncmp r0, #0x01\nbne _0802EE50\nmovs r0, #0x0C\nldsb r0, [r1, r0]\nldrb r1, [r1, #0x0E]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nbl sub_0803E1F4\nldr r2, [r4, #0x00]\nadds r1, r2, r5\nldr r1, [r1, #0x00]\nadds r1, r1, r6\nldr r2, [r2, #0x0C]\nlsls r1, r1, #0x04\nadds r1, r1, r2\nmovs r3, #0x0D\nldsb r3, [r1, r3]\nldrb r1, [r1, #0x0C]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nadds r0, #0x24\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nmovs r2, #0x64\nsubs r2, r2, r0\nadds r0, r3, #0x0\nbl sub_0802E2F8\nb _0802EE74\n.byte 0x00, 0x00\n_0802EE4C: .4byte 0x03000278\n_0802EE50:\nmovs r4, #0x0D\nldsb r4, [r1, r4]\nmovs r5, #0x0C\nldsb r5, [r1, r5]\nldrb r1, [r1, #0x0E]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nadds r0, r4, #0x0\nmov r2, sp\nbl sub_0802C4A4\nmov r0, sp\nmovs r2, #0x02\nldsb r2, [r0, r2]\nadds r0, r4, #0x0\nadds r1, r5, #0x0\nbl sub_0802E2F8\n_0802EE74:\nadds r1, r7, #0x0\nmovs r2, #0x10\nbl sub_080735DC\nadds r0, r7, #0x0\nmovs r1, #0xD4\nmovs r2, #0x01\nbl sub_0806171C\n_0802EE86:\nmov r2, r8\nldr r1, [r2, #0x00]\nmovs r3, #0x9A\nlsls r3, r3, #0x01\nadds r0, r1, r3\nldr r0, [r0, #0x00]\nadds r0, r0, r6\nldr r1, [r1, #0x0C]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldr r0, [r0, #0x04]\nmovs r1, #0x0C\nmovs r2, #0x02\nbl sub_0806171C\n_0802EEA4:\nmovs r0, #0x80\nlsls r0, r0, #0x0A\nadd r10, r0\nadd r9, r0\nadds r6, #0x01\ncmp r6, #0x02\nbgt _0802EEB4\nb _0802ED02\n_0802EEB4:\nadds r0, r7, #0x0\nbl sub_08073114\nadd sp, #0x00C\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0");
+    s32 i;
+    u8 *buf;
+    s32 name;
+    s32 value;
+    struct Unk8D0 *rec;
+    struct Unk2C314 info;
+
+    TextGetAreaWidth();
+    buf = BtlObjTableAdd(0x10);
+    for (i = 0; i <= 2; i++)
+    {
+        if (gData_03000278->entries[gData_03000278->top + i].unk0C < 0)
+            continue;
+        TextSetCursor(0, i * 16 + 0x40);
+        if (i == gData_03000278->cursor)
+        {
+            name = _080563A8(gData_03000278->entries[gData_03000278->top + i].unk0D, gData_03000278->entries[gData_03000278->top + i].unk0C);
+            if (name != 0)
+                sub_08070AD4((struct Unk7069C *)gData_03000278->text, (void *)name, 15);
+            else
+                sub_08070AD4((struct Unk7069C *)gData_03000278->text, gData_03000278->entries[gData_03000278->top + i].name, 15);
+            TextSetPaletteBank(14);
+            TextRowSetPaletteBank((u16)(i * 2 + 12), 14, 2, 0x1B);
+            TextRowSetPaletteBank((u16)(i * 2 + 13), 14, 2, 0x1B);
+        }
+        else
+        {
+            TextSetPaletteBank(15);
+            TextRowSetPaletteBank((u16)(i * 2 + 12), 15, 2, 0x1B);
+            TextRowSetPaletteBank((u16)(i * 2 + 13), 15, 2, 0x1B);
+        }
+        if (gData_03000278->top + i < gData_03000278->count - 1)
+        {
+            sub_080731F4(buf);
+            if ((u8)gData_03000278->entries[gData_03000278->top + i].unk0D == 1)
+            {
+                rec = sub_0803E1F4(gData_03000278->entries[gData_03000278->top + i].unk0C, gData_03000278->entries[gData_03000278->top + i].unk0E);
+                value = sub_0802E2F8(gData_03000278->entries[gData_03000278->top + i].unk0D,
+                                     gData_03000278->entries[gData_03000278->top + i].unk0C, 100 - rec->unk24);
+            }
+            else
+            {
+                struct Unk2ECD8Entry *e = &gData_03000278->entries[gData_03000278->top + i];
+                s32 kind = e->unk0D;
+                s32 id = e->unk0C;
+
+                sub_0802C4A4(kind, e->unk0E, &info);
+                value = sub_0802E2F8(kind, id, (s8)info.unk02);
+            }
+            TextFormatInt(value, buf, 0x10);
+            TextDrawAlign(buf, 0xD4, 1);
+        }
+        TextDrawAlign(gData_03000278->entries[gData_03000278->top + i].name, 0x0C, 2);
+    }
+    BtlObjTableRemove(buf);
 }
+

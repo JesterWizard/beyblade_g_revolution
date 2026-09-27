@@ -1,8 +1,54 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080411ec
-__attribute__((naked))
-void sub_080411EC(void *a)
+/* match-compiler: old_agbcc */
+// Menu input dispatch: in mode 0 (repeat-filtered d-pad from sub_08045C5C)
+// or mode 1 (raw held keys), run the first handler slot (unk25C..unk270 =
+// right/left/up/down/A/B) whose key is down and which is set.
+// The _08073C44/_08073C48 calls in retail are libgcc _call_via_rN thunks.
+typedef void (*MenuHandler)(struct Unk40F4C *);
+
+void sub_080411EC(void *arg)
 {
-    asm(".syntax unified\npush {r4, lr}\nadds r4, r0, #0x0\nmovs r1, #0xB5\nlsls r1, r1, #0x02\nadds r0, r4, r1\nldrb r0, [r0, #0x00]\ncmp r0, #0x01\nbeq _080411FE\nb _08041340\n_080411FE:\nldr r2, _08041210 @ =0x000002D9\nadds r0, r4, r2\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08041214\ncmp r0, #0x01\nbeq _080412A8\nb _08041340\n.byte 0x00, 0x00\n_08041210: .4byte 0x000002D9\n_08041214:\nmovs r0, #0x10\nmovs r1, #0x08\nbl sub_08045C5C\nadds r2, r0, #0x0\nmovs r0, #0x20\nands r0, r2\ncmp r0, #0x00\nbeq _08041232\nmovs r1, #0x97\nlsls r1, r1, #0x02\nadds r0, r4, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbne _0804129C\n_08041232:\nmovs r0, #0x10\nands r0, r2\ncmp r0, #0x00\nbeq _08041246\nmovs r1, #0x98\nlsls r1, r1, #0x02\nadds r0, r4, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbne _0804129C\n_08041246:\nmovs r0, #0x40\nands r0, r2\ncmp r0, #0x00\nbeq _0804125A\nmovs r1, #0x99\nlsls r1, r1, #0x02\nadds r0, r4, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbne _0804129C\n_0804125A:\nmovs r0, #0x80\nands r0, r2\ncmp r0, #0x00\nbeq _0804126E\nmovs r2, #0x9A\nlsls r2, r2, #0x02\nadds r0, r4, r2\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbne _0804129C\n_0804126E:\nldr r1, _080412A4 @ =0x03004060\nmovs r0, #0x01\nldrh r2, [r1, #0x00]\nands r0, r2\ncmp r0, #0x00\nbeq _08041286\nmovs r2, #0x9B\nlsls r2, r2, #0x02\nadds r0, r4, r2\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbne _08041318\n_08041286:\nmovs r0, #0x02\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _08041340\nmovs r1, #0x9C\nlsls r1, r1, #0x02\nadds r0, r4, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08041340\n_0804129C:\nadds r0, r4, #0x0\nbl _08073C44\nb _08041340\n_080412A4: .4byte 0x03004060\n_080412A8:\nldr r1, _08041320 @ =0x03004060\nmovs r0, #0x20\nldrh r2, [r1, #0x00]\nands r0, r2\ncmp r0, #0x00\nbeq _080412C0\nmovs r2, #0x97\nlsls r2, r2, #0x02\nadds r0, r4, r2\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbne _08041318\n_080412C0:\nmovs r0, #0x10\nldrh r2, [r1, #0x00]\nands r0, r2\ncmp r0, #0x00\nbeq _080412D6\nmovs r2, #0x98\nlsls r2, r2, #0x02\nadds r0, r4, r2\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbne _08041318\n_080412D6:\nmovs r0, #0x40\nldrh r2, [r1, #0x00]\nands r0, r2\ncmp r0, #0x00\nbeq _080412EC\nmovs r2, #0x99\nlsls r2, r2, #0x02\nadds r0, r4, r2\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbne _08041318\n_080412EC:\nmovs r0, #0x80\nldrh r2, [r1, #0x00]\nands r0, r2\ncmp r0, #0x00\nbeq _08041302\nmovs r2, #0x9A\nlsls r2, r2, #0x02\nadds r0, r4, r2\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbne _08041318\n_08041302:\nmovs r0, #0x01\nldrh r2, [r1, #0x00]\nands r0, r2\ncmp r0, #0x00\nbeq _08041324\nmovs r2, #0x9B\nlsls r2, r2, #0x02\nadds r0, r4, r2\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbeq _08041324\n_08041318:\nadds r0, r4, #0x0\nbl _08073C48\nb _08041340\n_08041320: .4byte 0x03004060\n_08041324:\nmovs r0, #0x02\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _08041340\nmovs r1, #0x9C\nlsls r1, r1, #0x02\nadds r0, r4, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08041340\nadds r0, r4, #0x0\nbl _08073C44\n_08041340:\npop {r4}\npop {r0}\nbx r0");
+    struct Unk40F4C *a = arg;
+    u32 flags;
+
+    if (a->unk2D4 != 1)
+        return;
+    switch (a->unk2D9)
+    {
+    case 0:
+        flags = sub_08045C5C(0x10, 8);
+        if ((flags & 0x20) && a->unk25C != NULL)
+            ((MenuHandler)a->unk25C)(a);
+        else if ((flags & 0x10) && a->unk260 != NULL)
+            ((MenuHandler)a->unk260)(a);
+        else if ((flags & 0x40) && a->unk264 != NULL)
+            ((MenuHandler)a->unk264)(a);
+        else if ((flags & 0x80) && a->unk268 != NULL)
+            ((MenuHandler)a->unk268)(a);
+        else if ((gData_03004060 & 1) && a->unk26C != NULL)
+            ((MenuHandler)a->unk26C)(a);
+        else if ((gData_03004060 & 2) && a->unk270 != NULL)
+            ((MenuHandler)a->unk270)(a);
+        break;
+    case 1:
+        if ((gData_03004060 & 0x20) && a->unk25C != NULL)
+            ((MenuHandler)a->unk25C)(a);
+        else if ((gData_03004060 & 0x10) && a->unk260 != NULL)
+            ((MenuHandler)a->unk260)(a);
+        else if ((gData_03004060 & 0x40) && a->unk264 != NULL)
+            ((MenuHandler)a->unk264)(a);
+        else if ((gData_03004060 & 0x80) && a->unk268 != NULL)
+            ((MenuHandler)a->unk268)(a);
+        else if ((gData_03004060 & 1) && a->unk26C != NULL)
+            ((MenuHandler)a->unk26C)(a);
+        else if ((gData_03004060 & 2) && a->unk270 != NULL)
+            ((MenuHandler)a->unk270)(a);
+        break;
+    }
+
 }
+

@@ -1,15 +1,16 @@
+/* match-compiler: old_agbcc */
+#define sub_0807027C sub_0807027C_old
 #include "global.h"
+#undef sub_0807027C
 #include "ram_map.h"
 
-struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
+struct Unk70354Object *sub_0807027C(struct Unk70354Object *obj, u16 b, u16 c, u8 d)
 {
-    struct Unk70354Object *obj;
     u32 special;
     s32 cosVal;
     s32 sinVal;
     s32 scale;
 
-    obj = a;
     special = 0;
     if (d == 0 && b == 0x100 && c == b)
         special = 1;
@@ -43,8 +44,9 @@ struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
         obj->unk0C = (cosVal * scale) >> 8;
         sinVal = gData_083C9544[d];
         obj->unk0E = (sinVal * scale) >> 8;
+        sinVal = -sinVal;
         scale = gData_083A9544[c];
-        obj->unk10 = (-sinVal * scale) >> 8;
+        obj->unk10 = (sinVal * scale) >> 8;
         obj->unk12 = (cosVal * scale) >> 8;
     }
     else

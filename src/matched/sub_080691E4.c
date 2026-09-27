@@ -1,88 +1,52 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080691e4
-__attribute__((naked))
-void sub_080691E4(void)
+// Sprite dimensions for OAM shape/size bits (b >> 14): with flags bit 0 a
+// square of 2^(size+4) pixels, else the fixed wide/tall table. Stores the
+// log2 width/height in unk5F/unk60 and returns the tile byte count.
+u32 sub_080691E4(struct Unk691E4 *a, u16 b, u16 flags)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r3, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "lsrs r1, r1, #0x1E\n"
-        "adds r0, r1, #0x0\n"
-        "movs r5, #0x01\n"
-        "ands r2, r5\n"
-        "cmp r2, #0x00\n"
-        "beq _0806920A\n"
-        "lsls r0, r1, #0x01\n"
-        "adds r0, #0x08\n"
-        "adds r4, r5, #0x0\n"
-        "lsls r4, r0\n"
-        "adds r1, #0x04\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x5F\n"
-        "b _08069260\n"
-        "_0806920A:\n"
-        "cmp r1, #0x01\n"
-        "beq _0806922E\n"
-        "cmp r1, #0x01\n"
-        "bgt _08069218\n"
-        "cmp r1, #0x00\n"
-        "beq _08069222\n"
-        "b _08069266\n"
-        "_08069218:\n"
-        "cmp r0, #0x02\n"
-        "beq _08069242\n"
-        "cmp r0, #0x03\n"
-        "beq _08069256\n"
-        "b _08069266\n"
-        "_08069222:\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x04\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x5F\n"
-        "movs r1, #0x05\n"
-        "b _08069260\n"
-        "_0806922E:\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x05\n"
-        "adds r1, r3, #0x0\n"
-        "adds r1, #0x5F\n"
-        "movs r0, #0x06\n"
-        "strb r0, [r1, #0x00]\n"
-        "adds r1, #0x01\n"
-        "movs r0, #0x05\n"
-        "strb r0, [r1, #0x00]\n"
-        "b _08069266\n"
-        "_08069242:\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x05\n"
-        "adds r1, r3, #0x0\n"
-        "adds r1, #0x5F\n"
-        "movs r0, #0x05\n"
-        "strb r0, [r1, #0x00]\n"
-        "adds r1, #0x01\n"
-        "movs r0, #0x06\n"
-        "strb r0, [r1, #0x00]\n"
-        "b _08069266\n"
-        "_08069256:\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x06\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x5F\n"
-        "movs r1, #0x06\n"
-        "_08069260:\n"
-        "strb r1, [r0, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strb r1, [r0, #0x00]\n"
-        "_08069266:\n"
-        "adds r0, r4, #0x0\n"
-        "pop {r4, r5}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s32 size;
+    s32 shape;
+    u32 result;
+
+    size = b >> 14;
+    shape = size;
+    if (flags & 1)
+    {
+        result = 1 << (size * 2 + 8);
+        size += 4;
+        a->unk5F = size;
+        a->unk60 = size;
+    }
+    else
+    {
+        switch (shape)
+        {
+        case 0:
+            result = 0x800;
+            a->unk5F = 5;
+            a->unk60 = 5;
+            break;
+        case 1:
+            result = 0x1000;
+            a->unk5F = 6;
+            a->unk60 = 5;
+            break;
+        case 2:
+            result = 0x1000;
+            a->unk5F = 5;
+            a->unk60 = 6;
+            break;
+        case 3:
+            result = 0x2000;
+            a->unk5F = 6;
+            a->unk60 = 6;
+            break;
+        }
+    }
+    return result;
 }
 

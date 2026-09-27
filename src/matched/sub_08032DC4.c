@@ -57,11 +57,11 @@ void BtlFrameUpdate(
             sub_08068EC0(gBattleWork->filler_0008);
             sub_08068EC0(gBattleWork->unk090);
             sub_08035D68(
-                &gBattleWork->unk328,
-                &gBattleWork->unkAA8);
+                (struct Unk35D68Source *)&gBattleWork->unk328,
+                (struct Unk35D68State *)&gBattleWork->unkAA8);
             sub_08035D68(
-                &gBattleWork->unk37C,
-                &gBattleWork->unkAA8);
+                (struct Unk35D68Source *)&gBattleWork->unk37C,
+                (struct Unk35D68State *)&gBattleWork->unkAA8);
             sub_080302A8(
                 (struct Unk302A8 *)&gBattleWork->unk328,
                 (struct Unk302A8Src *)&gBattleWork->unkAA8,

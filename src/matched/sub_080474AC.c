@@ -1,8 +1,43 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080474ac
-__attribute__((naked))
+// Per-frame update of the gData_03000630 sparkle pool: count unk44 down to
+// re-arm unk40 with a random delay, then count unk40 down, scattering the 16
+// sprites randomly each frame and parking them off-screen when it expires.
 void sub_080474AC(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nldr r0, _08047500 @ =0x03000198\nldr r3, [r0, #0x00]\nldr r2, _08047504 @ =0x00001825\nadds r1, r3, r2\nldrb r1, [r1, #0x00]\nadds r5, r0, #0x0\ncmp r1, #0x00\nbeq _0804758E\nldr r0, _08047508 @ =0x03000630\nldr r2, [r0, #0x00]\nadds r4, r0, #0x0\ncmp r2, #0x00\nbeq _0804758E\nldr r6, _0804750C @ =0x00001808\nadds r0, r3, r6\nldr r0, [r0, #0x00]\nmovs r1, #0x01\nands r0, r1\ncmp r0, #0x00\nbeq _0804758E\nldr r1, [r2, #0x44]\ncmp r1, #0x00\nble _08047510\nadds r6, #0x1F\nadds r0, r3, r6\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08047510\nsubs r0, r1, #0x1\nstr r0, [r2, #0x44]\ncmp r0, #0x00\nbne _0804758E\nmovs r0, #0x1E\nbl sub_080628B4\nldr r1, [r4, #0x00]\nadds r0, #0x1E\nlsls r0, r0, #0x06\nstr r0, [r1, #0x40]\nb _0804758E\n.byte 0x00, 0x00\n_08047500: .4byte 0x03000198\n_08047504: .4byte 0x00001825\n_08047508: .4byte 0x03000630\n_0804750C: .4byte 0x00001808\n_08047510:\nldr r1, [r4, #0x00]\nldr r2, [r1, #0x40]\ncmp r2, #0x00\nble _0804758E\nldr r0, [r5, #0x00]\nldr r3, _0804754C @ =0x00001827\nadds r0, r0, r3\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _0804758E\nsubs r0, r2, #0x1\nstr r0, [r1, #0x40]\ncmp r0, #0x00\nbne _08047554\nmovs r0, #0xE1\nlsls r0, r0, #0x05\nstr r0, [r1, #0x44]\nmovs r5, #0x00\nadds r3, r4, #0x0\nldr r2, _08047550 @ =0xFFFFC000\n_08047538:\nldr r0, [r3, #0x00]\nlsls r1, r5, #0x02\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nstr r2, [r0, #0x08]\nstr r2, [r0, #0x0C]\nadds r5, #0x01\ncmp r5, #0x0F\nble _08047538\nb _0804758E\n_0804754C: .4byte 0x00001827\n_08047550: .4byte 0xFFFFC000\n_08047554:\nmovs r5, #0x00\nadds r6, r4, #0x0\n_08047558:\nmovs r0, #0xE8\nbl sub_080628B4\nldr r1, [r6, #0x00]\nlsls r4, r5, #0x02\nadds r1, r1, r4\nldr r1, [r1, #0x00]\nlsls r0, r0, #0x08\nstr r0, [r1, #0x08]\nmovs r0, #0x98\nbl sub_080628B4\nldr r1, [r6, #0x00]\nadds r1, r1, r4\nldr r1, [r1, #0x00]\nlsls r0, r0, #0x08\nstr r0, [r1, #0x0C]\nmovs r0, #0x04\nbl sub_080628B4\nldr r1, [r6, #0x00]\nadds r1, r1, r4\nldr r1, [r1, #0x00]\nstrh r0, [r1, #0x18]\nadds r5, #0x01\ncmp r5, #0x0F\nble _08047558\n_0804758E:\npop {r4, r5, r6}\npop {r0}\nbx r0");
+    s32 i;
+
+    if (gData_03000198->unk1825 == 0 || gData_03000630 == NULL || (gData_03000198->unk1808 & 1) == 0)
+        return;
+    if (gData_03000630->unk44 > 0 && gData_03000198->unk1827 != 0)
+    {
+        if (--gData_03000630->unk44 == 0)
+            gData_03000630->unk40 = (RandRange(0x1E) + 0x1E) << 6;
+        return;
+    }
+    if (gData_03000630->unk40 > 0 && gData_03000198->unk1827 != 0)
+    {
+        if (--gData_03000630->unk40 == 0)
+        {
+            gData_03000630->unk44 = 0xE1 << 5;
+            for (i = 0; i <= 0x0F; i++)
+            {
+                gData_03000630->unk00[i]->unk08 = -0x4000;
+                gData_03000630->unk00[i]->unk0C = -0x4000;
+            }
+        }
+        else
+        {
+            for (i = 0; i <= 0x0F; i++)
+            {
+                gData_03000630->unk00[i]->unk08 = RandRange(0xE8) << 8;
+                gData_03000630->unk00[i]->unk0C = RandRange(0x98) << 8;
+                gData_03000630->unk00[i]->unk18 = RandRange(4);
+            }
+        }
+    }
 }
+

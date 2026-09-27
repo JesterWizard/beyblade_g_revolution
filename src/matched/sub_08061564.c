@@ -1,81 +1,43 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08061564
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Run a text control stream: 7 = set cursor (x, y), 8 = palette bank,
+// 10 = new line (wrapping the row) then set cursor; anything else is logged.
 void TextDraw(u8 *data)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "cmp r0, #0x00\n"
-        "beq _080615E0\n"
-        "ldrb r2, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _080615E0\n"
-        "adds r4, r0, #0x1\n"
-        "_08061572:\n"
-        "cmp r2, #0x08\n"
-        "beq _080615C4\n"
-        "cmp r2, #0x08\n"
-        "bgt _08061580\n"
-        "cmp r2, #0x07\n"
-        "beq _080615B2\n"
-        "b _080615CE\n"
-        "_08061580:\n"
-        "cmp r2, #0x0A\n"
-        "bne _080615CE\n"
-        "ldr r0, _080615C0 @ =0x03000798\n"
-        "ldr r2, [r0, #0x00]\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0x90\n"
-        "movs r5, #0x00\n"
-        "strh r5, [r0, #0x00]\n"
-        "adds r3, r2, #0x0\n"
-        "adds r3, #0x92\n"
-        "adds r0, #0x12\n"
-        "ldrh r1, [r3, #0x00]\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "adds r0, r1, r0\n"
-        "strh r0, [r3, #0x00]\n"
-        "movs r0, #0x00\n"
-        "ldsh r1, [r3, r0]\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0x9A\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "lsrs r0, r0, #0x03\n"
-        "subs r0, #0x01\n"
-        "cmp r1, r0\n"
-        "ble _080615B2\n"
-        "strh r5, [r3, #0x00]\n"
-        "_080615B2:\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "adds r4, #0x01\n"
-        "ldrb r1, [r4, #0x00]\n"
-        "adds r4, #0x01\n"
-        "bl sub_080615EC\n"
-        "b _080615D8\n"
-        "_080615C0: .4byte 0x03000798\n"
-        "_080615C4:\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "adds r4, #0x01\n"
-        "bl sub_08061610\n"
-        "b _080615D8\n"
-        "_080615CE:\n"
-        "ldr r0, _080615E8 @ =0x080BB644\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, r2, #0x0\n"
-        "bl _08073C44\n"
-        "_080615D8:\n"
-        "ldrb r2, [r4, #0x00]\n"
-        "adds r4, #0x01\n"
-        "cmp r2, #0x00\n"
-        "bne _08061572\n"
-        "_080615E0:\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_080615E8: .4byte 0x080BB644\n"
-    );
+    u8 op;
+    u8 x;
+    u8 *cur;
+    struct Unk0798 *work;
+
+    if (data == NULL || (op = *data) == 0)
+        return;
+    cur = data + 1;
+    do
+    {
+        switch (op)
+        {
+        case 10:
+            work = gUnk_03000798;
+            work->unk90 = 0;
+            work->unk92 = work->unk92 + work->unkA2;
+            if ((s16)work->unk92 > (work->unk9A >> 3) - 1)
+                work->unk92 = 0;
+        case 7:
+            x = *cur++;
+            TextSetCursor(x, *cur++);
+            break;
+        case 8:
+            TextSetPaletteBank(*cur++);
+            break;
+        default:
+            _08073C44((void *)(u32)op, (void *)gData_080BB644[0]);
+            break;
+        }
+    } while ((op = *cur++) != 0);
+
 }
 

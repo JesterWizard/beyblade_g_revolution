@@ -26,14 +26,14 @@ void sub_080473F8(void)
 
     tmp = HeapAlloc(0x48);
     *(u32 *)gData_03000638 = (u32)tmp;
-    *(struct Unk473F8 **)gData_03000630 = *(struct Unk473F8 **)tmp;
-    pool = *(struct Unk473F8 **)gData_03000630;
+    gData_03000630 = *(struct Unk473F8 **)tmp;
+    pool = gData_03000630;
     pool->unk44 = 0x1C20;
 
     for (i = 0; i <= 0xF; i++)
     {
         slot = BtlObjPoolAlloc(2);
-        (*(struct Unk473F8 **)gData_03000630)->unk00[i] = slot;
+        gData_03000630->unk00[i] = slot;
         sub_0806FF58((struct Unk705DC *)slot, (void *)0x081193C0, 0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
     }
 }

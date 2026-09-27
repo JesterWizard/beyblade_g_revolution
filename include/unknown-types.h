@@ -736,9 +736,9 @@ struct BattleWork /* >= 0x208A */
     /* 2020 */ u8 filler_2020[0x68];
     /* 2088 */ u8 unk2088;
     /* 2089 */ u8 unk2089;
-    /* 208a */ u8 filler_208A[0x0A];
+    /* 208a */ u8 filler_208A[2];
+    /* 208c */ s32 unk208C[2]; /* per-side countdown, sub_08031C98 */
     /* 2094 */ void *unk2094;
-    /* 208c */ s32 unk208C[4];
 };
 
 /* 4-byte records pointed to by MainWork.unk1694. sub_0802C62C. */
@@ -878,7 +878,8 @@ struct Unk8D0 /* 0x28 */
     /* 21 */ u8 unk21;
     /* 22 */ u8 filler_22;
     /* 23 */ u8 unk23; /* sub_0803e1f4 */
-    /* 24 */ u8 filler_24[2];
+    /* 24 */ s8 unk24;
+    /* 25 */ u8 filler_25;
     /* 26 */ u16 unk26;
 };
 
@@ -2422,6 +2423,82 @@ struct Unk6FF58Src /* >= 0x20 */
     /* 10 */ u32 unk10;
     /* 14 */ u8 filler_14[8];
     /* 1c */ u32 unk1C;
+};
+
+/* Camera-relative sprite placement, sub_08035D68. */
+struct Unk35D68Output
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ u8 filler_10[0x20];
+    /* 30 */ struct Unk70354Object *unk30;
+};
+
+struct Unk35D68Source
+{
+    /* 00 */ struct Unk35D68Output *unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C; /* world x */
+    /* 10 */ s32 unk10; /* world y */
+    /* 14 */ s32 unk14; /* world z */
+};
+
+struct Unk35D68State
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ s32 unk04;
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 unk10;
+    /* 14 */ u16 unk14; /* angle */
+};
+
+/* Row of the list drawn by sub_0802ECD8. */
+struct Unk2ECD8Entry /* 0x10 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ void *name;
+    /* 08 */ u8 filler_08[4];
+    /* 0c */ s8 unk0C;
+    /* 0d */ s8 unk0D;
+    /* 0e */ s8 unk0E;
+    /* 0f */ u8 filler_0F;
+};
+
+/* Row of the item list drawn by sub_0802FA94. */
+struct Unk2FA94Entry /* 0x10 */
+{
+    /* 00 */ s32 id;
+    /* 04 */ s32 kind;
+    /* 08 */ s32 count;
+    /* 0c */ void *name;
+};
+
+/* Scrolling three-row list at *0x03000278. sub_0802ECD8, sub_0802FA94. */
+struct Unk2ECD8 /* >= 0x13c */
+{
+    /* 000 */ u8 filler_000[8];
+    /* 008 */ struct Unk2FA94Entry *items;
+    /* 00c */ struct Unk2ECD8Entry *entries;
+    /* 010 */ u8 filler_010[0xE8];
+    /* 0f8 */ u8 text[0x38]; /* Unk7069C text object */
+    /* 130 */ s32 count;
+    /* 134 */ s32 top;
+    /* 138 */ s32 cursor;
+};
+
+/* 0x18-byte record returned by sub_0806A954; saved/restored by sub_08033188. */
+struct Unk6A954 /* 0x18 */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u32 unk08;
+    /* 0c */ u32 unk0C;
+    /* 10 */ u16 unk10;
+    /* 12 */ u16 unk12;
+    /* 14 */ u32 unk14;
 };
 
 /* Pending battle-object batch released by sub_080700CC. */

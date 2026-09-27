@@ -1,8 +1,55 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0805e044
-__attribute__((naked))
-void sub_0805E044(void)
+// Snap the camera (sub_0802D898) to the sprite that owns `resource`: the
+// three fixed HUD resources map to MainWork.unk0424/unk0500, anything else
+// is looked up in the -1-terminated gData_080991D0 list via sub_08041DB4.
+void sub_0805E044(void *resource)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nadds r5, r0, #0x0\nmovs r6, #0x00\ncmp r5, #0x00\nbeq _0805E11C\nldr r0, _0805E07C @ =0x03000198\nldr r2, [r0, #0x00]\nldr r1, _0805E080 @ =0x00001808\nadds r0, r2, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x08\nands r0, r1\ncmp r0, #0x00\nbne _0805E11C\nldr r0, _0805E084 @ =0x08266DAC\ncmp r5, r0\nbne _0805E08C\nldr r1, _0805E088 @ =0x00000424\nadds r0, r2, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _0805E0D8\nldr r0, [r1, #0x08]\nldr r1, [r1, #0x0C]\nbl sub_0802D898\nb _0805E0D8\n.byte 0x00, 0x00\n_0805E07C: .4byte 0x03000198\n_0805E080: .4byte 0x00001808\n_0805E084: .4byte 0x08266DAC\n_0805E088: .4byte 0x00000424\n_0805E08C:\nldr r0, _0805E0A8 @ =0x0827EA3C\ncmp r5, r0\nbne _0805E0B0\nldr r1, _0805E0AC @ =0x00000424\nadds r0, r2, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _0805E0D8\nldr r0, [r1, #0x08]\nldr r1, [r1, #0x0C]\nbl sub_0802D898\nb _0805E0D8\n.byte 0x00, 0x00\n_0805E0A8: .4byte 0x0827EA3C\n_0805E0AC: .4byte 0x00000424\n_0805E0B0:\nldr r0, _0805E0CC @ =0x0826ADC8\ncmp r5, r0\nbne _0805E0E0\nmovs r1, #0xA0\nlsls r1, r1, #0x03\nadds r0, r2, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _0805E0D8\nldr r0, [r1, #0x08]\nldr r1, [r1, #0x0C]\nbl sub_0802D898\nb _0805E0D8\n_0805E0CC: .4byte 0x0826ADC8\n_0805E0D0:\nldr r0, [r1, #0x08]\nldr r1, [r1, #0x0C]\nbl sub_0802D898\n_0805E0D8:\nmovs r0, #0x01\nbl sub_0802D8C4\nb _0805E11C\n_0805E0E0:\nldr r2, _0805E124 @ =0x080991D0\nldr r1, [r2, #0x00]\nmovs r0, #0x01\nnegs r0, r0\ncmp r1, r0\nbeq _0805E11C\nmovs r4, #0x00\n_0805E0EE:\nadds r0, r4, r2\nldr r0, [r0, #0x00]\ncmp r0, r5\nbne _0805E10A\nadds r0, r6, #0x0\nmovs r1, #0x00\nbl sub_08041DB4\ncmp r0, #0x00\nbeq _0805E10A\nadds r0, #0xB8\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbne _0805E0D0\n_0805E10A:\nadds r4, #0x04\nadds r6, #0x01\nldr r2, _0805E124 @ =0x080991D0\nadds r0, r4, r2\nldr r1, [r0, #0x00]\nmovs r0, #0x01\nnegs r0, r0\ncmp r1, r0\nbne _0805E0EE\n_0805E11C:\npop {r4, r5, r6}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_0805E124: .4byte 0x080991D0");
+    s32 i = 0;
+    struct Unk705DC *entry;
+    struct Unk5E044Lookup *lookup;
+
+    if (resource == NULL || (gMainWorkPtr->unk1808 & 8) != 0)
+        return;
+    if (resource == (void *)0x08266DAC)
+    {
+        entry = gMainWorkPtr->unk0424;
+        if (entry != NULL)
+            sub_0802D898(entry->unk08, entry->unk0C);
+        sub_0802D8C4(1);
+        return;
+    }
+    if (resource == (void *)0x0827EA3C)
+    {
+        entry = gMainWorkPtr->unk0424;
+        if (entry != NULL)
+            sub_0802D898(entry->unk08, entry->unk0C);
+        sub_0802D8C4(1);
+        return;
+    }
+    if (resource == (void *)0x0826ADC8)
+    {
+        entry = gMainWorkPtr->unk0500;
+        if (entry != NULL)
+            sub_0802D898(entry->unk08, entry->unk0C);
+        sub_0802D8C4(1);
+        return;
+    }
+    for (; gData_080991D0[i] != (void *)-1; i++)
+    {
+        if (gData_080991D0[i] == resource)
+        {
+            lookup = sub_08041DB4(i, 0);
+            if (lookup != NULL && lookup->unkB8 != NULL)
+            {
+                sub_0802D898(lookup->unkB8->unk08, lookup->unkB8->unk0C);
+                sub_0802D8C4(1);
+                return;
+            }
+        }
+    }
 }
+

@@ -1,8 +1,96 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08033188
-__attribute__((naked))
+union Unk33188Text
+{
+    struct Unk70604 hdr;
+    u8 raw[0x68];
+};
+
+// Banner scroll: save input state and the two gData_08078100 records, slide
+// the language banner text in until A or START is pressed (then slide it out
+// to -0xC800), and restore everything.
 void sub_08033188(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x0CC\nmovs r0, #0x00\nmov r9, r0\nmov r10, r0\nmov r8, r0\nldr r0, _0803328C @ =0x03003F60\nldrh r0, [r0, #0x00]\nstr r0, [sp, #0x0A4]\nldr r0, _08033290 @ =0x03004064\nldrh r0, [r0, #0x00]\nstr r0, [sp, #0x0A8]\nldr r0, _08033294 @ =0x03004060\nldrh r0, [r0, #0x00]\nstr r0, [sp, #0x0AC]\nldr r0, _08033298 @ =0x0300406C\nldrh r0, [r0, #0x00]\nstr r0, [sp, #0x0B0]\nldr r1, _0803329C @ =0x082BF600\nldr r2, _080332A0 @ =0x080B72F3\nmovs r3, #0xF0\nnegs r3, r3\nmovs r0, #0x50\nstr r0, [sp, #0x000]\nmovs r0, #0xF0\nstr r0, [sp, #0x004]\nmovs r0, #0x02\nstr r0, [sp, #0x008]\nadd r0, sp, #0x00C\nbl sub_08070604\nldr r1, _080332A4 @ =0x080780EC\nldr r0, _080332A8 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r2, _080332AC @ =0x00001818\nadds r0, r0, r2\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nldr r1, [r0, #0x00]\nadd r0, sp, #0x00C\nmovs r2, #0x00\nbl sub_08070AD4\nadd r0, sp, #0x00C\nbl sub_0807179C\nldr r4, _080332B0 @ =0x03000290\nldr r0, [r4, #0x00]\nldr r3, _080332B4 @ =0x00000B84\nadds r0, r0, r3\nbl sub_080312EC\nldr r0, [r4, #0x00]\nldr r1, _080332B8 @ =0x00000B94\nadds r0, r0, r1\nbl sub_080312EC\nldr r0, [r4, #0x00]\nmovs r2, #0x8F\nlsls r2, r2, #0x03\nadds r0, r0, r2\nbl sub_0803484C\nldr r0, [r4, #0x00]\nmovs r3, #0xF2\nlsls r3, r3, #0x03\nadds r0, r0, r3\nbl sub_0803484C\nmov r0, sp\nadds r0, #0x74\nstr r0, [sp, #0x0B4]\nmov r1, sp\nadds r1, #0x78\nstr r1, [sp, #0x0B8]\nmov r2, sp\nadds r2, #0x7C\nstr r2, [sp, #0x0BC]\nmov r3, sp\nadds r3, #0x80\nstr r3, [sp, #0x0C0]\nadds r0, #0x14\nstr r0, [sp, #0x0C4]\nadds r2, r0, #0x0\nadds r7, r3, #0x0\nldr r6, [sp, #0x0BC]\nadds r5, r1, #0x0\nldr r4, [sp, #0x0B4]\n_08033242:\nldr r1, _080332BC @ =0x08078100\nmov r3, r8\nlsls r0, r3, #0x02\nadds r0, r0, r1\nldrb r0, [r0, #0x00]\nstr r2, [sp, #0x0C8]\nbl sub_0806A954\nadds r1, r0, #0x0\nldr r0, [r1, #0x00]\nstr r0, [r4, #0x00]\nldr r0, [r1, #0x04]\nstr r0, [r5, #0x00]\nldr r0, [r1, #0x08]\nstr r0, [r6, #0x00]\nldr r0, [r1, #0x0C]\nstr r0, [r7, #0x00]\nldrh r0, [r1, #0x10]\nstrh r0, [r4, #0x10]\nldrh r0, [r1, #0x12]\nstrh r0, [r4, #0x12]\nldr r0, [r1, #0x14]\nldr r2, [sp, #0x0C8]\nstr r0, [r2, #0x00]\nadds r2, #0x18\nadds r7, #0x18\nadds r6, #0x18\nadds r5, #0x18\nadds r4, #0x18\nmovs r0, #0x01\nadd r8, r0\nmov r1, r8\ncmp r1, #0x01\nble _08033242\nbl sub_0806A6F8\nb _0803332E\n_0803328C: .4byte 0x03003F60\n_08033290: .4byte 0x03004064\n_08033294: .4byte 0x03004060\n_08033298: .4byte 0x0300406C\n_0803329C: .4byte 0x082BF600\n_080332A0: .4byte 0x080B72F3\n_080332A4: .4byte 0x080780EC\n_080332A8: .4byte 0x03000198\n_080332AC: .4byte 0x00001818\n_080332B0: .4byte 0x03000290\n_080332B4: .4byte 0x00000B84\n_080332B8: .4byte 0x00000B94\n_080332BC: .4byte 0x08078100\n_080332C0:\nbl sub_080674B4\nbl sub_0806A6F8\nldr r0, [sp, #0x00C]\nmov r3, r10\nsubs r4, r3, r0\ncmp r4, #0x00\nbeq _080332F4\nadds r0, r4, #0x0\nmovs r1, #0x10\nbl sub_08033158\nadds r4, r0, #0x0\nadd r0, sp, #0x00C\nbl sub_0807179C\nlsls r1, r4, #0x10\nasrs r1, r1, #0x10\nadd r0, sp, #0x00C\nmovs r2, #0x00\nbl sub_08070C98\nadd r0, sp, #0x00C\nbl sub_0807179C\n_080332F4:\nldr r0, _080333C8 @ =0x080BB888\nldr r0, [r0, #0x00]\nbl _08073C40\nmov r0, r9\ncmp r0, #0x00\nbne _08033334\nldr r0, [sp, #0x00C]\ncmp r0, r10\nbne _0803332E\nldr r0, _080333CC @ =0x03004060\nldrh r1, [r0, #0x00]\nmovs r0, #0x01\nands r0, r1\ncmp r0, #0x00\nbeq _08033318\nmovs r2, #0x01\nmov r9, r2\n_08033318:\nmovs r0, #0x08\nands r0, r1\ncmp r0, #0x00\nbeq _08033324\nmovs r3, #0x01\nmov r9, r3\n_08033324:\nmov r0, r9\ncmp r0, #0x00\nbeq _080332C0\nldr r1, _080333D0 @ =0xFFFF3800\nmov r10, r1\n_0803332E:\nmov r2, r9\ncmp r2, #0x00\nbeq _080332C0\n_08033334:\nldr r0, [sp, #0x00C]\ncmp r0, r10\nbne _080332C0\nadd r0, sp, #0x00C\nbl sub_08070678\nbl sub_080674B4\nmovs r3, #0x00\nmov r8, r3\nldr r2, [sp, #0x0C4]\nldr r7, [sp, #0x0C0]\nldr r6, [sp, #0x0BC]\nldr r5, [sp, #0x0B8]\nldr r4, [sp, #0x0B4]\n_08033352:\nldr r1, _080333D4 @ =0x08078100\nmov r3, r8\nlsls r0, r3, #0x02\nadds r0, r0, r1\nldrb r0, [r0, #0x00]\nstr r2, [sp, #0x0C8]\nbl sub_0806A954\nadds r1, r0, #0x0\nldr r0, [r4, #0x00]\nstr r0, [r1, #0x00]\nldr r0, [r5, #0x00]\nstr r0, [r1, #0x04]\nldr r0, [r6, #0x00]\nstr r0, [r1, #0x08]\nldr r0, [r7, #0x00]\nstr r0, [r1, #0x0C]\nldrh r0, [r4, #0x10]\nstrh r0, [r1, #0x10]\nldrh r0, [r4, #0x12]\nstrh r0, [r1, #0x12]\nldr r2, [sp, #0x0C8]\nldr r0, [r2, #0x00]\nstr r0, [r1, #0x14]\nadds r2, #0x18\nadds r7, #0x18\nadds r6, #0x18\nadds r5, #0x18\nadds r4, #0x18\nmovs r0, #0x01\nadd r8, r0\nmov r1, r8\ncmp r1, #0x01\nble _08033352\nldr r0, _080333D8 @ =0x03003F60\nadd r2, sp, #0x0A4\nldrh r2, [r2, #0x00]\nstrh r2, [r0, #0x00]\nldr r0, _080333DC @ =0x03004064\nadd r3, sp, #0x0A8\nldrh r3, [r3, #0x00]\nstrh r3, [r0, #0x00]\nldr r0, _080333CC @ =0x03004060\nadd r1, sp, #0x0AC\nldrh r1, [r1, #0x00]\nstrh r1, [r0, #0x00]\nldr r0, _080333E0 @ =0x0300406C\nadd r2, sp, #0x0B0\nldrh r2, [r2, #0x00]\nstrh r2, [r0, #0x00]\nadd sp, #0x0CC\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_080333C8: .4byte 0x080BB888\n_080333CC: .4byte 0x03004060\n_080333D0: .4byte 0xFFFF3800\n_080333D4: .4byte 0x08078100\n_080333D8: .4byte 0x03003F60\n_080333DC: .4byte 0x03004064\n_080333E0: .4byte 0x0300406C");
+    union Unk33188Text text;
+    struct Unk6A954 saved[2];
+    u32 mask;
+    u32 keys64;
+    u32 held;
+    u32 keysNew;
+    s32 done;
+    s32 target;
+    s32 i;
+    s32 delta;
+    struct Unk6A954 *slot;
+
+    done = 0;
+    target = 0;
+    i = 0;
+    mask = *(u16 *)gBtlInputMask;
+    keys64 = *(u16 *)gUnk_03004064;
+    held = gBtlKeysHeldU16;
+    keysNew = *(u16 *)gBtlKeysNew;
+    Unk70604Init(&text.hdr, (struct Unk70604Src *)0x082BF600, 0x080B72F3, -0xF0, 0x50, 0xF0, 2);
+    sub_08070AD4((struct Unk7069C *)&text, gData_080780EC[gMainWorkPtr->unk1818], 0);
+    sub_0807179C((struct Unk7179C *)&text);
+    sub_080312EC((struct Unk312EC *)gBattleWork->unkB84);
+    sub_080312EC((struct Unk312EC *)gBattleWork->unkB94);
+    sub_0803484C((struct Unk3484C *)gBattleWork->unk478);
+    sub_0803484C((struct Unk3484C *)&gBattleWork->unk478[0x318]);
+    for (; i <= 1; i++)
+    {
+        slot = sub_0806A954(gData_08078100[i]);
+        saved[i].unk00 = slot->unk00;
+        saved[i].unk04 = slot->unk04;
+        saved[i].unk08 = slot->unk08;
+        saved[i].unk0C = slot->unk0C;
+        saved[i].unk10 = slot->unk10;
+        saved[i].unk12 = slot->unk12;
+        saved[i].unk14 = slot->unk14;
+    }
+    sub_0806A6F8();
+    while (!done || text.hdr.unk00 != target)
+    {
+        VBlankIntrWait();
+        sub_0806A6F8();
+        delta = target - text.hdr.unk00;
+        if (delta != 0)
+        {
+            delta = sub_08033158(delta, 0x10);
+            sub_0807179C((struct Unk7179C *)&text);
+            sub_08070C98((struct Unk70C98 *)&text, (s16)delta, 0);
+            sub_0807179C((struct Unk7179C *)&text);
+        }
+        ((void (*)(void))gData_080BB888[0])();
+        if (!done && text.hdr.unk00 == target)
+        {
+            if (gData_03004060 & 1)
+                done = 1;
+            if (gData_03004060 & 8)
+                done = 1;
+            if (done)
+                target = -0xC800;
+        }
+    }
+    sub_08070678((struct Unk7069C *)&text);
+    VBlankIntrWait();
+    for (i = 0; i <= 1; i++)
+    {
+        slot = sub_0806A954(gData_08078100[i]);
+        slot->unk00 = saved[i].unk00;
+        slot->unk04 = saved[i].unk04;
+        slot->unk08 = saved[i].unk08;
+        slot->unk0C = saved[i].unk0C;
+        slot->unk10 = saved[i].unk10;
+        slot->unk12 = saved[i].unk12;
+        slot->unk14 = saved[i].unk14;
+    }
+    gData_03003F60 = mask;
+    gData_03004064 = keys64;
+    gData_03004060 = held;
+    gData_0300406C = keysNew;
 }
+

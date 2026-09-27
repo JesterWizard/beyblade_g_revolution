@@ -1,14 +1,7 @@
 #include "global.h"
 
-struct Unk31368Entry
-{
-    u8 filler_00[8];
-    u32 unk08;
-    u32 unk0C;
-};
-
 // @ 0x08031368
-void sub_08031368(struct Unk31368Entry **arr, s32 n, u32 *out08, u32 *out0C)
+void sub_08031368(struct Unk705DC **arr, s32 n, u32 *out08, u32 *out0C)
 {
     s32 i = n - 1;
 
@@ -16,7 +9,7 @@ void sub_08031368(struct Unk31368Entry **arr, s32 n, u32 *out08, u32 *out0C)
     {
         do
         {
-            struct Unk31368Entry *entry = arr[i];
+            struct Unk705DC *entry = arr[i];
 
             if (entry != 0)
             {

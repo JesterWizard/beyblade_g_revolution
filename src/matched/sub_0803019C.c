@@ -37,11 +37,11 @@ void sub_0803019C(void)
     sub_080302E0(
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk790);
     sub_08035D68(
-        ((struct Unk3019CWork *)gBattleWork)->unk328,
-        ((struct Unk3019CWork *)gBattleWork)->unkAA8);
+        (struct Unk35D68Source *)((struct Unk3019CWork *)gBattleWork)->unk328,
+        (struct Unk35D68State *)((struct Unk3019CWork *)gBattleWork)->unkAA8);
     sub_08035D68(
-        ((struct Unk3019CWork *)gBattleWork)->unk37C,
-        ((struct Unk3019CWork *)gBattleWork)->unkAA8);
+        (struct Unk35D68Source *)((struct Unk3019CWork *)gBattleWork)->unk37C,
+        (struct Unk35D68State *)((struct Unk3019CWork *)gBattleWork)->unkAA8);
     sub_080302A8(
         (struct Unk302A8 *)((struct Unk3019CWork *)gBattleWork)->unk328,
         (struct Unk302A8Src *)((struct Unk3019CWork *)gBattleWork)->unkAA8,

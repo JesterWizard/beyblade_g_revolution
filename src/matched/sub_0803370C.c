@@ -1,8 +1,64 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803370c
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Tick the floating score digits (BattleWork+0xB54): count the shown value up
+// towards its target by 4, lay the digits out right-to-left, ease y and x
+// towards their targets, and clear the display once the timer runs out.
 void sub_0803370C(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r9\nmov r6, r8\npush {r6, r7}\nadd sp, #-0x014\nldr r0, _08033804 @ =0x03000290\nldr r3, [r0, #0x00]\nldr r1, _08033808 @ =0x00000B6C\nadds r0, r3, r1\nldrb r0, [r0, #0x00]\ncmp r0, #0x01\nbeq _08033726\nb _08033868\n_08033726:\nldr r2, _0803380C @ =0x00000B78\nadds r1, r3, r2\nldr r0, [r1, #0x00]\nsubs r0, #0x01\nstr r0, [r1, #0x00]\ncmp r0, #0x00\nbge _08033736\nb _08033864\n_08033736:\nldr r7, _08033810 @ =0x00000B64\nadds r2, r3, r7\nldr r0, _08033814 @ =0x00000B68\nadds r1, r3, r0\nldr r3, [r2, #0x00]\nldr r0, [r1, #0x00]\ncmp r3, r0\nbge _08033752\nadds r0, r3, #0x4\nstr r0, [r2, #0x00]\nldr r1, [r1, #0x00]\ncmp r0, r1\nble _08033752\nstr r1, [r2, #0x00]\n_08033752:\nldr r6, _08033804 @ =0x03000290\nldr r1, [r6, #0x00]\nldr r7, _08033818 @ =0x00000B54\nadds r0, r1, r7\nldr r2, _08033810 @ =0x00000B64\nadds r1, r1, r2\nldr r1, [r1, #0x00]\nldr r3, _0803381C @ =0x0810B4E0\nmovs r2, #0x01\nstr r2, [sp, #0x000]\nmovs r2, #0x04\nbl sub_0803139C\nadds r5, r0, #0x0\nldr r2, [r6, #0x00]\nldr r0, _08033820 @ =0x00000B7C\nadds r2, r2, r0\nsubs r1, r5, #0x1\nlsls r0, r1, #0x03\nsubs r0, r0, r1\nlsls r0, r0, #0x08\nldr r1, [r2, #0x00]\nadds r4, r1, r0\nmovs r2, #0x00\ncmp r2, r5\nbge _080337B4\nmov r8, r6\nmov r12, r7\nldr r1, _08033824 @ =0x00000B74\nmov r9, r1\nldr r6, _08033828 @ =0xFFFFF900\n_08033790:\nmov r7, r8\nldr r3, [r7, #0x00]\nlsls r1, r2, #0x02\nmov r7, r12\nadds r0, r3, r7\nadds r0, r0, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _080337AC\nstr r4, [r1, #0x08]\nmov r7, r9\nadds r0, r3, r7\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x0C]\n_080337AC:\nadds r4, r4, r6\nadds r2, #0x01\ncmp r2, r5\nblt _08033790\n_080337B4:\nldr r4, _08033804 @ =0x03000290\nldr r3, [r4, #0x00]\nldr r0, _08033824 @ =0x00000B74\nadds r2, r3, r0\nmovs r1, #0xB7\nlsls r1, r1, #0x04\nadds r0, r3, r1\nldr r0, [r0, #0x00]\nldr r1, [r2, #0x00]\nsubs r0, r0, r1\nasrs r0, r0, #0x03\nadds r1, r1, r0\nstr r1, [r2, #0x00]\nmovs r2, #0xB8\nlsls r2, r2, #0x04\nadds r0, r3, r2\nldrb r0, [r0, #0x00]\ncmp r0, #0x01\nbne _0803382C\nmovs r0, #0x00\nstr r0, [sp, #0x004]\nstr r0, [sp, #0x008]\nmovs r7, #0xB0\nlsls r7, r7, #0x04\nadds r2, r3, r7\nldr r0, [r2, #0x00]\ncmp r0, #0x00\nbeq _080337F8\nadd r3, sp, #0x008\nadds r0, r2, #0x0\nmovs r1, #0x08\nadd r2, sp, #0x004\nbl sub_08031368\n_080337F8:\nldr r0, [r4, #0x00]\nldr r1, _08033820 @ =0x00000B7C\nadds r0, r0, r1\nldr r1, [sp, #0x004]\nb _08033852\n.byte 0x00, 0x00\n_08033804: .4byte 0x03000290\n_08033808: .4byte 0x00000B6C\n_0803380C: .4byte 0x00000B78\n_08033810: .4byte 0x00000B64\n_08033814: .4byte 0x00000B68\n_08033818: .4byte 0x00000B54\n_0803381C: .4byte 0x0810B4E0\n_08033820: .4byte 0x00000B7C\n_08033824: .4byte 0x00000B74\n_08033828: .4byte 0xFFFFF900\n_0803382C:\nmovs r0, #0x00\nstr r0, [sp, #0x00C]\nstr r0, [sp, #0x010]\nmovs r2, #0xB2\nlsls r2, r2, #0x04\nadds r1, r3, r2\nldr r0, [r1, #0x00]\ncmp r0, #0x00\nbeq _0803384A\nadd r2, sp, #0x00C\nadd r3, sp, #0x010\nadds r0, r1, #0x0\nmovs r1, #0x08\nbl sub_08031368\n_0803384A:\nldr r0, [r4, #0x00]\nldr r7, _08033860 @ =0x00000B7C\nadds r0, r0, r7\nldr r1, [sp, #0x00C]\n_08033852:\nldr r2, [r0, #0x00]\nsubs r1, r1, r2\nasrs r1, r1, #0x03\nadds r2, r2, r1\nstr r2, [r0, #0x00]\nb _08033868\n.byte 0x00, 0x00\n_08033860: .4byte 0x00000B7C\n_08033864:\nbl sub_08033878\n_08033868:\nadd sp, #0x014\npop {r3, r4}\nmov r8, r3\nmov r9, r4\npop {r4, r5, r6, r7}\npop {r0}\nbx r0");
+    s32 count;
+    s32 x;
+    s32 i;
+
+    if (gData_03000290->unk0B6C != 1)
+        return;
+    if (--gData_03000290->unk0B78 >= 0)
+    {
+        if (gData_03000290->unk0B64 < gData_03000290->unk0B68)
+        {
+            gData_03000290->unk0B64 += 4;
+            if (gData_03000290->unk0B64 > gData_03000290->unk0B68)
+                gData_03000290->unk0B64 = gData_03000290->unk0B68;
+        }
+        count = sub_0803139C((struct Unk705DC **)gData_03000290->unk0B54, gData_03000290->unk0B64, 4, gData_0810B4E0, 1);
+        x = gData_03000290->unk0B7C + (count - 1) * 0x700;
+        for (i = 0; i < count; i++)
+        {
+            struct Unk705DC *digit = gData_03000290->unk0B54[i];
+
+            if (digit != NULL)
+            {
+                digit->unk08 = x;
+                digit->unk0C = gData_03000290->unk0B74;
+            }
+            x -= 0x700;
+        }
+        gData_03000290->unk0B74 += (gData_03000290->unk0B70 - gData_03000290->unk0B74) >> 3;
+        if (gData_03000290->unk0B80 == 1)
+        {
+            s32 cx = 0;
+            s32 cy = 0;
+
+            if (gData_03000290->unk0AE8.fields.unkB00[0] != NULL)
+                sub_08031368(gData_03000290->unk0AE8.fields.unkB00, 8, (u32 *)&cx, (u32 *)&cy);
+            gData_03000290->unk0B7C += (cx - gData_03000290->unk0B7C) >> 3;
+        }
+        else
+        {
+            s32 cx = 0;
+            s32 cy = 0;
+
+            if (gData_03000290->unk0AE8.fields.unkB20[0] != NULL)
+                sub_08031368(gData_03000290->unk0AE8.fields.unkB20, 8, (u32 *)&cx, (u32 *)&cy);
+            gData_03000290->unk0B7C += (cx - gData_03000290->unk0B7C) >> 3;
+        }
+    }
+    else
+    {
+        BtlClearState();
+    }
 }
+

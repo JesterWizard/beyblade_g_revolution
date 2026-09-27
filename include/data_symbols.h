@@ -48,8 +48,8 @@ extern u8 gData_080B738E[];
 
 // IWRAM
 extern struct MainWork *gData_03000198;
-extern struct BattleWork *gData_03000290[];
-extern u32 gData_030003CC[];
+extern struct BattleWork *gData_03000290;
+extern struct Unk3CC *gData_030003CC;
 extern u16 gData_05000200[];
 extern u32 gData_08079068[];
 extern u32 gData_08079358[];
@@ -121,7 +121,7 @@ extern u8 gData_083D2690[];
 extern u8 gData_03000108[];
 extern u8 gData_030001A8[];
 extern u8 gData_030001B0[];
-extern u32 gData_03000630[];
+extern struct Unk473F8 *gData_03000630;
 extern u32 gData_03000638[];
 extern u32 *const gData_08094BB4[];
 extern void *gData_080971D8[];
@@ -194,6 +194,7 @@ extern struct Unk68574 *gData_03000698;
 // Per-scene tables indexed by gData_03000694 (sub_0804DB28)
 extern struct Unk7BE04 gData_0807BE04[];
 extern void *gData_080775CC[];
+extern void *gData_080779A8[]; /* sub_0804188C */
 extern void *gData_08098A20[];
 extern void *gData_08098DF8[];
 extern void *gData_080991D0[];
@@ -202,5 +203,40 @@ extern void *gData_080991D0[];
 // (sub_0806FBF8)
 extern struct Unk6FBF8Span *gData_03004088;
 extern struct Unk6FBF8Span *gData_03004098;
+
+// 256 event flags (IWRAM), saved per slot by sub_08045D3C
+extern struct Unk0610 gData_03000610;
+
+// Battle-object sprite templates and their palette types, indexed 0..15
+// (sub_08035054)
+extern struct Unk67BB8Source *gData_080785C8[];
+extern s8 gData_08078608[];
+
+// Scrolling list state (sub_0802ECD8)
+extern struct Unk2ECD8 *gData_03000278;
+
+// Per-language item/category name tables indexed by MainWork.unk1818
+// (sub_0802FA94)
+extern u8 *gData_08096B5C[];
+extern u8 *gData_08097084[];
+extern u8 *gData_08097098[];
+extern u8 *gData_080970AC[];
+extern u8 *gData_080970C0[];
+extern u8 *gData_080970D4[];
+extern u8 *gData_080970E8[];
+extern u8 *gData_080970FC[];
+extern u8 *gData_08097110[];
+
+// Input registers (IWRAM) saved/restored around sub_08033188
+extern u16 gData_03003F60;
+extern u16 gData_03004064;
+extern u16 gData_0300406C;
+
+// Per-language banner text and the two saved-slot ids (sub_08033188)
+extern u8 *gData_080780EC[];
+extern u32 gData_08078100[];
+
+// Digit glyph table for the floating score (sub_0803370C)
+extern u8 gData_0810B4E0[];
 
 #endif // GUARD_DATA_SYMBOLS_H

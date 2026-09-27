@@ -2,20 +2,22 @@
 #include "global.h"
 #include "ram_map.h"
 
+
 s32 sub_08038438(void *palette)
 {
     u16 key;
     s16 i;
-    struct Unk3CC **slots = &gUnk_030003CC;
+    struct Unk3CC **slots;
 
     key = 0;
+    slots = &gUnk_030003CC;
     while (gData_08079068[(s16)key] != 0 && gData_08079068[(s16)key] != (u32)palette)
         key++;
     if (*slots == NULL)
         return -1;
     for (i = 0; i < 16; i++)
     {
-        if ((s16)(*slots)->unk00[i] == (s16)key)
+        if ((s16)key == (s16)(*slots)->unk00[i])
         {
             (*slots)->unk22[i]++;
             return (s8)i;

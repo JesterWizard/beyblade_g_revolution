@@ -5,7 +5,6 @@
 // @ 0x080333e4
 /* match-compiler: old_agbcc */
 
-u32 sub_08038438(void *a);
 void sub_08068584(void *a, s32 b, s32 c);
 
 void sub_080333E4(void *arg, s32 x, s32 y, u8 mode)
