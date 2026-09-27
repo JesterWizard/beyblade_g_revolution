@@ -1,107 +1,80 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806a4d8
-__attribute__((naked))
-void * sub_0806A4D8(void *a, void *b, u32 c, void *d, void *e, void *f)
+/* First-fit insert of an `size`-byte block into the sorted region list at `head`. */
+void *sub_0806A4D8(u32 size, u8 *start, u32 len, struct Unk6A4D8Node *head, struct Unk6A4D8Node *out, struct Unk6A4D8Node **outp)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r5, r0, #0x0\n"
-        "adds r7, r1, #0x0\n"
-        "mov r8, r2\n"
-        "ldr r4, [sp, #0x01C]\n"
-        "ldr r0, [r3, #0x00]\n"
-        "movs r1, #0x00\n"
-        "cmp r0, #0x00\n"
-        "beq _0806A4F2\n"
-        "subs r1, r0, r7\n"
-        "_0806A4F2:\n"
-        "cmp r1, r5\n"
-        "bcc _0806A50A\n"
-        "str r7, [r4, #0x00]\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x08]\n"
-        "str r3, [r4, #0x0C]\n"
-        "str r5, [r4, #0x04]\n"
-        "str r4, [r3, #0x08]\n"
-        "ldr r0, [sp, #0x020]\n"
-        "str r4, [r0, #0x00]\n"
-        "_0806A506:\n"
-        "adds r0, r4, #0x0\n"
-        "b _0806A574\n"
-        "_0806A50A:\n"
-        "cmp r3, #0x00\n"
-        "beq _0806A546\n"
-        "adds r0, r7, #0x0\n"
-        "add r0, r8\n"
-        "mov r9, r0\n"
-        "_0806A514:\n"
-        "ldr r2, [r3, #0x0C]\n"
-        "cmp r2, #0x00\n"
-        "beq _0806A52C\n"
-        "ldr r1, [r3, #0x00]\n"
-        "ldr r0, [r3, #0x04]\n"
-        "adds r1, r1, r0\n"
-        "ldr r0, [r2, #0x00]\n"
-        "subs r0, r0, r1\n"
-        "cmp r0, r5\n"
-        "bcs _0806A560\n"
-        "adds r3, r2, #0x0\n"
-        "b _0806A542\n"
-        "_0806A52C:\n"
-        "ldr r1, [r3, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _0806A53E\n"
-        "ldr r0, [r3, #0x04]\n"
-        "adds r6, r1, r0\n"
-        "mov r0, r9\n"
-        "subs r0, r0, r6\n"
-        "mov r12, r0\n"
-        "b _0806A542\n"
-        "_0806A53E:\n"
-        "adds r6, r7, #0x0\n"
-        "mov r12, r8\n"
-        "_0806A542:\n"
-        "cmp r2, #0x00\n"
-        "bne _0806A514\n"
-        "_0806A546:\n"
-        "cmp r12, r5\n"
-        "bcc _0806A572\n"
-        "str r6, [r4, #0x00]\n"
-        "str r5, [r4, #0x04]\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x0C]\n"
-        "cmp r4, r3\n"
-        "bne _0806A55A\n"
-        "str r0, [r4, #0x08]\n"
-        "b _0806A506\n"
-        "_0806A55A:\n"
-        "str r3, [r4, #0x08]\n"
-        "str r4, [r3, #0x0C]\n"
-        "b _0806A506\n"
-        "_0806A560:\n"
-        "str r1, [r4, #0x00]\n"
-        "str r3, [r4, #0x08]\n"
-        "ldr r0, [r3, #0x0C]\n"
-        "str r0, [r4, #0x0C]\n"
-        "str r5, [r4, #0x04]\n"
-        "ldr r0, [r3, #0x0C]\n"
-        "str r4, [r0, #0x08]\n"
-        "str r4, [r3, #0x0C]\n"
-        "b _0806A506\n"
-        "_0806A572:\n"
-        "movs r0, #0x00\n"
-        "_0806A574:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
-}
+    struct Unk6A4D8Node *walk;
+    struct Unk6A4D8Node *next;
+    u8 *end;
+    u8 *pos;
+    u32 room;
+    u32 gap;
 
+    if (head->unk00 != NULL)
+        gap = (u8 *)head->unk00 - start;
+    else
+        gap = 0;
+    if (gap >= size)
+    {
+        out->unk00 = (s32 *)start;
+        out->unk08 = NULL;
+        out->unk0C = head;
+        out->unk04 = size;
+        head->unk08 = out;
+        *outp = out;
+        return out;
+    }
+    walk = head;
+    if (walk != NULL)
+    {
+        do
+        {
+            next = walk->unk0C;
+            if (next != NULL)
+            {
+                end = (u8 *)walk->unk00 + walk->unk04;
+                if ((u32)((u8 *)next->unk00 - end) >= size)
+                {
+                    out->unk00 = (s32 *)end;
+                    out->unk08 = walk;
+                    out->unk0C = walk->unk0C;
+                    out->unk04 = size;
+                    walk->unk0C->unk08 = out;
+                    walk->unk0C = out;
+                    return out;
+                }
+                walk = next;
+            }
+            else if (walk->unk00 != NULL)
+            {
+                pos = (u8 *)walk->unk00 + walk->unk04;
+                room = start + len - pos;
+            }
+            else
+            {
+                pos = start;
+                room = len;
+            }
+        } while (next != NULL);
+    }
+    if (room >= size)
+    {
+        out->unk00 = (s32 *)pos;
+        out->unk04 = size;
+        out->unk0C = NULL;
+        if (out == walk)
+        {
+            out->unk08 = NULL;
+        }
+        else
+        {
+            out->unk08 = walk;
+            walk->unk0C = out;
+        }
+        return out;
+    }
+    return NULL;
+}

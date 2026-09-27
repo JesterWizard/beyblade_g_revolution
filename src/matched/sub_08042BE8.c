@@ -1,55 +1,17 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08042be8
-__attribute__((naked))
-s32 ExpBracket(s32 a)
+s32 ExpBracket(s32 points)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "movs r3, #0x00\n"
-        "ldr r6, _08042C1C @ =0x080908BC\n"
-        "ldr r1, [r6, #0x00]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "beq _08042C30\n"
-        "adds r7, r6, #0x0\n"
-        "adds r5, r6, #0x4\n"
-        "_08042BFE:\n"
-        "lsls r2, r3, #0x03\n"
-        "adds r0, r2, r5\n"
-        "ldr r0, [r0, #0x00]\n"
-        "adds r1, r3, #0x1\n"
-        "cmp r4, r0\n"
-        "blt _08042C20\n"
-        "lsls r0, r1, #0x03\n"
-        "adds r0, r0, r5\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r4, r0\n"
-        "bge _08042C20\n"
-        "adds r0, r2, r7\n"
-        "ldr r0, [r0, #0x00]\n"
-        "b _08042C34\n"
-        ".byte 0x00, 0x00\n"
-        "_08042C1C: .4byte 0x080908BC\n"
-        "_08042C20:\n"
-        "adds r3, r1, #0x0\n"
-        "lsls r0, r3, #0x03\n"
-        "adds r0, r0, r6\n"
-        "ldr r1, [r0, #0x00]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "bne _08042BFE\n"
-        "_08042C30:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "_08042C34:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s32 i;
+
+    for (i = 0; gData_080908BC[i].unk00 != -1; i++)
+    {
+        if (points >= gData_080908BC[i].unk04 && points < gData_080908BC[i + 1].unk04)
+            return gData_080908BC[i].unk00;
+    }
+    return -1;
 }
 

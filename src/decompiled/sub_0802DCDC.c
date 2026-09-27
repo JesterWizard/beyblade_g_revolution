@@ -1,95 +1,69 @@
 #include "global.h"
-
-void *sub_08042B00(s16 a);
-
-struct Unk42E78Result
-{
-    s16 bitBeastExp;
-    u8 filler_02;
-    s8 strength;
-};
+#include "ram_map.h"
 
 void sub_0802DCDC(void *arg)
 {
-    struct Unk026C *state;
-    struct Unk705DC *old_resource;
-    struct Unk705DC *resource;
-    struct Unk42E78Result *result;
-    struct MainWork **main_loc;
     struct MainWork *main;
+    struct Unk026C *p;
+    struct Unk42E78 *row;
+    struct Unk310F0b *tens;
+    struct Unk310F0b *ones;
     u32 flags;
-    u32 mask;
-    struct Unk026C **state_loc;
-    s32 current;
-    u16 current_raw;
-    u32 resource_x;
-    u32 resource_y;
-    s16 next;
-    s32 value;
+    u32 x;
+    u32 y;
+    s16 current;
+    s8 t;
+    u32 *palette;
 
-    main_loc = gMainWorkPtrLoc;
-    main = *main_loc;
+    main = gMainWorkPtr;
     flags = main->unk1808;
-    if ((flags & 4) != 0)
+    if (flags & 4)
         return;
-    mask = flags & 0x1000;
-    if (mask != 0)
+    if (flags & 0x1000)
         return;
     main->unk1808 = flags | 0x1000;
-    current_raw = main->unk1838;
-    current = (s16)current_raw;
+    current = main->unk1838;
     if (current == -1)
         return;
-
-    state_loc = &gUnk_0300026C;
-    state = *state_loc;
-    if ((s8)state->unk48 == -1)
+    p = gUnk_0300026C;
+    if ((s8)p->unk48 == -1)
     {
-        state->unk4C = current;
-        state->unk4E = main->unk183A;
-        state->unk48 = 0;
-        state->unk04 = 1;
-        state->unk44 = arg;
-        (*main_loc)->unk16D4 = sub_08042B00(state->unk4E);
+        p->unk4C = current;
+        p->unk4E = main->unk183A;
+        p->unk48 = 0;
+        gUnk_0300026C->unk04 = 1;
+        gUnk_0300026C->unk44 = arg;
+        gMainWorkPtr->unk16D4 = sub_08042B00(gUnk_0300026C->unk4E);
         return;
     }
-    if (state->unk4C == current)
-        return;
-    if (state->unk48 != 2)
+    if (current == p->unk4C || (s8)p->unk48 != 2)
         return;
 
-    next = main->unk183A;
-    result = sub_08042E78(next);
-    state = *state_loc;
-    old_resource = state->unk28;
-    resource_x = old_resource->unk08;
-    resource_y = old_resource->unk0C;
-    state->unk4C = current_raw;
-    state->unk4E = next;
-    state->unk44 = arg;
-    (*main_loc)->unk16D4 = sub_08042B00(state->unk4E);
-    if (state->unk28 != 0)
+    row = (struct Unk42E78 *)sub_08042E78((s16)main->unk183A);
+    p = gUnk_0300026C;
+    x = p->unk28->unk08;
+    y = p->unk28->unk0C;
+    main = gMainWorkPtr;
+    p->unk4C = main->unk1838;
+    p->unk4E = main->unk183A;
+    p->unk44 = arg;
+    gMainWorkPtr->unk16D4 = sub_08042B00(p->unk4E);
+    if (gUnk_0300026C->unk28 != NULL)
     {
-        BtlObjPoolFree(state->unk28);
-        state->unk28 = (struct Unk705DC *)mask;
+        BtlObjPoolFree(gUnk_0300026C->unk28);
+        gUnk_0300026C->unk28 = NULL;
     }
-    state->unk28 = BtlObjPoolAlloc(1);
-    resource = sub_08042B28(state->unk4E);
-    sub_0806FF58(
-        state->unk28, resource, mask, 1, 1, mask,
-        resource_x, resource_y);
-    resource = sub_08042B50(state->unk4E);
-    _08073C4C(
-        resource, (void *)0x05000380, 0x20,
-        *(void **)0x080BB8C0);
-    TextEntrySetPaletteBank(state->unk28, 0x0C);
-    HudWriteDigits(
-        (struct Unk310F0b *)state->bladeStrengthTens,
-        (struct Unk310F0b *)state->bladeStrengthOnes, (s32)(s8)result->strength);
-    value = (s8)BitBeastLevel();
-    HudWriteDigits(
-        (struct Unk310F0b *)state->bitBeastLevelTens,
-        (struct Unk310F0b *)state->bitBeastLevelOnes, value);
-    value = ExpBarFill((s16)result->bitBeastExp);
-    state->bitBeastExpBar->unk18 = (s16)(s8)value;
+    gUnk_0300026C->unk28 = BtlObjPoolAlloc(1);
+    sub_0806FF58(gUnk_0300026C->unk28, sub_08042B28(gUnk_0300026C->unk4E), x, y, 0, 1, 1, 0);
+    palette = gData_080BB8C0;
+    _08073C4C(sub_08042B50(gUnk_0300026C->unk4E), (void *)0x05000380, 0x20, (void *)*palette);
+    TextEntrySetPaletteBank(gUnk_0300026C->unk28, 0x0C);
+    HudWriteDigits((struct Unk310F0b *)gUnk_0300026C->bladeStrengthTens, (struct Unk310F0b *)gUnk_0300026C->bladeStrengthOnes, (s8)row->strength);
+    tens = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelTens;
+    ones = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelOnes;
+    t = BitBeastLevel();
+    HudWriteDigits(tens, ones, t);
+    t = ExpBarFill(row->bitBeastExp);
+    gUnk_0300026C->bitBeastExpBar->unk18 = t;
 }
+

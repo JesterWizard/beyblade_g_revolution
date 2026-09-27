@@ -1,61 +1,34 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068118
-__attribute__((naked))
+/* match-compiler: old_agbcc */
 void sub_08068118(struct Unk68118 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r0, [r4, #0x00]\n"
-        "ldr r1, [r0, #0x18]\n"
-        "adds r0, r0, r1\n"
-        "ldrh r1, [r4, #0x1C]\n"
-        "adds r3, r1, r0\n"
-        "ldrh r1, [r4, #0x1E]\n"
-        "ldrh r0, [r3, #0x04]\n"
-        "subs r0, #0x01\n"
-        "cmp r1, r0\n"
-        "blt _08068164\n"
-        "movs r2, #0x00\n"
-        "movs r0, #0x2E\n"
-        "ldsh r1, [r4, r0]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r1, r0\n"
-        "beq _0806816A\n"
-        "movs r1, #0x1A\n"
-        "ldsh r5, [r4, r1]\n"
-        "ldrh r1, [r4, #0x2E]\n"
-        "ldr r2, _08068160 @ =0x0000FFFF\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08068020\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0xC0\n"
-        "ldr r2, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08068178\n"
-        "adds r0, r4, #0x0\n"
-        "adds r1, r5, #0x0\n"
-        "bl _08073C48\n"
-        "b _08068178\n"
-        "_08068160: .4byte 0x0000FFFF\n"
-        "_08068164:\n"
-        "adds r0, r1, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r2, r0, #0x10\n"
-        "_0806816A:\n"
-        "strh r2, [r4, #0x1E]\n"
-        "lsls r0, r2, #0x01\n"
-        "adds r0, r0, r3\n"
-        "ldrh r1, [r0, #0x08]\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08068180\n"
-        "_08068178:\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk68118Table *table;
+    u16 next;
+    s32 arg;
+
+    table = (struct Unk68118Table *)((u8 *)a->unk00 + a->unk00->unk18 + a->unk1C);
+    if (a->unk1E < table->unk04 - 1)
+    {
+        next = a->unk1E + 1;
+    }
+    else
+    {
+        next = 0;
+        if ((s16)a->unk2E != -1)
+        {
+            arg = a->unk1A;
+            BtlEntitySelectByKey((struct Unk680CC *)a, a->unk2E, 0xFFFF);
+            if (a->unkC0 != NULL)
+                _08073C48(a, (void *)arg, a->unkC0);
+            return;
+        }
+    }
+    a->unk1E = next;
+    sub_08068180((struct Unk68598 *)a, ((u16 *)table)[next + 4]);
 }
+
 

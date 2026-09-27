@@ -1,70 +1,30 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08041e14
-__attribute__((naked))
 s32 sub_08041E14(void *a, void *b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "movs r1, #0x00\n"
-        "ldr r0, _08041E68 @ =0x03000504\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "cmp r0, #0x00\n"
-        "ble _08041E7E\n"
-        "cmp r1, r0\n"
-        "bge _08041E7E\n"
-        "ldr r6, _08041E6C @ =0x03000480\n"
-        "adds r3, r0, #0x0\n"
-        "_08041E2E:\n"
-        "lsls r1, r1, #0x10\n"
-        "asrs r0, r1, #0x0E\n"
-        "adds r0, r0, r6\n"
-        "ldr r2, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08041E70\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xD4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r5\n"
-        "bne _08041E70\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xD8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r4\n"
-        "bne _08041E70\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xC8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08041E7E\n"
-        "ldr r0, [r0, #0x10]\n"
-        "cmp r0, #0x00\n"
-        "beq _08041E7E\n"
-        "ldr r0, [r0, #0x10]\n"
-        "cmp r0, #0x00\n"
-        "beq _08041E7E\n"
-        "movs r0, #0x01\n"
-        "b _08041E80\n"
-        "_08041E68: .4byte 0x03000504\n"
-        "_08041E6C: .4byte 0x03000480\n"
-        "_08041E70:\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x09\n"
-        "adds r0, r1, r2\n"
-        "lsrs r1, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, r3\n"
-        "blt _08041E2E\n"
-        "_08041E7E:\n"
-        "movs r0, #0x00\n"
-        "_08041E80:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s16 i;
+    s16 count;
+    struct Unk68574 *obj;
+
+    i = 0;
+    count = gData_03000504[0];
+    if (count > 0)
+    {
+        for (; i < count; i++)
+        {
+            obj = gData_03000480[i];
+            if (obj != NULL && obj->unkD4 == a && obj->unkD8 == b)
+            {
+                if (obj->unkC8 == NULL || obj->unkC8->unk10 == NULL || obj->unkC8->unk10->unk10 == NULL)
+                    return 0;
+                return 1;
+            }
+        }
+    }
+    return 0;
 }
+
 

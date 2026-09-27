@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-27T08:33:17Z",
+  "generated": "2026-09-27T08:58:51Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 136,
-    "semantic_done": 497,
-    "readable_asm": 136,
+    "pending": 130,
+    "semantic_done": 503,
+    "readable_asm": 130,
     "opcode": 0,
-    "battle_pending": 50,
-    "battle_semantic": 108,
+    "battle_pending": 49,
+    "battle_semantic": 109,
     "blocked": 20,
-    "wip": 65
+    "wip": 60
   },
   "pinned": [],
   "wip": [
@@ -59,28 +59,6 @@
       "status": "size_mismatch 14/90 baseline; explicit-goto and r2/r5-pinned variants did not reproduce retail loop allocation",
       "next": "leave readable Thumb; revisit with permuter over skip/main-loop source shape",
       "score": "14/90"
-    },
-    {
-      "name": "sub_08040EF4",
-      "addr": "0x08040EF4",
-      "kind": "asm",
-      "bytes": 88,
-      "seed": "src/decompiled/sub_08040EF4.c",
-      "notes": "src/decompiled/sub_08040EF4.md",
-      "status": "60s permuter, no score 0 (19/88)",
-      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
-      "score": "19/88"
-    },
-    {
-      "name": "sub_08042BE8",
-      "addr": "0x08042BE8",
-      "kind": "asm",
-      "bytes": 82,
-      "seed": "src/decompiled/sub_08042BE8.c",
-      "notes": "src/decompiled/sub_08042BE8.md",
-      "status": "60s permuter, no score 0 (17/82)",
-      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
-      "score": "17/82"
     },
     {
       "name": "sub_08059DC8",
@@ -246,17 +224,6 @@
       "status": "Two semantic attempts failed to reproduce the fixed-point table walk: direct loop 19/244 (208B), then pinned r4/r5/r6/r7 and explicit fixed-point/color locals 41/244 (224B). Object fields and update/callback roles are identified.",
       "next": "Use a targeted register/permuter search for the retail fixed-point index expression (r4=i<<16, r0=asr #14), r5 object slot, r6 table base, and r7 loop index; preserve separate signed count loads.",
       "score": "19/244 then 41/244"
-    },
-    {
-      "name": "sub_08041E14",
-      "addr": "0x08041E14",
-      "kind": "asm",
-      "bytes": 114,
-      "seed": "src/decompiled/sub_08041E14.c",
-      "notes": "src/decompiled/sub_08041E14.md",
-      "status": "Two semantic attempts: baseline 25/114 (104B), then retail register-pinned args/count/table 78/114 (108B). Matching logic and nested +0xC8/+0x10 presence chain are identified; remaining diff is fixed-point table indexing and loop increment shape.",
-      "next": "Use a targeted source/permuter search to reproduce lsls index,#16; asrs,#14 byte-offset indexing and bottom increment via r0/lsrs/asrs while retaining r5/r4 args, r6 table, r3 count, r1 index.",
-      "score": "25/114 then 78/114"
     },
     {
       "name": "sub_08043420",
@@ -446,17 +413,6 @@
       "score": "50/352 then 50/352"
     },
     {
-      "name": "sub_08068118",
-      "addr": "0x08068118",
-      "kind": "asm",
-      "bytes": 102,
-      "seed": "src/decompiled/sub_08068118.c",
-      "notes": "src/decompiled/sub_08068118.md",
-      "status": "Two semantic attempts: initial table/branch model 22/102 (116B), then corrected early-return behavior and pinned r4/r3/r2 shape 9/102 (112B). Retail reads current before table length, keeps base in r0 and table in r3, and lays the increment branch before the callback branch; the semantic control flow is now mapped.",
-      "next": "Use a base pointer pinned to r0 and a current halfword pinned to r1: load current before table->unk04, then shape the condition so the  increment block is emitted before the callback-return block. Preserve the retail early return when unk2E != -1.",
-      "score": "22/102 then 9/102"
-    },
-    {
       "name": "sub_08068598",
       "addr": "0x08068598",
       "kind": "asm",
@@ -631,17 +587,6 @@
       "status": "matched only with GCC asm labels; stripped DIFF",
       "next": "rewrite without register asm / empty asm(); permuter if same-size",
       "score": "22/180"
-    },
-    {
-      "name": "sub_08071BA0",
-      "addr": "0x08071BA0",
-      "kind": "asm",
-      "bytes": 148,
-      "seed": "src/decompiled/sub_08071BA0.c",
-      "notes": "src/decompiled/sub_08071BA0.md",
-      "status": "matched only with GCC asm labels; stripped DIFF",
-      "next": "rewrite without register asm / empty asm(); permuter if same-size",
-      "score": "32/148"
     },
     {
       "name": "sub_080739E8",
@@ -1065,18 +1010,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0806A4D8",
-      "addr": "0x0806A4D8",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 84,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_080419B0",
       "addr": "0x080419B0",
       "kind": "asm",
@@ -1250,6 +1183,18 @@
       "kind": "asm",
       "bytes": 256,
       "score": 138,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08068418",
+      "addr": "0x08068418",
+      "kind": "asm",
+      "bytes": 272,
+      "score": 139,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
@@ -1725,18 +1670,6 @@
       "kind": "asm",
       "bytes": 162,
       "score": 81,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806A4D8",
-      "addr": "0x0806A4D8",
-      "kind": "asm",
-      "bytes": 168,
-      "score": 84,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,

@@ -1274,8 +1274,8 @@
       "diff_bytes": 54,
       "status": "size_mismatch",
       "score": "22/72",
-      "updated": "2026-09-26T23:47:18Z",
-      "note": "semantic seed"
+      "updated": "2026-09-27T09:01:38Z",
+      "note": "semantic seed; see src/decompiled notes"
     },
     "sub_08067504": {
       "matched_bytes": 59,
@@ -1285,8 +1285,30 @@
       "diff_bytes": 69,
       "status": "size_mismatch",
       "score": "59/128",
-      "updated": "2026-09-26T23:47:18Z",
-      "note": "semantic seed"
+      "updated": "2026-09-27T09:01:38Z",
+      "note": "semantic seed; see src/decompiled notes"
+    },
+    "sub_0802DCDC": {
+      "matched_bytes": 416,
+      "retail_bytes": 452,
+      "compiled_bytes": 452,
+      "pct": 92.0,
+      "diff_bytes": 36,
+      "status": "same_size",
+      "score": "416/452",
+      "updated": "2026-09-27T09:01:38Z",
+      "note": "sibling-style rewrite; main/p register swap left"
+    },
+    "sub_08038D68": {
+      "matched_bytes": 86,
+      "retail_bytes": 112,
+      "compiled_bytes": 112,
+      "pct": 76.8,
+      "diff_bytes": 26,
+      "status": "same_size",
+      "score": "86/112",
+      "updated": "2026-09-27T09:01:38Z",
+      "note": "gData symbols + sel pointer; 2FC/300 address order left"
     }
   }
 }

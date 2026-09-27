@@ -125,24 +125,6 @@ next = "leave readable Thumb; revisit with permuter over skip/main-loop source s
 score = "14/90"
 
 [[wip]]
-name = "sub_08040EF4"
-seed = "src/decompiled/sub_08040EF4.c"
-notes = "src/decompiled/sub_08040EF4.md"
-status = "60s permuter, no score 0 (19/88)"
-next = "Do not re-attempt by hand or by permuter until a new seed exists."
-score = "19/88"
-retry = "false"
-
-[[wip]]
-name = "sub_08042BE8"
-seed = "src/decompiled/sub_08042BE8.c"
-notes = "src/decompiled/sub_08042BE8.md"
-status = "60s permuter, no score 0 (17/82)"
-next = "Do not re-attempt by hand or by permuter until a new seed exists."
-score = "17/82"
-retry = "false"
-
-[[wip]]
 name = "sub_08059DC8"
 seed = "src/decompiled/sub_08059DC8.c"
 notes = "src/decompiled/sub_08059DC8.md"
@@ -264,14 +246,6 @@ notes = "src/decompiled/sub_0804188C.md"
 status = "Two semantic attempts failed to reproduce the fixed-point table walk: direct loop 19/244 (208B), then pinned r4/r5/r6/r7 and explicit fixed-point/color locals 41/244 (224B). Object fields and update/callback roles are identified."
 next = "Use a targeted register/permuter search for the retail fixed-point index expression (r4=i<<16, r0=asr #14), r5 object slot, r6 table base, and r7 loop index; preserve separate signed count loads."
 score = "19/244 then 41/244"
-
-[[wip]]
-name = "sub_08041E14"
-seed = "src/decompiled/sub_08041E14.c"
-notes = "src/decompiled/sub_08041E14.md"
-status = "Two semantic attempts: baseline 25/114 (104B), then retail register-pinned args/count/table 78/114 (108B). Matching logic and nested +0xC8/+0x10 presence chain are identified; remaining diff is fixed-point table indexing and loop increment shape."
-next = "Use a targeted source/permuter search to reproduce lsls index,#16; asrs,#14 byte-offset indexing and bottom increment via r0/lsrs/asrs while retaining r5/r4 args, r6 table, r3 count, r1 index."
-score = "25/114 then 78/114"
 
 [[wip]]
 name = "sub_08043420"
@@ -408,14 +382,6 @@ next = "Use an explicit volatile 0xB0-byte workspace or struct to force the reta
 score = "50/352 then 50/352"
 
 [[wip]]
-name = "sub_08068118"
-seed = "src/decompiled/sub_08068118.c"
-notes = "src/decompiled/sub_08068118.md"
-status = "Two semantic attempts: initial table/branch model 22/102 (116B), then corrected early-return behavior and pinned r4/r3/r2 shape 9/102 (112B). Retail reads current before table length, keeps base in r0 and table in r3, and lays the increment branch before the callback branch; the semantic control flow is now mapped."
-next = "Use a base pointer pinned to r0 and a current halfword pinned to r1: load current before table->unk04, then shape the condition so the  increment block is emitted before the callback-return block. Preserve the retail early return when unk2E != -1."
-score = "22/102 then 9/102"
-
-[[wip]]
 name = "sub_08068598"
 seed = "src/decompiled/sub_08068598.c"
 notes = "src/decompiled/sub_08068598.md"
@@ -541,14 +507,6 @@ notes = "src/decompiled/sub_08033978.md"
 status = "matched only with GCC asm labels; stripped DIFF"
 next = "rewrite without register asm / empty asm(); permuter if same-size"
 score = "22/180"
-
-[[wip]]
-name = "sub_08071BA0"
-seed = "src/decompiled/sub_08071BA0.c"
-notes = "src/decompiled/sub_08071BA0.md"
-status = "matched only with GCC asm labels; stripped DIFF"
-next = "rewrite without register asm / empty asm(); permuter if same-size"
-score = "32/148"
 
 [[wip]]
 name = "sub_080739E8"

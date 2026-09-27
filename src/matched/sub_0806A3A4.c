@@ -29,12 +29,12 @@ void *HeapAlloc(u32 size)
     if (buffer == 0)
         DebugPrint((void *)0x083D1B00, (void *)size);
     node = sub_0806A4D8(
-        (void *)(size + 8),
+        size + 8,
         (void *)gUnk_03000B34,
         0xFE << 10,
         *current,
         buffer,
-        current);
+        (struct Unk6A4D8Node **)current);
     if (node != 0)
     {
         gUnk_03000B3C++;

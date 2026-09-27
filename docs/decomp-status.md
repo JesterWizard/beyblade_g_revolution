@@ -8,18 +8,28 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **494/633 (78.0%)** |
-| **Decompiled C (bytes)** | **42,210/90,272 (46.8%)** |
+| **Decompiled C (functions)** | **500/633 (79.0%)** |
+| **Decompiled C (bytes)** | **42,912/90,272 (47.5%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 139/633 (22.0%) |
+| Readable Thumb | 133/633 (21.0%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 106/160 (66.2% fn, 35.9% bytes) |
+| Battle semantic C | 107/160 (66.9% fn, 36.1% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-27 — parked-WIP sweep 6 (+7): 42BE8, 40EF4, 68118, 41E14, 71BA0, 6A4D8, 2DCDC→92%
+
+- `sub_08042BE8` / `sub_08040EF4` — plain `for` over the `gData_080908BC` / `gData_0808B2E4` tables (40EF4 `old_agbcc`).
+- `sub_08068118` — `old_agbcc`; `s32 arg = a->unk1A`; entries read as `((u16 *)table)[next + 4]`.
+- `sub_08041E14` — `s16 count` local + explicit `if (count > 0)` guard around the `s16 i` loop.
+- `sub_08071BA0` — `REG_DMA1SAD = buffer = ...` (LHS first); timer written through a `vu32 *timer` local, rate read into a local.
+- `sub_0806A4D8` — prototype typed (`u32 size, u8 *start, u32 len, Unk6A4D8Node *head, *out, **outp`);
+  callers `sub_0806A314`/`sub_0806A3A4` adjusted (still match); `gap` via if/else; success path is `if (room >= size)`.
+- Parked: `sub_0802DCDC` 416/452 (main/p register swap), `sub_08067504`, `sub_08038D68`, `sub_08059DC8`.
 
 ### 2026-09-27 — parked-WIP sweep 5 (+9): 31300, 385DC, 2C3DC, 2C4A4, 2C314, 36A68, 34420, 429CC, 444BC
 

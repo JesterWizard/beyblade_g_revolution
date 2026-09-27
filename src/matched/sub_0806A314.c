@@ -33,12 +33,12 @@ void *sub_0806A314(struct Unk6A314 *state)
     if (buffer == 0)
         DebugPrint((void *)0x083D1AC8, state);
     node = sub_0806A4D8(
-        (void *)((u32)state + 8),
+        (u32)state + 8,
         (void *)0x03000B40,
         0xD0 << 6,
         *current,
         buffer,
-        current);
+        (struct Unk6A4D8Node **)current);
     if (node != 0)
     {
         gUnk_03003F48++;
