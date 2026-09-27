@@ -3,6 +3,10 @@
 #include "battle.h"
 
 // @ 0x0802bad4
+// This caller was built against an older (s8, s8, u8) prototype of
+// sub_0803DEC8; its definition takes (u16, u8, u8).
+#define sub_0803DEC8(a, b, c) ((void (*)(s8, s8, u8))sub_0803DEC8)(a, b, c)
+
 // Claims the first free Unk1694 slot (word 0xFF0000FF) for (kind, group, c, d),
 // if the group still has room. Group 1 first registers the entry through
 // sub_0802C3DC/sub_0803DEC8 (logging and skipping the slot on failure). Retail

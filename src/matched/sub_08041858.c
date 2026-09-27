@@ -17,7 +17,7 @@ void sub_08041858(void)
         HeapFree(v);
         gData_03000508[0] = 0;
     }
-    gData_03000534[0] = 0;
-    gData_03000504[0] = 0;
+    gData_03000534 = NULL;
+    gData_03000504 = 0;
 }
 

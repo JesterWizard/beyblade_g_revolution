@@ -1,101 +1,36 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806ff58
-__attribute__((naked))
-void sub_0806FF58(void *a, void *b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h)
+/* match-compiler: old_agbcc */
+// Initialise sprite `dst` from template `src` at (x, y): pack the OAM
+// attribute words (shape/size from src->unk07; 16-colour flag and palette
+// from src->unk0C; object mode + mosaic; flip; priority) and point unk28 at
+// the template graphics.
+// The `mode` temporary keeps agbcc from re-associating the 0x1000 constant.
+void sub_0806FF58(struct Unk705DC *dst, struct Unk6FF58Src *src, u32 x, u32 y, u8 objMode, u8 priority, u8 flip, u16 h)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "adds r7, r0, #0x0\n"
-        "mov r12, r1\n"
-        "ldr r6, [sp, #0x020]\n"
-        "ldr r0, [sp, #0x024]\n"
-        "mov r9, r0\n"
-        "ldr r4, [sp, #0x028]\n"
-        "ldr r0, [sp, #0x02C]\n"
-        "lsls r4, r4, #0x18\n"
-        "lsrs r4, r4, #0x18\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r10, r0\n"
-        "ldrb r1, [r1, #0x07]\n"
-        "mov r0, r12\n"
-        "ldrb r5, [r0, #0x0C]\n"
-        "str r0, [r7, #0x2C]\n"
-        "strh r4, [r7, #0x1C]\n"
-        "str r2, [r7, #0x08]\n"
-        "str r3, [r7, #0x0C]\n"
-        "lsls r1, r1, #0x18\n"
-        "asrs r1, r1, #0x18\n"
-        "mov r8, r1\n"
-        "movs r3, #0x03\n"
-        "ands r1, r3\n"
-        "lsls r1, r1, #0x0E\n"
-        "mvns r0, r5\n"
-        "movs r2, #0x01\n"
-        "ands r0, r2\n"
-        "lsls r0, r0, #0x0D\n"
-        "orrs r1, r0\n"
-        "ands r6, r3\n"
-        "lsls r6, r6, #0x0A\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x05\n"
-        "orrs r6, r0\n"
-        "orrs r1, r6\n"
-        "movs r0, #0x0C\n"
-        "mov r2, r8\n"
-        "ands r0, r2\n"
-        "lsls r0, r0, #0x1C\n"
-        "orrs r1, r0\n"
-        "ands r4, r3\n"
-        "lsls r4, r4, #0x1C\n"
-        "orrs r1, r4\n"
-        "str r1, [r7, #0x10]\n"
-        "lsrs r5, r5, #0x01\n"
-        "movs r0, #0x0F\n"
-        "ands r5, r0\n"
-        "lsls r5, r5, #0x0C\n"
-        "mov r0, r9\n"
-        "ands r0, r3\n"
-        "lsls r0, r0, #0x0A\n"
-        "orrs r5, r0\n"
-        "strh r5, [r7, #0x14]\n"
-        "mov r1, r12\n"
-        "ldr r0, [r1, #0x1C]\n"
-        "cmp r0, #0x00\n"
-        "bne _0806FFDA\n"
-        "mov r2, r12\n"
-        "ldr r0, [r2, #0x10]\n"
-        "_0806FFDA:\n"
-        "add r0, r12\n"
-        "str r0, [r7, #0x28]\n"
-        "mov r1, r12\n"
-        "ldrb r0, [r1, #0x06]\n"
-        "movs r1, #0x00\n"
-        "strh r0, [r7, #0x16]\n"
-        "mov r2, r10\n"
-        "strh r2, [r7, #0x18]\n"
-        "ldr r0, _08070008 @ =0x0000FFFF\n"
-        "strh r0, [r7, #0x1A]\n"
-        "strh r1, [r7, #0x1C]\n"
-        "strh r1, [r7, #0x20]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r7, #0x24]\n"
-        "strh r1, [r7, #0x1E]\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08070008: .4byte 0x0000FFFF\n"
-    );
+    s8 shapeSize;
+    u8 palette;
+    u32 mode;
+
+    shapeSize = src->unk07;
+    palette = src->unk0C;
+    dst->unk2C = src;
+    dst->unk1C = flip;
+    dst->unk08 = x;
+    dst->unk0C = y;
+    dst->unk10 = ((shapeSize & 3) << 14) | ((~palette & 1) << 13) | (mode = ((objMode & 3) << 10) | 0x1000)
+               | ((shapeSize & 0xC) << 28) | ((flip & 3) << 28);
+    dst->unk14 = (((palette >> 1) & 0xF) << 12) | ((priority & 3) << 10);
+    dst->unk28 = (u8 *)src + (src->unk1C != 0 ? src->unk1C : src->unk10);
+    dst->unk16 = src->unk06;
+    dst->unk18 = h;
+    dst->unk1A = 0xFFFF;
+    dst->unk1C = 0;
+    dst->unk20 = 0;
+    dst->unk24 = -1;
+    dst->unk1E = 0;
 }
 

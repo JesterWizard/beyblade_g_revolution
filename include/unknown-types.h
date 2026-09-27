@@ -97,15 +97,17 @@ struct Unk346A8 /* >= 0x2f4 */
 };
 
 /* Packed u16s at +0x9a..+0xae. sub_08068574, sub_08068584, sub_08068558. */
-struct Unk68574 /* >= 0xdc */
+struct Unk68574 /* 0xdc */
 {
-    /* 00 */ u8 filler_00[4];
+    /* 00 */ void *unk00;
     /* 04 */ u32 unk04;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;
     /* 10 */ u8 filler_10[0x0A];
     /* 1a */ s16 unk1A; /* sub_0803559C */
-    /* 1c */ u8 filler_1C[0x1E];
+    /* 1c */ u8 filler_1C[0x15];
+    /* 31 */ u8 unk31; /* sub_0804DB28 */
+    /* 32 */ u8 filler_32[8];
     /* 3a */ u8 unk3A; /* sub_08035258 */
     /* 3b */ u8 filler_3B[0x17];
     /* 52 */ s16 unk52; /* sub_080353A0 */
@@ -134,6 +136,23 @@ struct Unk68574 /* >= 0xdc */
     /* cc */ u8 filler_CC[8];
     /* d4 */ void *unkD4; /* sub_08041DB4 */
     /* d8 */ void *unkD8; /* sub_08041DB4 */
+};
+
+/* 0x1C-stride table at 0x0807BE04; +0x10 is a sub_08067BB8 source. */
+struct Unk7BE04 /* 0x1c */
+{
+    /* 00 */ u8 filler_00[0x10];
+    /* 10 */ struct Unk67BB8Source *unk10;
+    /* 14 */ u8 filler_14[8];
+};
+
+/* Free-span list node: sorted list at gData_03004088, spares at
+ * gData_03004098. sub_0806FBF8. */
+struct Unk6FBF8Span /* 0x08 */
+{
+    /* 00 */ u16 start;
+    /* 02 */ u16 size;
+    /* 04 */ struct Unk6FBF8Span *next;
 };
 
 /* State initialized by sub_08067BB8. */
@@ -848,11 +867,19 @@ struct Unk45D3CEntry /* 0x1f60 */
 /* Per-slot record, 0x53 slots at MainWork+0x8D0. sub_0803E258. */
 struct Unk8D0 /* 0x28 */
 {
-    /* 00 */ u8 filler_00[0x1C];
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ u32 unk14;
+    /* 18 */ u32 unk18;
     /* 1C */ s8 unk1C;
-    /* 1D */ u8 filler_1D[6];
+    /* 1D */ u8 unk1D;
+    /* 1E */ u8 unk1E;
+    /* 1F */ u8 unk1F;
+    /* 20 */ u8 unk20;
+    /* 21 */ u8 unk21;
+    /* 22 */ u8 filler_22;
     /* 23 */ u8 unk23; /* sub_0803e1f4 */
-    /* 24 */ u8 filler_24[4];
+    /* 24 */ u8 filler_24[2];
+    /* 26 */ u16 unk26;
 };
 
 /* Flag at +8, pointers at +0/+4. sub_08045A84. */
@@ -976,7 +1003,8 @@ struct MainWork /* >= 0x18B4 */
     /* 086C */ u32 unk086C;
     /* 0870 */ u8 filler_0870[4];
     /* 0874 */ s16 expPoints; /* cumulative experience; level curve at 0x080908BC */
-    /* 0876 */ u8 filler_0876[2];
+    /* 0876 */ u8 filler_0876;
+    /* 0877 */ u8 unk0877; /* active unk08D0 records, sub_0803DEC8 */
     /* 0878 */ s8 strength; /* 0..99, shown as two HUD digits */
     /* 0879 */ u8 filler_0879[3];
     /* 087C */ u8 unk087C[0x53]; /* sub_0803E258 */
@@ -1250,13 +1278,13 @@ struct Unk61E40 /* >= 0x16 */
 
 /* Compare **a vs b, then base + (b<<4). sub_0806DEF4. */
 /* sub_0806DF38 output entry, 0x14 stride. sub_0806C78C. */
-struct UnkDF38Entry /* >= 0x14 */
+struct UnkDF38Entry /* 0x14 */
 {
-    /* 00 */ s32 *unk00;
-    /* 04 */ s32 unk04;
-    /* 08 */ s32 unk08;
-    /* 0c */ s32 unk0C;
-    /* 10 */ void *unk10;
+    /* 00 */ s32 *unk00; /* matching track (key count first) */
+    /* 04 */ s32 unk04; /* key index within the track */
+    /* 08 */ s32 unk08; /* track index */
+    /* 0c */ void *unk0C; /* frame before the key, or NULL */
+    /* 10 */ void *unk10; /* frame at the key, or NULL for the last key */
 };
 
 struct Unk6DEF4 /* >= 0x08 */
@@ -2037,11 +2065,13 @@ struct Unk0380 /* >= 0x1c */
 
 /* Beyblade row returned by sub_08042E78. 48 bytes apart. +0 is the bit-beast
  * experience (level via ExpBracket); +3 is the strength the HUD digits show. */
-struct Unk42E78 /* >= 0x04 */
+struct Unk42E78 /* 0x30 */
 {
     /* 00 */ s16 bitBeastExp;
     /* 02 */ u8 filler_02;
     /* 03 */ u8 strength;
+    /* 04 */ u8 filler_04[4];
+    /* 08 */ struct Unk8D0 unk08; /* copied into MainWork.unk08D0 by sub_0803DEC8 */
 };
 
 /* Lookup result. sub_080447CC. */
@@ -2311,7 +2341,9 @@ struct Unk4109CInput /* >= 0x4f */
     /* 24 */ u32 unk24;
     /* 28 */ u32 unk28;
     /* 2c */ u32 unk2C;
-    /* 30 */ u8 filler_30[0x18];
+    /* 30 */ void *unk30[4];
+    /* 40 */ void *unk40;
+    /* 44 */ void *unk44;
     /* 48 */ u16 unk48;
     /* 4a */ u16 unk4A;
     /* 4c */ u16 unk4C;
@@ -2375,6 +2407,21 @@ struct Unk705DC /* >= 0x30 */
     /* 28 */ void *unk28;
     /* 2c */ void *unk2C;
     /* 30 */ struct Unk705DC *unk30;
+};
+
+/* Sprite template read by sub_0806FF58: OAM shape/size at +7, colour
+ * mode/size at +0xC, graphics offset at +0x1C (else +0x10). */
+struct Unk6FF58Src /* >= 0x20 */
+{
+    /* 00 */ u8 filler_00[6];
+    /* 06 */ u8 unk06;
+    /* 07 */ s8 unk07;
+    /* 08 */ u8 filler_08[4];
+    /* 0c */ u8 unk0C;
+    /* 0d */ u8 filler_0D[3];
+    /* 10 */ u32 unk10;
+    /* 14 */ u8 filler_14[8];
+    /* 1c */ u32 unk1C;
 };
 
 /* Pending battle-object batch released by sub_080700CC. */
@@ -2952,8 +2999,8 @@ struct Unk38D68 /* >= 0x304 */
 struct Unk37508Resource /* 0x6c */
 {
     /* 00 */ u8 filler_00[0x18];
-    /* 18 */ u8 unkB00[0x20];
-    /* 38 */ u8 unkB20[0x20];
+    /* 18 */ struct Unk705DC *unkB00[8];
+    /* 38 */ struct Unk705DC *unkB20[8];
     /* 58 */ u8 filler_58[0x14];
 };
 

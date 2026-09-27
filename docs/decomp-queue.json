@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-27T15:29:54Z",
+  "generated": "2026-09-27T19:46:13Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 102,
-    "semantic_done": 531,
-    "readable_asm": 102,
+    "pending": 89,
+    "semantic_done": 544,
+    "readable_asm": 89,
     "opcode": 0,
-    "battle_pending": 36,
-    "battle_semantic": 122,
+    "battle_pending": 32,
+    "battle_semantic": 126,
     "blocked": 20,
     "wip": 38
   },
@@ -184,8 +184,8 @@
     {
       "name": "sub_08067504",
       "addr": "0x08067504",
-      "kind": "asm",
-      "bytes": 128,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08067504.c",
       "notes": "src/decompiled/sub_08067504.md",
       "status": "Two semantic attempts: direct volatile-register C 48/128 (120B), then explicit waitcnt/mask temporaries 60/128 (112B). DMA behavior and register sequence are mapped; remaining issues are waitcnt result register (retail r4 = REG_WAITCNT & 0xF8FF, candidate r3) and DMA-status literal scheduling (retail loads 0x040000DE before constructing the r1 mask).",
@@ -305,8 +305,8 @@
     {
       "name": "sub_0803114C",
       "addr": "0x0803114C",
-      "kind": "asm",
-      "bytes": 184,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0803114C.c",
       "notes": "src/decompiled/sub_0803114C.md",
       "status": "Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts.",
@@ -468,20 +468,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08044FB0",
-      "addr": "0x08044FB0",
-      "kind": "asm",
-      "bytes": 156,
-      "score": 77,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803E0CC",
       "addr": "0x0803E0CC",
       "kind": "asm",
@@ -490,20 +476,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803D284",
-      "addr": "0x0803D284",
-      "kind": "asm",
-      "bytes": 298,
-      "score": 144,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
       ],
       "has_pool": true,
       "blocked": false,
@@ -608,20 +580,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803DEC8",
-      "addr": "0x0803DEC8",
-      "kind": "asm",
-      "bytes": 514,
-      "score": 227,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08053690",
       "addr": "0x08053690",
       "kind": "asm",
@@ -716,90 +674,6 @@
         "gMainWorkPtr"
       ],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08041B74",
-      "addr": "0x08041B74",
-      "kind": "asm",
-      "bytes": 162,
-      "score": 78,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08073AEC",
-      "addr": "0x08073AEC",
-      "kind": "asm",
-      "bytes": 162,
-      "score": 81,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080419B0",
-      "addr": "0x080419B0",
-      "kind": "asm",
-      "bytes": 172,
-      "score": 80,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080416C4",
-      "addr": "0x080416C4",
-      "kind": "asm",
-      "bytes": 176,
-      "score": 100,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806FF58",
-      "addr": "0x0806FF58",
-      "kind": "asm",
-      "bytes": 180,
-      "score": 88,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806FBF8",
-      "addr": "0x0806FBF8",
-      "kind": "asm",
-      "bytes": 196,
-      "score": 91,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806DF38",
-      "addr": "0x0806DF38",
-      "kind": "asm",
-      "bytes": 228,
-      "score": 116,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },
@@ -953,6 +827,126 @@
       "kind": "asm",
       "bytes": 280,
       "score": 144,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806211C",
+      "addr": "0x0806211C",
+      "kind": "asm",
+      "bytes": 284,
+      "score": 150,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0804AE94",
+      "addr": "0x0804AE94",
+      "kind": "asm",
+      "bytes": 300,
+      "score": 178,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08056250",
+      "addr": "0x08056250",
+      "kind": "asm",
+      "bytes": 302,
+      "score": 156,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0804BD38",
+      "addr": "0x0804BD38",
+      "kind": "asm",
+      "bytes": 328,
+      "score": 170,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_08061EF8",
+      "addr": "0x08061EF8",
+      "kind": "asm",
+      "bytes": 332,
+      "score": 184,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_080737C0",
+      "addr": "0x080737C0",
+      "kind": "asm",
+      "bytes": 336,
+      "score": 188,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0804D420",
+      "addr": "0x0804D420",
+      "kind": "asm",
+      "bytes": 362,
+      "score": 208,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0804C8BC",
+      "addr": "0x0804C8BC",
+      "kind": "asm",
+      "bytes": 372,
+      "score": 191,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806314C",
+      "addr": "0x0806314C",
+      "kind": "asm",
+      "bytes": 404,
+      "score": 193,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": true,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806EEC8",
+      "addr": "0x0806EEC8",
+      "kind": "asm",
+      "bytes": 404,
+      "score": 203,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
@@ -1135,20 +1129,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08044FB0",
-      "addr": "0x08044FB0",
-      "kind": "asm",
-      "bytes": 156,
-      "score": 77,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0803E0CC",
       "addr": "0x0803E0CC",
       "kind": "asm",
@@ -1157,20 +1137,6 @@
       "battle_refs": 1,
       "battle_syms": [
         "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0803D284",
-      "addr": "0x0803D284",
-      "kind": "asm",
-      "bytes": 298,
-      "score": 144,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattleWork"
       ],
       "has_pool": true,
       "blocked": false,
@@ -1275,20 +1241,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_0803DEC8",
-      "addr": "0x0803DEC8",
-      "kind": "asm",
-      "bytes": 514,
-      "score": 227,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08053690",
       "addr": "0x08053690",
       "kind": "asm",
@@ -1383,90 +1335,6 @@
         "gMainWorkPtr"
       ],
       "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08041B74",
-      "addr": "0x08041B74",
-      "kind": "asm",
-      "bytes": 162,
-      "score": 78,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08073AEC",
-      "addr": "0x08073AEC",
-      "kind": "asm",
-      "bytes": 162,
-      "score": 81,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080419B0",
-      "addr": "0x080419B0",
-      "kind": "asm",
-      "bytes": 172,
-      "score": 80,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080416C4",
-      "addr": "0x080416C4",
-      "kind": "asm",
-      "bytes": 176,
-      "score": 100,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806FF58",
-      "addr": "0x0806FF58",
-      "kind": "asm",
-      "bytes": 180,
-      "score": 88,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806FBF8",
-      "addr": "0x0806FBF8",
-      "kind": "asm",
-      "bytes": 196,
-      "score": 91,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806DF38",
-      "addr": "0x0806DF38",
-      "kind": "asm",
-      "bytes": 228,
-      "score": 116,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
       "blocked": false,
       "block_reason": ""
     },
@@ -1896,18 +1764,6 @@
       "kind": "asm",
       "bytes": 710,
       "score": 365,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804DB28",
-      "addr": "0x0804DB28",
-      "kind": "asm",
-      "bytes": 900,
-      "score": 451,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,

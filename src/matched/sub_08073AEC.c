@@ -1,101 +1,52 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08073aec
-__attribute__((naked))
-void sub_08073AEC(void *a, void *b, void *c, u32 d, u32 e)
+// Copy NUL-terminated `src` into `dst`, expanding every `delim` byte into the
+// string `repl`. At most `size` bytes are copied; past that each would-be
+// write stores 0 at dst[size - 1] instead (and an overlong `repl` never
+// advances, so it spins forever). Always NUL-terminates dst.
+void sub_08073AEC(const u8 *src, u8 *dst, const u8 *repl, u8 delim, s32 size)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "adds r6, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "mov r9, r2\n"
-        "ldr r0, [sp, #0x020]\n"
-        "mov r8, r0\n"
-        "lsls r3, r3, #0x18\n"
-        "lsrs r3, r3, #0x18\n"
-        "mov r10, r3\n"
-        "movs r7, #0x00\n"
-        "cmp r6, #0x00\n"
-        "beq _08073B80\n"
-        "cmp r4, #0x00\n"
-        "beq _08073B80\n"
-        "cmp r2, #0x00\n"
-        "beq _08073B80\n"
-        "cmp r3, #0x00\n"
-        "beq _08073B80\n"
-        "ldrb r0, [r6, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08073B7C\n"
-        "subs r0, r4, #0x1\n"
-        "mov r1, r8\n"
-        "adds r5, r0, r1\n"
-        "_08073B24:\n"
-        "ldrb r0, [r6, #0x00]\n"
-        "adds r6, #0x01\n"
-        "cmp r0, r10\n"
-        "beq _08073B44\n"
-        "cmp r7, r8\n"
-        "bge _08073B3C\n"
-        "strb r0, [r4, #0x00]\n"
-        "adds r5, #0x01\n"
-        "adds r4, #0x01\n"
-        "adds r7, #0x01\n"
-        "ldrb r3, [r6, #0x00]\n"
-        "b _08073B78\n"
-        "_08073B3C:\n"
-        "movs r0, #0x00\n"
-        "strb r0, [r5, #0x00]\n"
-        "ldrb r3, [r6, #0x00]\n"
-        "b _08073B78\n"
-        "_08073B44:\n"
-        "mov r1, r9\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "ldrb r3, [r6, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08073B78\n"
-        "movs r0, #0x00\n"
-        "mov r12, r0\n"
-        "subs r0, r4, #0x1\n"
-        "mov r1, r8\n"
-        "adds r2, r0, r1\n"
-        "mov r1, r9\n"
-        "_08073B5A:\n"
-        "cmp r7, r8\n"
-        "bge _08073B6E\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "strb r0, [r4, #0x00]\n"
-        "adds r1, #0x01\n"
-        "adds r2, #0x01\n"
-        "adds r5, #0x01\n"
-        "adds r4, #0x01\n"
-        "adds r7, #0x01\n"
-        "b _08073B72\n"
-        "_08073B6E:\n"
-        "mov r0, r12\n"
-        "strb r0, [r2, #0x00]\n"
-        "_08073B72:\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08073B5A\n"
-        "_08073B78:\n"
-        "cmp r3, #0x00\n"
-        "bne _08073B24\n"
-        "_08073B7C:\n"
-        "movs r0, #0x00\n"
-        "strb r0, [r4, #0x00]\n"
-        "_08073B80:\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 len;
+    u8 ch;
+    s32 j;
+
+    len = 0;
+    if (src == NULL || dst == NULL || repl == NULL || delim == 0)
+        return;
+    while (*src != 0)
+    {
+        ch = *src++;
+        if (ch != delim)
+        {
+            if (len < size)
+            {
+                *dst++ = ch;
+                len++;
+            }
+            else
+            {
+                dst[size - 1] = 0;
+            }
+        }
+        else
+        {
+            for (j = 0; repl[j] != 0;)
+            {
+                if (len < size)
+                {
+                    *dst++ = repl[j++];
+                    len++;
+                }
+                else
+                {
+                    dst[size - 1] = 0;
+                }
+            }
+        }
+    }
+    *dst = 0;
 }
 

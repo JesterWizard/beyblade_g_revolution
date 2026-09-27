@@ -47,7 +47,7 @@ extern u8 gData_082BCD00[];
 extern u8 gData_080B738E[];
 
 // IWRAM
-extern struct MainWork *gData_03000198[];
+extern struct MainWork *gData_03000198;
 extern struct BattleWork *gData_03000290[];
 extern u32 gData_030003CC[];
 extern u16 gData_05000200[];
@@ -55,8 +55,8 @@ extern u32 gData_08079068[];
 extern u32 gData_08079358[];
 extern struct Unk002A0Record gData_030002A0[];
 extern void *gData_03000508[];
-extern u32 gData_03000534[];
-extern u16 gData_03000504[];
+extern struct Unk68574 *gData_03000534; /* pool of 0x20 objects, sub_080419B0 */
+extern s16 gData_03000504;
 extern void *gData_030003E0[];
 extern struct Unk68574 *gData_03000480[];
 extern u8 gData_03000770[];
@@ -101,7 +101,7 @@ extern u8 gData_030040A8[];
 extern u8 gData_030040B8[];
 extern u8 gData_080796DC[];
 extern u8 gData_08097458[];
-extern u8 gData_0807A1F4[];
+extern struct Unk8D0 gData_0807A1F4[]; /* 0x53 record templates, sub_0803DEC8 */
 extern u8 gData_0833D1E0[];
 extern u8 gData_0833D1F4[];
 extern u8 gData_083A858C[];
@@ -185,5 +185,22 @@ extern void *gData_08078108[];
 
 // (a, b) -> amount table, sub_0802E2F8
 extern struct Unk2E2F8 gData_08077AC0[];
+
+// Scene object pool (9 x 0xDC) and the scene index its tables are keyed by
+// (sub_0804DB28)
+extern u32 gData_03000694;
+extern struct Unk68574 *gData_03000698;
+
+// Per-scene tables indexed by gData_03000694 (sub_0804DB28)
+extern struct Unk7BE04 gData_0807BE04[];
+extern void *gData_080775CC[];
+extern void *gData_08098A20[];
+extern void *gData_08098DF8[];
+extern void *gData_080991D0[];
+
+// Free-span allocator (IWRAM): sorted free list and spare-node list
+// (sub_0806FBF8)
+extern struct Unk6FBF8Span *gData_03004088;
+extern struct Unk6FBF8Span *gData_03004098;
 
 #endif // GUARD_DATA_SYMBOLS_H

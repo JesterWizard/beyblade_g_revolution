@@ -1,117 +1,77 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806fbf8
-__attribute__((naked))
-void sub_0806FBF8(s32 a, s32 b)
+/* match-compiler: old_agbcc */
+// Return the span [start, start + size) to the sorted free list at
+// gData_03004088: grow a neighbouring span when it touches one, otherwise link
+// in a node taken from the spare list gData_03004098. Then coalesce adjacent
+// spans, returning the absorbed nodes to the spare list.
+void sub_0806FBF8(s32 start, s32 size)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r7, r0, #0x0\n"
-        "adds r5, r1, #0x0\n"
-        "ldr r1, _0806FC28 @ =0x03004088\n"
-        "ldr r2, [r1, #0x00]\n"
-        "ldr r0, _0806FC2C @ =0x03004098\n"
-        "ldr r4, [r0, #0x00]\n"
-        "movs r6, #0x00\n"
-        "adds r3, r7, r5\n"
-        "mov r12, r3\n"
-        "mov r8, r1\n"
-        "mov r9, r0\n"
-        "cmp r2, #0x00\n"
-        "beq _0806FC76\n"
-        "_0806FC1A:\n"
-        "ldrh r3, [r2, #0x00]\n"
-        "cmp r12, r3\n"
-        "bne _0806FC30\n"
-        "subs r0, r3, r5\n"
-        "strh r0, [r2, #0x00]\n"
-        "ldrh r1, [r2, #0x02]\n"
-        "b _0806FC38\n"
-        "_0806FC28: .4byte 0x03004088\n"
-        "_0806FC2C: .4byte 0x03004098\n"
-        "_0806FC30:\n"
-        "ldrh r1, [r2, #0x02]\n"
-        "adds r0, r3, r1\n"
-        "cmp r7, r0\n"
-        "bne _0806FC3E\n"
-        "_0806FC38:\n"
-        "adds r0, r1, r5\n"
-        "strh r0, [r2, #0x02]\n"
-        "b _0806FC76\n"
-        "_0806FC3E:\n"
-        "cmp r3, r7\n"
-        "ble _0806FC6E\n"
-        "cmp r4, #0x00\n"
-        "bne _0806FC54\n"
-        "ldr r0, _0806FC50 @ =0x083D2184\n"
-        "bl sub_08067B98\n"
-        "b _0806FCB0\n"
-        ".byte 0x00, 0x00\n"
-        "_0806FC50: .4byte 0x083D2184\n"
-        "_0806FC54:\n"
-        "ldr r0, [r4, #0x04]\n"
-        "mov r3, r9\n"
-        "str r0, [r3, #0x00]\n"
-        "cmp r6, #0x00\n"
-        "beq _0806FC62\n"
-        "str r4, [r6, #0x04]\n"
-        "b _0806FC66\n"
-        "_0806FC62:\n"
-        "mov r0, r8\n"
-        "str r4, [r0, #0x00]\n"
-        "_0806FC66:\n"
-        "str r2, [r4, #0x04]\n"
-        "strh r7, [r4, #0x00]\n"
-        "strh r5, [r4, #0x02]\n"
-        "b _0806FC76\n"
-        "_0806FC6E:\n"
-        "adds r6, r2, #0x0\n"
-        "ldr r2, [r2, #0x04]\n"
-        "cmp r2, #0x00\n"
-        "bne _0806FC1A\n"
-        "_0806FC76:\n"
-        "mov r1, r8\n"
-        "ldr r0, [r1, #0x00]\n"
-        "ldr r2, [r0, #0x04]\n"
-        "adds r6, r0, #0x0\n"
-        "cmp r2, #0x00\n"
-        "beq _0806FCB0\n"
-        "ldr r4, _0806FCA4 @ =0x03004098\n"
-        "_0806FC84:\n"
-        "ldrh r1, [r2, #0x00]\n"
-        "ldrh r3, [r6, #0x02]\n"
-        "ldrh r5, [r6, #0x00]\n"
-        "adds r0, r5, r3\n"
-        "cmp r1, r0\n"
-        "bne _0806FCA8\n"
-        "ldr r0, [r2, #0x04]\n"
-        "ldrh r5, [r2, #0x02]\n"
-        "adds r1, r5, r3\n"
-        "strh r1, [r6, #0x02]\n"
-        "str r0, [r6, #0x04]\n"
-        "ldr r1, [r4, #0x00]\n"
-        "str r1, [r2, #0x04]\n"
-        "str r2, [r4, #0x00]\n"
-        "adds r2, r0, #0x0\n"
-        "b _0806FCAC\n"
-        "_0806FCA4: .4byte 0x03004098\n"
-        "_0806FCA8:\n"
-        "adds r6, r2, #0x0\n"
-        "ldr r2, [r2, #0x04]\n"
-        "_0806FCAC:\n"
-        "cmp r2, #0x00\n"
-        "bne _0806FC84\n"
-        "_0806FCB0:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk6FBF8Span *cur;
+    struct Unk6FBF8Span *spare;
+    struct Unk6FBF8Span *prev;
+    struct Unk6FBF8Span *next;
+    s32 end;
+
+    cur = gData_03004088;
+    spare = gData_03004098;
+    prev = NULL;
+    end = start + size;
+    while (cur != NULL)
+    {
+        if (end == cur->start)
+        {
+            cur->start -= size;
+            cur->size += size;
+            break;
+        }
+        if (start == cur->start + cur->size)
+        {
+            cur->size += size;
+            break;
+        }
+        if (cur->start > start)
+        {
+            if (spare == NULL)
+            {
+                DebugPrint((void *)0x083D2184);
+                return;
+            }
+            gData_03004098 = spare->next;
+            if (prev != NULL)
+                prev->next = spare;
+            else
+                gData_03004088 = spare;
+            spare->next = cur;
+            spare->start = start;
+            spare->size = size;
+            break;
+        }
+        prev = cur;
+        cur = cur->next;
+    }
+
+    cur = gData_03004088->next;
+    prev = gData_03004088;
+    while (cur != NULL)
+    {
+        if (cur->start == prev->start + prev->size)
+        {
+            next = cur->next;
+            prev->size = cur->size + prev->size;
+            prev->next = next;
+            cur->next = gData_03004098;
+            gData_03004098 = cur;
+            cur = next;
+        }
+        else
+        {
+            prev = cur;
+            cur = cur->next;
+        }
+    }
 }
 

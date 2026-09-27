@@ -14,7 +14,7 @@ void *sub_0803DCFC(u32 a)
   new_var3[1] = a;
   if (new_var3[1] <= 0x52)
   {
- do { off = new_var3[1] << 2; off += new_var3[1]; off <<= 3; base = gData_0807A1F4; new_var2 = base + off; return (void *) new_var2; } while (new_var3[0]);
+ do { off = new_var3[1] << 2; off += new_var3[1]; off <<= 3; base = (u8 *)gData_0807A1F4; new_var2 = base + off; return (void *) new_var2; } while (new_var3[0]);
   }
   DebugPrint((void *) gData_0833D1E0, (void *) gData_0833D1F4);
   return 0;

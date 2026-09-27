@@ -29,8 +29,8 @@ void sub_08037508(void)
     sub_08033F48(&gBattleWork37508.unk20A4);
     BtlSetTimer118();
     sub_08062C38(5);
-    sub_0803114C(&gBattleWork37508.unkAE8.unkB00, 0, 0x1900, 0);
-    sub_0803114C(&gBattleWork37508.unkAE8.unkB20, 0, 0xD400, 1);
+    sub_0803114C(gBattleWork37508.unkAE8.unkB00, 0, 0x1900, 0);
+    sub_0803114C(gBattleWork37508.unkAE8.unkB20, 0, 0xD400, 1);
     gBattleWork37508.unk144 = 0;
     gBattleWork37508.unk148 = 0;
     gMainWorkPtr->unk1824 = 8;

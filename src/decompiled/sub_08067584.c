@@ -1,18 +1,21 @@
 #include "global.h"
 #include "ram_map.h"
+#include "battle.h"
 
-s32 sub_08067584(u16 addr, void *outArg)
+/* match-flags: -O1 */
+s32 sub_08067584(u32 addrArg, void *outArg)
 {
     u16 buf[0x44];
     u16 *p;
     u16 *out = outArg;
+    u16 addr = addrArg;
     u16 value;
     u8 i;
     u8 j;
 
     if (addr >= gUnk_030009B0->unk04)
         return 0x80FF;
-    p = &buf[gUnk_030009B0->unk08 + 1];
+    p = buf + gUnk_030009B0->unk08 + 1;
     for (i = 0; i < gUnk_030009B0->unk08; i++)
     {
         *p-- = addr;
@@ -36,4 +39,5 @@ s32 sub_08067584(u16 addr, void *outArg)
     }
     return 0;
 }
+
 

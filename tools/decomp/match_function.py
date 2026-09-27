@@ -50,6 +50,9 @@ ALLOWED_MATCH_FLAGS = frozenset(
     {
         "-fprologue-bugfix",
         "-fomit-frame-pointer",
+        # Library code built at -O1 (Nintendo EEPROM routines around 0x080674xx);
+        # overrides the default -O2 because it is passed after it.
+        "-O1",
     }
 )
 

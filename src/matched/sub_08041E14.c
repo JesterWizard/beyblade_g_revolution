@@ -10,7 +10,7 @@ s32 sub_08041E14(void *a, void *b)
     struct Unk68574 *obj;
 
     i = 0;
-    count = gData_03000504[0];
+    count = gData_03000504;
     if (count > 0)
     {
         for (; i < count; i++)

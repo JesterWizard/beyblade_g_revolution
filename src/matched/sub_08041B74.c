@@ -1,91 +1,37 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08041b74
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Remove the live object bound to (a, b): free its unkC8 node, park it
+// off-screen, and swap the last slot into its place.
 void sub_08041B74(void *a, void *b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r12, r0\n"
-        "adds r7, r1, #0x0\n"
-        "movs r2, #0x00\n"
-        "ldr r0, _08041BF4 @ =0x03000504\n"
-        "movs r3, #0x00\n"
-        "ldsh r1, [r0, r3]\n"
-        "adds r3, r0, #0x0\n"
-        "cmp r1, #0x00\n"
-        "ble _08041C10\n"
-        "cmp r2, r1\n"
-        "bge _08041C10\n"
-        "ldr r6, _08041BF8 @ =0x03000480\n"
-        "adds r5, r3, #0x0\n"
-        "_08041B90:\n"
-        "lsls r1, r2, #0x10\n"
-        "asrs r0, r1, #0x0E\n"
-        "adds r4, r0, r6\n"
-        "ldr r2, [r4, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08041C00\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xD4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r12\n"
-        "bne _08041C00\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xD8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r7\n"
-        "bne _08041C00\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0xC8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08041BC6\n"
-        "bl sub_08059D08\n"
-        "ldr r0, [r4, #0x00]\n"
-        "adds r0, #0xC8\n"
-        "movs r1, #0x00\n"
-        "str r1, [r0, #0x00]\n"
-        "_08041BC6:\n"
-        "ldr r0, [r4, #0x00]\n"
-        "bl sub_08068808\n"
-        "ldr r1, [r4, #0x00]\n"
-        "ldr r0, _08041BFC @ =0xFFFFC000\n"
-        "str r0, [r1, #0x04]\n"
-        "str r0, [r1, #0x08]\n"
-        "ldrh r0, [r5, #0x00]\n"
-        "subs r0, #0x01\n"
-        "strh r0, [r5, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "asrs r0, r0, #0x0E\n"
-        "adds r0, r0, r6\n"
-        "ldr r0, [r0, #0x00]\n"
-        "str r0, [r4, #0x00]\n"
-        "movs r4, #0x00\n"
-        "ldsh r0, [r5, r4]\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r6\n"
-        "movs r1, #0x00\n"
-        "str r1, [r0, #0x00]\n"
-        "b _08041C10\n"
-        ".byte 0x00, 0x00\n"
-        "_08041BF4: .4byte 0x03000504\n"
-        "_08041BF8: .4byte 0x03000480\n"
-        "_08041BFC: .4byte 0xFFFFC000\n"
-        "_08041C00:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x09\n"
-        "adds r1, r1, r0\n"
-        "lsrs r2, r1, #0x10\n"
-        "ldrh r4, [r3, #0x00]\n"
-        "lsls r0, r4, #0x10\n"
-        "cmp r1, r0\n"
-        "blt _08041B90\n"
-        "_08041C10:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s16 i;
+    struct Unk68574 **slot;
+
+    i = 0;
+    if (gData_03000504 > 0)
+    {
+        for (; i < gData_03000504; i++)
+        {
+            slot = &gData_03000480[i];
+            if (*slot != NULL && (*slot)->unkD4 == a && (*slot)->unkD8 == b)
+            {
+                if ((*slot)->unkC8 != NULL)
+                {
+                    sub_08059D08((struct Unk59D08 *)(*slot)->unkC8);
+                    (*slot)->unkC8 = NULL;
+                }
+                sub_08068808(*slot);
+                (*slot)->unk04 = -0x4000;
+                (*slot)->unk08 = -0x4000;
+                *slot = gData_03000480[--gData_03000504];
+                gData_03000480[gData_03000504] = NULL;
+                return;
+            }
+        }
+    }
 }
 

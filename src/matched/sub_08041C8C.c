@@ -12,9 +12,9 @@ void sub_08041C8C(void *a, void *b, u32 *src)
     struct Unk41C8CDst *dst;
 
     i = 0;
-    if ((s16)gData_03000504[0] > 0)
+    if (gData_03000504 > 0)
     {
-        for (; i < (s16)gData_03000504[0]; i++)
+        for (; i < gData_03000504; i++)
         {
             obj = gData_03000480[i];
             if (obj != NULL && obj->unkD4 == a && obj->unkD8 == b)

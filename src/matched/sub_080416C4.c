@@ -1,95 +1,39 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080416c4
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Build the four HUD digit/bar sprites from the descriptor at a->unk248 and
+// enable the matching BG layers.
 void sub_080416C4(struct Unk40F4C *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "add sp, #-0x004\n"
-        "adds r7, r0, #0x0\n"
-        "movs r1, #0x92\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r7, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "mov r9, r0\n"
-        "movs r2, #0x00\n"
-        "mov r8, r2\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08041394\n"
-        "bl sub_08069894\n"
-        "movs r5, #0x00\n"
-        "adds r6, r7, #0x0\n"
-        "_080416EC:\n"
-        "lsls r4, r5, #0x02\n"
-        "mov r0, r9\n"
-        "adds r0, #0x30\n"
-        "adds r0, r0, r4\n"
-        "ldr r2, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08041722\n"
-        "lsls r1, r5, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x000]\n"
-        "adds r0, r6, #0x0\n"
-        "movs r3, #0x00\n"
-        "bl sub_08065E0C\n"
-        "movs r2, #0x88\n"
-        "lsls r2, r2, #0x02\n"
-        "adds r1, r7, r2\n"
-        "adds r1, r1, r4\n"
-        "str r0, [r1, #0x00]\n"
-        "ldr r1, _08041770 @ =0x080908B4\n"
-        "lsls r0, r5, #0x01\n"
-        "adds r0, r0, r1\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "mov r1, r8\n"
-        "orrs r0, r1\n"
-        "mov r8, r0\n"
-        "_08041722:\n"
-        "adds r6, #0x88\n"
-        "adds r5, #0x01\n"
-        "cmp r5, #0x03\n"
-        "ble _080416EC\n"
-        "mov r2, r9\n"
-        "ldr r0, [r2, #0x40]\n"
-        "cmp r0, #0x00\n"
-        "beq _08041736\n"
-        "bl sub_080679A4\n"
-        "_08041736:\n"
-        "mov r1, r9\n"
-        "ldr r0, [r1, #0x44]\n"
-        "cmp r0, #0x00\n"
-        "beq _08041742\n"
-        "bl sub_080679C0\n"
-        "_08041742:\n"
-        "bl sub_080674B4\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x13\n"
-        "movs r2, #0x82\n"
-        "lsls r2, r2, #0x05\n"
-        "adds r0, r2, #0x0\n"
-        "mov r2, r8\n"
-        "orrs r2, r0\n"
-        "strh r2, [r1, #0x00]\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x01\n"
-        "movs r2, #0x02\n"
-        "movs r3, #0x03\n"
-        "bl sub_08069B78\n"
-        "add sp, #0x004\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08041770: .4byte 0x080908B4\n"
-    );
+    struct Unk4109CInput *desc;
+    u16 dispFlags;
+    s32 i;
+    u8 *walk;
+    void *src;
+
+    desc = a->unk248;
+    dispFlags = 0;
+    sub_08041394((struct Unk41394 *)a);
+    sub_08069894();
+    for (i = 0, walk = (u8 *)a; i <= 3; i++)
+    {
+        src = desc->unk30[i];
+        if (src != NULL)
+        {
+            a->unk220[i] = sub_08065E0C(walk, i, src, 0, 0);
+            dispFlags |= gData_080908B4[i];
+        }
+        walk += 0x88;
+    }
+    if (desc->unk40 != NULL)
+        sub_080679A4(desc->unk40);
+    if (desc->unk44 != NULL)
+        sub_080679C0(desc->unk44);
+    VBlankIntrWait();
+    REG_DISPCNT = dispFlags | 0x1040;
+    sub_08069B78(0, 1, 2, 3);
 }
 

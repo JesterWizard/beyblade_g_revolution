@@ -10,7 +10,7 @@
 // index handling instead of the default agbcc allocation.
 s32 sub_0803DD88(s32 a)
 {
-    u8 *base = gData_0807A1F4;
+    u8 *base = (u8 *)gData_0807A1F4;
     u32 off = gMainWorkPtr->unk1818 * 4 + a * 40;
 
     return *(s32 *)(base + off);

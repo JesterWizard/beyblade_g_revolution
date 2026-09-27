@@ -1,69 +1,26 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08067504
-__attribute__((naked))
+/* match-flags: -O1 */
+// EEPROM library (built at -O1): DMA3 transfer with interrupts off and the
+// cartridge wait state (WAITCNT bits 8-10) set from the EEPROM config.
 void sub_08067504(void *source, void *destination, u16 count)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "ldr r4, _08067564 @ =0x04000208\n"
-        "ldrh r3, [r4, #0x00]\n"
-        "adds r6, r3, #0x0\n"
-        "movs r3, #0x00\n"
-        "strh r3, [r4, #0x00]\n"
-        "ldr r5, _08067568 @ =0x04000204\n"
-        "ldrh r4, [r5, #0x00]\n"
-        "ldr r3, _0806756C @ =0x0000F8FF\n"
-        "ands r4, r3\n"
-        "ldr r3, _08067570 @ =0x030009B0\n"
-        "ldr r3, [r3, #0x00]\n"
-        "ldrh r3, [r3, #0x06]\n"
-        "orrs r4, r3\n"
-        "strh r4, [r5, #0x00]\n"
-        "ldr r3, _08067574 @ =0x040000D4\n"
-        "str r0, [r3, #0x00]\n"
-        "ldr r0, _08067578 @ =0x040000D8\n"
-        "str r1, [r0, #0x00]\n"
-        "ldr r1, _0806757C @ =0x040000DC\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x18\n"
-        "orrs r2, r0\n"
-        "str r2, [r1, #0x00]\n"
-        "adds r1, #0x02\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x08\n"
-        "adds r0, r2, #0x0\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08067558\n"
-        "ldr r2, _08067580 @ =0x040000DE\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x08\n"
-        "adds r1, r0, #0x0\n"
-        "_08067550:\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _08067550\n"
-        "_08067558:\n"
-        "ldr r0, _08067564 @ =0x04000208\n"
-        "strh r6, [r0, #0x00]\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08067564: .4byte 0x04000208\n"
-        "_08067568: .4byte 0x04000204\n"
-        "_0806756C: .4byte 0x0000F8FF\n"
-        "_08067570: .4byte 0x030009B0\n"
-        "_08067574: .4byte 0x040000D4\n"
-        "_08067578: .4byte 0x040000D8\n"
-        "_0806757C: .4byte 0x040000DC\n"
-        "_08067580: .4byte 0x040000DE\n"
-    );
-}
+    u16 ime;
+    u16 waitcnt;
 
+    ime = REG_IME;
+    REG_IME = 0;
+    waitcnt = REG_WAITCNT;
+    waitcnt &= 0xF8FF;
+    waitcnt |= gUnk_030009B0->unk06;
+    REG_WAITCNT = waitcnt;
+    REG_DMA3SAD = (u32)source;
+    REG_DMA3DAD = (u32)destination;
+    REG_DMA3CNT = count | 0x80000000;
+    while (REG_DMA3CNT_H & 0x8000)
+        ;
+    REG_IME = ime;
+}

@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-27T15:29:54Z_
+_Updated: 2026-09-27T19:46:13Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 531 |
-| Still need semantic C | **102** |
-| Readable Thumb remaining | 102 |
+| Semantic C done | 544 |
+| Still need semantic C | **89** |
+| Readable Thumb remaining | 89 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 36 (122 already semantic) |
+| Battle pending | 32 (126 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 38 |
 
@@ -41,7 +41,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0805E044` | 228 | 16/228 then 15/228 | `src/decompiled/sub_0805E044.c` | Two semantic attempts: typed table-pointer loop 16/228 (212B), then explicit ROM-base plus offset loop 15/228 (224B). Direct resource cases and callback payload semantics are mapped; retail loop retains ROM base in r2, byte offset in r4, and index in r6, while semantic C allocation/layout differs. | Use targeted offset/register search: preserve resource in r5, ROM base 0x080991D0 in r2, byte offset r4, index r6; retain the three direct resource branches and shared sub_0802D8C4 tail. |
 | `sub_08061564` | 136 | 11/136 then 9/136 | `src/decompiled/sub_08061564.c` | Two semantic attempts: switch-based C 11/136 (144B), then explicit branch/goto form 9/136 (148B). Existing matched file is retained as naked assembly. Semantic body is mapped; remaining codegen requires pinning input/cursor/opcode to retail r0/r4/r2, restoring direct unk92 += unkA2 for load order, and using switch cases 8/7 with default handling opcode 10 via inverted cmp. | Use a switch on opcode with only cases 8 and 7; in default, if opcode != 10 dispatch unknown, otherwise perform the Unk0798 update then fall through shared x/y draw. Pin input r0, cursor r4, opcode r2 if needed. |
 | `sub_08062F90` | 148 | 19/148 then 33/148 | `src/decompiled/sub_08062F90.c` | Two attempts: direct global C 19/148 (144B), then e0/d4 lifetime anchors 33/148 (152B). Initialization semantics and both palette copies are mapped; remaining codegen is saved-register/lifetime shaping: retail keeps e0 location r5, d4 location r6, size r4, recomputes DC without retaining its address, then loads D8 location into r6; candidate retains DC via r8 and uses r7/r4 temporaries. | Make the DC guard/store volatile or otherwise recompute its address, pin the 0x200 size to r4, keep e0 r5/d4 r6, and use a separate D8 location variable loaded into r6 after storing the D4-derived pointer. Retain palette-table loading after that. |
-| `sub_08067504` | 128 | 48/128 then 60/128 | `src/decompiled/sub_08067504.c` | Two semantic attempts: direct volatile-register C 48/128 (120B), then explicit waitcnt/mask temporaries 60/128 (112B). DMA behavior and register sequence are mapped; remaining issues are waitcnt result register (retail r4 = REG_WAITCNT & 0xF8FF, candidate r3) and DMA-status literal scheduling (retail loads 0x040000DE before constructing the r1 mask). | Pin waitcnt to r4 and the F8FF mask to r3, then OR in gUnk_030009B0->unk06. Introduce a DMA-status pointer pinned to r2 before setting busy_mask r1, and loop through that pointer. |
+| `sub_08067504` | 0 | 48/128 then 60/128 | `src/decompiled/sub_08067504.c` | Two semantic attempts: direct volatile-register C 48/128 (120B), then explicit waitcnt/mask temporaries 60/128 (112B). DMA behavior and register sequence are mapped; remaining issues are waitcnt result register (retail r4 = REG_WAITCNT & 0xF8FF, candidate r3) and DMA-status literal scheduling (retail loads 0x040000DE before constructing the r1 mask). | Pin waitcnt to r4 and the F8FF mask to r3, then OR in gUnk_030009B0->unk06. Introduce a DMA-status pointer pinned to r2 before setting busy_mask r1, and loop through that pointer. |
 | `sub_08067584` | 176 | 11/176 then 41/176 | `src/decompiled/sub_08067584.c` | Two semantic attempts: stack-array loops 11/176 (168B), then register anchors 41/176 (same-size). The generator semantics are mapped; remaining mismatches are global pointer lifetime (retail checks gUnk_030009B0 through r0, then loads its location into r6 only after the bound check), stack cursor construction, and output packing (retail increments the cursor pointer each inner iteration rather than indexing cursor[j]). | Move global_loc r6 assignment after the bound check, build the initial cursor through a stack-base temporary so agbcc emits mov r4,sp then add, and rewrite inner packing as ; keep out r5/value r3/counter r4 where useful. |
 | `sub_08067648` | 352 | 50/352 then 50/352 | `src/decompiled/sub_08067648.c` | Two semantic attempts: approximate DMA/timing model 50/352 (260B), then enlarged scratch array still 50/352 (260B). The high-level stages are mapped, but the retail function’s fixed 0xB0 stack frame, bit-stream packing, DMA timing loop, and hardware-status branches require a dedicated stack-struct/source-shape match. | Use an explicit volatile 0xB0-byte workspace or struct to force the retail frame and model the exact scratch regions: stream at sp, VCOUNT fields at +0xA4/+0xA6/+0xA8, elapsed at +0xAC. Then anchor source r5, value r1/r3, mode r7, and cursor r3/r2 as shown by retail. |
 | `sub_08068598` | 284 | 27/284 then 20/284 | `src/decompiled/sub_08068598.c` | Two semantic attempts: initial playback model 27/284 (288B), then explicit r2/r4/r5 register anchors and corrected record layout 20/284 (316B). Control flow and state fields are mapped, but retail keeps the record pointer in r4 without the extra locals, reads signed position at +0x36, and updates the low-byte record flags with byte stores. | Use a compact pointer/state formulation: pin work r2 and record r4, avoid persistent lookup/total locals, load the record start and length directly at +0/+2, and model record flags with a byte-addressable struct overlay that preserves the halfword fields. Match the initial record pointer sequence before tuning the boundary branches. |
@@ -52,7 +52,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0802FA94` | 748 | 65/748 | `src/decompiled/sub_0802FA94.c` | two attempts did not match; 65/748 bytes, final compiled 580B; loop semantics mapped but target root/main location and high-register/dispatch shape remain | restore natural callee-save prologue and use a root-location direct seed; inline the exact type/subtype switch and table literal order |
 | `sub_08030638` | 268 | 31/268 | `src/decompiled/sub_08030638.c` | Semantic rotation transform reconstructed, but compiler shape is 244/268 after two attempts; target uses natural r7/r2 argument copies while the candidate retains a high-register temporary and differs in literal/load scheduling. | Restore target register shape: remove persistent temporaries/table aliases, seed arguments in r7/r2, and match the angle/table expression order before retrying. |
 | `sub_08030F38` | 348 | 54/348 | `src/decompiled/sub_08030F38.c` | Resource timer/update semantics reconstructed across the AF0/B00/B20/B40/B48 paths, but two compiler attempts diverged in prologue and pointer scheduling (376-byte candidate versus 348-byte target). | Use the target's callee-save shape: seed gBattleWorkPtrLoc in r7, retain the initial work pointer in r4 only through the AF* updates, then hand-write scoped register aliases for the B00/B20 loop and final B48 delta clamp. |
-| `sub_0803114C` | 184 | 13/184 | `src/decompiled/sub_0803114C.c` | Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts. | Pin the base argument in r8 and preserve the original duplicated loop setup; target keeps separate mode-zero/nonzero loops, count in r6, remaining in r5, and reloads gBattleWork->unkBB0 per entry. |
+| `sub_0803114C` | 0 | 13/184 | `src/decompiled/sub_0803114C.c` | Entry-position initialization semantics reconstructed with both direction branches and resource rebinding, but compiler output remains 156/184 bytes after two attempts. | Pin the base argument in r8 and preserve the original duplicated loop setup; target keeps separate mode-zero/nonzero loops, count in r6, remaining in r5, and reloads gBattleWork->unkBB0 per entry. |
 | `sub_08033188` | 604 | 63/604 | `src/decompiled/sub_08033188.c` | Input-transition routine semantics mapped (input snapshot/restore, two-frame asset save/restore, transition loop, and final cleanup), but two compiler candidates diverged substantially; best baseline was 63/604 bytes. | Use the baseline without fixed r8/r9/r10 locals; model the input snapshots as stack-resident u16s and use a dedicated state object matching the Unk7069C layout before tuning the two asset-copy loops. |
 | `sub_0803370C` | 362 | 21/362 | `src/decompiled/sub_0803370C.c` | Battle animation-position update semantics reconstructed (timer/counter, resource digit allocation, position interpolation, and branch-specific endpoint sampling), but candidate remains 21/362 bytes after two attempts. | Recover the target's duplicated register-driven loops: retain gBattleWork pointer in r3/r6, use direct B54/B74/B7C aliases, and preserve separate B00/B20 sub_08031368 blocks. |
 | `sub_08035054` | 432 | 41/432 | `src/decompiled/sub_08035054.c` | Resource mode dispatcher semantics mapped for kinds 0/1/2 (asset allocation, flags, IDs, and sub_08035624 callbacks), but natural candidate reached 41/432; fixed-register tuning regressed to 47/432 with a larger output. | Retain natural register allocation and tune branch-specific struct member types/stack arguments; the target shares the Unk346C0 offset layout but keeps r4/r5/r7/r8/r9/r10 lifetimes naturally. |
@@ -73,9 +73,7 @@ Per-function notes: `src/decompiled/<fn>.md`.
 |----------|---------|------:|------------:|:----:|------|-------|
 | `sub_08046E7C` | `0x08046E7C` | 872 | 3 | pool | asm | (gMainWorkPtr, gBtlInputMask, gBattlerArena/gBtlK) |
 | `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
-| `sub_08044FB0` | `0x08044FB0` | 156 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0803E0CC` | `0x0803E0CC` | 296 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803D284` | `0x0803D284` | 298 | 1 | pool | asm | (gBattleWork) |
 | `sub_08040680` | `0x08040680` | 308 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08065CD0` | `0x08065CD0` | 316 | 1 | pool | asm | (gBattlerArena/gBtlKeysHeld) |
 | `sub_08043C70` | `0x08043C70` | 324 | 1 | pool | asm | (gMainWorkPtr) |
@@ -83,7 +81,6 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_080447E8` | `0x080447E8` | 372 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080618EC` | `0x080618EC` | 428 | 1 | pool | asm | (gBtlInputMask) |
 | `sub_08056BA4` | `0x08056BA4` | 450 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0803DEC8` | `0x0803DEC8` | 514 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044A8C` | `0x08044A8C` | 672 | 1 | pool | asm | (gMainWorkPtr) |
@@ -91,13 +88,6 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_08045590` | `0x08045590` | 1256 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08041B74` | `0x08041B74` | 162 | 0 | pool | asm | |
-| `sub_08073AEC` | `0x08073AEC` | 162 | 0 |      | asm | |
-| `sub_080419B0` | `0x080419B0` | 172 | 0 | pool | asm | |
-| `sub_080416C4` | `0x080416C4` | 176 | 0 | pool | asm | |
-| `sub_0806FF58` | `0x0806FF58` | 180 | 0 | pool | asm | |
-| `sub_0806FBF8` | `0x0806FBF8` | 196 | 0 | pool | asm | |
-| `sub_0806DF38` | `0x0806DF38` | 228 | 0 |      | asm | |
 | `sub_0806121C` | `0x0806121C` | 236 | 0 | pool | asm | |
 | `sub_08062790` | `0x08062790` | 236 | 0 | pool | asm | |
 | `sub_08061628` | `0x08061628` | 244 | 0 | pool | asm | |
@@ -111,6 +101,16 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_0806B5C8` | `0x0806B5C8` | 274 | 0 |      | asm | |
 | `sub_0806F05C` | `0x0806F05C` | 280 | 0 | pool | asm | |
 | `sub_08069A60` | `0x08069A60` | 280 | 0 | pool | asm | |
+| `sub_0806211C` | `0x0806211C` | 284 | 0 |      | asm | |
+| `sub_0804AE94` | `0x0804AE94` | 300 | 0 | pool | asm | |
+| `sub_08056250` | `0x08056250` | 302 | 0 | pool | asm | |
+| `sub_0804BD38` | `0x0804BD38` | 328 | 0 | pool | asm | |
+| `sub_08061EF8` | `0x08061EF8` | 332 | 0 | pool | asm | |
+| `sub_080737C0` | `0x080737C0` | 336 | 0 | pool | asm | |
+| `sub_0804D420` | `0x0804D420` | 362 | 0 | pool | asm | |
+| `sub_0804C8BC` | `0x0804C8BC` | 372 | 0 | pool | asm | |
+| `sub_0806314C` | `0x0806314C` | 404 | 0 | pool | asm | |
+| `sub_0806EEC8` | `0x0806EEC8` | 404 | 0 | pool | asm | |
 
 ## Blocked
 
@@ -153,6 +153,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (65 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (54 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

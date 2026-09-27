@@ -1,134 +1,48 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806df38
-__attribute__((naked))
-u16 sub_0806DF38(void *a, struct UnkDF38Entry *out, s32 matchVal, u32 maxCount, s32 fifth)
+// Collect up to maxCount (track, key) hits for `key` across a's keyframe
+// tracks, skipping track `skip`. Each hit records the track, key index, track
+// index and the 16-byte frames either side of the key. Returns the hit count.
+u16 sub_0806DF38(struct UnkDEC8 *a, struct UnkDF38Entry *out, void *skip, u16 maxCount, u32 key)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x010\n"
-        "str r0, [sp, #0x000]\n"
-        "mov r9, r1\n"
-        "str r2, [sp, #0x004]\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "str r3, [sp, #0x008]\n"
-        "movs r0, #0x00\n"
-        "mov r8, r0\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x00C]\n"
-        "b _0806DFF0\n"
-        "_0806DF5A:\n"
-        "ldr r2, [sp, #0x004]\n"
-        "cmp r3, r2\n"
-        "beq _0806DFEA\n"
-        "ldr r1, [r3, #0x00]\n"
-        "lsls r0, r1, #0x02\n"
-        "adds r0, #0x20\n"
-        "adds r2, r3, r0\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x20\n"
-        "movs r5, #0x00\n"
-        "adds r4, r1, #0x0\n"
-        "cmp r5, r4\n"
-        "bge _0806DFEA\n"
-        "mov r10, r5\n"
-        "adds r6, r2, #0x0\n"
-        "movs r1, #0x10\n"
-        "negs r1, r1\n"
-        "adds r1, r1, r6\n"
-        "mov r12, r1\n"
-        "adds r7, r0, #0x0\n"
-        "_0806DF82:\n"
-        "ldr r0, [r7, #0x00]\n"
-        "ldr r2, [sp, #0x030]\n"
-        "cmp r2, r0\n"
-        "bne _0806DFDC\n"
-        "mov r0, r8\n"
-        "lsls r1, r0, #0x02\n"
-        "adds r0, r1, r0\n"
-        "lsls r0, r0, #0x02\n"
-        "add r0, r9\n"
-        "str r3, [r0, #0x00]\n"
-        "str r5, [r0, #0x04]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "str r2, [r0, #0x08]\n"
-        "adds r2, r1, #0x0\n"
-        "cmp r5, #0x00\n"
-        "ble _0806DFA6\n"
-        "mov r1, r12\n"
-        "b _0806DFA8\n"
-        "_0806DFA6:\n"
-        "mov r1, r10\n"
-        "_0806DFA8:\n"
-        "str r1, [r0, #0x0C]\n"
-        "ldr r0, [r3, #0x00]\n"
-        "subs r1, r0, #0x1\n"
-        "adds r4, r0, #0x0\n"
-        "cmp r5, r1\n"
-        "bge _0806DFC0\n"
-        "mov r1, r8\n"
-        "adds r0, r2, r1\n"
-        "lsls r0, r0, #0x02\n"
-        "add r0, r9\n"
-        "str r6, [r0, #0x10]\n"
-        "b _0806DFCC\n"
-        "_0806DFC0:\n"
-        "mov r1, r8\n"
-        "adds r0, r2, r1\n"
-        "lsls r0, r0, #0x02\n"
-        "add r0, r9\n"
-        "mov r2, r10\n"
-        "str r2, [r0, #0x10]\n"
-        "_0806DFCC:\n"
-        "mov r0, r8\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r8, r0\n"
-        "ldr r0, [sp, #0x008]\n"
-        "cmp r8, r0\n"
-        "bcs _0806E00A\n"
-        "_0806DFDC:\n"
-        "adds r6, #0x10\n"
-        "movs r1, #0x10\n"
-        "add r12, r1\n"
-        "adds r7, #0x04\n"
-        "adds r5, #0x01\n"
-        "cmp r5, r4\n"
-        "blt _0806DF82\n"
-        "_0806DFEA:\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "adds r2, #0x01\n"
-        "str r2, [sp, #0x00C]\n"
-        "_0806DFF0:\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldr r0, [r1, #0x00]\n"
-        "ldr r0, [r0, #0x04]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "cmp r2, r0\n"
-        "bge _0806E00A\n"
-        "adds r0, r1, #0x0\n"
-        "adds r1, r2, #0x0\n"
-        "bl sub_0806DEC8\n"
-        "adds r3, r0, #0x0\n"
-        "cmp r3, #0x00\n"
-        "bne _0806DF5A\n"
-        "_0806E00A:\n"
-        "mov r0, r8\n"
-        "add sp, #0x010\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u16 count;
+    s32 idx;
+    struct Unk6E31CTrack *track;
+    u8 *frames;
+    s32 i;
+    u32 *keys;
+
+    count = 0;
+    for (idx = 0; idx < a->unk00->unk04; idx++)
+    {
+        track = (struct Unk6E31CTrack *)sub_0806DEC8(a, idx);
+        if (track == NULL)
+            break;
+        if (track == skip)
+            continue;
+        frames = (u8 *)track->unk20 + track->unk00 * 4;
+        keys = track->unk20;
+        for (i = 0; i < track->unk00; i++)
+        {
+            if (key == keys[i])
+            {
+                out[count].unk00 = (s32 *)track;
+                out[count].unk04 = i;
+                out[count].unk08 = idx;
+                out[count].unk0C = i > 0 ? frames + (i - 1) * 16 : NULL;
+                if (i < track->unk00 - 1)
+                    out[count].unk10 = frames + i * 16;
+                else
+                    out[count].unk10 = NULL;
+                count++;
+                if (count >= maxCount)
+                    return count;
+            }
+        }
+    }
+    return count;
 }
 

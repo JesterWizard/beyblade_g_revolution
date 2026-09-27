@@ -1,8 +1,39 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803d284
-__attribute__((naked))
-void sub_0803D284(void)
+/* match-compiler: old_agbcc */
+// Lay out `str` as a centred row of glyph sprites in BattleWork.unk0BCC:
+// hide all 48 entries, then give each non-space character its own entry
+// (spaces just advance x by 4). Glyphs map through gData_080BB748 and
+// advance by 0x10 minus that glyph's entry in `widths`.
+void sub_0803D284(const u8 *str, s32 b, const u8 *widths, s32 y)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x01C\nadds r6, r0, #0x0\nstr r1, [sp, #0x014]\nmov r10, r2\nstr r3, [sp, #0x018]\nmovs r4, #0x00\nldr r5, _0803D2E4 @ =0xFFFFC000\n_0803D29C:\nldr r0, _0803D2E8 @ =0x03000290\nmov r9, r0\nldr r0, [r0, #0x00]\nmovs r1, #0x64\nadds r2, r4, #0x0\nmuls r2, r1\nmovs r3, #0xBF\nlsls r3, r3, #0x04\nadds r1, r0, r3\nadds r1, r1, r2\nstr r5, [r1, #0x00]\nadds r3, #0x04\nadds r1, r0, r3\nadds r1, r1, r2\nstr r5, [r1, #0x00]\nldr r1, _0803D2EC @ =0x00000BCC\nadds r2, r2, r1\nadds r0, r0, r2\nbl sub_08062238\nadds r4, #0x01\ncmp r4, #0x2F\nble _0803D29C\nadds r0, r6, #0x0\nmov r1, r10\nmovs r2, #0x10\nmovs r3, #0x04\nbl sub_08073988\nasrs r0, r0, #0x01\nmovs r1, #0x76\nsubs r7, r1, r0\nmovs r2, #0x00\nmov r8, r2\nb _0803D398\n.byte 0x00, 0x00\n_0803D2E4: .4byte 0xFFFFC000\n_0803D2E8: .4byte 0x03000290\n_0803D2EC: .4byte 0x00000BCC\n_0803D2F0:\nldrb r3, [r6, #0x00]\ncmp r3, #0x20\nbeq _0803D394\nmovs r0, #0x64\nmov r4, r8\nmuls r4, r0\nldr r0, _0803D380 @ =0x00000BCC\nadds r5, r4, r0\nmov r1, r9\nldr r0, [r1, #0x00]\nadds r0, r0, r5\nldr r2, [sp, #0x018]\nstr r2, [sp, #0x000]\nmovs r2, #0x00\nstr r2, [sp, #0x004]\nmovs r1, #0x28\nstr r1, [sp, #0x008]\nstr r2, [sp, #0x00C]\nldr r2, _0803D384 @ =0x080BB748\nadds r1, r3, r2\nldrb r1, [r1, #0x00]\nstr r1, [sp, #0x010]\nmovs r1, #0x00\nldr r2, [sp, #0x014]\nadds r3, r7, #0x0\nbl sub_0806211C\nadds r1, r7, #0x0\nadds r1, #0x10\nldrb r3, [r6, #0x00]\nldr r2, _0803D384 @ =0x080BB748\nadds r0, r3, r2\nldrb r0, [r0, #0x00]\nadd r0, r10\nldrb r0, [r0, #0x00]\nsubs r7, r1, r0\nmov r3, r9\nldr r0, [r3, #0x00]\nadds r0, r0, r5\nmov r1, r8\nlsls r2, r1, #0x01\nmovs r1, #0x01\nnegs r1, r1\nldr r3, _0803D388 @ =0x0803D27D\nbl sub_08062634\nmov r2, r9\nldr r0, [r2, #0x00]\nldr r3, _0803D38C @ =0x00000BD4\nadds r0, r0, r3\nadds r0, r0, r4\nldr r0, [r0, #0x00]\nmovs r1, #0x00\nbl sub_080705DC\nmov r1, r9\nldr r0, [r1, #0x00]\nldr r2, _0803D38C @ =0x00000BD4\nadds r0, r0, r2\nadds r0, r0, r4\nldr r0, [r0, #0x00]\nldr r3, _0803D390 @ =0xFFFF9C40\nadds r1, r3, #0x0\nmov r2, r8\nsubs r1, r1, r2\nlsls r1, r1, #0x10\nlsrs r1, r1, #0x10\nbl sub_08070468\nmovs r3, #0x01\nadd r8, r3\nb _0803D396\n_0803D380: .4byte 0x00000BCC\n_0803D384: .4byte 0x080BB748\n_0803D388: .4byte 0x0803D27D\n_0803D38C: .4byte 0x00000BD4\n_0803D390: .4byte 0xFFFF9C40\n_0803D394:\nadds r7, #0x04\n_0803D396:\nadds r6, #0x01\n_0803D398:\nldrb r0, [r6, #0x00]\ncmp r0, #0x00\nbne _0803D2F0\nadd sp, #0x01C\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0");
+    s32 i;
+    s32 x;
+    s32 n;
+
+    for (i = 0; i <= 0x2F; i++)
+    {
+        gBattleWork->unk0BCC[i].unk24 = -0x4000;
+        gBattleWork->unk0BCC[i].unk28 = -0x4000;
+        sub_08062238(&gBattleWork->unk0BCC[i]);
+    }
+    x = 0x76 - (sub_08073988(str, widths, 0x10, 4) >> 1);
+    for (n = 0, i = 0; str[i] != 0; i++)
+    {
+        if (str[i] != ' ')
+        {
+            sub_0806211C(&gBattleWork->unk0BCC[n], 0, b, x, y, 0, 0x28, 0, gData_080BB748[str[i]]);
+            x += 0x10 - widths[gData_080BB748[str[i]]];
+            sub_08062634(&gBattleWork->unk0BCC[n], -1, n * 2, 0x0803D27D);
+            sub_080705DC(gBattleWork->unk0BCC[n].unk08, 0);
+            sub_08070468((struct Unk6FDB4 *)gBattleWork->unk0BCC[n].unk08, 40000 - n);
+            n++;
+        }
+        else
+            x += 4;
+    }
 }
+
