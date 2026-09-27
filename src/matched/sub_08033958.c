@@ -11,7 +11,7 @@ s32 sub_08033958(struct Unk33958 *a)
 
     r2 = 0;
     r1 = a->unk00;
-    r0 = *a->unk04;
+    r0 = a->unk04->unk00;
     if (r1 == r0)
         r2 = 1;
     r0 = r2;

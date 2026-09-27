@@ -1,69 +1,32 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803559c
-__attribute__((naked))
-void sub_0803559C(void *a, u32 b, u32 c)
+// Re-keys one of the three animation blocks (type 0..2) when its current key
+// differs from `value`.
+void sub_0803559C(void *obj, u32 b, u32 value)
 {
-    asm(
-        ".syntax unified\n"
-        "push {lr}\n"
-        "adds r3, r0, #0x0\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "adds r0, r1, #0x0\n"
-        "cmp r1, #0x01\n"
-        "beq _080355C8\n"
-        "cmp r1, #0x01\n"
-        "bgt _080355B4\n"
-        "cmp r1, #0x00\n"
-        "beq _080355BA\n"
-        "b _08035604\n"
-        "_080355B4:\n"
-        "cmp r0, #0x02\n"
-        "beq _080355E6\n"
-        "b _08035604\n"
-        "_080355BA:\n"
-        "movs r1, #0x36\n"
-        "ldsh r0, [r3, r1]\n"
-        "cmp r0, r2\n"
-        "beq _08035604\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x1C\n"
-        "b _080355DA\n"
-        "_080355C8:\n"
-        "movs r1, #0x89\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r0, r3, r1\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "cmp r0, r2\n"
-        "beq _08035604\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0xF8\n"
-        "_080355DA:\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "adds r1, r2, #0x0\n"
-        "bl sub_08068020\n"
-        "b _08035604\n"
-        "_080355E6:\n"
-        "movs r1, #0xF7\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r0, r3, r1\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "cmp r0, r2\n"
-        "beq _08035604\n"
-        "movs r1, #0xEA\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r0, r3, r1\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "adds r1, r2, #0x0\n"
-        "bl sub_08068020\n"
-        "_08035604:\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk35258 *base = obj;
+    u8 type = b;
+
+    switch (type)
+    {
+    case 0:
+        if (base->unk1C.unk1A == value)
+            break;
+        BtlEntitySelectByKey((struct Unk680CC *)&base->unk1C, value, value);
+        break;
+    case 1:
+        if (base->unkF8.unk1A == value)
+            break;
+        BtlEntitySelectByKey((struct Unk680CC *)&base->unkF8, value, value);
+        break;
+    case 2:
+        if (base->unk1D4.unk1A == value)
+            break;
+        BtlEntitySelectByKey((struct Unk680CC *)&base->unk1D4, value, value);
+        break;
+    }
 }
 

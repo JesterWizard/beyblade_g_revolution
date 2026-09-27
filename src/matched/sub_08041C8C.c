@@ -1,83 +1,36 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08041c8c
-__attribute__((naked))
-void sub_08041C8C(void)
+/* match-compiler: old_agbcc */
+void sub_08041C8C(void *a, void *b, u32 *src)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r5, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "movs r3, #0x00\n"
-        "ldr r0, _08041CF4 @ =0x03000504\n"
-        "movs r6, #0x00\n"
-        "ldsh r1, [r0, r6]\n"
-        "mov r8, r0\n"
-        "cmp r1, #0x00\n"
-        "ble _08041D0E\n"
-        "cmp r3, r1\n"
-        "bge _08041D0E\n"
-        "ldr r7, _08041CF8 @ =0x03000480\n"
-        "mov r9, r7\n"
-        "movs r0, #0x00\n"
-        "mov r12, r0\n"
-        "_08041CB2:\n"
-        "lsls r1, r3, #0x10\n"
-        "asrs r0, r1, #0x0E\n"
-        "add r0, r9\n"
-        "ldr r3, [r0, #0x00]\n"
-        "cmp r3, #0x00\n"
-        "beq _08041CFC\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0xD4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r5\n"
-        "bne _08041CFC\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0xD8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, r4\n"
-        "bne _08041CFC\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0xC8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08041D0E\n"
-        "ldr r1, [r0, #0x10]\n"
-        "cmp r1, #0x00\n"
-        "beq _08041D0E\n"
-        "str r2, [r1, #0x10]\n"
-        "ldr r0, [r0, #0x30]\n"
-        "ldr r1, [r2, #0x00]\n"
-        "strb r1, [r0, #0x00]\n"
-        "ldr r1, [r2, #0x04]\n"
-        "strh r1, [r0, #0x06]\n"
-        "mov r1, r12\n"
-        "strb r1, [r0, #0x04]\n"
-        "b _08041D0E\n"
-        "_08041CF4: .4byte 0x03000504\n"
-        "_08041CF8: .4byte 0x03000480\n"
-        "_08041CFC:\n"
-        "movs r6, #0x80\n"
-        "lsls r6, r6, #0x09\n"
-        "adds r1, r1, r6\n"
-        "lsrs r3, r1, #0x10\n"
-        "mov r7, r8\n"
-        "ldrh r7, [r7, #0x00]\n"
-        "lsls r0, r7, #0x10\n"
-        "cmp r1, r0\n"
-        "blt _08041CB2\n"
-        "_08041D0E:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s16 i;
+    struct Unk68574 *obj;
+    struct Unk41E14Node *node;
+    struct Unk41C8CDst *dst;
+
+    i = 0;
+    if ((s16)gData_03000504[0] > 0)
+    {
+        for (; i < (s16)gData_03000504[0]; i++)
+        {
+            obj = gData_03000480[i];
+            if (obj != NULL && obj->unkD4 == a && obj->unkD8 == b)
+            {
+                node = obj->unkC8;
+                if (node == NULL || node->unk10 == NULL)
+                    return;
+                node->unk10->unk10 = (struct Unk41E14Node *)src;
+                dst = node->unk30;
+                dst->unk00 = src[0];
+                dst->unk06 = src[1];
+                dst->unk04 = 0;
+                return;
+            }
+        }
+    }
 }
+
 

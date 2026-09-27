@@ -166,6 +166,14 @@ extern s16 gData_03000654;
 extern struct Unk4AAF0 **gData_03000658;
 extern struct Unk4AAF0 *gData_03000660;
 
+// Part menu (sub_08039BD4): first visible row, cursor row, row table
+extern s32 gData_03000400;
+extern s32 gData_03000404;
+extern struct Unk39BD4Row *gData_0300040C;
+
+// Script VM context word (sub_08059DC8)
+extern u32 gData_03000734;
+
 // Name string table indexed by MainWork.unk1818 (sub_08037430)
 extern void *gData_08096ECC[];
 
@@ -174,5 +182,8 @@ extern struct Unk32604Mode gData_0807800C[];
 
 // Battle mode resource pointers indexed by mode 0..4 (sub_080333E4)
 extern void *gData_08078108[];
+
+// (a, b) -> amount table, sub_0802E2F8
+extern struct Unk2E2F8 gData_08077AC0[];
 
 #endif // GUARD_DATA_SYMBOLS_H

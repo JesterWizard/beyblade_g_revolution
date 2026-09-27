@@ -1,8 +1,38 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080415fc
-__attribute__((naked))
+// Per-frame step: runs the frame callback (unless unk0854 bit 0), then the phase
+// callback for the current phase (unk0804), then the always-on callback.
 void sub_080415FC(void)
 {
-    asm(".syntax unified\npush {r4, lr}\nldr r4, _08041630 @ =0x03000198\nldr r0, [r4, #0x00]\nldr r1, _08041634 @ =0x00000854\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x01\nands r0, r1\ncmp r0, #0x00\nbne _08041618\nldr r0, _08041638 @ =0x080BB888\nldr r0, [r0, #0x00]\nbl _08073C40\n_08041618:\nldr r1, [r4, #0x00]\nldr r2, _0804163C @ =0x00000804\nadds r0, r1, r2\nldrb r0, [r0, #0x00]\ncmp r0, #0x01\nbeq _08041654\ncmp r0, #0x01\nbgt _08041640\ncmp r0, #0x00\nbeq _0804164A\nb _0804169C\n.byte 0x00, 0x00\n_08041630: .4byte 0x03000198\n_08041634: .4byte 0x00000854\n_08041638: .4byte 0x080BB888\n_0804163C: .4byte 0x00000804\n_08041640:\ncmp r0, #0x02\nbeq _08041678\ncmp r0, #0x03\nbeq _08041694\nb _0804169C\n_0804164A:\nldr r3, _08041650 @ =0x0000077C\nadds r0, r1, r3\nb _0804167C\n_08041650: .4byte 0x0000077C\n_08041654:\nmovs r2, #0xF0\nlsls r2, r2, #0x03\nadds r0, r1, r2\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbeq _0804166A\nmovs r3, #0xA6\nlsls r3, r3, #0x03\nadds r0, r1, r3\nbl _08073C48\n_0804166A:\nldr r0, [r4, #0x00]\nmovs r1, #0xA6\nlsls r1, r1, #0x03\nadds r0, r0, r1\nbl sub_080411EC\nb _0804169C\n_08041678:\nldr r2, _08041690 @ =0x00000784\nadds r0, r1, r2\n_0804167C:\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbeq _0804169C\nmovs r3, #0xA6\nlsls r3, r3, #0x03\nadds r0, r1, r3\nbl _08073C48\nb _0804169C\n.byte 0x00, 0x00\n_08041690: .4byte 0x00000784\n_08041694:\nldr r0, _080416BC @ =0x0000181C\nadds r1, r1, r0\nmovs r0, #0x02\nstrb r0, [r1, #0x00]\n_0804169C:\nldr r0, _080416C0 @ =0x03000198\nldr r2, [r0, #0x00]\nmovs r1, #0xF1\nlsls r1, r1, #0x03\nadds r0, r2, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _080416B6\nmovs r3, #0xA6\nlsls r3, r3, #0x03\nadds r0, r2, r3\nbl _08073C44\n_080416B6:\npop {r4}\npop {r0}\nbx r0\n_080416BC: .4byte 0x0000181C\n_080416C0: .4byte 0x03000198");
+    struct MainWork *work;
+
+    if ((gMainWorkPtr->unk0854 & 1) == 0)
+        ((void (*)(void))gData_080BB888[0])();
+
+    work = gMainWorkPtr;
+    switch (work->unk0804)
+    {
+    case 0:
+        if (work->unk077C != 0)
+            work->unk077C(&work->unk0530, work);
+        break;
+    case 1:
+        if (work->unk0780 != 0)
+            work->unk0780(&work->unk0530, work);
+        sub_080411EC(&gMainWorkPtr->unk0530);
+        break;
+    case 2:
+        if (work->unk0784 != 0)
+            work->unk0784(&work->unk0530, work);
+        break;
+    case 3:
+        work->unk181C = 2;
+        break;
+    }
+    if (gMainWorkPtr->unk0788 != 0)
+        gMainWorkPtr->unk0788(&gMainWorkPtr->unk0530);
 }
+

@@ -1,8 +1,162 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08039bd4
-__attribute__((naked))
-void PartMenuRebuild(struct Unk39BD4 *a)
+// Row i of the visible window into the row table.
+#define MENU_ROW(i) (&gData_0300040C[gData_03000400 + (i)])
+// Copy routine in ROM, used here to load a 16-colour OBJ palette.
+#define PALETTE_LOAD ((void (*)(const void *src, void *dst, u32 size))gData_080BB8C0[0])
+
+// Rebuilds the eight visible rows of the part menu. Frees the screen's text
+// slots, then redraws each row's label; the cursor row (gData_03000404) also
+// gets its detail panel (kind 1: part stats; kinds 2/3: gauge and name).
+void PartMenuRebuild(struct Unk39BD4 *screen)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x020\nmov r10, r0\nbl sub_08061784\nmovs r4, #0xA1\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039BFA\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039BFA:\nmovs r4, #0xA2\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C0E\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C0E:\nmovs r4, #0xA3\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C22\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C22:\nmovs r4, #0xA4\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C36\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C36:\nmovs r4, #0xA5\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C4A\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C4A:\nmovs r4, #0xA6\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C5E\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C5E:\nmovs r4, #0xA7\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C72\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C72:\nmovs r4, #0xA8\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C86\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C86:\nmovs r4, #0xAC\nlsls r4, r4, #0x02\nadd r4, r10\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08039C9A\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_08039C9A:\nmovs r0, #0x00\nmov r9, r0\nmov r8, r0\nmovs r1, #0x10\nstr r1, [sp, #0x01C]\nmovs r2, #0xA6\nlsls r2, r2, #0x02\nadd r2, r10\nstr r2, [sp, #0x010]\nmovs r3, #0xA8\nlsls r3, r3, #0x02\nadd r3, r10\nstr r3, [sp, #0x014]\nmovs r0, #0xAC\nlsls r0, r0, #0x02\nadd r0, r10\nstr r0, [sp, #0x018]\n_08039CBC:\nldr r1, _08039CF4 @ =0x03000400\nldr r0, [r1, #0x00]\nadd r0, r9\nldr r2, _08039CF8 @ =0x0300040C\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x04\nadds r1, r0, r1\nmovs r0, #0x0C\nldsb r0, [r1, r0]\ncmp r0, #0x00\nbge _08039CD4\nb _0803A1BA\n_08039CD4:\nldr r0, _08039CFC @ =0x03000404\nldr r0, [r0, #0x00]\ncmp r9, r0\nbeq _08039CDE\nb _0803A110\n_08039CDE:\nmovs r7, #0x0D\nldsb r7, [r1, r7]\ncmp r7, #0x02\nbne _08039CE8\nb _08039F0C\n_08039CE8:\ncmp r7, #0x02\nbgt _08039D00\ncmp r7, #0x01\nbeq _08039D08\nb _0803A0DA\n.byte 0x00, 0x00\n_08039CF4: .4byte 0x03000400\n_08039CF8: .4byte 0x0300040C\n_08039CFC: .4byte 0x03000404\n_08039D00:\ncmp r7, #0x03\nbne _08039D06\nb _0803A004\n_08039D06:\nb _0803A0DA\n_08039D08:\nmovs r0, #0x0C\nldsb r0, [r1, r0]\nldrb r1, [r1, #0x0E]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nbl sub_0803E1F4\nadds r6, r0, #0x0\ncmp r6, #0x00\nbne _08039D1E\nb _08039ECA\n_08039D1E:\nmovs r0, #0x00\nbl sub_0806FDD0\nmovs r4, #0xA1\nlsls r4, r4, #0x02\nadd r4, r10\nstr r0, [r4, #0x00]\nldr r1, [r6, #0x14]\nstr r7, [sp, #0x000]\nmov r3, r8\nstr r3, [sp, #0x004]\nstr r3, [sp, #0x008]\nmovs r2, #0x02\nstr r2, [sp, #0x00C]\nmovs r2, #0xC0\nlsls r2, r2, #0x05\nmovs r3, #0x80\nlsls r3, r3, #0x07\nbl sub_0806FF58\nldr r1, _08039EE4 @ =0x080BB8C0\nldr r0, [r6, #0x18]\nldr r3, [r1, #0x00]\nldr r1, _08039EE8 @ =0x050003E0\nmovs r2, #0x20\nbl _08073C4C\nldr r0, [r4, #0x00]\nmovs r1, #0x0F\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [sp, #0x010]\nstr r0, [r1, #0x00]\nadds r0, r6, #0x0\nbl sub_0803E328\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nldr r2, [sp, #0x010]\nldr r1, [r2, #0x00]\nstr r7, [sp, #0x000]\nmov r3, r8\nstr r3, [sp, #0x004]\nstr r3, [sp, #0x008]\nstr r0, [sp, #0x00C]\nadds r0, r1, #0x0\nldr r1, _08039EEC @ =0x081146E4\nmovs r2, #0xC0\nlsls r2, r2, #0x05\nmovs r3, #0x84\nlsls r3, r3, #0x08\nbl sub_0806FF58\nmovs r0, #0x00\nbl sub_0806FDD0\nmovs r4, #0xA7\nlsls r4, r4, #0x02\nadd r4, r10\nstr r0, [r4, #0x00]\nadds r0, r6, #0x0\nbl sub_0803E374\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nldr r1, [r4, #0x00]\nstr r7, [sp, #0x000]\nmov r2, r8\nstr r2, [sp, #0x004]\nstr r2, [sp, #0x008]\nstr r0, [sp, #0x00C]\nadds r0, r1, #0x0\nldr r1, _08039EEC @ =0x081146E4\nmovs r2, #0xC0\nlsls r2, r2, #0x05\nmovs r3, #0x8D\nlsls r3, r3, #0x08\nbl sub_0806FF58\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r3, [sp, #0x014]\nstr r0, [r3, #0x00]\nadds r0, r6, #0x0\nbl sub_0803E3C0\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nldr r2, [sp, #0x014]\nldr r1, [r2, #0x00]\nstr r7, [sp, #0x000]\nmov r3, r8\nstr r3, [sp, #0x004]\nstr r3, [sp, #0x008]\nstr r0, [sp, #0x00C]\nadds r0, r1, #0x0\nldr r1, _08039EEC @ =0x081146E4\nmovs r2, #0xC0\nlsls r2, r2, #0x05\nmovs r3, #0x96\nlsls r3, r3, #0x08\nbl sub_0806FF58\nldr r1, [sp, #0x010]\nldr r0, [r1, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nldr r0, [r4, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nldr r2, [sp, #0x014]\nldr r0, [r2, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nmovs r5, #0xA3\nlsls r5, r5, #0x02\nadd r5, r10\nstr r0, [r5, #0x00]\nstr r7, [sp, #0x000]\nmov r3, r8\nstr r3, [sp, #0x004]\nstr r3, [sp, #0x008]\nadds r4, r6, #0x0\nadds r4, #0x24\nmovs r1, #0x00\nldsb r1, [r4, r1]\nlsls r1, r1, #0x10\nlsrs r1, r1, #0x10\nstr r1, [sp, #0x00C]\nldr r1, _08039EF0 @ =0x080F3C9C\nmovs r2, #0x80\nlsls r2, r2, #0x04\nmovs r3, #0x90\nlsls r3, r3, #0x06\nbl sub_0806FF58\nmovs r0, #0x00\nldsb r0, [r4, r0]\nmovs r1, #0x64\nmovs r2, #0xB6\nbl sub_08031124\nldr r1, [r5, #0x00]\nstrh r0, [r1, #0x18]\nldr r0, [r5, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nmovs r4, #0xA5\nlsls r4, r4, #0x02\nadd r4, r10\nstr r0, [r4, #0x00]\nstr r7, [sp, #0x000]\nmov r1, r8\nstr r1, [sp, #0x004]\nstr r1, [sp, #0x008]\nstr r1, [sp, #0x00C]\nldr r1, _08039EF4 @ =0x08114950\nmovs r2, #0x80\nlsls r2, r2, #0x04\nmovs r3, #0xDE\nlsls r3, r3, #0x07\nbl sub_0806FF58\nadds r0, r6, #0x0\nbl _0803DE00\nldr r1, [r4, #0x00]\nstrh r0, [r1, #0x18]\nldr r0, [r4, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nmovs r4, #0xA4\nlsls r4, r4, #0x02\nadd r4, r10\nstr r0, [r4, #0x00]\nstr r7, [sp, #0x000]\nmov r2, r8\nstr r2, [sp, #0x004]\nstr r2, [sp, #0x008]\nldr r1, _08039EF8 @ =0x03000198\nldr r1, [r1, #0x00]\nldr r3, _08039EFC @ =0x00001818\nadds r1, r1, r3\nldrb r1, [r1, #0x00]\nstr r1, [sp, #0x00C]\nldr r1, _08039F00 @ =0x081155BC\nmovs r2, #0xE0\nlsls r2, r2, #0x03\nmovs r3, #0x81\nlsls r3, r3, #0x08\nbl sub_0806FF58\nldr r0, [r4, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\n_08039ECA:\nmovs r0, #0x00\nldr r1, [sp, #0x01C]\nbl sub_080615EC\nldr r1, _08039F04 @ =0x03000400\nldr r0, [r1, #0x00]\nadd r0, r9\nldr r2, _08039F08 @ =0x0300040C\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldr r0, [r0, #0x04]\nb _08039FDA\n_08039EE4: .4byte 0x080BB8C0\n_08039EE8: .4byte 0x050003E0\n_08039EEC: .4byte 0x081146E4\n_08039EF0: .4byte 0x080F3C9C\n_08039EF4: .4byte 0x08114950\n_08039EF8: .4byte 0x03000198\n_08039EFC: .4byte 0x00001818\n_08039F00: .4byte 0x081155BC\n_08039F04: .4byte 0x03000400\n_08039F08: .4byte 0x0300040C\n_08039F0C:\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r3, [sp, #0x018]\nstr r0, [r3, #0x00]\nmovs r4, #0x01\nstr r4, [sp, #0x000]\nmov r1, r8\nstr r1, [sp, #0x004]\nstr r1, [sp, #0x008]\nstr r1, [sp, #0x00C]\nldr r1, _08039FE4 @ =0x080F3C9C\nmovs r2, #0x80\nlsls r2, r2, #0x04\nmovs r3, #0x90\nlsls r3, r3, #0x06\nbl sub_0806FF58\nldr r0, _08039FE8 @ =0x03000198\nldr r2, [r0, #0x00]\nldr r3, _08039FEC @ =0x03000400\nldr r0, [r3, #0x00]\nadd r0, r9\nldr r3, _08039FF0 @ =0x0300040C\nldr r1, [r3, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0E]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nldr r1, _08039FF4 @ =0x00001694\nadds r2, r2, r1\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nmovs r1, #0x02\nldsb r1, [r0, r1]\nmovs r0, #0x64\nsubs r0, r0, r1\nmovs r1, #0x64\nmovs r2, #0xB6\nbl sub_08031124\nldr r2, [sp, #0x018]\nldr r1, [r2, #0x00]\nstrh r0, [r1, #0x18]\nldr r0, _08039FF8 @ =0x080BB8C0\nldr r3, [r0, #0x00]\nldr r0, _08039FFC @ =0x08113B80\nldr r1, _0803A000 @ =0x050003E0\nmovs r2, #0x20\nbl _08073C4C\nldr r3, [sp, #0x018]\nldr r0, [r3, #0x00]\nmovs r1, #0x0F\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [sp, #0x014]\nstr r0, [r1, #0x00]\nldr r2, _08039FEC @ =0x03000400\nldr r1, [r2, #0x00]\nadd r1, r9\nldr r3, _08039FF0 @ =0x0300040C\nldr r2, [r3, #0x00]\nlsls r1, r1, #0x04\nadds r1, r1, r2\nldr r1, [r1, #0x08]\nstr r4, [sp, #0x000]\nmov r2, r8\nstr r2, [sp, #0x004]\nstr r2, [sp, #0x008]\nstr r2, [sp, #0x00C]\nmovs r2, #0x80\nlsls r2, r2, #0x06\nmovs r3, #0x90\nlsls r3, r3, #0x07\nbl sub_0806FF58\nldr r3, [sp, #0x014]\nldr r0, [r3, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nmovs r0, #0x00\nldr r1, [sp, #0x01C]\nbl sub_080615EC\nldr r1, _08039FEC @ =0x03000400\nldr r0, [r1, #0x00]\nadd r0, r9\nldr r2, _08039FF0 @ =0x0300040C\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0C]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nbl sub_0803DDD8\n_08039FDA:\nmovs r1, #0x42\nmovs r2, #0x02\nbl sub_0806171C\nb _0803A0DA\n_08039FE4: .4byte 0x080F3C9C\n_08039FE8: .4byte 0x03000198\n_08039FEC: .4byte 0x03000400\n_08039FF0: .4byte 0x0300040C\n_08039FF4: .4byte 0x00001694\n_08039FF8: .4byte 0x080BB8C0\n_08039FFC: .4byte 0x08113B80\n_0803A000: .4byte 0x050003E0\n_0803A004:\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r3, [sp, #0x018]\nstr r0, [r3, #0x00]\nmovs r4, #0x01\nstr r4, [sp, #0x000]\nmov r1, r8\nstr r1, [sp, #0x004]\nstr r1, [sp, #0x008]\nstr r1, [sp, #0x00C]\nldr r1, _0803A0F0 @ =0x080F3C9C\nmovs r2, #0x80\nlsls r2, r2, #0x04\nmovs r3, #0x90\nlsls r3, r3, #0x06\nbl sub_0806FF58\nldr r0, _0803A0F4 @ =0x03000198\nldr r2, [r0, #0x00]\nldr r3, _0803A0F8 @ =0x03000400\nldr r0, [r3, #0x00]\nadd r0, r9\nldr r3, _0803A0FC @ =0x0300040C\nldr r1, [r3, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0E]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nldr r1, _0803A100 @ =0x00001694\nadds r2, r2, r1\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nmovs r1, #0x02\nldsb r1, [r0, r1]\nmovs r0, #0x64\nsubs r0, r0, r1\nmovs r1, #0x64\nmovs r2, #0xB6\nbl sub_08031124\nldr r2, [sp, #0x018]\nldr r1, [r2, #0x00]\nstrh r0, [r1, #0x18]\nldr r0, _0803A104 @ =0x080BB8C0\nldr r3, [r0, #0x00]\nldr r0, _0803A108 @ =0x08113B80\nldr r1, _0803A10C @ =0x050003E0\nmovs r2, #0x20\nbl _08073C4C\nldr r3, [sp, #0x018]\nldr r0, [r3, #0x00]\nmovs r1, #0x0F\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nldr r1, [sp, #0x014]\nstr r0, [r1, #0x00]\nldr r2, _0803A0F8 @ =0x03000400\nldr r1, [r2, #0x00]\nadd r1, r9\nldr r3, _0803A0FC @ =0x0300040C\nldr r2, [r3, #0x00]\nlsls r1, r1, #0x04\nadds r1, r1, r2\nldr r1, [r1, #0x08]\nstr r4, [sp, #0x000]\nmov r2, r8\nstr r2, [sp, #0x004]\nstr r2, [sp, #0x008]\nstr r2, [sp, #0x00C]\nmovs r2, #0x80\nlsls r2, r2, #0x06\nmovs r3, #0x90\nlsls r3, r3, #0x07\nbl sub_0806FF58\nldr r3, [sp, #0x014]\nldr r0, [r3, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nmovs r0, #0x00\nldr r1, [sp, #0x01C]\nbl sub_080615EC\nldr r1, _0803A0F8 @ =0x03000400\nldr r0, [r1, #0x00]\nadd r0, r9\nldr r2, _0803A0FC @ =0x0300040C\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0C]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nbl sub_0803DDB0\nmovs r1, #0x42\nmovs r2, #0x02\nbl sub_0806171C\n_0803A0DA:\nmov r0, r9\nadds r0, #0x06\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nmovs r1, #0x0E\nmovs r2, #0x09\nmovs r3, #0x1A\nbl sub_08061D68\nb _0803A1BA\n.byte 0x00, 0x00\n_0803A0F0: .4byte 0x080F3C9C\n_0803A0F4: .4byte 0x03000198\n_0803A0F8: .4byte 0x03000400\n_0803A0FC: .4byte 0x0300040C\n_0803A100: .4byte 0x00001694\n_0803A104: .4byte 0x080BB8C0\n_0803A108: .4byte 0x08113B80\n_0803A10C: .4byte 0x050003E0\n_0803A110:\nmovs r0, #0x0D\nldsb r0, [r1, r0]\ncmp r0, #0x02\nbeq _0803A14C\ncmp r0, #0x02\nbgt _0803A122\ncmp r0, #0x01\nbeq _0803A128\nb _0803A1A8\n_0803A122:\ncmp r0, #0x03\nbeq _0803A180\nb _0803A1A8\n_0803A128:\nmovs r0, #0x00\nldr r1, [sp, #0x01C]\nbl sub_080615EC\nldr r3, _0803A144 @ =0x03000400\nldr r0, [r3, #0x00]\nadd r0, r9\nldr r2, _0803A148 @ =0x0300040C\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldr r0, [r0, #0x04]\nb _0803A16C\n.byte 0x00, 0x00\n_0803A144: .4byte 0x03000400\n_0803A148: .4byte 0x0300040C\n_0803A14C:\nmovs r0, #0x00\nldr r1, [sp, #0x01C]\nbl sub_080615EC\nldr r3, _0803A178 @ =0x03000400\nldr r0, [r3, #0x00]\nadd r0, r9\nldr r2, _0803A17C @ =0x0300040C\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0C]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nbl sub_0803DDD8\n_0803A16C:\nmovs r1, #0x42\nmovs r2, #0x02\nbl sub_0806171C\nb _0803A1A8\n.byte 0x00, 0x00\n_0803A178: .4byte 0x03000400\n_0803A17C: .4byte 0x0300040C\n_0803A180:\nmovs r0, #0x00\nldr r1, [sp, #0x01C]\nbl sub_080615EC\nldr r3, _0803A1DC @ =0x03000400\nldr r0, [r3, #0x00]\nadd r0, r9\nldr r2, _0803A1E0 @ =0x0300040C\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0C]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nbl sub_0803DDB0\nmovs r1, #0x42\nmovs r2, #0x02\nbl sub_0806171C\n_0803A1A8:\nmov r0, r9\nadds r0, #0x06\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nmovs r1, #0x0F\nmovs r2, #0x09\nmovs r3, #0x1A\nbl sub_08061D68\n_0803A1BA:\nldr r3, [sp, #0x01C]\nadds r3, #0x08\nstr r3, [sp, #0x01C]\nmovs r0, #0x01\nadd r9, r0\nmov r1, r9\ncmp r1, #0x07\nbgt _0803A1CC\nb _08039CBC\n_0803A1CC:\nadd sp, #0x020\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_0803A1DC: .4byte 0x03000400\n_0803A1E0: .4byte 0x0300040C");
+    s32 i;
+    s32 kind;
+    struct Unk39BD4Part *part;
+
+    TextGetAreaWidth();
+    if (screen->unk284 != NULL)
+    {
+        BtlObjPoolFree(screen->unk284);
+        screen->unk284 = NULL;
+    }
+    if (screen->unk288 != NULL)
+    {
+        BtlObjPoolFree(screen->unk288);
+        screen->unk288 = NULL;
+    }
+    if (screen->unk28C != NULL)
+    {
+        BtlObjPoolFree(screen->unk28C);
+        screen->unk28C = NULL;
+    }
+    if (screen->unk290 != NULL)
+    {
+        BtlObjPoolFree(screen->unk290);
+        screen->unk290 = NULL;
+    }
+    if (screen->unk294 != NULL)
+    {
+        BtlObjPoolFree(screen->unk294);
+        screen->unk294 = NULL;
+    }
+    if (screen->unk298 != NULL)
+    {
+        BtlObjPoolFree(screen->unk298);
+        screen->unk298 = NULL;
+    }
+    if (screen->unk29C != NULL)
+    {
+        BtlObjPoolFree(screen->unk29C);
+        screen->unk29C = NULL;
+    }
+    if (screen->unk2A0 != NULL)
+    {
+        BtlObjPoolFree(screen->unk2A0);
+        screen->unk2A0 = NULL;
+    }
+    if (screen->unk2B0 != NULL)
+    {
+        BtlObjPoolFree(screen->unk2B0);
+        screen->unk2B0 = NULL;
+    }
+
+    for (i = 0; i < 8; i++)
+    {
+        if (MENU_ROW(i)->unk0C < 0)
+            continue;
+        if (i == gData_03000404)
+        {
+            switch (kind = MENU_ROW(i)->unk0D)
+            {
+            case 1:
+                part = sub_0803E1F4(MENU_ROW(i)->unk0C, MENU_ROW(i)->unk0E);
+                if (part != NULL)
+                {
+                    screen->unk284 = BtlObjPoolAlloc(0);
+                    sub_0806FF58(screen->unk284, (void *)part->unk14, 0x1800, 0x4000, kind, 0, 0, 2);
+                    PALETTE_LOAD((void *)part->unk18, (void *)0x050003E0, 0x20);
+                    TextEntrySetPaletteBank(screen->unk284, 0x0F);
+
+                    screen->unk298 = BtlObjPoolAlloc(0);
+                    sub_0806FF58(screen->unk298, (void *)0x081146E4, 0x1800, 0x8400, kind, 0, 0,
+                        (u16)sub_0803E328((struct Unk3E328 *)part));
+                    screen->unk29C = BtlObjPoolAlloc(0);
+                    sub_0806FF58(screen->unk29C, (void *)0x081146E4, 0x1800, 0x8D00, kind, 0, 0,
+                        (u16)sub_0803E374((struct Unk3E328 *)part));
+                    screen->unk2A0 = BtlObjPoolAlloc(0);
+                    sub_0806FF58(screen->unk2A0, (void *)0x081146E4, 0x1800, 0x9600, kind, 0, 0,
+                        (u16)sub_0803E3C0((struct Unk3E328 *)part));
+                    TextEntrySetPaletteBank(screen->unk298, 0x0E);
+                    TextEntrySetPaletteBank(screen->unk29C, 0x0E);
+                    TextEntrySetPaletteBank(screen->unk2A0, 0x0E);
+
+                    screen->unk28C = BtlObjPoolAlloc(0);
+                    sub_0806FF58(screen->unk28C, (void *)0x080F3C9C, 0x800, 0x2400, kind, 0, 0, (u16)part->unk24);
+                    screen->unk28C->unk18 = ScaleRatio(part->unk24, 100, 0xB6);
+                    TextEntrySetPaletteBank(screen->unk28C, 0x0E);
+
+                    screen->unk294 = BtlObjPoolAlloc(0);
+                    sub_0806FF58(screen->unk294, (void *)0x08114950, 0x800, 0x6F00, kind, 0, 0, 0);
+                    screen->unk294->unk18 = _0803DE00(part);
+                    TextEntrySetPaletteBank(screen->unk294, 0x0E);
+
+                    screen->unk290 = BtlObjPoolAlloc(0);
+                    sub_0806FF58(screen->unk290, (void *)0x081155BC, 0x700, 0x8100, kind, 0, 0, gMainWorkPtr->unk1818);
+                    TextEntrySetPaletteBank(screen->unk290, 0x0E);
+                }
+                TextSetCursor(0, i * 8 + 0x10);
+                TextDrawAlign((void *)MENU_ROW(i)->unk04, 0x42, 2);
+                break;
+            case 2:
+                screen->unk2B0 = BtlObjPoolAlloc(0);
+                sub_0806FF58(screen->unk2B0, (void *)0x080F3C9C, 0x800, 0x2400, 1, 0, 0, 0);
+                screen->unk2B0->unk18 = ScaleRatio(100 - (s8)gMainWorkPtr->unk1694[MENU_ROW(i)->unk0E].unk02, 100, 0xB6);
+                PALETTE_LOAD((void *)0x08113B80, (void *)0x050003E0, 0x20);
+                TextEntrySetPaletteBank(screen->unk2B0, 0x0F);
+                screen->unk2A0 = BtlObjPoolAlloc(0);
+                sub_0806FF58(screen->unk2A0, (void *)MENU_ROW(i)->unk08, 0x2000, 0x4800, 1, 0, 0, 0);
+                TextEntrySetPaletteBank(screen->unk2A0, 0x0E);
+                TextSetCursor(0, i * 8 + 0x10);
+                TextDrawAlign(sub_0803DDD8(MENU_ROW(i)->unk0C), 0x42, 2);
+                break;
+            case 3:
+                screen->unk2B0 = BtlObjPoolAlloc(0);
+                sub_0806FF58(screen->unk2B0, (void *)0x080F3C9C, 0x800, 0x2400, 1, 0, 0, 0);
+                screen->unk2B0->unk18 = ScaleRatio(100 - (s8)gMainWorkPtr->unk1694[MENU_ROW(i)->unk0E].unk02, 100, 0xB6);
+                PALETTE_LOAD((void *)0x08113B80, (void *)0x050003E0, 0x20);
+                TextEntrySetPaletteBank(screen->unk2B0, 0x0F);
+                screen->unk2A0 = BtlObjPoolAlloc(0);
+                sub_0806FF58(screen->unk2A0, (void *)MENU_ROW(i)->unk08, 0x2000, 0x4800, 1, 0, 0, 0);
+                TextEntrySetPaletteBank(screen->unk2A0, 0x0E);
+                TextSetCursor(0, i * 8 + 0x10);
+                TextDrawAlign(sub_0803DDB0(MENU_ROW(i)->unk0C), 0x42, 2);
+                break;
+            }
+            TextRowSetPaletteBank((u16)(i + 6), 0x0E, 9, 0x1A);
+        }
+        else
+        {
+            switch (MENU_ROW(i)->unk0D)
+            {
+            case 1:
+                TextSetCursor(0, i * 8 + 0x10);
+                TextDrawAlign((void *)MENU_ROW(i)->unk04, 0x42, 2);
+                break;
+            case 2:
+                TextSetCursor(0, i * 8 + 0x10);
+                TextDrawAlign(sub_0803DDD8(MENU_ROW(i)->unk0C), 0x42, 2);
+                break;
+            case 3:
+                TextSetCursor(0, i * 8 + 0x10);
+                TextDrawAlign(sub_0803DDB0(MENU_ROW(i)->unk0C), 0x42, 2);
+                break;
+            }
+            TextRowSetPaletteBank((u16)(i + 6), 0x0F, 9, 0x1A);
+        }
+    }
 }
+

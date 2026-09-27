@@ -100,14 +100,6 @@ reason = "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHel
 name = "sub_08045C5C"
 reason = "gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter"
 [[wip]]
-name = "sub_080338F0"
-seed = "src/decompiled/sub_080338F0.c"
-notes = "src/decompiled/sub_080338F0.md"
-status = "same_size DIFF, 20/104 bytes (19.2%) — structural rewrite needed, indexing bug noted in file"
-next = "fix table indexing to byte-offset (see note), re-add Unk338F0Table struct + Unk33958 retype, then re-run match_function.py"
-score = "20/104"
-
-[[wip]]
 name = "sub_0802BC14"
 seed = "src/decompiled/sub_0802BC14.c"
 notes = "src/decompiled/sub_0802BC14.md"
@@ -123,15 +115,6 @@ notes = "src/decompiled/sub_080733E4.md"
 status = "size_mismatch 14/90 baseline; explicit-goto and r2/r5-pinned variants did not reproduce retail loop allocation"
 next = "leave readable Thumb; revisit with permuter over skip/main-loop source shape"
 score = "14/90"
-
-[[wip]]
-name = "sub_08059DC8"
-seed = "src/decompiled/sub_08059DC8.c"
-notes = "src/decompiled/sub_08059DC8.md"
-status = "60s permuter, no score 0 (27/72)"
-next = "Do not re-attempt by hand or by permuter until a new seed exists."
-score = "27/72"
-retry = "false"
 
 [[wip]]
 name = "sub_080620D4"
@@ -184,14 +167,6 @@ next = "Use the nested seed and force selector r5 without a callee-saved registe
 score = "33/196"
 
 [[wip]]
-name = "sub_0803559C"
-seed = "src/decompiled/sub_0803559C.c"
-notes = "src/decompiled/sub_0803559C.md"
-status = "two attempts: 21/108 direct nested shape (104B), then 22/108 same-size with explicit retail labels and base/target register pins; remaining mismatch is dispatch branch layout/displacements"
-next = "Retain the same-size label seed; adjust only the type dispatch branch orientation to match beq/bgt/cmp0 offsets, then verify the shared update call"
-score = "22/108"
-
-[[wip]]
 name = "sub_08035624"
 seed = "src/decompiled/sub_08035624.c"
 notes = "src/decompiled/sub_08035624.md"
@@ -216,28 +191,12 @@ next = "Use the first compact seed as baseline; force only global-location reloa
 score = "56/316"
 
 [[wip]]
-name = "sub_0803D51C"
-seed = "src/decompiled/sub_0803D51C.c"
-notes = "src/decompiled/sub_0803D51C.md"
-status = "Two same-size attempts did not match: direct semantic seed compiled 288/304 with result in r6; r5 pin expanded to 280/304 and forced extra registers. Logic and Unk2C314 result fields are identified."
-next = "Use a targeted register-layout/permuter search to reproduce retail push {r4,r5,lr}, r4 main-work location, and r5 result; preserve two repeated sub_0802C314/sub_0802C55C blocks."
-score = "63/304 then 38/304"
-
-[[wip]]
 name = "sub_080411EC"
 seed = "src/decompiled/sub_080411EC.c"
 notes = "src/decompiled/sub_080411EC.md"
 status = "Two semantic attempts failed to preserve the retail dispatcher shape: direct struct logic 36/346 (332B), then r2 key pin plus volatile mode reload 35/346 (328B). The state pointer fields, two callback modes, key masks, and sub_08045C5C flag path are modeled."
 next = "Use the original direct seed with a targeted literal/register-order search: force a separate 0x2D9 offset pool load, keys in r1/r2, and preserve the callback fallthrough labels; avoid fixed pins that shrink the branch layout."
 score = "36/346 then 35/346"
-
-[[wip]]
-name = "sub_080415FC"
-seed = "src/decompiled/sub_080415FC.c"
-notes = "src/decompiled/sub_080415FC.md"
-status = "Two semantic attempts: cached-main/state seed 38/200 (180B), direct state-address seed 127/200 (192B). The latter matches the core dispatch logic but agbcc caches main in r4 and uses different offset materialization than retail's r1 main pointer/reloaded locations."
-next = "Try direct gMainWorkPtr field expressions (no persistent main local) or targeted register-layout/permuter work to retain main in r1, state at +0x530, and r4 as the pointer-location only."
-score = "38/200 then 127/200"
 
 [[wip]]
 name = "sub_0804188C"
@@ -248,28 +207,12 @@ next = "Use a targeted register/permuter search for the retail fixed-point index
 score = "19/244 then 41/244"
 
 [[wip]]
-name = "sub_08043420"
-seed = "src/decompiled/sub_08043420.c"
-notes = "src/decompiled/sub_08043420.md"
-status = "Two semantic attempts both 79/438 (448B): explicit state local and direct switch/state source produced identical codegen. All four transition paths, fixed-point thresholds, mirrored fields, flags, mode values, and sub_080680CC/sub_08043638 fallbacks are identified; mismatch is chiefly global/state pointer register allocation and branch layout."
-next = "Use a targeted register/permuter search to keep gUnk_03000554 in r0 and state in r3 as retail, with ordinary per-case MainWork locals; preserve signed s32 coordinate fields and threshold halfwords."
-score = "79/438 then 79/438"
-
-[[wip]]
 name = "sub_080436B0"
 seed = "src/decompiled/sub_080436B0.c"
 notes = "src/decompiled/sub_080436B0.md"
 status = "Two semantic attempts failed: structured local seed 46/658 (616B), then fixed state-location/direct-field layout 85/658 (708B). Transition semantics are mapped across input masks 0x40/0x80/0x10/0x20, keyboard finalization, coordinate lookup, and common input-0x8 setup; source restructuring or permuter work is required."
 next = "Use a compact helper/branch-shape seed from the parked C, then targeted register/permuter search for retail r6 state-location, r2 state pointer, r5 phase, and shared common tail. Preserve Unk0558 entry offsets and signed coordinate fields."
 score = "46/658 then 85/658"
-[[wip]]
-name = "sub_0804438C"
-seed = "src/decompiled/sub_0804438C.c"
-notes = "src/decompiled/sub_0804438C.md"
-status = "Two semantic attempts: baseline 56/304 (292B), then signed value plus r5 DISPCNT base/explicit IO stores 54/304 (288B). Fade behavior is mapped for mode -1 and mode 1, including VRAM clear, brightness loops, blend register resets, DISPCNT writes, and final display setup; register allocation/condition-code scheduling remains."
-next = "Restore baseline; use targeted register/permuter work to keep loop counter r4 and DISPCNT base r5 without introducing r6, and reproduce signed ble/bgt brightness branches."
-score = "56/304 then 54/304"
-
 [[wip]]
 name = "sub_08045D3C"
 seed = "src/decompiled/sub_08045D3C.c"
@@ -294,14 +237,6 @@ status = "Two semantic attempts: local pool physics seed 24/232 (200B), then r3-
 next = "Restore the baseline; use a targeted register/permuter search for MainWork r3, pool-location r4, pool pointer r2, and ldm/stm slot iteration while preserving 0x1825/0x1827 gates and random updates."
 score = "24/232 then 25/232"
 [[wip]]
-name = "sub_08051BBC"
-seed = "src/decompiled/sub_08051BBC.c"
-notes = "src/decompiled/sub_08051BBC.md"
-status = "Two semantic attempts: direct field/volatile loop 24/124 (144B), then pinned main-location/BLDY anchors 26/124 (156B). Fade counters and register writes are semantically correct, but the retail uses a compact offset-register layout and the typed pointer anchors add code."
-next = "Restore direct semantic fields and use targeted source-order/permuter work for retail r5=main-location, r4=0x17F0 offset, r6=BLDY; preserve loop writes and callback order."
-score = "24/124 then 26/124"
-
-[[wip]]
 name = "sub_08056D68"
 seed = "src/decompiled/sub_08056D68.c"
 notes = "src/decompiled/sub_08056D68.md"
@@ -316,14 +251,6 @@ notes = "src/decompiled/sub_0805E044.md"
 status = "Two semantic attempts: typed table-pointer loop 16/228 (212B), then explicit ROM-base plus offset loop 15/228 (224B). Direct resource cases and callback payload semantics are mapped; retail loop retains ROM base in r2, byte offset in r4, and index in r6, while semantic C allocation/layout differs."
 next = "Use targeted offset/register search: preserve resource in r5, ROM base 0x080991D0 in r2, byte offset r4, index r6; retain the three direct resource branches and shared sub_0802D8C4 tail."
 score = "16/228 then 15/228"
-
-[[wip]]
-name = "sub_080607BC"
-seed = "src/decompiled/sub_080607BC.c"
-notes = "src/decompiled/sub_080607BC.md"
-status = "Two semantic attempts: direct typed state 26/128 (same size), then r2/r3/r4/r5 register anchors 36/128 (136B). State fields and blend behavior are mapped; remaining mismatches are repeated submode/delay loads, temp evaluation order for +0x02/+0x04, and the retail non-optimized 0xFFFF|old-word instruction shape."
-next = "Use local submode/delay/current/amount temporaries: submode=unk07, delay=unk08, current=unk02, amount=unk04; make mode a u32 in r4, state r2, location r3, and let the 0xFFFF OR reuse r5 naturally."
-score = "26/128 then 36/128"
 
 [[wip]]
 name = "sub_08061564"
@@ -566,10 +493,3 @@ status = "22/190 size 188; mode r8 scheduling"
 next = "match retail: ldr mode to r8 before u8-extend index; then permuter"
 score = "22/190"
 
-[[wip]]
-name = "sub_08039BD4"
-seed = "src/decompiled/sub_08039BD4.c"
-notes = "src/decompiled/sub_08039BD4.md"
-status = "inlined draft 282/1552 (peaked 344/1552); 180s permuter best 22665, still 364 bytes short"
-next = "Compiled body is 1188 vs 1552. Stack is sub sp,#0x24 vs retail #0x20. Recover the missing kind==1/2/3 text before another permuter run."
-score = "282/1552"

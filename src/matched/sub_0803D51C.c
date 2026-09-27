@@ -1,8 +1,46 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0803d51c
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Retail compiled this caller against a (s8, s8, s16) prototype of
+// sub_0802C55C, whose definition takes (u16, u8, s16): the arguments are
+// passed sign-extended. The cast reproduces that call (still a direct bl).
+#define FreeSlotSigned ((void (*)(s32, s32, s32))sub_0802C55C)
+
+// For the Unk1694 entries found by sub_0802C314(3, 1) and (2, 1): subtracts
+// (unk00 + MainWork.strength) from the entry's unk02 and frees the entry once
+// it drops to 0 or below. Returns 1 if either entry was freed.
 s32 sub_0803D51C(void)
 {
-    asm(".syntax unified\npush {r4, r5, lr}\nadd sp, #-0x00C\nmovs r5, #0x00\nldr r4, _0803D53C @ =0x03000198\nldr r0, [r4, #0x00]\nldr r1, _0803D540 @ =0x00001808\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x80\nlsls r1, r1, #0x09\nands r0, r1\ncmp r0, #0x00\nbeq _0803D544\nmovs r0, #0x00\nb _0803D62C\n.byte 0x00, 0x00\n_0803D53C: .4byte 0x03000198\n_0803D540: .4byte 0x00001808\n_0803D544:\nmovs r0, #0x03\nmovs r1, #0x01\nmov r2, sp\nbl sub_0802C314\nldr r2, [sp, #0x008]\nmov r1, sp\nldr r0, [r4, #0x00]\nldr r3, _0803D634 @ =0x00000878\nadds r0, r0, r3\nldrb r1, [r1, #0x00]\nldrb r0, [r0, #0x00]\nadds r0, r1, r0\nldrb r1, [r2, #0x02]\nsubs r0, r1, r0\nstrb r0, [r2, #0x02]\nldr r0, [sp, #0x008]\nldrb r0, [r0, #0x02]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x00\nbgt _0803D5B6\nldr r0, _0803D638 @ =0x030002A0\nstr r5, [r0, #0x0C]\nldr r4, _0803D63C @ =0x03000290\nldr r0, [r4, #0x00]\nmovs r2, #0x98\nlsls r2, r2, #0x01\nadds r0, r0, r2\nmovs r1, #0x01\nstrb r1, [r0, #0x00]\nmovs r5, #0x01\nmov r0, sp\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nmov r1, sp\nldrb r1, [r1, #0x03]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nldr r2, [sp, #0x004]\nlsls r2, r2, #0x10\nasrs r2, r2, #0x10\nbl sub_0802C55C\nmov r0, sp\nldrb r0, [r0, #0x03]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nbl sub_0802C5DC\ncmp r0, #0x00\nbne _0803D5B6\nldr r0, [r4, #0x00]\nldr r3, _0803D640 @ =0x00001F73\nadds r0, r0, r3\nstrb r5, [r0, #0x00]\n_0803D5B6:\nmovs r0, #0x02\nmovs r1, #0x01\nmov r2, sp\nbl sub_0802C314\nldr r2, [sp, #0x008]\nmov r1, sp\nldr r0, _0803D644 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r3, _0803D634 @ =0x00000878\nadds r0, r0, r3\nldrb r1, [r1, #0x00]\nldrb r0, [r0, #0x00]\nadds r0, r1, r0\nldrb r1, [r2, #0x02]\nsubs r0, r1, r0\nstrb r0, [r2, #0x02]\nldr r0, [sp, #0x008]\nldrb r0, [r0, #0x02]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x00\nbgt _0803D62A\nldr r1, _0803D638 @ =0x030002A0\nmovs r0, #0x00\nstr r0, [r1, #0x0C]\nldr r4, _0803D63C @ =0x03000290\nldr r0, [r4, #0x00]\nldr r2, _0803D648 @ =0x00000131\nadds r1, r0, r2\nmovs r0, #0x01\nstrb r0, [r1, #0x00]\nmovs r5, #0x01\nmov r0, sp\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nmov r1, sp\nldrb r1, [r1, #0x03]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nldr r2, [sp, #0x004]\nlsls r2, r2, #0x10\nasrs r2, r2, #0x10\nbl sub_0802C55C\nmov r0, sp\nldrb r0, [r0, #0x03]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nbl sub_0802C5DC\ncmp r0, #0x00\nbne _0803D62A\nldr r0, [r4, #0x00]\nldr r3, _0803D640 @ =0x00001F73\nadds r0, r0, r3\nstrb r5, [r0, #0x00]\n_0803D62A:\nadds r0, r5, #0x0\n_0803D62C:\nadd sp, #0x00C\npop {r4, r5}\npop {r1}\nbx r1\n_0803D634: .4byte 0x00000878\n_0803D638: .4byte 0x030002A0\n_0803D63C: .4byte 0x03000290\n_0803D640: .4byte 0x00001F73\n_0803D644: .4byte 0x03000198\n_0803D648: .4byte 0x00000131");
+    struct Unk2C314 out;
+    s32 result = 0;
+
+    if (gMainWorkPtr->unk1808 & 0x10000)
+        return 0;
+    sub_0802C314(3, 1, &out);
+    out.unk08->unk02 -= out.unk00 + gMainWorkPtr->strength;
+    if ((s8)out.unk08->unk02 <= 0)
+    {
+        gUnk_030002A0.records[0].unk0C = result;
+        gBattleWork->unk130 = 1;
+        result = 1;
+        FreeSlotSigned((s8)out.unk00, (s8)out.unk03, (s16)out.unk04);
+        if (BtlUnk1694FindAndMark(out.unk03) == 0)
+            gBattleWork->unk1F73 = result;
+    }
+    sub_0802C314(2, 1, &out);
+    out.unk08->unk02 -= out.unk00 + gMainWorkPtr->strength;
+    if ((s8)out.unk08->unk02 <= 0)
+    {
+        gUnk_030002A0.records[0].unk0C = 0;
+        gBattleWork->unk131 = 1;
+        result = 1;
+        FreeSlotSigned((s8)out.unk00, (s8)out.unk03, (s16)out.unk04);
+        if (BtlUnk1694FindAndMark(out.unk03) == 0)
+            gBattleWork->unk1F73 = result;
+    }
+    return result;
 }
+

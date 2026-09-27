@@ -1,152 +1,106 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
+#include "ram_map.h"
 
 void sub_080436B0(void)
 {
-    struct Unk0554 **stateLoc;
     u8 phase;
-    u16 input;
+    s32 *pos;
+    struct Unk0554 *st;
 
-    stateLoc = (struct Unk0554 **)0x03000554;
-    phase = (*stateLoc)->unk01;
+    phase = gUnk_03000554->unk01;
     if (phase == 0)
     {
-        input = *(vu16 *)gBtlInputMask;
-        if ((input & 0x40) != 0)
+        if (*(u16 *)gBtlInputMask & 0x40)
         {
-            struct Unk436B0Entry *entry;
-            struct Unk6DEF4 *lookup;
-            s32 *coords;
-
-            if (((*stateLoc)->unk02 & 0x10) == 0)
-                goto common;
-            entry = gUnk_03000558->unk04;
-            if (entry == 0)
-                goto common;
-            if (entry->unk34 >= 0)
+            if ((gUnk_03000554->unk02 & 0x10) && gUnk_03000558->unk04 != NULL)
+        {
+            if (gUnk_03000558->unk34[0] >= 0)
             {
-                lookup = (struct Unk6DEF4 *)sub_08062A14();
-                lookup = (struct Unk6DEF4 *)sub_0806DEF4(
-                    lookup,
-                    entry->unk34);
-                coords = (s32 *)lookup;
-                (*stateLoc)->unk04 = coords[0] >> 3;
-                (*stateLoc)->unk06 = (coords[1] >> 3) - 0x10;
+                pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gUnk_03000558->unk34[0]);
+                st = gUnk_03000554;
+                st->unk04 = pos[0] >> 3;
+                st->unk06 = (pos[1] >> 3) - 16;
             }
-            gMainWorkPtr->unk17F6 = entry->unk01;
-            (*stateLoc)->unk01 = 1;
-            (*stateLoc)->unk00 = phase;
+            gMainWorkPtr->unk17F6 = gUnk_03000558->unk04->unk01;
+            gUnk_03000554->unk01 = 1;
+            gUnk_03000554->unk00 = phase;
             sub_080435D8();
-            goto common;
         }
-        if ((input & 0x80) != 0)
+        }
+        else if (*(u16 *)gBtlInputMask & 0x80)
         {
-            struct Unk436B0Entry *entry;
-            struct Unk6DEF4 *lookup;
-            s32 *coords;
-
-            if (((*stateLoc)->unk02 & 0x20) == 0)
-                goto common;
-            entry = gUnk_03000558->unk08;
-            if (entry == 0)
-                goto common;
-            if (entry->unk36 >= 0)
+            if ((gUnk_03000554->unk02 & 0x20) && gUnk_03000558->unk08 != NULL)
+        {
+            if (gUnk_03000558->unk34[1] >= 0)
             {
-                lookup = (struct Unk6DEF4 *)sub_08062A14();
-                lookup = (struct Unk6DEF4 *)sub_0806DEF4(
-                    lookup,
-                    entry->unk36);
-                coords = (s32 *)lookup;
-                (*stateLoc)->unk04 = coords[0] >> 3;
-                (*stateLoc)->unk06 = (coords[1] >> 3) - 0x10;
+                pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gUnk_03000558->unk34[1]);
+                st = gUnk_03000554;
+                st->unk04 = pos[0] >> 3;
+                st->unk06 = (pos[1] >> 3) - 16;
             }
-            gMainWorkPtr->unk17F6 = entry->unk01;
-            (*stateLoc)->unk01 = 1;
-            (*stateLoc)->unk00 = 1;
+            gMainWorkPtr->unk17F6 = gUnk_03000558->unk08->unk01;
+            gUnk_03000554->unk01 = 1;
+            gUnk_03000554->unk00 = 1;
             sub_080435D8();
-            goto common;
         }
-        if ((input & 0x10) != 0)
+        }
+        else if (*(u16 *)gBtlInputMask & 0x10)
         {
-            struct Unk436B0Entry *entry;
-            struct Unk6DEF4 *lookup;
-            s32 *coords;
-
-            if (((*stateLoc)->unk02 & 0x40) == 0)
-                goto common;
-            entry = gUnk_03000558->unk0C;
-            if (entry == 0)
-                goto common;
-            if (entry->unk38 >= 0)
+            if ((gUnk_03000554->unk02 & 0x40) && gUnk_03000558->unk0C != NULL)
+        {
+            if (gUnk_03000558->unk34[2] >= 0)
             {
-                lookup = (struct Unk6DEF4 *)sub_08062A14();
-                lookup = (struct Unk6DEF4 *)sub_0806DEF4(
-                    lookup,
-                    entry->unk38);
-                coords = (s32 *)lookup;
-                (*stateLoc)->unk04 = coords[0] >> 3;
-                (*stateLoc)->unk06 = (coords[1] >> 3) - 0x10;
+                pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gUnk_03000558->unk34[2]);
+                st = gUnk_03000554;
+                st->unk04 = pos[0] >> 3;
+                st->unk06 = (pos[1] >> 3) - 16;
             }
-            gMainWorkPtr->unk17F6 = entry->unk01;
-            (*stateLoc)->unk01 = 1;
-            (*stateLoc)->unk00 = 2;
+            gMainWorkPtr->unk17F6 = gUnk_03000558->unk0C->unk01;
+            gUnk_03000554->unk01 = 1;
+            gUnk_03000554->unk00 = 2;
             sub_080435D8();
-            goto common;
         }
-        if ((input & 0x20) != 0)
+        }
+        else if (*(u16 *)gBtlInputMask & 0x20)
         {
-            struct Unk436B0Entry *entry;
-            struct Unk6DEF4 *lookup;
-            s32 *coords;
-
-            if (((*stateLoc)->unk02 & 0x80) == 0)
-                goto common;
-            entry = gUnk_03000558->unk10;
-            if (entry == 0)
-                goto common;
-            if (entry->unk3A >= 0)
+            if ((gUnk_03000554->unk02 & 0x80) && gUnk_03000558->unk10 != NULL)
+        {
+            if (gUnk_03000558->unk34[3] >= 0)
             {
-                lookup = (struct Unk6DEF4 *)sub_08062A14();
-                lookup = (struct Unk6DEF4 *)sub_0806DEF4(
-                    lookup,
-                    entry->unk3A);
-                coords = (s32 *)lookup;
-                (*stateLoc)->unk04 = coords[0] >> 3;
-                (*stateLoc)->unk06 = (coords[1] >> 3) - 0x10;
+                pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gUnk_03000558->unk34[3]);
+                st = gUnk_03000554;
+                st->unk04 = pos[0] >> 3;
+                st->unk06 = (pos[1] >> 3) - 16;
             }
-            gMainWorkPtr->unk17F6 = entry->unk01;
-            (*stateLoc)->unk01 = 1;
-            (*stateLoc)->unk00 = 3;
+            gMainWorkPtr->unk17F6 = gUnk_03000558->unk10->unk01;
+            gUnk_03000554->unk01 = 1;
+            gUnk_03000554->unk00 = 3;
             sub_080435D8();
-            goto common;
         }
-        if ((*(vu16 *)gBtlKeysHeld & 1) != 0 &&
-            ((*stateLoc)->unk02 & 0x0F) != 0)
+        }
+        else if (gBtlKeysHeldU16 & 1)
         {
-            sub_08045AA8(&gMainWorkPtr->unk18B8);
-            gMainWorkPtr->unk1833 = 1;
-            gMainWorkPtr->unk181C = 2;
-            (*stateLoc)->unk01 = 0xFF;
-            gMainWorkPtr->unk1808 &= ~0x200;
-            BtlClearUnk1834();
+            if (gUnk_03000554->unk02 & 0x0F)
+            {
+                sub_08045AA8(&gMainWorkPtr->unk18B8);
+                gMainWorkPtr->unk1833 = 1;
+                gMainWorkPtr->unk181C = 2;
+                gUnk_03000554->unk01 = 0xFF;
+                gMainWorkPtr->unk1808 &= ~0x200;
+                BtlClearUnk1834();
+            }
+        }
+        if (gBtlKeysHeldU16 & 8)
+        {
+            sub_08066390(7);
+            sub_0804109C((struct Unk40F4C *)&gMainWorkPtr->unk0530, sub_0806639C());
+            gMainWorkPtr->unk181C = 3;
+            sub_08060428();
         }
     }
     else if (phase == 1)
     {
         sub_08043420();
-        return;
-    }
-    else
-    {
-        return;
-    }
-
-common:
-    if ((*(vu16 *)gBtlKeysHeld & 8) != 0 &&
-        ((*stateLoc)->unk02 & 0x0F) != 0)
-    {
-        sub_08066390(7);
-        sub_0804109C(&gMainWorkPtr->unk0530, sub_0806639C());
-        gMainWorkPtr->unk181C = 3;
-        sub_08060428();
     }
 }

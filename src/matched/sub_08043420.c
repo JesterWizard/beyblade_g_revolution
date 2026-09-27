@@ -1,8 +1,71 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08043420
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Steps the 24.8 position (unk0370/unk0374) one unit toward the target
+// (unk04/unk06) along the direction in unk00 (0: -unk0374, 1: +unk0374,
+// 2: +unk0370, 3: -unk0370), selecting that direction's animation; calls
+// sub_08043638 once the target is reached.
 void sub_08043420(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nldr r0, _08043438 @ =0x03000554\nldr r0, [r0, #0x00]\nldrb r3, [r0, #0x00]\ncmp r3, #0x01\nbeq _080434B0\ncmp r3, #0x01\nbgt _0804343C\ncmp r3, #0x00\nbeq _08043448\nb _080435D0\n.byte 0x00, 0x00\n_08043438: .4byte 0x03000554\n_0804343C:\ncmp r3, #0x02\nbeq _08043510\ncmp r3, #0x03\nbne _08043446\nb _08043562\n_08043446:\nb _080435D0\n_08043448:\nldr r6, _08043498 @ =0x03000198\nldr r2, [r6, #0x00]\nmovs r1, #0xDD\nlsls r1, r1, #0x02\nadds r5, r2, r1\nldr r4, [r5, #0x00]\nasrs r1, r4, #0x08\nmovs r7, #0x06\nldsh r0, [r0, r7]\ncmp r1, r0\nbgt _08043460\nb _0804355C\n_08043460:\nldr r0, _0804349C @ =0xFFFFFF00\nadds r1, r4, r0\nstr r1, [r5, #0x00]\nldr r4, _080434A0 @ =0x0000086C\nadds r0, r2, r4\nstr r1, [r0, #0x00]\nldr r7, _080434A4 @ =0x0000039D\nadds r0, r2, r7\nstrb r3, [r0, #0x00]\nldr r2, [r6, #0x00]\nldr r0, _080434A8 @ =0x00001810\nadds r1, r2, r0\nmovs r0, #0x80\nstr r0, [r1, #0x00]\nldr r1, _080434AC @ =0x00000386\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x0A\nbne _08043488\nb _080435D0\n_08043488:\nmovs r3, #0xDB\nlsls r3, r3, #0x02\nadds r0, r2, r3\nmovs r1, #0x0A\nbl sub_080680CC\nb _080435D0\n.byte 0x00, 0x00\n_08043498: .4byte 0x03000198\n_0804349C: .4byte 0xFFFFFF00\n_080434A0: .4byte 0x0000086C\n_080434A4: .4byte 0x0000039D\n_080434A8: .4byte 0x00001810\n_080434AC: .4byte 0x00000386\n_080434B0:\nldr r6, _080434FC @ =0x03000198\nldr r3, [r6, #0x00]\nmovs r4, #0xDD\nlsls r4, r4, #0x02\nadds r5, r3, r4\nldr r4, [r5, #0x00]\nasrs r1, r4, #0x08\nmovs r7, #0x06\nldsh r0, [r0, r7]\ncmp r1, r0\nbge _0804355C\nmovs r2, #0x80\nlsls r2, r2, #0x01\nadds r1, r4, r2\nstr r1, [r5, #0x00]\nldr r4, _08043500 @ =0x0000086C\nadds r0, r3, r4\nstr r1, [r0, #0x00]\nldr r7, _08043504 @ =0x0000039D\nadds r1, r3, r7\nmovs r0, #0x00\nstrb r0, [r1, #0x00]\nldr r1, [r6, #0x00]\nldr r3, _08043508 @ =0x00001810\nadds r0, r1, r3\nstr r2, [r0, #0x00]\nldr r4, _0804350C @ =0x00000386\nadds r0, r1, r4\nldrh r0, [r0, #0x00]\ncmp r0, #0x0B\nbeq _080435D0\nmovs r6, #0xDB\nlsls r6, r6, #0x02\nadds r0, r1, r6\nmovs r1, #0x0B\nbl sub_080680CC\nb _080435D0\n_080434FC: .4byte 0x03000198\n_08043500: .4byte 0x0000086C\n_08043504: .4byte 0x0000039D\n_08043508: .4byte 0x00001810\n_0804350C: .4byte 0x00000386\n_08043510:\nldr r5, _0804354C @ =0x03000198\nldr r2, [r5, #0x00]\nmovs r7, #0xDC\nlsls r7, r7, #0x02\nadds r4, r2, r7\nldr r3, [r4, #0x00]\nasrs r1, r3, #0x08\nmovs r6, #0x04\nldsh r0, [r0, r6]\ncmp r1, r0\nbge _0804355C\nmovs r7, #0x80\nlsls r7, r7, #0x01\nadds r1, r3, r7\nstr r1, [r4, #0x00]\nldr r3, _08043550 @ =0x00000868\nadds r0, r2, r3\nstr r1, [r0, #0x00]\nldr r4, _08043554 @ =0x0000039D\nadds r1, r2, r4\nmovs r0, #0x01\nldrb r6, [r1, #0x00]\norrs r0, r6\nstrb r0, [r1, #0x00]\nldr r2, [r5, #0x00]\nldr r7, _08043558 @ =0x00001810\nadds r1, r2, r7\nmovs r0, #0x20\nb _08043598\n.byte 0x00, 0x00\n_0804354C: .4byte 0x03000198\n_08043550: .4byte 0x00000868\n_08043554: .4byte 0x0000039D\n_08043558: .4byte 0x00001810\n_0804355C:\nbl sub_08043638\nb _080435D0\n_08043562:\nldr r5, _080435B4 @ =0x03000198\nldr r2, [r5, #0x00]\nmovs r6, #0xDC\nlsls r6, r6, #0x02\nadds r4, r2, r6\nldr r3, [r4, #0x00]\nasrs r1, r3, #0x08\nmovs r7, #0x04\nldsh r0, [r0, r7]\ncmp r1, r0\nble _080435CC\nldr r0, _080435B8 @ =0xFFFFFF00\nadds r1, r3, r0\nstr r1, [r4, #0x00]\nldr r3, _080435BC @ =0x00000868\nadds r0, r2, r3\nstr r1, [r0, #0x00]\nldr r4, _080435C0 @ =0x0000039D\nadds r1, r2, r4\nmovs r0, #0x02\nldrb r6, [r1, #0x00]\nands r0, r6\nstrb r0, [r1, #0x00]\nldr r2, [r5, #0x00]\nldr r7, _080435C4 @ =0x00001810\nadds r1, r2, r7\nmovs r0, #0x40\n_08043598:\nstr r0, [r1, #0x00]\nldr r1, _080435C8 @ =0x00000386\nadds r0, r2, r1\nldrh r0, [r0, #0x00]\ncmp r0, #0x08\nbeq _080435D0\nmovs r3, #0xDB\nlsls r3, r3, #0x02\nadds r0, r2, r3\nmovs r1, #0x08\nbl sub_080680CC\nb _080435D0\n.byte 0x00, 0x00\n_080435B4: .4byte 0x03000198\n_080435B8: .4byte 0xFFFFFF00\n_080435BC: .4byte 0x00000868\n_080435C0: .4byte 0x0000039D\n_080435C4: .4byte 0x00001810\n_080435C8: .4byte 0x00000386\n_080435CC:\nbl sub_08043638\n_080435D0:\npop {r4, r5, r6, r7}\npop {r0}\nbx r0");
+    struct Unk0554 *move = gUnk_03000554;
+
+    switch (move->unk00)
+    {
+    case 0:
+        if ((gMainWorkPtr->unk0374 >> 8) > move->unk06)
+        {
+            gMainWorkPtr->unk0374 -= 0x100;
+            gMainWorkPtr->unk086C = gMainWorkPtr->unk0374;
+            gMainWorkPtr->unk039D = 0;
+            gMainWorkPtr->unk1810 = 0x80;
+            if (gMainWorkPtr->unk0386 != 10)
+                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 10);
+        }
+        else
+            sub_08043638();
+        break;
+    case 1:
+        if ((gMainWorkPtr->unk0374 >> 8) < move->unk06)
+        {
+            gMainWorkPtr->unk0374 += 0x100;
+            gMainWorkPtr->unk086C = gMainWorkPtr->unk0374;
+            gMainWorkPtr->unk039D = 0;
+            gMainWorkPtr->unk1810 = 0x100;
+            if (gMainWorkPtr->unk0386 != 11)
+                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 11);
+        }
+        else
+            sub_08043638();
+        break;
+    case 2:
+        if ((gMainWorkPtr->unk0370 >> 8) < move->unk04)
+        {
+            gMainWorkPtr->unk0370 += 0x100;
+            gMainWorkPtr->unk0868 = gMainWorkPtr->unk0370;
+            gMainWorkPtr->unk039D |= 1;
+            gMainWorkPtr->unk1810 = 0x20;
+            if (gMainWorkPtr->unk0386 != 8)
+                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 8);
+        }
+        else
+            sub_08043638();
+        break;
+    case 3:
+        if ((gMainWorkPtr->unk0370 >> 8) > move->unk04)
+        {
+            gMainWorkPtr->unk0370 -= 0x100;
+            gMainWorkPtr->unk0868 = gMainWorkPtr->unk0370;
+            gMainWorkPtr->unk039D &= 2;
+            gMainWorkPtr->unk1810 = 0x40;
+            if (gMainWorkPtr->unk0386 != 8)
+                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 8);
+        }
+        else
+            sub_08043638();
+        break;
+    }
 }
+

@@ -1,42 +1,43 @@
+#define sub_0806FF58 sub_0806FF58_old
 #include "global.h"
+#include "ram_map.h"
+#undef sub_0806FF58
 
-// @ 0x0806ff58
-void sub_0806FF58(void *a, void *b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h)
+struct Unk6FF58Src
 {
-    struct Unk705DC *dst;
-    u8 *src;
-    u32 attr;
-    u32 attrHi;
-    s8 pri;
-    u8 shapeByte;
+    u8 filler_00[6];
+    u8 unk06;
+    s8 unk07;
+    u8 filler_08[4];
+    u8 unk0C;
+    u8 filler_0D[3];
+    u32 unk10;
+    u8 filler_14[8];
+    u32 unk1C;
+};
 
-    dst = a;
-    src = b;
-    shapeByte = src[0x0C];
-    pri = (s8)src[7];
+void sub_0806FF58(void *obj, void *srcArg, u32 x, u32 y, u8 e, u8 f, u8 g, u16 h)
+{
+    struct Unk705DC *dst = obj;
+    struct Unk6FF58Src *src = srcArg;
+    s8 pri;
+    u8 shape;
+
+    pri = src->unk07;
+    shape = src->unk0C;
     dst->unk2C = src;
-    dst->unk1C = (u16)e;
-    dst->unk08 = c;
-    dst->unk0C = d;
-    attr = (u32)(pri & 3) << 14;
-    attr |= (u32)(~shapeByte & 1) << 13;
-    attr |= (u32)(f & 3) << 10;
-    attr |= 0x1000;
-    attr |= (u32)(shapeByte & 0xC) << 28;
-    attr |= (u32)(e & 3) << 28;
-    dst->unk10 = attr;
-    attrHi = (u32)((shapeByte >> 1) & 0xF) << 12;
-    attrHi |= (u32)(g & 3) << 10;
-    dst->unk14 = (u16)attrHi;
-    if (src[0x1C] != 0)
-        dst->unk28 = *(void **)(src + 0x1C);
-    else
-        dst->unk28 = *(void **)(src + 0x10);
-    dst->unk16 = src[6];
-    dst->unk18 = (u16)h;
+    dst->unk1C = g;
+    dst->unk08 = x;
+    dst->unk0C = y;
+    dst->unk10 = ((pri & 3) << 14) | ((~shape & 1) << 13) | (((e & 3) << 10) | 0x1000) | ((pri & 0xC) << 28) | ((g & 3) << 28);
+    dst->unk14 = (((shape >> 1) & 0xF) << 12) | ((f & 3) << 10);
+    dst->unk28 = (u8 *)src + (src->unk1C != 0 ? src->unk1C : src->unk10);
+    dst->unk16 = src->unk06;
+    dst->unk18 = h;
     dst->unk1A = 0xFFFF;
     dst->unk1C = 0;
     dst->unk20 = 0;
     dst->unk24 = -1;
     dst->unk1E = 0;
 }
+

@@ -1,16 +1,13 @@
 #include "global.h"
-#include "data_symbols.h"
+#include "ram_map.h"
 
-// @ 0x0807027C
-/* Init or refresh Unk70354Object scale/rotation from angle tables. */
 struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
 {
     struct Unk70354Object *obj;
     u32 special;
-    s16 cosVal;
-    s16 sinVal;
-    s16 scaleB;
-    s16 scaleC;
+    s32 cosVal;
+    s32 sinVal;
+    s32 scale;
 
     obj = a;
     special = 0;
@@ -42,14 +39,13 @@ struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
     if (d != 0)
     {
         cosVal = gData_083C9544[d + 0x40];
-        scaleB = gData_083A9544[b];
-        obj->unk0C = (cosVal * scaleB) >> 8;
+        scale = gData_083A9544[b];
+        obj->unk0C = (cosVal * scale) >> 8;
         sinVal = gData_083C9544[d];
-        obj->unk0E = (sinVal * scaleB) >> 8;
-        sinVal = -sinVal;
-        scaleC = gData_083A9544[c];
-        obj->unk10 = (sinVal * scaleC) >> 8;
-        obj->unk12 = (cosVal * scaleC) >> 8;
+        obj->unk0E = (sinVal * scale) >> 8;
+        scale = gData_083A9544[c];
+        obj->unk10 = (-sinVal * scale) >> 8;
+        obj->unk12 = (cosVal * scale) >> 8;
     }
     else
     {
@@ -60,3 +56,4 @@ struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
     }
     return obj;
 }
+

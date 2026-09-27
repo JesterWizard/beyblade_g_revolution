@@ -595,6 +595,36 @@ struct Unk32604Mode /* 0x0c */
     /* 08 */ void *palette;
 };
 
+/* 12-byte (a, b) -> amount rows at 0x08077AC0, terminated by unk00 < 0. sub_0802E2F8. */
+struct Unk2E2F8 /* 0x0c */
+{
+    /* 00 */ s16 unk00;
+    /* 02 */ s16 unk02;
+    /* 04 */ u8 filler_04[2];
+    /* 06 */ s16 unk06;
+    /* 08 */ u8 filler_08[4];
+};
+
+/* Position record: x at +0x08, y at +0x0C. sub_080593A4. */
+struct Unk593A4Pos /* >= 0x10 */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+};
+
+/* Owner of an 8-segment sprite bar at +0x4C. sub_080593A4. */
+struct Unk593A4 /* >= 0xa8 */
+{
+    /* 00 */ struct Unk593A4Pos *unk00;
+    /* 04 */ u8 filler_04[0x2C];
+    /* 30 */ struct Unk593A4Pos *unk30;
+    /* 34 */ u8 filler_34[0x18];
+    /* 4c */ struct Unk705DC *unk4C[8];
+    /* 6c */ u8 filler_6C[0x38];
+    /* a4 */ s32 unkA4;
+};
+
 struct BattleWork /* >= 0x208A */
 {
     /* 0000 */ void *unk00;
@@ -640,15 +670,16 @@ struct BattleWork /* >= 0x208A */
     /* 0AD8 */ void *unk0AD8[4];
     /* 0AE8 */ union Unk30D4CResource unk0AE8;
     /* 0B54 */ void *unk0B54[4]; /* sub_08033878 */
-    /* 0B64 */ u32 unk0B64;
-    /* 0B68 */ u32 unk0B68;
+    /* 0B64 */ s32 unk0B64;
+    /* 0B68 */ s32 unk0B68;
     /* 0B6C */ u8 unk0B6C;
     /* 0B6D */ u8 filler_0B6D[3];
-    /* 0B70 */ u32 unk0B70;
+    /* 0B70 */ s32 unk0B70;
     /* 0B74 */ s32 unk0B74;
-    /* 0B78 */ u32 unk0B78;
+    /* 0B78 */ s32 unk0B78;
     /* 0B7C */ s32 unk0B7C;
-    /* 0B80 */ u8 filler_0B80[4];
+    /* 0B80 */ u8 unk0B80;
+    /* 0B81 */ u8 filler_0B81[3];
     /* 0B84 */ u8 unkB84[0x10];
     /* 0B94 */ u8 unkB94[0x10];
     /* 0BA4 */ void *unkBA4;
@@ -931,10 +962,10 @@ struct MainWork /* >= 0x18B4 */
     /* 0504 */ u8 filler_0504[0x2C];
     /* 0530 */ u8 unk0530; /* sub_080415FC */
     /* 0531 */ u8 filler_0531[0x24B];
-    /* 077c */ void *unk077C;
-    /* 0780 */ void *unk0780;
-    /* 0784 */ void *unk0784;
-    /* 0788 */ void *unk0788;
+    /* 077c */ void (*unk077C)(u8 *state, struct MainWork *work); /* sub_080415FC */
+    /* 0780 */ void (*unk0780)(u8 *state, struct MainWork *work);
+    /* 0784 */ void (*unk0784)(u8 *state, struct MainWork *work);
+    /* 0788 */ void (*unk0788)(u8 *state);
     /* 078c */ u8 filler_078C[0x18];
     /* 07A4 */ struct Unk38F30Entry *unk07A4[0x18]; /* sub_08038F30 */
     /* 0804 */ u8 unk0804; /* sub_080415FC */
@@ -1188,11 +1219,20 @@ struct Unk62728 /* >= 0x0c */
 };
 
 /* ldrsh at +0, pointer at +4. sub_08033958. */
+/* Key-combo table: length, then that many u16 key masks. sub_080338F0. */
+struct Unk338F0Table
+{
+    /* 00 */ s32 unk00;
+    /* 04 */ u16 unk04[1];
+};
+
+/* Key-combo tracker: position, timeout, table. sub_080338E4, sub_080338F0,
+ * sub_08033958. */
 struct Unk33958 /* >= 0x08 */
 {
     /* 00 */ s16 unk00;
-    /* 02 */ u8 filler_02[2];
-    /* 04 */ s32 *unk04;
+    /* 02 */ s16 unk02;
+    /* 04 */ struct Unk338F0Table *unk04;
 };
 
 /* Clear fields if non-NULL. sub_08061E40. */
@@ -2800,6 +2840,8 @@ struct Unk0558 /* >= 0x14 */
     /* 08 */ struct Unk436B0Entry *unk08;
     /* 0c */ struct Unk436B0Entry *unk0C;
     /* 10 */ struct Unk436B0Entry *unk10;
+    /* 14 */ u8 filler_14[0x20];
+    /* 34 */ s16 unk34[4]; /* map-point index per direction, sub_080436B0 */
 };
 
 /* Fixed-point (x.8) coordinate pair. sub_08042390. */

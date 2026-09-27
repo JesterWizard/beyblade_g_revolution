@@ -1,8 +1,71 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0804438c
-__attribute__((naked))
-void sub_0804438C(void)
+// Brightness fade over 11 steps: mode -1 lowers the level by 16 per step;
+// mode 1 raises it by 16 per step (capped at 0xB8) while restoring DISPCNT.
+void sub_0804438C(s8 mode)
 {
-    asm(".syntax unified\npush {r4, r5, lr}\nadd sp, #-0x004\nadds r4, r0, #0x0\nlsls r4, r4, #0x18\nlsrs r4, r4, #0x18\nldr r0, _080443B8 @ =0x08119204\nldr r1, _080443BC @ =0x080B7429\nbl sub_080617C4\nldr r1, _080443C0 @ =0x050001FE\nmovs r0, #0x00\nstrh r0, [r1, #0x00]\nlsls r4, r4, #0x18\nasrs r4, r4, #0x18\nmovs r0, #0x01\nnegs r0, r0\ncmp r4, r0\nbeq _080443C4\ncmp r4, #0x01\nbeq _0804440E\nb _080444A4\n.byte 0x00, 0x00\n_080443B8: .4byte 0x08119204\n_080443BC: .4byte 0x080B7429\n_080443C0: .4byte 0x050001FE\n_080443C4:\nmovs r4, #0x00\n_080443C6:\nbl sub_08060394\nlsls r0, r0, #0x18\nlsrs r0, r0, #0x18\ncmp r0, #0x00\nble _080443E6\nsubs r0, #0x10\nlsls r0, r0, #0x10\nlsrs r1, r0, #0x10\ncmp r0, #0x00\nbge _080443DE\nmovs r1, #0x00\n_080443DE:\nlsls r0, r1, #0x18\nlsrs r0, r0, #0x18\nbl sub_080602C0\n_080443E6:\nlsls r0, r4, #0x10\nlsrs r0, r0, #0x10\nmovs r1, #0x0F\nbl sub_08061D00\nbl sub_08052FC8\nbl sub_08052FC8\nbl sub_08052FC8\nadds r4, #0x01\ncmp r4, #0x0A\nble _080443C6\nmovs r0, #0x00\nbl sub_080602C0\nbl sub_08062C80\nb _080444A4\n_0804440E:\nmovs r0, #0x00\nbl sub_08046E7C\nmovs r0, #0x00\nbl sub_08046E7C\nmovs r0, #0x00\nbl sub_08046E7C\nldr r0, _080444AC @ =0x03000198\nldr r0, [r0, #0x00]\nldr r1, _080444B0 @ =0x00001834\nadds r0, r0, r1\nldrb r0, [r0, #0x00]\ncmp r0, #0x01\nbne _08044432\nbl sub_08042718\n_08044432:\nmovs r4, #0x0A\nmovs r5, #0x80\nlsls r5, r5, #0x13\n_08044438:\nbl sub_08060394\nlsls r0, r0, #0x18\nlsrs r0, r0, #0x18\ncmp r0, #0xB7\nbgt _08044456\nadds r1, r0, #0x0\nadds r1, #0x10\ncmp r1, #0xB8\nble _0804444E\nmovs r1, #0xB8\n_0804444E:\nlsls r0, r1, #0x18\nlsrs r0, r0, #0x18\nbl sub_080602C0\n_08044456:\nlsls r0, r4, #0x10\nlsrs r0, r0, #0x10\nmovs r1, #0x0F\nbl sub_08061D00\nbl sub_08052FC8\nbl sub_08052FC8\nbl sub_08052FC8\nldr r0, _080444B4 @ =0x04000050\nmovs r1, #0x00\nstrh r1, [r0, #0x00]\nadds r0, #0x04\nstrh r1, [r0, #0x00]\nldr r0, _080444AC @ =0x03000198\nldr r0, [r0, #0x00]\nmovs r1, #0xD6\nlsls r1, r1, #0x02\nadds r0, r0, r1\nldrh r0, [r0, #0x00]\nstrh r0, [r5, #0x00]\nsubs r4, #0x01\ncmp r4, #0x00\nbge _08044438\nbl sub_08061308\nldr r0, _080444B8 @ =0x000001BF\nstr r0, [sp, #0x000]\nmovs r0, #0x01\nmovs r1, #0x04\nmovs r2, #0x1C\nmovs r3, #0x10\nbl sub_08061628\nmovs r0, #0xB8\nbl sub_080602C0\n_080444A4:\nadd sp, #0x004\npop {r4, r5}\npop {r0}\nbx r0\n_080444AC: .4byte 0x03000198\n_080444B0: .4byte 0x00001834\n_080444B4: .4byte 0x04000050\n_080444B8: .4byte 0x000001BF");
+    s32 i;
+    s32 value;
+    s16 level;
+
+    TextSetActiveObject((struct Unk617C4 *)0x08119204, 0x080B7429);
+    *(vu16 *)0x050001FE = 0;
+    switch (mode)
+    {
+    case -1:
+        i = 0;
+        while (i <= 10)
+        {
+            value = sub_08060394();
+            if (value > 0)
+            {
+                level = value - 0x10;
+                if (level < 0)
+                    level = 0;
+                sub_080602C0(level);
+            }
+            sub_08061D00((u16)i, 0x0F);
+            sub_08052FC8();
+            sub_08052FC8();
+            sub_08052FC8();
+            i++;
+        }
+        sub_080602C0(0);
+        sub_08062C80();
+        break;
+    case 1:
+        sub_08046E7C(0);
+        sub_08046E7C(0);
+        sub_08046E7C(0);
+        if (gMainWorkPtr->unk1834 == 1)
+            sub_08042718();
+        i = 10;
+        while (i >= 0)
+        {
+            value = sub_08060394();
+            if (value <= 0xB7)
+            {
+                level = value + 0x10;
+                if (level > 0xB8)
+                    level = 0xB8;
+                sub_080602C0(level);
+            }
+            sub_08061D00((u16)i, 0x0F);
+            sub_08052FC8();
+            sub_08052FC8();
+            sub_08052FC8();
+            REG_BLDCNT = 0;
+            REG_BLDY = 0;
+            REG_DISPCNT = gMainWorkPtr->unk0358;
+            i--;
+        }
+        sub_08061308();
+        sub_08061628(1, 4, 0x1C, 0x10, 0x1BF);
+        sub_080602C0(0xB8);
+        break;
+    }
 }
+

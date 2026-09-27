@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-27T08:58:51Z",
+  "generated": "2026-09-27T14:25:01Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 130,
-    "semantic_done": 503,
-    "readable_asm": 130,
+    "pending": 115,
+    "semantic_done": 518,
+    "readable_asm": 115,
     "opcode": 0,
-    "battle_pending": 49,
-    "battle_semantic": 109,
+    "battle_pending": 41,
+    "battle_semantic": 117,
     "blocked": 20,
-    "wip": 60
+    "wip": 50
   },
   "pinned": [],
   "wip": [
@@ -28,21 +28,10 @@
       "score": "11/92"
     },
     {
-      "name": "sub_080338F0",
-      "addr": "0x080338F0",
-      "kind": "asm",
-      "bytes": 104,
-      "seed": "src/decompiled/sub_080338F0.c",
-      "notes": "src/decompiled/sub_080338F0.md",
-      "status": "same_size DIFF, 20/104 bytes (19.2%) \u2014 structural rewrite needed, indexing bug noted in file",
-      "next": "fix table indexing to byte-offset (see note), re-add Unk338F0Table struct + Unk33958 retype, then re-run match_function.py",
-      "score": "20/104"
-    },
-    {
       "name": "sub_0802BC14",
       "addr": "0x0802BC14",
-      "kind": "asm",
-      "bytes": 112,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0802BC14.c",
       "notes": "src/decompiled/sub_0802BC14.md",
       "status": "size_mismatch 5/112; u32 prototype, 60s permuter no score 0",
@@ -59,17 +48,6 @@
       "status": "size_mismatch 14/90 baseline; explicit-goto and r2/r5-pinned variants did not reproduce retail loop allocation",
       "next": "leave readable Thumb; revisit with permuter over skip/main-loop source shape",
       "score": "14/90"
-    },
-    {
-      "name": "sub_08059DC8",
-      "addr": "0x08059DC8",
-      "kind": "asm",
-      "bytes": 72,
-      "seed": "src/decompiled/sub_08059DC8.c",
-      "notes": "src/decompiled/sub_08059DC8.md",
-      "status": "60s permuter, no score 0 (27/72)",
-      "next": "Do not re-attempt by hand or by permuter until a new seed exists.",
-      "score": "27/72"
     },
     {
       "name": "sub_080620D4",
@@ -96,8 +74,8 @@
     {
       "name": "sub_080302E0",
       "addr": "0x080302E0",
-      "kind": "asm",
-      "bytes": 168,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080302E0.c",
       "notes": "src/decompiled/sub_080302E0.md",
       "status": "seed does not compile: Unk battle struct has no unk13C/unkAE8",
@@ -138,17 +116,6 @@
       "score": "33/196"
     },
     {
-      "name": "sub_0803559C",
-      "addr": "0x0803559C",
-      "kind": "asm",
-      "bytes": 108,
-      "seed": "src/decompiled/sub_0803559C.c",
-      "notes": "src/decompiled/sub_0803559C.md",
-      "status": "two attempts: 21/108 direct nested shape (104B), then 22/108 same-size with explicit retail labels and base/target register pins; remaining mismatch is dispatch branch layout/displacements",
-      "next": "Retain the same-size label seed; adjust only the type dispatch branch orientation to match beq/bgt/cmp0 offsets, then verify the shared update call",
-      "score": "22/108"
-    },
-    {
       "name": "sub_08035624",
       "addr": "0x08035624",
       "kind": "asm",
@@ -182,17 +149,6 @@
       "score": "56/316"
     },
     {
-      "name": "sub_0803D51C",
-      "addr": "0x0803D51C",
-      "kind": "asm",
-      "bytes": 304,
-      "seed": "src/decompiled/sub_0803D51C.c",
-      "notes": "src/decompiled/sub_0803D51C.md",
-      "status": "Two same-size attempts did not match: direct semantic seed compiled 288/304 with result in r6; r5 pin expanded to 280/304 and forced extra registers. Logic and Unk2C314 result fields are identified.",
-      "next": "Use a targeted register-layout/permuter search to reproduce retail push {r4,r5,lr}, r4 main-work location, and r5 result; preserve two repeated sub_0802C314/sub_0802C55C blocks.",
-      "score": "63/304 then 38/304"
-    },
-    {
       "name": "sub_080411EC",
       "addr": "0x080411EC",
       "kind": "asm",
@@ -202,17 +158,6 @@
       "status": "Two semantic attempts failed to preserve the retail dispatcher shape: direct struct logic 36/346 (332B), then r2 key pin plus volatile mode reload 35/346 (328B). The state pointer fields, two callback modes, key masks, and sub_08045C5C flag path are modeled.",
       "next": "Use the original direct seed with a targeted literal/register-order search: force a separate 0x2D9 offset pool load, keys in r1/r2, and preserve the callback fallthrough labels; avoid fixed pins that shrink the branch layout.",
       "score": "36/346 then 35/346"
-    },
-    {
-      "name": "sub_080415FC",
-      "addr": "0x080415FC",
-      "kind": "asm",
-      "bytes": 200,
-      "seed": "src/decompiled/sub_080415FC.c",
-      "notes": "src/decompiled/sub_080415FC.md",
-      "status": "Two semantic attempts: cached-main/state seed 38/200 (180B), direct state-address seed 127/200 (192B). The latter matches the core dispatch logic but agbcc caches main in r4 and uses different offset materialization than retail's r1 main pointer/reloaded locations.",
-      "next": "Try direct gMainWorkPtr field expressions (no persistent main local) or targeted register-layout/permuter work to retain main in r1, state at +0x530, and r4 as the pointer-location only.",
-      "score": "38/200 then 127/200"
     },
     {
       "name": "sub_0804188C",
@@ -226,17 +171,6 @@
       "score": "19/244 then 41/244"
     },
     {
-      "name": "sub_08043420",
-      "addr": "0x08043420",
-      "kind": "asm",
-      "bytes": 438,
-      "seed": "src/decompiled/sub_08043420.c",
-      "notes": "src/decompiled/sub_08043420.md",
-      "status": "Two semantic attempts both 79/438 (448B): explicit state local and direct switch/state source produced identical codegen. All four transition paths, fixed-point thresholds, mirrored fields, flags, mode values, and sub_080680CC/sub_08043638 fallbacks are identified; mismatch is chiefly global/state pointer register allocation and branch layout.",
-      "next": "Use a targeted register/permuter search to keep gUnk_03000554 in r0 and state in r3 as retail, with ordinary per-case MainWork locals; preserve signed s32 coordinate fields and threshold halfwords.",
-      "score": "79/438 then 79/438"
-    },
-    {
       "name": "sub_080436B0",
       "addr": "0x080436B0",
       "kind": "asm",
@@ -246,17 +180,6 @@
       "status": "Two semantic attempts failed: structured local seed 46/658 (616B), then fixed state-location/direct-field layout 85/658 (708B). Transition semantics are mapped across input masks 0x40/0x80/0x10/0x20, keyboard finalization, coordinate lookup, and common input-0x8 setup; source restructuring or permuter work is required.",
       "next": "Use a compact helper/branch-shape seed from the parked C, then targeted register/permuter search for retail r6 state-location, r2 state pointer, r5 phase, and shared common tail. Preserve Unk0558 entry offsets and signed coordinate fields.",
       "score": "46/658 then 85/658"
-    },
-    {
-      "name": "sub_0804438C",
-      "addr": "0x0804438C",
-      "kind": "asm",
-      "bytes": 304,
-      "seed": "src/decompiled/sub_0804438C.c",
-      "notes": "src/decompiled/sub_0804438C.md",
-      "status": "Two semantic attempts: baseline 56/304 (292B), then signed value plus r5 DISPCNT base/explicit IO stores 54/304 (288B). Fade behavior is mapped for mode -1 and mode 1, including VRAM clear, brightness loops, blend register resets, DISPCNT writes, and final display setup; register allocation/condition-code scheduling remains.",
-      "next": "Restore baseline; use targeted register/permuter work to keep loop counter r4 and DISPCNT base r5 without introducing r6, and reproduce signed ble/bgt brightness branches.",
-      "score": "56/304 then 54/304"
     },
     {
       "name": "sub_08045D3C",
@@ -292,17 +215,6 @@
       "score": "24/232 then 25/232"
     },
     {
-      "name": "sub_08051BBC",
-      "addr": "0x08051BBC",
-      "kind": "asm",
-      "bytes": 124,
-      "seed": "src/decompiled/sub_08051BBC.c",
-      "notes": "src/decompiled/sub_08051BBC.md",
-      "status": "Two semantic attempts: direct field/volatile loop 24/124 (144B), then pinned main-location/BLDY anchors 26/124 (156B). Fade counters and register writes are semantically correct, but the retail uses a compact offset-register layout and the typed pointer anchors add code.",
-      "next": "Restore direct semantic fields and use targeted source-order/permuter work for retail r5=main-location, r4=0x17F0 offset, r6=BLDY; preserve loop writes and callback order.",
-      "score": "24/124 then 26/124"
-    },
-    {
       "name": "sub_08056D68",
       "addr": "0x08056D68",
       "kind": "asm",
@@ -323,17 +235,6 @@
       "status": "Two semantic attempts: typed table-pointer loop 16/228 (212B), then explicit ROM-base plus offset loop 15/228 (224B). Direct resource cases and callback payload semantics are mapped; retail loop retains ROM base in r2, byte offset in r4, and index in r6, while semantic C allocation/layout differs.",
       "next": "Use targeted offset/register search: preserve resource in r5, ROM base 0x080991D0 in r2, byte offset r4, index r6; retain the three direct resource branches and shared sub_0802D8C4 tail.",
       "score": "16/228 then 15/228"
-    },
-    {
-      "name": "sub_080607BC",
-      "addr": "0x080607BC",
-      "kind": "asm",
-      "bytes": 128,
-      "seed": "src/decompiled/sub_080607BC.c",
-      "notes": "src/decompiled/sub_080607BC.md",
-      "status": "Two semantic attempts: direct typed state 26/128 (same size), then r2/r3/r4/r5 register anchors 36/128 (136B). State fields and blend behavior are mapped; remaining mismatches are repeated submode/delay loads, temp evaluation order for +0x02/+0x04, and the retail non-optimized 0xFFFF|old-word instruction shape.",
-      "next": "Use local submode/delay/current/amount temporaries: submode=unk07, delay=unk08, current=unk02, amount=unk04; make mode a u32 in r4, state r2, location r3, and let the 0xFFFF OR reuse r5 naturally.",
-      "score": "26/128 then 36/128"
     },
     {
       "name": "sub_08061564",
@@ -459,8 +360,8 @@
     {
       "name": "sub_0802E2F8",
       "addr": "0x0802E2F8",
-      "kind": "asm",
-      "bytes": 110,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0802E2F8.c",
       "notes": "src/decompiled/sub_0802E2F8.md",
       "status": "two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue",
@@ -664,17 +565,6 @@
       "status": "22/190 size 188; mode r8 scheduling",
       "next": "match retail: ldr mode to r8 before u8-extend index; then permuter",
       "score": "22/190"
-    },
-    {
-      "name": "sub_08039BD4",
-      "addr": "0x08039BD4",
-      "kind": "asm",
-      "bytes": 1552,
-      "seed": "src/decompiled/sub_08039BD4.c",
-      "notes": "src/decompiled/sub_08039BD4.md",
-      "status": "inlined draft 282/1552 (peaked 344/1552); 180s permuter best 22665, still 364 bytes short",
-      "next": "Compiled body is 1188 vs 1552. Stack is sub sp,#0x24 vs retail #0x20. Recover the missing kind==1/2/3 text before another permuter run.",
-      "score": "282/1552"
     }
   ],
   "recommended": [
@@ -962,18 +852,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08041C8C",
-      "addr": "0x08041C8C",
-      "kind": "asm",
-      "bytes": 142,
-      "score": 67,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0806E31C",
       "addr": "0x0806E31C",
       "kind": "asm",
@@ -1178,11 +1056,11 @@
       "block_reason": ""
     },
     {
-      "name": "sub_080593A4",
-      "addr": "0x080593A4",
+      "name": "sub_08068418",
+      "addr": "0x08068418",
       "kind": "asm",
-      "bytes": 256,
-      "score": 138,
+      "bytes": 272,
+      "score": 139,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
@@ -1190,11 +1068,23 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08068418",
-      "addr": "0x08068418",
+      "name": "sub_0806B5C8",
+      "addr": "0x0806B5C8",
       "kind": "asm",
-      "bytes": 272,
-      "score": 139,
+      "bytes": 274,
+      "score": 145,
+      "battle_refs": 0,
+      "battle_syms": [],
+      "has_pool": false,
+      "blocked": false,
+      "block_reason": ""
+    },
+    {
+      "name": "sub_0806F05C",
+      "addr": "0x0806F05C",
+      "kind": "asm",
+      "bytes": 280,
+      "score": 140,
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": true,
@@ -1629,18 +1519,6 @@
       "block_reason": ""
     },
     {
-      "name": "sub_08041C8C",
-      "addr": "0x08041C8C",
-      "kind": "asm",
-      "bytes": 142,
-      "score": 67,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_0806E31C",
       "addr": "0x0806E31C",
       "kind": "asm",
@@ -1841,18 +1719,6 @@
       "battle_refs": 0,
       "battle_syms": [],
       "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080593A4",
-      "addr": "0x080593A4",
-      "kind": "asm",
-      "bytes": 256,
-      "score": 138,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
       "blocked": false,
       "block_reason": ""
     },

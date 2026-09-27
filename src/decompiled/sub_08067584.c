@@ -1,47 +1,39 @@
 #include "global.h"
+#include "ram_map.h"
 
-s32 sub_08067584(u16 value_arg, void *out_arg)
+s32 sub_08067584(u16 addr, void *outArg)
 {
+    u16 buf[0x44];
+    u16 *p;
+    u16 *out = outArg;
     u16 value;
-    u16 *out;
-    struct Unk09B0 **global_loc;
-    u16 *cursor;
     u8 i;
-    u16 scratch[0x44];
-    u8 count;
     u8 j;
-    u32 packed;
 
-    out = (u16 *)out_arg;
-    value = value_arg;
-    global_loc = (struct Unk09B0 **)0x030009B0;
-    if (value >= (*global_loc)->unk04)
+    if (addr >= gUnk_030009B0->unk04)
         return 0x80FF;
-    count = (*global_loc)->unk08;
-    cursor = &scratch[count + 1];
-    for (i = 0; i < count; i++)
+    p = &buf[gUnk_030009B0->unk08 + 1];
+    for (i = 0; i < gUnk_030009B0->unk08; i++)
     {
-        *cursor = value;
-        cursor--;
-        value >>= 1;
+        *p-- = addr;
+        addr >>= 1;
     }
-    *cursor = 1;
-    cursor--;
-    *cursor = 1;
-    sub_08067504(scratch, (void *)0x0D000000, count + 3);
-    sub_08067504((void *)0x0D000000, scratch, 0x44);
-    cursor = &scratch[4];
+    *p-- = 1;
+    *p = 1;
+    sub_08067504(buf, (void *)0x0D000000, gUnk_030009B0->unk08 + 3);
+    sub_08067504((void *)0x0D000000, buf, 0x44);
+    p = &buf[4];
     out += 3;
     for (i = 0; i < 4; i++)
     {
-        packed = 0;
+        value = 0;
         for (j = 0; j < 16; j++)
         {
-            packed = (packed << 1) | (cursor[j] & 1);
+            value <<= 1;
+            value |= *p++ & 1;
         }
-        *out = packed;
-        out--;
-        cursor += 16;
+        *out-- = value;
     }
     return 0;
 }
+

@@ -8,18 +8,37 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **500/633 (79.0%)** |
-| **Decompiled C (bytes)** | **42,912/90,272 (47.5%)** |
+| **Decompiled C (functions)** | **515/633 (81.4%)** |
+| **Decompiled C (bytes)** | **47,034/90,272 (52.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 133/633 (21.0%) |
+| Readable Thumb | 118/633 (18.6%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 107/160 (66.9% fn, 36.1% bytes) |
+| Battle semantic C | 115/160 (71.9% fn, 44.6% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-27 — parked-WIP sweep 7 (+10/10): 59DC8, 3D51C, 3559C, 607BC, 51BBC, 338F0, 415FC, 4438C, 39BD4, 43420
+
+- Tooling: `match_function.py` resolves libgcc `_call_via_rN` BL relocs (0x08073C40 + 4·N), so indirect calls
+  can be written as real function-pointer calls instead of `_08073C4x(...)` stubs.
+- `sub_08059DC8` — `while (done == 0)` dispatch through `gData_08099710`; the RAM word must be the symbol
+  `gData_03000734` (a literal address may alias `done`, and cse can then no longer thread the entry test).
+- `sub_08039BD4` (`PartMenuRebuild`, 1552 B) — y is `i * 8 + 0x10` (strength-reduced, so its spill slot comes
+  after the hoisted `&screen->unk298/2A0/2B0`); menu globals are symbols `gData_03000400/404/40C`.
+- `sub_08051BBC` — `old_agbcc`; loop reads `*loc` into a block-scoped local.
+- `sub_08043420` — `old_agbcc`; direct `gMainWorkPtr->` accesses (reloaded only after byte stores).
+- `sub_0803D51C` — `old_agbcc`; calls `sub_0802C55C` through a `(s32, s32, s32)` cast (retail sign-extends the
+  args; the definition takes `u16, u8`). `sub_0802C5DC` now takes `s8` (still matches).
+- `sub_080415FC` — `MainWork.unk077C..0788` are typed function pointers. `sub_080338F0` — `Unk33958` gains
+  `s16 unk02` and a `struct Unk338F0Table *` (the key-combo table); a wrong key resets *both* fields.
+- `sub_0804438C` — `s32 value` (signed compares) and one `s16 level` shared by both clamps (permuter find);
+  `sub_08046E7C` takes one argument.
+- `sub_0803559C` / `sub_080607BC` — plain `switch`; 607BC writes BLDCNT/BLDY (the draft had BLDALPHA).
+- Pre-existing, not from this batch: `sub_0802E048` fails `make audit` at HEAD (missing struct members).
 
 ### 2026-09-27 — parked-WIP sweep 6 (+7): 42BE8, 40EF4, 68118, 41E14, 71BA0, 6A4D8, 2DCDC→92%
 

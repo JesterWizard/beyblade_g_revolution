@@ -1,76 +1,41 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080607bc
-__attribute__((naked))
+// Blend fade tick: writes BLDCNT/BLDY from the fade state and, every
+// (unk09 + 1) frames, steps the BLDY level by unk02 (bouncing at 15, and
+// resetting the step when the level returns to 0).
 void sub_080607BC(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "ldr r3, _080607D4 @ =0x03000758\n"
-        "ldr r2, [r3, #0x00]\n"
-        "ldrb r4, [r2, #0x06]\n"
-        "cmp r4, #0x01\n"
-        "bne _08060830\n"
-        "ldrb r0, [r2, #0x07]\n"
-        "cmp r0, #0x00\n"
-        "beq _080607D8\n"
-        "cmp r0, #0x01\n"
-        "beq _08060824\n"
-        "b _08060830\n"
-        "_080607D4: .4byte 0x03000758\n"
-        "_080607D8:\n"
-        "ldr r1, _080607F0 @ =0x04000050\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r1, #0x04\n"
-        "ldrh r0, [r2, #0x04]\n"
-        "strh r0, [r1, #0x00]\n"
-        "ldrb r0, [r2, #0x08]\n"
-        "cmp r0, #0x00\n"
-        "beq _080607F4\n"
-        "subs r0, #0x01\n"
-        "strb r0, [r2, #0x08]\n"
-        "b _08060830\n"
-        "_080607F0: .4byte 0x04000050\n"
-        "_080607F4:\n"
-        "ldrb r0, [r2, #0x09]\n"
-        "strb r0, [r2, #0x08]\n"
-        "ldr r1, [r3, #0x00]\n"
-        "ldrh r2, [r1, #0x02]\n"
-        "ldrh r5, [r1, #0x04]\n"
-        "adds r0, r2, r5\n"
-        "strh r0, [r1, #0x04]\n"
-        "lsls r0, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, #0x0F\n"
-        "bne _08060812\n"
-        "ldr r5, _08060820 @ =0x0000FFFF\n"
-        "adds r0, r5, #0x0\n"
-        "orrs r0, r2\n"
-        "strh r0, [r1, #0x02]\n"
-        "_08060812:\n"
-        "ldr r1, [r3, #0x00]\n"
-        "movs r2, #0x04\n"
-        "ldsh r0, [r1, r2]\n"
-        "cmp r0, #0x00\n"
-        "bne _08060830\n"
-        "strh r4, [r1, #0x02]\n"
-        "b _08060830\n"
-        "_08060820: .4byte 0x0000FFFF\n"
-        "_08060824:\n"
-        "ldr r1, _08060838 @ =0x04000050\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r1, #0x04\n"
-        "ldrh r0, [r2, #0x04]\n"
-        "strh r0, [r1, #0x00]\n"
-        "_08060830:\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08060838: .4byte 0x04000050\n"
-    );
+    struct Unk0758 *state = gUnk_03000758;
+    u32 mode = state->unk06;
+    struct Unk0758 *fade;
+
+    if (mode != 1)
+        return;
+    switch (state->unk07)
+    {
+    case 0:
+        REG_BLDCNT = state->unk00;
+        REG_BLDY = state->unk04;
+        if (state->unk08 != 0)
+        {
+            state->unk08--;
+            break;
+        }
+        state->unk08 = state->unk09;
+        fade = gUnk_03000758;
+        fade->unk04 += fade->unk02;
+        if (fade->unk04 == 0x0F)
+            fade->unk02 |= 0xFFFF;
+        if (gUnk_03000758->unk04 == 0)
+            gUnk_03000758->unk02 = mode;
+        break;
+    case 1:
+        REG_BLDCNT = state->unk00;
+        REG_BLDY = state->unk04;
+        break;
+    }
 }
 

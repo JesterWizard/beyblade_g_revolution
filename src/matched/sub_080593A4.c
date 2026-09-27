@@ -1,137 +1,46 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080593a4
-__attribute__((naked))
-void sub_080593A4(void)
+void sub_080593A4(struct Unk593A4 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x010\n"
-        "adds r5, r0, #0x0\n"
-        "movs r6, #0x00\n"
-        "movs r0, #0x4C\n"
-        "adds r0, r0, r5\n"
-        "mov r10, r0\n"
-        "mov r4, r10\n"
-        "_080593BC:\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _080593CA\n"
-        "bl sub_0806FE84\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x00]\n"
-        "_080593CA:\n"
-        "adds r4, #0x04\n"
-        "adds r6, #0x01\n"
-        "cmp r6, #0x07\n"
-        "ble _080593BC\n"
-        "ldr r0, [r5, #0x00]\n"
-        "ldr r2, [r0, #0x08]\n"
-        "asrs r2, r2, #0x08\n"
-        "ldr r0, [r5, #0x30]\n"
-        "adds r4, r5, #0x0\n"
-        "adds r4, #0xA4\n"
-        "ldr r0, [r0, #0x08]\n"
-        "ldr r1, [r4, #0x00]\n"
-        "adds r0, r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "subs r7, r2, r0\n"
-        "adds r0, r7, #0x0\n"
-        "movs r1, #0x20\n"
-        "bl sub_080674A4\n"
-        "asrs r7, r7, #0x05\n"
-        "mov r9, r4\n"
-        "cmp r0, #0x18\n"
-        "ble _080593FA\n"
-        "movs r0, #0x18\n"
-        "_080593FA:\n"
-        "movs r6, #0x00\n"
-        "cmp r6, r7\n"
-        "bgt _0805948E\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r8, r0\n"
-        "mov r4, r10\n"
-        "_08059408:\n"
-        "cmp r6, #0x00\n"
-        "bne _08059448\n"
-        "movs r0, #0x0A\n"
-        "bl sub_0806FDD0\n"
-        "str r0, [r5, #0x4C]\n"
-        "ldr r1, [r5, #0x30]\n"
-        "ldr r2, [r1, #0x08]\n"
-        "mov r3, r9\n"
-        "ldr r1, [r3, #0x00]\n"
-        "adds r2, r2, r1\n"
-        "ldr r1, [r5, #0x00]\n"
-        "ldr r3, [r1, #0x0C]\n"
-        "str r6, [sp, #0x000]\n"
-        "str r6, [sp, #0x004]\n"
-        "str r6, [sp, #0x008]\n"
-        "mov r1, r8\n"
-        "str r1, [sp, #0x00C]\n"
-        "ldr r1, _08059444 @ =0x0810E628\n"
-        "bl sub_0806FF58\n"
-        "ldr r0, [r5, #0x4C]\n"
-        "movs r1, #0x09\n"
-        "bl sub_080705DC\n"
-        "cmp r6, r7\n"
-        "bge _08059486\n"
-        "ldr r1, [r5, #0x4C]\n"
-        "b _08059482\n"
-        ".byte 0x00, 0x00\n"
-        "_08059444: .4byte 0x0810E628\n"
-        "_08059448:\n"
-        "movs r0, #0x0A\n"
-        "bl sub_0806FDD0\n"
-        "str r0, [r4, #0x00]\n"
-        "ldr r1, [r5, #0x30]\n"
-        "ldr r2, [r1, #0x08]\n"
-        "mov r3, r9\n"
-        "ldr r1, [r3, #0x00]\n"
-        "adds r2, r2, r1\n"
-        "lsls r1, r6, #0x0D\n"
-        "adds r2, r2, r1\n"
-        "ldr r1, [r5, #0x00]\n"
-        "ldr r3, [r1, #0x0C]\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x000]\n"
-        "str r1, [sp, #0x004]\n"
-        "str r1, [sp, #0x008]\n"
-        "mov r1, r8\n"
-        "str r1, [sp, #0x00C]\n"
-        "ldr r1, _080594A0 @ =0x081178B0\n"
-        "bl sub_0806FF58\n"
-        "ldr r0, [r4, #0x00]\n"
-        "movs r1, #0x09\n"
-        "bl sub_080705DC\n"
-        "cmp r6, r7\n"
-        "bge _08059486\n"
-        "ldr r1, [r4, #0x00]\n"
-        "_08059482:\n"
-        "movs r0, #0x18\n"
-        "strh r0, [r1, #0x18]\n"
-        "_08059486:\n"
-        "adds r4, #0x04\n"
-        "adds r6, #0x01\n"
-        "cmp r6, r7\n"
-        "ble _08059408\n"
-        "_0805948E:\n"
-        "add sp, #0x010\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_080594A0: .4byte 0x081178B0\n"
-    );
+    s32 i;
+    s32 last;
+    s32 count;
+
+    for (i = 0; i <= 7; i++)
+    {
+        if (a->unk4C[i] != NULL)
+        {
+            BtlObjPoolFree(a->unk4C[i]);
+            a->unk4C[i] = NULL;
+        }
+    }
+    count = (a->unk00->unk08 >> 8) - ((a->unk30->unk08 + a->unkA4) >> 8);
+    last = DivRemainder(count, 32);
+    count >>= 5;
+    if (last > 24)
+        last = 24;
+    for (i = 0; i <= count; i++)
+    {
+        if (i == 0)
+        {
+            a->unk4C[0] = BtlObjPoolAlloc(10);
+            sub_0806FF58(a->unk4C[0], (void *)0x0810E628, a->unk30->unk08 + a->unkA4, a->unk00->unk0C, 0, 0, 0, (u16)last);
+            TextEntrySetPaletteBank(a->unk4C[0], 9);
+            if (i < count)
+                a->unk4C[0]->unk18 = 24;
+        }
+        else
+        {
+            a->unk4C[i] = BtlObjPoolAlloc(10);
+            sub_0806FF58(a->unk4C[i], (void *)0x081178B0, a->unk30->unk08 + a->unkA4 + (i << 13), a->unk00->unk0C, 0, 0, 0, (u16)last);
+            TextEntrySetPaletteBank(a->unk4C[i], 9);
+            if (i < count)
+                a->unk4C[i]->unk18 = 24;
+        }
+    }
 }
+
 
