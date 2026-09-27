@@ -1,66 +1,37 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08061ab8
-__attribute__((naked))
+// ROM copy routine at gData_080BB8C0 (reached via _call_via_r3).
+typedef void (*CopyFunc)(const void *src, void *dst, u32 size);
+
+// Allocates the next of the 4 VRAM slots (gData_03000794 counts them) for the
+// current graphic (gData_03000798): copies unk94 tiles from its VRAM block into a
+// heap buffer and records the buffer and the graphic's unk90/unk92.
 void VramSlotLoad(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "ldr r6, _08061B20 @ =0x03000794\n"
-        "ldr r0, [r6, #0x00]\n"
-        "cmp r0, #0x04\n"
-        "beq _08061B1A\n"
-        "ldr r5, _08061B24 @ =0x03000798\n"
-        "ldr r0, [r5, #0x00]\n"
-        "adds r0, #0x94\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x05\n"
-        "bl sub_0806A3A4\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r7, _08061B28 @ =0x03000770\n"
-        "ldr r0, [r6, #0x00]\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r0, r0, r7\n"
-        "str r4, [r0, #0x00]\n"
-        "cmp r4, #0x00\n"
-        "beq _08061B1A\n"
-        "ldr r2, [r5, #0x00]\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0x5D\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x0E\n"
-        "movs r1, #0xC0\n"
-        "lsls r1, r1, #0x13\n"
-        "adds r0, r0, r1\n"
-        "ldr r3, _08061B2C @ =0x080BB8C0\n"
-        "ldr r1, [r4, #0x00]\n"
-        "adds r2, #0x94\n"
-        "ldrh r2, [r2, #0x00]\n"
-        "lsls r2, r2, #0x05\n"
-        "ldr r3, [r3, #0x00]\n"
-        "bl _08073C4C\n"
-        "ldr r3, [r6, #0x00]\n"
-        "lsls r2, r3, #0x03\n"
-        "adds r2, r2, r7\n"
-        "ldr r0, [r5, #0x00]\n"
-        "adds r1, r0, #0x0\n"
-        "adds r1, #0x90\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "strh r1, [r2, #0x04]\n"
-        "adds r0, #0x92\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "strh r0, [r2, #0x06]\n"
-        "adds r3, #0x01\n"
-        "str r3, [r6, #0x00]\n"
-        "_08061B1A:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08061B20: .4byte 0x03000794\n"
-        "_08061B24: .4byte 0x03000798\n"
-        "_08061B28: .4byte 0x03000770\n"
-        "_08061B2C: .4byte 0x080BB8C0\n"
-    );
+    void **buffer;
+    struct Unk0770 *slot;
+    struct Unk0798 *work;
+    u32 n;
+    void *vram;
+    struct Unk0770 *table;
+
+    if (gData_03000794[0] == 4)
+        return;
+    buffer = HeapAlloc(gData_03000798->unk94 << 5);
+    table = (struct Unk0770 *)gData_03000770;
+    table[gData_03000794[0]].unk00 = buffer;
+    if (buffer == NULL)
+        return;
+    work = gData_03000798;
+    vram = (void *)(VRAM + (work->unk5D << 14));
+    ((CopyFunc)gData_080BB8C0[0])(vram, *buffer, work->unk94 << 5);
+    n = gData_03000794[0];
+    slot = &table[n];
+    slot->unk04 = gData_03000798->unk90;
+    slot->unk06 = gData_03000798->unk92;
+    gData_03000794[0] = n + 1;
 }
 

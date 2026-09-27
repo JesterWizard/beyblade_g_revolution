@@ -1,47 +1,35 @@
+/* match-compiler: old_agbcc */
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
-// @ 0x08041b74
-void sub_08041B74(u32 a, u32 b)
+void sub_08041B74(void *a, void *b)
 {
     s16 i;
-    s32 idxHi;
     s16 count;
-    struct Unk68574 **pool;
     struct Unk68574 **slot;
-    struct Unk68574 *p;
-    u16 *countAddr;
 
     i = 0;
-    countAddr = (u16 *)gUnk_03000504;
-    count = *(s16 *)countAddr;
-    if (count <= 0)
-        return;
-    if (i >= count)
-        return;
-    pool = (struct Unk68574 **)gUnk_03000480;
-    while (i < count)
+    count = gData_03000504[0];
+    if (count > 0)
     {
-        idxHi = (s32)i << 16;
-        slot = &pool[i];
-        p = *slot;
-        if (p != 0 && p->unkD4 == (void *)a && p->unkD8 == (void *)b)
+        for (; i < (s16)gData_03000504[0]; i++)
         {
-            if (p->unkC8 != 0)
+            slot = &gData_03000480[i];
+            if (*slot != NULL && (*slot)->unkD4 == a && (*slot)->unkD8 == b)
             {
-                sub_08059D08((struct Unk59D08 *)p->unkC8);
-                (*slot)->unkC8 = 0;
+                if ((*slot)->unkC8 != NULL)
+                {
+                    sub_08059D08((struct Unk59D08 *)(*slot)->unkC8);
+                    (*slot)->unkC8 = NULL;
+                }
+                sub_08068808(*slot);
+                (*slot)->unk04 = -0x4000;
+                (*slot)->unk08 = -0x4000;
+                *slot = gData_03000480[(s16)--gData_03000504[0]];
+                gData_03000480[(s16)gData_03000504[0]] = NULL;
+                return;
             }
-            sub_08068808(*slot);
-            p = *slot;
-            p->unk04 = 0xFFFFC000;
-            p->unk08 = 0xFFFFC000;
-            count = *(s16 *)countAddr - 1;
-            *(s16 *)countAddr = count;
-            *slot = pool[count];
-            pool[count] = 0;
-            return;
         }
-        idxHi += 0x10000;
-        i = (s16)(idxHi >> 16);
     }
 }

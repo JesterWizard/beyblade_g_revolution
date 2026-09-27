@@ -682,8 +682,8 @@ struct BattleWork /* >= 0x208A */
     /* 0B81 */ u8 filler_0B81[3];
     /* 0B84 */ u8 unkB84[0x10];
     /* 0B94 */ u8 unkB94[0x10];
-    /* 0BA4 */ void *unkBA4;
-    /* 0BA8 */ void *unkBA8;
+    /* 0BA4 */ struct Unk705DC *unkBA4;
+    /* 0BA8 */ struct Unk705DC *unkBA8;
     /* 0BAC */ s32 unkBAC;
     /* 0BB0 */ s32 unkBB0;
     /* 0BB4 */ s32 unkBB4;
@@ -1774,12 +1774,21 @@ struct Unk70354Object /* >= 0x1A */
 
 struct Unk70354 /* >= 0x34 */
 {
-    /* 00 */ u8 filler_00[0x10];
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08; /* screen x (8.8), sub_08035468 */
+    /* 0C */ s32 unk0C; /* screen y (8.8) */
     /* 10 */ u32 unk10;
     /* 14 */ u8 filler_14[8];
     /* 1C */ u16 unk1C;
     /* 1E */ u8 filler_1E[0x12];
     /* 30 */ struct Unk70354Object *unk30;
+};
+
+/* Owner of the sprite placed by sub_08035468. */
+struct Unk35468Source /* >= 0xbc */
+{
+    /* 00 */ u8 filler_00[0xB8];
+    /* b8 */ struct Unk70354 *unkB8;
 };
 
 /* Halfword delta @ +0x1C, words @ +0x14/+0x18. sub_080361A8. */

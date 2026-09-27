@@ -1,8 +1,75 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080348e8
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Per-frame update of a battle participant: animation/collision step, input,
+// optional attack (sub_08034A68), then the timed states 7 (countdown in unk2FC,
+// then switch to 5) and 5 (countdown in unk2F8 with the unk312 start/finish
+// animations).
 void sub_080348E8(struct Unk346C0 *a, u32 b)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nadd sp, #-0x004\nadds r5, r0, #0x0\nadds r6, r1, #0x0\nldr r0, [r5, #0x00]\nmovs r4, #0x80\nlsls r4, r4, #0x09\nmovs r1, #0x80\nlsls r1, r1, #0x08\nstr r1, [sp, #0x000]\nadds r1, r4, #0x0\nadds r2, r4, #0x0\nmovs r3, #0xC8\nbl sub_08035C64\nldr r2, _080349A0 @ =0x0000030E\nadds r1, r5, r2\nstrb r0, [r1, #0x00]\nldr r0, [r5, #0x00]\nadds r1, r4, #0x0\nadds r2, r4, #0x0\nbl sub_08035D1C\ncmp r0, #0x01\nbne _08034924\nmovs r0, #0x04\nmovs r1, #0x38\nmovs r2, #0x07\nbl sub_08060254\n_08034924:\nldr r0, [r5, #0x00]\nbl sub_08035984\nldrb r0, [r5, #0x18]\ncmp r0, #0x01\nbne _08034938\nadds r0, r5, #0x0\nadds r0, #0x08\nbl sub_08035884\n_08034938:\nadds r0, r5, #0x0\nbl sub_08034894\nmovs r1, #0xC4\nlsls r1, r1, #0x02\nadds r0, r5, r1\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08034972\nmovs r2, #0xB3\nlsls r2, r2, #0x02\nadds r0, r5, r2\nldr r0, [r0, #0x00]\ncmp r0, #0x02\nbeq _08034972\ncmp r0, #0x06\nbeq _08034972\ncmp r0, #0x03\nbeq _08034972\nadds r0, r5, #0x0\nbl sub_08034FBC\nlsls r0, r0, #0x18\ncmp r0, #0x00\nbeq _08034972\nadds r0, r5, #0x0\nadds r1, r6, #0x0\nbl sub_08034A68\n_08034972:\nadds r0, r5, #0x0\nbl sub_08034618\nmovs r0, #0xB3\nlsls r0, r0, #0x02\nadds r2, r5, r0\nldr r0, [r2, #0x00]\ncmp r0, #0x07\nbne _080349C4\nmovs r1, #0xBF\nlsls r1, r1, #0x02\nadds r4, r5, r1\nldr r1, [r4, #0x00]\ncmp r1, #0x00\nblt _080349A4\nadds r0, r5, #0x0\nbl sub_08034810\nldr r0, [r4, #0x00]\nsubs r0, #0x01\nstr r0, [r4, #0x00]\nb _080349C4\n.byte 0x00, 0x00\n_080349A0: .4byte 0x0000030E\n_080349A4:\nmovs r0, #0x05\nstr r0, [r2, #0x00]\nmovs r2, #0xC4\nlsls r2, r2, #0x02\nadds r1, r5, r2\nmovs r0, #0x00\nstrb r0, [r1, #0x00]\nadds r0, r5, #0x0\nbl sub_0803484C\nmovs r0, #0xBE\nlsls r0, r0, #0x02\nadds r1, r5, r0\nmovs r0, #0x01\nnegs r0, r0\nstr r0, [r1, #0x00]\n_080349C4:\nmovs r1, #0xC4\nlsls r1, r1, #0x02\nadds r0, r5, r1\nldrb r7, [r0, #0x00]\ncmp r7, #0x00\nbne _08034A5A\nmovs r2, #0xB3\nlsls r2, r2, #0x02\nadds r0, r5, r2\nldr r0, [r0, #0x00]\ncmp r0, #0x05\nbne _08034A5A\nmovs r0, #0xBE\nlsls r0, r0, #0x02\nadds r4, r5, r0\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nblt _08034A1E\nadds r1, #0x02\nadds r6, r5, r1\nldrb r0, [r6, #0x00]\ncmp r0, #0x00\nbne _08034A16\nmovs r3, #0x01\nnegs r3, r3\nadds r0, r5, #0x0\nmovs r1, #0x00\nmovs r2, #0x0A\nbl sub_08035204\nmovs r0, #0x01\nstrb r0, [r6, #0x00]\nmovs r2, #0xAC\nlsls r2, r2, #0x02\nadds r0, r5, r2\nstr r7, [r0, #0x00]\nmovs r0, #0xAD\nlsls r0, r0, #0x02\nadds r1, r5, r0\nmovs r0, #0x08\nstr r0, [r1, #0x00]\n_08034A16:\nldr r0, [r4, #0x00]\nsubs r0, #0x01\nstr r0, [r4, #0x00]\nb _08034A5A\n_08034A1E:\nldr r1, _08034A64 @ =0x00000312\nadds r4, r5, r1\nldrb r2, [r4, #0x00]\ncmp r2, #0x01\nbne _08034A5A\nmovs r3, #0x01\nnegs r3, r3\nadds r0, r5, #0x0\nmovs r1, #0x00\nmovs r2, #0x0B\nbl sub_08035204\nadds r0, r5, #0x0\nadds r0, #0x1C\nmovs r1, #0x00\nbl sub_08067FC8\nadds r1, r5, #0x0\nadds r1, #0x8C\nstr r0, [r1, #0x00]\nmovs r1, #0xAC\nlsls r1, r1, #0x02\nadds r0, r5, r1\nstr r7, [r0, #0x00]\nmovs r2, #0xAD\nlsls r2, r2, #0x02\nadds r1, r5, r2\nmovs r0, #0x08\nstr r0, [r1, #0x00]\nstrb r7, [r4, #0x00]\n_08034A5A:\nadd sp, #0x004\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08034A64: .4byte 0x00000312");
+    s32 *counter;
+    u32 flag;
+    u8 *flag_ptr;
+
+    a->unk30E = sub_08035C64(a->unk00, 0x10000, 0x10000, 0xC8, 0x8000);
+    if (sub_08035D1C(a->unk00, 0x10000, 0x10000) == 1)
+        sub_08060254(4, 0x38, 7);
+    sub_08035984((struct Unk35984 *)a->unk00);
+    if (a->unk18 == 1)
+        sub_08035884(&a->unk08);
+    BtlCaptureInput(a);
+    if (a->unk310 != 0 &&
+        a->unk2CC != 2 &&
+        a->unk2CC != 6 &&
+        a->unk2CC != 3 &&
+        sub_08034FBC((struct Unk34FF8 *)a) != 0)
+    {
+        sub_08034A68(a, b);
+    }
+    sub_08034618(a);
+    if (a->unk2CC == 7)
+    {
+        counter = &a->unk2FC;
+        if (*counter >= 0)
+        {
+            sub_08034810(a, *counter);
+            (*counter)--;
+        }
+        else
+        {
+            a->unk2CC = 5;
+            a->unk310 = 0;
+            sub_0803484C((struct Unk3484C *)a);
+            a->unk2F8 = -1;
+        }
+    }
+    flag = a->unk310;
+    if (flag == 0 && a->unk2CC == 5)
+    {
+        counter = &a->unk2F8;
+        if (*counter >= 0)
+        {
+            flag_ptr = &a->unk312;
+            if (*flag_ptr == 0)
+            {
+                sub_08035204(a, 0, 0x0A, -1);
+                *flag_ptr = 1;
+                a->unk2B0 = flag;
+                a->unk2B4 = 8;
+            }
+            (*counter)--;
+        }
+        else if (a->unk312 == 1)
+        {
+            sub_08035204(a, 0, 0x0B, -1);
+            a->unk08C = sub_08067FC8(&a->unk1C, 0);
+            a->unk2B0 = flag;
+            a->unk2B4 = 8;
+            a->unk312 = flag;
+        }
+    }
 }
+

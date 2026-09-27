@@ -319,6 +319,7 @@ void sub_08039BD4(struct Unk39BD4 *a);
 void *sub_0803E1F4(s16 a, s16 b);
 s32 sub_080733E4(const u8 *src, u8 *dst, s32 size);
 void sub_08038F30(s32 dir);
+void sub_08041B74(void *a, void *b);
 void sub_0803DEC8(s8 a, s8 b, u8 c);
 s32 sub_0802BAD4(u8 kind, u8 group, u8 c, u8 d);
 void *sub_0803DDD8(s32 a);

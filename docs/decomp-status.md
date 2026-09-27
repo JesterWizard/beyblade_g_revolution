@@ -8,18 +8,29 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **524/633 (82.8%)** |
-| **Decompiled C (bytes)** | **48,932/90,272 (54.2%)** |
+| **Decompiled C (functions)** | **528/633 (83.4%)** |
+| **Decompiled C (bytes)** | **50,284/90,272 (55.7%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 109/633 (17.2%) |
+| Readable Thumb | 105/633 (16.6%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 118/160 (73.8% fn, 47.4% bytes) |
+| Battle semantic C | 120/160 (75.0% fn, 49.6% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-27 — parked-WIP sweep 9 (+4/10): 348E8, 61AB8, 35468, 56D68
+
+- `sub_080348E8` — the existing draft already matched under `old_agbcc` (earlier notes said otherwise).
+- `sub_08061AB8` — `gData_03000770/794/798` symbols plus a `vram` destination local before the copy call.
+- `sub_08035468` — camera projection; a separate depth local; `Unk70354` gains screen `unk08`/`unk0C`.
+- `sub_08056D68` — switch on event key; key 0x47EE is ignored (the old draft wrote `unk1828` for it).
+- Parked with better seeds: `sub_08030F38` (fields corrected, same size), `sub_08067648` (EEPROM write,
+  rewritten), `sub_08038D68`, `sub_08067504`, `sub_0802DCDC`.
+- Permuter bests saved (not semantic) in `src/decompiled/permuter/`: `sub_0802DCDC` (437/452),
+  `sub_08030F38` (149/348) and `sub_08041B74`, which byte-matches but needs `(void *)(s32)(count = 0)`.
 
 ### 2026-09-27 — parked-WIP sweep 8 (+9/10): 620D4, 62988, 6E31C, 733E4, 62358, 35258, 2BAD4, 2DEA0, 38F30
 

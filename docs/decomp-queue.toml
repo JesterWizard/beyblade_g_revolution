@@ -126,14 +126,6 @@ next = "Use a targeted register-layout/permuter search; model the byte-offset wo
 score = "15/150"
 
 [[wip]]
-name = "sub_080348E8"
-seed = "src/decompiled/sub_080348E8.c"
-notes = "src/decompiled/sub_080348E8.md"
-status = "two semantic attempts: 208/384 same-size first draft; second fixed-register attempt 222/384 but grew to 392B; control flow and field roles are reconstructed, remaining difference is register/pointer allocation in the state/cleanup tail"
-next = "Start from the 208/384 seed; try source-shape or permuter work for state pointer r2 and final flag/pointer r7/r6 allocation without fixed 8-bit register pins"
-score = "208/384"
-
-[[wip]]
 name = "sub_08035624"
 seed = "src/decompiled/sub_08035624.c"
 notes = "src/decompiled/sub_08035624.md"
@@ -196,14 +188,6 @@ status = "Two semantic attempts: local pool physics seed 24/232 (200B), then r3-
 next = "Restore the baseline; use a targeted register/permuter search for MainWork r3, pool-location r4, pool pointer r2, and ldm/stm slot iteration while preserving 0x1825/0x1827 gates and random updates."
 score = "24/232 then 25/232"
 [[wip]]
-name = "sub_08056D68"
-seed = "src/decompiled/sub_08056D68.c"
-notes = "src/decompiled/sub_08056D68.md"
-status = "Two semantic attempts (first after prototype correction, then after correcting MainWork's missing +0x17F4 padding) both produced 73/540 (548B). Event cases and side effects are mapped, but switch branch layout differs substantially; the header padding correction is retained for the discovered +0x17F6/+0x17F7 fields."
-next = "Use a switch/source-order or permuter search to reproduce the retail comparison tree and long-jump layout; retain struct Unk56D68 fields and MainWork +0x17F4 padding."
-score = "73/540 then 73/540"
-
-[[wip]]
 name = "sub_0805E044"
 seed = "src/decompiled/sub_0805E044.c"
 notes = "src/decompiled/sub_0805E044.md"
@@ -218,14 +202,6 @@ notes = "src/decompiled/sub_08061564.md"
 status = "Two semantic attempts: switch-based C 11/136 (144B), then explicit branch/goto form 9/136 (148B). Existing matched file is retained as naked assembly. Semantic body is mapped; remaining codegen requires pinning input/cursor/opcode to retail r0/r4/r2, restoring direct unk92 += unkA2 for load order, and using switch cases 8/7 with default handling opcode 10 via inverted cmp."
 next = "Use a switch on opcode with only cases 8 and 7; in default, if opcode != 10 dispatch unknown, otherwise perform the Unk0798 update then fall through shared x/y draw. Pin input r0, cursor r4, opcode r2 if needed."
 score = "11/136 then 9/136"
-
-[[wip]]
-name = "sub_08061AB8"
-seed = "src/decompiled/sub_08061AB8.c"
-notes = "src/decompiled/sub_08061AB8.md"
-status = "Two attempts: direct global C 18/120 same-size, then r4/r5/r6/r7 global anchors 50/120 (128B). Allocation is close but the fixed r7 table did not get a saved-register prologue; retail also retains work in r2 for the VRAM copy while the candidate reloads it into r0/r1."
-next = "Make table an ordinary local so agbcc saves normal r7, and introduce a work pointer anchored in r2 after allocation (work=*work_loc) for the bank and +0x94 copy-size expressions. Preserve count_loc r6, work_loc r5, buffer r4."
-score = "18/120 then 50/120"
 
 [[wip]]
 name = "sub_08062F90"
@@ -353,14 +329,6 @@ notes = "src/decompiled/sub_08035054.md"
 status = "Resource mode dispatcher semantics mapped for kinds 0/1/2 (asset allocation, flags, IDs, and sub_08035624 callbacks), but natural candidate reached 41/432; fixed-register tuning regressed to 47/432 with a larger output."
 next = "Retain natural register allocation and tune branch-specific struct member types/stack arguments; the target shares the Unk346C0 offset layout but keeps r4/r5/r7/r8/r9/r10 lifetimes naturally."
 score = "41/432"
-
-[[wip]]
-name = "sub_08035468"
-seed = "src/decompiled/sub_08035468.c"
-notes = "src/decompiled/sub_08035468.md"
-status = "Rotation/projection math reconstructed through both angle frames, depth correction, output coordinates, and sub_08070354; natural candidate reached 41/308 bytes, while fixed-register tuning regressed to 31/308."
-next = "Retain the natural baseline and tune the signed fixed-point expression grouping; target keeps the root in r7/table in r9 only after the null check, with input coordinates reused across both transforms."
-score = "41/308"
 
 [[wip]]
 name = "sub_08035D68"

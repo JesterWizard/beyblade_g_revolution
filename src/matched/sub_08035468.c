@@ -1,8 +1,54 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035468
-__attribute__((naked))
-void sub_08035468(void *a, s32 b, s32 c, s32 d, s32 e, s32 f, s32 g)
+// Projects world point (x, y, z) through the battle camera (gBattleWork.unkAA8:
+// position, screen centre, angle) and places the source's sprite there: depth
+// scales the offset, the sprite offset (ox, oy) is rotated by camera - angle, and
+// sub_08070354 gets the depth as scale and the relative angle.
+void sub_08035468(void *source, s32 x, s32 y, s32 z, s32 ox, s32 oy, s32 angle)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadds r6, r1, #0x0\nadds r0, #0xB8\nldr r0, [r0, #0x00]\nmov r8, r0\nldr r0, _0803558C @ =0x03000290\nldr r0, [r0, #0x00]\nldr r1, _08035590 @ =0x00000AA8\nadds r7, r0, r1\nmov r4, r8\ncmp r4, #0x00\nbeq _0803557E\nldr r0, _08035594 @ =0x083C9544\nmov r9, r0\nldr r1, [r7, #0x14]\nmov r10, r1\nmov r0, r10\nldr r4, _08035598 @ =0x0000FFFF\nands r0, r4\nlsrs r0, r0, #0x08\nlsls r1, r0, #0x01\nadd r1, r9\nmovs r4, #0x00\nldsh r5, [r1, r4]\nadds r0, #0x40\nlsls r0, r0, #0x01\nadd r0, r9\nmovs r1, #0x00\nldsh r4, [r0, r1]\nldr r0, [r7, #0x00]\nsubs r6, r6, r0\nldr r0, [r7, #0x04]\nsubs r2, r2, r0\nldr r0, [r7, #0x08]\nsubs r3, r3, r0\nasrs r3, r3, #0x08\nadds r0, r6, #0x0\nmuls r0, r3\nasrs r6, r0, #0x08\nadds r0, r2, #0x0\nmuls r0, r3\nasrs r2, r0, #0x08\nadds r1, r6, #0x0\nmuls r1, r4\nasrs r1, r1, #0x08\nadds r0, r2, #0x0\nmuls r0, r5\nasrs r0, r0, #0x08\nadds r1, r1, r0\nldr r0, [r7, #0x0C]\nadds r1, r1, r0\nmov r12, r1\nadds r1, r2, #0x0\nmuls r1, r4\nasrs r1, r1, #0x08\nadds r0, r6, #0x0\nmuls r0, r5\nasrs r0, r0, #0x08\nsubs r1, r1, r0\nldr r0, [r7, #0x10]\nadds r6, r1, r0\nlsls r0, r3, #0x0D\nasrs r0, r0, #0x08\nmov r2, r12\nsubs r2, r2, r0\nmov r12, r2\nsubs r6, r6, r0\ncmp r3, #0xFF\nbgt _0803550A\nmovs r0, #0x80\nlsls r0, r0, #0x01\nsubs r0, r0, r3\nlsls r0, r0, #0x0D\nasrs r0, r0, #0x08\nsubs r2, r2, r0\nmov r12, r2\nsubs r6, r6, r0\n_0803550A:\nmov r4, r10\nldr r0, [sp, #0x028]\nsubs r1, r4, r0\nldr r2, _08035598 @ =0x0000FFFF\nands r1, r2\nlsrs r1, r1, #0x08\nadds r0, r1, #0x0\nadds r0, #0x40\nlsls r0, r0, #0x01\nadd r0, r9\nmovs r2, #0x00\nldsh r4, [r0, r2]\nlsls r1, r1, #0x01\nadd r1, r9\nmovs r0, #0x00\nldsh r5, [r1, r0]\nldr r2, [sp, #0x020]\nadds r1, r2, #0x0\nmuls r1, r4\nasrs r1, r1, #0x08\nldr r2, [sp, #0x024]\nadds r0, r2, #0x0\nmuls r0, r5\nasrs r0, r0, #0x08\nadds r2, r1, r0\nldr r0, [sp, #0x024]\nadds r1, r0, #0x0\nmuls r1, r4\nasrs r1, r1, #0x08\nldr r4, [sp, #0x020]\nadds r0, r4, #0x0\nmuls r0, r5\nasrs r0, r0, #0x08\nsubs r1, r1, r0\nadds r0, r2, #0x0\nmuls r0, r3\nasrs r2, r0, #0x08\nadds r0, r1, #0x0\nmuls r0, r3\nasrs r1, r0, #0x08\nmov r4, r12\nsubs r0, r4, r2\nmov r2, r8\nstr r0, [r2, #0x08]\nsubs r0, r6, r1\nstr r0, [r2, #0x0C]\nlsls r2, r3, #0x10\nlsrs r2, r2, #0x10\nldr r3, [r7, #0x14]\nldr r4, [sp, #0x028]\nsubs r3, r4, r3\nasrs r3, r3, #0x08\nlsls r3, r3, #0x18\nlsrs r3, r3, #0x18\nmov r0, r8\nadds r1, r2, #0x0\nbl sub_08070354\n_0803557E:\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_0803558C: .4byte 0x03000290\n_08035590: .4byte 0x00000AA8\n_08035594: .4byte 0x083C9544\n_08035598: .4byte 0x0000FFFF");
+    struct Unk70354 *obj = ((struct Unk35468Source *)source)->unkB8;
+    struct Unk30638AA8 *cam = &gBattleWork->unkAA8;
+    s32 sine;
+    s32 cosine;
+    s32 sx;
+    s32 sy;
+    s32 edge;
+    s32 rx;
+    s32 ry;
+    s32 depth;
+
+    if (obj == NULL)
+        return;
+    sine = gData_083C9544[((u32)cam->unk14 & 0xFFFF) >> 8];
+    cosine = gData_083C9544[(((u32)cam->unk14 & 0xFFFF) >> 8) + 0x40];
+    x -= cam->unk00;
+    y -= cam->unk04;
+    z -= cam->unk08;
+    depth = z >> 8;
+    x = (x * depth) >> 8;
+    y = (y * depth) >> 8;
+    sx = ((x * cosine) >> 8) + ((y * sine) >> 8) + cam->unk0C;
+    sy = ((y * cosine) >> 8) - ((x * sine) >> 8) + cam->unk10;
+    edge = (depth << 13) >> 8;
+    sx -= edge;
+    sy -= edge;
+    if (depth < 0x100)
+    {
+        edge = ((0x100 - depth) << 13) >> 8;
+        sx -= edge;
+        sy -= edge;
+    }
+    cosine = gData_083C9544[(((u32)(cam->unk14 - angle) & 0xFFFF) >> 8) + 0x40];
+    sine = gData_083C9544[((u32)(cam->unk14 - angle) & 0xFFFF) >> 8];
+    rx = ((ox * cosine) >> 8) + ((oy * sine) >> 8);
+    ry = ((oy * cosine) >> 8) - ((ox * sine) >> 8);
+    rx = (rx * depth) >> 8;
+    ry = (ry * depth) >> 8;
+    obj->unk08 = sx - rx;
+    obj->unk0C = sy - ry;
+    sub_08070354(obj, depth, depth, (angle - cam->unk14) >> 8);
 }
+

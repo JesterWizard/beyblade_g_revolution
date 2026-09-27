@@ -1,81 +1,71 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
-u16 sub_08067648(u16 value, u32 source_arg, u32 mode_arg)
+u16 sub_08067648(u16 address, u32 data_arg, u32 mode_arg)
 {
-    u16 scratch[0x4B];
-    u16 *cursor;
-    u16 *source;
-    u8 count;
-    u8 mode;
-    u16 vcount;
-    u16 previous;
-    u16 current;
-    u16 word;
-    u16 remaining;
-    u16 ready;
-    s32 elapsed;
-    u32 i;
-    u32 j;
+    u16 buffer[0x52];
+    vu16 status;
+    vu16 lastVcount;
+    vu16 vcount;
+    vu32 elapsed;
+    const u16 *data = (const u16 *)data_arg;
+    u8 mode = mode_arg;
+    u16 result;
+    u16 *ptr;
+    u16 bits;
+    u8 i;
+    u8 j;
 
-    source = (u16 *)source_arg;
-    mode = (u8)mode_arg;
-    if (value >= gUnk_030009B0->unk04)
+    if (address >= gUnk_030009B0->unk04)
         return 0x80FF;
-    count = gUnk_030009B0->unk08;
-    remaining = value;
-    cursor = &scratch[count + 0x42];
-    *cursor-- = 0;
+    ptr = &buffer[gUnk_030009B0->unk08 + 0x42];
+    *ptr-- = 0;
     for (i = 0; i < 4; i++)
     {
-        word = *source++;
+        bits = *data++;
         for (j = 0; j < 16; j++)
         {
-            *cursor-- = word;
-            word >>= 1;
+            *ptr-- = bits;
+            bits >>= 1;
         }
     }
-    while (count != 0)
+    for (i = 0; i < gUnk_030009B0->unk08; i++)
     {
-        *cursor-- = remaining;
-        remaining >>= 1;
-        count--;
+        *ptr-- = address;
+        address >>= 1;
     }
-    *cursor-- = 0;
-    *cursor = 1;
-    sub_08067504(scratch, (void *)0x0D000000, gUnk_030009B0->unk08 + 0x43);
+    *ptr-- = 0;
+    *ptr = 1;
+    sub_08067504(buffer, (void *)0x0D000000, gUnk_030009B0->unk08 + 0x43);
 
-    ready = 0;
-    previous = REG_VCOUNT;
+    result = 0;
+    status = 0;
+    lastVcount = REG_VCOUNT;
     elapsed = 0;
     for (;;)
     {
-        if (ready == 0 && (*(vu16 *)0x0D000000 & 1) == 0)
+        if (status == 0 && (*(vu16 *)0x0D000000 & 1))
         {
-            current = REG_VCOUNT;
-            if (current != previous)
-            {
-                if (current > previous)
-                    elapsed += current - previous;
-                else
-                    elapsed += current + 0xE4 - previous;
-                if (elapsed > 0x88)
-                {
-                    if (ready != 0)
-                        return 0;
-                    if ((*(vu16 *)0x0D000000 & 1) != 0)
-                        return 0xC001;
-                    return 0;
-                }
-                previous = current;
-            }
-        }
-        if (ready == 0)
-        {
-            if ((*(vu16 *)0x0D000000 & 1) != 0)
-                continue;
-            ready++;
+            status++;
             if (mode == 0)
-                return 0;
+                break;
+        }
+        vcount = REG_VCOUNT;
+        if (vcount != lastVcount)
+        {
+            if (vcount > lastVcount)
+                elapsed += vcount - lastVcount;
+            else
+                elapsed += vcount + 0xE4 - lastVcount;
+            if (elapsed > 0x88)
+            {
+                if (status == 0 && !(*(vu16 *)0x0D000000 & 1))
+                    result = 0xC001;
+                break;
+            }
+            lastVcount = vcount;
         }
     }
+    return result;
 }

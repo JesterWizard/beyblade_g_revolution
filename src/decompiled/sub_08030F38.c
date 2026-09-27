@@ -1,56 +1,62 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 void sub_08030F38(void)
 {
-    struct BattleWork **main_loc;
+    struct BattleWork *volatile *loc = (struct BattleWork *volatile *)gBattleWorkPtrLoc;
     struct BattleWork *work;
-    struct Unk705DC *resource;
+    struct Unk705DC *e;
     s32 i;
     s32 delta;
 
-    main_loc = gBattleWorkPtrLoc;
-    work = *main_loc;
-    resource = work->unk0AE8.fields.unkAF0;
-    if (resource != 0 && resource->unk0C <= 0x7FF)
+    work = *loc;
+    e = work->unk0AE8.fields.unkAF0;
+    if (e != NULL && (s32)e->unk0C <= 0x7FF)
     {
-        resource->unk0C += 0x100;
-        if (work->unk0AE8.fields.unkAF4 != 0)
+        e->unk0C += 0x100;
+        if (work->unk0AE8.fields.unkAF4 != NULL)
             work->unk0AE8.fields.unkAF4->unk0C += 0x100;
-        if (work->unk0AE8.fields.unkAF8 != 0)
+        work = *loc;
+        if (work->unk0AE8.fields.unkAF8 != NULL)
             work->unk0AE8.fields.unkAF8->unk0C += 0x100;
-        if (work->unk0AE8.fields.unkAFC != 0)
+        work = *loc;
+        if (work->unk0AE8.fields.unkAFC != NULL)
             work->unk0AE8.fields.unkAFC->unk0C += 0x100;
-        if (work->unk0AE8.fields.unkB40 != 0)
+        work = *loc;
+        if (work->unk0AE8.fields.unkB40 != NULL)
             work->unk0AE8.fields.unkB40->unk0C += 0x100;
-        if (work->unk0AE8.fields.unkB44 != 0)
+        work = *loc;
+        if (work->unk0AE8.fields.unkB44 != NULL)
             work->unk0AE8.fields.unkB44->unk0C += 0x100;
-        if (work->unk0AE8.fields.unkB48 != 0)
-            work->unk0AE8.fields.unkB48->unk0C += 0x100;
-        if (work->unk0AE8.fields.unkB4C != 0)
-            work->unk0AE8.fields.unkB4C->unk0C += 0x100;
-        work->unkBB0 += 0x100;
-
+        work = *loc;
+        if (work->unkBA4 != NULL)
+            work->unkBA4->unk0C += 0x100;
+        work = *loc;
+        if (work->unkBA8 != NULL)
+            work->unkBA8->unk0C += 0x100;
+        (*loc)->unkBB0 += 0x100;
         for (i = 0; i <= 7; i++)
         {
-            if ((*main_loc)->unk0AE8.fields.unkB00[i] != 0)
-                (*main_loc)->unk0AE8.fields.unkB00[i]->unk0C =
-                    (*main_loc)->unkBB0;
-            if ((*main_loc)->unk0AE8.fields.unkB20[i] != 0)
-                (*main_loc)->unk0AE8.fields.unkB20[i]->unk0C =
-                    (*main_loc)->unkBB0;
+            work = *loc;
+            if (work->unk0AE8.fields.unkB00[i] != NULL)
+                work->unk0AE8.fields.unkB00[i]->unk0C = work->unkBB0;
+            work = *loc;
+            if (work->unk0AE8.fields.unkB20[i] != NULL)
+                work->unk0AE8.fields.unkB20[i]->unk0C = work->unkBB0;
         }
     }
-
-    resource = (*main_loc)->unk0AE8.fields.unkB48;
-    if (resource != 0 && resource->unk0C != (*main_loc)->unkBAC)
+    work = *loc;
+    e = work->unk0AE8.fields.unkB48;
+    if (e != NULL && e->unk0C != work->unkBAC)
     {
-        delta = (*main_loc)->unkBAC - resource->unk0C;
+        delta = work->unkBAC - e->unk0C;
         if (delta > 0x100)
             delta = 0x100;
-        if (delta < -0x100)
+        if (delta < 0x100) /* BUG: meant -0x100 */
             delta = -0x100;
-        resource->unk0C += delta;
-        if ((*main_loc)->unk0AE8.fields.unkB4C != 0)
-            (*main_loc)->unk0AE8.fields.unkB4C->unk0C += delta;
+        e->unk0C += delta;
+        if (work->unk0AE8.fields.unkB4C != NULL)
+            work->unk0AE8.fields.unkB4C->unk0C += delta;
     }
 }
