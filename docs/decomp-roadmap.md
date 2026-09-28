@@ -45,7 +45,7 @@ What the batch does:
 | Do | Don't |
 |----|-------|
 | Integrate when asm objdump bytes == baserom | Hand-edit `asm/nonmatchings/*.s` |
-| Keep `make compare` green | Enable `HACKS=1` during matching |
+| Keep `make compare` green | Commit a change that breaks `make compare` |
 | Prefer asm integration for literal-pool loaders | Force C that doesn't `match_function.py` |
 
 ### Exit criteria (Phase 1 done)
@@ -103,7 +103,7 @@ Phase 2 is **never finished** but should be **non-blocking** for Phase 1 batches
 |--------------|--------------|
 | `match_function.py` prints `MATCH` | Literal-pool PC-relative loads agbcc won't reproduce |
 | Simple loads/stores once RAM symbols exist | `swi #N` stubs (until syscall wrappers exist) |
-| Struct field access with known types | Hand-written asm (`asm/*.s` trampolines, LynJump veneers) |
+| Struct field access with known types | Hand-written asm (`asm/*.s` trampolines) |
 | Empty returns, trivial getters | `mov pc, lr` and other agbcc mismatches |
 
 ### Per-function workflow
@@ -202,8 +202,7 @@ Current peel (`gen_rom_layout.py`) assigns each matched function a **fixed VMA**
 These stay **outside** the shiftable C pool forever (unless rewritten deliberately):
 
 - `asm/ram_map*.s`
-- Future trampolines / LynJump stubs in `asm/*.s`
-- `src_custom/` append code (`HACKS=1`)
+- Future trampolines in `asm/*.s`
 
 ### Exit criteria (Phase 5 done)
 

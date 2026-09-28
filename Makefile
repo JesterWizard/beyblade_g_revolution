@@ -34,12 +34,9 @@ endif
 
 MODERN  ?= 0
 COMPARE ?= 0
-# Set HACKS=1 to link append ROM (runtime + src_custom). Breaks make compare.
-HACKS   ?= 0
 
 ifeq (compare,$(MAKECMDGOALS))
   COMPARE := 1
-  HACKS := 0
   MODERN := 1
 endif
 ifeq (modern,$(MAKECMDGOALS))
@@ -88,36 +85,14 @@ SHELL := bash -o pipefail
 all: rom
 
 C_SUBDIR = src
-CUSTOM_C_SUBDIR = src_custom
-CONFIG_SUBDIR = configs
 ASM_SUBDIR = asm
 DATA_ASM_SUBDIR = data
 
 C_BUILDDIR = $(OBJ_DIR)/$(C_SUBDIR)
-CUSTOM_C_BUILDDIR = $(OBJ_DIR)/$(CUSTOM_C_SUBDIR)
-CONFIG_BUILDDIR = $(OBJ_DIR)/$(CONFIG_SUBDIR)
 ASM_BUILDDIR = $(OBJ_DIR)/$(ASM_SUBDIR)
 DATA_ASM_BUILDDIR = $(OBJ_DIR)/$(DATA_ASM_SUBDIR)
 
 C_SRCS :=
-ifeq ($(HACKS),1)
-CUSTOM_C_SRCS := \
-	$(CUSTOM_C_SUBDIR)/nocash.c \
-	$(CUSTOM_C_SUBDIR)/bitbeast_exp.c \
-	$(CUSTOM_C_SUBDIR)/bitbeast_gauge.c \
-	$(CUSTOM_C_SUBDIR)/save_bitbeast.c \
-	$(CUSTOM_C_SUBDIR)/high_exp_rpm.c \
-	$(CUSTOM_C_SUBDIR)/part_health.c
-CUSTOM_S_SRCS := \
-	$(CUSTOM_C_SUBDIR)/start_rpm.s \
-	$(CUSTOM_C_SUBDIR)/keep_blade.s \
-	$(CUSTOM_C_SUBDIR)/overworld_speed.s
-CONFIG_SRCS := $(CONFIG_SUBDIR)/runtime.c
-else
-CUSTOM_C_SRCS :=
-CUSTOM_S_SRCS :=
-CONFIG_SRCS :=
-endif
 RAM_MAP_FRAGMENTS := \
 	$(ASM_SUBDIR)/ram_map_iwram.s \
 	$(ASM_SUBDIR)/ram_map_ewram.s \
@@ -136,17 +111,12 @@ ASM_SRCS := \
 DATA_ASM_SRCS :=
 
 C_OBJS := $(patsubst $(C_SUBDIR)/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
-CUSTOM_C_OBJS := $(patsubst $(CUSTOM_C_SUBDIR)/%.c,$(CUSTOM_C_BUILDDIR)/%.o,$(CUSTOM_C_SRCS))
-CUSTOM_S_OBJS := $(patsubst $(CUSTOM_C_SUBDIR)/%.s,$(CUSTOM_C_BUILDDIR)/%.o,$(CUSTOM_S_SRCS))
-CONFIG_OBJS := $(patsubst $(CONFIG_SUBDIR)/%.c,$(CONFIG_BUILDDIR)/%.o,$(CONFIG_SRCS))
 ASM_OBJS := $(patsubst $(ASM_SUBDIR)/%.s,$(ASM_BUILDDIR)/%.o,$(ASM_SRCS))
 DATA_ASM_OBJS := $(patsubst $(DATA_ASM_SUBDIR)/%.s,$(DATA_ASM_BUILDDIR)/%.o,$(DATA_ASM_SRCS))
 
-OBJS := $(C_OBJS) $(CUSTOM_C_OBJS) $(CUSTOM_S_OBJS) $(CONFIG_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS)
+OBJS := $(C_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS)
 OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJS))
 
-LYNJUMP_EVENT := $(CUSTOM_C_SUBDIR)/LynJump.event
-APPLY_LYNJUMP := $(TOOLS_DIR)/apply_lynjump.py
 
 SUBDIRS := $(sort $(dir $(OBJS)))
 $(shell mkdir -p $(SUBDIRS))
@@ -259,23 +229,6 @@ endif
 	@echo -e ".text\n\t.align\t2, 0\n" >> $(C_BUILDDIR)/$*.s
 	$(AS) $(ASFLAGS) -o $@ $(C_BUILDDIR)/$*.s
 
-$(CUSTOM_C_BUILDDIR)/%.o: $(CUSTOM_C_SUBDIR)/%.c
-ifeq ($(MODERN),0)
-	@test -x $(CC1) || { echo "error: agbcc missing. See INSTALL.md"; exit 1; }
-endif
-	@$(CPP) $(CPPFLAGS) $< | $(CC1) $(CFLAGS) -o $(CUSTOM_C_BUILDDIR)/$*.s
-	@echo -e ".text\n\t.align\t2, 0\n" >> $(CUSTOM_C_BUILDDIR)/$*.s
-	$(AS) $(ASFLAGS) -o $@ $(CUSTOM_C_BUILDDIR)/$*.s
-
-$(CUSTOM_C_BUILDDIR)/%.o: $(CUSTOM_C_SUBDIR)/%.s
-	$(AS) $(ASFLAGS) -mthumb -o $@ $<
-
-# runtime.c uses C99 designated initializers (ygodm8-style); compile with modern gcc.
-$(CONFIG_BUILDDIR)/%.o: $(CONFIG_SUBDIR)/%.c
-	$(PREFIX)gcc -c -mcpu=arm7tdmi -mthumb -mthumb-interwork -O2 \
-		-fno-toplevel-reorder -iquote include -I include \
-		-o $@ $<
-
 LD_SCRIPT := ld_script.ld
 LDFLAGS = -Map ../../$(MAP) -L ../../asm
 
@@ -285,16 +238,12 @@ ifneq ($(wildcard $(FIX)),)
 	$(FIX) $@ -t"$(TITLE)" -c$(GAME_CODE) -m$(MAKER_CODE) -r$(REVISION) --silent
 endif
 
-$(ROM): $(ELF) $(LYNJUMP_EVENT) $(APPLY_LYNJUMP)
+$(ROM): $(ELF)
 	$(OBJCOPY) -O binary --gap-fill 0xFF $< $@
 ifneq ($(wildcard $(FIX)),)
 	$(FIX) $@ -p --silent
 endif
-ifeq ($(HACKS),1)
-	python3 $(APPLY_LYNJUMP) $(ELF) $@
-endif
-	@# Pad only through append end. Must be >4MB so 0x08400000 is not a
-	@# mirror of 0x08000000; do not force a full 8MB image.
+	@# Trim the image to __append_end (the end of the retail ROM).
 	@end=$$(arm-none-eabi-nm $(ELF) | awk '/__append_end$$/{print $$1}'); \
 	 size=$$((0x$$end - 0x08000000)); \
 	 truncate -s $$size $@

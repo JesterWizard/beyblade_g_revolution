@@ -59,8 +59,8 @@ MATCH → integrate → shrink ROM .incbin → commit
 
 ## Matching vs modern build
 
-- **Matching path:** agbcc, C89, `HACKS=0`, SHA1 compare — required for decomp %
-- **Modern path:** `arm-none-eabi-gcc`, `HACKS=1` — hacks/porting only; breaks compare
+- **Matching path:** agbcc, C89, SHA1 compare — required for decomp %
+- **Modern path:** `make modern` (`arm-none-eabi-gcc`) — porting only; breaks compare
 
 Do not mix modern C constructs into matching paths.
 

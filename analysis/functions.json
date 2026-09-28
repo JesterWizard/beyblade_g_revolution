@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T19:40:06Z",
+  "generated": "2026-09-28T19:47:16Z",
   "total": 633,
   "functions": [
     {
@@ -22381,7 +22381,7 @@
       "size": 2,
       "kind": "asm",
       "status": "not_started",
-      "tier": "DECOMPILED",
+      "tier": "UNKNOWN",
       "symbol": "",
       "note": "toolchain-blocked: mov pc,lr \u2014 not semantic C",
       "insn_count": 1,

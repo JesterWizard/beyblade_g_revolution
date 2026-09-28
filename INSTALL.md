@@ -47,13 +47,10 @@ cd ../agbcc
 cd ../beyblade_g_revolution
 ```
 
-For append/hack C only (`src_custom/`, `configs/`), `make modern` uses `arm-none-eabi-gcc` and does not require agbcc.
-
 ## Build / compare
 
 ```bash
 make compare     # builds and checks rom.sha1 (vanilla rebuild)
-make HACKS=1 modern   # append ROM with runtime + src_custom
 ```
 
 ## AI decompilation toolchain

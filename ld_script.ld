@@ -33,13 +33,9 @@ SECTIONS {
     /* Retail ROM image (incbin peels + matched asm at fixed VMAs). */
     INCLUDE rom_layout.ld
 
-    /* Custom code past the 4MB retail image (ygodm8-style append). */
+    /* Sections not placed by rom_layout.ld land after the retail image.
+     * Nothing does today, so __append_end is the end of the retail ROM. */
     __append_start = .;
-
-    .runtime_config :
-    {
-        *(.runtime_config);
-    } > ROM = 0xFF
 
     .append_text :
     {

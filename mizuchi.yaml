@@ -31,7 +31,6 @@ global:
     - tools
     - build
     - mizuchi-output
-    - src_custom
 
 plugins:
   objdiff:

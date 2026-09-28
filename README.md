@@ -1,6 +1,6 @@
 # Beyblade G Revolution
 
-Decompilation scaffold for *Beyblade G Revolution* (GBA), structured after [pret/pokeemerald](https://github.com/pret/pokeemerald). Custom hacks follow the [ygodm8](https://github.com/JesterWizard/ygodm8) pattern: append ROM past the retail image, LynJump hooks, and `configs/runtime.c` toggles.
+Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemerald](https://github.com/pret/pokeemerald). Mods are made by editing the decompiled source directly.
 
 ## Status
 
@@ -34,8 +34,7 @@ See [INSTALL.md](INSTALL.md).
 
 ```bash
 # after placing baserom.gba
-make compare          # vanilla rebuild (default HACKS=0)
-make HACKS=1 modern   # link append ROM (runtime + src_custom)
+make compare          # rebuild and check the SHA1 against the retail ROM
 ```
 
 ## Decompilation
@@ -160,11 +159,9 @@ Matching C is `src/matched/` (one file per function). Unmatched drafts are
 `src/decompiled/` (not linked — `C_SRCS` is empty). Patterns:
 [docs/decomp-patterns.md](docs/decomp-patterns.md). Queue: `make queue`.
 
-Do not enable `HACKS=1` while matching — that breaks the SHA1 compare.
-
 ## Layout
 
-pret/pokeemerald-style matching tree, plus a small ygodm8 hack overlay:
+pret/pokeemerald-style matching tree:
 
 | Path | Role |
 |------|------|
@@ -177,13 +174,5 @@ pret/pokeemerald-style matching tree, plus a small ygodm8 hack overlay:
 | `tools/` | pret tools + `tools/decomp/` matching pipeline |
 | `libagbsyscall/` | BIOS syscall helpers |
 | `ld_script.ld`, `sym_*.txt`, `rom.sha1` | Linker map, RAM symbols, compare checksum |
-| `src_custom/`, `configs/` | ygodm8-style append hacks (not used by `make compare`) |
-
-## Adding a hack (ygodm8-style)
-
-1. Add a toggle in `configs/runtime.c` / `include/runtime.h`.
-2. Implement `Name__Replacement` in `src_custom/*_hooks.c` (linked in append ROM).
-3. Add a stub in `src_custom/LynJump.event` (`ORG` vanilla offset + `POIN` replacement).
-4. `make` — linker places append code past 4MB; `apply_lynjump.py` patches the entry.
 
 Target ROM: **USA/Europe**, SHA1 `a89f7b4eb77dc986022201db51a676451ba7c5e4`.

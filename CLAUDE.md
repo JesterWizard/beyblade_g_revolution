@@ -111,14 +111,6 @@ bash build_tools.sh
 - Rename identifiers with a plain text replace — it will corrupt `asm("...")` string literals, where the preprocessor cannot expand a macro. Use `symbols.py apply`
 - Use offset-casts (`*(u16 *)((u8 *)p + off)`), `register`, `asm volatile`, GCC asm labels, or empty `asm("")` barriers in semantic C — struct members in `unknown-types.h`. Inline `asm()` is only for BIOS `swi` and naked Thumb wrappers.
 - Mimic asm in semantic C: register-named locals (`r3`, `r5`), or `goto` labels copied from retail (`loop:`, `advance:`). Write readable struct/loop C in `src/decompiled/`; use permuter or leave Thumb when bytes differ (see `.cursor/rules/decomp-semantic-style.mdc`).
-- Enable `HACKS=1` during matching work (`make compare` must stay green)
-
-## Matching vs hacking
-
-| Goal | Command |
-|------|---------|
-| Matching decomp | `make compare` (`HACKS=0`, default) |
-| Append / hacks | `make HACKS=1 modern` (breaks SHA1 compare) |
 
 ## Tooling map
 

@@ -1,25 +1,16 @@
 # Architecture
 
-Beyblade G Revolution is a commercial GBA ROM (`baserom.gba`) being modded/patched
-via a hybrid decompile-and-append strategy, not a full decompile. Read this
-before touching build output, hook wiring, or the runtime toggle system.
+Beyblade G Revolution is a commercial GBA ROM (`baserom.gba`) being decompiled
+into matching C. Mods are made by editing that source, not by hooking the ROM.
 
 ## The mental model
 
 1. `baserom.gba` is the unmodified retail ROM. It is never edited directly.
-2. `src/*.c` holds **decompiled** vanilla functions — real C recreations of
-   specific baserom addresses, compiled and appended into the ROM to
-   *replace* the original machine code at that address.
-3. `src_custom/*.c` holds **new** functionality that has no vanilla
-   equivalent. These call into vanilla ROM addresses as opaque function
-   pointers/hooks — there's no compiler-checked struct backing them, just
-   raw offsets (see `include/ram_map.h` and `docs/ram-map.md`).
-4. `tools/apply_lynjump.py` is the final build step: it patches compiled
-   veneers/hooks into the ELF/ROM at specific byte offsets, guarded by
-   `RuntimeConfig` flags in `configs/runtime.c`.
-5. Everything is gated by **build-time** flags in `configs/runtime.c`
-   (`gRuntimeConfigRom`) — a feature that's `FALSE` there may have its
-   entire hook *not installed at all* in the ROM.
+2. `src/matched/*.c` holds **decompiled** vanilla functions — C (or readable
+   Thumb) that compiles to the same bytes as the retail function at that
+   address.
+3. `asm/` assembles the ROM: `rom.s` / `rom_layout.ld` place the matched
+   functions at their retail addresses and `.incbin` the rest of the baserom.
 
 ## Directory map
 
@@ -28,20 +19,15 @@ before touching build output, hook wiring, or the runtime toggle system.
 | `src/matched/*.c` | One matched function per file (semantic C or readable Thumb). |
 | `src/decompiled/` | Unmatched C seeds + process notes (the DECOMPILED lifecycle tier). Not linked. See `docs/decomp-wip.md`. |
 | `analysis/` | Generated analysis DB: functions, xrefs, structs, systems, symbols. See `docs/decomp-pipeline.md`. |
-| `src_custom/*.c` | New hooks/features with no vanilla equivalent. |
-| `include/*.h` | Headers for both of the above, plus `ram_map.h` (EWRAM/IWRAM symbol table) and `runtime.h` (`RuntimeConfig` + `APPEND_*` macros). |
+| `include/*.h` | Headers: types (`unknown-types.h`), prototypes, generated `symbols.h`, and `ram_map.h` (EWRAM/IWRAM symbol table). |
 | `asm/*.s` | Hand-written trampolines, `ram_map*.s` (address registry), and `rom.s` (raw ROM segment definitions). |
-| `src_custom/LynJump.event` | Declarative full-function replacements in `ygodm8` LynJump format. |
-| `tools/apply_lynjump.py` | Post-link patcher for LynJump stubs and runtime-gated veneers. |
-| `configs/runtime.c` | Build-time toggles (`gRuntimeConfigRom`). |
 | `data/`, `graphics/`, `sound/`, `constants/` | Extracted assets / asm constants (pret layout; mostly reserved). |
 | `docs/` | Decomp notes, RAM map, progress counter. |
 | `tools/decomp/` | Matching pipeline (was `scripts/decomp/`). |
 | `build_tools.sh` | pret-style bootstrap (`agbcc`, Luvdis, permuter). |
 
-## Matching vs. hacking
+## Matching
 
-- **Matching**: shrink `asm/rom.s` `.incbin` ranges as real asm/C replaces them.
-  `make compare` checks `rom.sha1` against the retail dump.
-- **Hacking**: link `src_custom/` and `configs/` into the append region past 4MB.
-  Once append code is linked, `make compare` no longer matches the retail SHA1.
+Shrink `asm/rom.s` `.incbin` ranges as real asm/C replaces them.
+`make compare` checks `rom.sha1` against the retail dump. A mod that edits the
+source will naturally stop matching that SHA1.

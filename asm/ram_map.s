@@ -11,7 +11,6 @@
 @   ram_map_ewram_pool.inc   — auto gUnk_* (hits>=2)
 @   ram_map_sram.s           — save-bus note + optional scratch window
 @
-@ Pattern: https://github.com/JesterWizard/ygodm8/blob/master/asm/ram_map.s
 @ Guide: documentation/ram-map.md
 @ =============================================================================
 
