@@ -1,8 +1,52 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08030638
-__attribute__((naked))
-void sub_08030638(void)
+/* match-compiler: old_agbcc */
+// Nudge battler A's motion by the d-pad direction in a->unk302, scaled by b
+// and rotated into camera space by -unkAA8.unk14.
+void sub_08030638(struct Unk346C0 *a, s32 b)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nadds r7, r0, #0x0\nadds r2, r1, #0x0\nmovs r4, #0x00\nldr r1, _08030668 @ =0x03000290\nldr r0, [r1, #0x00]\nldr r3, _0803066C @ =0x00000AA8\nadds r6, r0, r3\nldr r5, _08030670 @ =0x00000302\nadds r0, r7, r5\nldrh r3, [r0, #0x00]\nmovs r0, #0xC0\nands r0, r3\nmov r12, r1\ncmp r0, #0x00\nbeq _08030698\nmovs r5, #0x20\nmovs r0, #0x80\nands r0, r3\ncmp r0, #0x00\nbeq _08030674\nmovs r4, #0x80\nb _08030678\n.byte 0x00, 0x00\n_08030668: .4byte 0x03000290\n_0803066C: .4byte 0x00000AA8\n_08030670: .4byte 0x00000302\n_08030674:\nmovs r5, #0x20\nnegs r5, r5\n_08030678:\nldr r1, _08030694 @ =0x00000302\nadds r0, r7, r1\nldrh r1, [r0, #0x00]\nmovs r0, #0x20\nands r0, r1\ncmp r0, #0x00\nbeq _08030688\nadds r4, r4, r5\n_08030688:\nmovs r0, #0x10\nands r0, r1\ncmp r0, #0x00\nbeq _080306AC\nsubs r4, r4, r5\nb _080306AC\n_08030694: .4byte 0x00000302\n_08030698:\nmovs r0, #0x20\nands r0, r3\ncmp r0, #0x00\nbeq _080306A2\nmovs r4, #0xC0\n_080306A2:\nmovs r0, #0x10\nands r0, r3\ncmp r0, #0x00\nbeq _080306AC\nmovs r4, #0x40\n_080306AC:\nldr r3, _08030738 @ =0x083C9544\nlsls r1, r4, #0x18\nlsrs r1, r1, #0x18\nlsls r0, r1, #0x01\nadds r0, r0, r3\nmovs r4, #0x00\nldsh r0, [r0, r4]\nadds r4, r2, #0x0\nmuls r4, r0\nasrs r4, r4, #0x08\nadds r1, #0x40\nlsls r1, r1, #0x01\nadds r1, r1, r3\nmovs r5, #0x00\nldsh r0, [r1, r5]\nmuls r2, r0\nnegs r2, r2\nasrs r2, r2, #0x08\nldr r0, [r6, #0x14]\nnegs r0, r0\nldr r1, _0803073C @ =0x0000FFFF\nands r0, r1\nlsrs r0, r0, #0x08\nlsls r1, r0, #0x01\nadds r1, r1, r3\nmovs r6, #0x00\nldsh r5, [r1, r6]\nadds r0, #0x40\nlsls r0, r0, #0x01\nadds r0, r0, r3\nmovs r1, #0x00\nldsh r3, [r0, r1]\nadds r1, r4, #0x0\nmuls r1, r3\nasrs r1, r1, #0x08\nadds r0, r2, #0x0\nmuls r0, r5\nasrs r0, r0, #0x08\nadds r6, r1, r0\nadds r1, r2, #0x0\nmuls r1, r3\nasrs r1, r1, #0x08\nadds r0, r4, #0x0\nmuls r0, r5\nasrs r0, r0, #0x08\nsubs r2, r1, r0\nldr r3, _08030740 @ =0x00000302\nadds r1, r7, r3\nmovs r0, #0xF0\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _08030732\nmov r4, r12\nldr r3, [r4, #0x00]\nmovs r5, #0xD0\nlsls r5, r5, #0x02\nadds r1, r3, r5\nldr r0, [r1, #0x00]\nadds r0, r0, r6\nstr r0, [r1, #0x00]\nmovs r6, #0xD1\nlsls r6, r6, #0x02\nadds r1, r3, r6\nldr r0, [r1, #0x00]\nadds r0, r0, r2\nstr r0, [r1, #0x00]\n_08030732:\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_08030738: .4byte 0x083C9544\n_0803073C: .4byte 0x0000FFFF\n_08030740: .4byte 0x00000302");
+    struct Unk30638AA8 *cam;
+    s32 angle;
+    s32 step;
+    s32 x, y, s, c, rx, ry;
+    u8 idx;
+    u32 rot;
+
+    angle = 0;
+    cam = &gData_03000290->unkAA8;
+    if (a->unk302 & 0xC0)
+    {
+        step = 0x20;
+        if (a->unk302 & 0x80)
+            angle = 0x80;
+        else
+            step = -0x20;
+        if (a->unk302 & 0x20)
+            angle += step;
+        if (a->unk302 & 0x10)
+            angle -= step;
+    }
+    else
+    {
+        if (a->unk302 & 0x20)
+            angle = 0xC0;
+        if (a->unk302 & 0x10)
+            angle = 0x40;
+    }
+    x = (b * gData_083C9544[(u8)angle]) >> 8;
+    y = -(b * gData_083C9544[(u8)angle + 0x40]) >> 8;
+    rot = (u32)(-cam->unk14 & 0xFFFF) >> 8;
+    s = gData_083C9544[rot];
+    c = gData_083C9544[rot + 0x40];
+    rx = ((x * c) >> 8) + ((y * s) >> 8);
+    ry = ((y * c) >> 8) - ((x * s) >> 8);
+    if (a->unk302 & 0xF0)
+    {
+        gData_03000290->unk328.unk18 += rx;
+        gData_03000290->unk328.unk1C += ry;
+    }
 }
+

@@ -8,18 +8,23 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **554/633 (87.5%)** |
-| **Decompiled C (bytes)** | **58,258/90,272 (64.5%)** |
+| **Decompiled C (functions)** | **564/633 (89.1%)** |
+| **Decompiled C (bytes)** | **60,602/90,272 (67.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 79/633 (12.5%) |
+| Readable Thumb | 69/633 (10.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 133/160 (83.1% fn, 62.0% bytes) |
+| Battle semantic C | 136/160 (85.0% fn, 64.6% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-28 — sub_08045C5C retry (parked, 93/136)
+
+- Input-mask debounce. Loading the halfword through the address, then keeping a separate pointer, fixed the frame: 17/136 (140 B) → 93/136 (136 B).
+- Permuter 60s best 255. Retail keeps `a` in r7 and builds `0xFC00` in r1 before the mask-pointer copy; agbcc uses r6/r2 and swaps that copy with the load. Seed: `src/decompiled/sub_08045C5C.c`.
 
 ### 2026-09-27 — parked-WIP sweep 9 (+4/10): 348E8, 61AB8, 35468, 56D68
 

@@ -1,100 +1,49 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08067584
-__attribute__((naked))
-s32 sub_08067584(u16 a, void *b)
+/* match-flags: -O1 */
+// EEPROM read: clock out the read command and the unk08-bit address at
+// addr, then pack the 64 returned bits into four halfwords (last first).
+// Returns 0x80FF if addr is past the chip size (unk04).
+s32 sub_08067584(u32 addr, void *out)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "add sp, #-0x088\n"
-        "adds r5, r1, #0x0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r3, r0, #0x10\n"
-        "ldr r0, _0806759C @ =0x030009B0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrh r0, [r0, #0x04]\n"
-        "cmp r3, r0\n"
-        "bcc _080675A4\n"
-        "ldr r0, _080675A0 @ =0x000080FF\n"
-        "b _08067626\n"
-        "_0806759C: .4byte 0x030009B0\n"
-        "_080675A0: .4byte 0x000080FF\n"
-        "_080675A4:\n"
-        "ldr r0, _08067630 @ =0x030009B0\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrb r1, [r0, #0x08]\n"
-        "lsls r0, r1, #0x01\n"
-        "mov r4, sp\n"
-        "adds r2, r0, r4\n"
-        "adds r2, #0x02\n"
-        "movs r4, #0x00\n"
-        "cmp r4, r1\n"
-        "bcs _080675CE\n"
-        "_080675BA:\n"
-        "strh r3, [r2, #0x00]\n"
-        "subs r2, #0x02\n"
-        "lsrs r3, r3, #0x01\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r4, r0, #0x18\n"
-        "ldr r0, [r6, #0x00]\n"
-        "ldrb r0, [r0, #0x08]\n"
-        "cmp r4, r0\n"
-        "bcc _080675BA\n"
-        "_080675CE:\n"
-        "movs r0, #0x01\n"
-        "strh r0, [r2, #0x00]\n"
-        "subs r2, #0x02\n"
-        "strh r0, [r2, #0x00]\n"
-        "movs r4, #0xD0\n"
-        "lsls r4, r4, #0x14\n"
-        "ldr r0, _08067630 @ =0x030009B0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrb r2, [r0, #0x08]\n"
-        "adds r2, #0x03\n"
-        "mov r0, sp\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_08067504\n"
-        "adds r0, r4, #0x0\n"
-        "mov r1, sp\n"
-        "movs r2, #0x44\n"
-        "bl sub_08067504\n"
-        "add r2, sp, #0x008\n"
-        "adds r5, #0x06\n"
-        "movs r4, #0x00\n"
-        "movs r6, #0x01\n"
-        "_080675FC:\n"
-        "movs r1, #0x00\n"
-        "movs r3, #0x00\n"
-        "_08067600:\n"
-        "lsls r1, r1, #0x11\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "ands r0, r6\n"
-        "lsrs r1, r1, #0x10\n"
-        "orrs r1, r0\n"
-        "adds r2, #0x02\n"
-        "adds r0, r3, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r3, r0, #0x18\n"
-        "cmp r3, #0x0F\n"
-        "bls _08067600\n"
-        "strh r1, [r5, #0x00]\n"
-        "subs r5, #0x02\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r4, r0, #0x18\n"
-        "cmp r4, #0x03\n"
-        "bls _080675FC\n"
-        "movs r0, #0x00\n"
-        "_08067626:\n"
-        "add sp, #0x088\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        ".byte 0x00, 0x00\n"
-        "_08067630: .4byte 0x030009B0\n"
-    );
+    u16 buf[0x44];
+    u16 *p;
+    u16 *dst;
+    u16 a;
+    u16 value;
+    u8 i;
+    u8 j;
+
+    dst = out;
+    a = addr;
+    if (a >= gData_030009B0->unk04)
+        return 0x80FF;
+    // buf[0..1] is the read command; the address bits fill buf[2..n+1], MSB first.
+    p = &buf[gData_030009B0->unk08 + 2] - 1;
+    for (i = 0; i < gData_030009B0->unk08; i++)
+    {
+        *p-- = a;
+        a >>= 1;
+    }
+    *p-- = 1;
+    *p = 1;
+    sub_08067504(buf, (void *)0x0D000000, gData_030009B0->unk08 + 3);
+    sub_08067504((void *)0x0D000000, buf, 0x44);
+    p = &buf[4];
+    dst += 3;
+    for (i = 0; i < 4; i++)
+    {
+        value = 0;
+        for (j = 0; j < 16; j++)
+        {
+            value <<= 1;
+            value |= *p++ & 1;
+        }
+        *dst-- = value;
+    }
+    return 0;
 }
 

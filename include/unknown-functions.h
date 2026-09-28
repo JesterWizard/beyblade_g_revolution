@@ -468,7 +468,7 @@ u8 sub_08070AD4(struct Unk7069C *a, void *b, u8 c);
 u8 sub_08070DF4(struct Unk7069C *a, void *b, u8 c);
 u8 sub_08070930(struct Unk7069C *a, void *b, u8 c);
 u8 sub_08070D44(struct Unk7069C *a, s32 b, u8 c);
-struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d);
+struct Unk70354Object *sub_0807027C(struct Unk70354Object *obj, u16 b, u16 c, u8 d);
 void sub_0806114C(struct Unk6114C *state, u32 tile, u32 palette, u32 first, u32 last);
 void sub_08070354(struct Unk70354 *a, u16 b, u16 c, u8 d);
 s32 sub_08040EF4(void *a);

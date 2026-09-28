@@ -2,7 +2,6 @@
 #include "global.h"
 #include "ram_map.h"
 
-
 s32 sub_08038438(void *palette)
 {
     u16 key;
@@ -10,7 +9,7 @@ s32 sub_08038438(void *palette)
     struct Unk3CC **slots;
 
     key = 0;
-    slots = &gUnk_030003CC;
+    slots = &gData_030003CC;
     while (gData_08079068[(s16)key] != 0 && gData_08079068[(s16)key] != (u32)palette)
         key++;
     if (*slots == NULL)
@@ -30,7 +29,7 @@ s32 sub_08038438(void *palette)
             (*slots)->unk00[i] = key;
             (*slots)->unk20 |= 1 << i;
             (*slots)->unk22[i] = 1;
-            _08073C4C((void *)gData_08079358[(s16)key], (void *)(0x05000200 + i * 32), 0x20, (void *)gData_080BB8C0[0]);
+            ((void (*)(u32, void *, u32))gData_080BB8C0[0])(gData_08079358[(s16)key], (void *)(0x05000200 + i * 32), 0x20);
             return (s8)i;
         }
     }

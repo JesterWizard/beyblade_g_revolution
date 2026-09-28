@@ -1,103 +1,34 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080688c8
-__attribute__((naked))
-void sub_080688C8(void)
+// Load a BG tile map, set the scroll registers to (x, y), and seed the
+// visible tile rect (x/8, y/8, width 1<<unk5F, height 1<<unk60).
+void sub_080688C8(struct Unk68988 *state, u8 index, void *arg2, u16 limit, u16 mode, s32 x, s32 y)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "add sp, #-0x00C\n"
-        "adds r7, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "ldr r0, [sp, #0x024]\n"
-        "mov r8, r0\n"
-        "lsls r4, r4, #0x18\n"
-        "lsrs r4, r4, #0x18\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "mov r1, r8\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "mov r8, r1\n"
-        "ldr r0, [sp, #0x028]\n"
-        "asrs r5, r0, #0x03\n"
-        "ldr r1, [sp, #0x02C]\n"
-        "asrs r6, r1, #0x03\n"
-        "mov r0, r8\n"
-        "str r0, [sp, #0x000]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_08068A08\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08069908\n"
-        "mov r1, sp\n"
-        "ldrh r1, [r1, #0x28]\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08069948\n"
-        "mov r2, sp\n"
-        "ldrh r2, [r2, #0x2C]\n"
-        "strh r2, [r0, #0x00]\n"
-        "ldr r4, [r7, #0x08]\n"
-        "str r5, [r4, #0x10]\n"
-        "str r6, [r4, #0x14]\n"
-        "str r5, [r4, #0x00]\n"
-        "adds r3, r7, #0x0\n"
-        "adds r3, #0x5F\n"
-        "movs r1, #0x01\n"
-        "adds r0, r1, #0x0\n"
-        "ldrb r2, [r3, #0x00]\n"
-        "lsls r0, r2\n"
-        "adds r5, r5, r0\n"
-        "subs r5, #0x01\n"
-        "str r5, [r4, #0x08]\n"
-        "str r6, [r4, #0x04]\n"
-        "adds r2, r7, #0x0\n"
-        "adds r2, #0x60\n"
-        "adds r0, r1, #0x0\n"
-        "ldrb r5, [r2, #0x00]\n"
-        "lsls r0, r5\n"
-        "adds r6, r6, r0\n"
-        "subs r6, #0x01\n"
-        "str r6, [r4, #0x0C]\n"
-        "ldr r0, [sp, #0x028]\n"
-        "lsls r5, r0, #0x08\n"
-        "str r5, [r7, #0x0C]\n"
-        "ldr r0, [sp, #0x02C]\n"
-        "lsls r6, r0, #0x08\n"
-        "str r6, [r7, #0x10]\n"
-        "str r5, [r7, #0x40]\n"
-        "str r6, [r7, #0x44]\n"
-        "adds r6, r1, #0x0\n"
-        "ldrb r3, [r3, #0x00]\n"
-        "lsls r6, r3\n"
-        "adds r5, r1, #0x0\n"
-        "ldrb r2, [r2, #0x00]\n"
-        "lsls r5, r2\n"
-        "movs r0, #0x02\n"
-        "mov r1, r8\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _0806897A\n"
-        "ldr r1, [r4, #0x00]\n"
-        "ldr r2, [r4, #0x04]\n"
-        "ldr r3, [r4, #0x10]\n"
-        "ldr r0, [r4, #0x14]\n"
-        "str r0, [sp, #0x000]\n"
-        "str r6, [sp, #0x004]\n"
-        "str r5, [sp, #0x008]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08069270\n"
-        "_0806897A:\n"
-        "add sp, #0x00C\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct Unk688C8Rect *rect;
+    s32 xt = x >> 3;
+    s32 yt = y >> 3;
+    s32 w, h;
+
+    sub_08068A08(state, index, arg2, limit, mode);
+    *BgGetHofsReg(index) = x;
+    *BgGetVofsReg(index) = y;
+    rect = state->unk08;
+    rect->unk10 = xt;
+    rect->unk14 = yt;
+    rect->unk00 = xt;
+    rect->unk08 = xt + (1 << state->unk5F) - 1;
+    rect->unk04 = yt;
+    rect->unk0C = yt + (1 << state->unk60) - 1;
+    state->unk0C = x << 8;
+    state->unk10 = y << 8;
+    state->unk40 = x << 8;
+    state->unk44 = y << 8;
+    w = 1 << state->unk5F;
+    h = 1 << state->unk60;
+    if (!(mode & 2))
+        sub_08069270(state, rect->unk00, rect->unk04, rect->unk10, rect->unk14, w, h);
 }
 

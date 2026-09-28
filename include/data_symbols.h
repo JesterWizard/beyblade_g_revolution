@@ -239,4 +239,14 @@ extern u32 gData_08078100[];
 // Digit glyph table for the floating score (sub_0803370C)
 extern u8 gData_0810B4E0[];
 
+// Per-player setup table indexed by player id (sub_08033978)
+extern u32 gData_08078158[];
+
+// World-map cursor state and its direction table (sub_080436B0)
+extern struct Unk0554 *gData_03000554;
+extern struct Unk0558 *gData_03000558;
+
+// Frame clock triple (sub_08068598)
+extern struct Unk0180 gData_03000180;
+
 #endif // GUARD_DATA_SYMBOLS_H

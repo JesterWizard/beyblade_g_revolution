@@ -1,8 +1,112 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080436b0
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Map cursor input. Phase 0: a press of 0x40/0x80/0x10/0x20 follows the
+// matching link (unk04..unk10) if the node allows it (unk02 bits 0x10..0x80),
+// moving the cursor to that link's map point; held bit 0 with any of unk02's
+// low bits set commits (unk181C = 2); held bit 3 sets unk181C = 3.
+// Phase 1 runs sub_08043420.
 void sub_080436B0(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, lr}\nldr r6, _080436C4 @ =0x03000554\nldr r2, [r6, #0x00]\nldrb r5, [r2, #0x01]\ncmp r5, #0x00\nbeq _080436C8\ncmp r5, #0x01\nbne _080436C2\nb _08043938\n_080436C2:\nb _0804393C\n_080436C4: .4byte 0x03000554\n_080436C8:\nldr r0, _08043734 @ =0x03003F60\nldrh r1, [r0, #0x00]\nmovs r3, #0x40\nadds r0, r3, #0x0\nands r0, r1\ncmp r0, #0x00\nbeq _08043744\nmovs r0, #0x10\nldrb r2, [r2, #0x02]\nands r0, r2\ncmp r0, #0x00\nbne _080436E2\nb _080438E6\n_080436E2:\nldr r4, _08043738 @ =0x03000558\nldr r1, [r4, #0x00]\nldr r0, [r1, #0x04]\ncmp r0, #0x00\nbne _080436EE\nb _080438E6\n_080436EE:\nmovs r2, #0x34\nldsh r0, [r1, r2]\ncmp r0, #0x00\nblt _08043714\nbl sub_08062A14\nldr r1, [r4, #0x00]\nmovs r2, #0x34\nldsh r1, [r1, r2]\nbl sub_0806DEF4\nldr r2, [r6, #0x00]\nldr r1, [r0, #0x00]\nasrs r1, r1, #0x03\nstrh r1, [r2, #0x04]\nldr r0, [r0, #0x04]\nasrs r0, r0, #0x03\nsubs r0, #0x10\nstrh r0, [r2, #0x06]\n_08043714:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x04]\nldr r0, _0804373C @ =0x03000198\nldr r0, [r0, #0x00]\nldrb r1, [r1, #0x01]\nldr r2, _08043740 @ =0x000017F6\nadds r0, r0, r2\nstrb r1, [r0, #0x00]\nldr r1, [r6, #0x00]\nmovs r0, #0x01\nstrb r0, [r1, #0x01]\nldr r0, [r6, #0x00]\nstrb r5, [r0, #0x00]\nbl sub_080435D8\nb _080438E6\n_08043734: .4byte 0x03003F60\n_08043738: .4byte 0x03000558\n_0804373C: .4byte 0x03000198\n_08043740: .4byte 0x000017F6\n_08043744:\nmovs r4, #0x80\nadds r0, r4, #0x0\nands r0, r1\ncmp r0, #0x00\nbeq _080437B8\nmovs r0, #0x20\nldrb r2, [r2, #0x02]\nands r0, r2\ncmp r0, #0x00\nbne _0804375A\nb _080438E6\n_0804375A:\nldr r4, _080437AC @ =0x03000558\nldr r1, [r4, #0x00]\nldr r0, [r1, #0x08]\ncmp r0, #0x00\nbne _08043766\nb _080438E6\n_08043766:\nmovs r2, #0x36\nldsh r0, [r1, r2]\ncmp r0, #0x00\nblt _0804378C\nbl sub_08062A14\nldr r1, [r4, #0x00]\nmovs r2, #0x36\nldsh r1, [r1, r2]\nbl sub_0806DEF4\nldr r2, [r6, #0x00]\nldr r1, [r0, #0x00]\nasrs r1, r1, #0x03\nstrh r1, [r2, #0x04]\nldr r0, [r0, #0x04]\nasrs r0, r0, #0x03\nsubs r0, #0x10\nstrh r0, [r2, #0x06]\n_0804378C:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x08]\nldr r0, _080437B0 @ =0x03000198\nldr r0, [r0, #0x00]\nldrb r1, [r1, #0x01]\nldr r2, _080437B4 @ =0x000017F6\nadds r0, r0, r2\nstrb r1, [r0, #0x00]\nldr r0, [r6, #0x00]\nmovs r1, #0x01\nstrb r1, [r0, #0x01]\nldr r0, [r6, #0x00]\nstrb r1, [r0, #0x00]\nbl sub_080435D8\nb _080438E6\n_080437AC: .4byte 0x03000558\n_080437B0: .4byte 0x03000198\n_080437B4: .4byte 0x000017F6\n_080437B8:\nmovs r0, #0x10\nands r0, r1\ncmp r0, #0x00\nbeq _08043828\nadds r0, r3, #0x0\nldrb r2, [r2, #0x02]\nands r0, r2\ncmp r0, #0x00\nbne _080437CC\nb _080438E6\n_080437CC:\nldr r4, _0804381C @ =0x03000558\nldr r1, [r4, #0x00]\nldr r0, [r1, #0x0C]\ncmp r0, #0x00\nbne _080437D8\nb _080438E6\n_080437D8:\nmovs r2, #0x38\nldsh r0, [r1, r2]\ncmp r0, #0x00\nblt _080437FE\nbl sub_08062A14\nldr r1, [r4, #0x00]\nmovs r2, #0x38\nldsh r1, [r1, r2]\nbl sub_0806DEF4\nldr r2, [r6, #0x00]\nldr r1, [r0, #0x00]\nasrs r1, r1, #0x03\nstrh r1, [r2, #0x04]\nldr r0, [r0, #0x04]\nasrs r0, r0, #0x03\nsubs r0, #0x10\nstrh r0, [r2, #0x06]\n_080437FE:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x0C]\nldr r0, _08043820 @ =0x03000198\nldr r0, [r0, #0x00]\nldrb r1, [r1, #0x01]\nldr r2, _08043824 @ =0x000017F6\nadds r0, r0, r2\nstrb r1, [r0, #0x00]\nldr r1, [r6, #0x00]\nmovs r0, #0x01\nstrb r0, [r1, #0x01]\nldr r1, [r6, #0x00]\nmovs r0, #0x02\nb _08043884\n.byte 0x00, 0x00\n_0804381C: .4byte 0x03000558\n_08043820: .4byte 0x03000198\n_08043824: .4byte 0x000017F6\n_08043828:\nmovs r0, #0x20\nands r0, r1\ncmp r0, #0x00\nbeq _08043898\nadds r0, r4, #0x0\nldrb r2, [r2, #0x02]\nands r0, r2\ncmp r0, #0x00\nbeq _080438E6\nldr r4, _0804388C @ =0x03000558\nldr r1, [r4, #0x00]\nldr r0, [r1, #0x10]\ncmp r0, #0x00\nbeq _080438E6\nmovs r2, #0x3A\nldsh r0, [r1, r2]\ncmp r0, #0x00\nblt _0804386A\nbl sub_08062A14\nldr r1, [r4, #0x00]\nmovs r2, #0x3A\nldsh r1, [r1, r2]\nbl sub_0806DEF4\nldr r2, [r6, #0x00]\nldr r1, [r0, #0x00]\nasrs r1, r1, #0x03\nstrh r1, [r2, #0x04]\nldr r0, [r0, #0x04]\nasrs r0, r0, #0x03\nsubs r0, #0x10\nstrh r0, [r2, #0x06]\n_0804386A:\nldr r0, [r4, #0x00]\nldr r1, [r0, #0x10]\nldr r0, _08043890 @ =0x03000198\nldr r0, [r0, #0x00]\nldrb r1, [r1, #0x01]\nldr r2, _08043894 @ =0x000017F6\nadds r0, r0, r2\nstrb r1, [r0, #0x00]\nldr r1, [r6, #0x00]\nmovs r0, #0x01\nstrb r0, [r1, #0x01]\nldr r1, [r6, #0x00]\nmovs r0, #0x03\n_08043884:\nstrb r0, [r1, #0x00]\nbl sub_080435D8\nb _080438E6\n_0804388C: .4byte 0x03000558\n_08043890: .4byte 0x03000198\n_08043894: .4byte 0x000017F6\n_08043898:\nldr r1, _08043920 @ =0x03004060\nmovs r0, #0x01\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _080438E6\nmovs r0, #0x0F\nldrb r2, [r2, #0x02]\nands r0, r2\ncmp r0, #0x00\nbeq _080438E6\nldr r4, _08043924 @ =0x03000198\nldr r0, [r4, #0x00]\nldr r1, _08043928 @ =0x000018B8\nadds r0, r0, r1\nbl sub_08045AA8\nldr r0, [r4, #0x00]\nldr r2, _0804392C @ =0x00001833\nadds r0, r0, r2\nmovs r1, #0x01\nstrb r1, [r0, #0x00]\nldr r0, [r4, #0x00]\nldr r1, _08043930 @ =0x0000181C\nadds r0, r0, r1\nmovs r1, #0x02\nstrb r1, [r0, #0x00]\nldr r1, [r6, #0x00]\nmovs r0, #0xFF\nstrb r0, [r1, #0x01]\nldr r1, [r4, #0x00]\nsubs r2, #0x2B\nadds r1, r1, r2\nldr r0, [r1, #0x00]\nldr r2, _08043934 @ =0xFFFFFDFF\nands r0, r2\nstr r0, [r1, #0x00]\nbl sub_080433F4\n_080438E6:\nldr r1, _08043920 @ =0x03004060\nmovs r0, #0x08\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _0804393C\nmovs r0, #0x07\nbl sub_08066390\nldr r5, _08043924 @ =0x03000198\nldr r4, [r5, #0x00]\nmovs r0, #0xA6\nlsls r0, r0, #0x03\nadds r4, r4, r0\nbl sub_0806639C\nadds r1, r0, #0x0\nadds r0, r4, #0x0\nbl sub_0804109C\nldr r0, [r5, #0x00]\nldr r1, _08043930 @ =0x0000181C\nadds r0, r0, r1\nmovs r1, #0x03\nstrb r1, [r0, #0x00]\nbl sub_08060428\nb _0804393C\n.byte 0x00, 0x00\n_08043920: .4byte 0x03004060\n_08043924: .4byte 0x03000198\n_08043928: .4byte 0x000018B8\n_0804392C: .4byte 0x00001833\n_08043930: .4byte 0x0000181C\n_08043934: .4byte 0xFFFFFDFF\n_08043938:\nbl sub_08043420\n_0804393C:\npop {r4, r5, r6}\npop {r0}\nbx r0");
+    struct Unk436B0Entry *entry;
+
+    switch (gData_03000554->unk01)
+    {
+    case 0:
+        if (gData_03003F60 & 0x40)
+        {
+            if ((gData_03000554->unk02 & 0x10) && gData_03000558->unk04 != NULL)
+            {
+                if (gData_03000558->unk34[0] >= 0)
+                {
+                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[0]);
+                    gData_03000554->unk04 = pos[0] >> 3;
+                    gData_03000554->unk06 = (pos[1] >> 3) - 16;
+                }
+                entry = gData_03000558->unk04;
+                gData_03000198->unk17F6 = entry->unk01;
+                gData_03000554->unk01 = 1;
+                gData_03000554->unk00 = 0;
+                sub_080435D8();
+            }
+        }
+        else if (gData_03003F60 & 0x80)
+        {
+            if ((gData_03000554->unk02 & 0x20) && gData_03000558->unk08 != NULL)
+            {
+                if (gData_03000558->unk34[1] >= 0)
+                {
+                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[1]);
+                    gData_03000554->unk04 = pos[0] >> 3;
+                    gData_03000554->unk06 = (pos[1] >> 3) - 16;
+                }
+                entry = gData_03000558->unk08;
+                gData_03000198->unk17F6 = entry->unk01;
+                gData_03000554->unk01 = 1;
+                gData_03000554->unk00 = 1;
+                sub_080435D8();
+            }
+        }
+        else if (gData_03003F60 & 0x10)
+        {
+            if ((gData_03000554->unk02 & 0x40) && gData_03000558->unk0C != NULL)
+            {
+                if (gData_03000558->unk34[2] >= 0)
+                {
+                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[2]);
+                    gData_03000554->unk04 = pos[0] >> 3;
+                    gData_03000554->unk06 = (pos[1] >> 3) - 16;
+                }
+                entry = gData_03000558->unk0C;
+                gData_03000198->unk17F6 = entry->unk01;
+                gData_03000554->unk01 = 1;
+                gData_03000554->unk00 = 2;
+                sub_080435D8();
+            }
+        }
+        else if (gData_03003F60 & 0x20)
+        {
+            if ((gData_03000554->unk02 & 0x80) && gData_03000558->unk10 != NULL)
+            {
+                if (gData_03000558->unk34[3] >= 0)
+                {
+                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[3]);
+                    gData_03000554->unk04 = pos[0] >> 3;
+                    gData_03000554->unk06 = (pos[1] >> 3) - 16;
+                }
+                entry = gData_03000558->unk10;
+                gData_03000198->unk17F6 = entry->unk01;
+                gData_03000554->unk01 = 1;
+                gData_03000554->unk00 = 3;
+                sub_080435D8();
+            }
+        }
+        else if (gData_03004060 & 1)
+        {
+            if (gData_03000554->unk02 & 0x0F)
+            {
+                sub_08045AA8(&gData_03000198->unk18B8);
+                gData_03000198->unk1833 = 1;
+                gData_03000198->unk181C = 2;
+                gData_03000554->unk01 = 0xFF;
+                gData_03000198->unk1808 &= ~0x200;
+                BtlClearUnk1834();
+            }
+        }
+        if (gData_03004060 & 8)
+        {
+            sub_08066390(7);
+            sub_0804109C((struct Unk40F4C *)&gData_03000198->unk0530, sub_0806639C());
+            gData_03000198->unk181C = 3;
+            sub_08060428();
+        }
+        break;
+    case 1:
+        sub_08043420();
+        break;
+    }
 }
+

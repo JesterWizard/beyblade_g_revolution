@@ -1,121 +1,60 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0807027c
-__attribute__((naked))
-struct Unk70354Object *sub_0807027C(void *a, u16 b, u16 c, u8 d)
+// Set an object's scale (b, c) and rotation d, rebuilding its 2x2 affine
+// matrix. A NULL obj takes one from the battle-object pool; the identity
+// transform (d 0, scale 0x100) releases it instead. Busy objects (unk19) are
+// left alone and their unk19 is returned.
+struct Unk70354Object *sub_0807027C(struct Unk70354Object *obj, u16 b, u16 c, u8 d)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "adds r5, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r7, r1, #0x10\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "mov r8, r2\n"
-        "lsls r3, r3, #0x18\n"
-        "lsrs r6, r3, #0x18\n"
-        "movs r1, #0x00\n"
-        "cmp r6, #0x00\n"
-        "bne _080702A6\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x01\n"
-        "cmp r7, r0\n"
-        "bne _080702A6\n"
-        "cmp r8, r7\n"
-        "bne _080702A6\n"
-        "movs r1, #0x01\n"
-        "_080702A6:\n"
-        "cmp r5, #0x00\n"
-        "beq _080702BE\n"
-        "ldrb r0, [r5, #0x19]\n"
-        "cmp r0, #0x00\n"
-        "bne _08070346\n"
-        "cmp r1, #0x00\n"
-        "beq _080702CC\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_0806FF28\n"
-        "_080702BA:\n"
-        "movs r0, #0x00\n"
-        "b _08070346\n"
-        "_080702BE:\n"
-        "cmp r1, #0x00\n"
-        "bne _080702BA\n"
-        "bl sub_0806FEFC\n"
-        "adds r5, r0, #0x0\n"
-        "cmp r5, #0x00\n"
-        "beq _080702BA\n"
-        "_080702CC:\n"
-        "strh r7, [r5, #0x14]\n"
-        "mov r0, r8\n"
-        "strh r0, [r5, #0x16]\n"
-        "strb r6, [r5, #0x18]\n"
-        "cmp r6, #0x00\n"
-        "beq _0807032C\n"
-        "ldr r1, _08070324 @ =0x083C9544\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x40\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r1\n"
-        "movs r2, #0x00\n"
-        "ldsh r4, [r0, r2]\n"
-        "ldr r3, _08070328 @ =0x083A9544\n"
-        "lsls r0, r7, #0x01\n"
-        "adds r0, r0, r3\n"
-        "movs r7, #0x00\n"
-        "ldsh r2, [r0, r7]\n"
-        "adds r0, r4, #0x0\n"
-        "muls r0, r2\n"
-        "asrs r0, r0, #0x08\n"
-        "strh r0, [r5, #0x0C]\n"
-        "lsls r0, r6, #0x01\n"
-        "adds r0, r0, r1\n"
-        "movs r6, #0x00\n"
-        "ldsh r1, [r0, r6]\n"
-        "adds r0, r1, #0x0\n"
-        "muls r0, r2\n"
-        "asrs r0, r0, #0x08\n"
-        "strh r0, [r5, #0x0E]\n"
-        "negs r1, r1\n"
-        "mov r7, r8\n"
-        "lsls r0, r7, #0x01\n"
-        "adds r0, r0, r3\n"
-        "movs r3, #0x00\n"
-        "ldsh r2, [r0, r3]\n"
-        "adds r0, r1, #0x0\n"
-        "muls r0, r2\n"
-        "asrs r0, r0, #0x08\n"
-        "strh r0, [r5, #0x10]\n"
-        "adds r0, r4, #0x0\n"
-        "muls r0, r2\n"
-        "asrs r0, r0, #0x08\n"
-        "b _08070342\n"
-        "_08070324: .4byte 0x083C9544\n"
-        "_08070328: .4byte 0x083A9544\n"
-        "_0807032C:\n"
-        "ldr r1, _08070350 @ =0x083A9544\n"
-        "lsls r0, r7, #0x01\n"
-        "adds r0, r0, r1\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "strh r0, [r5, #0x0C]\n"
-        "strh r6, [r5, #0x0E]\n"
-        "strh r6, [r5, #0x10]\n"
-        "mov r6, r8\n"
-        "lsls r0, r6, #0x01\n"
-        "adds r0, r0, r1\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "_08070342:\n"
-        "strh r0, [r5, #0x12]\n"
-        "adds r0, r5, #0x0\n"
-        "_08070346:\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_08070350: .4byte 0x083A9544\n"
-    );
+    bool32 reset;
+    s32 cos, sin, sx, sy;
+
+    reset = FALSE;
+    if (d == 0 && b == 0x100 && c == b)
+        reset = TRUE;
+    if (obj != NULL)
+    {
+        if (obj->unk19 != 0)
+            return (struct Unk70354Object *)(u32)obj->unk19;
+        if (reset)
+        {
+            BtlObjListMoveToHead((struct BtlObj *)obj);
+            return NULL;
+        }
+    }
+    else
+    {
+        if (reset)
+            return NULL;
+        obj = (struct Unk70354Object *)BtlObjListMoveHeadToTail();
+        if (obj == NULL)
+            return NULL;
+    }
+    obj->unk14 = b;
+    obj->unk16 = c;
+    obj->unk18 = d;
+    if (d != 0)
+    {
+        cos = gData_083C9544[d + 0x40];
+        sx = gData_083A9544[b];
+        obj->unk0C = (cos * sx) >> 8;
+        sin = gData_083C9544[d];
+        obj->unk0E = (sin * sx) >> 8;
+        sin = -sin;
+        sy = gData_083A9544[c];
+        obj->unk10 = (sin * sy) >> 8;
+        obj->unk12 = (cos * sy) >> 8;
+    }
+    else
+    {
+        obj->unk0C = gData_083A9544[b];
+        obj->unk0E = d;
+        obj->unk10 = d;
+        obj->unk12 = gData_083A9544[c];
+    }
+    return obj;
 }
 

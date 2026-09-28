@@ -1,163 +1,78 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068598
-__attribute__((naked))
-void sub_08068598(void)
+/* match-compiler: old_agbcc */
+// Advance an animation by one frame once its delay has elapsed: the delay is
+// unk34 + unk36 plus the per-frame entry from the optional delay table, never
+// below the global minimum. Steps unk22 forward or back (unk33 bit 1) within
+// the current record's [start, start + len), wrapping or ping-ponging (bit 0),
+// counting loops in unk24; calls sub_08068118 once that reaches unk32.
+void sub_08068598(struct Unk68598 *work)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r2, r0, #0x0\n"
-        "ldrh r1, [r2, #0x20]\n"
-        "lsls r0, r1, #0x03\n"
-        "adds r0, #0x20\n"
-        "ldr r3, [r2, #0x00]\n"
-        "adds r4, r3, r0\n"
-        "adds r1, r2, #0x0\n"
-        "adds r1, #0x98\n"
-        "movs r0, #0x04\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _080685C4\n"
-        "ldr r1, [r3, #0x08]\n"
-        "lsls r1, r1, #0x03\n"
-        "adds r1, #0x20\n"
-        "ldr r0, [r3, #0x18]\n"
-        "adds r0, r3, r0\n"
-        "adds r1, r3, r1\n"
-        "cmp r1, r0\n"
-        "bne _080685C6\n"
-        "_080685C4:\n"
-        "movs r1, #0x00\n"
-        "_080685C6:\n"
-        "movs r3, #0x36\n"
-        "ldsh r0, [r2, r3]\n"
-        "ldrh r5, [r2, #0x34]\n"
-        "adds r3, r5, r0\n"
-        "cmp r1, #0x00\n"
-        "beq _080685E2\n"
-        "movs r5, #0x22\n"
-        "ldsh r0, [r2, r5]\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r1\n"
-        "ldrh r0, [r0, #0x02]\n"
-        "adds r0, r0, r3\n"
-        "lsls r0, r0, #0x10\n"
-        "b _080685E4\n"
-        "_080685E2:\n"
-        "lsls r0, r3, #0x10\n"
-        "_080685E4:\n"
-        "lsrs r0, r0, #0x10\n"
-        "adds r1, r0, #0x0\n"
-        "ldr r3, _08068624 @ =0x03000180\n"
-        "ldr r0, [r3, #0x08]\n"
-        "cmp r1, r0\n"
-        "bcs _080685F4\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "_080685F4:\n"
-        "ldr r0, [r3, #0x00]\n"
-        "ldr r3, [r2, #0x58]\n"
-        "subs r0, r0, r3\n"
-        "cmp r0, r1\n"
-        "bcc _080686AA\n"
-        "adds r0, r3, r1\n"
-        "str r0, [r2, #0x58]\n"
-        "ldrh r3, [r4, #0x00]\n"
-        "ldrh r5, [r4, #0x02]\n"
-        "ldrh r1, [r2, #0x22]\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0x60\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r1, r2, #0x0\n"
-        "adds r1, #0x33\n"
-        "movs r0, #0x02\n"
-        "ldrb r4, [r1, #0x00]\n"
-        "ands r0, r4\n"
-        "adds r4, r1, #0x0\n"
-        "cmp r0, #0x00\n"
-        "beq _08068628\n"
-        "ldrh r0, [r2, #0x22]\n"
-        "subs r0, #0x01\n"
-        "b _0806862C\n"
-        "_08068624: .4byte 0x03000180\n"
-        "_08068628:\n"
-        "ldrh r0, [r2, #0x22]\n"
-        "adds r0, #0x01\n"
-        "_0806862C:\n"
-        "strh r0, [r2, #0x22]\n"
-        "movs r0, #0x22\n"
-        "ldsh r1, [r2, r0]\n"
-        "subs r0, r3, #0x1\n"
-        "adds r0, r0, r5\n"
-        "cmp r1, r0\n"
-        "ble _08068664\n"
-        "ldrb r1, [r4, #0x00]\n"
-        "movs r0, #0x01\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08068658\n"
-        "movs r0, #0x02\n"
-        "eors r0, r1\n"
-        "strb r0, [r4, #0x00]\n"
-        "ldr r1, _08068654 @ =0x0000FFFE\n"
-        "adds r0, r5, r1\n"
-        "adds r0, r3, r0\n"
-        "strh r0, [r2, #0x22]\n"
-        "b _0806865A\n"
-        "_08068654: .4byte 0x0000FFFE\n"
-        "_08068658:\n"
-        "strh r3, [r2, #0x22]\n"
-        "_0806865A:\n"
-        "adds r1, r2, #0x0\n"
-        "adds r1, #0x24\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strb r0, [r1, #0x00]\n"
-        "_08068664:\n"
-        "movs r1, #0x22\n"
-        "ldsh r0, [r2, r1]\n"
-        "cmp r0, r3\n"
-        "bge _08068692\n"
-        "ldrb r1, [r4, #0x00]\n"
-        "movs r0, #0x01\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08068680\n"
-        "movs r0, #0x02\n"
-        "eors r0, r1\n"
-        "strb r0, [r4, #0x00]\n"
-        "adds r0, r3, #0x1\n"
-        "b _08068686\n"
-        "_08068680:\n"
-        "ldr r4, _080686B0 @ =0x0000FFFF\n"
-        "adds r0, r5, r4\n"
-        "adds r0, r3, r0\n"
-        "_08068686:\n"
-        "strh r0, [r2, #0x22]\n"
-        "adds r1, r2, #0x0\n"
-        "adds r1, #0x24\n"
-        "ldrb r0, [r1, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strb r0, [r1, #0x00]\n"
-        "_08068692:\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0x32\n"
-        "ldrb r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _080686AA\n"
-        "subs r0, #0x0E\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "cmp r0, r1\n"
-        "bcc _080686AA\n"
-        "adds r0, r2, #0x0\n"
-        "bl sub_08068118\n"
-        "_080686AA:\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_080686B0: .4byte 0x0000FFFF\n"
-    );
+    struct Unk68014Rec *rec;
+    struct Unk68598Lookup *lookup;
+    s32 total;
+    u16 delay;
+    u16 start;
+    u16 len;
+    u32 off;
+    struct Unk68598Lookup *end;
+    s32 last;
+
+    rec = &work->unk00->unk20[work->unk20];
+    if (!(work->unk98 & 4))
+    {
+        off = work->unk00->unk08 * 8 + 0x20;
+        end = (struct Unk68598Lookup *)((u8 *)work->unk00 + work->unk00->unk18);
+        lookup = (struct Unk68598Lookup *)((u8 *)work->unk00 + off);
+        if (lookup == end)
+            lookup = NULL;
+    }
+    else
+        lookup = NULL;
+    total = work->unk34 + work->unk36;
+    delay = lookup != NULL ? (&lookup->unk00)[work->unk22 + 1] + total : total;
+    if (delay < gData_03000180.unk08)
+        delay = gData_03000180.unk08;
+    if (gData_03000180.unk00 - work->unk58 < delay)
+        return;
+    work->unk58 += delay;
+    start = rec->unk00;
+    len = rec->unk02;
+    work->unk60 = work->unk22;
+    if (work->unk33 & 2)
+        work->unk22--;
+    else
+        work->unk22++;
+    if (work->unk22 > (last = start - 1) + len)
+    {
+        if (work->unk33 & 1)
+        {
+            work->unk33 ^= 2;
+            work->unk22 = start + (len - 2);
+        }
+        else
+        {
+            work->unk22 = start;
+        }
+        work->unk24++;
+    }
+    if (work->unk22 < start)
+    {
+        if (work->unk33 & 1)
+        {
+            work->unk33 ^= 2;
+            work->unk22 = start + 1;
+        }
+        else
+        {
+            work->unk22 = start + (len - 1);
+        }
+        work->unk24++;
+    }
+    if (work->unk32 != 0 && work->unk24 >= work->unk32)
+        sub_08068118((struct Unk68118 *)work);
 }
 

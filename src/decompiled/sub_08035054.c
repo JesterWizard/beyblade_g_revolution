@@ -9,8 +9,8 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
     u8 index = indexArg;
     s32 pos = 0;
     struct Unk67BB8Source *src = NULL;
-    s8 type = 0;
     u16 id;
+    s8 type = 0;
 
     if (index <= 0x0F)
     {
@@ -53,5 +53,4 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
         sub_08035624((struct Unk346C0 *)state, 2, type);
         break;
     }
-
 }

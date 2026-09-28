@@ -1,128 +1,43 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0804188c
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+// Per-frame update of the scene objects: tick each one, refresh its sort key
+// (0xFFFF when unkD8 == 1, else ~(unk08 >> 8)) and re-claim its palette slot.
 void sub_0804188C(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "movs r7, #0x00\n"
-        "ldr r4, _080418E8 @ =0x03000504\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r4, r1]\n"
-        "cmp r0, #0x00\n"
-        "ble _08041972\n"
-        "movs r0, #0x03\n"
-        "movs r1, #0x0F\n"
-        "bl sub_08062B9C\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r4, r2]\n"
-        "cmp r7, r0\n"
-        "bge _08041972\n"
-        "ldr r6, _080418EC @ =0x03000480\n"
-        "_080418AC:\n"
-        "lsls r4, r7, #0x10\n"
-        "asrs r0, r4, #0x0E\n"
-        "adds r5, r0, r6\n"
-        "ldr r0, [r5, #0x00]\n"
-        "bl sub_08068418\n"
-        "ldr r1, [r5, #0x00]\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0xB8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0804194E\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0xD8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x01\n"
-        "bne _080418F4\n"
-        "adds r1, #0xBC\n"
-        "ldr r0, _080418F0 @ =0x0000FFFF\n"
-        "strh r0, [r1, #0x00]\n"
-        "ldr r1, [r5, #0x00]\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0xB8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "adds r1, #0xBC\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "bl sub_08070468\n"
-        "b _0804190E\n"
-        ".byte 0x00, 0x00\n"
-        "_080418E8: .4byte 0x03000504\n"
-        "_080418EC: .4byte 0x03000480\n"
-        "_080418F0: .4byte 0x0000FFFF\n"
-        "_080418F4:\n"
-        "ldr r0, [r1, #0x08]\n"
-        "asrs r0, r0, #0x08\n"
-        "mvns r0, r0\n"
-        "adds r1, #0xBC\n"
-        "strh r0, [r1, #0x00]\n"
-        "ldr r1, [r5, #0x00]\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0xB8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "adds r1, #0xBC\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "bl sub_08070468\n"
-        "_0804190E:\n"
-        "asrs r0, r4, #0x0E\n"
-        "adds r0, r0, r6\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0xD8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _0804192C\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0xD4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r0, _08041928 @ =0x080775CC\n"
-        "b _08041934\n"
-        "_08041928: .4byte 0x080775CC\n"
-        "_0804192C:\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0xD4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r0, _08041978 @ =0x080779A8\n"
-        "_08041934:\n"
-        "bl sub_08062AF8\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x08\n"
-        "lsrs r2, r0, #0x10\n"
-        "asrs r0, r4, #0x0E\n"
-        "adds r0, r0, r6\n"
-        "ldr r1, [r0, #0x00]\n"
-        "lsls r0, r2, #0x01\n"
-        "movs r2, #0x01\n"
-        "adds r1, #0x3A\n"
-        "orrs r0, r2\n"
-        "strb r0, [r1, #0x00]\n"
-        "_0804194E:\n"
-        "adds r0, r7, #0x0\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x09\n"
-        "adds r1, r4, r2\n"
-        "lsrs r7, r1, #0x10\n"
-        "lsls r0, r0, #0x10\n"
-        "asrs r0, r0, #0x0E\n"
-        "adds r0, r0, r6\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r1, #0x00\n"
-        "bl sub_08067CE8\n"
-        "ldr r0, _0804197C @ =0x03000504\n"
-        "lsls r1, r7, #0x10\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x10\n"
-        "cmp r1, r0\n"
-        "blt _080418AC\n"
-        "_08041972:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08041978: .4byte 0x080779A8\n"
-        "_0804197C: .4byte 0x03000504\n"
-    );
+    s16 i;
+    u16 color;
+
+    i = 0;
+    if (gData_03000504 > 0)
+    {
+        sub_08062B9C(3, 0x0F);
+        while (i < gData_03000504)
+        {
+            sub_08068418(gData_03000480[i]);
+            if (gData_03000480[i]->unkB8 != NULL)
+            {
+                if (gData_03000480[i]->unkD8 == (void *)1)
+                {
+                    gData_03000480[i]->unkBC = 0xFFFF;
+                    sub_08070468(gData_03000480[i]->unkB8, gData_03000480[i]->unkBC);
+                }
+                else
+                {
+                    gData_03000480[i]->unkBC = ~((s32)gData_03000480[i]->unk08 >> 8);
+                    sub_08070468(gData_03000480[i]->unkB8, gData_03000480[i]->unkBC);
+                }
+                if (gData_03000480[i]->unkD8 == NULL)
+                    color = (s8)sub_08062AF8(gData_080775CC, gData_03000480[i]->unkD4);
+                else
+                    color = (s8)sub_08062AF8(gData_080779A8, gData_03000480[i]->unkD4);
+                gData_03000480[i]->unk3A = (color << 1) | 1;
+            }
+            sub_08067CE8(gData_03000480[i++], 0);
+        }
+    }
 }
 
