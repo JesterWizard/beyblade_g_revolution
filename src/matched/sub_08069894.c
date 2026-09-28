@@ -19,9 +19,9 @@ void sub_08069894(void)
     u16 zero;
     u32 n;
 
-    gData_03000108[0] = 0;
-    gData_030001B0[0] = 0;
-    gData_030001A8[0] = 0x20;
+    gData_03000108 = 0;
+    gData_030001B0 = 0;
+    gData_030001A8 = 0x20;
 
     i = 0;
     zero = 0;

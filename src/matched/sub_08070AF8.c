@@ -1,229 +1,82 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08070af8
-__attribute__((naked))
-void sub_08070AF8(void)
+/* match-compiler: old_agbcc */
+
+// Points every glyph of the group at the shared affine object. Bit 9 (OAM
+// double size) is set when the scale would clip the sprite, unless the group
+// asks for no double size (unk08 bit 3).
+#define GROUP_APPLY_AFFINE(g, aff)                                  \
+    {                                                               \
+        u32 bits = ((aff->unk08 & 0x3E0) << 20) | 0x100;            \
+        struct Unk705DC *node = (struct Unk705DC *)g->unk14.unk00;  \
+        s32 n = g->unk14.unk08;                                     \
+        if (!(g->unk08 & 8))                                        \
+        {                                                           \
+            if (aff->unk18 != 0)                                    \
+            {                                                       \
+                if (aff->unk14 > 0xB0 || aff->unk16 > 0xB0)         \
+                    bits |= 0x200;                                  \
+            }                                                       \
+            else if (aff->unk14 > 0x100 || aff->unk16 > 0x100)      \
+                bits |= 0x200;                                      \
+        }                                                           \
+        for (n--; n != -1; n--)                                     \
+        {                                                           \
+            node->unk30 = (struct Unk705DC *)aff;                   \
+            node->unk10 = (node->unk10 & 0xC1FFFCFF) | bits;        \
+            node = node->unk04;                                     \
+        }                                                           \
+        sub_080705CC(aff);                                          \
+    }
+
+// Moves a text sprite group to (x, y): per glyph for scaled groups, otherwise
+// re-creates the shared affine object and patches every glyph's OAM affine
+// index and double-size bit (cleared again if no affine slot is free).
+void sub_08070AF8(struct Unk7069C *g, u16 x, u16 y)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r6, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "mov r9, r1\n"
-        "mov r8, r9\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r5, r2, #0x10\n"
-        "adds r7, r5, #0x0\n"
-        "ldr r1, [r6, #0x1C]\n"
-        "cmp r1, #0x00\n"
-        "bne _08070B18\n"
-        "b _08070C88\n"
-        "_08070B18:\n"
-        "movs r0, #0x04\n"
-        "ldrh r2, [r6, #0x08]\n"
-        "ands r0, r2\n"
-        "cmp r0, #0x00\n"
-        "beq _08070B46\n"
-        "ldr r5, [r6, #0x14]\n"
-        "subs r4, r1, #0x1\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r4, r0\n"
-        "bne _08070B30\n"
-        "b _08070C82\n"
-        "_08070B30:\n"
-        "mov r9, r0\n"
-        "_08070B32:\n"
-        "adds r0, r5, #0x0\n"
-        "mov r1, r8\n"
-        "adds r2, r7, #0x0\n"
-        "bl sub_080703FC\n"
-        "ldr r5, [r5, #0x04]\n"
-        "subs r4, #0x01\n"
-        "cmp r4, r9\n"
-        "bne _08070B32\n"
-        "b _08070C82\n"
-        "_08070B46:\n"
-        "ldr r4, [r6, #0x2C]\n"
-        "cmp r4, #0x00\n"
-        "beq _08070C04\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_080705D4\n"
-        "ldrb r3, [r4, #0x18]\n"
-        "adds r0, r4, #0x0\n"
-        "mov r1, r9\n"
-        "adds r2, r5, #0x0\n"
-        "bl sub_0807027C\n"
-        "str r0, [r6, #0x2C]\n"
-        "adds r4, r0, #0x0\n"
-        "cmp r4, #0x00\n"
-        "bne _08070B94\n"
-        "ldr r1, [r6, #0x14]\n"
-        "ldr r2, [r6, #0x1C]\n"
-        "subs r2, #0x01\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r2, r0\n"
-        "bne _08070B76\n"
-        "b _08070C82\n"
-        "_08070B76:\n"
-        "movs r5, #0x00\n"
-        "ldr r4, _08070B90 @ =0xC1FFFCFF\n"
-        "adds r3, r0, #0x0\n"
-        "_08070B7C:\n"
-        "str r5, [r1, #0x30]\n"
-        "ldr r0, [r1, #0x10]\n"
-        "ands r0, r4\n"
-        "str r0, [r1, #0x10]\n"
-        "ldr r1, [r1, #0x04]\n"
-        "subs r2, #0x01\n"
-        "cmp r2, r3\n"
-        "bne _08070B7C\n"
-        "b _08070C82\n"
-        ".byte 0x00, 0x00\n"
-        "_08070B90: .4byte 0xC1FFFCFF\n"
-        "_08070B94:\n"
-        "ldr r0, [r4, #0x08]\n"
-        "movs r1, #0xF8\n"
-        "lsls r1, r1, #0x02\n"
-        "ands r0, r1\n"
-        "lsls r3, r0, #0x14\n"
-        "movs r5, #0x80\n"
-        "lsls r5, r5, #0x01\n"
-        "orrs r3, r5\n"
-        "ldr r1, [r6, #0x14]\n"
-        "ldr r2, [r6, #0x1C]\n"
-        "movs r0, #0x08\n"
-        "ldrh r7, [r6, #0x08]\n"
-        "ands r0, r7\n"
-        "cmp r0, #0x00\n"
-        "bne _08070BD8\n"
-        "ldrb r0, [r4, #0x18]\n"
-        "cmp r0, #0x00\n"
-        "beq _08070BC6\n"
-        "ldrh r0, [r4, #0x14]\n"
-        "cmp r0, #0xB0\n"
-        "bhi _08070BD2\n"
-        "ldrh r7, [r4, #0x16]\n"
-        "cmp r7, #0xB0\n"
-        "bls _08070BD8\n"
-        "b _08070BD2\n"
-        "_08070BC6:\n"
-        "ldrh r0, [r4, #0x14]\n"
-        "cmp r0, r5\n"
-        "bhi _08070BD2\n"
-        "ldrh r7, [r4, #0x16]\n"
-        "cmp r7, r5\n"
-        "bls _08070BD8\n"
-        "_08070BD2:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x02\n"
-        "orrs r3, r0\n"
-        "_08070BD8:\n"
-        "subs r2, #0x01\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r2, r0\n"
-        "beq _08070BF8\n"
-        "ldr r7, _08070C00 @ =0xC1FFFCFF\n"
-        "adds r5, r0, #0x0\n"
-        "_08070BE6:\n"
-        "str r4, [r1, #0x30]\n"
-        "ldr r0, [r1, #0x10]\n"
-        "ands r0, r7\n"
-        "orrs r0, r3\n"
-        "str r0, [r1, #0x10]\n"
-        "ldr r1, [r1, #0x04]\n"
-        "subs r2, #0x01\n"
-        "cmp r2, r5\n"
-        "bne _08070BE6\n"
-        "_08070BF8:\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_080705CC\n"
-        "b _08070C82\n"
-        "_08070C00: .4byte 0xC1FFFCFF\n"
-        "_08070C04:\n"
-        "movs r0, #0x00\n"
-        "mov r1, r8\n"
-        "adds r2, r7, #0x0\n"
-        "movs r3, #0x00\n"
-        "bl sub_0807027C\n"
-        "str r0, [r6, #0x2C]\n"
-        "adds r4, r0, #0x0\n"
-        "cmp r4, #0x00\n"
-        "beq _08070C82\n"
-        "ldr r0, [r4, #0x08]\n"
-        "movs r1, #0xF8\n"
-        "lsls r1, r1, #0x02\n"
-        "ands r0, r1\n"
-        "lsls r3, r0, #0x14\n"
-        "movs r5, #0x80\n"
-        "lsls r5, r5, #0x01\n"
-        "orrs r3, r5\n"
-        "ldr r1, [r6, #0x14]\n"
-        "ldr r2, [r6, #0x1C]\n"
-        "movs r0, #0x08\n"
-        "ldrh r7, [r6, #0x08]\n"
-        "ands r0, r7\n"
-        "cmp r0, #0x00\n"
-        "bne _08070C5C\n"
-        "ldrb r0, [r4, #0x18]\n"
-        "cmp r0, #0x00\n"
-        "beq _08070C4A\n"
-        "ldrh r0, [r4, #0x14]\n"
-        "cmp r0, #0xB0\n"
-        "bhi _08070C56\n"
-        "ldrh r7, [r4, #0x16]\n"
-        "cmp r7, #0xB0\n"
-        "bls _08070C5C\n"
-        "b _08070C56\n"
-        "_08070C4A:\n"
-        "ldrh r0, [r4, #0x14]\n"
-        "cmp r0, r5\n"
-        "bhi _08070C56\n"
-        "ldrh r7, [r4, #0x16]\n"
-        "cmp r7, r5\n"
-        "bls _08070C5C\n"
-        "_08070C56:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x02\n"
-        "orrs r3, r0\n"
-        "_08070C5C:\n"
-        "subs r2, #0x01\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r2, r0\n"
-        "beq _08070C7C\n"
-        "ldr r7, _08070C94 @ =0xC1FFFCFF\n"
-        "adds r5, r0, #0x0\n"
-        "_08070C6A:\n"
-        "str r4, [r1, #0x30]\n"
-        "ldr r0, [r1, #0x10]\n"
-        "ands r0, r7\n"
-        "orrs r0, r3\n"
-        "str r0, [r1, #0x10]\n"
-        "ldr r1, [r1, #0x04]\n"
-        "subs r2, #0x01\n"
-        "cmp r2, r5\n"
-        "bne _08070C6A\n"
-        "_08070C7C:\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_080705CC\n"
-        "_08070C82:\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_080706B0\n"
-        "_08070C88:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08070C94: .4byte 0xC1FFFCFF\n"
-    );
+    struct Unk70354Object *aff;
+
+    if (g->unk14.unk08 == 0)
+        return;
+    if (g->unk08 & 4)
+    {
+        struct Unk705DC *node = (struct Unk705DC *)g->unk14.unk00;
+        s32 n;
+
+        for (n = g->unk14.unk08 - 1; n != -1; n--)
+        {
+            sub_080703FC((struct Unk703FC *)node, x, y);
+            node = node->unk04;
+        }
+    }
+    else if ((aff = g->unk2C) != NULL)
+    {
+        sub_080705D4(aff);
+        aff = g->unk2C = BtlObjSetAffine(aff, x, y, aff->unk18);
+        if (aff == NULL)
+        {
+            struct Unk705DC *node = (struct Unk705DC *)g->unk14.unk00;
+            s32 n = g->unk14.unk08;
+
+            for (n--; n != -1; n--)
+            {
+                node->unk30 = NULL;
+                node->unk10 &= 0xC1FFFCFF;
+                node = node->unk04;
+            }
+        }
+        else
+            GROUP_APPLY_AFFINE(g, aff)
+    }
+    else
+    {
+        aff = g->unk2C = BtlObjSetAffine(NULL, x, y, 0);
+        if (aff != NULL)
+            GROUP_APPLY_AFFINE(g, aff)
+    }
+    sub_080706B0((struct Unk70C98 *)g);
 }
 

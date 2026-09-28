@@ -13,7 +13,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
 
     gData_03000198->unk17F0 = 0;
     gData_03000198->unk17F2 = 0;
-    REG_BLDY = 0;
+    REG_BLDALPHA = 0;
     gData_03000198->unk185A = 0;
     if (d != 0)
         ScreenBrightnessFade(-1);

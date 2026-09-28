@@ -3,7 +3,7 @@
 // @ 0x08070678
 void BtlReleaseEntry(struct Unk7069C *a)
 {
-    struct Unk705CC *p;
+    struct Unk70354Object *p;
 
     BtlObjPoolReleaseChain(&a->unk14);
     p = a->unk2C;

@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-28T14:59:38Z_
+_Updated: 2026-09-28T18:58:44Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 594 |
-| Still need semantic C | **39** |
-| Readable Thumb remaining | 39 |
+| Semantic C done | 605 |
+| Still need semantic C | **28** |
+| Readable Thumb remaining | 28 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 11 (147 already semantic) |
+| Battle pending | 7 (151 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 39 |
+| WIP (resume these first) | 42 |
 
 Ranking: **battle** · showing top **40**
 
@@ -41,7 +41,6 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08067504` | 0 | 48/128 then 60/128 | `src/decompiled/sub_08067504.c` | Two semantic attempts: direct volatile-register C 48/128 (120B), then explicit waitcnt/mask temporaries 60/128 (112B). DMA behavior and register sequence are mapped; remaining issues are waitcnt result register (retail r4 = REG_WAITCNT & 0xF8FF, candidate r3) and DMA-status literal scheduling (retail loads 0x040000DE before constructing the r1 mask). | Pin waitcnt to r4 and the F8FF mask to r3, then OR in gUnk_030009B0->unk06. Introduce a DMA-status pointer pinned to r2 before setting busy_mask r1, and loop through that pointer. |
 | `sub_08067648` | 0 | 50/352 then 50/352 | `src/decompiled/sub_08067648.c` | Two semantic attempts: approximate DMA/timing model 50/352 (260B), then enlarged scratch array still 50/352 (260B). The high-level stages are mapped, but the retail function’s fixed 0xB0 stack frame, bit-stream packing, DMA timing loop, and hardware-status branches require a dedicated stack-struct/source-shape match. | Use an explicit volatile 0xB0-byte workspace or struct to force the retail frame and model the exact scratch regions: stream at sp, VCOUNT fields at +0xA4/+0xA6/+0xA8, elapsed at +0xAC. Then anchor source r5, value r1/r3, mode r7, and cursor r3/r2 as shown by retail. |
 | `sub_080691E4` | 0 | 15/138 then 20/138 | `src/decompiled/sub_080691E4.c` | Two semantic attempts: direct mode switch 15/138 (128B), then exact two-step value shift 20/138 (128B). Retail additionally copies value into r0, uses r0 for the bit-branch shift amount, and lays the non-bit cases as equality/value-greater-than checks (bgt plus explicit zero check); the candidate uses a compact switch and wrong register shape. | Pin selector to r0 and copy selector = value immediately after the >>30; in the bit path compute selector = (value << 1) + 8, result = one, result <<= selector. Replace switch with if value==1, else if value>1 using selector==2/3, else if value==0, leaving default result untouched. |
-| `sub_0802DCDC` | 452 | 100/452 | `src/decompiled/sub_0802DCDC.c` | size mismatch; 100/452 bytes, compiled 428 vs retail 452; direct semantic control flow mapped, but frame remains 0x1C vs retail 0x18 and high-register lifetimes differ | reduce spills to the retail 0x18 frame, preserve r8/r9/r10 and exact state-location reloads |
 | `sub_0802E2F8` | 0 | 4/110 | `src/decompiled/sub_0802E2F8.c` | two attempts did not match; 4/110 bytes, final pinned candidate 116B; table algorithm mapped but fixed-register aliases worsened the prologue | restore the 20/110 natural seed, then tune only multiplier r5, signed a r2, and table r3 without overlapping fixed variables |
 | `sub_0802ECD8` | 0 | 50/498 | `src/decompiled/sub_0802ECD8.c` | two attempts did not match; 50/498 bytes, final compiled 416B; logic mapped but fixed high-register pins removed the retail callee-save prologue | restore natural prologue from first seed, then selectively anchor buffer/index/root location without fixed r8-r10 pins |
 | `sub_0802FA94` | 0 | 65/748 | `src/decompiled/sub_0802FA94.c` | two attempts did not match; 65/748 bytes, final compiled 580B; loop semantics mapped but target root/main location and high-register/dispatch shape remain | restore natural callee-save prologue and use a root-location direct seed; inline the exact type/subtype switch and table literal order |
@@ -53,18 +52,22 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08035D68` | 0 | 19/196 | `src/decompiled/sub_08035D68.c` | Rotation/projection helper semantics reconstructed: table sine/cosine lookup, depth-scaled coordinate rotation, perspective correction, output writes, flag extraction, and sub_08070354 dispatch. Natural baseline is 19/196 bytes and size-mismatched at 208 bytes; a second fixed-register attempt reached 50/196 but aliased the source pointer with a pinned delta and was discarded. | Use the natural seed and introduce register constraints only after preserving the source pointer in ip. Target uses sine r8, dx r7, dy r5, dz r4, output x r6, output y r2, and flag r9; do not pin dx to r7 unless source is explicitly pinned to r12. |
 | `sub_0803715C` | 0 | 33/444 | `src/decompiled/sub_0803715C.c` | 33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 instead of r8 and about 20 bytes of reloads are folded | do not hand-chase registers; only revisit if a same-size seed appears, then permuter |
 | `sub_08038438` | 240 | 45/240 | `src/decompiled/sub_08038438.c` | for-loop seed with slots=&gData_030003CC + _call_via_r3 fn-pointer call is same-size (old_agbcc 45/240). Retail keeps both loops' found-blocks inline (no loop-exit block motion), so *slots reloads every pass; agbcc/old_agbcc move the found blocks out of the loops. | Find a loop shape that stops loop.c moving the exit blocks (break + flag, goto-free) while keeping the hoisted r7/r8/r5 in loop 2. |
-| `sub_08045C5C` | 136 | 93/136 | `src/decompiled/sub_08045C5C.c` | Same-size semantic seed 93/136; permuter best 255 in 60s. Retail keeps a in r7 and builds 0xFC00 in r1 before copying the mask pointer; agbcc puts a in r6, the constant in r2, and swaps the mask copy with the halfword load. | Need a in r7 and sentinel in r1 so the mask pointer is copied before the halfword load. Do not re-run this seed until that register shape exists. |
+| `sub_08045C5C` | 136 | 127/136 | `src/decompiled/sub_08045C5C.c` | Rewritten with the gData_03003F60 / gData_03000198 data symbols (plain reads, no local pointers): 93/136 -> 127/136, same size. Only the prologue differs: retail loads the 0xFC00 sentinel before copying the mask address into r4 and does the ldrh through r4. | Find the shape that puts `movs r1,#0xFC; lsls` between the address load and the copy (sentinel local, comparison order and volatile views tried). Permuter 480s: best 220. |
 | `sub_08069270` | 244 | 24/244 | `src/decompiled/sub_08069270.c` | Logic mapped (horizontal wrap split into two blits; fn = 0x0806945D or gData_080BB8A4[0]; wrap-off path uses gData_080BB8A8[0]). Separate e1/e2/h1/h2 copies reproduce retail's stack spills; remaining diff is register choice: retail keeps d in r3 and end in r5, ours copies d to r6 (+2B). Permuter (2 rounds) reached 25 only via uninitialised-variable tricks. | Find a source shape that leaves d in its argument register (d is only read by the first blit); try the permuter from this seed with a longer budget. |
 | `sub_0806B2F0` | 0 | 35/248 | `src/decompiled/sub_0806B2F0.c` | Digit-row renderer (right to left, DivRemainder/Div by 10, frame 0x34 + digit, optional zero padding). Our compile cross-jumps the two sub_0806833C calls; retail keeps them separate because the padded path increments from the (s16)drawn value it just tested. | Make the padded-path increment differ from the normal path (retail: drawn = (s16)drawn + 1 vs drawn++), and keep i/drawn as u16 compared via (s16). |
 | `sub_0806B5C8` | 0 | 87/274 | `src/decompiled/sub_0806B5C8.c` | 8x8 4bpp glyph blit into a 2x2 tile block (tiles[0,1,0x20,0x21] via sub_0806B5B8), shifted by x&7 and y&7. Logic complete; register allocation differs (retail: base/br share r7, x reused as the shift in r9, y&7 in r10, first row count as ~y + 8). | Reuse x for the shift and y for the second loop's counter; try n = 7 - y with != -1 tests; then permuter. |
 | `sub_0806960C` | 600 | 226/600 | `src/decompiled/sub_0806960C.c` | BG map streaming (scroll by dx/dy, stream a column/row of tiles through sub_08069270 when the view crosses the loaded rect, wrap on unk7C bits). Logic complete, same size. Retail spills tile/edge/source/start values to 8 consecutive stack words (sp0C..sp28) and keeps the constant 1 in r10; a local Unk688C8Rect + start[2] gets closest. | Find the local aggregate shape that yields the sp0C..sp28 layout while keeping CSE of the stored values; one = 1 local helps the prologue. |
-| `sub_08043DB4` | 1352 | 1031/1352 | `src/decompiled/sub_08043DB4.c` | Map entry/setup sequence fully mapped (same size). Only remaining diff: retail keeps a -1 in a stack slot (sp18) set right after sub_0806644C and compares unk18B4 against it; every source form tried lets agbcc rematerialise the constant, which shifts the frame by 4 and some registers. | Find what variable holds that -1 (param reuse and locals tried). |
-| `sub_08044A8C` | 672 | 602/672 | `src/decompiled/sub_08044A8C.c` | Save-data verify (EEPROM read retry x8, checksum/magic/size/version checks per slot). Same size; remaining diff is register choice around the hdr/slot HeapAlloc results (retail keeps &gData_03000198 in r4 and buf in r7). | Tune the alloc/assignment statement shape at the top; permuter from this seed. |
-| `sub_0806F05C` | 280 | 205/280 (one address-mode diff) | `src/decompiled/sub_0806F05C.c` | logic exact (camera follow + 4-slot parallax); one diff: ratio load address (t+0x28)+off in retail vs (t+off)+#0x28 (2 insns short) | find the source shape for the entries[i].unk14 address; permuter 5 min found nothing |
+| `sub_08043DB4` | 1352 | 1031/1352 | `src/decompiled/sub_08043DB4.c` | Fixed REG_BLDY -> REG_BLDALPHA (retail stores 0 to 0x04000052). Remaining: retail keeps the -1 compared against unk18B4 in a stack slot (sp+0x18). local-alloc's update_equiv_regs moves a set-once/used-once constant next to its use, so any `none = -1` local is rematerialised. | The -1 needs a pseudo with a second, different set (no REG_EQUIV) that still gets no hard register. A volatile local gives the right 0x1C frame but the wrong slot order (sp10 instead of sp18). |
+| `sub_08044A8C` | 672 | 613/672 | `src/decompiled/sub_08044A8C.c` | Same size. `hdr = unk1688; hdr += i;` fixed the base-before-index order at both header reads (602 -> 613). Left: buf/retry register swap at the top (retail buf=r7, retry=r5) and the unk1688 base register (retail r4) in the per-slot checks. | Retail copies *hdrBlock into r3 and only later into r7: find the statement shape that creates that copy. Permuter 480s from this seed: best 425. |
 | `sub_08040680` | 308 | one-insn diff (304 vs 308 B) | `src/decompiled/sub_08040680.c` | logic exact; one diff: BtlObjTableAdd result copied to r1 before the unk834 store in retail (ours stores from r0) | local-alloc shape for the buffer store; permuter 5 min found nothing |
-| `sub_0803E0CC` | 296 | 56/296 | `src/decompiled/sub_0803E0CC.c` | logic mapped (release all slots with unk23 == id); s8 unk1C |= 0xFF folds to strb -1, retail keeps ldrb/orr; loop.c hoists different constants | unk1C likely a u8 view / bitfield here; other users need s8 |
+| `sub_0803E0CC` | 296 | 170/296 | `src/decompiled/sub_0803E0CC.c` | Data symbol gData_03000198 plus `unk1C |= (s8)0xFF` (keeps the ldrb/orr/strb instead of folding to strb -1): 56 -> 170/296. Still 4 bytes short: retail hoists the unk1C offset into r10, ours keeps it in r3 and caller-saves it to the stack. | Get the loop-invariant 0x8EC offset into a callee-saved register (r10); old_agbcc is required. |
 | `sub_0804BD38` | 328 | 56 asm diff lines | `src/decompiled/sub_0804BD38.c` | logic mapped (5-row menu redraw); retail makes i*16 a giv in r9 and keeps a on the stack, ours hoists &gData_03000674 instead | find the loop shape that makes the row-y giv; try permuter |
 | `sub_080737C0` | 336 | 61/336 | `src/decompiled/sub_080737C0.c` | logic mapped (word wrap into <=count lines); retail keeps the done flag in a stack slot and tests count from the stack | while(!done) shape is closest (81 diff lines); find what spills done |
+| `sub_08044648` | 364 | 135/364 | `src/decompiled/sub_08044648.c` | New semantic draft from scratch (the old one was a junk stub); roster is gData_08075AB8 (struct BeybladeDef[]). Same size, logic exact. Left: retail loads the table base before computing id*28 (ours computes the offset first), which swaps r6/r7; a `s16 key` local for the two GetIndexedRecordWord calls duplicates the loop test. | Same table-base-first problem as sub_080447E8. A local table pointer gets hoisted out of the loop by loop.c; look for a shape that keeps the symbol load inside the if and before the multiply. |
+| `sub_080447E8` | 372 | 232/372 | `src/decompiled/sub_080447E8.c` | New semantic draft (sibling of sub_08044648, table gData_0807BE04, Unk7BE04 fields named). Logic exact, 4 bytes long; retail loads the table symbol before id*28 and keeps it in r8. | Solve the table-base-first order (see sub_08044648), then the loop-test duplication. |
+| `sub_0804C8BC` | 372 | 74/372 | `src/decompiled/sub_0804C8BC.c` | New semantic draft (the old one was a junk stub): five list rows from gData_080989F0 (struct Unk4C8BCRow). Logic exact, 4 bytes long. Retail has five loop givs (palette pointer, i*4, two row givs, i*16) and copies the i*16 giv into a stack local for the sprite y; every shape tried either drops the i*16 giv or adds a (y+0x38)<<8 giv. | Find the source form of the sprite y ((i*16 + 0x38) << 8) that reuses the i*16 giv through a copy. |
+| `sub_08070930` | 420 | 199/420 | `src/decompiled/sub_08070930.c` | New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top. | Find why retail has two pseudos for the affine pointer; that also un-merges the loop tests. |
+| `sub_080618EC` | 428 | 108/428 | `src/decompiled/sub_080618EC.c` | New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF. | Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail. |
 
 Per-function notes: `src/decompiled/<fn>.md`.
 
@@ -72,21 +75,7 @@ Per-function notes: `src/decompiled/<fn>.md`.
 
 | Function | Address | Bytes | Battle refs | Pool | Kind | Notes |
 |----------|---------|------:|------------:|:----:|------|-------|
-| `sub_08044648` | `0x08044648` | 364 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080447E8` | `0x080447E8` | 372 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_080618EC` | `0x080618EC` | 428 | 1 | pool | asm | (gBtlInputMask) |
-| `sub_08056BA4` | `0x08056BA4` | 450 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0804D420` | `0x0804D420` | 362 | 0 | pool | asm | |
-| `sub_0804C8BC` | `0x0804C8BC` | 372 | 0 | pool | asm | |
 | `sub_0806314C` | `0x0806314C` | 404 | 0 | pool | asm | |
-| `sub_0806EEC8` | `0x0806EEC8` | 404 | 0 | pool | asm | |
-| `sub_08070AF8` | `0x08070AF8` | 416 | 0 | pool | asm | |
-| `sub_08068BD4` | `0x08068BD4` | 420 | 0 | pool | asm | |
-| `sub_08070930` | `0x08070930` | 420 | 0 | pool | asm | |
-| `sub_08048DB8` | `0x08048DB8` | 440 | 0 | pool | asm | |
-| `sub_08068A08` | `0x08068A08` | 460 | 0 | pool | asm | |
 | `sub_0806E060` | `0x0806E060` | 492 | 0 | pool | asm | |
 | `sub_0806EC20` | `0x0806EC20` | 516 | 0 | pool | asm | |
 | `sub_08060E48` | `0x08060E48` | 532 | 0 | pool | asm | |
@@ -136,6 +125,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (22 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (8 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

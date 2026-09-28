@@ -66,7 +66,8 @@ s8 SaveDataVerify(void)
         sub_08044D8C((u32 *)&gData_03000198->unk168C[i]);
         if (sub_08044D8C((u32 *)&gData_03000198->unk168C[i]) == 0)
             gData_03000198->unk185C = 0;
-        hdr = (struct Unk1688Words *)&gData_03000198->unk1688[i];
+        hdr = (struct Unk1688Words *)gData_03000198->unk1688;
+        hdr += i;
         if (hdr->unk04 != sub_08044D8C((u32 *)&gData_03000198->unk168C[i]))
             SAVE_FAIL(i);
         if (((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk00 != 0xFEEDFACE)
@@ -74,7 +75,8 @@ s8 SaveDataVerify(void)
         if (((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk00 == 0xFEEDFACE
             && ((u32 *)&gData_03000198->unk168C[i])[1] != 0x1F60)
             SAVE_FAIL(i);
-        hdr = (struct Unk1688Words *)&gData_03000198->unk1688[i];
+        hdr = (struct Unk1688Words *)gData_03000198->unk1688;
+        hdr += i;
         if (hdr->unk10 != 0x00370053 || hdr->unk14 != 0x00F6009C)
         {
             DebugPrint((void *)0x083A2E04);

@@ -111,7 +111,8 @@ struct Unk68574 /* 0xdc */
     /* 31 */ u8 unk31; /* sub_0804DB28 */
     /* 32 */ u8 filler_32[8];
     /* 3a */ u8 unk3A; /* sub_08035258 */
-    /* 3b */ u8 filler_3B[0x17];
+    /* 3b */ u8 unk3B; /* BeybladeDef.type, sub_08044648 */
+    /* 3c */ u8 filler_3C[0x16];
     /* 52 */ s16 unk52; /* sub_080353A0 */
     /* 54 */ u8 filler_54[0x1C];
     /* 70 */ void *unk70; /* sub_0803531C */
@@ -145,9 +146,14 @@ struct Unk68574 /* 0xdc */
 /* 0x1C-stride table at 0x0807BE04; +0x10 is a sub_08067BB8 source. */
 struct Unk7BE04 /* 0x1c */
 {
-    /* 00 */ u8 filler_00[0x10];
+    /* 00 */ u8 filler_00[2];
+    /* 02 */ s16 unk02; /* position record index (sub_0806DEF4) */
+    /* 04 */ u8 filler_04[4];
+    /* 08 */ void *unk08; /* script, sub_080626B8 */
+    /* 0c */ struct Unk59C98Src *unk0C; /* part */
     /* 10 */ struct Unk67BB8Source *unk10;
-    /* 14 */ u8 filler_14[8];
+    /* 14 */ u8 filler_14[4];
+    /* 18 */ s32 unk18; /* -1 or type byte for obj+0x3B */
 };
 
 /* Free-span list node: sorted list at gData_03004088, spares at
@@ -266,13 +272,6 @@ struct Unk35258 /* >= 0x2c6 */
     /* 2ec */ s32 unk2EC; /* sub_080353A0 */
 };
 
-/* Byte at +0x19. sub_080705CC, sub_080705D4. */
-struct Unk705CC /* >= 0x1a */
-{
-    /* 00 */ u8 filler_00[0x19];
-    /* 19 */ u8 unk19;
-};
-
 /* Shift byte at +6, addend at +0x10. sub_0806BB38. */
 struct Unk6BB38 /* >= 0x14 */
 {
@@ -348,6 +347,14 @@ struct Unk62A74 /* >= 0x42 */
 };
 
 /* Halfword at +4, object at +0x14, pointer at +0x2C. sub_0807069C, sub_08070678. */
+/* Pending battle-object batch released by sub_080700CC. */
+struct Unk700CCHdr /* >= 0x0c */
+{
+    /* 00 */ struct Unk6FDB4 *unk00;
+    /* 04 */ struct Unk6FDB4 *unk04;
+    /* 08 */ u32 unk08;
+};
+
 struct Unk7069C /* >= 0x30 */
 {
     /* 00 */ u32 unk00;
@@ -355,10 +362,17 @@ struct Unk7069C /* >= 0x30 */
     /* 06 */ u8 filler_06[2];
     /* 08 */ u16 unk08;
     /* 0a */ u16 unk0A;
-    /* 0c */ u8 filler_0C[8];
-    /* 14 */ u8 unk14;
-    /* 15 */ u8 filler_15[0x17];
-    /* 2c */ struct Unk705CC *unk2C;
+    /* 0c */ u8 filler_0C[2];
+    /* 0e */ u8 unk0E; /* sub_08070930 */
+    /* 0f */ u8 filler_0F[5];
+    /* 14 */ struct Unk700CCHdr unk14; /* glyph sprite chain; unk14.unk08 = count */
+    /* 20 */ u8 *unk20; /* per-glyph width table, may be NULL */
+    /* 24 */ struct Unk6FF58Src *unk24; /* font */
+    /* 28 */ u8 unk28; /* space width */
+    /* 29 */ s8 unk29; /* letter spacing */
+    /* 2a */ u8 filler_2A;
+    /* 2b */ u8 unk2B;
+    /* 2c */ struct Unk70354Object *unk2C; /* shared affine object */
 };
 
 /* Linked entry with a position word pair. sub_08038F30. */
@@ -1732,11 +1746,13 @@ struct Unk4FFCCWin /* >= 0x90 */
 };
 
 /* Icon entry returned by sub_0803DCFC: sprite source and palette. */
-struct Unk4FFCCIcon /* >= 0x1c */
+struct Unk4FFCCIcon /* >= 0x22 */
 {
     /* 00 */ u8 filler_00[0x14];
     /* 14 */ struct Unk6FF58Src *unk14;
     /* 18 */ void *unk18;
+    /* 1c */ u8 filler_1C[5];
+    /* 21 */ s8 unk21; /* sub_08048DB8 */
 };
 
 /* Detail panel state: six sprite handles at +0x28C. sub_0804FFCC. */
@@ -1934,7 +1950,7 @@ struct Unk0068Entry /* 0x18 */
     /* 14 */ s32 unk14;
 };
 
-struct Unk68E54 /* >= 0x65 */
+struct Unk68E54 /* >= 0x88 */
 {
     /* 00 */ s32 unk00; /* map width in tiles (same object as Unk68988) */
     /* 04 */ s32 unk04; /* map height in tiles */
@@ -1960,15 +1976,24 @@ struct Unk68E54 /* >= 0x65 */
     /* 50 */ s32 unk50;
     /* 54 */ s32 unk54;
     /* 58 */ s32 unk58;
-    /* 5c */ u8 filler_5C[2];
+    /* 5c */ u8 unk5C; /* screen base block. sub_08068BD4 */
+    /* 5d */ u8 unk5D; /* char base block. sub_08068BD4 */
     /* 5e */ u8 unk5E; /* affine BG number (2 or 3). sub_08068EC0 */
     /* 5f */ u8 unk5F; /* log2 visible width */
     /* 60 */ u8 unk60; /* log2 visible height */
-    /* 61 */ u8 filler_61[3];
+    /* 61 */ u8 unk61; /* sub_08068A08 */
+    /* 62 */ u8 filler_62[2];
     /* 64 */ u16 unk64;
-    /* 66 */ u8 filler_66[0x16];
+    /* 66 */ u8 filler_66[2];
+    /* 68 */ s32 unk68;
+    /* 6c */ s32 unk6C;
+    /* 70 */ s32 unk70;
+    /* 74 */ u32 unk74; /* tile data size in bytes. sub_08068BD4 */
+    /* 78 */ s32 unk78;
     /* 7c */ u8 unk7C; /* bit 0/1: freeze column/row streaming, bit 2/3: wrap y/x. sub_0806960C */
-    /* 7d */ u8 filler_7D[0x0B];
+    /* 7d */ u8 filler_7D[3];
+    /* 80 */ s32 unk80;
+    /* 84 */ s32 unk84;
 };
 
 struct Unk691E4 /* >= 0x61 */
@@ -2057,8 +2082,7 @@ struct Unk6EE48Entry /* 0x18 */
 {
     /* 00 */ void *unk00;
     /* 04 */ u8 filler_04[0x10];
-    /* 14 */ s16 unk14; /* follow ratio in 1/32 steps, sub_0806F05C */
-    /* 16 */ u8 filler_16[2];
+    /* 14 */ s32 unk14; /* follow ratio in 1/32 steps (read as s16), sub_0806F05C */
 };
 
 struct Unk6EE48Table /* >= 0x74 */
@@ -2067,7 +2091,7 @@ struct Unk6EE48Table /* >= 0x74 */
     /* 14 */ struct Unk6EE48Entry entries[4];
 };
 
-struct Unk6EE48 /* >= 0x355 */
+struct Unk6EE48 /* >= 0x362 */
 {
     /* 000 */ struct Unk68E54 motion[4];
     /* 220 */ struct Unk6EE48Table *unk220;
@@ -2076,6 +2100,10 @@ struct Unk6EE48 /* >= 0x355 */
     /* 344 */ void *unk344;
     /* 348 */ u8 filler_348[0x0C];
     /* 354 */ u8 unk354;
+    /* 355 */ u8 filler_355[7];
+    /* 35c */ u16 unk35C; /* camera min x (pixels), sub_0806EEC8 */
+    /* 35e */ u8 filler_35E[2];
+    /* 360 */ u16 unk360; /* camera right margin (pixels), sub_0806EEC8 */
 };
 
 /* Entry of the scrolling list at *0x03000664 (sub_08056250). */
@@ -2481,7 +2509,9 @@ struct Unk42E78 /* 0x30 */
     /* 00 */ s16 bitBeastExp;
     /* 02 */ u8 filler_02;
     /* 03 */ u8 strength;
-    /* 04 */ u8 filler_04[4];
+    /* 04 */ u8 filler_04;
+    /* 05 */ s8 unk05; /* icon id, sub_08048DB8 */
+    /* 06 */ u8 filler_06[2];
     /* 08 */ struct Unk8D0 unk08; /* copied into MainWork.unk08D0 by sub_0803DEC8 */
 };
 
@@ -2904,14 +2934,6 @@ struct Unk6A954 /* 0x18 */
     /* 10 */ u16 unk10;
     /* 12 */ u16 unk12;
     /* 14 */ u32 unk14;
-};
-
-/* Pending battle-object batch released by sub_080700CC. */
-struct Unk700CCHdr /* >= 0x0c */
-{
-    /* 00 */ struct Unk6FDB4 *unk00;
-    /* 04 */ struct Unk6FDB4 *unk04;
-    /* 08 */ u32 unk08;
 };
 
 /* Extended battle object node touched by sub_080700CC. */
@@ -3572,6 +3594,60 @@ struct Unk39BD4 /* >= 0x2b4 */
     /* 2a0 */ struct Unk705DC *unk2A0;
     /* 2a4 */ u8 filler_2A4[0xC];
     /* 2b0 */ struct Unk705DC *unk2B0;
+};
+
+/* 8-byte list rows at 0x080989F0 (id < 0 = empty row, label text). sub_0804C8BC. */
+struct Unk4C8BCRow /* 0x08 */
+{
+    /* 00 */ s16 unk00;
+    /* 02 */ u8 filler_02[2];
+    /* 04 */ void *unk04;
+};
+
+/* BG resource header passed to sub_08068A08: offsets are relative to the
+ * header. */
+struct Unk68A08Res /* >= 0x20 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ s32 tilesOffset;
+    /* 08 */ u32 tilesSize;
+    /* 0c */ s32 mapOffset;
+    /* 10 */ s32 mapSize;
+    /* 14 */ u8 unk14;
+    /* 15 */ u8 filler_15[3];
+    /* 18 */ u8 shape;
+    /* 19 */ u8 flags; /* bit 0 clear: BGxCNT bit 7 (256-colour) */
+    /* 1a */ u8 filler_1A[2];
+    /* 1c */ u16 width;
+    /* 1e */ u16 height;
+};
+
+/* Typewriter text state: prints lines[line] one character per `delay`
+ * frames. sub_080618EC. */
+struct Unk618EC /* 0x16 */
+{
+    /* 00 */ u8 **lines;
+    /* 04 */ u32 len; /* length of the current line, 0 = not started */
+    /* 08 */ u16 lineCount;
+    /* 0a */ u16 line;
+    /* 0c */ u16 fastKeys; /* held: quarter delay */
+    /* 0e */ u16 skipKeys; /* held: abort */
+    /* 10 */ s16 timer;
+    /* 12 */ u16 delay;
+    /* 14 */ u8 state; /* 1 = printing, 0xFF = finished (returned as s8) */
+    /* 15 */ s8 pos;
+};
+
+/* 16-byte list rows pointed to by gData_030006E8. sub_08053690. */
+struct Unk53690Row /* 0x10 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u8 *unk04; /* fallback label */
+    /* 08 */ struct Unk6FF58Src *unk08; /* sprite */
+    /* 0c */ s8 unk0C; /* < 0: empty row */
+    /* 0d */ s8 unk0D;
+    /* 0e */ s8 unk0E; /* MainWork.unk1694 index */
+    /* 0f */ u8 filler_0F;
 };
 
 #endif /* GUARD_UNKNOWN_TYPES_H */

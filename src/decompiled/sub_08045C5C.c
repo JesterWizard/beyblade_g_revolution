@@ -5,39 +5,21 @@
 // counts down before the current mask is accepted.
 u32 sub_08045C5C(u32 a, u32 b)
 {
-    u32 addr;
-    vu16 *mask;
-    u32 sentinel;
-    u32 sample;
-    struct MainWork **workLoc;
-    struct MainWork *work;
-    s32 *timer;
-    s32 held;
-
-    addr = gBtlInputMask;
-    sentinel = 0xFC;
-    sentinel <<= 8;
-    sample = *(vu16 *)addr;
-    mask = (vu16 *)addr;
-    if (sample == sentinel)
+    if (gData_03003F60 == 0xFC00)
     {
-        gMainWorkPtr->unk1778 = 0;
-        gMainWorkPtr->unk1774 = 0;
+        gData_03000198->unk1778 = 0;
+        gData_03000198->unk1774 = 0;
         return 0;
     }
-    workLoc = gMainWorkPtrLoc;
-    work = *workLoc;
-    timer = &work->unk1778;
-    held = *timer;
-    if (held != 0)
+    if (gData_03000198->unk1778 != 0)
     {
-        *timer = held - 1;
+        gData_03000198->unk1778--;
         return 0;
     }
-    if (work->unk1774 == *mask)
-        *timer = b;
+    if (gData_03000198->unk1774 == gData_03003F60)
+        gData_03000198->unk1778 = b;
     else
-        *timer = a;
-    (*workLoc)->unk1774 = *mask;
-    return *mask;
+        gData_03000198->unk1778 = a;
+    gData_03000198->unk1774 = gData_03003F60;
+    return gData_03003F60;
 }

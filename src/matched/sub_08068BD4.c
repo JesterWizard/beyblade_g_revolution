@@ -1,220 +1,91 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068bd4
-__attribute__((naked))
-void sub_08068BD4(void *a, u8 b, u16 c, u16 d)
+/* match-compiler: old_agbcc */
+// Initialises an affine BG layer: resets the scroll/scale state, points it at
+// its visible-rect slot, reserves char blocks (gData_03000108 grows upwards)
+// and screen blocks (gData_030001A8 grows downwards) for the tile data,
+// clears that VRAM and writes the BGxCNT value.
+void sub_08068BD4(struct Unk68E54 *st, u8 bg, u16 tiles, u16 cnt)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "adds r6, r0, #0x0\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r5, r1, #0x18\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "mov r9, r2\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "mov r8, r3\n"
-        "movs r4, #0x00\n"
-        "str r4, [r6, #0x68]\n"
-        "adds r0, #0x64\n"
-        "movs r1, #0x00\n"
-        "mov r10, r1\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "mov r1, r8\n"
-        "movs r2, #0x00\n"
-        "bl sub_080691E4\n"
-        "adds r7, r0, #0x0\n"
-        "lsls r2, r5, #0x01\n"
-        "adds r2, r2, r5\n"
-        "lsls r2, r2, #0x03\n"
-        "ldr r0, _08068CA4 @ =0x03000008\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r6, #0x08]\n"
-        "str r4, [r2, #0x10]\n"
-        "str r4, [r2, #0x14]\n"
-        "str r4, [r2, #0x00]\n"
-        "adds r3, r6, #0x0\n"
-        "adds r3, #0x5F\n"
-        "movs r1, #0x01\n"
-        "adds r0, r1, #0x0\n"
-        "ldrb r3, [r3, #0x00]\n"
-        "lsls r0, r3\n"
-        "subs r0, #0x01\n"
-        "str r0, [r2, #0x08]\n"
-        "str r4, [r2, #0x04]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x60\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0\n"
-        "subs r1, #0x01\n"
-        "str r1, [r2, #0x0C]\n"
-        "movs r0, #0x20\n"
-        "str r0, [r6, #0x00]\n"
-        "str r0, [r6, #0x04]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x5E\n"
-        "strb r5, [r0, #0x00]\n"
-        "str r4, [r6, #0x0C]\n"
-        "str r4, [r6, #0x10]\n"
-        "str r4, [r6, #0x14]\n"
-        "str r4, [r6, #0x18]\n"
-        "str r4, [r6, #0x1C]\n"
-        "str r4, [r6, #0x20]\n"
-        "str r4, [r6, #0x54]\n"
-        "str r4, [r6, #0x58]\n"
-        "movs r0, #0x10\n"
-        "str r0, [r6, #0x24]\n"
-        "str r4, [r6, #0x40]\n"
-        "str r4, [r6, #0x44]\n"
-        "str r4, [r6, #0x28]\n"
-        "str r4, [r6, #0x2C]\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x09\n"
-        "str r0, [r6, #0x30]\n"
-        "str r0, [r6, #0x34]\n"
-        "str r4, [r6, #0x38]\n"
-        "str r4, [r6, #0x3C]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x48\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strh r4, [r0, #0x00]\n"
-        "str r4, [r6, #0x4C]\n"
-        "str r4, [r6, #0x50]\n"
-        "adds r0, #0x32\n"
-        "mov r2, r10\n"
-        "strb r2, [r0, #0x00]\n"
-        "adds r1, r6, #0x0\n"
-        "adds r1, #0x80\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x84\n"
-        "str r4, [r0, #0x00]\n"
-        "str r4, [r6, #0x6C]\n"
-        "movs r0, #0x80\n"
-        "mov r3, r8\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "beq _08068CA8\n"
-        "mov r4, r9\n"
-        "lsls r0, r4, #0x06\n"
-        "b _08068CAC\n"
-        ".byte 0x00, 0x00\n"
-        "_08068CA4: .4byte 0x03000008\n"
-        "_08068CA8:\n"
-        "mov r1, r9\n"
-        "lsls r0, r1, #0x05\n"
-        "_08068CAC:\n"
-        "str r0, [r6, #0x74]\n"
-        "movs r0, #0x00\n"
-        "str r0, [r6, #0x70]\n"
-        "str r0, [r6, #0x78]\n"
-        "ldr r0, [r6, #0x74]\n"
-        "subs r0, #0x01\n"
-        "lsrs r4, r0, #0x0E\n"
-        "ldr r1, _08068CD8 @ =0x03000108\n"
-        "ldrb r3, [r1, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x5D\n"
-        "strb r3, [r0, #0x00]\n"
-        "ldr r2, [r6, #0x74]\n"
-        "mov r12, r1\n"
-        "mov r9, r0\n"
-        "cmp r2, #0x00\n"
-        "beq _08068CDC\n"
-        "adds r0, r3, #0x1\n"
-        "adds r0, r0, r4\n"
-        "strb r0, [r1, #0x00]\n"
-        "b _08068CE0\n"
-        ".byte 0x00, 0x00\n"
-        "_08068CD8: .4byte 0x03000108\n"
-        "_08068CDC:\n"
-        "mov r3, r9\n"
-        "strb r2, [r3, #0x00]\n"
-        "_08068CE0:\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x0E\n"
-        "ldr r2, [r6, #0x74]\n"
-        "subs r0, r0, r2\n"
-        "cmp r0, r7\n"
-        "bcc _08068D20\n"
-        "cmp r2, #0x00\n"
-        "beq _08068D20\n"
-        "lsrs r2, r7, #0x0B\n"
-        "adds r1, r2, #0x0\n"
-        "cmp r2, #0x00\n"
-        "bne _08068CFA\n"
-        "movs r1, #0x01\n"
-        "_08068CFA:\n"
-        "mov r4, r12\n"
-        "ldrb r4, [r4, #0x00]\n"
-        "lsls r0, r4, #0x03\n"
-        "subs r0, r0, r1\n"
-        "adds r1, r6, #0x0\n"
-        "adds r1, #0x5C\n"
-        "strb r0, [r1, #0x00]\n"
-        "ldr r3, _08068D1C @ =0x030001A8\n"
-        "ldrb r4, [r3, #0x00]\n"
-        "subs r0, r4, r2\n"
-        "adds r4, r1, #0x0\n"
-        "ldrb r1, [r4, #0x00]\n"
-        "cmp r1, r0\n"
-        "bcc _08068D32\n"
-        "strb r0, [r3, #0x00]\n"
-        "strb r0, [r4, #0x00]\n"
-        "b _08068D32\n"
-        "_08068D1C: .4byte 0x030001A8\n"
-        "_08068D20:\n"
-        "ldr r0, _08068D70 @ =0x030001A8\n"
-        "lsrs r1, r7, #0x0B\n"
-        "ldrb r2, [r0, #0x00]\n"
-        "subs r1, r2, r1\n"
-        "strb r1, [r0, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x5C\n"
-        "strb r1, [r0, #0x00]\n"
-        "adds r4, r0, #0x0\n"
-        "_08068D32:\n"
-        "ldrb r3, [r4, #0x00]\n"
-        "lsls r1, r3, #0x0B\n"
-        "movs r0, #0xC0\n"
-        "lsls r0, r0, #0x13\n"
-        "adds r1, r1, r0\n"
-        "ldr r0, _08068D74 @ =0x080BB8BC\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "adds r2, r7, #0x0\n"
-        "bl _08073C4C\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08069988\n"
-        "ldrb r4, [r4, #0x00]\n"
-        "lsls r1, r4, #0x08\n"
-        "mov r4, r8\n"
-        "orrs r1, r4\n"
-        "mov r3, r9\n"
-        "ldrb r3, [r3, #0x00]\n"
-        "lsls r2, r3, #0x02\n"
-        "orrs r1, r2\n"
-        "strh r1, [r0, #0x00]\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08068D70: .4byte 0x030001A8\n"
-        "_08068D74: .4byte 0x080BB8BC\n"
-    );
+    u32 size;
+    struct Unk688C8Rect *rect;
+    u32 blocks;
+    u32 n;
+    u32 m;
+    u16 *reg;
+    void *vram;
+
+    st->unk68 = 0;
+    st->unk64 = 0;
+    size = OamShapeToSize((struct Unk691E4 *)st, cnt, 0);
+    rect = &gData_03000008[bg];
+    st->unk08 = rect;
+    rect->unk10 = 0;
+    rect->unk14 = 0;
+    rect->unk00 = 0;
+    rect->unk08 = (1 << st->unk5F) - 1;
+    rect->unk04 = 0;
+    rect->unk0C = (1 << st->unk60) - 1;
+    st->unk00 = 0x20;
+    st->unk04 = 0x20;
+    st->unk5E = bg;
+    st->unk0C = 0;
+    st->unk10 = 0;
+    st->unk14 = 0;
+    st->unk18 = 0;
+    st->unk1C = 0;
+    st->unk20 = 0;
+    st->unk54 = 0;
+    st->unk58 = 0;
+    st->unk24 = 0x10;
+    st->unk40 = 0;
+    st->unk44 = 0;
+    st->unk28 = 0;
+    st->unk2C = 0;
+    st->unk30 = 0x10000;
+    st->unk34 = 0x10000;
+    st->unk38 = 0;
+    st->unk3C = 0;
+    st->unk48 = 0;
+    st->unk4A = 0;
+    st->unk4C = 0;
+    st->unk50 = 0;
+    st->unk7C = 0;
+    st->unk80 = -1;
+    st->unk84 = 0;
+    st->unk6C = 0;
+    if (cnt & 0x80)
+        st->unk74 = tiles << 6;
+    else
+        st->unk74 = tiles << 5;
+    st->unk70 = 0;
+    st->unk78 = 0;
+    blocks = (st->unk74 - 1) >> 14;
+    st->unk5D = gData_03000108;
+    if (st->unk74 != 0)
+        gData_03000108 += 1 + blocks;
+    else
+        st->unk5D = 0;
+    if (((blocks + 1) << 14) - st->unk74 >= size && st->unk74 != 0)
+    {
+        n = size >> 11;
+        m = n;
+        if (n == 0)
+            m = 1;
+        st->unk5C = gData_03000108 * 8 - m;
+        if (st->unk5C >= gData_030001A8 - n)
+            st->unk5C = gData_030001A8 -= n;
+    }
+    else
+    {
+        st->unk5C = gData_030001A8 -= size >> 11;
+    }
+    vram = (void *)(st->unk5C * 0x800 + 0x06000000);
+    ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, vram, size);
+    reg = sub_08069988(bg);
+    *reg = (st->unk5C << 8) | cnt | (st->unk5D << 2);
 }
 

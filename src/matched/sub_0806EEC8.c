@@ -1,219 +1,55 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806eec8
-__attribute__((naked))
-void sub_0806EEC8(void *a)
+/* match-compiler: old_agbcc */
+// Eases the active camera halfway towards centring state->unk224, clamped to
+// the map, then drags every other targeted camera by its follow ratio; each
+// camera is clamped the same way.
+void sub_0806EEC8(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x00C\n"
-        "adds r7, r0, #0x0\n"
-        "bl sub_0806EEC4\n"
-        "adds r6, r0, #0x0\n"
-        "movs r1, #0x89\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r7, r1\n"
-        "ldr r4, [r0, #0x00]\n"
-        "adds r0, r4, #0x0\n"
-        "mov r1, sp\n"
-        "bl sub_080686B4\n"
-        "ldrb r3, [r4, #0x10]\n"
-        "lsrs r1, r3, #0x01\n"
-        "movs r0, #0x78\n"
-        "subs r0, r0, r1\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r3, [r6, #0x40]\n"
-        "adds r0, r3, r0\n"
-        "ldr r2, [sp, #0x000]\n"
-        "subs r2, r2, r0\n"
-        "asrs r2, r2, #0x01\n"
-        "str r2, [r6, #0x14]\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0xA2\n"
-        "movs r5, #0x00\n"
-        "ldsh r0, [r0, r5]\n"
-        "adds r0, #0x50\n"
-        "ldrb r4, [r4, #0x11]\n"
-        "lsrs r1, r4, #0x01\n"
-        "subs r0, r0, r1\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [r6, #0x44]\n"
-        "adds r1, r1, r0\n"
-        "ldr r0, [sp, #0x004]\n"
-        "subs r0, r0, r1\n"
-        "asrs r0, r0, #0x01\n"
-        "str r0, [r6, #0x18]\n"
-        "adds r2, r3, r2\n"
-        "movs r0, #0xD7\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r7\n"
-        "mov r8, r0\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "cmp r2, r1\n"
-        "bge _0806EF34\n"
-        "negs r0, r3\n"
-        "str r0, [r6, #0x14]\n"
-        "_0806EF34:\n"
-        "ldr r3, [r6, #0x44]\n"
-        "ldr r0, [r6, #0x18]\n"
-        "adds r0, r3, r0\n"
-        "adds r1, r3, #0x0\n"
-        "cmp r0, #0x00\n"
-        "bge _0806EF44\n"
-        "negs r0, r1\n"
-        "str r0, [r6, #0x18]\n"
-        "_0806EF44:\n"
-        "ldr r4, [r6, #0x40]\n"
-        "ldr r1, [r6, #0x14]\n"
-        "adds r1, r4, r1\n"
-        "ldr r0, [r6, #0x00]\n"
-        "lsls r2, r0, #0x0B\n"
-        "movs r5, #0xD8\n"
-        "lsls r5, r5, #0x02\n"
-        "adds r0, r7, r5\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x08\n"
-        "subs r0, r2, r0\n"
-        "cmp r1, r0\n"
-        "ble _0806EF68\n"
-        "movs r1, #0xF0\n"
-        "lsls r1, r1, #0x08\n"
-        "adds r0, r4, r1\n"
-        "subs r0, r2, r0\n"
-        "str r0, [r6, #0x14]\n"
-        "_0806EF68:\n"
-        "ldr r0, [r6, #0x18]\n"
-        "adds r0, r3, r0\n"
-        "ldr r1, [r6, #0x04]\n"
-        "lsls r2, r1, #0x0B\n"
-        "ldr r4, _0806F058 @ =0xFFFF6000\n"
-        "adds r1, r2, r4\n"
-        "cmp r0, r1\n"
-        "ble _0806EF82\n"
-        "movs r5, #0xA0\n"
-        "lsls r5, r5, #0x08\n"
-        "adds r0, r3, r5\n"
-        "subs r0, r2, r0\n"
-        "str r0, [r6, #0x18]\n"
-        "_0806EF82:\n"
-        "movs r1, #0x00\n"
-        "movs r0, #0x88\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r7\n"
-        "mov r9, r0\n"
-        "_0806EF8C:\n"
-        "mov r3, r9\n"
-        "ldr r4, [r3, #0x00]\n"
-        "lsls r1, r1, #0x10\n"
-        "asrs r2, r1, #0x10\n"
-        "lsls r0, r2, #0x01\n"
-        "adds r0, r0, r2\n"
-        "lsls r3, r0, #0x03\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x14\n"
-        "adds r0, r0, r3\n"
-        "ldr r0, [r0, #0x00]\n"
-        "mov r12, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806F038\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x28\n"
-        "adds r0, r0, r3\n"
-        "ldrh r3, [r0, #0x00]\n"
-        "lsls r0, r2, #0x04\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r4, r7, r0\n"
-        "cmp r4, r6\n"
-        "beq _0806F038\n"
-        "lsls r3, r3, #0x10\n"
-        "asrs r3, r3, #0x10\n"
-        "ldr r2, [r6, #0x14]\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r3\n"
-        "asrs r0, r0, #0x05\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r4, #0x14]\n"
-        "ldr r1, [r6, #0x18]\n"
-        "adds r0, r1, #0x0\n"
-        "muls r0, r3\n"
-        "asrs r0, r0, #0x05\n"
-        "adds r1, r1, r0\n"
-        "str r1, [r4, #0x18]\n"
-        "ldr r3, [r4, #0x40]\n"
-        "adds r2, r3, r2\n"
-        "adds r0, r3, #0x0\n"
-        "mov r5, r8\n"
-        "ldrh r5, [r5, #0x00]\n"
-        "cmp r2, r5\n"
-        "bge _0806EFEA\n"
-        "negs r0, r0\n"
-        "str r0, [r4, #0x14]\n"
-        "_0806EFEA:\n"
-        "ldr r5, [r4, #0x44]\n"
-        "ldr r0, [r4, #0x18]\n"
-        "adds r0, r5, r0\n"
-        "adds r1, r5, #0x0\n"
-        "cmp r0, #0x00\n"
-        "bge _0806EFFA\n"
-        "negs r0, r1\n"
-        "str r0, [r4, #0x18]\n"
-        "_0806EFFA:\n"
-        "ldr r1, [r4, #0x14]\n"
-        "adds r1, r1, r3\n"
-        "mov r10, r1\n"
-        "ldr r0, [r4, #0x00]\n"
-        "lsls r2, r0, #0x0B\n"
-        "movs r1, #0xD8\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r7, r1\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x08\n"
-        "subs r0, r2, r0\n"
-        "cmp r10, r0\n"
-        "ble _0806F01E\n"
-        "movs r1, #0xF0\n"
-        "lsls r1, r1, #0x08\n"
-        "adds r0, r3, r1\n"
-        "subs r0, r2, r0\n"
-        "str r0, [r4, #0x14]\n"
-        "_0806F01E:\n"
-        "ldr r0, [r4, #0x18]\n"
-        "adds r0, r5, r0\n"
-        "ldr r1, [r4, #0x04]\n"
-        "lsls r2, r1, #0x0B\n"
-        "ldr r3, _0806F058 @ =0xFFFF6000\n"
-        "adds r1, r2, r3\n"
-        "cmp r0, r1\n"
-        "ble _0806F038\n"
-        "movs r1, #0xA0\n"
-        "lsls r1, r1, #0x08\n"
-        "adds r0, r5, r1\n"
-        "subs r0, r2, r0\n"
-        "str r0, [r4, #0x18]\n"
-        "_0806F038:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x09\n"
-        "add r0, r12\n"
-        "lsrs r1, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, #0x03\n"
-        "ble _0806EF8C\n"
-        "add sp, #0x00C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0806F058: .4byte 0xFFFF6000\n"
-    );
+    struct Unk6EE48 *state = arg;
+    struct Unk68E54 *cam;
+    struct Unk68574 *obj;
+    s32 pos[3];
+    s16 i;
+    s32 y;
+
+    cam = sub_0806EEC4(state);
+    obj = state->unk224;
+    sub_080686B4(obj, (u32 *)pos);
+    cam->unk14 = (pos[0] - (cam->unk40 + ((0x78 - (obj->unk10 >> 1)) << 8))) >> 1;
+    cam->unk18 = (pos[1] - (cam->unk44 + (((y = (s16)obj->unkA2 + 0x50) - (obj->unk11 >> 1)) << 8))) >> 1;
+    if (cam->unk40 + cam->unk14 < state->unk35C)
+        cam->unk14 = -cam->unk40;
+    if (cam->unk44 + cam->unk18 < 0)
+        cam->unk18 = -cam->unk44;
+    if (cam->unk40 + cam->unk14 > (cam->unk00 << 11) - (state->unk360 << 8))
+        cam->unk14 = (cam->unk00 << 11) - 0xF000 - cam->unk40;
+    if (cam->unk44 + cam->unk18 > (cam->unk04 << 11) - 0xA000)
+        cam->unk18 = (cam->unk04 << 11) - 0xA000 - cam->unk44;
+    for (i = 0; i < 4; i++)
+    {
+        if (state->unk220->entries[i].unk00 != NULL)
+        {
+            s16 ratio = state->unk220->entries[i].unk14;
+            struct Unk68E54 *other = &state->motion[i];
+
+            if (other != cam)
+            {
+                other->unk14 = cam->unk14 + ((cam->unk14 * ratio) >> 5);
+                other->unk18 = cam->unk18 + ((cam->unk18 * ratio) >> 5);
+                if (other->unk40 + other->unk14 < state->unk35C)
+                    other->unk14 = -other->unk40;
+                if (other->unk44 + other->unk18 < 0)
+                    other->unk18 = -other->unk44;
+                if (other->unk40 + other->unk14 > (other->unk00 << 11) - (state->unk360 << 8))
+                    other->unk14 = (other->unk00 << 11) - 0xF000 - other->unk40;
+                if (other->unk44 + other->unk18 > (other->unk04 << 11) - 0xA000)
+                    other->unk18 = (other->unk04 << 11) - 0xA000 - other->unk44;
+            }
+        }
+    }
 }
 

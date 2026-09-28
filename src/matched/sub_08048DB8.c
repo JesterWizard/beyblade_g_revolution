@@ -1,201 +1,53 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08048db8
-__attribute__((naked))
-void sub_08048DB8(void *a)
+// Detail panel for the selected Beyblade: name, Bit-Beast EXP, and two
+// icon-derived labels, then its sprite (palette 15) and icon (palette 13).
+void sub_08048DB8(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x010\n"
-        "adds r5, r0, #0x0\n"
-        "movs r0, #0x10\n"
-        "bl sub_0807309C\n"
-        "mov r9, r0\n"
-        "ldr r0, _08048F58 @ =0x000002D5\n"
-        "adds r7, r5, r0\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r7, r0]\n"
-        "ldr r1, _08048F5C @ =0x03000648\n"
-        "mov r10, r1\n"
-        "ldr r1, [r1, #0x00]\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r1\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "bl sub_08042E78\n"
-        "adds r4, r0, #0x0\n"
-        "ldr r0, _08048F60 @ =0x0300064C\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "cmp r0, #0x00\n"
-        "bgt _08048DF6\n"
-        "b _08048F40\n"
-        "_08048DF6:\n"
-        "movs r0, #0x05\n"
-        "ldsb r0, [r4, r0]\n"
-        "bl sub_0803DCFC\n"
-        "mov r8, r0\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x18\n"
-        "bl sub_080615EC\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r7, r0]\n"
-        "mov r2, r10\n"
-        "ldr r1, [r2, #0x00]\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r1\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "bl sub_08042B00\n"
-        "movs r1, #0x4A\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x28\n"
-        "bl sub_080615EC\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r4, r2]\n"
-        "mov r1, r9\n"
-        "movs r2, #0x10\n"
-        "bl sub_080735DC\n"
-        "mov r0, r9\n"
-        "movs r1, #0x4A\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x38\n"
-        "bl sub_080615EC\n"
-        "movs r0, #0x05\n"
-        "ldsb r0, [r4, r0]\n"
-        "bl sub_0803DD88\n"
-        "movs r1, #0x4A\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0x00\n"
-        "movs r1, #0x48\n"
-        "bl sub_080615EC\n"
-        "mov r0, r8\n"
-        "adds r0, #0x21\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "bl sub_0803DBD0\n"
-        "movs r1, #0x4A\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "movs r0, #0xA1\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r4, r5, r0\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08048E8C\n"
-        "bl sub_0806FE84\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x00]\n"
-        "_08048E8C:\n"
-        "movs r1, #0xA2\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r6, r5, r1\n"
-        "ldr r0, [r6, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08048EA0\n"
-        "bl sub_0806FE84\n"
-        "movs r0, #0x00\n"
-        "str r0, [r6, #0x00]\n"
-        "_08048EA0:\n"
-        "movs r0, #0x00\n"
-        "bl sub_0806FDD0\n"
-        "str r0, [r4, #0x00]\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r7, r0]\n"
-        "mov r2, r10\n"
-        "ldr r1, [r2, #0x00]\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r1\n"
-        "movs r5, #0x00\n"
-        "ldsh r0, [r0, r5]\n"
-        "bl sub_08042B28\n"
-        "adds r1, r0, #0x0\n"
-        "ldr r0, [r4, #0x00]\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x04\n"
-        "movs r3, #0x80\n"
-        "lsls r3, r3, #0x05\n"
-        "movs r5, #0x01\n"
-        "str r5, [sp, #0x000]\n"
-        "movs r5, #0x00\n"
-        "str r5, [sp, #0x004]\n"
-        "str r5, [sp, #0x008]\n"
-        "str r5, [sp, #0x00C]\n"
-        "bl sub_0806FF58\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r7, r0]\n"
-        "mov r2, r10\n"
-        "ldr r1, [r2, #0x00]\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r1\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "bl sub_08042B50\n"
-        "ldr r1, _08048F64 @ =0x050003E0\n"
-        "ldr r2, _08048F68 @ =0x080BB8C0\n"
-        "ldr r3, [r2, #0x00]\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "ldr r0, [r4, #0x00]\n"
-        "movs r1, #0x0F\n"
-        "bl sub_080705DC\n"
-        "mov r4, r8\n"
-        "cmp r4, #0x00\n"
-        "beq _08048F40\n"
-        "movs r0, #0x00\n"
-        "bl sub_0806FDD0\n"
-        "str r0, [r6, #0x00]\n"
-        "ldr r1, [r4, #0x14]\n"
-        "movs r2, #0xC0\n"
-        "lsls r2, r2, #0x05\n"
-        "movs r3, #0x80\n"
-        "lsls r3, r3, #0x07\n"
-        "movs r4, #0x01\n"
-        "str r4, [sp, #0x000]\n"
-        "str r5, [sp, #0x004]\n"
-        "str r5, [sp, #0x008]\n"
-        "movs r4, #0x02\n"
-        "str r4, [sp, #0x00C]\n"
-        "bl sub_0806FF58\n"
-        "mov r5, r8\n"
-        "ldr r0, [r5, #0x18]\n"
-        "ldr r1, _08048F6C @ =0x050003A0\n"
-        "ldr r2, _08048F68 @ =0x080BB8C0\n"
-        "ldr r3, [r2, #0x00]\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "ldr r0, [r6, #0x00]\n"
-        "movs r1, #0x0D\n"
-        "bl sub_080705DC\n"
-        "_08048F40:\n"
-        "mov r0, r9\n"
-        "bl sub_08073114\n"
-        "add sp, #0x010\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08048F58: .4byte 0x000002D5\n"
-        "_08048F5C: .4byte 0x03000648\n"
-        "_08048F60: .4byte 0x0300064C\n"
-        "_08048F64: .4byte 0x050003E0\n"
-        "_08048F68: .4byte 0x080BB8C0\n"
-        "_08048F6C: .4byte 0x050003A0\n"
-    );
+    struct Unk65560 *a = arg;
+    u8 *buf;
+    struct Unk42E78 *entry;
+    struct Unk4FFCCIcon *icon;
+
+    buf = BtlObjTableAdd(0x10);
+    entry = BeybladeCollectionEntry(gData_03000648[a->unk2D5]);
+    if (gData_0300064C > 0)
+    {
+        icon = sub_0803DCFC(entry->unk05);
+        TextSetCursor(0, 0x18);
+        TextDrawAlign(sub_08042B00(gData_03000648[a->unk2D5]), 0x4A, 2);
+        TextSetCursor(0, 0x28);
+        TextFormatInt(entry->bitBeastExp, buf, 0x10);
+        TextDrawAlign(buf, 0x4A, 2);
+        TextSetCursor(0, 0x38);
+        TextDrawAlign((void *)sub_0803DD88(entry->unk05), 0x4A, 2);
+        TextSetCursor(0, 0x48);
+        TextDrawAlign((void *)sub_0803DBD0(icon->unk21), 0x4A, 2);
+        if (a->unk274[4] != NULL)
+        {
+            BtlObjPoolFree(a->unk274[4]);
+            a->unk274[4] = NULL;
+        }
+        if (a->unk274[5] != NULL)
+        {
+            BtlObjPoolFree(a->unk274[5]);
+            a->unk274[5] = NULL;
+        }
+        a->unk274[4] = BtlObjPoolAlloc(0);
+        SpriteInitFromTemplate(a->unk274[4], sub_08042B28(gData_03000648[a->unk2D5]), 0x800, 0x1000, 1, 0, 0, 0);
+        ((void (*)(const void *, void *, u32))gData_080BB8C0[0])(sub_08042B50(gData_03000648[a->unk2D5]), (void *)0x050003E0, 0x20);
+        TextEntrySetPaletteBank(a->unk274[4], 15);
+        if (icon != NULL)
+        {
+            a->unk274[5] = BtlObjPoolAlloc(0);
+            SpriteInitFromTemplate(a->unk274[5], icon->unk14, 0x1800, 0x4000, 1, 0, 0, 2);
+            ((void (*)(const void *, void *, u32))gData_080BB8C0[0])(icon->unk18, (void *)0x050003A0, 0x20);
+            TextEntrySetPaletteBank(a->unk274[5], 13);
+        }
+    }
+    BtlObjTableRemove(buf);
 }
 

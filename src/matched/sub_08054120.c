@@ -1,8 +1,87 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08054120
-__attribute__((naked))
-void sub_08054120(void *a)
+// Item sprite in palette 14 plus a second sprite whose unk18 is scaled by
+// 100 - unk02 of the row's MainWork.unk1694 record.
+#define SHOW_SCALED_SPRITE(a, i)                                                                  \
+    {                                                                                     \
+        TextEntrySetPaletteBank(a->unk274[4], 14);                                        \
+        a->unk274[5] = BtlObjPoolAlloc(0);                                                \
+        SpriteInitFromTemplate(a->unk274[5], (struct Unk6FF58Src *)0x080F3C9C,            \
+                               0x800, 0x2400, 1, 0, 0, 0);                                \
+        a->unk274[5]->unk18 = ScaleRatio(100 - (s8)gData_03000198->unk1694[              \
+            gData_030006FC[gData_030006F4 + i].unk0E].unk02, 100, 0xB6);                  \
+        TextEntrySetPaletteBank(a->unk274[5], 14);                                        \
+    }
+
+// Redraws the eight visible rows of a list whose labels depend on
+// MainWork.unk1826 (2, 3 or 7), highlighting the selected row with its sprites.
+void sub_08054120(void *arg)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r9\nmov r6, r8\npush {r6, r7}\nadd sp, #-0x010\nadds r5, r0, #0x0\nldr r0, _080541C0 @ =0x03000700\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbne _08054136\nb _08054364\n_08054136:\nmovs r0, #0xA1\nlsls r0, r0, #0x02\nadds r4, r5, r0\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _0805414A\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_0805414A:\nmovs r1, #0xA2\nlsls r1, r1, #0x02\nadds r4, r5, r1\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _0805415E\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_0805415E:\nmovs r6, #0x00\nldr r2, _080541C4 @ =0x030006F4\nmov r9, r2\nmovs r0, #0xA1\nlsls r0, r0, #0x02\nadds r0, r0, r5\nmov r8, r0\nmovs r4, #0x00\nmovs r1, #0xA2\nlsls r1, r1, #0x02\nadds r7, r5, r1\n_08054174:\nmov r2, r9\nldr r0, [r2, #0x00]\nadds r0, r0, r6\nldr r1, _080541C0 @ =0x03000700\nldr r1, [r1, #0x00]\ncmp r0, r1\nblt _08054184\nb _0805435C\n_08054184:\nlsls r1, r6, #0x03\nadds r1, #0x10\nmovs r0, #0x00\nbl sub_080615EC\nmov r0, r9\nldr r1, [r0, #0x00]\nadds r1, r1, r6\nldr r0, _080541C8 @ =0x030006FC\nldr r0, [r0, #0x00]\nlsls r1, r1, #0x04\nadds r1, r1, r0\nmovs r0, #0x0C\nldsb r0, [r1, r0]\ncmp r0, #0x00\nblt _08054206\nldr r0, _080541CC @ =0x03000198\nldr r0, [r0, #0x00]\nldr r2, _080541D0 @ =0x00001826\nadds r0, r0, r2\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x03\nbeq _080541DA\ncmp r0, #0x03\nbgt _080541D4\ncmp r0, #0x02\nbeq _080541E4\nb _08054206\n_080541C0: .4byte 0x03000700\n_080541C4: .4byte 0x030006F4\n_080541C8: .4byte 0x030006FC\n_080541CC: .4byte 0x03000198\n_080541D0: .4byte 0x00001826\n_080541D4:\ncmp r0, #0x07\nbeq _080541F6\nb _08054206\n_080541DA:\nmovs r0, #0x0C\nldsb r0, [r1, r0]\nbl sub_0803DDB0\nb _080541EC\n_080541E4:\nmovs r0, #0x0C\nldsb r0, [r1, r0]\nbl sub_0803DDD8\n_080541EC:\nmovs r1, #0x42\nmovs r2, #0x02\nbl sub_0806171C\nb _08054206\n_080541F6:\nmovs r0, #0x0C\nldsb r0, [r1, r0]\nbl sub_0803DBD0\nmovs r1, #0x42\nmovs r2, #0x02\nbl sub_0806171C\n_08054206:\nldr r0, _0805423C @ =0x030006F8\nldr r0, [r0, #0x00]\ncmp r6, r0\nbeq _08054210\nb _0805434C\n_08054210:\nadds r0, r6, #0x6\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nmovs r1, #0x0E\nmovs r2, #0x09\nmovs r3, #0x1A\nbl sub_08061D68\nldr r5, _08054240 @ =0x03000198\nldr r0, [r5, #0x00]\nldr r1, _08054244 @ =0x00001826\nadds r0, r0, r1\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x03\nbeq _0805424E\ncmp r0, #0x03\nbgt _08054248\ncmp r0, #0x02\nbeq _08054268\nb _0805435C\n_0805423C: .4byte 0x030006F8\n_08054240: .4byte 0x03000198\n_08054244: .4byte 0x00001826\n_08054248:\ncmp r0, #0x07\nbeq _08054300\nb _0805435C\n_0805424E:\nmovs r0, #0x00\nbl sub_0806FDD0\nmov r2, r8\nstr r0, [r2, #0x00]\nstr r4, [sp, #0x000]\nstr r4, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nldr r1, _08054264 @ =0x082F9A68\nb _0805427C\n_08054264: .4byte 0x082F9A68\n_08054268:\nmovs r0, #0x00\nbl sub_0806FDD0\nmov r2, r8\nstr r0, [r2, #0x00]\nstr r4, [sp, #0x000]\nstr r4, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nldr r1, _080542F0 @ =0x082F9B38\n_0805427C:\nmovs r2, #0x80\nlsls r2, r2, #0x06\nmovs r3, #0x90\nlsls r3, r3, #0x07\nbl sub_0806FF58\nmov r1, r8\nldr r0, [r1, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nmovs r0, #0x00\nbl sub_0806FDD0\nstr r0, [r7, #0x00]\nmovs r1, #0x01\nstr r1, [sp, #0x000]\nstr r4, [sp, #0x004]\nstr r4, [sp, #0x008]\nstr r4, [sp, #0x00C]\nldr r1, _080542F4 @ =0x080F3C9C\nmovs r2, #0x80\nlsls r2, r2, #0x04\nmovs r3, #0x90\nlsls r3, r3, #0x06\nbl sub_0806FF58\nldr r2, [r5, #0x00]\nmov r1, r9\nldr r0, [r1, #0x00]\nadds r0, r0, r6\nldr r1, _080542F8 @ =0x030006FC\nldr r1, [r1, #0x00]\nlsls r0, r0, #0x04\nadds r0, r0, r1\nldrb r0, [r0, #0x0E]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nldr r1, _080542FC @ =0x00001694\nadds r2, r2, r1\nldr r1, [r2, #0x00]\nlsls r0, r0, #0x02\nadds r0, r0, r1\nmovs r1, #0x02\nldsb r1, [r0, r1]\nmovs r0, #0x64\nsubs r0, r0, r1\nmovs r1, #0x64\nmovs r2, #0xB6\nbl sub_08031124\nldr r1, [r7, #0x00]\nstrh r0, [r1, #0x18]\nldr r0, [r7, #0x00]\nmovs r1, #0x0E\nbl sub_080705DC\nb _0805435C\n_080542F0: .4byte 0x082F9B38\n_080542F4: .4byte 0x080F3C9C\n_080542F8: .4byte 0x030006FC\n_080542FC: .4byte 0x00001694\n_08054300:\nmovs r0, #0x00\nbl sub_0806FDD0\nmov r2, r8\nstr r0, [r2, #0x00]\nstr r4, [sp, #0x000]\nstr r4, [sp, #0x004]\nstr r4, [sp, #0x008]\nmovs r1, #0x01\nstr r1, [sp, #0x00C]\nldr r1, _0805433C @ =0x082FA21C\nmovs r2, #0x80\nlsls r2, r2, #0x06\nmovs r3, #0x90\nlsls r3, r3, #0x07\nbl sub_0806FF58\nmov r1, r8\nldr r0, [r1, #0x00]\nmovs r1, #0x0F\nbl sub_080705DC\nldr r0, _08054340 @ =0x080BB8C0\nldr r3, [r0, #0x00]\nldr r0, _08054344 @ =0x082FBCE0\nldr r1, _08054348 @ =0x050003E0\nmovs r2, #0x20\nbl _08073C4C\nb _0805435C\n_0805433C: .4byte 0x082FA21C\n_08054340: .4byte 0x080BB8C0\n_08054344: .4byte 0x082FBCE0\n_08054348: .4byte 0x050003E0\n_0805434C:\nadds r0, r6, #0x6\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nmovs r1, #0x0F\nmovs r2, #0x09\nmovs r3, #0x1A\nbl sub_08061D68\n_0805435C:\nadds r6, #0x01\ncmp r6, #0x07\nbgt _08054364\nb _08054174\n_08054364:\nadd sp, #0x010\npop {r3, r4}\nmov r8, r3\nmov r9, r4\npop {r4, r5, r6, r7}\npop {r0}\nbx r0");
+    struct Unk65560 *a = arg;
+    s32 i;
+
+    if (gData_03000700 == 0)
+        return;
+    if (a->unk274[4] != NULL)
+    {
+        BtlObjPoolFree(a->unk274[4]);
+        a->unk274[4] = NULL;
+    }
+    if (a->unk274[5] != NULL)
+    {
+        BtlObjPoolFree(a->unk274[5]);
+        a->unk274[5] = NULL;
+    }
+    for (i = 0; i < 8; i++)
+    {
+        if (gData_030006F4 + i >= gData_03000700)
+            continue;
+        TextSetCursor(0, i * 8 + 0x10);
+        if (gData_030006FC[gData_030006F4 + i].unk0C >= 0)
+        {
+            switch ((s8)gData_03000198->unk1826)
+            {
+            case 3:
+                TextDrawAlign(sub_0803DDB0(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
+                break;
+            case 2:
+                TextDrawAlign(sub_0803DDD8(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
+                break;
+            case 7:
+                TextDrawAlign((void *)sub_0803DBD0(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
+                break;
+            }
+        }
+        if (i == gData_030006F8)
+        {
+            TextRowSetPaletteBank((u16)(i + 6), 0xE, 9, 0x1A);
+            switch ((s8)gData_03000198->unk1826)
+            {
+            case 3:
+                a->unk274[4] = BtlObjPoolAlloc(0);
+                SpriteInitFromTemplate(a->unk274[4], (struct Unk6FF58Src *)0x082F9A68, 0x2000, 0x4800, 0, 0, 0, 0);
+                SHOW_SCALED_SPRITE(a, i);
+                break;
+            case 2:
+                a->unk274[4] = BtlObjPoolAlloc(0);
+                SpriteInitFromTemplate(a->unk274[4], (struct Unk6FF58Src *)0x082F9B38, 0x2000, 0x4800, 0, 0, 0, 0);
+                SHOW_SCALED_SPRITE(a, i);
+                break;
+            case 7:
+                a->unk274[4] = BtlObjPoolAlloc(0);
+                SpriteInitFromTemplate(a->unk274[4], (struct Unk6FF58Src *)0x082FA21C, 0x2000, 0x4800, 0, 0, 0, 1);
+                TextEntrySetPaletteBank(a->unk274[4], 15);
+                ((void (*)(const void *, void *, u32))gData_080BB8C0[0])((void *)0x082FBCE0, (void *)0x050003E0, 0x20);
+                break;
+            }
+        }
+        else
+        {
+            TextRowSetPaletteBank((u16)(i + 6), 0xF, 9, 0x1A);
+        }
+    }
 }
+

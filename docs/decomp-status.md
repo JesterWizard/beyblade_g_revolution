@@ -8,18 +8,41 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **591/633 (93.4%)** |
-| **Decompiled C (bytes)** | **72,618/90,272 (80.4%)** |
+| **Decompiled C (functions)** | **602/633 (95.1%)** |
+| **Decompiled C (bytes)** | **77,424/90,272 (85.8%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 42/633 (6.6%) |
+| Readable Thumb | 31/633 (4.9%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 145/160 (90.6% fn, 82.6% bytes) |
+| Battle semantic C | 149/160 (93.1% fn, 87.9% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-28 — final sweep of the non-semantic list (+11): 2DCDC, 4D420, 6F05C, 6EEC8, 68BD4, 68A08, 70AF8, 48DB8, 56BA4, 53690, 54120
+
+- `sub_0802DCDC` — a block-scoped second set of locals (`m2`, `q`) for the second half.
+- `sub_0806F05C` / `sub_0806EEC8` — `Unk6EE48Entry.unk14` is an `s32` read as `s16`. With the `s32`
+  field, the `(table + 0x28) + i*24` address comes out naturally. gcc only adds the field offset to
+  the base first when the field's mode alignment equals the element's alignment. `sub_0806EEC8` is
+  the eased sibling. It uses the new `Unk6EE48.unk35C/unk360` clamps.
+- `sub_08068BD4` / `sub_08068A08` — affine BG init. `gData_03000108/1B0/1A8` are now scalar `u8`
+  symbols, not arrays, because the array form expands as a bit-field store. The char block
+  bump is `gData_03000108 += 1 + blocks`. Both take `struct Unk68E54 *` directly, and their callers
+  cast. `sub_08069894` still matches with the scalar symbols.
+- `sub_08070AF8` — text sprite group move. It uses old_agbcc, `aff = g->unk2C = BtlObjSetAffine(...)`
+  and `n = count; for (n--; n != -1; n--)`. `Unk7069C` now embeds the `Unk700CCHdr` chain at 0x14.
+  `unk2C` is `struct Unk70354Object *`, and `Unk705CC` is gone.
+- Fresh decompiles of list/panel redraws (the matched stubs were readable Thumb): `sub_0804D420`,
+  `sub_08048DB8`, `sub_08056BA4`, `sub_08053690` and `sub_08054120`. Tricks: `icon = NULL`
+  supplies the zero register for the NULL stores, and a local for a `u8 *[]` table loads the base
+  before the index. In `sub_08054120`, two identical switch cases are left for cross-jumping to merge.
+- Improved drafts: `sub_08044A8C` 613/672, `sub_08045C5C` 127/136 (data symbols), `sub_0803E0CC`
+  170/296 (`|= (s8)0xFF`), and `sub_08043DB4` (`REG_BLDALPHA`). There are new drafts for
+  `sub_08044648`, `sub_080447E8`, `sub_0804C8BC`, `sub_08070930` and `sub_080618EC`.
+- Permuter (480 s each): no score 0 for `sub_08045C5C`, `sub_08038D68`, `sub_08035624` or `sub_08044A8C`.
 
 ### 2026-09-28 — readable-Thumb size-DIFF batch (+7/12): 69A60, 6211C, 4AE94, 56250, 65CD0, 61EF8, 43C70
 

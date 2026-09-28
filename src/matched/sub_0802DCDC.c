@@ -1,8 +1,78 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0802dcdc
-__attribute__((naked))
-void sub_0802DCDC(void)
+// Swaps the displayed Beyblade when the collection cursor changes: reloads the
+// sprite and palette and redraws the strength / Bit-Beast level digits and EXP bar.
+void sub_0802DCDC(void *arg)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x018\nstr r0, [sp, #0x010]\nldr r0, _0802DD70 @ =0x03000198\nmov r8, r0\nldr r5, [r0, #0x00]\nldr r1, _0802DD74 @ =0x00001808\nadds r2, r5, r1\nldr r1, [r2, #0x00]\nmovs r0, #0x04\nands r0, r1\ncmp r0, #0x00\nbeq _0802DD00\nb _0802DE7C\n_0802DD00:\nmovs r0, #0x80\nlsls r0, r0, #0x05\nadds r6, r1, #0x0\nands r6, r0\ncmp r6, #0x00\nbeq _0802DD0E\nb _0802DE7C\n_0802DD0E:\norrs r1, r0\nstr r1, [r2, #0x00]\nldr r2, _0802DD78 @ =0x00001838\nadds r0, r5, r2\nldrh r3, [r0, #0x00]\nmov r12, r3\nmovs r1, #0x00\nldsh r2, [r0, r1]\nmovs r0, #0x01\nnegs r0, r0\ncmp r2, r0\nbne _0802DD28\nb _0802DE7C\n_0802DD28:\nldr r7, _0802DD7C @ =0x0300026C\nldr r3, [r7, #0x00]\nadds r4, r3, #0x0\nadds r4, #0x48\nmovs r1, #0x00\nldsb r1, [r4, r1]\ncmp r1, r0\nbne _0802DD88\nadds r0, r3, #0x0\nadds r0, #0x4C\nmovs r2, #0x00\nmov r1, r12\nstrh r1, [r0, #0x00]\nldr r1, _0802DD80 @ =0x0000183A\nadds r0, r5, r1\nldrh r1, [r0, #0x00]\nadds r0, r3, #0x0\nadds r0, #0x4E\nstrh r1, [r0, #0x00]\nstrb r2, [r4, #0x00]\nldr r0, [r7, #0x00]\nmovs r1, #0x01\nstr r1, [r0, #0x04]\nldr r2, [sp, #0x010]\nstr r2, [r0, #0x44]\nadds r0, #0x4E\nmovs r3, #0x00\nldsh r0, [r0, r3]\nbl sub_08042B00\nmov r2, r8\nldr r1, [r2, #0x00]\nldr r3, _0802DD84 @ =0x000016D4\nadds r1, r1, r3\nstr r0, [r1, #0x00]\nb _0802DE7C\n_0802DD70: .4byte 0x03000198\n_0802DD74: .4byte 0x00001808\n_0802DD78: .4byte 0x00001838\n_0802DD7C: .4byte 0x0300026C\n_0802DD80: .4byte 0x0000183A\n_0802DD84: .4byte 0x000016D4\n_0802DD88:\nadds r0, r3, #0x0\nadds r0, #0x4C\nmovs r3, #0x00\nldsh r0, [r0, r3]\ncmp r2, r0\nbeq _0802DE7C\ncmp r1, #0x02\nbne _0802DE7C\nldr r4, _0802DE8C @ =0x0000183A\nadds r0, r5, r4\nmovs r1, #0x00\nldsh r0, [r0, r1]\nbl sub_08042E78\nstr r0, [sp, #0x014]\nldr r5, [r7, #0x00]\nldr r0, [r5, #0x28]\nldr r2, [r0, #0x08]\nmov r9, r2\nldr r0, [r0, #0x0C]\nmov r10, r0\nmov r3, r8\nldr r1, [r3, #0x00]\nldr r2, _0802DE90 @ =0x00001838\nadds r0, r1, r2\nldrh r2, [r0, #0x00]\nadds r0, r5, #0x0\nadds r0, #0x4C\nstrh r2, [r0, #0x00]\nadds r1, r1, r4\nldrh r0, [r1, #0x00]\nadds r1, r5, #0x0\nadds r1, #0x4E\nstrh r0, [r1, #0x00]\nldr r3, [sp, #0x010]\nstr r3, [r5, #0x44]\nmovs r2, #0x00\nldsh r0, [r1, r2]\nbl sub_08042B00\nmov r3, r8\nldr r1, [r3, #0x00]\nldr r2, _0802DE94 @ =0x000016D4\nadds r1, r1, r2\nstr r0, [r1, #0x00]\nldr r0, [r7, #0x00]\nldr r0, [r0, #0x28]\ncmp r0, #0x00\nbeq _0802DDF2\nbl sub_0806FE84\nldr r0, [r7, #0x00]\nstr r6, [r0, #0x28]\n_0802DDF2:\nmovs r0, #0x01\nbl sub_0806FDD0\nldr r1, [r7, #0x00]\nstr r0, [r1, #0x28]\nadds r1, #0x4E\nmovs r3, #0x00\nldsh r0, [r1, r3]\nbl sub_08042B28\nadds r1, r0, #0x0\nldr r0, [r7, #0x00]\nldr r0, [r0, #0x28]\nstr r6, [sp, #0x000]\nmovs r2, #0x01\nstr r2, [sp, #0x004]\nstr r2, [sp, #0x008]\nstr r6, [sp, #0x00C]\nmov r2, r9\nmov r3, r10\nbl sub_0806FF58\nldr r4, _0802DE98 @ =0x080BB8C0\nldr r0, [r7, #0x00]\nadds r0, #0x4E\nmovs r1, #0x00\nldsh r0, [r0, r1]\nbl sub_08042B50\nldr r1, _0802DE9C @ =0x05000380\nldr r3, [r4, #0x00]\nmovs r2, #0x20\nbl _08073C4C\nldr r0, [r7, #0x00]\nldr r0, [r0, #0x28]\nmovs r1, #0x0C\nbl sub_080705DC\nldr r1, [r7, #0x00]\nldr r0, [r1, #0x38]\nldr r1, [r1, #0x3C]\nldr r3, [sp, #0x014]\nmovs r2, #0x03\nldsb r2, [r3, r2]\nbl sub_0802E18C\nldr r0, [r7, #0x00]\nldr r4, [r0, #0x30]\nldr r5, [r0, #0x34]\nbl sub_0802E210\nadds r2, r0, #0x0\nlsls r2, r2, #0x18\nasrs r2, r2, #0x18\nadds r0, r4, #0x0\nadds r1, r5, #0x0\nbl sub_0802E18C\nldr r1, [sp, #0x014]\nmovs r2, #0x00\nldsh r0, [r1, r2]\nbl sub_0802E1B4\nldr r1, [r7, #0x00]\nldr r1, [r1, #0x40]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nstrh r0, [r1, #0x18]\n_0802DE7C:\nadd sp, #0x018\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_0802DE8C: .4byte 0x0000183A\n_0802DE90: .4byte 0x00001838\n_0802DE94: .4byte 0x000016D4\n_0802DE98: .4byte 0x080BB8C0\n_0802DE9C: .4byte 0x05000380");
+    struct MainWork *main;
+    struct Unk026C *p;
+    struct Unk42E78 *row;
+    struct Unk310F0b *tens;
+    struct Unk310F0b *ones;
+    u32 flags;
+    u32 x;
+    u32 y;
+    s16 current;
+    s8 t;
+    u32 *palette;
+
+    main = gMainWorkPtr;
+    flags = main->unk1808;
+    if (flags & 4)
+        return;
+    if (flags & 0x1000)
+        return;
+    main->unk1808 = flags | 0x1000;
+    current = main->unk1838;
+    if (current == -1)
+        return;
+    p = gUnk_0300026C;
+    if ((s8)p->unk48 == -1)
+    {
+        p->unk4C = current;
+        p->unk4E = main->unk183A;
+        p->unk48 = 0;
+        gUnk_0300026C->unk04 = 1;
+        gUnk_0300026C->unk44 = arg;
+        gMainWorkPtr->unk16D4 = sub_08042B00(gUnk_0300026C->unk4E);
+        return;
+    }
+    if (current == p->unk4C || (s8)p->unk48 != 2)
+        return;
+
+    row = (struct Unk42E78 *)BeybladeCollectionEntry((s16)main->unk183A);
+    {
+    struct MainWork *m2;
+    struct Unk026C *q;
+    q = gUnk_0300026C;
+    x = q->unk28->unk08;
+    y = q->unk28->unk0C;
+    m2 = gMainWorkPtr;
+    q->unk4C = m2->unk1838;
+    q->unk4E = m2->unk183A;
+    q->unk44 = arg;
+    gMainWorkPtr->unk16D4 = sub_08042B00(q->unk4E);
+    }
+    if (gUnk_0300026C->unk28 != NULL)
+    {
+        BtlObjPoolFree(gUnk_0300026C->unk28);
+        gUnk_0300026C->unk28 = NULL;
+    }
+    gUnk_0300026C->unk28 = BtlObjPoolAlloc(1);
+    SpriteInitFromTemplate(gUnk_0300026C->unk28, sub_08042B28(gUnk_0300026C->unk4E), x, y, 0, 1, 1, 0);
+    palette = gData_080BB8C0;
+    _08073C4C(sub_08042B50(gUnk_0300026C->unk4E), (void *)0x05000380, 0x20, (void *)*palette);
+    TextEntrySetPaletteBank(gUnk_0300026C->unk28, 0x0C);
+    HudWriteDigits((struct Unk310F0b *)gUnk_0300026C->bladeStrengthTens, (struct Unk310F0b *)gUnk_0300026C->bladeStrengthOnes, (s8)row->strength);
+    tens = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelTens;
+    ones = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelOnes;
+    t = BitBeastLevel();
+    HudWriteDigits(tens, ones, t);
+    t = ExpBarFill(row->bitBeastExp);
+    gUnk_0300026C->bitBeastExpBar->unk18 = t;
 }
+
+

@@ -1,237 +1,91 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068a08
-__attribute__((naked))
-void sub_08068A08(void *a, u8 b, void *c, u16 d, u16 e)
+/* match-compiler: old_agbcc */
+// Initialises an affine BG layer from a resource header: like sub_08068BD4, but
+// the map size, tile data and map pointers come from the header and the tiles
+// are copied (not cleared) into the reserved char blocks.
+void sub_08068A08(struct Unk68E54 *st, u8 bg, void *resArg, u16 cnt, u16 mode)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x008\n"
-        "adds r7, r0, #0x0\n"
-        "adds r5, r2, #0x0\n"
-        "ldr r6, [sp, #0x028]\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "str r1, [sp, #0x000]\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "str r3, [sp, #0x004]\n"
-        "lsls r6, r6, #0x10\n"
-        "lsrs r6, r6, #0x10\n"
-        "str r5, [r7, #0x68]\n"
-        "ldrb r1, [r5, #0x18]\n"
-        "adds r0, #0x64\n"
-        "movs r4, #0x00\n"
-        "strh r1, [r0, #0x00]\n"
-        "ldrh r2, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x004]\n"
-        "bl sub_080691E4\n"
-        "mov r10, r0\n"
-        "ldrb r0, [r5, #0x19]\n"
-        "mov r9, r0\n"
-        "ldr r1, [sp, #0x000]\n"
-        "lsls r2, r1, #0x01\n"
-        "adds r2, r2, r1\n"
-        "lsls r2, r2, #0x03\n"
-        "ldr r0, _08068B2C @ =0x03000008\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r7, #0x08]\n"
-        "str r4, [r2, #0x10]\n"
-        "str r4, [r2, #0x14]\n"
-        "str r4, [r2, #0x00]\n"
-        "adds r3, r7, #0x0\n"
-        "adds r3, #0x5F\n"
-        "movs r1, #0x01\n"
-        "adds r0, r1, #0x0\n"
-        "ldrb r3, [r3, #0x00]\n"
-        "lsls r0, r3\n"
-        "subs r0, #0x01\n"
-        "str r0, [r2, #0x08]\n"
-        "str r4, [r2, #0x04]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x60\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0\n"
-        "subs r1, #0x01\n"
-        "str r1, [r2, #0x0C]\n"
-        "ldrh r0, [r5, #0x1C]\n"
-        "str r0, [r7, #0x00]\n"
-        "ldrh r0, [r5, #0x1E]\n"
-        "str r0, [r7, #0x04]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x5E\n"
-        "mov r2, sp\n"
-        "ldrb r2, [r2, #0x00]\n"
-        "strb r2, [r0, #0x00]\n"
-        "str r4, [r7, #0x0C]\n"
-        "str r4, [r7, #0x10]\n"
-        "str r4, [r7, #0x14]\n"
-        "str r4, [r7, #0x18]\n"
-        "str r4, [r7, #0x1C]\n"
-        "str r4, [r7, #0x20]\n"
-        "str r4, [r7, #0x54]\n"
-        "str r4, [r7, #0x58]\n"
-        "movs r0, #0x10\n"
-        "str r0, [r7, #0x24]\n"
-        "str r4, [r7, #0x40]\n"
-        "str r4, [r7, #0x44]\n"
-        "str r4, [r7, #0x28]\n"
-        "str r4, [r7, #0x2C]\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x09\n"
-        "str r0, [r7, #0x30]\n"
-        "str r0, [r7, #0x34]\n"
-        "str r4, [r7, #0x38]\n"
-        "str r4, [r7, #0x3C]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x48\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strh r4, [r0, #0x00]\n"
-        "str r4, [r7, #0x4C]\n"
-        "str r4, [r7, #0x50]\n"
-        "movs r0, #0x0C\n"
-        "ands r6, r0\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x7C\n"
-        "strb r6, [r0, #0x00]\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0x80\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r1, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x84\n"
-        "str r4, [r0, #0x00]\n"
-        "ldr r0, [r5, #0x04]\n"
-        "adds r0, r5, r0\n"
-        "str r0, [r7, #0x6C]\n"
-        "ldr r1, [r5, #0x08]\n"
-        "str r1, [r7, #0x74]\n"
-        "ldr r0, [r5, #0x0C]\n"
-        "adds r0, r5, r0\n"
-        "str r0, [r7, #0x70]\n"
-        "ldr r0, [r5, #0x10]\n"
-        "str r0, [r7, #0x78]\n"
-        "subs r1, #0x01\n"
-        "lsrs r1, r1, #0x0E\n"
-        "mov r8, r1\n"
-        "ldr r6, _08068B30 @ =0x03000108\n"
-        "ldrb r0, [r6, #0x00]\n"
-        "adds r2, r7, #0x0\n"
-        "adds r2, #0x5D\n"
-        "strb r0, [r2, #0x00]\n"
-        "ldrb r0, [r5, #0x14]\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0x61\n"
-        "strb r0, [r1, #0x00]\n"
-        "ldr r4, [r7, #0x74]\n"
-        "cmp r4, #0x00\n"
-        "beq _08068B38\n"
-        "ldr r3, _08068B34 @ =0x080BB8C0\n"
-        "ldr r0, [r7, #0x6C]\n"
-        "ldrb r2, [r2, #0x00]\n"
-        "lsls r1, r2, #0x0E\n"
-        "movs r2, #0xC0\n"
-        "lsls r2, r2, #0x13\n"
-        "adds r1, r1, r2\n"
-        "ldr r3, [r3, #0x00]\n"
-        "adds r2, r4, #0x0\n"
-        "bl _08073C4C\n"
-        "ldrb r0, [r6, #0x00]\n"
-        "adds r0, #0x01\n"
-        "add r0, r8\n"
-        "strb r0, [r6, #0x00]\n"
-        "b _08068B3C\n"
-        ".byte 0x00, 0x00\n"
-        "_08068B2C: .4byte 0x03000008\n"
-        "_08068B30: .4byte 0x03000108\n"
-        "_08068B34: .4byte 0x080BB8C0\n"
-        "_08068B38:\n"
-        "movs r0, #0x00\n"
-        "strb r0, [r2, #0x00]\n"
-        "_08068B3C:\n"
-        "mov r0, r8\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x0E\n"
-        "ldr r1, [r7, #0x74]\n"
-        "subs r0, r0, r1\n"
-        "cmp r0, r10\n"
-        "bcc _08068B84\n"
-        "cmp r1, #0x00\n"
-        "beq _08068B84\n"
-        "mov r3, r10\n"
-        "lsrs r2, r3, #0x0B\n"
-        "adds r1, r2, #0x0\n"
-        "cmp r2, #0x00\n"
-        "bne _08068B5A\n"
-        "movs r1, #0x01\n"
-        "_08068B5A:\n"
-        "ldr r0, _08068B7C @ =0x03000108\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x03\n"
-        "subs r0, r0, r1\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0x5C\n"
-        "strb r0, [r1, #0x00]\n"
-        "ldr r3, _08068B80 @ =0x030001A8\n"
-        "ldrb r4, [r3, #0x00]\n"
-        "subs r0, r4, r2\n"
-        "adds r4, r1, #0x0\n"
-        "ldrb r1, [r4, #0x00]\n"
-        "cmp r1, r0\n"
-        "bcc _08068B98\n"
-        "strb r0, [r3, #0x00]\n"
-        "strb r0, [r4, #0x00]\n"
-        "b _08068B98\n"
-        "_08068B7C: .4byte 0x03000108\n"
-        "_08068B80: .4byte 0x030001A8\n"
-        "_08068B84:\n"
-        "ldr r0, _08068BD0 @ =0x030001A8\n"
-        "mov r2, r10\n"
-        "lsrs r1, r2, #0x0B\n"
-        "ldrb r3, [r0, #0x00]\n"
-        "subs r1, r3, r1\n"
-        "strb r1, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x5C\n"
-        "strb r1, [r0, #0x00]\n"
-        "adds r4, r0, #0x0\n"
-        "_08068B98:\n"
-        "ldr r0, [sp, #0x000]\n"
-        "bl sub_08069988\n"
-        "ldrb r4, [r4, #0x00]\n"
-        "lsls r1, r4, #0x08\n"
-        "ldr r4, [sp, #0x004]\n"
-        "orrs r1, r4\n"
-        "adds r2, r7, #0x0\n"
-        "adds r2, #0x5D\n"
-        "ldrb r2, [r2, #0x00]\n"
-        "lsls r2, r2, #0x02\n"
-        "orrs r1, r2\n"
-        "movs r3, #0x01\n"
-        "movs r2, #0x01\n"
-        "mov r4, r9\n"
-        "ands r4, r2\n"
-        "eors r4, r3\n"
-        "lsls r2, r4, #0x07\n"
-        "orrs r1, r2\n"
-        "strh r1, [r0, #0x00]\n"
-        "add sp, #0x008\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08068BD0: .4byte 0x030001A8\n"
-    );
+    struct Unk68A08Res *res = resArg;
+    u32 size;
+    u8 flags;
+    struct Unk688C8Rect *rect;
+    u32 blocks;
+    u32 n;
+    u32 m;
+    u16 *reg;
+
+    st->unk68 = (s32)res;
+    st->unk64 = res->shape;
+    size = OamShapeToSize((struct Unk691E4 *)st, cnt, st->unk64);
+    flags = res->flags;
+    rect = &gData_03000008[bg];
+    st->unk08 = rect;
+    rect->unk10 = 0;
+    rect->unk14 = 0;
+    rect->unk00 = 0;
+    rect->unk08 = (1 << st->unk5F) - 1;
+    rect->unk04 = 0;
+    rect->unk0C = (1 << st->unk60) - 1;
+    st->unk00 = res->width;
+    st->unk04 = res->height;
+    st->unk5E = bg;
+    st->unk0C = 0;
+    st->unk10 = 0;
+    st->unk14 = 0;
+    st->unk18 = 0;
+    st->unk1C = 0;
+    st->unk20 = 0;
+    st->unk54 = 0;
+    st->unk58 = 0;
+    st->unk24 = 0x10;
+    st->unk40 = 0;
+    st->unk44 = 0;
+    st->unk28 = 0;
+    st->unk2C = 0;
+    st->unk30 = 0x10000;
+    st->unk34 = 0x10000;
+    st->unk38 = 0;
+    st->unk3C = 0;
+    st->unk48 = 0;
+    st->unk4A = 0;
+    st->unk4C = 0;
+    st->unk50 = 0;
+    st->unk7C = mode & 0x0C;
+    st->unk80 = -1;
+    st->unk84 = 0;
+    st->unk6C = (s32)((u8 *)res + res->tilesOffset);
+    st->unk74 = res->tilesSize;
+    st->unk70 = (s32)((u8 *)res + res->mapOffset);
+    st->unk78 = res->mapSize;
+    blocks = (st->unk74 - 1) >> 14;
+    st->unk5D = gData_03000108;
+    st->unk61 = res->unk14;
+    if (st->unk74 != 0)
+    {
+        ((void (*)(const void *, void *, u32))gData_080BB8C0[0])((void *)st->unk6C, (void *)(st->unk5D * 0x4000 + 0x06000000), st->unk74);
+        gData_03000108 += 1 + blocks;
+    }
+    else
+        st->unk5D = 0;
+    if (((blocks + 1) << 14) - st->unk74 >= size && st->unk74 != 0)
+    {
+        n = size >> 11;
+        m = n;
+        if (n == 0)
+            m = 1;
+        st->unk5C = gData_03000108 * 8 - m;
+        if (st->unk5C >= gData_030001A8 - n)
+            st->unk5C = gData_030001A8 -= n;
+    }
+    else
+    {
+        st->unk5C = gData_030001A8 -= size >> 11;
+    }
+    reg = sub_08069988(bg);
+    *reg = (st->unk5C << 8) | cnt | (st->unk5D << 2) | (((flags & 1) ^ 1) << 7);
 }
 
