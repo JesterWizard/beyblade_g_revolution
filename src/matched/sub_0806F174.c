@@ -5,7 +5,7 @@ void sub_0806F174(struct Unk6F174 *a, void *b)
 {
     a->unk224 = b;
     if (a->unk348 == 0)
-        sub_0806F05C(a);
+        sub_0806F05C((struct Unk6EE48 *)a, b);
     else
         _08073C4C(b, a, (u32)a, a->unk348);
 }

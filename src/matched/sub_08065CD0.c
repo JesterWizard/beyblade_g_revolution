@@ -1,8 +1,74 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+#include "data_symbols.h"
 
 // @ 0x08065cd0
-__attribute__((naked))
-void sub_08065CD0(void)
+/* match-compiler: old_agbcc */
+// Shows a scene: loads it and its palette, fades in, then runs frames until
+// the timer expires or (if skippable) a key is pressed once the fade is done,
+// and optionally fades out.
+void sub_08065CD0(struct Unk65CD0 *s, u16 fade, void *check)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x08C\nadds r5, r0, #0x0\nmov r8, r2\nlsls r1, r1, #0x10\nlsrs r4, r1, #0x10\nmovs r6, #0x00\nldrh r7, [r5, #0x08]\nbl sub_08069894\nldr r2, [r5, #0x00]\nmovs r0, #0x01\nstr r0, [sp, #0x000]\nadd r0, sp, #0x004\nmovs r1, #0x00\nmovs r3, #0x00\nbl sub_08065E0C\nmov r10, r0\nldr r0, [r5, #0x04]\nbl sub_080679A4\nbl sub_080674B4\nmovs r1, #0x80\nlsls r1, r1, #0x13\nmovs r2, #0x8A\nlsls r2, r2, #0x05\nadds r0, r2, #0x0\nstrh r0, [r1, #0x00]\nmovs r0, #0x0A\nldsh r1, [r5, r0]\ncmp r1, #0x00\nbeq _08065D3C\ncmp r1, #0x00\nbgt _08065D2A\nmovs r0, #0x01\nnegs r0, r0\ncmp r1, r0\nbeq _08065D30\nb _08065D4E\n_08065D2A:\ncmp r1, #0x01\nbeq _08065D48\nb _08065D4E\n_08065D30:\nldr r1, _08065D38 @ =0x04000050\nmovs r0, #0xFF\nb _08065D4C\n.byte 0x00, 0x00\n_08065D38: .4byte 0x04000050\n_08065D3C:\nldr r0, _08065D44 @ =0x04000050\nstrh r6, [r0, #0x00]\nb _08065D4E\n.byte 0x00, 0x00\n_08065D44: .4byte 0x04000050\n_08065D48:\nldr r1, _08065DD4 @ =0x04000050\nmovs r0, #0xBF\n_08065D4C:\nstrh r0, [r1, #0x00]\n_08065D4E:\nmovs r1, #0x01\nnegs r1, r1\nmov r9, r1\n_08065D54:\nlsls r0, r4, #0x10\nasrs r0, r0, #0x10\ncmp r0, #0x00\nble _08065D6A\nldrh r2, [r5, #0x0C]\nsubs r0, r0, r2\nlsls r0, r0, #0x10\nlsrs r4, r0, #0x10\ncmp r0, #0x00\nbge _08065D6A\nmovs r4, #0x00\n_08065D6A:\nldr r0, _08065DD8 @ =0x04000054\nstrh r4, [r0, #0x00]\nbl sub_080674B4\nldr r0, _08065DDC @ =0x080BB888\nldr r0, [r0, #0x00]\nbl _08073C40\nbl sub_0806A6F8\nmov r0, r8\ncmp r0, #0x00\nbeq _08065D8C\nbl sub_08044A8C\nmovs r1, #0x00\nmov r8, r1\n_08065D8C:\nldr r1, _08065DE0 @ =0x03004060\nmovs r0, #0x0B\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _08065DA4\ncmp r4, #0x00\nbne _08065DA4\nldrh r2, [r5, #0x12]\ncmp r2, #0x01\nbne _08065DA4\nmovs r6, #0x01\n_08065DA4:\nlsls r0, r7, #0x10\nasrs r0, r0, #0x10\ncmp r0, r9\nble _08065DB8\nsubs r0, #0x01\nlsls r0, r0, #0x10\nlsrs r7, r0, #0x10\ncmp r0, #0x00\nbne _08065DB8\nmovs r6, #0x01\n_08065DB8:\ncmp r6, #0x00\nbeq _08065D54\nmovs r0, #0x0E\nldsh r1, [r5, r0]\ncmp r1, #0x00\nbeq _08065DF0\nmovs r0, #0x01\nnegs r0, r0\ncmp r1, r0\nbne _08065DE4\nldr r1, _08065DD4 @ =0x04000050\nmovs r0, #0xFF\nb _08065DE8\n.byte 0x00, 0x00\n_08065DD4: .4byte 0x04000050\n_08065DD8: .4byte 0x04000054\n_08065DDC: .4byte 0x080BB888\n_08065DE0: .4byte 0x03004060\n_08065DE4:\nldr r1, _08065E08 @ =0x04000050\nmovs r0, #0xBF\n_08065DE8:\nstrh r0, [r1, #0x00]\nldrh r0, [r5, #0x10]\nbl sub_08062BF0\n_08065DF0:\nmov r0, r10\nbl sub_0806A434\nadd sp, #0x08C\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08065E08: .4byte 0x04000050");
+    u8 scene[0x88];
+    void *handle;
+    s16 timer;
+    bool32 done;
+
+    done = FALSE;
+    timer = s->unk08;
+    sub_08069894();
+    handle = sub_08065E0C(scene, 0, s->unk00, 0, 1);
+    sub_080679A4(s->unk04);
+    VBlankIntrWait();
+    REG_DISPCNT = 0x1140;
+    switch (s->unk0A)
+    {
+    case -1:
+        REG_BLDCNT = 0xFF;
+        break;
+    case 0:
+        REG_BLDCNT = 0;
+        break;
+    case 1:
+        REG_BLDCNT = 0xBF;
+        break;
+    }
+    do
+    {
+        if ((s16)fade > 0)
+        {
+            s32 v = (s16)fade - s->unk0C;
+
+            fade = v;
+            if ((s16)fade < 0)
+                fade = 0;
+        }
+        REG_BLDY = fade;
+        VBlankIntrWait();
+        ((void (*)(void))gData_080BB888[0])();
+        sub_0806A6F8();
+        if (check != NULL)
+        {
+            SaveDataVerify();
+            check = NULL;
+        }
+        if ((gData_03004060 & 0xB) && fade == 0 && s->unk12 == 1)
+            done = TRUE;
+        if (timer > -1)
+        {
+            if (--timer == 0)
+                done = TRUE;
+        }
+    } while (!done);
+    if (s->unk0E != 0)
+    {
+        if (s->unk0E == -1)
+            REG_BLDCNT = 0xFF;
+        else
+            REG_BLDCNT = 0xBF;
+        sub_08062BF0(s->unk10);
+    }
+    HeapFree(handle);
 }
+

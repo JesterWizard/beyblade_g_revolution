@@ -1,151 +1,44 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+#include "data_symbols.h"
 
 // @ 0x08056250
-__attribute__((naked))
-void sub_08056250(void *a)
+typedef void (*CpuCopyFunc)(const void *, void *, u32);
+
+// Redraws the eight visible rows of the scrolling list: label text for each
+// filled row, and for the cursor row an icon sprite plus its palette.
+void sub_08056250(struct Unk56250 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "add sp, #-0x010\n"
-        "adds r5, r0, #0x0\n"
-        "bl sub_08061784\n"
-        "ldr r0, _0805633C @ =0x0300066C\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _0805626A\n"
-        "b _08056370\n"
-        "_0805626A:\n"
-        "movs r0, #0xA1\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r4, r5, r0\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0805627E\n"
-        "bl sub_0806FE84\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x00]\n"
-        "_0805627E:\n"
-        "movs r4, #0x00\n"
-        "ldr r7, _08056340 @ =0x03000674\n"
-        "ldr r6, _08056344 @ =0x03000664\n"
-        "movs r1, #0xA1\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r1, r1, r5\n"
-        "mov r8, r1\n"
-        "movs r5, #0xC0\n"
-        "lsls r5, r5, #0x0B\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "mov r9, r0\n"
-        "_08056296:\n"
-        "ldr r0, [r7, #0x00]\n"
-        "adds r0, r0, r4\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r0, r0, r1\n"
-        "ldrb r0, [r0, #0x0C]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "cmp r0, r9\n"
-        "ble _08056364\n"
-        "lsls r1, r4, #0x03\n"
-        "adds r1, #0x10\n"
-        "movs r0, #0x00\n"
-        "bl sub_080615EC\n"
-        "ldr r0, [r7, #0x00]\n"
-        "adds r0, r0, r4\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x04]\n"
-        "movs r1, #0x4A\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _08056348 @ =0x03000678\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r4, r0\n"
-        "bne _08056358\n"
-        "movs r0, #0x00\n"
-        "bl sub_0806FDD0\n"
-        "mov r1, r8\n"
-        "str r0, [r1, #0x00]\n"
-        "ldr r1, [r7, #0x00]\n"
-        "adds r1, r1, r4\n"
-        "ldr r2, [r6, #0x00]\n"
-        "lsls r1, r1, #0x04\n"
-        "adds r1, r1, r2\n"
-        "ldr r1, [r1, #0x08]\n"
-        "movs r2, #0x01\n"
-        "str r2, [sp, #0x000]\n"
-        "movs r2, #0x00\n"
-        "str r2, [sp, #0x004]\n"
-        "str r2, [sp, #0x008]\n"
-        "str r2, [sp, #0x00C]\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x06\n"
-        "movs r3, #0x90\n"
-        "lsls r3, r3, #0x07\n"
-        "bl sub_0806FF58\n"
-        "mov r1, r8\n"
-        "ldr r0, [r1, #0x00]\n"
-        "movs r1, #0x0F\n"
-        "bl sub_080705DC\n"
-        "ldr r3, _0805634C @ =0x080BB8C0\n"
-        "ldr r2, _08056350 @ =0x080779A8\n"
-        "ldr r0, [r7, #0x00]\n"
-        "adds r0, r0, r4\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r0, r0, r1\n"
-        "ldrb r0, [r0, #0x0C]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r2\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r3, [r3, #0x00]\n"
-        "ldr r1, _08056354 @ =0x050003E0\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "lsrs r0, r5, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "b _08056364\n"
-        ".byte 0x00, 0x00\n"
-        "_0805633C: .4byte 0x0300066C\n"
-        "_08056340: .4byte 0x03000674\n"
-        "_08056344: .4byte 0x03000664\n"
-        "_08056348: .4byte 0x03000678\n"
-        "_0805634C: .4byte 0x080BB8C0\n"
-        "_08056350: .4byte 0x080779A8\n"
-        "_08056354: .4byte 0x050003E0\n"
-        "_08056358:\n"
-        "lsrs r0, r5, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x0A\n"
-        "movs r3, #0x1A\n"
-        "bl sub_08061D68\n"
-        "_08056364:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x09\n"
-        "adds r5, r5, r0\n"
-        "adds r4, #0x01\n"
-        "cmp r4, #0x07\n"
-        "ble _08056296\n"
-        "_08056370:\n"
-        "add sp, #0x010\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 i;
+
+    sub_08061784();
+    if (gData_0300066C == 0)
+        return;
+    if (a->unk284 != NULL)
+    {
+        sub_0806FE84(a->unk284);
+        a->unk284 = NULL;
+    }
+    for (i = 0; i < 8; i++)
+    {
+        if (gData_03000664[gData_03000674 + i].unk0C > -1)
+        {
+            sub_080615EC(0, i * 8 + 0x10);
+            sub_0806171C(gData_03000664[gData_03000674 + i].unk04, 0x4A, 2);
+            if (i == gData_03000678)
+            {
+                a->unk284 = sub_0806FDD0(0);
+                sub_0806FF58(a->unk284, gData_03000664[gData_03000674 + i].unk08, 0x2000, 0x4800, 1, 0, 0, 0);
+                sub_080705DC(a->unk284, 0x0F);
+                ((CpuCopyFunc)gData_080BB8C0[0])(gData_080779A8[gData_03000664[gData_03000674 + i].unk0C], (void *)0x050003E0, 0x20);
+                sub_08061D68((u16)(i + 6), 0x0E, 0x0A, 0x1A);
+            }
+            else
+            {
+                sub_08061D68((u16)(i + 6), 0x0F, 0x0A, 0x1A);
+            }
+        }
+    }
 }
 

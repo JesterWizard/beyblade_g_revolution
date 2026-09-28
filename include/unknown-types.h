@@ -327,12 +327,17 @@ struct Unk620D4Entry /* >= 0x10 */
 struct Unk62044 /* 0x28 (padded from >= 0x26) */
 {
     /* 00 */ void *unk00;
-    /* 04 */ u8 filler_04[8];
+    /* 04 */ const u8 *unk04; /* glyph width table */
+    /* 08 */ struct Unk6FF58Src *unk08; /* glyph sprite */
     /* 0c */ struct Unk620D4Entry **unk0C;
     /* 10 */ s32 unk10;
     /* 14 */ s32 unk14;
-    /* 18 */ u8 filler_18[0xC];
-    /* 24 */ u16 unk24;
+    /* 18 */ s32 unk18; /* last line width */
+    /* 1c */ u16 unk1C;
+    /* 1e */ s16 unk1E;
+    /* 20 */ u16 unk20; /* glyph size */
+    /* 22 */ u16 unk22; /* line height */
+    /* 24 */ u16 unk24; /* sprites in use */
 };
 
 /* *gUnk_030008D0. 16-slot pointer pool + used-bitmask. sub_08062A74, sub_08062AF8, sub_08062B9C. */
@@ -453,7 +458,9 @@ struct Unk62634 /* >= 0x64 */
     /* 00 */ struct Unk62358Anim *unk00; /* frame list, ends at unk02 == -1 */
     /* 04 */ struct Unk6225CSource *unk04;
     /* 08 */ struct Unk705DC *unk08;
-    /* 0c */ u8 filler_0C[0xC];
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 unk10;
+    /* 14 */ struct Unk6FF58Src *unk14;
     /* 18 */ u32 unk18;
     /* 1c */ s32 unk1C;
     /* 20 */ s32 unk20;
@@ -465,12 +472,17 @@ struct Unk62634 /* >= 0x64 */
     /* 38 */ s32 unk38;
     /* 3c */ s32 unk3C;
     /* 40 */ s32 unk40;
-    /* 44 */ u8 filler_44[0xC];
+    /* 44 */ u32 unk44; /* object tile/pool id, sub_0806211C */
+    /* 48 */ s32 unk48; /* half width, 8.8 */
+    /* 4c */ s32 unk4C; /* half height, 8.8 */
     /* 50 */ s16 unk50; /* frame index */
     /* 52 */ u16 unk52; /* 1 loop, 2 play once */
     /* 54 */ u16 unk54; /* current frame */
     /* 56 */ s16 unk56; /* frames left */
-    /* 58 */ u8 filler_58[8];
+    /* 58 */ u16 unk58; /* width */
+    /* 5a */ u16 unk5A; /* height */
+    /* 5c */ u16 unk5C;
+    /* 5e */ u16 unk5E;
     /* 60 */ u8 unk60;
     /* 61 */ u8 filler_61[3];
 };
@@ -909,7 +921,8 @@ struct Unk45A84 /* >= 0x0c */
 /* Current menu entry selected by sub_0804AAF0. */
 struct Unk4AAF0 /* >= 0x28 */
 {
-    /* 00 */ u8 filler_00[0x1D];
+    /* 00 */ u8 filler_00[0x1C];
+    /* 1C */ s8 unk1C;
     /* 1D */ s8 unk1D;
     /* 1E */ s8 unk1E;
     /* 1F */ u8 unk1F;
@@ -1455,6 +1468,24 @@ struct Unk047C /* >= 0x834 */
     /* 808 */ u32 unk808;
     /* 80c */ u32 unk80C;
     /* 810 */ void *unk810[9];
+    /* 834 */ u8 *unk834; /* scratch text buffer, sub_08040680 */
+};
+
+struct Unk40680Text
+{
+    /* 00 */ void *unk00;
+};
+
+/* Menu/dialog work passed to sub_08040680. */
+struct Unk40680 /* >= 0x304 */
+{
+    /* 000 */ u8 filler_000[0x220];
+    /* 220 */ struct Unk40680Text *unk220;
+    /* 224 */ u8 filler_224[0x50];
+    /* 274 */ struct Unk705DC *unk274;
+    /* 278 */ u8 filler_278[0x84];
+    /* 2fc */ s32 unk2FC;
+    /* 300 */ u32 unk300;
 };
 
 /* Stride-4 u16 table. sub_0802B8BC. */
@@ -1892,7 +1923,11 @@ struct Unk6B2F0 /* >= 0x05 */
 /* Affine BG matrix slots at IWRAM 0x03000068, one per affine BG (2, 3). */
 struct Unk0068Entry /* 0x18 */
 {
-    /* 00 */ u8 filler_00[8];
+    /* 00 */ u8 unk00; /* rotation angle, sub_08069A60 */
+    /* 01 */ u8 filler_01;
+    /* 02 */ u16 unk02; /* x scale index */
+    /* 04 */ u16 unk04; /* y scale index */
+    /* 06 */ u8 filler_06[2];
     /* 08 */ s32 unk08;
     /* 0c */ s32 unk0C;
     /* 10 */ s32 unk10;
@@ -2021,7 +2056,9 @@ struct Unk6C704 /* >= 0xa0 */
 struct Unk6EE48Entry /* 0x18 */
 {
     /* 00 */ void *unk00;
-    /* 04 */ u8 filler_04[0x14];
+    /* 04 */ u8 filler_04[0x10];
+    /* 14 */ s16 unk14; /* follow ratio in 1/32 steps, sub_0806F05C */
+    /* 16 */ u8 filler_16[2];
 };
 
 struct Unk6EE48Table /* >= 0x74 */
@@ -2039,6 +2076,76 @@ struct Unk6EE48 /* >= 0x355 */
     /* 344 */ void *unk344;
     /* 348 */ u8 filler_348[0x0C];
     /* 354 */ u8 unk354;
+};
+
+/* Entry of the scrolling list at *0x03000664 (sub_08056250). */
+struct Unk56250Entry /* 0x10 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ void *unk04; /* label text */
+    /* 08 */ struct Unk6FF58Src *unk08; /* icon sprite */
+    /* 0c */ s8 unk0C; /* palette index, -1 = empty */
+    /* 0d */ u8 filler_0D[3];
+};
+
+struct Unk56250 /* >= 0x288 */
+{
+    /* 000 */ u8 filler_000[0x284];
+    /* 284 */ struct Unk705DC *unk284; /* cursor icon */
+};
+
+/* Scene display parameters for sub_08065CD0. */
+struct Unk65CD0
+{
+    /* 00 */ void *unk00; /* scene script */
+    /* 04 */ void *unk04; /* palette */
+    /* 08 */ s16 unk08; /* frames to show, -1 = until a key */
+    /* 0a */ s16 unk0A; /* fade-in: 0 none, -1 black, 1 white */
+    /* 0c */ u16 unk0C; /* fade step */
+    /* 0e */ s16 unk0E; /* fade-out mode */
+    /* 10 */ u16 unk10;
+    /* 12 */ u16 unk12; /* 1 = skippable */
+};
+
+/* Map layer header: compressed size << 8 plus a format byte (0x20 = raw). */
+struct Unk0560LayerSrc
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u8 unk04;
+};
+
+/* Heap handle whose first word is the data pointer. */
+struct Unk0560Handle
+{
+    /* 00 */ void *unk00;
+};
+
+struct Unk0560Layer /* 0x18 */
+{
+    /* 00 */ struct Unk0560LayerSrc *unk00;
+    /* 04 */ u8 filler_04[0x14];
+};
+
+/* Current map header copied to 0x03000560 by sub_08043C70. */
+struct Unk0560 /* 0x84 */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ struct Unk0560Layer layers[4];
+    /* 74 */ u8 filler_74[0x0C];
+    /* 80 */ struct Unk62988 *unk80;
+};
+
+struct Unk4BD38Label /* 0x08 */
+{
+    /* 00 */ void *unk00; /* text */
+    /* 04 */ u32 unk04;
+};
+
+/* Menu work for sub_0804BD38: five icon sprites at +0x274. */
+struct Unk4BD38 /* >= 0x288 */
+{
+    /* 000 */ u8 filler_000[0x274];
+    /* 274 */ struct Unk705DC *unk274[5];
 };
 
 struct Unk38438 /* 0x42, index bitmap + per-slot counts */
@@ -2710,7 +2817,9 @@ struct Unk705DC /* >= 0x30 */
  * mode/size at +0xC, graphics offset at +0x1C (else +0x10). */
 struct Unk6FF58Src /* >= 0x20 */
 {
-    /* 00 */ u8 filler_00[6];
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u8 unk04; /* width, sub_0806211C */
+    /* 05 */ u8 unk05; /* height */
     /* 06 */ u8 unk06;
     /* 07 */ s8 unk07;
     /* 08 */ u8 filler_08[4];

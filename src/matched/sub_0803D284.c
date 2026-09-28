@@ -25,7 +25,7 @@ void BattleTextGlyphRow(const u8 *str, s32 b, const u8 *widths, s32 y)
     {
         if (str[i] != ' ')
         {
-            sub_0806211C(&gBattleWork->unk0BCC[n], 0, b, x, y, 0, 0x28, 0, gData_080BB748[str[i]]);
+            sub_0806211C(&gBattleWork->unk0BCC[n], NULL, (struct Unk6FF58Src *)b, x, y, 0, 0x28, 0, gData_080BB748[str[i]]);
             x += 0x10 - widths[gData_080BB748[str[i]]];
             sub_08062634(&gBattleWork->unk0BCC[n], -1, n * 2, 0x0803D27D);
             TextEntrySetPaletteBank(gBattleWork->unk0BCC[n].unk08, 0);

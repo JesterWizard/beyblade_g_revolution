@@ -1,8 +1,82 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+#include "data_symbols.h"
 
 // @ 0x08043c70
-__attribute__((naked))
-void sub_08043C70(void *a, void *b, u32 c, u32 d, u32 e)
+/* match-compiler: old_agbcc */
+typedef void (*CpuCopyFunc)(const void *, void *, u32);
+
+// Loads map `map`: copies its header to gData_03000560, decompresses each
+// compressed layer into a heap buffer, then places `obj` either at the saved
+// position (`restore`) or at spawn point `spawn`, and sets the camera.
+void sub_08043C70(struct Unk68574 *obj, const struct Unk0560 *map, u32 modeArg, u32 spawnArg, u32 restore)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadd sp, #-0x008\nmov r9, r0\nadds r0, r1, #0x0\nlsls r2, r2, #0x10\nlsrs r2, r2, #0x10\nstr r2, [sp, #0x004]\nlsls r3, r3, #0x10\nlsrs r3, r3, #0x10\nmov r10, r3\nldr r1, _08043CC8 @ =0x080BB8C0\nldr r4, _08043CCC @ =0x03000560\nldr r3, [r1, #0x00]\nadds r1, r4, #0x0\nmovs r2, #0x84\nbl _08073C4C\nbl sub_08043C28\nadds r6, r4, #0x0\nadds r6, #0x14\nldr r7, _08043CD0 @ =0x030005F0\nmovs r0, #0x03\nmov r8, r0\n_08043CA8:\nldr r5, [r6, #0x00]\ncmp r5, #0x00\nbeq _08043CE6\nldr r0, [r5, #0x00]\nlsrs r0, r0, #0x08\nldrb r1, [r5, #0x04]\ncmp r1, #0x20\nbeq _08043CE6\nbl sub_0806A3A4\nadds r4, r0, #0x0\ncmp r4, #0x00\nbne _08043CD4\nstr r4, [r6, #0x00]\nstr r4, [r7, #0x00]\nb _08043CE6\n_08043CC8: .4byte 0x080BB8C0\n_08043CCC: .4byte 0x03000560\n_08043CD0: .4byte 0x030005F0\n_08043CD4:\nstr r4, [r7, #0x00]\nbl sub_080674B4\nldr r1, [r4, #0x00]\nadds r0, r5, #0x0\nbl sub_080674AC\nldr r0, [r4, #0x00]\nstr r0, [r6, #0x00]\n_08043CE6:\nadds r6, #0x18\nadds r7, #0x04\nmovs r3, #0x01\nnegs r3, r3\nadd r8, r3\nmov r4, r8\ncmp r4, #0x00\nbge _08043CA8\nbl sub_080674B4\nldr r0, _08043D30 @ =0x03000560\nadds r0, #0x80\nldr r0, [r0, #0x00]\nbl sub_08062988\nldr r0, [sp, #0x028]\ncmp r0, #0x00\nbeq _08043D40\nldr r0, _08043D34 @ =0x03000198\nldr r1, [r0, #0x00]\nldr r0, _08043D38 @ =0x00000868\nadds r2, r1, r0\nldr r0, [r2, #0x00]\nmov r3, r9\nstr r0, [r3, #0x04]\nldr r4, _08043D3C @ =0x0000086C\nadds r1, r1, r4\nldr r0, [r1, #0x00]\nstr r0, [r3, #0x08]\nldr r0, [r2, #0x00]\nasrs r0, r0, #0x08\nadds r5, r0, #0x0\nsubs r5, #0x78\nldr r0, [r1, #0x00]\nasrs r0, r0, #0x08\nb _08043D76\n.byte 0x00, 0x00\n_08043D30: .4byte 0x03000560\n_08043D34: .4byte 0x03000198\n_08043D38: .4byte 0x00000868\n_08043D3C: .4byte 0x0000086C\n_08043D40:\nbl sub_08062A14\nmov r1, r10\nbl sub_0806DEF4\nldr r2, [r0, #0x00]\nlsls r2, r2, #0x05\nmov r3, r9\nldrb r3, [r3, #0x10]\nlsrs r1, r3, #0x01\nlsls r1, r1, #0x08\nsubs r2, r2, r1\nmov r4, r9\nstr r2, [r4, #0x04]\nldr r2, [r0, #0x04]\nlsls r2, r2, #0x05\nldrb r3, [r4, #0x11]\nlsrs r1, r3, #0x01\nlsls r1, r1, #0x08\nsubs r2, r2, r1\nstr r2, [r4, #0x08]\nldr r1, [r0, #0x00]\nasrs r1, r1, #0x03\nadds r5, r1, #0x0\nsubs r5, #0x78\nldr r0, [r0, #0x04]\nasrs r0, r0, #0x03\n_08043D76:\nadds r4, r0, #0x0\nsubs r4, #0x50\ncmp r5, #0x00\nbge _08043D80\nmovs r5, #0x00\n_08043D80:\ncmp r4, #0x00\nbge _08043D86\nmovs r4, #0x00\n_08043D86:\nbl sub_080674B4\nldr r0, _08043DAC @ =0x03000198\nldr r0, [r0, #0x00]\nldr r1, _08043DB0 @ =0x03000560\nstr r4, [sp, #0x000]\nldr r2, [sp, #0x004]\nadds r3, r5, #0x0\nbl sub_0806EBF8\nadd sp, #0x008\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_08043DAC: .4byte 0x03000198\n_08043DB0: .4byte 0x03000560");
+    u16 mode = modeArg;
+    u16 spawn = spawnArg;
+    struct Unk0560 *cur;
+    struct Unk0560Layer *layer;
+    struct Unk0560Handle **slot;
+    struct Unk0560LayerSrc *src;
+    struct Unk0560Handle *buf;
+    s32 i;
+    u32 size;
+    s32 x;
+    s32 y;
+
+    ((CpuCopyFunc)gData_080BB8C0[0])(map, &gData_03000560, sizeof(struct Unk0560));
+    sub_08043C28();
+    cur = &gData_03000560;
+    layer = cur->layers;
+    slot = gData_030005F0;
+    for (i = 0; i < 4; i++)
+    {
+        src = layer->unk00;
+        if (src != NULL)
+        {
+            size = src->unk00 >> 8;
+            if (src->unk04 != 0x20)
+            {
+                buf = HeapAlloc(size);
+                if (buf == NULL)
+                {
+                    layer->unk00 = NULL;
+                    *slot = NULL;
+                }
+                else
+                {
+                    *slot = buf;
+                    VBlankIntrWait();
+                    LZ77UnCompWram(src, buf->unk00);
+                    layer->unk00 = buf->unk00;
+                }
+            }
+        }
+        layer++;
+        slot++;
+    }
+    VBlankIntrWait();
+    sub_08062988(gData_03000560.unk80);
+    if (restore)
+    {
+        obj->unk04 = gMainWorkPtr->unk0868;
+        obj->unk08 = gMainWorkPtr->unk086C;
+        x = ((s32)gMainWorkPtr->unk0868 >> 8) - 0x78;
+        y = ((s32)gMainWorkPtr->unk086C >> 8) - 0x50;
+    }
+    else
+    {
+        s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), spawn);
+
+        obj->unk04 = (pos[0] << 5) - ((obj->unk10 >> 1) << 8);
+        obj->unk08 = (pos[1] << 5) - ((obj->unk11 >> 1) << 8);
+        x = (pos[0] >> 3) - 0x78;
+        y = (pos[1] >> 3) - 0x50;
+    }
+    if (x < 0)
+        x = 0;
+    if (y < 0)
+        y = 0;
+    VBlankIntrWait();
+    sub_0806EBF8(gMainWorkPtr, (u32)&gData_03000560, mode, x, y);
 }

@@ -285,6 +285,21 @@ extern void *gData_08097728[];
 // Script byte variables (sub_08045EF0)
 extern struct Unk0600 gData_03000600;
 
+// Current map header and its decompressed layer buffers (sub_08043C70)
+extern struct Unk0560 gData_03000560;
+extern struct Unk0560Handle *gData_030005F0[4];
+
+// Scrolling list: entries, entry count, first visible row, cursor (sub_08056250)
+extern struct Unk56250Entry *gData_03000664;
+extern u32 gData_0300066C;
+extern s32 gData_03000674;
+extern s32 gData_03000678;
+
+// Five-row menu tables (sub_0804BD38): label text, icon sprite, icon palette
+extern struct Unk4BD38Label gData_08098004[];
+extern struct Unk6FF58Src *gData_080984F0[];
+extern void *gData_08098764[];
+
 // Saved palette buffers: BG/OBJ palette RAM snapshots (sub_08062F90)
 extern u32 **gData_030008D4;
 extern u32 *gData_030008D8;

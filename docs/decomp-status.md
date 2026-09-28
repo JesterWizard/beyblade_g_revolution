@@ -8,18 +8,34 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **584/633 (92.3%)** |
-| **Decompiled C (bytes)** | **70,480/90,272 (78.1%)** |
+| **Decompiled C (functions)** | **591/633 (93.4%)** |
+| **Decompiled C (bytes)** | **72,618/90,272 (80.4%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 49/633 (7.7%) |
+| Readable Thumb | 42/633 (6.6%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 143/160 (89.4% fn, 80.9% bytes) |
+| Battle semantic C | 145/160 (90.6% fn, 82.6% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-28 — readable-Thumb size-DIFF batch (+7/12): 69A60, 6211C, 4AE94, 56250, 65CD0, 61EF8, 43C70
+
+- `sub_08069A60` — affine BG matrix setup. The slot fields are written through `gData_03000068[slot]`, and
+  `e` is taken after those stores. `sub_08069A18` now takes `s16` matrix entries (it still matches).
+- `sub_0806211C` — sprite object attach. It needed the shifted coordinates in their own locals, and
+  `Unk62634`/`Unk6FF58Src` gained fields.
+- `sub_0804AE94` — record caption string. Uses `gData_03000654/58` (the literal macros load the table first).
+- `sub_08056250` — scrolling list redraw. Matched on the first try with new `gData_03000664/6C/74/78` symbols.
+- `sub_08065CD0` — scene display loop. `s32 v = (s16)fade - step` keeps retail's `asr`.
+- `sub_08061EF8` — glyph sprite text layout. Uses `x = 0x10 - w + x`. Its params stay `u32` with
+  `u8`/`u16` locals, so the existing callers still match.
+- `sub_08043C70` — map load. The header is the struct symbol `gData_03000560`, which gives retail's
+  `ldr base; add #0x80` (the literal address folds to one constant).
+- Parked: `sub_0806F05C` and `sub_08040680` (one-instruction diffs each), `sub_0803E0CC`,
+  `sub_0804BD38`, `sub_080737C0`. `sub_0806EEC4` now returns `state->motion`.
 
 ### 2026-09-28 — parked-WIP retry (+6/10): 6B2F0, 6B5C8, 67648, 45EF0, 30F38, 62F90
 

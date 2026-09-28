@@ -1,153 +1,57 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806211c
-__attribute__((naked))
-void sub_0806211C(struct Unk62634 *a, s32 b, s32 c, s32 x, s32 y, u8 f, u16 g, u8 h, u16 i)
+/* match-compiler: old_agbcc */
+// Attaches a new OAM object (pool tile `tile`) to sprite `a`, positioned at
+// (x, y) pixels and optionally parented to `parent`, and resets its motion and
+// animation state. Returns FALSE if no object could be allocated.
+bool32 sub_0806211C(struct Unk62634 *a, struct Unk6225CSource *parent, struct Unk6FF58Src *src, s32 x, s32 y,
+    u8 objMode, u16 tile, u8 flip, u16 h)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x020\n"
-        "adds r6, r0, #0x0\n"
-        "mov r8, r1\n"
-        "mov r9, r2\n"
-        "adds r5, r3, #0x0\n"
-        "ldr r0, [sp, #0x044]\n"
-        "ldr r1, [sp, #0x048]\n"
-        "ldr r2, [sp, #0x04C]\n"
-        "ldr r3, [sp, #0x050]\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x010]\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "str r1, [sp, #0x014]\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "str r2, [sp, #0x018]\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "str r3, [sp, #0x01C]\n"
-        "movs r0, #0x00\n"
-        "mov r10, r0\n"
-        "cmp r6, #0x00\n"
-        "beq _0806216A\n"
-        "mov r1, r9\n"
-        "cmp r1, #0x00\n"
-        "beq _0806216A\n"
-        "ldr r0, [sp, #0x014]\n"
-        "bl sub_0806FDD0\n"
-        "adds r7, r0, #0x0\n"
-        "cmp r7, #0x00\n"
-        "bne _0806216E\n"
-        "_0806216A:\n"
-        "movs r0, #0x00\n"
-        "b _08062228\n"
-        "_0806216E:\n"
-        "mov r4, r8\n"
-        "cmp r4, #0x00\n"
-        "beq _08062180\n"
-        "mov r0, r8\n"
-        "bl sub_08069C14\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r10, r0\n"
-        "_08062180:\n"
-        "lsls r5, r5, #0x08\n"
-        "ldr r4, [sp, #0x040]\n"
-        "lsls r4, r4, #0x08\n"
-        "ldr r0, [sp, #0x010]\n"
-        "str r0, [sp, #0x000]\n"
-        "mov r1, r10\n"
-        "str r1, [sp, #0x004]\n"
-        "ldr r0, [sp, #0x018]\n"
-        "str r0, [sp, #0x008]\n"
-        "ldr r1, [sp, #0x01C]\n"
-        "str r1, [sp, #0x00C]\n"
-        "adds r0, r7, #0x0\n"
-        "mov r1, r9\n"
-        "adds r2, r5, #0x0\n"
-        "adds r3, r4, #0x0\n"
-        "bl sub_0806FF58\n"
-        "mov r0, r8\n"
-        "str r0, [r6, #0x04]\n"
-        "str r7, [r6, #0x08]\n"
-        "movs r2, #0x00\n"
-        "str r2, [r6, #0x30]\n"
-        "str r2, [r6, #0x34]\n"
-        "str r2, [r6, #0x38]\n"
-        "str r2, [r6, #0x3C]\n"
-        "str r5, [r6, #0x24]\n"
-        "str r4, [r6, #0x28]\n"
-        "movs r0, #0x10\n"
-        "str r0, [r6, #0x40]\n"
-        "mov r1, r9\n"
-        "ldrb r0, [r1, #0x04]\n"
-        "adds r3, r6, #0x0\n"
-        "adds r3, #0x58\n"
-        "movs r1, #0x00\n"
-        "strh r0, [r3, #0x00]\n"
-        "mov r4, r9\n"
-        "ldrb r0, [r4, #0x05]\n"
-        "adds r5, r6, #0x0\n"
-        "adds r5, #0x5A\n"
-        "strh r0, [r5, #0x00]\n"
-        "str r2, [r6, #0x0C]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x5E\n"
-        "strh r2, [r0, #0x00]\n"
-        "subs r0, #0x02\n"
-        "strh r2, [r0, #0x00]\n"
-        "str r2, [r6, #0x10]\n"
-        "ldr r0, [sp, #0x014]\n"
-        "str r0, [r6, #0x44]\n"
-        "str r4, [r6, #0x14]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x60\n"
-        "strb r1, [r0, #0x00]\n"
-        "str r2, [r6, #0x20]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r6, #0x1C]\n"
-        "str r2, [r6, #0x18]\n"
-        "str r2, [r6, #0x00]\n"
-        "adds r4, r6, #0x0\n"
-        "adds r4, #0x56\n"
-        "ldrh r1, [r4, #0x00]\n"
-        "orrs r1, r0\n"
-        "strh r1, [r4, #0x00]\n"
-        "adds r1, r6, #0x0\n"
-        "adds r1, #0x54\n"
-        "ldrh r4, [r1, #0x00]\n"
-        "orrs r0, r4\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x50\n"
-        "strh r2, [r0, #0x00]\n"
-        "ldrh r3, [r3, #0x00]\n"
-        "lsrs r0, r3, #0x01\n"
-        "lsls r0, r0, #0x08\n"
-        "str r0, [r6, #0x48]\n"
-        "ldrh r5, [r5, #0x00]\n"
-        "lsrs r0, r5, #0x01\n"
-        "lsls r0, r0, #0x08\n"
-        "str r0, [r6, #0x4C]\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_0806225C\n"
-        "movs r0, #0x01\n"
-        "_08062228:\n"
-        "add sp, #0x020\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk705DC *obj;
+    u8 priority = 0;
+    s32 px, py;
+
+    if (a == NULL || src == NULL)
+        return FALSE;
+    obj = sub_0806FDD0(tile);
+    if (obj == NULL)
+        return FALSE;
+    if (parent != NULL)
+        priority = sub_08069C14((struct Unk69C14 *)parent);
+    px = x << 8;
+    py = y << 8;
+    sub_0806FF58(obj, src, px, py, objMode, priority, flip, h);
+    a->unk04 = parent;
+    a->unk08 = obj;
+    a->unk30 = 0;
+    a->unk34 = 0;
+    a->unk38 = 0;
+    a->unk3C = 0;
+    a->unk24 = px;
+    a->unk28 = py;
+    a->unk40 = 0x10;
+    a->unk58 = src->unk04;
+    a->unk5A = src->unk05;
+    a->unk0C = 0;
+    a->unk5E = 0;
+    a->unk5C = 0;
+    a->unk10 = 0;
+    a->unk44 = tile;
+    a->unk14 = src;
+    a->unk60 = 0;
+    a->unk20 = 0;
+    a->unk1C = -1;
+    a->unk18 = 0;
+    a->unk00 = NULL;
+    a->unk56 |= -1;
+    a->unk54 |= -1;
+    a->unk50 = 0;
+    a->unk48 = (a->unk58 >> 1) << 8;
+    a->unk4C = (a->unk5A >> 1) << 8;
+    sub_0806225C(a);
+    return TRUE;
 }
 

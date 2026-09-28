@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-28T14:32:43Z_
+_Updated: 2026-09-28T14:59:38Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 587 |
-| Still need semantic C | **46** |
-| Readable Thumb remaining | 46 |
+| Semantic C done | 594 |
+| Still need semantic C | **39** |
+| Readable Thumb remaining | 39 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 13 (145 already semantic) |
+| Battle pending | 11 (147 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 34 |
+| WIP (resume these first) | 39 |
 
 Ranking: **battle** · showing top **40**
 
@@ -60,6 +60,11 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0806960C` | 600 | 226/600 | `src/decompiled/sub_0806960C.c` | BG map streaming (scroll by dx/dy, stream a column/row of tiles through sub_08069270 when the view crosses the loaded rect, wrap on unk7C bits). Logic complete, same size. Retail spills tile/edge/source/start values to 8 consecutive stack words (sp0C..sp28) and keeps the constant 1 in r10; a local Unk688C8Rect + start[2] gets closest. | Find the local aggregate shape that yields the sp0C..sp28 layout while keeping CSE of the stored values; one = 1 local helps the prologue. |
 | `sub_08043DB4` | 1352 | 1031/1352 | `src/decompiled/sub_08043DB4.c` | Map entry/setup sequence fully mapped (same size). Only remaining diff: retail keeps a -1 in a stack slot (sp18) set right after sub_0806644C and compares unk18B4 against it; every source form tried lets agbcc rematerialise the constant, which shifts the frame by 4 and some registers. | Find what variable holds that -1 (param reuse and locals tried). |
 | `sub_08044A8C` | 672 | 602/672 | `src/decompiled/sub_08044A8C.c` | Save-data verify (EEPROM read retry x8, checksum/magic/size/version checks per slot). Same size; remaining diff is register choice around the hdr/slot HeapAlloc results (retail keeps &gData_03000198 in r4 and buf in r7). | Tune the alloc/assignment statement shape at the top; permuter from this seed. |
+| `sub_0806F05C` | 280 | 205/280 (one address-mode diff) | `src/decompiled/sub_0806F05C.c` | logic exact (camera follow + 4-slot parallax); one diff: ratio load address (t+0x28)+off in retail vs (t+off)+#0x28 (2 insns short) | find the source shape for the entries[i].unk14 address; permuter 5 min found nothing |
+| `sub_08040680` | 308 | one-insn diff (304 vs 308 B) | `src/decompiled/sub_08040680.c` | logic exact; one diff: BtlObjTableAdd result copied to r1 before the unk834 store in retail (ours stores from r0) | local-alloc shape for the buffer store; permuter 5 min found nothing |
+| `sub_0803E0CC` | 296 | 56/296 | `src/decompiled/sub_0803E0CC.c` | logic mapped (release all slots with unk23 == id); s8 unk1C |= 0xFF folds to strb -1, retail keeps ldrb/orr; loop.c hoists different constants | unk1C likely a u8 view / bitfield here; other users need s8 |
+| `sub_0804BD38` | 328 | 56 asm diff lines | `src/decompiled/sub_0804BD38.c` | logic mapped (5-row menu redraw); retail makes i*16 a giv in r9 and keeps a on the stack, ours hoists &gData_03000674 instead | find the loop shape that makes the row-y giv; try permuter |
+| `sub_080737C0` | 336 | 61/336 | `src/decompiled/sub_080737C0.c` | logic mapped (word wrap into <=count lines); retail keeps the done flag in a stack slot and tests count from the stack | while(!done) shape is closest (81 diff lines); find what spills done |
 
 Per-function notes: `src/decompiled/<fn>.md`.
 
@@ -67,24 +72,12 @@ Per-function notes: `src/decompiled/<fn>.md`.
 
 | Function | Address | Bytes | Battle refs | Pool | Kind | Notes |
 |----------|---------|------:|------------:|:----:|------|-------|
-| `sub_0803E0CC` | `0x0803E0CC` | 296 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08040680` | `0x08040680` | 308 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08065CD0` | `0x08065CD0` | 316 | 1 | pool | asm | (gBattlerArena/gBtlKeysHeld) |
-| `sub_08043C70` | `0x08043C70` | 324 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08044648` | `0x08044648` | 364 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080447E8` | `0x080447E8` | 372 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_080618EC` | `0x080618EC` | 428 | 1 | pool | asm | (gBtlInputMask) |
 | `sub_08056BA4` | `0x08056BA4` | 450 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0806F05C` | `0x0806F05C` | 280 | 0 | pool | asm | |
-| `sub_08069A60` | `0x08069A60` | 280 | 0 | pool | asm | |
-| `sub_0806211C` | `0x0806211C` | 284 | 0 |      | asm | |
-| `sub_0804AE94` | `0x0804AE94` | 300 | 0 | pool | asm | |
-| `sub_08056250` | `0x08056250` | 302 | 0 | pool | asm | |
-| `sub_0804BD38` | `0x0804BD38` | 328 | 0 | pool | asm | |
-| `sub_08061EF8` | `0x08061EF8` | 332 | 0 | pool | asm | |
-| `sub_080737C0` | `0x080737C0` | 336 | 0 | pool | asm | |
 | `sub_0804D420` | `0x0804D420` | 362 | 0 | pool | asm | |
 | `sub_0804C8BC` | `0x0804C8BC` | 372 | 0 | pool | asm | |
 | `sub_0806314C` | `0x0806314C` | 404 | 0 | pool | asm | |
@@ -143,6 +136,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (34 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (22 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

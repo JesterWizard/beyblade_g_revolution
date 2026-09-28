@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-28T14:32:43Z",
+  "generated": "2026-09-28T14:59:38Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 46,
-    "semantic_done": 587,
-    "readable_asm": 46,
+    "pending": 39,
+    "semantic_done": 594,
+    "readable_asm": 39,
     "opcode": 0,
-    "battle_pending": 13,
-    "battle_semantic": 145,
+    "battle_pending": 11,
+    "battle_semantic": 147,
     "blocked": 20,
-    "wip": 34
+    "wip": 39
   },
   "pinned": [],
   "wip": [
@@ -389,65 +389,64 @@
       "status": "Save-data verify (EEPROM read retry x8, checksum/magic/size/version checks per slot). Same size; remaining diff is register choice around the hdr/slot HeapAlloc results (retail keeps &gData_03000198 in r4 and buf in r7).",
       "next": "Tune the alloc/assignment statement shape at the top; permuter from this seed.",
       "score": "602/672"
-    }
-  ],
-  "recommended": [
+    },
     {
-      "name": "sub_0803E0CC",
-      "addr": "0x0803E0CC",
+      "name": "sub_0806F05C",
+      "addr": "0x0806F05C",
       "kind": "asm",
-      "bytes": 296,
-      "score": 126,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
+      "bytes": 280,
+      "seed": "src/decompiled/sub_0806F05C.c",
+      "notes": "src/decompiled/sub_0806F05C.md",
+      "status": "logic exact (camera follow + 4-slot parallax); one diff: ratio load address (t+0x28)+off in retail vs (t+off)+#0x28 (2 insns short)",
+      "next": "find the source shape for the entries[i].unk14 address; permuter 5 min found nothing",
+      "score": "205/280 (one address-mode diff)"
     },
     {
       "name": "sub_08040680",
       "addr": "0x08040680",
       "kind": "asm",
       "bytes": 308,
-      "score": 167,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
+      "seed": "src/decompiled/sub_08040680.c",
+      "notes": "src/decompiled/sub_08040680.md",
+      "status": "logic exact; one diff: BtlObjTableAdd result copied to r1 before the unk834 store in retail (ours stores from r0)",
+      "next": "local-alloc shape for the buffer store; permuter 5 min found nothing",
+      "score": "one-insn diff (304 vs 308 B)"
     },
     {
-      "name": "sub_08065CD0",
-      "addr": "0x08065CD0",
+      "name": "sub_0803E0CC",
+      "addr": "0x0803E0CC",
       "kind": "asm",
-      "bytes": 316,
-      "score": 160,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
+      "bytes": 296,
+      "seed": "src/decompiled/sub_0803E0CC.c",
+      "notes": "src/decompiled/sub_0803E0CC.md",
+      "status": "logic mapped (release all slots with unk23 == id); s8 unk1C |= 0xFF folds to strb -1, retail keeps ldrb/orr; loop.c hoists different constants",
+      "next": "unk1C likely a u8 view / bitfield here; other users need s8",
+      "score": "56/296"
     },
     {
-      "name": "sub_08043C70",
-      "addr": "0x08043C70",
+      "name": "sub_0804BD38",
+      "addr": "0x0804BD38",
       "kind": "asm",
-      "bytes": 324,
-      "score": 164,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
+      "bytes": 328,
+      "seed": "src/decompiled/sub_0804BD38.c",
+      "notes": "src/decompiled/sub_0804BD38.md",
+      "status": "logic mapped (5-row menu redraw); retail makes i*16 a giv in r9 and keeps a on the stack, ours hoists &gData_03000674 instead",
+      "next": "find the loop shape that makes the row-y giv; try permuter",
+      "score": "56 asm diff lines"
     },
+    {
+      "name": "sub_080737C0",
+      "addr": "0x080737C0",
+      "kind": "asm",
+      "bytes": 336,
+      "seed": "src/decompiled/sub_080737C0.c",
+      "notes": "src/decompiled/sub_080737C0.md",
+      "status": "logic mapped (word wrap into <=count lines); retail keeps the done flag in a stack slot and tests count from the stack",
+      "next": "while(!done) shape is closest (81 diff lines); find what spills done",
+      "score": "61/336"
+    }
+  ],
+  "recommended": [
     {
       "name": "sub_08044648",
       "addr": "0x08044648",
@@ -528,102 +527,6 @@
       "battle_syms": [
         "gMainWorkPtr"
       ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806F05C",
-      "addr": "0x0806F05C",
-      "kind": "asm",
-      "bytes": 280,
-      "score": 140,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069A60",
-      "addr": "0x08069A60",
-      "kind": "asm",
-      "bytes": 280,
-      "score": 144,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806211C",
-      "addr": "0x0806211C",
-      "kind": "asm",
-      "bytes": 284,
-      "score": 150,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804AE94",
-      "addr": "0x0804AE94",
-      "kind": "asm",
-      "bytes": 300,
-      "score": 178,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08056250",
-      "addr": "0x08056250",
-      "kind": "asm",
-      "bytes": 302,
-      "score": 156,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804BD38",
-      "addr": "0x0804BD38",
-      "kind": "asm",
-      "bytes": 328,
-      "score": 170,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08061EF8",
-      "addr": "0x08061EF8",
-      "kind": "asm",
-      "bytes": 332,
-      "score": 184,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080737C0",
-      "addr": "0x080737C0",
-      "kind": "asm",
-      "bytes": 336,
-      "score": 188,
-      "battle_refs": 0,
-      "battle_syms": [],
       "has_pool": true,
       "blocked": false,
       "block_reason": ""
@@ -965,62 +868,6 @@
   ],
   "backlog": [
     {
-      "name": "sub_0803E0CC",
-      "addr": "0x0803E0CC",
-      "kind": "asm",
-      "bytes": 296,
-      "score": 126,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08040680",
-      "addr": "0x08040680",
-      "kind": "asm",
-      "bytes": 308,
-      "score": 167,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08065CD0",
-      "addr": "0x08065CD0",
-      "kind": "asm",
-      "bytes": 316,
-      "score": 160,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gBattlerArena/gBtlKeysHeld"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08043C70",
-      "addr": "0x08043C70",
-      "kind": "asm",
-      "bytes": 324,
-      "score": 164,
-      "battle_refs": 1,
-      "battle_syms": [
-        "gMainWorkPtr"
-      ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
       "name": "sub_08044648",
       "addr": "0x08044648",
       "kind": "asm",
@@ -1100,102 +947,6 @@
       "battle_syms": [
         "gMainWorkPtr"
       ],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806F05C",
-      "addr": "0x0806F05C",
-      "kind": "asm",
-      "bytes": 280,
-      "score": 140,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08069A60",
-      "addr": "0x08069A60",
-      "kind": "asm",
-      "bytes": 280,
-      "score": 144,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806211C",
-      "addr": "0x0806211C",
-      "kind": "asm",
-      "bytes": 284,
-      "score": 150,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804AE94",
-      "addr": "0x0804AE94",
-      "kind": "asm",
-      "bytes": 300,
-      "score": 178,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08056250",
-      "addr": "0x08056250",
-      "kind": "asm",
-      "bytes": 302,
-      "score": 156,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0804BD38",
-      "addr": "0x0804BD38",
-      "kind": "asm",
-      "bytes": 328,
-      "score": 170,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08061EF8",
-      "addr": "0x08061EF8",
-      "kind": "asm",
-      "bytes": 332,
-      "score": 184,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_080737C0",
-      "addr": "0x080737C0",
-      "kind": "asm",
-      "bytes": 336,
-      "score": 188,
-      "battle_refs": 0,
-      "battle_syms": [],
       "has_pool": true,
       "blocked": false,
       "block_reason": ""

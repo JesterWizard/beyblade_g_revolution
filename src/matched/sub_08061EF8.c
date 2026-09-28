@@ -1,175 +1,60 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+#include "data_symbols.h"
 
 // @ 0x08061ef8
-__attribute__((naked))
-void sub_08061EF8(void *a, void *b, u32 c, u32 d, u32 e, u32 f, u32 g)
+/* match-compiler: old_agbcc */
+// Lays `text` out as glyph sprites: wraps it into up to four lines, aligns
+// each line with sub_08062068 (`align`) and places one sprite per glyph,
+// advancing by 0x10 minus the glyph's entry in the width table.
+void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 paletteArg, u32 tileArg, u32 align)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x02C\n"
-        "adds r6, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "mov r9, r3\n"
-        "ldr r0, [sp, #0x04C]\n"
-        "ldr r1, [sp, #0x050]\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x020]\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "str r1, [sp, #0x024]\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_0806209C\n"
-        "add r0, sp, #0x010\n"
-        "movs r1, #0x04\n"
-        "movs r2, #0x60\n"
-        "bl sub_08073568\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "cmp r0, #0x03\n"
-        "bhi _08061F3C\n"
-        "add r0, sp, #0x010\n"
-        "movs r1, #0x04\n"
-        "bl sub_080735B0\n"
-        "b _08062030\n"
-        "_08061F3C:\n"
-        "ldr r3, [r6, #0x04]\n"
-        "ldrh r0, [r6, #0x1C]\n"
-        "str r0, [sp, #0x000]\n"
-        "ldrh r0, [r6, #0x20]\n"
-        "str r0, [sp, #0x004]\n"
-        "ldrh r1, [r6, #0x20]\n"
-        "lsrs r0, r1, #0x02\n"
-        "str r0, [sp, #0x008]\n"
-        "movs r0, #0x60\n"
-        "str r0, [sp, #0x00C]\n"
-        "add r0, sp, #0x010\n"
-        "adds r1, r4, #0x0\n"
-        "movs r2, #0x04\n"
-        "bl sub_080737C0\n"
-        "str r0, [sp, #0x028]\n"
-        "movs r2, #0x00\n"
-        "mov r10, r2\n"
-        "cmp r10, r0\n"
-        "bge _08062028\n"
-        "_08061F64:\n"
-        "mov r3, r10\n"
-        "lsls r0, r3, #0x02\n"
-        "add r0, sp\n"
-        "adds r0, #0x10\n"
-        "ldr r0, [r0, #0x00]\n"
-        "mov r8, r0\n"
-        "ldr r1, [r6, #0x04]\n"
-        "ldrh r2, [r6, #0x20]\n"
-        "lsrs r3, r2, #0x02\n"
-        "bl sub_08073988\n"
-        "adds r1, r0, #0x0\n"
-        "str r1, [r6, #0x18]\n"
-        "adds r0, r6, #0x0\n"
-        "ldr r2, [sp, #0x054]\n"
-        "bl sub_08062068\n"
-        "adds r7, r0, #0x0\n"
-        "mov r5, r10\n"
-        "cmp r5, #0x00\n"
-        "bne _08061F98\n"
-        "lsls r0, r7, #0x08\n"
-        "str r0, [r6, #0x10]\n"
-        "mov r1, r9\n"
-        "lsls r0, r1, #0x08\n"
-        "str r0, [r6, #0x14]\n"
-        "_08061F98:\n"
-        "mov r2, r8\n"
-        "ldrb r5, [r2, #0x00]\n"
-        "movs r3, #0x01\n"
-        "add r8, r3\n"
-        "cmp r5, #0x00\n"
-        "beq _0806201A\n"
-        "_08061FA4:\n"
-        "cmp r5, #0x20\n"
-        "bne _08061FB0\n"
-        "ldrh r5, [r6, #0x20]\n"
-        "lsrs r0, r5, #0x02\n"
-        "adds r7, r7, r0\n"
-        "b _0806200E\n"
-        "_08061FB0:\n"
-        "ldr r0, [sp, #0x024]\n"
-        "bl sub_0806FDD0\n"
-        "ldr r2, [r6, #0x0C]\n"
-        "ldrh r3, [r6, #0x24]\n"
-        "lsls r1, r3, #0x02\n"
-        "adds r1, r1, r2\n"
-        "str r0, [r1, #0x00]\n"
-        "ldrh r1, [r6, #0x24]\n"
-        "lsls r0, r1, #0x02\n"
-        "adds r0, r0, r2\n"
-        "ldr r3, [r0, #0x00]\n"
-        "cmp r3, #0x00\n"
-        "beq _08062030\n"
-        "ldr r1, [r6, #0x08]\n"
-        "lsls r2, r7, #0x08\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x000]\n"
-        "str r0, [sp, #0x004]\n"
-        "str r0, [sp, #0x008]\n"
-        "ldr r4, _08062040 @ =0x080BB748\n"
-        "adds r4, r5, r4\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "str r0, [sp, #0x00C]\n"
-        "adds r0, r3, #0x0\n"
-        "mov r5, r9\n"
-        "lsls r3, r5, #0x08\n"
-        "bl sub_0806FF58\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0x10\n"
-        "ldr r0, [r6, #0x04]\n"
-        "ldrb r4, [r4, #0x00]\n"
-        "adds r0, r4, r0\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "subs r7, r1, r0\n"
-        "ldr r1, [r6, #0x0C]\n"
-        "ldrh r2, [r6, #0x24]\n"
-        "lsls r0, r2, #0x02\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r1, [sp, #0x020]\n"
-        "bl sub_080705DC\n"
-        "ldrh r0, [r6, #0x24]\n"
-        "adds r0, #0x01\n"
-        "strh r0, [r6, #0x24]\n"
-        "_0806200E:\n"
-        "mov r3, r8\n"
-        "ldrb r5, [r3, #0x00]\n"
-        "movs r0, #0x01\n"
-        "add r8, r0\n"
-        "cmp r5, #0x00\n"
-        "bne _08061FA4\n"
-        "_0806201A:\n"
-        "ldrh r1, [r6, #0x22]\n"
-        "add r9, r1\n"
-        "movs r2, #0x01\n"
-        "add r10, r2\n"
-        "ldr r3, [sp, #0x028]\n"
-        "cmp r10, r3\n"
-        "blt _08061F64\n"
-        "_08062028:\n"
-        "add r0, sp, #0x010\n"
-        "movs r1, #0x04\n"
-        "bl sub_080735B0\n"
-        "_08062030:\n"
-        "add sp, #0x02C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08062040: .4byte 0x080BB748\n"
-    );
+    u8 *lines[4];
+    u8 palette = paletteArg;
+    u16 tile = tileArg;
+    s32 count;
+    s32 i;
+    u8 *p;
+    s32 x;
+    u32 c;
+
+    sub_0806209C(a);
+    if (sub_08073568((void **)lines, 4, 0x60) < 4)
+    {
+        sub_080735B0((void **)lines, 4);
+        return;
+    }
+    count = sub_080737C0((void **)lines, (u8 *)text, 4, (u32)a->unk04, a->unk1C, a->unk20, a->unk20 >> 2, 0x60);
+    for (i = 0; i < count; i++)
+    {
+        p = lines[i];
+        a->unk18 = TextMeasureWidth(p, a->unk04, a->unk20, a->unk20 >> 2);
+        x = sub_08062068((struct Unk62068 *)a, a->unk18, align);
+        if (i == 0)
+        {
+            a->unk10 = x << 8;
+            a->unk14 = y << 8;
+        }
+        for (c = *p++; c != 0; c = *p++)
+        {
+            if (c == ' ')
+            {
+                x += a->unk20 >> 2;
+            }
+            else
+            {
+                a->unk0C[a->unk24] = sub_0806FDD0(tile);
+                if (a->unk0C[a->unk24] == NULL)
+                    return;
+                sub_0806FF58((struct Unk705DC *)a->unk0C[a->unk24], a->unk08, x << 8, y << 8, 0, 0, 0, gData_080BB748[c]);
+                x = 0x10 - a->unk04[gData_080BB748[c]] + x;
+                TextEntrySetPaletteBank((struct Unk705DC *)a->unk0C[a->unk24], palette);
+                a->unk24++;
+            }
+        }
+        y += a->unk22;
+    }
+    sub_080735B0((void **)lines, 4);
 }
 
