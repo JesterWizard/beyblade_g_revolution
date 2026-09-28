@@ -20,7 +20,7 @@ void sub_0806C704(void *arg0, void *arg1, s32 arg2, s32 arg3)
   extra = arg3;
   if ((state->unk8D & 4) != 0)
   {
-    result = sub_0806E060(source, input, output);
+    result = sub_0806E060(source, input, output, extra);
   }
   else
   {

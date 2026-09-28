@@ -275,10 +275,25 @@ struct Unk35258 /* >= 0x2c6 */
 /* Shift byte at +6, addend at +0x10. sub_0806BB38. */
 struct Unk6BB38 /* >= 0x14 */
 {
-    /* 00 */ u8 filler_00[6];
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u8 unk04; /* glyph width in pixels, sub_0806B764 */
+    /* 05 */ u8 unk05; /* glyph height in pixels */
     /* 06 */ u8 unk06;
-    /* 07 */ u8 filler_07[9];
+    /* 07 */ u8 filler_07[5];
+    /* 0c */ u8 unk0C; /* bit 0: tile-map text enabled */
+    /* 0d */ u8 filler_0D[3];
     /* 10 */ u32 unk10;
+};
+
+/* Tile-map text layer. sub_0806B764. */
+struct TextLayer /* >= 0x10 */
+{
+    /* 00 */ struct TextWindow *win;
+    /* 04 */ u8 *widths; /* per-glyph width trim table, or NULL */
+    /* 08 */ struct Unk6BB38 *font;
+    /* 0c */ u8 palette;
+    /* 0d */ u8 filler_0D;
+    /* 0e */ u16 nextTile; /* next free tile number, bumped as cells are claimed */
 };
 
 /* Six-word init block. sub_08036190. */
@@ -1235,7 +1250,8 @@ struct TextWindow /* >= 0xa8 */
     /* 00 */ u8 filler_00[0x5C];
     /* 5c */ u8 screenBlock;
     /* 5d */ u8 charBlock;
-    /* 5e */ u8 filler_5E[0x2A];
+    /* 5e */ u8 bgIndex;
+    /* 5f */ u8 filler_5F[0x29];
     /* 88 */ void *unk88;
     /* 8c */ u32 widthTable;
     /* 90 */ u16 penX;

@@ -1,37 +1,57 @@
-#include "global.h"
-#include "ram_map.h"
-#include "battle.h"
-
-// @ 0x0806b764
+/* match-compiler: old_agbcc */
 /* match-compiler: old_agbcc */
 #include "global.h"
 #include "ram_map.h"
 #include "battle.h"
 
-// @ 0x0806b764
-// Lays `str` out on a tile-map text layer starting at pixel (x, y): claims and
-// clears tile cells for the aligned string width, then blits each glyph into
-// them. align: 1 = right-aligned at x, 2 = centred on x. Returns the pen x.
+s32 sub_0806B724(const u8 *s, const u8 *kern, s32 spacing);
+
+struct TlObj
+{
+    u8 filler_00[4];
+    u8 unk04;
+    u8 unk05;
+    u8 filler_06[6];
+    u8 unk0C;
+};
+
+struct TlWin
+{
+    u8 filler_00[0x5C];
+    u8 screenBlock;
+    u8 charBlock;
+    u8 unk5E;
+};
+
+struct TextLayer
+{
+    struct TlWin *win;
+    u8 *widths;
+    struct TlObj *obj;
+    u8 unk0C;
+    u8 filler_0D;
+    u16 unk0E;
+};
+
 s32 sub_0806B764(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
 {
     u8 align = alignArg;
-    struct TextWindow *win = a->win;
-    struct Unk6BB38 *font = a->font;
+    struct TlWin *win = a->win;
+    struct TlObj *obj = a->obj;
     u16 *cur = (u16 *)(0x06000000 + (win->screenBlock << 11));
     u32 charBase = 0x06000000 + (win->charBlock << 14);
-    u32 wt = font->unk04 >> 3;
-    u32 ht = font->unk05 >> 3;
-    u32 glyphAdv = font->unk04;
+    u32 wt = obj->unk04 >> 3;
+    u32 ht = obj->unk05 >> 3;
+    u32 glyphAdv = obj->unk04;
     s32 strW;
     s32 rows;
     s32 cols;
     u16 start;
     u32 c;
-    vu16 *reg;
-    int pin; /* pins the base+offset sum so agbcc adds charBlock<<14 last */
+    u16 *reg;
 
-    reg = BgGetCntReg(win->bgIndex);
-    if ((*reg & 0x80) || !(font->unk0C & 1))
+    reg = BgGetCntReg(win->unk5E);
+    if ((*reg & 0x80) || !(obj->unk0C & 1))
     {
         DebugMessage((void *)0x083D1D08);
         return x;
@@ -51,7 +71,7 @@ s32 sub_0806B764(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
     if ((y & 7) != 0)
         rows++;
     cols = (strW + (x & 7) + 8) >> 3;
-    start = a->nextTile;
+    start = a->unk0E;
     while (rows-- != 0)
     {
         s32 n = cols;
@@ -60,19 +80,19 @@ s32 sub_0806B764(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
         {
             if (*cur == 0)
             {
-                *cur = a->nextTile;
-                a->nextTile++;
+                *cur = a->unk0E;
+                a->unk0E++;
             }
-            *cur = (*cur & 0xFFF) | (a->palette << 12);
+            *cur = (*cur & 0xFFF) | (a->unk0C << 12);
             cur++;
         }
         cur += 0x20 - cols;
     }
     {
-        u32 n = a->nextTile - start;
+        u32 n = a->unk0E - start;
 
         if (n != 0)
-            ((void (*)(u32, u32, u32))gData_080BB8BC[0])(0, (a->win->charBlock << 14) + (pin = 0x06000000 + (start << 5)), n << 5);
+            ((void (*)(u32, u32, u32))gData_080BB8BC[0])(0, (a->win->charBlock << 14) + (0x06000000 + (start << 5)), n << 5);
     }
     cur = (u16 *)(0x06000000 + (win->screenBlock << 11));
     c = *str++;
@@ -87,7 +107,7 @@ s32 sub_0806B764(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
             u32 *glyph;
 
             c = gData_080BB748[c];
-            glyph = sub_0806BB38(a->font, c);
+            glyph = sub_0806BB38((void *)a->obj, c);
             adv = glyphAdv;
             if (a->widths != NULL)
                 adv -= a->widths[c];
@@ -121,4 +141,3 @@ s32 sub_0806B764(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
     }
     return x;
 }
-

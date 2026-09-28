@@ -235,3 +235,51 @@ notes = "src/decompiled/sub_080618EC.md"
 status = "New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF."
 next = "Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail."
 score = "108/428"
+
+[[wip]]
+name = "sub_0806314C"
+seed = "src/decompiled/sub_0806314C.c"
+notes = "src/decompiled/sub_0806314C.md"
+status = "palette fade step, 400/404"
+next = "offset i*2 spilled at sp+8 in retail"
+score = "175/404"
+
+[[wip]]
+name = "sub_08060E48"
+seed = "src/decompiled/sub_08060E48.c"
+notes = "src/decompiled/sub_08060E48.md"
+status = "text glyph blit 528/532; regalloc: retail spills 9 address pseudos"
+next = "gw in r9, rows/yt next-iter in sp24/28; permuter"
+score = "92/532"
+
+[[wip]]
+name = "sub_0806EC20"
+seed = "src/decompiled/sub_0806EC20.c"
+notes = "src/decompiled/sub_0806EC20.md"
+status = "BG setup 500/516; param copy order matches"
+next = "a in r5,b in r8 (ours r7/r10); i<<24 copy r6"
+score = "?/516"
+
+[[wip]]
+name = "sub_0806E060"
+seed = "src/decompiled/sub_0806E060.c"
+notes = "src/decompiled/sub_0806E060.md"
+status = "bezier keyframe sampler 468/492"
+next = "idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded"
+score = "89/492"
+
+[[wip]]
+name = "sub_0806B764"
+seed = "src/decompiled/sub_0806B764.c"
+notes = "src/decompiled/sub_0806B764.md"
+status = "TextLayerInit same-size 509/588, old_agbcc"
+next = "a reload gets r4 not r7; 0x80 test operand order"
+score = "509/588"
+
+[[wip]]
+name = "sub_08067CE8"
+seed = "src/decompiled/sub_08067CE8.c"
+notes = "src/decompiled/sub_08067CE8.md"
+status = "AnimObjDraw same-size 548, structure matches; only regalloc (a=r5,px=r4,py=r7,slot=r6 in retail)"
+next = "raise px priority over a; m3 mask var, pin vars, out[3] all matter"
+score = "258/548"
