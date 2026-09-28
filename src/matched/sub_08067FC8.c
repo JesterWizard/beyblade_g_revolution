@@ -5,7 +5,7 @@
 // @ 0x08067fc8
 #include "global.h"
 
-u32 sub_08067FC8(void *a, u32 b)
+u32 AnimDurationForKey(void *a, u32 b)
 {
     void *obj;
     u16 key;

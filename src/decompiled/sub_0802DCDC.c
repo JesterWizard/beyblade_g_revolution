@@ -39,7 +39,7 @@ void sub_0802DCDC(void *arg)
     if (current == p->unk4C || (s8)p->unk48 != 2)
         return;
 
-    row = (struct Unk42E78 *)sub_08042E78((s16)main->unk183A);
+    row = (struct Unk42E78 *)BeybladeCollectionEntry((s16)main->unk183A);
     p = gUnk_0300026C;
     x = p->unk28->unk08;
     y = p->unk28->unk0C;

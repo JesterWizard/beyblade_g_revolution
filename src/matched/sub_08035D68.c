@@ -41,6 +41,6 @@ void BtlProjectToScreen(struct Unk35D68Source *source, struct Unk35D68State *sta
     source->unk00->unk0C = y;
     if (source->unk00->unk30 != NULL)
         flag = source->unk00->unk30->unk18;
-    sub_08070354((struct Unk70354 *)source->unk00, dz, dz, flag);
+    SpriteApplyAffine((struct Unk70354 *)source->unk00, dz, dz, flag);
 }
 

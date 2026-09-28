@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0803531c
-void sub_0803531C(struct Unk35258 *a)
+void BeybladeEffectsUpdate(struct Unk35258 *a)
 {
     u32 r0;
     u32 r1;

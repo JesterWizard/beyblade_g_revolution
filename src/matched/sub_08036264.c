@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08036264
-void sub_08036264(struct Unk36264 *out, struct Unk360BC *a, struct Unk360BC *b, s32 scale)
+void MotionMidpoint(struct Unk36264 *out, struct Unk360BC *a, struct Unk360BC *b, s32 scale)
 {
     s32 dx;
     s32 dy;

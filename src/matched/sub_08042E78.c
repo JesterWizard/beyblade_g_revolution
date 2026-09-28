@@ -4,7 +4,7 @@
 
 // @ 0x08042e78
 /* match-compiler: old_agbcc */
-void *sub_08042E78(u32 i)
+void *BeybladeCollectionEntry(u32 i)
 {
     if (i > 0x36)
         return 0;

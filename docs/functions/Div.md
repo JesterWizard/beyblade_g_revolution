@@ -27,8 +27,8 @@
 - `sub_0803139C`
 - [`BeybladeMotionStep`](BeybladeMotionStep.md)
 - [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
-- `sub_08035C64`
-- `sub_080360BC`
+- [`BeybladeHomeToward`](BeybladeHomeToward.md)
+- [`MotionSetVelocityToward`](MotionSetVelocityToward.md)
 - [`BtlApplyClampedScore`](BtlApplyClampedScore.md)
 - [`DigitRowDraw`](DigitRowDraw.md)
 - `sub_0806E420`

@@ -30,10 +30,10 @@
 ## Callees
 
 - [`RandRange`](RandRange.md)
-- `sub_08070354`
+- [`SpriteApplyAffine`](SpriteApplyAffine.md)
 - `sub_080740B0` _(not one of the 633 functions)_
 
 ## Callers
 
-- `sub_0803019C`
+- [`BattleStepBeyblades`](BattleStepBeyblades.md)
 - [`BtlFrameUpdate`](BtlFrameUpdate.md)

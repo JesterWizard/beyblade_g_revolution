@@ -12,7 +12,7 @@ void sub_08042F4C(s32 expBase, s32 strengthBase, s32 bladeId, s32 gained)
     s32 old;
     s32 scaled;
 
-    row = (struct Unk42E78 *)sub_08042E78((u32)bladeId);
+    row = (struct Unk42E78 *)BeybladeCollectionEntry((u32)bladeId);
     if (row != 0)
     {
         old = row->bitBeastExp;

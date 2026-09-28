@@ -29,11 +29,11 @@
 
 ## Callees
 
-- `sub_08070354`
+- [`SpriteApplyAffine`](SpriteApplyAffine.md)
 
 ## Callers
 
-- `sub_080353A0`
+- [`BeybladeEffectsPlace`](BeybladeEffectsPlace.md)
 
 ## ROM data referenced
 

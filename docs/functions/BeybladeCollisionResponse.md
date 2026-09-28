@@ -31,4 +31,4 @@
 
 ## Callers
 
-- `sub_0803019C`
+- [`BattleStepBeyblades`](BattleStepBeyblades.md)

@@ -49,6 +49,6 @@ void BtlPlaceSpriteAtWorld(void *source, s32 x, s32 y, s32 z, s32 ox, s32 oy, s3
     ry = (ry * depth) >> 8;
     obj->unk08 = sx - rx;
     obj->unk0C = sy - ry;
-    sub_08070354(obj, depth, depth, (angle - cam->unk14) >> 8);
+    SpriteApplyAffine(obj, depth, depth, (angle - cam->unk14) >> 8);
 }
 

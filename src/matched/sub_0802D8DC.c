@@ -27,7 +27,7 @@ void HudRefreshStats(void)
     p = gUnk_0300026C;
     if (p->unk28 != 0)
     {
-        row = (struct Unk42E78 *)sub_08042E78(p->unk4E);
+        row = (struct Unk42E78 *)BeybladeCollectionEntry(p->unk4E);
         p = gUnk_0300026C;
         HudWriteDigits((struct Unk310F0b *)p->bladeStrengthTens, (struct Unk310F0b *)p->bladeStrengthOnes, (s8)row->strength);
         tens = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelTens;

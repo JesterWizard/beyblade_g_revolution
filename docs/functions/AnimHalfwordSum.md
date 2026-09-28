@@ -30,4 +30,4 @@
 
 ## Callers
 
-- `sub_08067FC8`
+- [`AnimDurationForKey`](AnimDurationForKey.md)

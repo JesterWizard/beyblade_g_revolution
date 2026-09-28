@@ -8,7 +8,7 @@ void sub_08032D5C(struct Unk346C0 *a, struct Unk346C0 *b);
 void BattleBannerScroll(void);
 void BattleScorePopupTick(void);
 void sub_08033084(void *a, u32 b);
-void sub_080353A0(void *a);
+void BeybladeEffectsPlace(void *a);
 void sub_08030F38(void);
 void sub_08033DD4(void);
 void BtlKeyComboStep(struct Unk33958 *a, u16 b);
@@ -70,10 +70,10 @@ void BtlFrameUpdate(
                 (struct Unk302A8 *)&gBattleWork->unk37C,
                 (struct Unk302A8Src *)&gBattleWork->unkAA8,
                 (struct Unk302A8 *)gBattleWork->unk0AD8[1]);
-            sub_0803531C((struct Unk35258 *)state_a);
-            sub_0803531C((struct Unk35258 *)state_b);
-            sub_080353A0(state_a);
-            sub_080353A0(state_b);
+            BeybladeEffectsUpdate((struct Unk35258 *)state_a);
+            BeybladeEffectsUpdate((struct Unk35258 *)state_b);
+            BeybladeEffectsPlace(state_a);
+            BeybladeEffectsPlace(state_b);
             sub_08030F38();
             sub_08030F00(
                 (struct Unk30F00 *)gBattleWork->unk0AE8.fields.unkB50,
@@ -88,7 +88,7 @@ void BtlFrameUpdate(
             TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB84);
             TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB94);
             _08073C40((void *)gData_080BB888[0]);
-            sub_08036264(
+            MotionMidpoint(
                 (struct Unk36264 *)&gBattleWork->unkAA8,
                 &gBattleWork->unk328,
                 &gBattleWork->unk37C, 0x66);

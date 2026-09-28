@@ -34,11 +34,11 @@
 - `sub_08035204`
 - `sub_08035884`
 - [`BeybladeMotionStep`](BeybladeMotionStep.md)
-- `sub_08035C64`
+- [`BeybladeHomeToward`](BeybladeHomeToward.md)
 - `sub_08035D1C`
 - `sub_08060254`
-- `sub_08067FC8`
+- [`AnimDurationForKey`](AnimDurationForKey.md)
 
 ## Callers
 
-- `sub_0803019C`
+- [`BattleStepBeyblades`](BattleStepBeyblades.md)

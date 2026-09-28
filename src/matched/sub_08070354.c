@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
 
-void sub_08070354(struct Unk70354 *state, u16 b, u16 c, u8 d)
+void SpriteApplyAffine(struct Unk70354 *state, u16 b, u16 c, u8 d)
 {
     u16 count = (u16)c;
     u8 mode = d;

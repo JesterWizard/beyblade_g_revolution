@@ -41,7 +41,7 @@
 - [`BtlFrameUpdate`](BtlFrameUpdate.md)
 - `sub_08033D90`
 - [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
-- `sub_08035C64`
+- [`BeybladeHomeToward`](BeybladeHomeToward.md)
 - [`BtlApplyClampedScore`](BtlApplyClampedScore.md)
 - [`FieldEnter`](FieldEnter.md)
 - `sub_080474AC`

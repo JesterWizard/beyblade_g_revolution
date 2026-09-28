@@ -3,7 +3,7 @@
 
 # battle subsystem
 
-93 functions — 40 named.
+93 functions — 42 named.
 
 | Tier | Functions |
 |------|----------:|
@@ -44,7 +44,7 @@
 | [`BtlSetMode1F90`](../functions/BtlSetMode1F90.md) | `0x080330F4` | MATCHING | 72 | 2 | 0 | gBattleWork |
 | [`BtlClearState`](../functions/BtlClearState.md) | `0x08033878` | MATCHING | 108 | 2 | 1 | gBattleWork |
 | [`BtlCaptureInput`](../functions/BtlCaptureInput.md) | `0x08034894` | MATCHING | 84 | 2 | 0 | gBtlInputMask, gBtlKeysHeld |
-| `sub_080353A0` | `0x080353A0` | MATCHING | 200 | 2 | 2 |  |
+| [`BeybladeEffectsPlace`](../functions/BeybladeEffectsPlace.md) | `0x080353A0` | MATCHING | 200 | 2 | 2 |  |
 | [`BtlClearUnk1834`](../functions/BtlClearUnk1834.md) | `0x080433F4` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
 | [`BtlClearUnk1688Entry`](../functions/BtlClearUnk1688Entry.md) | `0x08044EE8` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
 | [`FieldUpdateFrame`](../functions/FieldUpdateFrame.md) | `0x08046E7C` | UNKNOWN | 872 | 2 | 26 | gBtlInputMask, gBtlKeysHeld |
@@ -82,7 +82,7 @@
 | [`BtlObjListMoveHeadToTail`](../functions/BtlObjListMoveHeadToTail.md) | `0x0806FEFC` | MATCHING | 44 | 1 | 0 | gBtlObjListHead, gBtlObjListTail |
 | [`GetBtlLookupByte`](../functions/GetBtlLookupByte.md) | `0x08072F94` | MATCHING | 20 | 1 | 0 | gBtlLookupBase, gBtlLookupPtr |
 | [`BtlFreeUnk1694Obj`](../functions/BtlFreeUnk1694Obj.md) | `0x0802BA4C` | MATCHING | 48 | 0 | 1 | gMainWorkPtr, gUnk_03000268 |
-| `sub_0803019C` | `0x0803019C` | MATCHING | 268 | 0 | 11 | gBattleWork |
+| [`BattleStepBeyblades`](../functions/BattleStepBeyblades.md) | `0x0803019C` | MATCHING | 268 | 0 | 11 | gBattleWork |
 | [`BeybladeSteerByDpad`](../functions/BeybladeSteerByDpad.md) | `0x08030638` | DECOMPILED | 268 | 0 | 0 | gBattleWork |
 | `sub_08031C98` | `0x08031C98` | DECOMPILED | 150 | 0 | 2 | gBattleWork, gUnk_030002A0 |
 | [`BtlFrameUpdate`](../functions/BtlFrameUpdate.md) | `0x08032DC4` | MATCHING | 660 | 0 | 31 | gBattleWork, gBtlKeysHeld |

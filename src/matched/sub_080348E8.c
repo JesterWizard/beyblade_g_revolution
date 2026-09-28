@@ -14,7 +14,7 @@ void BeybladeUpdate(struct Unk346C0 *a, u32 b)
     u32 flag;
     u8 *flag_ptr;
 
-    a->unk30E = sub_08035C64(a->unk00, 0x10000, 0x10000, 0xC8, 0x8000);
+    a->unk30E = BeybladeHomeToward(a->unk00, 0x10000, 0x10000, 0xC8, 0x8000);
     if (sub_08035D1C(a->unk00, 0x10000, 0x10000) == 1)
         sub_08060254(4, 0x38, 7);
     BeybladeMotionStep((struct Unk35984 *)a->unk00);
@@ -65,7 +65,7 @@ void BeybladeUpdate(struct Unk346C0 *a, u32 b)
         else if (a->unk312 == 1)
         {
             sub_08035204(a, 0, 0x0B, -1);
-            a->unk08C = sub_08067FC8(&a->unk1C, 0);
+            a->unk08C = AnimDurationForKey(&a->unk1C, 0);
             a->unk2B0 = flag;
             a->unk2B4 = 8;
             a->unk312 = flag;

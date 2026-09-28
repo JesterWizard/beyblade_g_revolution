@@ -1,6 +1,6 @@
 {
-  "count": 167,
-  "generated": "2026-09-28T09:49:59Z",
+  "count": 176,
+  "generated": "2026-09-28T09:52:16Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -138,6 +138,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "ItemListDraw",
+      "updated": "2026-09-28"
+    },
+    "0x0803019C": {
+      "aliases": [
+        "sub_0803019C"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "per-frame battle step: BeybladeSpinStep on both Beyblades (BattleWork+0x478/+0x790), then BtlProjectToScreen for both motion records (+0x328/+0x37C)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleStepBeyblades",
       "updated": "2026-09-28"
     },
     "0x080302E0": {
@@ -341,6 +354,32 @@
       "symbol": "BeybladeUpdate",
       "updated": "2026-09-28"
     },
+    "0x0803531C": {
+      "aliases": [
+        "sub_0803531C"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "stops finished effect blocks (unk1C/unkF8/unk1D4) and ticks each active one with SceneObjUpdate (bits in unk2C5)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeEffectsUpdate",
+      "updated": "2026-09-28"
+    },
+    "0x080353A0": {
+      "aliases": [
+        "sub_080353A0"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "places each active effect block's sprite at its Beyblade's world position via BtlPlaceSpriteAtWorld"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeEffectsPlace",
+      "updated": "2026-09-28"
+    },
     "0x08035468": {
       "aliases": [
         "sub_08035468"
@@ -380,6 +419,19 @@
       "symbol": "BeybladeCollisionResponse",
       "updated": "2026-09-28"
     },
+    "0x08035C64": {
+      "aliases": [
+        "sub_08035C64"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "if the target point is outside radius z, adds a randomly scaled velocity toward it; returns 1, or 0 (and stops) when unk14 reached the threshold"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeHomeToward",
+      "updated": "2026-09-28"
+    },
     "0x08035D68": {
       "aliases": [
         "sub_08035D68"
@@ -391,6 +443,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BtlProjectToScreen",
+      "updated": "2026-09-28"
+    },
+    "0x080360BC": {
+      "aliases": [
+        "sub_080360BC"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "sets velocity (unk18/unk1C) to `scale` along the unit vector toward (x, y)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MotionSetVelocityToward",
+      "updated": "2026-09-28"
+    },
+    "0x08036264": {
+      "aliases": [
+        "sub_08036264"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "writes the scaled midpoint between two motion records and a distance-derived height into out"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MotionMidpoint",
       "updated": "2026-09-28"
     },
     "0x0803715C": {
@@ -720,6 +798,19 @@
       "source": "ai",
       "symbol": "ExpBracket",
       "updated": "2026-09-25"
+    },
+    "0x08042E78": {
+      "aliases": [
+        "sub_08042E78"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns entry i (0..0x36, 48 bytes each) of the owned-Beyblade array at *gUnk_03000540 (saved as the 0xA50 block); callers name it `blade`"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeCollectionEntry",
+      "updated": "2026-09-28"
     },
     "0x080433F4": {
       "aliases": [
@@ -1539,6 +1630,19 @@
       "symbol": "AnimHalfwordSum",
       "updated": "2026-09-25"
     },
+    "0x08067FC8": {
+      "aliases": [
+        "sub_08067FC8"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "sums the per-frame halfwords of the animation record for key: total frame duration"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimDurationForKey",
+      "updated": "2026-09-28"
+    },
     "0x08068014": {
       "aliases": [
         "sub_08068014"
@@ -2047,6 +2151,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BtlObjSetAffine",
+      "updated": "2026-09-28"
+    },
+    "0x08070354": {
+      "aliases": [
+        "sub_08070354"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "attaches/refreshes an affine matrix object (BtlObjSetAffine) for a sprite and updates its OAM affine/double-size flags"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SpriteApplyAffine",
       "updated": "2026-09-28"
     },
     "0x08070468": {

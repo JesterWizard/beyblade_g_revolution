@@ -24,6 +24,6 @@
 
 - [`BeybladeMotionStep`](BeybladeMotionStep.md)
 - [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
-- `sub_08035C64`
-- `sub_080360BC`
-- `sub_08036264`
+- [`BeybladeHomeToward`](BeybladeHomeToward.md)
+- [`MotionSetVelocityToward`](MotionSetVelocityToward.md)
+- [`MotionMidpoint`](MotionMidpoint.md)

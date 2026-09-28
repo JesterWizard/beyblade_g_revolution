@@ -45,7 +45,7 @@
 | `sub_0802F520` | `0x0802F520` | graphics | MATCHING | 92 | 0 |
 | [`ItemListDraw`](ItemListDraw.md) | `0x0802FA94` |  | DECOMPILED | 748 | 1 |
 | `sub_0802FD80` | `0x0802FD80` |  | MATCHING | 32 | 0 |
-| `sub_0803019C` | `0x0803019C` | battle | MATCHING | 268 | 0 |
+| [`BattleStepBeyblades`](BattleStepBeyblades.md) | `0x0803019C` | battle | MATCHING | 268 | 0 |
 | `sub_080302A8` | `0x080302A8` |  | MATCHING | 54 | 2 |
 | [`BeybladeSpinStep`](BeybladeSpinStep.md) | `0x080302E0` | battle | DECOMPILED | 168 | 2 |
 | [`BeybladeSteerByDpad`](BeybladeSteerByDpad.md) | `0x08030638` | battle | DECOMPILED | 268 | 0 |
@@ -120,8 +120,8 @@
 | `sub_08035204` | `0x08035204` |  | MATCHING | 50 | 2 |
 | `sub_08035238` | `0x08035238` |  | MATCHING | 32 | 2 |
 | `sub_08035258` | `0x08035258` |  | DECOMPILED | 196 | 5 |
-| `sub_0803531C` | `0x0803531C` |  | MATCHING | 132 | 2 |
-| `sub_080353A0` | `0x080353A0` | battle | MATCHING | 200 | 2 |
+| [`BeybladeEffectsUpdate`](BeybladeEffectsUpdate.md) | `0x0803531C` |  | MATCHING | 132 | 2 |
+| [`BeybladeEffectsPlace`](BeybladeEffectsPlace.md) | `0x080353A0` | battle | MATCHING | 200 | 2 |
 | [`BtlPlaceSpriteAtWorld`](BtlPlaceSpriteAtWorld.md) | `0x08035468` | battle | DECOMPILED | 308 | 1 |
 | `sub_0803559C` | `0x0803559C` |  | DECOMPILED | 108 | 1 |
 | `sub_08035624` | `0x08035624` |  | DECOMPILED | 114 | 1 |
@@ -132,14 +132,14 @@
 | `sub_0803593C` | `0x0803593C` |  | MATCHING | 72 | 0 |
 | [`BeybladeMotionStep`](BeybladeMotionStep.md) | `0x08035984` |  | MATCHING | 348 | 1 |
 | [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md) | `0x08035AE0` |  | MATCHING | 388 | 1 |
-| `sub_08035C64` | `0x08035C64` |  | MATCHING | 182 | 1 |
+| [`BeybladeHomeToward`](BeybladeHomeToward.md) | `0x08035C64` |  | MATCHING | 182 | 1 |
 | `sub_08035D1C` | `0x08035D1C` |  | MATCHING | 76 | 1 |
 | [`BtlProjectToScreen`](BtlProjectToScreen.md) | `0x08035D68` |  | DECOMPILED | 196 | 2 |
-| `sub_080360BC` | `0x080360BC` |  | MATCHING | 104 | 0 |
+| [`MotionSetVelocityToward`](MotionSetVelocityToward.md) | `0x080360BC` |  | MATCHING | 104 | 0 |
 | `sub_08036190` | `0x08036190` |  | MATCHING | 24 | 1 |
 | `sub_080361A8` | `0x080361A8` |  | MATCHING | 36 | 2 |
 | `sub_080361CC` | `0x080361CC` |  | MATCHING | 44 | 2 |
-| `sub_08036264` | `0x08036264` |  | MATCHING | 112 | 2 |
+| [`MotionMidpoint`](MotionMidpoint.md) | `0x08036264` |  | MATCHING | 112 | 2 |
 | `sub_08036A68` | `0x08036A68` | battle | DECOMPILED | 240 | 0 |
 | [`BtlApplyClampedScore`](BtlApplyClampedScore.md) | `0x0803715C` |  | UNDERSTOOD | 444 | 0 |
 | `sub_08037318` | `0x08037318` |  | MATCHING | 100 | 1 |
@@ -235,7 +235,7 @@
 | [`ExpBracketBase`](ExpBracketBase.md) | `0x08042BB0` |  | MATCHING | 56 | 1 |
 | [`ExpBracket`](ExpBracket.md) | `0x08042BE8` |  | UNDERSTOOD | 82 | 3 |
 | `sub_08042C3C` | `0x08042C3C` |  | MATCHING | 56 | 1 |
-| `sub_08042E78` | `0x08042E78` |  | MATCHING | 28 | 8 |
+| [`BeybladeCollectionEntry`](BeybladeCollectionEntry.md) | `0x08042E78` |  | MATCHING | 28 | 8 |
 | `sub_08042F4C` | `0x08042F4C` |  | MATCHING | 80 | 0 |
 | [`BtlClearUnk1834`](BtlClearUnk1834.md) | `0x080433F4` | battle | MATCHING | 44 | 2 |
 | [`MapCursorMoveStep`](MapCursorMoveStep.md) | `0x08043420` |  | DECOMPILED | 438 | 2 |
@@ -488,7 +488,7 @@
 | `sub_08067CE8` | `0x08067CE8` | battle | UNKNOWN | 548 | 7 |
 | [`AnimHalfwordSum`](AnimHalfwordSum.md) | `0x08067F3C` |  | MATCHING | 92 | 1 |
 | `sub_08067F98` | `0x08067F98` |  | MATCHING | 48 | 1 |
-| `sub_08067FC8` | `0x08067FC8` |  | MATCHING | 74 | 3 |
+| [`AnimDurationForKey`](AnimDurationForKey.md) | `0x08067FC8` |  | MATCHING | 74 | 3 |
 | [`AnimRecAt`](AnimRecAt.md) | `0x08068014` |  | MATCHING | 10 | 2 |
 | [`BtlEntitySelectByKey`](BtlEntitySelectByKey.md) | `0x08068020` |  | MATCHING | 78 | 2 |
 | [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md) | `0x080680CC` |  | MATCHING | 76 | 11 |
@@ -582,7 +582,7 @@
 | [`BtlObjPoolReleaseChain`](BtlObjPoolReleaseChain.md) | `0x080700CC` |  | MATCHING | 188 | 3 |
 | [`BtlObjPoolResizeChain`](BtlObjPoolResizeChain.md) | `0x08070188` |  | UNKNOWN | 244 | 1 |
 | [`BtlObjSetAffine`](BtlObjSetAffine.md) | `0x0807027C` |  | DECOMPILED | 216 | 2 |
-| `sub_08070354` | `0x08070354` |  | MATCHING | 168 | 7 |
+| [`SpriteApplyAffine`](SpriteApplyAffine.md) | `0x08070354` |  | MATCHING | 168 | 7 |
 | `sub_080703FC` | `0x080703FC` |  | MATCHING | 34 | 1 |
 | [`BtlObjListResort`](BtlObjListResort.md) | `0x08070468` |  | DECOMPILED | 114 | 4 |
 | `sub_080705A4` | `0x080705A4` |  | MATCHING | 28 | 2 |

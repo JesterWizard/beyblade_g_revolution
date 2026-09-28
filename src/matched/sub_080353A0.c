@@ -2,7 +2,7 @@
 
 // @ 0x080353a0
 /* match-compiler: old_agbcc */
-void sub_080353A0(struct Unk35258 *a)
+void BeybladeEffectsPlace(struct Unk35258 *a)
 {
     if ((1 & a->unk2C5) != 0)
     {

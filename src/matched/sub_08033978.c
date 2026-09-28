@@ -12,7 +12,7 @@ void sub_08033978(struct Unk33A5C *a, struct Unk346C0 *b, struct Unk346C0 *c, u8
     sub_08034FF8((struct Unk34FF8 *)c, 0x08078E58, (u32)b);
     BtlSetMode1F90(0x80);
     sub_08035204(b, 0, 0xC, -1);
-    b->unk08C = sub_08067FC8(&b->unk1C, 0);
+    b->unk08C = AnimDurationForKey(&b->unk1C, 0);
     b->unk2B0 = 0;
     b->unk2B4 = -1;
     b->unk2CC = 2;

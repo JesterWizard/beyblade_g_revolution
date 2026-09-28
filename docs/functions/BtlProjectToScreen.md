@@ -25,11 +25,11 @@
 
 ## Callees
 
-- `sub_08070354`
+- [`SpriteApplyAffine`](SpriteApplyAffine.md)
 
 ## Callers
 
-- `sub_0803019C`
+- [`BattleStepBeyblades`](BattleStepBeyblades.md)
 - [`BtlFrameUpdate`](BtlFrameUpdate.md)
 
 ## ROM data referenced

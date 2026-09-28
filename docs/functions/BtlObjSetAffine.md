@@ -30,7 +30,7 @@
 
 ## Callers
 
-- `sub_08070354`
+- [`SpriteApplyAffine`](SpriteApplyAffine.md)
 - `sub_08070AF8`
 
 ## ROM data referenced

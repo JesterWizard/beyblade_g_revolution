@@ -29,7 +29,7 @@
 ## Callees
 
 - [`ExpBracket`](ExpBracket.md)
-- `sub_08042E78`
+- [`BeybladeCollectionEntry`](BeybladeCollectionEntry.md)
 
 ## Callers
 

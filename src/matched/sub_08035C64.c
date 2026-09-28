@@ -6,7 +6,7 @@
 #include "global.h"
 
 // @ 0x08035c64
-u8 sub_08035C64(struct Unk346C0Inner *a, s32 x, s32 y, s32 z, s32 threshold)
+u8 BeybladeHomeToward(struct Unk346C0Inner *a, s32 x, s32 y, s32 z, s32 threshold)
 {
     s32 dx;
     s32 dy;

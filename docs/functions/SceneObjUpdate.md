@@ -36,7 +36,7 @@
 ## Callers
 
 - `sub_08033530`
-- `sub_0803531C`
+- [`BeybladeEffectsUpdate`](BeybladeEffectsUpdate.md)
 - [`SceneObjsUpdateAll`](SceneObjsUpdateAll.md)
 - `sub_08042718`
 - [`FieldEnter`](FieldEnter.md)

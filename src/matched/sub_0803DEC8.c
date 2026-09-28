@@ -31,7 +31,7 @@ void BeybladeRecordClaim(u16 id, u8 row, u8 slot)
             }
             else
             {
-                blade = sub_08042E78((s8)row);
+                blade = BeybladeCollectionEntry((s8)row);
                 gData_03000198->unk08D0[i].unk1D = blade->unk08.unk1D;
                 gData_03000198->unk08D0[i].unk21 = blade->unk08.unk21;
                 gData_03000198->unk08D0[i].unk20 = blade->unk08.unk20;

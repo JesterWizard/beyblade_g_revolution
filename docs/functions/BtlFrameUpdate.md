@@ -49,12 +49,12 @@
 - `sub_08033A94`
 - `sub_08033DD4`
 - [`BtlCaptureInput`](BtlCaptureInput.md)
-- `sub_0803531C`
-- `sub_080353A0`
+- [`BeybladeEffectsUpdate`](BeybladeEffectsUpdate.md)
+- [`BeybladeEffectsPlace`](BeybladeEffectsPlace.md)
 - [`BtlProjectToScreen`](BtlProjectToScreen.md)
 - `sub_080361A8`
 - `sub_080361CC`
-- `sub_08036264`
+- [`MotionMidpoint`](MotionMidpoint.md)
 - [`RandRange`](RandRange.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`TimerAdvance`](TimerAdvance.md)

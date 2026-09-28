@@ -42,7 +42,7 @@ void SaveDataWrite(struct Unk45198Save *save, u8 fresh)
     ((CpuCopyFunc)gData_080BB8C0[0])(gData_03000198->unk1694, save->unk0080, 0x200);
     ((CpuCopyFunc)gData_080BB8C0[0])((void *)sub_0802B90C(), save->unk06CC, 0xF8);
     ((CpuCopyFunc)gData_080BB8C0[0])((void *)sub_0803EDC8(0), save->unk07C4, 0xB88);
-    ((CpuCopyFunc)gData_080BB8C0[0])(sub_08042E78(0), save->unk134C, 0xA50);
+    ((CpuCopyFunc)gData_080BB8C0[0])(BeybladeCollectionEntry(0), save->unk134C, 0xA50);
     ((CpuCopyFunc)gData_080BB8C0[0])((void *)sub_080429C0(), save->unk1D9C, 0x144);
     ((CpuCopyFunc)gData_080BB8C0[0])((void *)sub_08043974(), save->unk1EF4, 0x18);
     ((CpuCopyFunc)gData_080BB8C0[0])(&gData_03000198->unk15C8, save->unk1EE0, 0x14);

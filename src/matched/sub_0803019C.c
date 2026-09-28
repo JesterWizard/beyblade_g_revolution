@@ -4,7 +4,7 @@
 
 void sub_08030F38(void);
 void sub_0803D4C4(void);
-void sub_080353A0(void *a);
+void BeybladeEffectsPlace(void *a);
 void sub_080361A8(void *a);
 
 struct Unk3019CWork
@@ -28,7 +28,7 @@ struct Unk3019CWork
     void *unk0AD8[4];
 };
 
-void sub_0803019C(void)
+void BattleStepBeyblades(void)
 {
     sub_08030F38();
     sub_0803D4C4();
@@ -56,20 +56,20 @@ void sub_0803019C(void)
     BeybladeUpdate(
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk790,
         (u32)((struct Unk3019CWork *)gBattleWork)->unk478);
-    sub_0803531C(
+    BeybladeEffectsUpdate(
         (struct Unk35258 *)((struct Unk3019CWork *)gBattleWork)->unk478);
-    sub_0803531C(
+    BeybladeEffectsUpdate(
         (struct Unk35258 *)((struct Unk3019CWork *)gBattleWork)->unk790);
-    sub_080353A0(
+    BeybladeEffectsPlace(
         ((struct Unk3019CWork *)gBattleWork)->unk478);
-    sub_080353A0(
+    BeybladeEffectsPlace(
         ((struct Unk3019CWork *)gBattleWork)->unk790);
     ((struct Unk3019CWork *)gBattleWork)->unk789 = (u8)BeybladeCollisionResponse(
         (struct Unk346C0Inner *)((struct Unk3019CWork *)gBattleWork)->unk328,
         (struct Unk346C0Inner *)((struct Unk3019CWork *)gBattleWork)->unk37C);
     ((struct Unk3019CWork *)gBattleWork)->unkAA1 =
         ((struct Unk3019CWork *)gBattleWork)->unk789;
-    sub_08036264(
+    MotionMidpoint(
         (struct Unk36264 *)((struct Unk3019CWork *)gBattleWork)->unkAA8,
         (struct Unk360BC *)((struct Unk3019CWork *)gBattleWork)->unk328,
         (struct Unk360BC *)((struct Unk3019CWork *)gBattleWork)->unk37C, 0x66);

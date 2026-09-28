@@ -32,7 +32,7 @@
 - `sub_0802B90C`
 - `sub_0803EDC8`
 - `sub_080429C0`
-- `sub_08042E78`
+- [`BeybladeCollectionEntry`](BeybladeCollectionEntry.md)
 - `sub_08043974`
 - [`EventFlagOp`](EventFlagOp.md)
 - `sub_08045EF0`

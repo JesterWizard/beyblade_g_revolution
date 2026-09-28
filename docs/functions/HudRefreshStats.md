@@ -34,7 +34,7 @@
 - [`ExpBarFill`](ExpBarFill.md)
 - [`ExpLevel`](ExpLevel.md)
 - [`BitBeastLevel`](BitBeastLevel.md)
-- `sub_08042E78`
+- [`BeybladeCollectionEntry`](BeybladeCollectionEntry.md)
 
 ## Callers
 

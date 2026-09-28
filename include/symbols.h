@@ -21,6 +21,7 @@
 #define ExpLevel sub_0802E1EC
 #define BitBeastLevel sub_0802E210
 #define ItemListDraw sub_0802FA94
+#define BattleStepBeyblades sub_0803019C
 #define BeybladeSpinStep sub_080302E0
 #define BeybladeSteerByDpad sub_08030638
 #define ScaleRatio sub_08031124
@@ -36,10 +37,15 @@
 #define Unk346C0Init sub_08034420
 #define BtlCaptureInput sub_08034894
 #define BeybladeUpdate sub_080348E8
+#define BeybladeEffectsUpdate sub_0803531C
+#define BeybladeEffectsPlace sub_080353A0
 #define BtlPlaceSpriteAtWorld sub_08035468
 #define BeybladeMotionStep sub_08035984
 #define BeybladeCollisionResponse sub_08035AE0
+#define BeybladeHomeToward sub_08035C64
 #define BtlProjectToScreen sub_08035D68
+#define MotionSetVelocityToward sub_080360BC
+#define MotionMidpoint sub_08036264
 #define BtlApplyClampedScore sub_0803715C
 #define PaletteSlotAcquire sub_08038438
 #define PaletteSlotsRelease sub_080385DC
@@ -65,6 +71,7 @@
 #define ExpBracketTop sub_08042B78
 #define ExpBracketBase sub_08042BB0
 #define ExpBracket sub_08042BE8
+#define BeybladeCollectionEntry sub_08042E78
 #define BtlClearUnk1834 sub_080433F4
 #define MapCursorMoveStep sub_08043420
 #define MapCursorInput sub_080436B0
@@ -125,6 +132,7 @@
 #define DebugPrint sub_08067B98
 #define AnimObjCreate sub_08067BB8
 #define AnimHalfwordSum sub_08067F3C
+#define AnimDurationForKey sub_08067FC8
 #define AnimRecAt sub_08068014
 #define BtlEntitySelectByKey sub_08068020
 #define BtlEntitySelectByKeyDefault sub_080680CC
@@ -163,6 +171,7 @@
 #define BtlObjPoolReleaseChain sub_080700CC
 #define BtlObjPoolResizeChain sub_08070188
 #define BtlObjSetAffine sub_0807027C
+#define SpriteApplyAffine sub_08070354
 #define BtlObjListResort sub_08070468
 #define TextEntrySetPaletteBank sub_080705DC
 #define Unk70604Init sub_08070604
