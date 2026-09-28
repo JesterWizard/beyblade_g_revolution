@@ -12,9 +12,6 @@ With the flag set, the launcher block of that function is skipped, so the health
 | --- | --- |
 | `include/runtime.h` | Field `infiniteLauncherHealth` |
 | `configs/runtime.c` | The value |
-| `src_custom/part_health.c` | Shared replacement for both part-health flags |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$3D51C` |
-| `Makefile` | `part_health.c` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 

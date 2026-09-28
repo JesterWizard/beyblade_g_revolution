@@ -12,9 +12,6 @@ With the flag set, that mask is skipped. The result is clamped to 0..32767, whic
 | --- | --- |
 | `include/runtime.h` | Field `uncapBitBeastExp` |
 | `configs/runtime.c` | The value |
-| `src_custom/bitbeast_exp.c` | Replacement |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$3EAC0` |
-| `Makefile` | `bitbeast_exp.c` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 

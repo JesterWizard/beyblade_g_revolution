@@ -12,9 +12,6 @@ This byte multiplies that argument before it is stored. `1` is retail speed. `2`
 | --- | --- |
 | `include/runtime.h` | Field `overworldSpeed` |
 | `configs/runtime.c` | The value |
-| `src_custom/overworld_speed.s` | `OverworldSpeed__Replacement` |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$41E88` |
-| `Makefile` | `overworld_speed.s` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 

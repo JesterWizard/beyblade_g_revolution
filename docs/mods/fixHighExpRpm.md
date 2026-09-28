@@ -12,9 +12,6 @@ With the flag set, a non-positive player-0 RPM is rebuilt with an unsigned multi
 | --- | --- |
 | `include/runtime.h` | Field `fixHighExpRpm` |
 | `configs/runtime.c` | The value |
-| `src_custom/high_exp_rpm.c` | Replacement |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$302E0` |
-| `Makefile` | `high_exp_rpm.c` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 

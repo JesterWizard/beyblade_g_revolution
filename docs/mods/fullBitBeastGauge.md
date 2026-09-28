@@ -12,9 +12,6 @@ With the flag set, player 0's reading is forced to 36 and the bar frame is force
 | --- | --- |
 | `include/runtime.h` | Field `fullBitBeastGauge` |
 | `configs/runtime.c` | The value |
-| `src_custom/bitbeast_gauge.c` | Replacement |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$31094` |
-| `Makefile` | `bitbeast_gauge.c` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 

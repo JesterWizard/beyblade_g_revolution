@@ -12,9 +12,6 @@ With the flag set, the live blade table is snapshotted first, the retail clear a
 | --- | --- |
 | `include/runtime.h` | Field `keepBitBeastExp` |
 | `configs/runtime.c` | The value |
-| `src_custom/save_bitbeast.c` | Replacement |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$44E54` |
-| `Makefile` | `save_bitbeast.c` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 

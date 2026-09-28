@@ -12,9 +12,6 @@ With the flag set, a loss takes the same spare path retail uses for those exempt
 | --- | --- |
 | `include/runtime.h` | Field `keepBeybladeOnLoss` |
 | `configs/runtime.c` | The value |
-| `src_custom/keep_blade.s` | `KeepBladeOnLoss__Replacement` |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$380E0` |
-| `Makefile` | `keep_blade.s` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 

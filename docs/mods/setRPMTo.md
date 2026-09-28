@@ -12,9 +12,6 @@ After the retail launch formula in `sub_0803CECC`, player 0's launch RPM and spi
 | --- | --- |
 | `include/runtime.h` | Field `setRPMTo` |
 | `configs/runtime.c` | The value |
-| `src_custom/start_rpm.s` | `StartRpm__Replacement` and `StartRpm_Finish` |
-| `src_custom/LynJump.event` | Stub at ROM file offset `$3CECC` |
-| `Makefile` | `start_rpm.s` is linked only for `make HACKS=1 modern` |
 
 ## Functions
 
