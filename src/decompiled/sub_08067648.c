@@ -37,7 +37,7 @@ u16 sub_08067648(u16 address, u32 data_arg, u32 mode_arg)
     }
     *ptr-- = 0;
     *ptr = 1;
-    sub_08067504(buffer, (void *)0x0D000000, gUnk_030009B0->unk08 + 0x43);
+    EepromDmaTransfer(buffer, (void *)0x0D000000, gUnk_030009B0->unk08 + 0x43);
 
     result = 0;
     status = 0;

@@ -30,8 +30,8 @@ s32 EepromReadBlock(u32 addr, void *out)
     }
     *p-- = 1;
     *p = 1;
-    sub_08067504(buf, (void *)0x0D000000, gData_030009B0->unk08 + 3);
-    sub_08067504((void *)0x0D000000, buf, 0x44);
+    EepromDmaTransfer(buf, (void *)0x0D000000, gData_030009B0->unk08 + 3);
+    EepromDmaTransfer((void *)0x0D000000, buf, 0x44);
     p = &buf[4];
     dst += 3;
     for (i = 0; i < 4; i++)

@@ -5,7 +5,7 @@
 // @ 0x0802bad4
 // This caller was built against an older (s8, s8, u8) prototype of
 // sub_0803DEC8; its definition takes (u16, u8, u8).
-#define sub_0803DEC8(a, b, c) ((void (*)(s8, s8, u8))sub_0803DEC8)(a, b, c)
+#define BeybladeRecordClaimS8(a, b, c) ((void (*)(s8, s8, u8))sub_0803DEC8)(a, b, c)
 
 // Claims the first free Unk1694 slot (word 0xFF0000FF) for (kind, group, c, d),
 // if the group still has room. Group 1 first registers the entry through
@@ -30,7 +30,7 @@ s32 sub_0802BAD4(u8 kind, u8 group, u8 c, u8 d)
                 err = sub_0802C3DC(1, kind, NULL);
                 if (err == 0)
                 {
-                    sub_0803DEC8(kind, d, i);
+                    BeybladeRecordClaimS8(kind, d, i);
                     gMainWorkPtr->unk1694[i].unk02 = err;
                     gMainWorkPtr->unk1694[i].unk00 = kind;
                     gMainWorkPtr->unk1694[i].unk03 = group;

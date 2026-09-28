@@ -37,16 +37,16 @@
 - `sub_0803DDD8`
 - `sub_0803DE00` _(not one of the 633 functions)_
 - `sub_0803E1F4`
-- `sub_0803E328`
-- `sub_0803E374`
-- `sub_0803E3C0`
+- [`BeybladeAttackRating`](BeybladeAttackRating.md)
+- [`BeybladeDefenseRating`](BeybladeDefenseRating.md)
+- [`BeybladeEnduranceRating`](BeybladeEnduranceRating.md)
 - [`TextSetCursor`](TextSetCursor.md)
 - [`TextDrawAlign`](TextDrawAlign.md)
 - [`TextGetAreaWidth`](TextGetAreaWidth.md)
 - [`TextRowSetPaletteBank`](TextRowSetPaletteBank.md)
 - [`BtlObjPoolAlloc`](BtlObjPoolAlloc.md)
 - [`BtlObjPoolFree`](BtlObjPoolFree.md)
-- `sub_0806FF58`
+- [`SpriteInitFromTemplate`](SpriteInitFromTemplate.md)
 - [`TextEntrySetPaletteBank`](TextEntrySetPaletteBank.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 

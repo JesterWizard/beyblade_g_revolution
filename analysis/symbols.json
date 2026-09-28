@@ -1,6 +1,6 @@
 {
-  "count": 109,
-  "generated": "2026-09-28T09:41:03Z",
+  "count": 167,
+  "generated": "2026-09-28T09:49:59Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -127,6 +127,45 @@
       "symbol": "BitBeastLevel",
       "updated": "2026-09-25"
     },
+    "0x0802FA94": {
+      "aliases": [
+        "sub_0802FA94"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "draws the three visible rows of the gData_03000278 item list with names and per-language category labels"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ItemListDraw",
+      "updated": "2026-09-28"
+    },
+    "0x080302E0": {
+      "aliases": [
+        "sub_080302E0"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "advances the battler's spin angle by speed/0x900 each frame and updates its sprite (the per-frame spin step in docs/mechanics.md)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeSpinStep",
+      "updated": "2026-09-28"
+    },
+    "0x08030638": {
+      "aliases": [
+        "sub_08030638"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "nudges battler A's motion by the d-pad direction in unk302, scaled and rotated into camera space by -unkAA8.unk14"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeSteerByDpad",
+      "updated": "2026-09-28"
+    },
     "0x08031124": {
       "aliases": [
         "sub_08031124"
@@ -167,6 +206,19 @@
       "symbol": "BtlSetTimer118",
       "updated": "2026-09-22"
     },
+    "0x08032908": {
+      "aliases": [
+        "sub_08032908"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "frees battle work buffers, releases pooled objects and entries"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleTeardown",
+      "updated": "2026-09-28"
+    },
     "0x08032DC4": {
       "aliases": [
         "sub_08032DC4"
@@ -195,6 +247,32 @@
       "symbol": "BtlSetMode1F90",
       "updated": "2026-09-22"
     },
+    "0x08033188": {
+      "aliases": [
+        "sub_08033188"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "slides the language banner text in until A or START, then out"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleBannerScroll",
+      "updated": "2026-09-28"
+    },
+    "0x0803370C": {
+      "aliases": [
+        "sub_0803370C"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "counts the floating score digits (BattleWork+0xB54) up to target, lays them out and eases their position"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleScorePopupTick",
+      "updated": "2026-09-28"
+    },
     "0x08033878": {
       "aliases": [
         "sub_08033878"
@@ -208,6 +286,19 @@
       "source": "ai",
       "symbol": "BtlClearState",
       "updated": "2026-09-22"
+    },
+    "0x080338F0": {
+      "aliases": [
+        "sub_080338F0"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "advances a key-combo tracker: key must match the next combo table entry within 60 frames or the combo resets"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlKeyComboStep",
+      "updated": "2026-09-28"
     },
     "0x08034420": {
       "aliases": [
@@ -237,6 +328,71 @@
       "symbol": "BtlCaptureInput",
       "updated": "2026-09-22"
     },
+    "0x080348E8": {
+      "aliases": [
+        "sub_080348E8"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "per-frame update of a battle participant: animation/collision step, input, optional attack (sub_08034A68), then timed states"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeUpdate",
+      "updated": "2026-09-28"
+    },
+    "0x08035468": {
+      "aliases": [
+        "sub_08035468"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "projects (x,y,z) through the battle camera (BattleWork.unkAA8) and places the source's sprite there"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlPlaceSpriteAtWorld",
+      "updated": "2026-09-28"
+    },
+    "0x08035984": {
+      "aliases": [
+        "sub_08035984"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "per-frame motion: heading from velocity angle, clamp, integrate position/velocity/accel, damping, sine wobble of the spinning top"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeMotionStep",
+      "updated": "2026-09-28"
+    },
+    "0x08035AE0": {
+      "aliases": [
+        "sub_08035AE0"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "sphere overlap between two motion objects: pushes both apart along the contact normal and exchanges velocity"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeCollisionResponse",
+      "updated": "2026-09-28"
+    },
+    "0x08035D68": {
+      "aliases": [
+        "sub_08035D68"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "rotates world x/y/z by the battle camera angle, scales by depth and places the sprite on screen"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlProjectToScreen",
+      "updated": "2026-09-28"
+    },
     "0x0803715C": {
       "aliases": [
         "sub_0803715C"
@@ -263,6 +419,19 @@
       "symbol": "PaletteSlotAcquire",
       "updated": "2026-09-28"
     },
+    "0x080385DC": {
+      "aliases": [
+        "sub_080385DC"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "releases palette slots lo..hi: clears in-use bits, resets key/refcount to 0xFFFF (pair of PaletteSlotAcquire)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteSlotsRelease",
+      "updated": "2026-09-28"
+    },
     "0x08039BD4": {
       "aliases": [
         "sub_08039BD4"
@@ -275,6 +444,58 @@
       "source": "ai",
       "symbol": "PartMenuRebuild",
       "updated": "2026-09-25"
+    },
+    "0x0803C500": {
+      "aliases": [
+        "sub_0803C500"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "prints 100 - miss into the launch HUD box and stores it as BattleWork.unk1F74, the launch power meter (docs/mechanics.md)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "LaunchShowPowerMeter",
+      "updated": "2026-09-28"
+    },
+    "0x0803C5DC": {
+      "aliases": [
+        "sub_0803C5DC"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "prints the hit value into the second launch box once, stores BattleWork.unk1F76 (boost meter)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "LaunchShowBoostMeter",
+      "updated": "2026-09-28"
+    },
+    "0x0803D284": {
+      "aliases": [
+        "sub_0803D284"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "lays out a string as a centred row of glyph sprites in BattleWork.unk0BCC (48 entries)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleTextGlyphRow",
+      "updated": "2026-09-28"
+    },
+    "0x0803DEC8": {
+      "aliases": [
+        "sub_0803DEC8"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "claims the first free MainWork.unk08D0 record (0x53 slots, flag unk087C) and fills its part bytes (ring 1D, disk 1E, base 20) from template gData_0807A1F4 or a sub_08042E78 blade"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeRecordClaim",
+      "updated": "2026-09-28"
     },
     "0x0803E258": {
       "aliases": [
@@ -289,6 +510,58 @@
       "source": "ai",
       "symbol": "Unk8D0FindActiveById",
       "updated": "2026-09-23"
+    },
+    "0x0803E2AC": {
+      "aliases": [
+        "sub_0803E2AC"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "sums the attack/defense/endurance triples of attack ring (unk1D), weight disk (unk1E) and blade base (unk20); returns 0 Attack (atk>8), 1 Defence (def>8), 2 Endurance (def>5 && end>5), 3 Combination (docs/mechanics.md)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeGetType",
+      "updated": "2026-09-28"
+    },
+    "0x0803E328": {
+      "aliases": [
+        "sub_0803E328"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "attack sum of ring + disk + base, /3 - 1: the status screen star rating (docs/mechanics.md)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeAttackRating",
+      "updated": "2026-09-28"
+    },
+    "0x0803E374": {
+      "aliases": [
+        "sub_0803E374"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "byte 1 (defense) of the part stat rows summed, /3 - 1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeDefenseRating",
+      "updated": "2026-09-28"
+    },
+    "0x0803E3C0": {
+      "aliases": [
+        "sub_0803E3C0"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "byte 2 (endurance) of the part stat rows summed, /3 - 1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeEnduranceRating",
+      "updated": "2026-09-28"
     },
     "0x0803E440": {
       "aliases": [
@@ -331,6 +604,32 @@
       "symbol": "MenuDispatchLoop",
       "updated": "2026-09-25"
     },
+    "0x080415FC": {
+      "aliases": [
+        "sub_080415FC"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "per-frame: frame callback (unless unk0854 bit 0), phase callback for unk0804, then the always-on callback"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MainCallbacksRun",
+      "updated": "2026-09-28"
+    },
+    "0x080416C4": {
+      "aliases": [
+        "sub_080416C4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "builds the four HUD digit/bar sprites from a->unk248 and enables their BG layers"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "HudBuildDigitSprites",
+      "updated": "2026-09-28"
+    },
     "0x0804188C": {
       "aliases": [
         "sub_0804188C"
@@ -342,6 +641,45 @@
       "kind": "function",
       "source": "ai",
       "symbol": "SceneObjsUpdateAll",
+      "updated": "2026-09-28"
+    },
+    "0x080419B0": {
+      "aliases": [
+        "sub_080419B0"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "takes a free object from the gData_03000534 pool (max 0x20 live), initialises it with AnimObjCreate, appends to gData_03000480"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneObjSpawn",
+      "updated": "2026-09-28"
+    },
+    "0x08041B74": {
+      "aliases": [
+        "sub_08041B74"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "removes the live object bound to (a,b), parks it off-screen and swaps the last slot in"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneObjDespawn",
+      "updated": "2026-09-28"
+    },
+    "0x08042784": {
+      "aliases": [
+        "sub_08042784"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "pushes {a, cursor x, cursor y} onto the 32-slot history ring while recording is enabled"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorHistoryPush",
       "updated": "2026-09-28"
     },
     "0x08042B78": {
@@ -397,6 +735,19 @@
       "symbol": "BtlClearUnk1834",
       "updated": "2026-09-22"
     },
+    "0x08043420": {
+      "aliases": [
+        "sub_08043420"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "steps the 24.8 cursor position one unit toward the target point along its direction (phase 1 of MapCursorInput)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MapCursorMoveStep",
+      "updated": "2026-09-28"
+    },
     "0x080436B0": {
       "aliases": [
         "sub_080436B0"
@@ -449,6 +800,19 @@
       "symbol": "FieldEnter",
       "updated": "2026-09-28"
     },
+    "0x0804438C": {
+      "aliases": [
+        "sub_0804438C"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "11-step brightness fade: mode -1 darkens by 16 per step, mode 1 brightens (cap 0xB8) and restores DISPCNT"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ScreenBrightnessFade",
+      "updated": "2026-09-28"
+    },
     "0x08044A8C": {
       "aliases": [
         "sub_08044A8C"
@@ -477,6 +841,19 @@
       "symbol": "BtlClearUnk1688Entry",
       "updated": "2026-09-22"
     },
+    "0x08044FB0": {
+      "aliases": [
+        "sub_08044FB0"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "clears save slot `index` (0x1F60 bytes) and fills it from 8-byte EEPROM blocks via EepromReadBlock with retries"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SaveSlotLoadFromEeprom",
+      "updated": "2026-09-28"
+    },
     "0x08045198": {
       "aliases": [
         "sub_08045198"
@@ -501,6 +878,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "SaveDataRead",
+      "updated": "2026-09-28"
+    },
+    "0x08045D3C": {
+      "aliases": [
+        "sub_08045D3C"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "operations on the 256-bit event flag set gData_03000610: clear all/clear/set/toggle/test, save/load"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "EventFlagOp",
       "updated": "2026-09-28"
     },
     "0x08046230": {
@@ -542,6 +932,32 @@
       "symbol": "FieldUpdateFrame",
       "updated": "2026-09-28"
     },
+    "0x08047624": {
+      "aliases": [
+        "sub_08047624"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "counts pixel steps from the cursor to the next 8-pixel boundary in direction mode"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorStepsToTile",
+      "updated": "2026-09-28"
+    },
+    "0x0804DB28": {
+      "aliases": [
+        "sub_0804DB28"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "resets the nine scene objects and lays eight out in a 4x2 grid from the scene's gData_0807BE04 source"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneObjPoolRebuild",
+      "updated": "2026-09-28"
+    },
     "0x0804FFCC": {
       "aliases": [
         "sub_0804FFCC"
@@ -553,6 +969,45 @@
       "kind": "function",
       "source": "ai",
       "symbol": "DetailPanelDraw",
+      "updated": "2026-09-28"
+    },
+    "0x08051BBC": {
+      "aliases": [
+        "sub_08051BBC"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "steps BLDALPHA EVA down from 16 and EVB up from 0 once per frame until EVA is 0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BlendFadeInLoop",
+      "updated": "2026-09-28"
+    },
+    "0x08056D68": {
+      "aliases": [
+        "sub_08056D68"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "dispatches a script event by its 16-bit key; args start at unk08"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ScriptDispatchEvent",
+      "updated": "2026-09-28"
+    },
+    "0x08059DC8": {
+      "aliases": [
+        "sub_08059DC8"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "runs a script, dispatching each command through the handler table until one sets done"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ScriptRun",
       "updated": "2026-09-28"
     },
     "0x080603E0": {
@@ -569,6 +1024,19 @@
       "source": "ai",
       "symbol": "BtlSetAllUnk1710",
       "updated": "2026-09-22"
+    },
+    "0x080607BC": {
+      "aliases": [
+        "sub_080607BC"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "writes BLDCNT/BLDY from the fade state and steps the BLDY level every (unk09+1) frames, bouncing at 15"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BlendFadeTick",
+      "updated": "2026-09-28"
     },
     "0x08060C30": {
       "aliases": [
@@ -781,6 +1249,19 @@
       "symbol": "Unk62044OffsetPoints",
       "updated": "2026-09-25"
     },
+    "0x08062728": {
+      "aliases": [
+        "sub_08062728"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "zeroes a->unk08 words starting at a->unk04"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BufferClearWords",
+      "updated": "2026-09-28"
+    },
     "0x08062790": {
       "aliases": [
         "sub_08062790"
@@ -822,6 +1303,71 @@
       "source": "ai",
       "symbol": "ObjPalLoadSlot",
       "updated": "2026-09-25"
+    },
+    "0x08062AF8": {
+      "aliases": [
+        "sub_08062AF8"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "finds table[key] in the 16-slot palette pool or claims a free slot, uploads 32 bytes to OBJ palette RAM, returns slot or -1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ScenePaletteAcquire",
+      "updated": "2026-09-28"
+    },
+    "0x08062CF4": {
+      "aliases": [
+        "sub_08062CF4"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "packs an RGB byte triple into BGR555 at OBJ palette entry idx"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ObjPaletteSetRgb",
+      "updated": "2026-09-28"
+    },
+    "0x08062D50": {
+      "aliases": [
+        "sub_08062D50"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "packs an RGB byte triple into BGR555 at BG palette entry idx"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgPaletteSetRgb",
+      "updated": "2026-09-28"
+    },
+    "0x08062D80": {
+      "aliases": [
+        "sub_08062D80"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "walks BG palette entries a..b adding (c==0) or subtracting (c==1) d from each channel, clamped"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgPaletteShiftRange",
+      "updated": "2026-09-28"
+    },
+    "0x08062E88": {
+      "aliases": [
+        "sub_08062E88"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "OBJ-palette twin of BgPaletteShiftRange (reads sub_08062CC8, writes ObjPaletteSetRgb)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ObjPaletteShiftRange",
+      "updated": "2026-09-28"
     },
     "0x080674A0": {
       "aliases": [
@@ -895,6 +1441,19 @@
       "symbol": "VBlankIntrWait",
       "updated": "2026-09-22"
     },
+    "0x08067504": {
+      "aliases": [
+        "sub_08067504"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "EEPROM DMA3 transfer with interrupts off and WAITCNT set from the EEPROM config"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "EepromDmaTransfer",
+      "updated": "2026-09-28"
+    },
     "0x08067584": {
       "aliases": [
         "sub_08067584"
@@ -953,6 +1512,19 @@
       "source": "ai",
       "symbol": "DebugPrint",
       "updated": "2026-09-22"
+    },
+    "0x08067BB8": {
+      "aliases": [
+        "sub_08067BB8"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "constructs an animated object from its template: 24.8 position, state defaults, frame/palette setup"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimObjCreate",
+      "updated": "2026-09-28"
     },
     "0x08067F3C": {
       "aliases": [
@@ -1074,6 +1646,19 @@
       "symbol": "AffineBgUpdate",
       "updated": "2026-09-28"
     },
+    "0x080691E4": {
+      "aliases": [
+        "sub_080691E4"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "sprite width/height from OAM shape/size bits, storing log2 w/h"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "OamShapeToSize",
+      "updated": "2026-09-28"
+    },
     "0x08069270": {
       "aliases": [
         "sub_08069270"
@@ -1127,6 +1712,19 @@
       "symbol": "BgGetVofsReg",
       "updated": "2026-09-22"
     },
+    "0x08069B78": {
+      "aliases": [
+        "sub_08069B78"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "sets the priority bits of BG0-BG3 control registers"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgSetPriorities",
+      "updated": "2026-09-28"
+    },
     "0x08069DBC": {
       "aliases": [
         "sub_08069DBC"
@@ -1169,6 +1767,19 @@
       "symbol": "HeapFree",
       "updated": "2026-09-23"
     },
+    "0x0806A4D8": {
+      "aliases": [
+        "sub_0806A4D8"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "first-fit insert of a size-byte block into the sorted region list at head"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "HeapRegionInsert",
+      "updated": "2026-09-28"
+    },
     "0x0806B2F0": {
       "aliases": [
         "sub_0806B2F0"
@@ -1195,6 +1806,32 @@
       "symbol": "GlyphBlit2x2",
       "updated": "2026-09-28"
     },
+    "0x0806BC0C": {
+      "aliases": [
+        "sub_0806BC0C"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "binds a resource header: resolves three section offsets and builds up to 64 entry pointers"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ResourceBind",
+      "updated": "2026-09-28"
+    },
+    "0x0806BE20": {
+      "aliases": [
+        "sub_0806BE20"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "walks a size-prefixed entry table to entry c"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ResourceEntryAt",
+      "updated": "2026-09-28"
+    },
     "0x0806C388": {
       "aliases": [
         "sub_0806C388"
@@ -1206,6 +1843,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "CollisionQuadtreeBuild",
+      "updated": "2026-09-28"
+    },
+    "0x0806DF38": {
+      "aliases": [
+        "sub_0806DF38"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "collects up to maxCount (track, key) hits for a key across keyframe tracks"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "KeyframeFindHits",
+      "updated": "2026-09-28"
+    },
+    "0x0806E31C": {
+      "aliases": [
+        "sub_0806E31C"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "samples keyframe track b at time d, linearly interpolating x/y/z between the surrounding keys"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "KeyframeTrackSample",
       "updated": "2026-09-28"
     },
     "0x0806E7BC": {
@@ -1246,6 +1909,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BtlObjSystemInit",
+      "updated": "2026-09-28"
+    },
+    "0x0806FBF8": {
+      "aliases": [
+        "sub_0806FBF8"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "returns span [start,start+size) to the sorted free list at gData_03004088, merging neighbours"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "VramSpanFree",
       "updated": "2026-09-28"
     },
     "0x0806FDD0": {
@@ -1308,6 +1984,19 @@
       "symbol": "BtlObjListMoveToHead",
       "updated": "2026-09-22"
     },
+    "0x0806FF58": {
+      "aliases": [
+        "sub_0806FF58"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "initialises a sprite from a template at (x,y): packs OAM attribute words, palette, priority, flip"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SpriteInitFromTemplate",
+      "updated": "2026-09-28"
+    },
     "0x0807000C": {
       "aliases": [
         "sub_0807000C"
@@ -1320,6 +2009,19 @@
       "source": "ai",
       "symbol": "BtlObjPoolAllocChain",
       "updated": "2026-09-25"
+    },
+    "0x080700CC": {
+      "aliases": [
+        "sub_080700CC"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "returns a batch's nodes to the free list and unlinks the run from the active list (pair of BtlObjPoolAllocChain)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjPoolReleaseChain",
+      "updated": "2026-09-28"
     },
     "0x08070188": {
       "aliases": [
@@ -1345,6 +2047,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BtlObjSetAffine",
+      "updated": "2026-09-28"
+    },
+    "0x08070468": {
+      "aliases": [
+        "sub_08070468"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "moves a node to its sorted position in the gData_030040A4 list after its key changes"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjListResort",
       "updated": "2026-09-28"
     },
     "0x080705DC": {
@@ -1463,6 +2178,19 @@
       "symbol": "MemClear",
       "updated": "2026-09-22"
     },
+    "0x080733E4": {
+      "aliases": [
+        "sub_080733E4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "appends src to dst within size bytes (skipping newlines)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringAppend",
+      "updated": "2026-09-28"
+    },
     "0x080735DC": {
       "aliases": [
         "sub_080735DC"
@@ -1478,6 +2206,19 @@
       "source": "ai",
       "symbol": "TextFormatInt",
       "updated": "2026-09-22"
+    },
+    "0x08073910": {
+      "aliases": [
+        "sub_08073910"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "copies the next whitespace-delimited word of src into dst, returns the index after it"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringNextWord",
+      "updated": "2026-09-28"
     },
     "0x08073988": {
       "aliases": [
@@ -1505,6 +2246,19 @@
       "source": "ai",
       "symbol": "TextHasNewline",
       "updated": "2026-09-25"
+    },
+    "0x08073AEC": {
+      "aliases": [
+        "sub_08073AEC"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "copies src to dst expanding every delim byte into the string repl, bounded by size"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringExpandDelim",
+      "updated": "2026-09-28"
     }
   }
 }

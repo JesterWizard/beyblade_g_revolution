@@ -22,7 +22,7 @@ void MenuDispatchLoop(void)
     do
     {
         sub_080604C8();
-        sub_080607BC();
+        BlendFadeTick();
         VBlankIntrWait();
         sub_0806A6F8();
         if (!(state.unk324 & 1))

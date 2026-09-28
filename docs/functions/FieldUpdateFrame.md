@@ -39,12 +39,12 @@
 - [`SceneObjsUpdateAll`](SceneObjsUpdateAll.md)
 - `sub_08041E88` _(not one of the 633 functions)_
 - `sub_0804245C`
-- `sub_08042784`
+- [`CursorHistoryPush`](CursorHistoryPush.md)
 - `sub_080462D4`
 - `sub_080474AC`
-- `sub_08047624`
+- [`CursorStepsToTile`](CursorStepsToTile.md)
 - `sub_08059B74`
-- `sub_08059DC8`
+- [`ScriptRun`](ScriptRun.md)
 - `sub_08060428`
 - `sub_08062758`
 - `sub_08062A14`
@@ -57,13 +57,13 @@
 - `sub_0806A6F8`
 - `sub_0806C7D4`
 - `sub_0806EE48`
-- `sub_08070468`
+- [`BtlObjListResort`](BtlObjListResort.md)
 - `sub_08073C40` _(not one of the 633 functions)_
 
 ## Callers
 
 - [`FieldEnter`](FieldEnter.md)
-- `sub_0804438C`
+- [`ScreenBrightnessFade`](ScreenBrightnessFade.md)
 
 ## ROM data referenced
 

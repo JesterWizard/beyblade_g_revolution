@@ -6,7 +6,7 @@
 /* match-flags: -O1 */
 // EEPROM library (built at -O1): DMA3 transfer with interrupts off and the
 // cartridge wait state (WAITCNT bits 8-10) set from the EEPROM config.
-void sub_08067504(void *source, void *destination, u16 count)
+void EepromDmaTransfer(void *source, void *destination, u16 count)
 {
     u16 ime;
     u16 waitcnt;

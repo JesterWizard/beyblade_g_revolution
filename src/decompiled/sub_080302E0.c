@@ -2,7 +2,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-void sub_080302E0(struct Unk346C0 *a)
+void BeybladeSpinStep(struct Unk346C0 *a)
 {
     s32 speed;
     s32 angle;

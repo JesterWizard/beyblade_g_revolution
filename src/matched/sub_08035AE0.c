@@ -7,7 +7,7 @@
 // radii, push both apart along the contact normal and exchange velocity scaled
 // by each mass (unk34) and a random 1.0-2.0 factor. Returns 1 on contact.
 // (The do/while(0) scope around the setup is needed for register allocation.)
-s32 sub_08035AE0(
+s32 BeybladeCollisionResponse(
     struct Unk346C0Inner *a, struct Unk346C0Inner *b)
 {
     s32 result;

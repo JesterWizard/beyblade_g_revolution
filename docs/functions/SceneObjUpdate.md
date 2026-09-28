@@ -41,6 +41,6 @@
 - `sub_08042718`
 - [`FieldEnter`](FieldEnter.md)
 - [`FieldUpdateFrame`](FieldUpdateFrame.md)
-- `sub_0804DB28`
+- [`SceneObjPoolRebuild`](SceneObjPoolRebuild.md)
 - `sub_08052FC8`
 - `sub_0805D1AC`

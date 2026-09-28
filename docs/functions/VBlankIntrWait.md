@@ -28,11 +28,11 @@
 - `sub_0802EECC`
 - `sub_0802FD80`
 - [`BtlFrameUpdate`](BtlFrameUpdate.md)
-- `sub_08033188`
+- [`BattleBannerScroll`](BattleBannerScroll.md)
 - `sub_0803A1E4`
 - `sub_0803B078`
 - [`MenuDispatchLoop`](MenuDispatchLoop.md)
-- `sub_080416C4`
+- [`HudBuildDigitSprites`](HudBuildDigitSprites.md)
 - `sub_08043C70`
 - [`SaveDataVerify`](SaveDataVerify.md)
 - [`FieldUpdateFrame`](FieldUpdateFrame.md)
@@ -46,7 +46,7 @@
 - [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08050864`
 - `sub_08051444`
-- `sub_08051BBC`
+- [`BlendFadeInLoop`](BlendFadeInLoop.md)
 - `sub_08052FC8`
 - `sub_080538A0`
 - `sub_08054108`

@@ -8,7 +8,7 @@
 #include "battle.h"
 #include "data_symbols.h"
 
-void sub_0803C5DC(s32 a)
+void LaunchShowBoostMeter(s32 a)
 {
     struct BattleWork **btl_loc;
     struct BattleWork *btl;
@@ -25,7 +25,7 @@ void sub_0803C5DC(s32 a)
     sub_08061E8C((struct Unk61E8C *)&(*btl_loc)->unk1F38, (void *)gData_080B72F3, (struct Unk61E8CSrc *)gData_082BF600, 0xF0, 0x78);
     TextFormatInt(a, buf_b, 0x20);
     table = gData_080971D8;
-    sub_08073AEC(table[gMainWorkPtr->unk1818], buf_a, buf_b, 0x40, 0x20);
+    StringExpandDelim(table[gMainWorkPtr->unk1818], buf_a, buf_b, 0x40, 0x20);
     sub_08061EF8(&(*btl_loc)->unk1F38, buf_a, 0, 0x4E, flag, 0xFFFF, flag);
     BtlObjTableRemove(buf_a);
     BtlObjTableRemove(buf_b);

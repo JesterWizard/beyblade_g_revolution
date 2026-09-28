@@ -7,7 +7,7 @@
 // string `repl`. At most `size` bytes are copied; past that each would-be
 // write stores 0 at dst[size - 1] instead (and an overlong `repl` never
 // advances, so it spins forever). Always NUL-terminates dst.
-void sub_08073AEC(const u8 *src, u8 *dst, const u8 *repl, u8 delim, s32 size)
+void StringExpandDelim(const u8 *src, u8 *dst, const u8 *repl, u8 delim, s32 size)
 {
     s32 len;
     u8 ch;

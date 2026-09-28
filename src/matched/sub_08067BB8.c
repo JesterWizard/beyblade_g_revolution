@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Construct an animated object from its template: position (x, y, z in pixels,
 // stored 24.8), defaults for every state field, then frame/palette setup.
-void sub_08067BB8(struct Unk67BB8 *obj, struct Unk67BB8Source *src, s32 arg2, s32 x, s32 y, s32 z, s32 arg6)
+void AnimObjCreate(struct Unk67BB8 *obj, struct Unk67BB8Source *src, s32 arg2, s32 x, s32 y, s32 z, s32 arg6)
 {
     obj->unk00 = src;
     obj->unk58 = gUnk_03000180.unk00;

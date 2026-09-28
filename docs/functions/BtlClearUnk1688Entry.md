@@ -32,4 +32,4 @@
 ## Callers
 
 - [`SaveDataVerify`](SaveDataVerify.md)
-- `sub_08044FB0`
+- [`SaveSlotLoadFromEeprom`](SaveSlotLoadFromEeprom.md)

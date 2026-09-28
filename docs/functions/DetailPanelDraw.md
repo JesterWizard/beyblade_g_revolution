@@ -38,10 +38,10 @@
 - `sub_0803DD88`
 - `sub_0803DE00` _(not one of the 633 functions)_
 - `sub_0803E1F4`
-- `sub_0803E2AC`
-- `sub_0803E328`
-- `sub_0803E374`
-- `sub_0803E3C0`
+- [`BeybladeGetType`](BeybladeGetType.md)
+- [`BeybladeAttackRating`](BeybladeAttackRating.md)
+- [`BeybladeDefenseRating`](BeybladeDefenseRating.md)
+- [`BeybladeEnduranceRating`](BeybladeEnduranceRating.md)
 - `sub_080505AC` _(not one of the 633 functions)_
 - `sub_080507B8`
 - [`TextSetCursor`](TextSetCursor.md)
@@ -50,7 +50,7 @@
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`BtlObjPoolAlloc`](BtlObjPoolAlloc.md)
 - [`BtlObjPoolFree`](BtlObjPoolFree.md)
-- `sub_0806FF58`
+- [`SpriteInitFromTemplate`](SpriteInitFromTemplate.md)
 - [`TextEntrySetPaletteBank`](TextEntrySetPaletteBank.md)
 - `sub_08070AD4`
 - [`BtlObjTableAdd`](BtlObjTableAdd.md)

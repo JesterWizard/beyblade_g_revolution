@@ -30,6 +30,6 @@ void sub_08062988(struct Unk62988 *a)
         ((BlockFunc)gData_080BB8BC[0])(NULL, gUnk_030007A4, 0x2000);
         ((BlockFunc)gData_080BB8C0[0])(a, gUnk_030007A4, 0x2000);
     }
-    sub_0806BC0C(gUnk_030007B0, gUnk_030007A4);
+    ResourceBind(gUnk_030007B0, gUnk_030007A4);
 }
 

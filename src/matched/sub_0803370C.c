@@ -7,7 +7,7 @@
 // Tick the floating score digits (BattleWork+0xB54): count the shown value up
 // towards its target by 4, lay the digits out right-to-left, ease y and x
 // towards their targets, and clear the display once the timer runs out.
-void sub_0803370C(void)
+void BattleScorePopupTick(void)
 {
     s32 count;
     s32 x;

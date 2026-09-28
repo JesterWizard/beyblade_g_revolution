@@ -22,7 +22,7 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
     case 0:
         if ((state->unk2C5 & 1) || index == 0x0E || src == NULL)
             break;
-        sub_08067BB8((struct Unk67BB8 *)&state->unk1C, src, 0, 0, pos, pos, value);
+        AnimObjCreate((struct Unk67BB8 *)&state->unk1C, src, 0, 0, pos, pos, value);
         state->unk2B0 = pos;
         state->unk2B4 = pos;
         id = PaletteSlotAcquire(src);
@@ -33,7 +33,7 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
     case 1:
         if (state->unk2C5 & 2)
             break;
-        sub_08067BB8((struct Unk67BB8 *)&state->unkF8, src, 0, 0, pos, pos, value);
+        AnimObjCreate((struct Unk67BB8 *)&state->unkF8, src, 0, 0, pos, pos, value);
         id = PaletteSlotAcquire(src);
         state->unkF8.unk3A = (state->unkF8.unk3A & 1) | (id << 1);
         state->unk2C5 |= 2;
@@ -46,7 +46,7 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
             if (state->unk2C5 & 4)
                 break;
         }
-        sub_08067BB8((struct Unk67BB8 *)&state->unk1D4, src, 0, 0, pos, pos, value);
+        AnimObjCreate((struct Unk67BB8 *)&state->unk1D4, src, 0, 0, pos, pos, value);
         id = PaletteSlotAcquire(src);
         state->unk1D4.unk3A = (state->unk1D4.unk3A & 1) | (id << 1);
         state->unk2C5 |= 4;

@@ -8,7 +8,7 @@
 // (sub_0803DD88 name for kind 1) and the count; empty rows get the
 // gData_08096B5C placeholder.
 
-void sub_0802FA94(void)
+void ItemListDraw(void)
 {
     s32 i;
     u8 *buf;

@@ -5,7 +5,7 @@
 // @ 0x080415fc
 // Per-frame step: runs the frame callback (unless unk0854 bit 0), then the phase
 // callback for the current phase (unk0804), then the always-on callback.
-void sub_080415FC(void)
+void MainCallbacksRun(void)
 {
     struct MainWork *work;
 

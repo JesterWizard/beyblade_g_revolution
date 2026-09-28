@@ -38,11 +38,11 @@
 - [`BtlClearUnk1834`](BtlClearUnk1834.md)
 - `sub_08043ADC`
 - `sub_080442FC`
-- `sub_0804438C`
+- [`ScreenBrightnessFade`](ScreenBrightnessFade.md)
 - `sub_080444BC`
 - `sub_080447CC`
 - `sub_08044A20`
-- `sub_08045D3C`
+- [`EventFlagOp`](EventFlagOp.md)
 - [`FieldUpdateFrame`](FieldUpdateFrame.md)
 - `sub_080473E4`
 - `sub_08047594`
@@ -53,7 +53,7 @@
 - `sub_080611F0`
 - [`TextWindowOpen`](TextWindowOpen.md)
 - [`VramSlotsRelease`](VramSlotsRelease.md)
-- `sub_08062728`
+- [`BufferClearWords`](BufferClearWords.md)
 - [`RandRange`](RandRange.md)
 - `sub_080632F8`
 - `sub_08066440`
@@ -62,7 +62,7 @@
 - [`SceneObjUpdate`](SceneObjUpdate.md)
 - `sub_08068808`
 - `sub_08069894`
-- `sub_08069B78`
+- [`BgSetPriorities`](BgSetPriorities.md)
 - `sub_0806EE24`
 - `sub_0806EE48`
 - `sub_0806F174`

@@ -31,7 +31,7 @@
 ## Callers
 
 - `sub_0802ECD8`
-- `sub_0802FA94`
+- [`ItemListDraw`](ItemListDraw.md)
 - `sub_0803E848`
 - `sub_08047A94`
 - `sub_0804A438`

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T09:41:32Z",
+  "generated": "2026-09-28T09:51:31Z",
   "counts": {
     "matched": 581,
     "wip": 16,
@@ -715,7 +715,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ItemListDraw"
     },
     {
       "name": "sub_0802FD80",
@@ -791,7 +791,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeSpinStep"
     },
     {
       "name": "sub_08030638",
@@ -810,7 +810,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeSteerByDpad"
     },
     {
       "name": "sub_08030938",
@@ -1209,7 +1209,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BattleTeardown"
     },
     {
       "name": "sub_08032D5C",
@@ -1342,7 +1342,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BattleBannerScroll"
     },
     {
       "name": "sub_080333E4",
@@ -1418,7 +1418,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BattleScorePopupTick"
     },
     {
       "name": "sub_08033878",
@@ -1475,7 +1475,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlKeyComboStep"
     },
     {
       "name": "sub_08033958",
@@ -1988,7 +1988,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeUpdate"
     },
     {
       "name": "sub_08034A68",
@@ -2216,7 +2216,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlPlaceSpriteAtWorld"
     },
     {
       "name": "sub_0803559C",
@@ -2368,7 +2368,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeMotionStep"
     },
     {
       "name": "sub_08035AE0",
@@ -2387,7 +2387,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeCollisionResponse"
     },
     {
       "name": "sub_08035C64",
@@ -2444,7 +2444,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlProjectToScreen"
     },
     {
       "name": "sub_080360BC",
@@ -2710,7 +2710,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteSlotsRelease"
     },
     {
       "name": "sub_08038638",
@@ -2881,7 +2881,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "LaunchShowPowerMeter"
     },
     {
       "name": "sub_0803C5DC",
@@ -2900,7 +2900,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "LaunchShowBoostMeter"
     },
     {
       "name": "sub_0803C6B8",
@@ -2938,7 +2938,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BattleTextGlyphRow"
     },
     {
       "name": "sub_0803D4C4",
@@ -3109,7 +3109,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeRecordClaim"
     },
     {
       "name": "sub_0803E0CC",
@@ -3185,7 +3185,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeGetType"
     },
     {
       "name": "sub_0803E328",
@@ -3204,7 +3204,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeAttackRating"
     },
     {
       "name": "sub_0803E374",
@@ -3223,7 +3223,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeDefenseRating"
     },
     {
       "name": "sub_0803E3C0",
@@ -3242,7 +3242,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeEnduranceRating"
     },
     {
       "name": "sub_0803E440",
@@ -3736,7 +3736,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MainCallbacksRun"
     },
     {
       "name": "sub_080416C4",
@@ -3755,7 +3755,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "HudBuildDigitSprites"
     },
     {
       "name": "sub_08041774",
@@ -3850,7 +3850,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SceneObjSpawn"
     },
     {
       "name": "sub_08041B74",
@@ -3869,7 +3869,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SceneObjDespawn"
     },
     {
       "name": "sub_08041C8C",
@@ -4116,7 +4116,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CursorHistoryPush"
     },
     {
       "name": "sub_080427E8",
@@ -4420,7 +4420,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MapCursorMoveStep"
     },
     {
       "name": "sub_080435D8",
@@ -4686,7 +4686,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ScreenBrightnessFade"
     },
     {
       "name": "sub_080444BC",
@@ -4933,7 +4933,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SaveSlotLoadFromEeprom"
     },
     {
       "name": "sub_08045128",
@@ -5066,7 +5066,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "EventFlagOp"
     },
     {
       "name": "sub_08045EF0",
@@ -5332,7 +5332,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CursorStepsToTile"
     },
     {
       "name": "sub_08047A94",
@@ -5788,7 +5788,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SceneObjPoolRebuild"
     },
     {
       "name": "sub_0804E17C",
@@ -6016,7 +6016,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BlendFadeInLoop"
     },
     {
       "name": "sub_080523A4",
@@ -6396,7 +6396,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ScriptDispatchEvent"
     },
     {
       "name": "sub_08056F84",
@@ -6605,7 +6605,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ScriptRun"
     },
     {
       "name": "sub_0805D1AC",
@@ -7023,7 +7023,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BlendFadeTick"
     },
     {
       "name": "sub_080608D4",
@@ -7992,7 +7992,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BufferClearWords"
     },
     {
       "name": "sub_08062758",
@@ -8201,7 +8201,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ScenePaletteAcquire"
     },
     {
       "name": "sub_08062B9C",
@@ -8315,7 +8315,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ObjPaletteSetRgb"
     },
     {
       "name": "sub_08062D24",
@@ -8353,7 +8353,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgPaletteSetRgb"
     },
     {
       "name": "sub_08062D80",
@@ -8372,7 +8372,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgPaletteShiftRange"
     },
     {
       "name": "sub_08062E88",
@@ -8391,7 +8391,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ObjPaletteShiftRange"
     },
     {
       "name": "sub_08062F90",
@@ -8904,7 +8904,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "EepromDmaTransfer"
     },
     {
       "name": "sub_08067584",
@@ -9094,7 +9094,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "AnimObjCreate"
     },
     {
       "name": "sub_08067CE8",
@@ -9626,7 +9626,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "OamShapeToSize"
     },
     {
       "name": "sub_08069270",
@@ -9816,7 +9816,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgSetPriorities"
     },
     {
       "name": "sub_08069C14",
@@ -9949,7 +9949,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "HeapRegionInsert"
     },
     {
       "name": "sub_0806A580",
@@ -10196,7 +10196,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ResourceBind"
     },
     {
       "name": "sub_0806BDA8",
@@ -10253,7 +10253,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ResourceEntryAt"
     },
     {
       "name": "sub_0806C388",
@@ -10424,7 +10424,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "KeyframeFindHits"
     },
     {
       "name": "sub_0806E060",
@@ -10462,7 +10462,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "KeyframeTrackSample"
     },
     {
       "name": "sub_0806E420",
@@ -10747,7 +10747,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "VramSpanFree"
     },
     {
       "name": "sub_0806FDB4",
@@ -10861,7 +10861,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SpriteInitFromTemplate"
     },
     {
       "name": "sub_0807000C",
@@ -10899,7 +10899,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjPoolReleaseChain"
     },
     {
       "name": "sub_08070188",
@@ -10994,7 +10994,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjListResort"
     },
     {
       "name": "sub_080705A4",
@@ -11830,7 +11830,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringAppend"
     },
     {
       "name": "sub_08073440",
@@ -11944,7 +11944,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringNextWord"
     },
     {
       "name": "sub_08073988",
@@ -12020,7 +12020,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringExpandDelim"
     },
     {
       "name": "sub_08074144",

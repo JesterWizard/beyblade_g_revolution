@@ -35,7 +35,7 @@
 
 - `sub_0804109C`
 - [`BtlClearUnk1834`](BtlClearUnk1834.md)
-- `sub_08043420`
+- [`MapCursorMoveStep`](MapCursorMoveStep.md)
 - `sub_080435D8`
 - `sub_08045AA8`
 - `sub_08060428`

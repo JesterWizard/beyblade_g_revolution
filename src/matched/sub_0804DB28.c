@@ -8,21 +8,21 @@
 // objects, lay out eight in a 4x2 grid from the scene's gData_0807BE04 source,
 // load their palette, pick each one's animation, and set up the optional ninth
 // object when the scene has one (otherwise park it off-screen).
-void sub_0804DB28(void)
+void SceneObjPoolRebuild(void)
 {
     s32 i;
 
     for (i = 0; i < 9; i++)
         sub_08068808(&gData_03000698[i]);
 
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[0], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x34, 0, -1);
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[1], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x34, 0, -1);
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[2], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x34, 0, -1);
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[3], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x34, 0, -1);
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[4], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x6C, 0, -1);
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[5], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x6C, 0, -1);
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[6], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x6C, 0, -1);
-    sub_08067BB8((struct Unk67BB8 *)&gData_03000698[7], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x6C, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[0], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x34, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[1], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x34, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[2], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x34, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[3], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x34, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[4], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x6C, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[5], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x6C, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[6], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x6C, 0, -1);
+    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[7], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x6C, 0, -1);
 
     gData_03000698[0].unk3A = 0x1F;
     gData_03000698[1].unk3A = 0x1F;
@@ -56,7 +56,7 @@ void sub_0804DB28(void)
 
     if (gData_08098DF8[gData_03000694] != NULL && gData_080991D0[gData_03000694] != NULL)
     {
-        sub_08067BB8((struct Unk67BB8 *)&gData_03000698[8], gData_080991D0[gData_03000694], 0, 0x8C, 3, 0, -1);
+        AnimObjCreate((struct Unk67BB8 *)&gData_03000698[8], gData_080991D0[gData_03000694], 0, 0x8C, 3, 0, -1);
         _08073C4C(gData_08098DF8[gData_03000694], (void *)0x050003C0, 0x20, (void *)gData_080BB8C0[0]);
         gData_03000698[8].unk3A = 0x1D;
     }

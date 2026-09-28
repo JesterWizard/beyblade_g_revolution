@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Count the pixel steps from the cursor (MainWork x/y >> 8) to the next
 // 8-pixel boundary in direction `mode` (0 = -x, 1 = +x, 2 = -y, 3 = +y).
-s32 sub_08047624(u32 mode)
+s32 CursorStepsToTile(u32 mode)
 {
     u8 dir = mode;
     s32 x = gMainWorkPtr->unk0370 >> 8;

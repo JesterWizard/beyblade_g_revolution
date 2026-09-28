@@ -34,7 +34,7 @@
 - `sub_0803FDD0`
 - `sub_08041F88`
 - `sub_080473E4`
-- `sub_08059DC8`
+- [`ScriptRun`](ScriptRun.md)
 
 ## Callers
 

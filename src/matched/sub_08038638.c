@@ -9,6 +9,6 @@ void sub_08038638(u16 a)
         gUnk_030003CC->unk22[a] = raw - 1;
 
     if ((s16)gUnk_030003CC->unk22[a] == 0)
-        sub_080385DC(a, a);
+        PaletteSlotsRelease(a, a);
 }
 

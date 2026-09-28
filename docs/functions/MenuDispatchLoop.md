@@ -33,7 +33,7 @@
 - `sub_080604C8`
 - `sub_08060758`
 - `sub_08060798`
-- `sub_080607BC`
+- [`BlendFadeTick`](BlendFadeTick.md)
 - `sub_0806639C`
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - `sub_0806A6F8`

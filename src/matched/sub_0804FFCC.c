@@ -60,7 +60,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     else
         TextDrawAlign(text, 0xC0, 1);
     TextSetCursor(0, 0x30);
-    switch (sub_0803E2AC(rec))
+    switch (BeybladeGetType(rec))
     {
     case 0:
         strings = gData_080976EC;
@@ -125,19 +125,19 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
         panel->unk28C[5] = NULL;
     }
     panel->unk28C[1] = BtlObjPoolAlloc(0);
-    sub_0806FF58(panel->unk28C[1], (struct Unk6FF58Src *)0x08114950, 0xA300, 0xE00, 1, 0, 0, 0);
+    SpriteInitFromTemplate(panel->unk28C[1], (struct Unk6FF58Src *)0x08114950, 0xA300, 0xE00, 1, 0, 0, 0);
     panel->unk28C[1]->unk18 = _0803DE00(rec);
     TextEntrySetPaletteBank(panel->unk28C[1], 14);
     panel->unk28C[2] = BtlObjPoolAlloc(0);
-    sub_0806FF58(panel->unk28C[2], (struct Unk6FF58Src *)0x080F3C9C, 0xE00, 0x1600, 1, 0, 0, 0);
+    SpriteInitFromTemplate(panel->unk28C[2], (struct Unk6FF58Src *)0x080F3C9C, 0xE00, 0x1600, 1, 0, 0, 0);
     TextEntrySetPaletteBank(panel->unk28C[2], 14);
     panel->unk28C[2]->unk18 = ScaleRatio(rec->unk24, 100, 0xB6);
     panel->unk28C[3] = BtlObjPoolAlloc(0);
-    sub_0806FF58(panel->unk28C[3], (struct Unk6FF58Src *)0x081146E4, 0x2A00, 0x5F00, 1, 0, 0, sub_0803E328(rec));
+    SpriteInitFromTemplate(panel->unk28C[3], (struct Unk6FF58Src *)0x081146E4, 0x2A00, 0x5F00, 1, 0, 0, BeybladeAttackRating(rec));
     panel->unk28C[4] = BtlObjPoolAlloc(0);
-    sub_0806FF58(panel->unk28C[4], (struct Unk6FF58Src *)0x081146E4, 0x2A00, 0x6700, 1, 0, 0, sub_0803E374(rec));
+    SpriteInitFromTemplate(panel->unk28C[4], (struct Unk6FF58Src *)0x081146E4, 0x2A00, 0x6700, 1, 0, 0, BeybladeDefenseRating(rec));
     panel->unk28C[5] = BtlObjPoolAlloc(0);
-    sub_0806FF58(panel->unk28C[5], (struct Unk6FF58Src *)0x081146E4, 0x2A00, 0x6F00, 1, 0, 0, sub_0803E3C0(rec));
+    SpriteInitFromTemplate(panel->unk28C[5], (struct Unk6FF58Src *)0x081146E4, 0x2A00, 0x6F00, 1, 0, 0, BeybladeEnduranceRating(rec));
     TextEntrySetPaletteBank(panel->unk28C[3], 14);
     TextEntrySetPaletteBank(panel->unk28C[4], 14);
     TextEntrySetPaletteBank(panel->unk28C[5], 14);
@@ -146,7 +146,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     if (rec != NULL)
     {
         panel->unk28C[0] = BtlObjPoolAlloc(0);
-        sub_0806FF58(panel->unk28C[0], ((struct Unk4FFCCIcon *)rec)->unk14, 0x1400, 0x2800, 0, 0, 0, 2);
+        SpriteInitFromTemplate(panel->unk28C[0], ((struct Unk4FFCCIcon *)rec)->unk14, 0x1400, 0x2800, 0, 0, 0, 2);
         TextEntrySetPaletteBank(panel->unk28C[0], 15);
         ((void (*)(const void *, void *, u32))gData_080BB8C0[0])(((struct Unk4FFCCIcon *)rec)->unk18, (void *)0x050003E0, 0x20);
     }

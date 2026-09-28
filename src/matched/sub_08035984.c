@@ -5,7 +5,7 @@
 // @ 0x08035984
 // Per-frame motion step: heading byte from the velocity angle, clamp velocity,
 // integrate position/velocity/accel, apply damping, advance the sine wobble.
-void sub_08035984(struct Unk35984 *a)
+void BeybladeMotionStep(struct Unk35984 *a)
 {
     s32 speed;
     s32 sn;

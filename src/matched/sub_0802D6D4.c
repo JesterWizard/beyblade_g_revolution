@@ -8,7 +8,7 @@ void sub_0802D6D4(void)
 
     resource = BtlObjPoolAlloc(2);
     gUnk_0300026C->unk08 = resource;
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         resource, (void *)0x080D63CC,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
     TextEntrySetPaletteBank(gUnk_0300026C->unk08, 2);
@@ -21,26 +21,26 @@ void sub_0802D6D4(void)
     gUnk_0300026C->playerStrengthOnes = BtlObjPoolAlloc(0);
     gUnk_0300026C->playerExpBar = BtlObjPoolAlloc(0);
 
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         gUnk_0300026C->unk0C, (void *)0x08266DAC,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         gUnk_0300026C->unk10, (void *)0x080D6618,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0,
         gMainWorkPtr->unk1818);
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         gUnk_0300026C->playerLevelTens, (void *)0x080D6B68,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         gUnk_0300026C->playerLevelOnes, (void *)0x080D6B68,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         gUnk_0300026C->playerStrengthTens, (void *)0x080D6B68,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         gUnk_0300026C->playerStrengthOnes, (void *)0x080D6B68,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         gUnk_0300026C->playerExpBar, (void *)0x080D6D50,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
 

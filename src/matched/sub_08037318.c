@@ -23,7 +23,7 @@ void sub_08037318(struct Unk346C0 *a, u32 index_arg)
     r5 *= r0;
     r5 += r1;
     record = (struct Unk002A0Record *)r5;
-    sub_0806FF58(
+    SpriteInitFromTemplate(
         *slot,
         sub_08042B28(record->unk00),
         0xFC00,

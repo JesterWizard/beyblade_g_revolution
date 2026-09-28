@@ -11,7 +11,7 @@
 // The `pal` local hoisting the palette base is load-bearing: it keeps the base
 // live across the packing so agbcc gives it r5 (retail) instead of loading it
 // into a late scratch. old_agbcc is required for the r5/r6 split.
-void sub_08062CF4(u8 idx, u8 *rgb)
+void ObjPaletteSetRgb(u8 idx, u8 *rgb)
 {
     u16 *pal;
     u16 c;

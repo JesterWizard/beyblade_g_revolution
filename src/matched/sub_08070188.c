@@ -57,7 +57,7 @@ struct Unk6FDB4 *BtlObjPoolResizeChain(struct Unk700CCHdr *hdr, u16 count, u16 k
         return hdr->unk00;
     }
     DebugMessage((void *)0x083D22A4);
-    sub_080700CC(hdr);
+    BtlObjPoolReleaseChain(hdr);
     return BtlObjPoolAllocChain(hdr, count, key);
 }
 

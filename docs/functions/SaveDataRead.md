@@ -34,7 +34,7 @@
 - `sub_080429C0`
 - `sub_08042E78`
 - `sub_08043974`
-- `sub_08045D3C`
+- [`EventFlagOp`](EventFlagOp.md)
 - `sub_08045EF0`
 - `sub_08073C4C` _(not one of the 633 functions)_
 

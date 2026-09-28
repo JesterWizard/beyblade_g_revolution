@@ -1,6 +1,6 @@
 #include "global.h"
 
-void sub_08067504(void *source, void *destination, u16 count)
+void EepromDmaTransfer(void *source, void *destination, u16 count)
 {
     u16 ime;
     u16 waitcnt;

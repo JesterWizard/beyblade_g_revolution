@@ -34,7 +34,7 @@
 ## Callees
 
 - `sub_0806F8C4`
-- `sub_0806FBF8`
+- [`VramSpanFree`](VramSpanFree.md)
 - [`BtlObjListMoveToHead`](BtlObjListMoveToHead.md)
 
 ## Callers
@@ -45,7 +45,7 @@
 - `sub_0802E048`
 - `sub_08030D4C`
 - `sub_0803139C`
-- `sub_08032908`
+- [`BattleTeardown`](BattleTeardown.md)
 - [`BtlClearState`](BtlClearState.md)
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803FFB0`

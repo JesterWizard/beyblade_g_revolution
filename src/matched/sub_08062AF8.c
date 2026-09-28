@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Find `table[key]` in the 16-slot palette pool, or claim a free slot, upload
 // the 32-byte palette to OBJ palette RAM and return the slot index (-1 if full).
-s32 sub_08062AF8(void *table, void *key)
+s32 ScenePaletteAcquire(void *table, void *key)
 {
     void **slot;
     void *entry;

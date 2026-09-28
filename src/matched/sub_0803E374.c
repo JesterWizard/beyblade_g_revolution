@@ -7,7 +7,7 @@
 // Byte 1 of the 4-byte rows at gData_0807BDB8 / gData_0807BB80 / gData_0807B6F0.
 // The discarded `v2 = table[index]` reads hoist each pool load above the index
 // math (`ldr r3,=table` before `movs r1,#imm`). Dropping either one misses.
-s32 sub_0803E374(struct Unk3E328 *a)
+s32 BeybladeDefenseRating(struct Unk3E328 *a)
 {
     const u8 *t1 = gData_0807BDB8;
     u32 i1 = a->unk1E * 4;

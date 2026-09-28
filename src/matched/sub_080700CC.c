@@ -5,7 +5,7 @@
 // @ 0x080700cc
 // Release a pending battle-object batch: return its nodes to the free list,
 // unlink the run from the active list and clear the batch header.
-void sub_080700CC(void *a)
+void BtlObjPoolReleaseChain(void *a)
 {
     struct Unk700CCHdr *batch;
     struct Unk700CCNode *node;
@@ -35,7 +35,7 @@ void sub_080700CC(void *a)
             node->unk30 = 0;
         }
         if (node->unk24 >= 0)
-            sub_0806FBF8(node->unk24, 1 << (node->unk16 - 5));
+            VramSpanFree(node->unk24, 1 << (node->unk16 - 5));
         node->unk24 = -1;
         node = node->unk04;
     }

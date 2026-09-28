@@ -54,7 +54,7 @@ void sub_0802DCDC(void *arg)
         gUnk_0300026C->unk28 = NULL;
     }
     gUnk_0300026C->unk28 = BtlObjPoolAlloc(1);
-    sub_0806FF58(gUnk_0300026C->unk28, sub_08042B28(gUnk_0300026C->unk4E), x, y, 0, 1, 1, 0);
+    SpriteInitFromTemplate(gUnk_0300026C->unk28, sub_08042B28(gUnk_0300026C->unk4E), x, y, 0, 1, 1, 0);
     palette = gData_080BB8C0;
     _08073C4C(sub_08042B50(gUnk_0300026C->unk4E), (void *)0x05000380, 0x20, (void *)*palette);
     TextEntrySetPaletteBank(gUnk_0300026C->unk28, 0x0C);

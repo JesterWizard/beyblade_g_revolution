@@ -6,7 +6,7 @@
 // Sprite dimensions for OAM shape/size bits (b >> 14): with flags bit 0 a
 // square of 2^(size+4) pixels, else the fixed wide/tall table. Stores the
 // log2 width/height in unk5F/unk60 and returns the tile byte count.
-u32 sub_080691E4(struct Unk691E4 *a, u16 b, u16 flags)
+u32 OamShapeToSize(struct Unk691E4 *a, u16 b, u16 flags)
 {
     s32 size;
     s32 shape;

@@ -32,7 +32,7 @@ void *sub_0806A314(struct Unk6A314 *state)
     buffer = sub_0806A580(*(void **)pool, 0x20);
     if (buffer == 0)
         DebugPrint((void *)0x083D1AC8, state);
-    node = sub_0806A4D8(
+    node = HeapRegionInsert(
         (u32)state + 8,
         (void *)0x03000B40,
         0xD0 << 6,

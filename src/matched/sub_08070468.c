@@ -4,7 +4,7 @@
 
 // @ 0x08070468
 /* Move a node to its sorted position in the gData_030040A4 list after its key changes. */
-void sub_08070468(struct Unk6FDB4 *node, u16 key)
+void BtlObjListResort(struct Unk6FDB4 *node, u16 key)
 {
     struct Unk6FDB4 *found;
 

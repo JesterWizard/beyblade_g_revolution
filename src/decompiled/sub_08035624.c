@@ -12,19 +12,19 @@ void sub_08035624(struct Unk346C0 *a, u8 type, s32 delta)
         a->unkD8 = value;
         if (a->unkD4 == NULL)
             break;
-        sub_08070468((struct Unk6FDB4 *)a->unkD4, value);
+        BtlObjListResort((struct Unk6FDB4 *)a->unkD4, value);
         break;
     case 1:
         a->unk1B4 = value;
         if (a->unk1B0 == NULL)
             break;
-        sub_08070468((struct Unk6FDB4 *)a->unk1B0, value);
+        BtlObjListResort((struct Unk6FDB4 *)a->unk1B0, value);
         break;
     case 2:
         a->unk290 = value;
         if (a->unk28C == NULL)
             break;
-        sub_08070468((struct Unk6FDB4 *)a->unk28C, value);
+        BtlObjListResort((struct Unk6FDB4 *)a->unk28C, value);
         break;
     }
 }

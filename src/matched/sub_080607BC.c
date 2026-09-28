@@ -6,7 +6,7 @@
 // Blend fade tick: writes BLDCNT/BLDY from the fade state and, every
 // (unk09 + 1) frames, steps the BLDY level by unk02 (bouncing at 15, and
 // resetting the step when the level returns to 0).
-void sub_080607BC(void)
+void BlendFadeTick(void)
 {
     struct Unk0758 *state = gUnk_03000758;
     u32 mode = state->unk06;

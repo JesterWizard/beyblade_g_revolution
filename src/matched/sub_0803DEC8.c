@@ -7,7 +7,7 @@
 // Claim the first free unk08D0 record (unk087C[i] == 0). A negative `row`
 // copies template `id` from gData_0807A1F4 and tags it with (id, slot);
 // otherwise the record comes from blade row sub_08042E78(row).
-void sub_0803DEC8(u16 id, u8 row, u8 slot)
+void BeybladeRecordClaim(u16 id, u8 row, u8 slot)
 {
     s32 i;
     struct Unk42E78 *blade;

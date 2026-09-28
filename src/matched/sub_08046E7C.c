@@ -17,11 +17,11 @@ void FieldUpdateFrame(u32 active)
     VBlankIntrWait();
     gData_03000198->unk0428 = ~(gData_03000198->unk0374 >> 8);
     if (gData_03000198->unk0424 != NULL)
-        sub_08070468((struct Unk6FDB4 *)gData_03000198->unk0424, gData_03000198->unk0428);
+        BtlObjListResort((struct Unk6FDB4 *)gData_03000198->unk0424, gData_03000198->unk0428);
     if (gData_03000198->unk0500 != NULL)
     {
         gData_03000198->unk0504 = ~((s32)gData_03000198->unk0450 >> 8);
-        sub_08070468((struct Unk6FDB4 *)gData_03000198->unk0500, gData_03000198->unk0504);
+        BtlObjListResort((struct Unk6FDB4 *)gData_03000198->unk0500, gData_03000198->unk0504);
     }
     sub_0806EE48((struct Unk6EE48 *)gData_03000198);
     SceneObjUpdate(&gData_03000198->unk036C);
@@ -53,29 +53,29 @@ void FieldUpdateFrame(u32 active)
             {
                 dir = 1;
                 *(u32 *)gData_0300063C = dir;
-                *(u32 *)gData_03000634 = sub_08047624(0);
-                sub_08042784(1);
+                *(u32 *)gData_03000634 = CursorStepsToTile(0);
+                CursorHistoryPush(1);
             }
             else if (gData_03003F60 & 0x10)
             {
                 dir = 2;
                 *(u32 *)gData_0300063C = dir;
-                *(u32 *)gData_03000634 = sub_08047624(1);
-                sub_08042784(2);
+                *(u32 *)gData_03000634 = CursorStepsToTile(1);
+                CursorHistoryPush(2);
             }
             else if (gData_03003F60 & 0x40)
             {
                 dir = 4;
                 *(u32 *)gData_0300063C = dir;
-                *(u32 *)gData_03000634 = sub_08047624(2);
-                sub_08042784(4);
+                *(u32 *)gData_03000634 = CursorStepsToTile(2);
+                CursorHistoryPush(4);
             }
             else if (gData_03003F60 & 0x80)
             {
                 dir = 8;
                 *(u32 *)gData_0300063C = dir;
-                *(u32 *)gData_03000634 = sub_08047624(3);
-                sub_08042784(8);
+                *(u32 *)gData_03000634 = CursorStepsToTile(3);
+                CursorHistoryPush(8);
             }
             else if (gData_03004060 & 1)
             {
@@ -94,7 +94,7 @@ void FieldUpdateFrame(u32 active)
         {
             (*(u32 *)gData_03000634)--;
             dir = *(u32 *)gData_0300063C;
-            sub_08042784(dir);
+            CursorHistoryPush(dir);
         }
     }
     _08041E88((void *)dir, speed);
@@ -111,7 +111,7 @@ void FieldUpdateFrame(u32 active)
         if (--gData_03000198->unk1858 <= 0)
         {
             gData_03000198->unk1857 = 1;
-            sub_08059DC8(0, gData_080979EC);
+            ScriptRun(0, gData_080979EC);
         }
     }
     if ((gData_03004060 & 8) && gData_03000198->unk180C == 0 && gData_03000198->unk185A == 1)

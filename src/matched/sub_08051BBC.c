@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Fade-in loop: steps the BLDALPHA weights (EVA down from 16, EVB up from 0)
 // once per frame until EVA reaches 0.
-void sub_08051BBC(void)
+void BlendFadeInLoop(void)
 {
     struct MainWork **loc = gMainWorkPtrLoc;
     struct MainWork *work;

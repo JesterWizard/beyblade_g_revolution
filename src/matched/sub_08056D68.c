@@ -5,7 +5,7 @@
 // @ 0x08056d68
 // Dispatches a script event by its 16-bit key; the event's arguments start at
 // unk08. Key 0x47EE is recognised but ignored.
-void sub_08056D68(struct Unk56D68 *event)
+void ScriptDispatchEvent(struct Unk56D68 *event)
 {
     s16 *entry;
     u32 *args;
@@ -41,7 +41,7 @@ void sub_08056D68(struct Unk56D68 *event)
     case 0xE319:
         args = &event->unk08;
         gMainWorkPtr->unk16C8 = args;
-        sub_08059DC8(0, BtlFindUnk16E4());
+        ScriptRun(0, BtlFindUnk16E4());
         break;
     case 0x6A74:
         gMainWorkPtr->unk1828 = event->unk08;

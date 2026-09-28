@@ -5,7 +5,7 @@
 // @ 0x08073910
 // Copy the next whitespace-delimited word of `src` into `dst` (at most `size`
 // bytes incl. the terminator). Returns the index in `src` after the word.
-s32 sub_08073910(const u8 *src, u8 *dst, s32 size_arg)
+s32 StringNextWord(const u8 *src, u8 *dst, s32 size_arg)
 {
     u32 size = size_arg;
     u32 si;

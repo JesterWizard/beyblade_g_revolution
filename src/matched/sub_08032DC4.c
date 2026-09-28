@@ -5,13 +5,13 @@
 // @ 0x08032dc4
 void sub_080338E4(void *dst, void *src);
 void sub_08032D5C(struct Unk346C0 *a, struct Unk346C0 *b);
-void sub_08033188(void);
-void sub_0803370C(void);
+void BattleBannerScroll(void);
+void BattleScorePopupTick(void);
 void sub_08033084(void *a, u32 b);
 void sub_080353A0(void *a);
 void sub_08030F38(void);
 void sub_08033DD4(void);
-void sub_080338F0(struct Unk33958 *a, u16 b);
+void BtlKeyComboStep(struct Unk33958 *a, u16 b);
 void sub_080333E4(s32 a, s32 b, s32 c, s32 d);
 void sub_08032DB8(struct Unk346C0 *a);
 u8 sub_08033A94(u8 *a);
@@ -47,7 +47,7 @@ void BtlFrameUpdate(
             TimerAdvance();
             sub_0806A6F8();
             if ((gData_03004060 & 8) != 0)
-                sub_08033188();
+                BattleBannerScroll();
             sub_080361CC(
                 (struct Unk36190 *)&gBattleWork->unkAA8,
                 (struct Unk361CCDst *)gBattleWork->filler_0008);
@@ -56,10 +56,10 @@ void BtlFrameUpdate(
                 (struct Unk361CCDst *)gBattleWork->unk090);
             AffineBgUpdate(gBattleWork->filler_0008);
             AffineBgUpdate(gBattleWork->unk090);
-            sub_08035D68(
+            BtlProjectToScreen(
                 (struct Unk35D68Source *)&gBattleWork->unk328,
                 (struct Unk35D68State *)&gBattleWork->unkAA8);
-            sub_08035D68(
+            BtlProjectToScreen(
                 (struct Unk35D68Source *)&gBattleWork->unk37C,
                 (struct Unk35D68State *)&gBattleWork->unkAA8);
             sub_080302A8(
@@ -79,12 +79,12 @@ void BtlFrameUpdate(
                 (struct Unk30F00 *)gBattleWork->unk0AE8.fields.unkB50,
                 (struct Unk30F00Src *)gBattleWork->unk478);
             sub_08033530();
-            sub_0803370C();
+            BattleScorePopupTick();
             sub_08033084(
                 &gBattleWork->unk1F7C,
                 gBattleWork->unk1F98);
-            sub_080302E0(state_a);
-            sub_080302E0(state_b);
+            BeybladeSpinStep(state_a);
+            BeybladeSpinStep(state_b);
             TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB84);
             TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB94);
             _08073C40((void *)gData_080BB888[0]);
@@ -98,9 +98,9 @@ void BtlFrameUpdate(
                 sub_08033DD4();
             if (sub_08033A94((u8 *)&gBattleWork->unk2094) == 0)
             {
-                sub_080338F0(&temp_a, state_a->unk300);
-                sub_080338F0(&temp_b, state_a->unk300);
-                sub_080338F0(&temp_c, state_a->unk300);
+                BtlKeyComboStep(&temp_a, state_a->unk300);
+                BtlKeyComboStep(&temp_b, state_a->unk300);
+                BtlKeyComboStep(&temp_c, state_a->unk300);
                 if ((u8)sub_08033958(&temp_a) != 0)
                 {
                     sub_08033978(

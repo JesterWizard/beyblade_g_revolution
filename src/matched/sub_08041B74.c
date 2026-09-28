@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Remove the live object bound to (a, b): free its unkC8 node, park it
 // off-screen, and swap the last slot into its place.
-void sub_08041B74(void *a, void *b)
+void SceneObjDespawn(void *a, void *b)
 {
     s16 i;
     struct Unk68574 **slot;

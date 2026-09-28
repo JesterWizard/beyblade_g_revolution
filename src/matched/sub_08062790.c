@@ -28,7 +28,7 @@ s32 ProximityTriggerCheck(struct Unk68574 *a, struct Unk68574 *obj, u32 rangeX, 
             if (sub_0802BC14(profile) == 0 || profile == -1)
             {
                 if (obj->unkC4 != NULL)
-                    sub_08059DC8((u32)obj, obj->unkC4);
+                    ScriptRun((u32)obj, obj->unkC4);
             }
             else if (slot != -1 && gData_03000510[slot] == 0)
             {
@@ -39,7 +39,7 @@ s32 ProximityTriggerCheck(struct Unk68574 *a, struct Unk68574 *obj, u32 rangeX, 
             }
         }
         else if (obj->unkC4 != NULL)
-            sub_08059DC8((u32)obj, obj->unkC4);
+            ScriptRun((u32)obj, obj->unkC4);
         return 1;
     }
     if (slot != -1)

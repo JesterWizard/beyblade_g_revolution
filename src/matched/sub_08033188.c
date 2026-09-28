@@ -12,7 +12,7 @@ union Unk33188Text
 // Banner scroll: save input state and the two gData_08078100 records, slide
 // the language banner text in until A or START is pressed (then slide it out
 // to -0xC800), and restore everything.
-void sub_08033188(void)
+void BattleBannerScroll(void)
 {
     union Unk33188Text text;
     struct Unk6A954 saved[2];

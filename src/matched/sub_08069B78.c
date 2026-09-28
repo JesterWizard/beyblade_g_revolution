@@ -5,7 +5,7 @@
 // @ 0x08069b78
 /* match-compiler: old_agbcc */
 // Set the priority of BG0-BG3 (sub_08069988 returns the BGxCNT register).
-void sub_08069B78(u32 a, u32 b, u32 c, u32 d)
+void BgSetPriorities(u32 a, u32 b, u32 c, u32 d)
 {
     u8 bg0 = a;
     u8 bg1 = b;

@@ -7,7 +7,7 @@
 #include "global.h"
 #include "data_symbols.h"
 
-s32 sub_0803E2AC(struct Unk3E328 *a)
+s32 BeybladeGetType(struct Unk3E328 *a)
 {
     const u8 *t1;
     u32 i1;

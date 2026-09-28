@@ -28,7 +28,7 @@ void *HeapAlloc(u32 size)
     buffer = sub_0806A580(*(void **)pool, 0x60);
     if (buffer == 0)
         DebugPrint((void *)0x083D1B00, (void *)size);
-    node = sub_0806A4D8(
+    node = HeapRegionInsert(
         size + 8,
         (void *)gUnk_03000B34,
         0xFE << 10,

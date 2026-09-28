@@ -26,7 +26,7 @@ void sub_08054494(s32 x, s32 y)
     {
         obj = BtlObjPoolAlloc(0x0A);
         gUnk_0300070C->unk00[i] = obj;
-        sub_0806FF58(obj, (void *)0x081232A4, (x + i * 16) << 8, y8, 1, 0, 0, 1);
+        SpriteInitFromTemplate(obj, (void *)0x081232A4, (x + i * 16) << 8, y8, 1, 0, 0, 1);
         if (i == 0)
             ((struct Unk705DC *)gUnk_0300070C->unk00[0])->unk18 = i;
         if (i == 12)

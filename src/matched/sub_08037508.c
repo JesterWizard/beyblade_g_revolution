@@ -6,7 +6,7 @@
 void sub_08037508(void)
 {
     sub_08062BF0(5);
-    sub_08032908();
+    BattleTeardown();
     sub_08032604();
     sub_08036190(&gBattleWork37508.unkAA8, 0xEBB0, 0x10000, 0xFFFF2E00);
     sub_080361CC(&gBattleWork37508.unkAA8, &gBattleWork37508.unk08);

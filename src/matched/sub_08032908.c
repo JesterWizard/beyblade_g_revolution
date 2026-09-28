@@ -4,7 +4,7 @@
 
 // @ 0x08032908
 // Battle teardown: free work buffers, release pooled objects and entries.
-void sub_08032908(void)
+void BattleTeardown(void)
 {
     s32 i;
 

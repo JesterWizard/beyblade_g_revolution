@@ -11,7 +11,7 @@ void sub_080447CC(void)
     {
         v = p->unk18;
         if (v != 0)
-            sub_08059DC8(0, v);
+            ScriptRun(0, v);
     }
 }
 

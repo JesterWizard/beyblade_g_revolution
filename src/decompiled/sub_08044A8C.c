@@ -60,7 +60,7 @@ s8 SaveDataVerify(void)
         buf += 2;
     }
     for (i = 0; i < 1; i++)
-        sub_08044FB0(i);
+        SaveSlotLoadFromEeprom(i);
     for (i = 0; i < 1; i++)
     {
         sub_08044D8C((u32 *)&gData_03000198->unk168C[i]);

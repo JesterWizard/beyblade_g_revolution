@@ -7,7 +7,7 @@
 // in src is not copied (that byte of dst is left as it was); bytes past the
 // buffer are dropped and the last byte is forced to 0. Returns strlen(src), or
 // -1 for a NULL argument or an already-full buffer.
-s32 sub_080733E4(const u8 *src, u8 *dst, s32 size)
+s32 StringAppend(const u8 *src, u8 *dst, s32 size)
 {
     u8 ch;
     u32 i = 0;

@@ -34,5 +34,5 @@
 
 ## Callers
 
-- `sub_0803370C`
+- [`BattleScorePopupTick`](BattleScorePopupTick.md)
 - `sub_08037508`

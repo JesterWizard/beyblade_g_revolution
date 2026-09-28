@@ -33,4 +33,4 @@
 
 ## Callers
 
-- `sub_08056D68`
+- [`ScriptDispatchEvent`](ScriptDispatchEvent.md)

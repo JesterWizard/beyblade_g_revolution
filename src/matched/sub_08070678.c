@@ -5,7 +5,7 @@ void BtlReleaseEntry(struct Unk7069C *a)
 {
     struct Unk705CC *p;
 
-    sub_080700CC(&a->unk14);
+    BtlObjPoolReleaseChain(&a->unk14);
     p = a->unk2C;
     if (p != 0)
     {

@@ -32,7 +32,7 @@
 - `sub_08044D8C`
 - [`BtlClearUnk1688Entry`](BtlClearUnk1688Entry.md)
 - `sub_08044F64`
-- `sub_08044FB0`
+- [`SaveSlotLoadFromEeprom`](SaveSlotLoadFromEeprom.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - `sub_080674BC`
 - [`EepromReadBlock`](EepromReadBlock.md)

@@ -4,10 +4,10 @@
 
 // @ 0x08062e88
 void sub_08062CC8(u32 idx, u8 *out);
-void sub_08062CF4(u32 idx, struct Unk62D50 *rgb);
+void ObjPaletteSetRgb(u32 idx, struct Unk62D50 *rgb);
 
 // Twin of sub_08062D80. Reads with sub_08062CC8 and writes with sub_08062CF4.
-void sub_08062E88(u8 a, u8 b, u8 c, u8 d)
+void ObjPaletteShiftRange(u8 a, u8 b, u8 c, u8 d)
 {
     struct Unk62D50 rgb;
     s16 i;
@@ -39,7 +39,7 @@ add:
             rgb.unk01 = 31;
         if ((s8)rgb.unk02 > 31)
             rgb.unk02 = 31;
-        sub_08062CF4(idx, &rgb);
+        ObjPaletteSetRgb(idx, &rgb);
     }
     goto done;
 
@@ -59,7 +59,7 @@ sub:
             rgb.unk01 = 0;
         if (((s32)rgb.unk02 << 24) < 0)
             rgb.unk02 = 0;
-        sub_08062CF4(idx, &rgb);
+        ObjPaletteSetRgb(idx, &rgb);
     }
 
 done:

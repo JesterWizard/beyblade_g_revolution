@@ -16,16 +16,16 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     REG_BLDY = 0;
     gData_03000198->unk185A = 0;
     if (d != 0)
-        sub_0804438C(-1);
+        ScreenBrightnessFade(-1);
     sub_080447CC();
-    sub_08062728(&gData_03000198->unk0524);
+    BufferClearWords(&gData_03000198->unk0524);
     sub_08041980();
     sub_08059C6C();
     VramSlotsRelease();
     sub_0802D598();
     sub_0802DEA0();
     sub_08043ADC();
-    sub_08045D3C(0x18, 4, &tmp);
+    EventFlagOp(0x18, 4, &tmp);
     if (tmp != 0)
     {
         do
@@ -56,7 +56,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     sub_080442FC(b, (void *)a, c, e);
     gData_03000198->unk0358 |= 0x800;
     TextWindowOpen((struct Unk617C4 *)0x082BCD00, 0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0F);
-    sub_08069B78(gData_03000198->unk1690->unk74_0, gData_03000198->unk1690->unk74_2, gData_03000198->unk1690->unk74_4, 0);
+    BgSetPriorities(gData_03000198->unk1690->unk74_0, gData_03000198->unk1690->unk74_2, gData_03000198->unk1690->unk74_4, 0);
     sub_08047594();
     sub_080444BC();
     sub_0806EE24((struct Unk6EE24 *)gData_03000198);
@@ -86,7 +86,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     gData_03000198->unk1790 = -1;
     gData_03000198->unk178C = -1;
     gData_03000198->unk17CC = 0;
-    sub_08045D3C(0x18, 4, &tmp);
+    EventFlagOp(0x18, 4, &tmp);
     if (tmp != 0)
     {
         sub_080428C4();
@@ -140,7 +140,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     }
     if (gData_03000198->unk182C != 0)
         sub_08044A20();
-    sub_08045D3C(0x18, 1, 0);
+    EventFlagOp(0x18, 1, 0);
     gData_03000198->unk1808 &= ~0x2000;
     sub_0805DA70();
     switch (gData_03000198->unk185F)
@@ -166,7 +166,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
         gData_03000198->unk1810 = 0x20;
         break;
     }
-    sub_0804438C(1);
+    ScreenBrightnessFade(1);
     BtlClearUnk1834();
     gData_03000198->unk185A = 1;
     gData_03000198->unk185F = -1;

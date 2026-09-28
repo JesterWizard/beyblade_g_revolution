@@ -9,7 +9,7 @@
 // from src->unk0C; object mode + mosaic; flip; priority) and point unk28 at
 // the template graphics.
 // The `mode` temporary keeps agbcc from re-associating the 0x1000 constant.
-void sub_0806FF58(struct Unk705DC *dst, struct Unk6FF58Src *src, u32 x, u32 y, u8 objMode, u8 priority, u8 flip, u16 h)
+void SpriteInitFromTemplate(struct Unk705DC *dst, struct Unk6FF58Src *src, u32 x, u32 y, u8 objMode, u8 priority, u8 flip, u16 h)
 {
     s8 shapeSize;
     u8 palette;

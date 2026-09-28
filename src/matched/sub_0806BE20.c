@@ -8,7 +8,7 @@
 // entries by adding the u16 length stored at the head of each entry.
 // Declaration order matters here: agbcc emits `i = 0` before `p = b + 4` only
 // when `i` is declared/initialised first (retail: movs r3,#0; adds r0,r1,#4).
-void *sub_0806BE20(void *a, void *b, s32 c)
+void *ResourceEntryAt(void *a, void *b, s32 c)
 {
     s32 i = 0;
     u8 *p = (u8 *)b + 4;

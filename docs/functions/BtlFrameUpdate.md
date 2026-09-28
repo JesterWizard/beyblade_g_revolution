@@ -31,19 +31,19 @@
 ## Callees
 
 - `sub_080302A8`
-- `sub_080302E0`
+- [`BeybladeSpinStep`](BeybladeSpinStep.md)
 - `sub_08030F00`
 - `sub_08030F38`
 - [`TextRowPulsePalette`](TextRowPulsePalette.md)
 - `sub_08032D5C`
 - `sub_08032DB8`
 - `sub_08033084`
-- `sub_08033188`
+- [`BattleBannerScroll`](BattleBannerScroll.md)
 - `sub_080333E4`
 - `sub_08033530`
-- `sub_0803370C`
+- [`BattleScorePopupTick`](BattleScorePopupTick.md)
 - `sub_080338E4`
-- `sub_080338F0`
+- [`BtlKeyComboStep`](BtlKeyComboStep.md)
 - `sub_08033958`
 - `sub_08033978`
 - `sub_08033A94`
@@ -51,7 +51,7 @@
 - [`BtlCaptureInput`](BtlCaptureInput.md)
 - `sub_0803531C`
 - `sub_080353A0`
-- `sub_08035D68`
+- [`BtlProjectToScreen`](BtlProjectToScreen.md)
 - `sub_080361A8`
 - `sub_080361CC`
 - `sub_08036264`

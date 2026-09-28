@@ -33,7 +33,7 @@
 ## Callees
 
 - [`DebugPrint`](DebugPrint.md)
-- `sub_0806A4D8`
+- [`HeapRegionInsert`](HeapRegionInsert.md)
 - `sub_0806A580`
 
 ## Callers

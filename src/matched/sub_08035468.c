@@ -7,7 +7,7 @@
 // position, screen centre, angle) and places the source's sprite there: depth
 // scales the offset, the sprite offset (ox, oy) is rotated by camera - angle, and
 // sub_08070354 gets the depth as scale and the relative angle.
-void sub_08035468(void *source, s32 x, s32 y, s32 z, s32 ox, s32 oy, s32 angle)
+void BtlPlaceSpriteAtWorld(void *source, s32 x, s32 y, s32 z, s32 ox, s32 oy, s32 angle)
 {
     struct Unk70354 *obj = ((struct Unk35468Source *)source)->unkB8;
     struct Unk30638AA8 *cam = &gBattleWork->unkAA8;

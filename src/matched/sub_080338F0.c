@@ -6,7 +6,7 @@
 // Advances a key-combo tracker by one frame: `key` must match the next entry
 // of the combo table within 60 frames of the previous one, or the combo resets.
 // Completing the table sets the position to -1.
-void sub_080338F0(struct Unk33958 *a, u16 key)
+void BtlKeyComboStep(struct Unk33958 *a, u16 key)
 {
     struct Unk338F0Table *table = a->unk04;
     u16 *keys = table->unk04;

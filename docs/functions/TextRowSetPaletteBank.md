@@ -34,7 +34,7 @@
 
 - `sub_0802ECD8`
 - `sub_0802F520`
-- `sub_0802FA94`
+- [`ItemListDraw`](ItemListDraw.md)
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803B078`
 - `sub_0803E934`

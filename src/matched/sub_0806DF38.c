@@ -6,7 +6,7 @@
 // Collect up to maxCount (track, key) hits for `key` across a's keyframe
 // tracks, skipping track `skip`. Each hit records the track, key index, track
 // index and the 16-byte frames either side of the key. Returns the hit count.
-u16 sub_0806DF38(struct UnkDEC8 *a, struct UnkDF38Entry *out, void *skip, u16 maxCount, u32 key)
+u16 KeyframeFindHits(struct UnkDEC8 *a, struct UnkDF38Entry *out, void *skip, u16 maxCount, u32 key)
 {
     u16 count;
     s32 idx;

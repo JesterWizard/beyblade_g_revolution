@@ -33,7 +33,7 @@
 
 ## Callers
 
-- `sub_0804438C`
+- [`ScreenBrightnessFade`](ScreenBrightnessFade.md)
 - [`TextWindowOpen`](TextWindowOpen.md)
 
 ## ROM data referenced

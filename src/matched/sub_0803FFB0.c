@@ -57,7 +57,7 @@ void sub_0803FFB0(struct MainWork *a, s32 b)
     }
     *slot = BtlObjPoolAlloc(0);
 
-    sub_0806FF58((struct Unk705DC *)*slot, (void *)0x08118CF0, x << 8, ypos << 8, 1, 0, 0, 0);
+    SpriteInitFromTemplate((struct Unk705DC *)*slot, (void *)0x08118CF0, x << 8, ypos << 8, 1, 0, 0, 0);
     TextEntrySetPaletteBank((struct Unk705DC *)*slot, 2);
 
     a->unk0304 = 4;

@@ -12,7 +12,7 @@
 // `movs r5,#0xA0; lsls r5,#0x13`) and `mask` gives the three 0x1F constants
 // retail reuses. agbcc picks r6 for the base and r5 for the byte temp, so
 // old_agbcc is required for the r5/r6 split.
-void sub_08062D50(u8 idx, u8 *rgb)
+void BgPaletteSetRgb(u8 idx, u8 *rgb)
 {
     u16 *pal;
     u16 c;

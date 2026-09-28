@@ -30,11 +30,11 @@
 
 ## Callees
 
-- `sub_08062AF8`
+- [`ScenePaletteAcquire`](ScenePaletteAcquire.md)
 - `sub_08062B9C`
 - `sub_08067CE8`
 - [`SceneObjUpdate`](SceneObjUpdate.md)
-- `sub_08070468`
+- [`BtlObjListResort`](BtlObjListResort.md)
 
 ## Callers
 

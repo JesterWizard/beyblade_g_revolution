@@ -24,7 +24,7 @@ void sub_0806C704(void *arg0, void *arg1, s32 arg2, s32 arg3)
   }
   else
   {
-    result = sub_0806E31C(source, input, output, extra);
+    result = KeyframeTrackSample(source, input, output, extra);
   }
   if (result != 0)
   {

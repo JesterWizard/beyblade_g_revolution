@@ -6,7 +6,7 @@
 // Samples keyframe track `b` of `a` at time `d` (22.10 fixed point, clamped to
 // the last key): linearly interpolates the x/y/z of the two surrounding keys into
 // out[0..2], and stores the fraction and key index in out[3], out[4]. Returns out.
-u32 sub_0806E31C(void *a, void *b, s32 *out, s32 d)
+u32 KeyframeTrackSample(void *a, void *b, s32 *out, s32 d)
 {
     struct Unk6E31CTrack *track = (struct Unk6E31CTrack *)sub_0806DEC8(a, (s32)b);
     u32 *keys = track->unk20;

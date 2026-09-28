@@ -32,14 +32,14 @@ void sub_0803019C(void)
 {
     sub_08030F38();
     sub_0803D4C4();
-    sub_080302E0(
+    BeybladeSpinStep(
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk478);
-    sub_080302E0(
+    BeybladeSpinStep(
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk790);
-    sub_08035D68(
+    BtlProjectToScreen(
         (struct Unk35D68Source *)((struct Unk3019CWork *)gBattleWork)->unk328,
         (struct Unk35D68State *)((struct Unk3019CWork *)gBattleWork)->unkAA8);
-    sub_08035D68(
+    BtlProjectToScreen(
         (struct Unk35D68Source *)((struct Unk3019CWork *)gBattleWork)->unk37C,
         (struct Unk35D68State *)((struct Unk3019CWork *)gBattleWork)->unkAA8);
     sub_080302A8(
@@ -50,10 +50,10 @@ void sub_0803019C(void)
         (struct Unk302A8 *)((struct Unk3019CWork *)gBattleWork)->unk37C,
         (struct Unk302A8Src *)((struct Unk3019CWork *)gBattleWork)->unkAA8,
         (struct Unk302A8 *)((struct Unk3019CWork *)gBattleWork)->unk0AD8[1]);
-    sub_080348E8(
+    BeybladeUpdate(
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk478,
         (u32)((struct Unk3019CWork *)gBattleWork)->unk790);
-    sub_080348E8(
+    BeybladeUpdate(
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk790,
         (u32)((struct Unk3019CWork *)gBattleWork)->unk478);
     sub_0803531C(
@@ -64,7 +64,7 @@ void sub_0803019C(void)
         ((struct Unk3019CWork *)gBattleWork)->unk478);
     sub_080353A0(
         ((struct Unk3019CWork *)gBattleWork)->unk790);
-    ((struct Unk3019CWork *)gBattleWork)->unk789 = (u8)sub_08035AE0(
+    ((struct Unk3019CWork *)gBattleWork)->unk789 = (u8)BeybladeCollisionResponse(
         (struct Unk346C0Inner *)((struct Unk3019CWork *)gBattleWork)->unk328,
         (struct Unk346C0Inner *)((struct Unk3019CWork *)gBattleWork)->unk37C);
     ((struct Unk3019CWork *)gBattleWork)->unkAA1 =

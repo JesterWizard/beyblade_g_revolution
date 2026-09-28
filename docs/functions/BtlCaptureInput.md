@@ -34,4 +34,4 @@
 ## Callers
 
 - [`BtlFrameUpdate`](BtlFrameUpdate.md)
-- `sub_080348E8`
+- [`BeybladeUpdate`](BeybladeUpdate.md)

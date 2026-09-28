@@ -23,17 +23,17 @@ void SceneObjsUpdateAll(void)
                 if (gData_03000480[i]->unkD8 == (void *)1)
                 {
                     gData_03000480[i]->unkBC = 0xFFFF;
-                    sub_08070468(gData_03000480[i]->unkB8, gData_03000480[i]->unkBC);
+                    BtlObjListResort(gData_03000480[i]->unkB8, gData_03000480[i]->unkBC);
                 }
                 else
                 {
                     gData_03000480[i]->unkBC = ~((s32)gData_03000480[i]->unk08 >> 8);
-                    sub_08070468(gData_03000480[i]->unkB8, gData_03000480[i]->unkBC);
+                    BtlObjListResort(gData_03000480[i]->unkB8, gData_03000480[i]->unkBC);
                 }
                 if (gData_03000480[i]->unkD8 == NULL)
-                    color = (s8)sub_08062AF8(gData_080775CC, gData_03000480[i]->unkD4);
+                    color = (s8)ScenePaletteAcquire(gData_080775CC, gData_03000480[i]->unkD4);
                 else
-                    color = (s8)sub_08062AF8(gData_080779A8, gData_03000480[i]->unkD4);
+                    color = (s8)ScenePaletteAcquire(gData_080779A8, gData_03000480[i]->unkD4);
                 gData_03000480[i]->unk3A = (color << 1) | 1;
             }
             sub_08067CE8(gData_03000480[i++], 0);

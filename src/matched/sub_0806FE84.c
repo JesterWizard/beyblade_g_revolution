@@ -21,7 +21,7 @@ void BtlObjPoolFree(void *arg)
     if (status >= 0 && (state->unk20 & 1) == 0)
     {
         bit = 1 << (state->unk16 - 5);
-        sub_0806FBF8(status, bit);
+        VramSpanFree(status, bit);
     }
     state->unk24 = -1;
     if (previous != 0)

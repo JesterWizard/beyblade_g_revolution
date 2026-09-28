@@ -39,7 +39,7 @@
 - `sub_0803484C`
 - `sub_08037318`
 - [`PartMenuRebuild`](PartMenuRebuild.md)
-- `sub_0803D284`
+- [`BattleTextGlyphRow`](BattleTextGlyphRow.md)
 - `sub_0803FFB0`
 - `sub_08048DB8`
 - `sub_0804BD38`

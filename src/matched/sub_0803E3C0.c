@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Byte 2 of the same 4-byte rows as sub_0803E374. Same discarded reads: they
 // hoist `ldr r3,=table` above the index math.
-s32 sub_0803E3C0(struct Unk3E328 *a)
+s32 BeybladeEnduranceRating(struct Unk3E328 *a)
 {
     const u8 *t1 = gData_0807BDB8;
     u32 i1 = a->unk1E * 4;

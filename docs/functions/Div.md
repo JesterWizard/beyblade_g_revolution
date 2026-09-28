@@ -25,8 +25,8 @@
 - `sub_08030938`
 - [`ScaleRatio`](ScaleRatio.md)
 - `sub_0803139C`
-- `sub_08035984`
-- `sub_08035AE0`
+- [`BeybladeMotionStep`](BeybladeMotionStep.md)
+- [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
 - `sub_08035C64`
 - `sub_080360BC`
 - [`BtlApplyClampedScore`](BtlApplyClampedScore.md)

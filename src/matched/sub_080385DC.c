@@ -5,7 +5,7 @@
 // @ 0x080385dc
 /* match-compiler: old_agbcc */
 /* Release palette slots lo..hi: clear their in-use bits and reset key/refcount to 0xFFFF. */
-void sub_080385DC(u16 lo, u16 hi)
+void PaletteSlotsRelease(u16 lo, u16 hi)
 {
     s32 i;
     struct Unk3CC *slots;

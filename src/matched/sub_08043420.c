@@ -8,7 +8,7 @@
 // (unk04/unk06) along the direction in unk00 (0: -unk0374, 1: +unk0374,
 // 2: +unk0370, 3: -unk0370), selecting that direction's animation; calls
 // sub_08043638 once the target is reached.
-void sub_08043420(void)
+void MapCursorMoveStep(void)
 {
     struct Unk0554 *move = gUnk_03000554;
 

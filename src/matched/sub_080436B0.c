@@ -105,7 +105,7 @@ void MapCursorInput(void)
         }
         break;
     case 1:
-        sub_08043420();
+        MapCursorMoveStep();
         break;
     }
 }

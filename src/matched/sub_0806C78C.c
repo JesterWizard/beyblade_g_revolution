@@ -11,7 +11,7 @@ s32 sub_0806C78C(void *a, void *b, s32 c)
     s32 shifted;
     s32 stride;
 
-    shifted = sub_0806DF38(a, &out, 0, 1, c) << 16;
+    shifted = KeyframeFindHits(a, &out, 0, 1, c) << 16;
     if (shifted == 0)
         goto done;
     if (*out.unk00 > 1)

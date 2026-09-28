@@ -5,7 +5,7 @@
 // @ 0x0806bc0c
 // Bind a resource header: resolve its three section offsets, then build up to
 // 64 entry pointers (warns and clamps when the header asks for more).
-void sub_0806BC0C(void *arg, void *source_arg)
+void ResourceBind(void *arg, void *source_arg)
 {
     struct Unk6BC0C *state = arg;
     struct Unk6BC0CSource *source = source_arg;

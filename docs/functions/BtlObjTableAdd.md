@@ -40,12 +40,12 @@
 ## Callers
 
 - `sub_0802ECD8`
-- `sub_0802FA94`
+- [`ItemListDraw`](ItemListDraw.md)
 - `sub_08031204`
 - `sub_08036A68`
 - `sub_08037430`
-- `sub_0803C500`
-- `sub_0803C5DC`
+- [`LaunchShowPowerMeter`](LaunchShowPowerMeter.md)
+- [`LaunchShowBoostMeter`](LaunchShowBoostMeter.md)
 - `sub_08040680`
 - `sub_08048DB8`
 - `sub_0804AAF0`

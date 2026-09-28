@@ -7,7 +7,7 @@
 // Project `source` (world x/y/z) into screen space relative to camera `state`:
 // rotate by the camera angle, scale by depth, then place and scale the
 // source's sprite (sub_08070354 with the depth as zoom).
-void sub_08035D68(struct Unk35D68Source *source, struct Unk35D68State *state)
+void BtlProjectToScreen(struct Unk35D68Source *source, struct Unk35D68State *state)
 {
     s16 index;
     s32 sine;

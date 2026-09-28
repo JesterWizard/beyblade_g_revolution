@@ -27,14 +27,14 @@
 - `sub_0802C6AC`
 - `sub_08030D4C`
 - [`Unk346C0Init`](Unk346C0Init.md)
-- `sub_0803C500`
+- [`LaunchShowPowerMeter`](LaunchShowPowerMeter.md)
 - `sub_0803DCFC`
 - `sub_0803E0CC`
 - `sub_08042B28`
 - `sub_08042B50`
 - `sub_08042F4C`
 - [`SaveDataVerify`](SaveDataVerify.md)
-- `sub_08044FB0`
+- [`SaveSlotLoadFromEeprom`](SaveSlotLoadFromEeprom.md)
 - `sub_08056BA4`
 - `sub_0806A314`
 - [`HeapAlloc`](HeapAlloc.md)
@@ -44,7 +44,7 @@
 - `sub_0806F430`
 - `sub_0806F8C4`
 - [`BtlObjSystemInit`](BtlObjSystemInit.md)
-- `sub_0806FBF8`
+- [`VramSpanFree`](VramSpanFree.md)
 - [`BtlObjPoolAllocChain`](BtlObjPoolAllocChain.md)
 - `sub_08070930`
 - `sub_08071E84`

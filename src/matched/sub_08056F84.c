@@ -15,7 +15,7 @@ void sub_08056F84(void)
     index = BtlFindUnk16E0();
     if (index < 0)
         return;
-    sub_08045D3C((u8)index, 4, &result);
+    EventFlagOp((u8)index, 4, &result);
     busy = result;
     if (busy != 0)
     {
@@ -30,7 +30,7 @@ void sub_08056F84(void)
     {
         gMainWorkPtr->unk17E4 = entry->unk00;
         if (entry->unk08 != 0)
-            sub_08059DC8(0, entry->unk08);
+            ScriptRun(0, entry->unk08);
     }
     else
         gMainWorkPtr->unk17E4 = 0xFFFF;

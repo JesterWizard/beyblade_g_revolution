@@ -8,7 +8,7 @@
 // gData_03004088: grow a neighbouring span when it touches one, otherwise link
 // in a node taken from the spare list gData_03004098. Then coalesce adjacent
 // spans, returning the absorbed nodes to the spare list.
-void sub_0806FBF8(s32 start, s32 size)
+void VramSpanFree(s32 start, s32 size)
 {
     struct Unk6FBF8Span *cur;
     struct Unk6FBF8Span *spare;

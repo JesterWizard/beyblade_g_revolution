@@ -11,7 +11,7 @@
 // order makes it come before the two ldr's (`0021 0023 8268 4068` in retail).
 // With the zero written inline (`*p++ = 0`) the mov lands after the loads (13/18),
 // and with the zero declared first the two movs swap (16/18).
-void sub_08062728(struct Unk62728 *a)
+void BufferClearWords(struct Unk62728 *a)
 {
     u32 i = 0;
     u32 z = 0;

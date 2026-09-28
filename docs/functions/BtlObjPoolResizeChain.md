@@ -34,7 +34,7 @@
 - [`DebugMessage`](DebugMessage.md)
 - `sub_0806F8C4`
 - [`BtlObjPoolAllocChain`](BtlObjPoolAllocChain.md)
-- `sub_080700CC`
+- [`BtlObjPoolReleaseChain`](BtlObjPoolReleaseChain.md)
 
 ## Callers
 

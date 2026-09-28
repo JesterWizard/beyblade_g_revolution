@@ -39,7 +39,7 @@
 
 - [`BtlFreeUnk1694Obj`](BtlFreeUnk1694Obj.md)
 - `sub_0802D3F0`
-- `sub_08032908`
+- [`BattleTeardown`](BattleTeardown.md)
 - `sub_08041394`
 - `sub_08041858`
 - `sub_08043ADC`

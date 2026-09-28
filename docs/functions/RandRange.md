@@ -36,11 +36,11 @@
 
 ## Callers
 
-- `sub_080302E0`
+- [`BeybladeSpinStep`](BeybladeSpinStep.md)
 - `sub_08032D5C`
 - [`BtlFrameUpdate`](BtlFrameUpdate.md)
 - `sub_08033D90`
-- `sub_08035AE0`
+- [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
 - `sub_08035C64`
 - [`BtlApplyClampedScore`](BtlApplyClampedScore.md)
 - [`FieldEnter`](FieldEnter.md)

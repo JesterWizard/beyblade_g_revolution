@@ -27,7 +27,7 @@
 ## Callers
 
 - `sub_08038D68`
-- `sub_0803D284`
+- [`BattleTextGlyphRow`](BattleTextGlyphRow.md)
 - `sub_0803FFB0`
 - `sub_080610A8`
 - [`TextDrawAlign`](TextDrawAlign.md)

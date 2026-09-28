@@ -33,6 +33,6 @@
 ## Callers
 
 - [`BtlObjPoolFree`](BtlObjPoolFree.md)
-- `sub_080700CC`
+- [`BtlObjPoolReleaseChain`](BtlObjPoolReleaseChain.md)
 - [`BtlObjSetAffine`](BtlObjSetAffine.md)
 - [`BtlReleaseEntry`](BtlReleaseEntry.md)

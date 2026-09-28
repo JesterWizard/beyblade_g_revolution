@@ -8,7 +8,7 @@
 // optional attack (sub_08034A68), then the timed states 7 (countdown in unk2FC,
 // then switch to 5) and 5 (countdown in unk2F8 with the unk312 start/finish
 // animations).
-void sub_080348E8(struct Unk346C0 *a, u32 b)
+void BeybladeUpdate(struct Unk346C0 *a, u32 b)
 {
     s32 *counter;
     u32 flag;
@@ -17,7 +17,7 @@ void sub_080348E8(struct Unk346C0 *a, u32 b)
     a->unk30E = sub_08035C64(a->unk00, 0x10000, 0x10000, 0xC8, 0x8000);
     if (sub_08035D1C(a->unk00, 0x10000, 0x10000) == 1)
         sub_08060254(4, 0x38, 7);
-    sub_08035984((struct Unk35984 *)a->unk00);
+    BeybladeMotionStep((struct Unk35984 *)a->unk00);
     if (a->unk18 == 1)
         sub_08035884(&a->unk08);
     BtlCaptureInput(a);

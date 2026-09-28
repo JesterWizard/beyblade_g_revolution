@@ -25,5 +25,5 @@
 
 ## Callers
 
-- `sub_08033188`
+- [`BattleBannerScroll`](BattleBannerScroll.md)
 - `sub_08054494`

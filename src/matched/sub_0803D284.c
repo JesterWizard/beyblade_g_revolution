@@ -8,7 +8,7 @@
 // hide all 48 entries, then give each non-space character its own entry
 // (spaces just advance x by 4). Glyphs map through gData_080BB748 and
 // advance by 0x10 minus that glyph's entry in `widths`.
-void sub_0803D284(const u8 *str, s32 b, const u8 *widths, s32 y)
+void BattleTextGlyphRow(const u8 *str, s32 b, const u8 *widths, s32 y)
 {
     s32 i;
     s32 x;
@@ -29,7 +29,7 @@ void sub_0803D284(const u8 *str, s32 b, const u8 *widths, s32 y)
             x += 0x10 - widths[gData_080BB748[str[i]]];
             sub_08062634(&gBattleWork->unk0BCC[n], -1, n * 2, 0x0803D27D);
             TextEntrySetPaletteBank(gBattleWork->unk0BCC[n].unk08, 0);
-            sub_08070468((struct Unk6FDB4 *)gBattleWork->unk0BCC[n].unk08, 40000 - n);
+            BtlObjListResort((struct Unk6FDB4 *)gBattleWork->unk0BCC[n].unk08, 40000 - n);
             n++;
         }
         else

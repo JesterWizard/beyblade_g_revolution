@@ -4,7 +4,7 @@
 
 // @ 0x0806a4d8
 /* First-fit insert of an `size`-byte block into the sorted region list at `head`. */
-void *sub_0806A4D8(u32 size, u8 *start, u32 len, struct Unk6A4D8Node *head, struct Unk6A4D8Node *out, struct Unk6A4D8Node **outp)
+void *HeapRegionInsert(u32 size, u8 *start, u32 len, struct Unk6A4D8Node *head, struct Unk6A4D8Node *out, struct Unk6A4D8Node **outp)
 {
     struct Unk6A4D8Node *walk;
     struct Unk6A4D8Node *next;

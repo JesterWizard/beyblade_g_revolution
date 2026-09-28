@@ -28,13 +28,13 @@
 ## Callees
 
 - [`BtlObjListMoveToHead`](BtlObjListMoveToHead.md)
-- `sub_080700CC`
+- [`BtlObjPoolReleaseChain`](BtlObjPoolReleaseChain.md)
 - `sub_080705D4`
 
 ## Callers
 
-- `sub_08032908`
-- `sub_08033188`
+- [`BattleTeardown`](BattleTeardown.md)
+- [`BattleBannerScroll`](BattleBannerScroll.md)
 - `sub_08038D10`
 - `sub_08054454`
 - `sub_08054558`

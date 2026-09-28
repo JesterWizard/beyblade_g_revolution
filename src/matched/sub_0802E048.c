@@ -46,13 +46,13 @@ void sub_0802E048(void)
   r1 = 0x08266FE0;
   r3 = 0xFFFFC000;
   r2 = 0;
-  sub_0806FF58(r5, (void *) r1, r3, r3, r2, 1, r2, r2);
+  SpriteInitFromTemplate(r5, (void *) r1, r3, r3, r2, 1, r2, r2);
   goto after_ff58;
   use_dac:
   r1 = 0x08266DAC;
 
   r3 = 0xFFFFC000;
-  sub_0806FF58(r5, (void *) r1, r3, r3, r2, 1, r2, r2);
+  SpriteInitFromTemplate(r5, (void *) r1, r3, r3, r2, 1, r2, r2);
   after_ff58:
   r4 = (u32) (&(*((struct Unk026C **) 0x0300026C)));
 

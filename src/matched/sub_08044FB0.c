@@ -6,7 +6,7 @@
 // Clear save slot `index` (a 0x1F60-byte Unk45D3CEntry), then fill it from
 // its 8-byte EEPROM blocks via sub_08067584, retrying a block while that
 // returns nonzero. Eight failures in a row log, drop the slot and return 0.
-s32 sub_08044FB0(u32 index)
+s32 SaveSlotLoadFromEeprom(u32 index)
 {
     u8 *base;
     u32 y;

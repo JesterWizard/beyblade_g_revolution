@@ -49,12 +49,12 @@ void SaveDataWrite(struct Unk45198Save *save, u8 fresh)
     if (fresh == 0)
     {
         sub_08045EF0(0, 0, 1000, 0);
-        sub_08045D3C(0, 1002, 0);
+        EventFlagOp(0, 1002, 0);
     }
     else
     {
         sub_08045EF0(0, 0, 1007, 0);
-        sub_08045D3C(0, 1004, 0);
+        EventFlagOp(0, 1004, 0);
     }
     for (i = 0; i < 2; i++)
     {

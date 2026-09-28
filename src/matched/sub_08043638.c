@@ -12,7 +12,7 @@ void sub_08043638(void)
     MapCursorInput();
 
     if (gUnk_03000554->unk01 == 1)
-        sub_08043420();
+        MapCursorMoveStep();
     else
         BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 7);
 }

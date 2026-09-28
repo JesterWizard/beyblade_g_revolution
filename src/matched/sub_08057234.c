@@ -17,10 +17,10 @@ void sub_08057234(struct Unk6BE08 *arg0, u32 arg1)
         return;
 
     ret = 0;
-    while ((next = sub_0806BE20(arg0, entry, ret)) != 0)
+    while ((next = ResourceEntryAt(arg0, entry, ret)) != 0)
     {
         ret++;
-        sub_08056D68(next);
+        ScriptDispatchEvent(next);
     }
 }
 

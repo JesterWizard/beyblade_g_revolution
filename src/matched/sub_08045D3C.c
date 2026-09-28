@@ -6,7 +6,7 @@
 // Event-flag operations on the 256-bit set gData_03000610 (flag `id`):
 // 0 clear all, 1 clear, 2 set, 3 toggle, 4 test into *out; 0x3EA/0x3EB save
 // to / load from the current save slot, 0x3EC/0x3ED to / from unk18B8.
-void sub_08045D3C(u8 id, u32 op, u32 *out)
+void EventFlagOp(u8 id, u32 op, u32 *out)
 {
     u32 group;
     u8 bit;

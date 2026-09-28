@@ -5,7 +5,7 @@
 // @ 0x0804438c
 // Brightness fade over 11 steps: mode -1 lowers the level by 16 per step;
 // mode 1 raises it by 16 per step (capped at 0xB8) while restoring DISPCNT.
-void sub_0804438C(s8 mode)
+void ScreenBrightnessFade(s8 mode)
 {
     s32 i;
     s32 value;

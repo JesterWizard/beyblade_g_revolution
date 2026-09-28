@@ -5,7 +5,7 @@
 // @ 0x0803e328
 /* match-compiler: old_agbcc */
 
-s32 sub_0803E328(struct Unk3E328 *a)
+s32 BeybladeAttackRating(struct Unk3E328 *a)
 {
     const u8 *t1 = gData_0807BDB8;
     u32 i1 = a->unk1E * 4;

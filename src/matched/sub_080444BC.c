@@ -18,7 +18,7 @@ void sub_080444BC(void)
     if (p != NULL)
     {
         if (p->unk14 != NULL)
-            sub_08059DC8(0, p->unk14);
+            ScriptRun(0, p->unk14);
         if (p->unk04 != NULL)
             sub_080447E8(p->unk04);
         if (p->unk08 != NULL)
@@ -40,7 +40,7 @@ void sub_080444BC(void)
         if (p->unk28 & 4)
         {
             TextWindowOpenEx(gMainWorkPtr->unk15DC, (void *)0x082BCD00, (void *)0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0D, 2);
-            sub_08069B78(gMainWorkPtr->unk1690->unk74_0, gMainWorkPtr->unk1690->unk74_2, 1, 0);
+            BgSetPriorities(gMainWorkPtr->unk1690->unk74_0, gMainWorkPtr->unk1690->unk74_2, 1, 0);
         }
     }
     else

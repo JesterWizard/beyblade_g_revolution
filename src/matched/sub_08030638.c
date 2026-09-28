@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Nudge battler A's motion by the d-pad direction in a->unk302, scaled by b
 // and rotated into camera space by -unkAA8.unk14.
-void sub_08030638(struct Unk346C0 *a, s32 b)
+void BeybladeSteerByDpad(struct Unk346C0 *a, s32 b)
 {
     struct Unk30638AA8 *cam;
     s32 angle;

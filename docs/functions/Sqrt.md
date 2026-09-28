@@ -22,8 +22,8 @@
 
 ## Callers
 
-- `sub_08035984`
-- `sub_08035AE0`
+- [`BeybladeMotionStep`](BeybladeMotionStep.md)
+- [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
 - `sub_08035C64`
 - `sub_080360BC`
 - `sub_08036264`
