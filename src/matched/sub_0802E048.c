@@ -71,14 +71,14 @@ void sub_0802E048(void)
   r0 <<= 6;
   *((u32 *) (r2 + 8)) = r0;
   *((u32 *) (r2 + 0xC)) = r1;
-  r0 = (u32) obj->unk14;
+  r0 = (u32) obj->playerLevelTens;
   r2 = 0x96;
   r2 <<= 7;
   *((u32 *) (r0 + 8)) = r2;
   r1 = 0xA8;
   r1 <<= 5;
   *((u32 *) (r0 + 0xC)) = r1;
-  r0 = (u32) obj->unk18;
+  r0 = (u32) obj->playerLevelOnes;
   r4 = 0xA0;
- do { r4 <<= 7; *((u32 *) (r0 + 8)) = r4; *((u32 *) (r0 + 0xC)) = r1; r0 = (u32) obj->unk1C; *((u32 *) (r0 + 8)) = r2; r1 = 0xC0; r1 <<= 2; *((u32 *) (r0 + 0xC)) = r1; r0 = (u32) obj->unk20; *((u32 *) (r0 + 8)) = r4; *((u32 *) (r0 + 0xC)) = r1; r1 = (u32) obj->unk24; *((u32 *) (r1 + 8)) = r2; r0 = 0xC0; r0 <<= 4; *((u32 *) (r1 + 0xC)) = r0; } while (0);
+ do { r4 <<= 7; *((u32 *) (r0 + 8)) = r4; *((u32 *) (r0 + 0xC)) = r1; r0 = (u32) obj->playerStrengthTens; *((u32 *) (r0 + 8)) = r2; r1 = 0xC0; r1 <<= 2; *((u32 *) (r0 + 0xC)) = r1; r0 = (u32) obj->playerStrengthOnes; *((u32 *) (r0 + 8)) = r4; *((u32 *) (r0 + 0xC)) = r1; r1 = (u32) obj->playerExpBar; *((u32 *) (r1 + 8)) = r2; r0 = 0xC0; r0 <<= 4; *((u32 *) (r1 + 0xC)) = r0; } while (0);
 }
