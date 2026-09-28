@@ -1,77 +1,28 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+#include "data_symbols.h"
 
 // @ 0x08062f90
-__attribute__((naked))
+typedef void (*CpuCopyFunc)(const void *, void *, u32);
+
+// Snapshots BG and OBJ palette RAM into two freshly allocated 0x200-byte
+// buffers, unless a snapshot is already held (see sub_0806306C).
 void sub_08062F90(void)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, lr}\n"
-        "ldr r0, _0806300C @ =0x030008DC\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08063004\n"
-        "ldr r0, _08063010 @ =0x030008D8\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08063004\n"
-        "ldr r5, _08063014 @ =0x030008E0\n"
-        "ldr r0, [r5, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08063004\n"
-        "ldr r6, _08063018 @ =0x030008D4\n"
-        "ldr r0, [r6, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08063004\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x02\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_0806A3A4\n"
-        "str r0, [r5, #0x00]\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_0806A3A4\n"
-        "adds r1, r0, #0x0\n"
-        "str r1, [r6, #0x00]\n"
-        "ldr r0, [r5, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08062FD2\n"
-        "cmp r1, #0x00\n"
-        "beq _08063004\n"
-        "_08062FD2:\n"
-        "ldr r2, _0806300C @ =0x030008DC\n"
-        "ldr r0, _08063014 @ =0x030008E0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r1, [r0, #0x00]\n"
-        "str r1, [r2, #0x00]\n"
-        "ldr r6, _08063010 @ =0x030008D8\n"
-        "ldr r0, _08063018 @ =0x030008D4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r0, [r0, #0x00]\n"
-        "str r0, [r6, #0x00]\n"
-        "ldr r4, _0806301C @ =0x080BB8C0\n"
-        "movs r0, #0xA0\n"
-        "lsls r0, r0, #0x13\n"
-        "movs r5, #0x80\n"
-        "lsls r5, r5, #0x02\n"
-        "ldr r3, [r4, #0x00]\n"
-        "adds r2, r5, #0x0\n"
-        "bl _08073C4C\n"
-        "ldr r0, _08063020 @ =0x05000200\n"
-        "ldr r1, [r6, #0x00]\n"
-        "ldr r3, [r4, #0x00]\n"
-        "adds r2, r5, #0x0\n"
-        "bl _08073C4C\n"
-        "_08063004:\n"
-        "pop {r4, r5, r6}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_0806300C: .4byte 0x030008DC\n"
-        "_08063010: .4byte 0x030008D8\n"
-        "_08063014: .4byte 0x030008E0\n"
-        "_08063018: .4byte 0x030008D4\n"
-        "_0806301C: .4byte 0x080BB8C0\n"
-        "_08063020: .4byte 0x05000200\n"
-    );
+    bool32 bgAllocated;
+
+    if (gData_030008DC != NULL || gData_030008D8 != NULL
+        || gData_030008E0 != NULL || gData_030008D4 != NULL)
+        return;
+    gData_030008E0 = HeapAlloc(0x200);
+    gData_030008D4 = HeapAlloc(0x200);
+    if ((bgAllocated = gData_030008E0 != NULL) || gData_030008D4 != NULL)
+    {
+        gData_030008DC = *gData_030008E0;
+        gData_030008D8 = *gData_030008D4;
+        ((CpuCopyFunc)gData_080BB8C0[0])((void *)0x05000000, gData_030008DC, 0x200);
+        ((CpuCopyFunc)gData_080BB8C0[0])((void *)0x05000200, gData_030008D8, 0x200);
+    }
 }
 

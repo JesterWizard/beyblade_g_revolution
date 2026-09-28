@@ -1,193 +1,80 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08067648
-__attribute__((naked))
-u16 sub_08067648(u32 a, u32 b, u32 c)
+/* match-flags: -O1 */
+// EEPROM library (built at -O1): write one 64-bit block. Clocks out the write
+// command, the address and the four data halfwords (MSB first), then polls the
+// chip's ready bit, giving up after 0x88 scanlines. Returns 0x80FF if address
+// is past the chip size and 0xC001 on a timeout.
+u16 sub_08067648(u16 address, const u16 *data, u8 mode)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "add sp, #-0x0B0\n"
-        "adds r5, r1, #0x0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r7, r2, #0x18\n"
-        "ldr r0, _08067664 @ =0x030009B0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrh r0, [r0, #0x04]\n"
-        "cmp r1, r0\n"
-        "bcc _0806766C\n"
-        "ldr r0, _08067668 @ =0x000080FF\n"
-        "b _080677A0\n"
-        "_08067664: .4byte 0x030009B0\n"
-        "_08067668: .4byte 0x000080FF\n"
-        "_0806766C:\n"
-        "ldr r0, _080676AC @ =0x030009B0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrb r0, [r0, #0x08]\n"
-        "lsls r0, r0, #0x01\n"
-        "mov r2, sp\n"
-        "adds r3, r0, r2\n"
-        "adds r3, #0x84\n"
-        "movs r0, #0x00\n"
-        "strh r0, [r3, #0x00]\n"
-        "subs r3, #0x02\n"
-        "movs r4, #0x00\n"
-        "_08067682:\n"
-        "ldrh r2, [r5, #0x00]\n"
-        "adds r5, #0x02\n"
-        "movs r0, #0x00\n"
-        "_08067688:\n"
-        "strh r2, [r3, #0x00]\n"
-        "subs r3, #0x02\n"
-        "lsrs r2, r2, #0x01\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "cmp r0, #0x0F\n"
-        "bls _08067688\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r4, r0, #0x18\n"
-        "cmp r4, #0x03\n"
-        "bls _08067682\n"
-        "movs r4, #0x00\n"
-        "ldr r0, _080676AC @ =0x030009B0\n"
-        "adds r2, r0, #0x0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "b _080676BE\n"
-        "_080676AC: .4byte 0x030009B0\n"
-        "_080676B0:\n"
-        "strh r1, [r3, #0x00]\n"
-        "subs r3, #0x02\n"
-        "lsrs r1, r1, #0x01\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r4, r0, #0x18\n"
-        "ldr r0, [r2, #0x00]\n"
-        "_080676BE:\n"
-        "ldrb r0, [r0, #0x08]\n"
-        "cmp r4, r0\n"
-        "bcc _080676B0\n"
-        "movs r0, #0x00\n"
-        "strh r0, [r3, #0x00]\n"
-        "subs r3, #0x02\n"
-        "movs r6, #0x01\n"
-        "strh r6, [r3, #0x00]\n"
-        "movs r4, #0xD0\n"
-        "lsls r4, r4, #0x14\n"
-        "ldr r0, _08067730 @ =0x030009B0\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldrb r2, [r0, #0x08]\n"
-        "adds r2, #0x43\n"
-        "mov r0, sp\n"
-        "adds r1, r4, #0x0\n"
-        "bl sub_08067504\n"
-        "movs r5, #0x00\n"
-        "add r2, sp, #0x0A4\n"
-        "strh r5, [r2, #0x00]\n"
-        "mov r1, sp\n"
-        "adds r1, #0xA6\n"
-        "ldr r0, _08067734 @ =0x04000006\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "strh r0, [r1, #0x00]\n"
-        "add r0, sp, #0x0AC\n"
-        "str r5, [r0, #0x00]\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08067704\n"
-        "ldrh r0, [r4, #0x00]\n"
-        "ands r0, r6\n"
-        "cmp r0, #0x00\n"
-        "bne _08067794\n"
-        "_08067704:\n"
-        "add r3, sp, #0x0A8\n"
-        "ldr r0, _08067734 @ =0x04000006\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "strh r0, [r3, #0x00]\n"
-        "mov r4, sp\n"
-        "adds r4, #0xA6\n"
-        "ldrh r1, [r3, #0x00]\n"
-        "ldrh r0, [r4, #0x00]\n"
-        "cmp r1, r0\n"
-        "beq _0806777E\n"
-        "ldrh r1, [r3, #0x00]\n"
-        "ldrh r0, [r4, #0x00]\n"
-        "cmp r1, r0\n"
-        "bls _08067738\n"
-        "add r2, sp, #0x0AC\n"
-        "ldrh r1, [r3, #0x00]\n"
-        "ldrh r0, [r4, #0x00]\n"
-        "subs r1, r1, r0\n"
-        "ldr r0, [r2, #0x00]\n"
-        "adds r1, r1, r0\n"
-        "str r1, [r2, #0x00]\n"
-        "b _0806774E\n"
-        "_08067730: .4byte 0x030009B0\n"
-        "_08067734: .4byte 0x04000006\n"
-        "_08067738:\n"
-        "add r2, sp, #0x0AC\n"
-        "add r0, sp, #0x0A8\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "adds r0, #0xE4\n"
-        "mov r1, sp\n"
-        "adds r1, #0xA6\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "subs r0, r0, r1\n"
-        "ldr r1, [r2, #0x00]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r2, #0x00]\n"
-        "_0806774E:\n"
-        "add r0, sp, #0x0AC\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x88\n"
-        "bls _08067774\n"
-        "add r0, sp, #0x0A4\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _0806779E\n"
-        "movs r0, #0xD0\n"
-        "lsls r0, r0, #0x14\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "movs r1, #0x01\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _0806779E\n"
-        "ldr r5, _08067770 @ =0x0000C001\n"
-        "b _0806779E\n"
-        "_08067770: .4byte 0x0000C001\n"
-        "_08067774:\n"
-        "mov r0, sp\n"
-        "adds r0, #0xA6\n"
-        "add r1, sp, #0x0A8\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "strh r1, [r0, #0x00]\n"
-        "_0806777E:\n"
-        "add r2, sp, #0x0A4\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08067704\n"
-        "movs r0, #0xD0\n"
-        "lsls r0, r0, #0x14\n"
-        "movs r1, #0x01\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "ands r1, r0\n"
-        "cmp r1, #0x00\n"
-        "beq _08067704\n"
-        "_08067794:\n"
-        "ldrh r0, [r2, #0x00]\n"
-        "adds r0, #0x01\n"
-        "strh r0, [r2, #0x00]\n"
-        "cmp r7, #0x00\n"
-        "bne _08067704\n"
-        "_0806779E:\n"
-        "adds r0, r5, #0x0\n"
-        "_080677A0:\n"
-        "add sp, #0x0B0\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u16 buffer[0x52];
+    vu16 status;
+    vu16 lastVcount;
+    vu16 vcount;
+    vu32 elapsed;
+    u16 result;
+    u16 *ptr;
+    u16 bits;
+    u8 i;
+    u8 j;
+
+    if (address >= gData_030009B0->unk04)
+        return 0x80FF;
+    // Stop bit, then the data bits, address bits and the two command bits,
+    // filled from the end of the stream.
+    ptr = &buffer[gData_030009B0->unk08 + 0x43];
+    ptr--;
+    *ptr-- = 0;
+    for (i = 0; i < 4; i++)
+    {
+        bits = *data++;
+        for (j = 0; j < 16; j++)
+        {
+            *ptr-- = bits;
+            bits >>= 1;
+        }
+    }
+    for (i = 0; i < gData_030009B0->unk08; i++)
+    {
+        *ptr-- = address;
+        address >>= 1;
+    }
+    *ptr-- = 0;
+    *ptr = 1;
+    EepromDmaTransfer(buffer, (void *)0x0D000000, gData_030009B0->unk08 + 0x43);
+
+    result = 0;
+    status = 0;
+    lastVcount = REG_VCOUNT;
+    elapsed = 0;
+    for (;;)
+    {
+        if (status == 0 && (*(vu16 *)0x0D000000 & 1))
+        {
+            status++;
+            if (mode == 0)
+                break;
+        }
+        vcount = REG_VCOUNT;
+        if (vcount != lastVcount)
+        {
+            // VCOUNT wraps after 228 (0xE4) lines.
+            if (vcount > lastVcount)
+                elapsed += vcount - lastVcount;
+            else
+                elapsed += 0xE4 - lastVcount + vcount;
+            if (elapsed > 0x88)
+            {
+                if (status == 0 && !(*(vu16 *)0x0D000000 & 1))
+                    result = 0xC001;
+                break;
+            }
+            lastVcount = vcount;
+        }
+    }
+    return result;
 }
 

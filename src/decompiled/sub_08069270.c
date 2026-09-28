@@ -1,18 +1,20 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
 #include "ram_map.h"
-
 typedef void (*BlitFunc)(struct Unk68988 *, s32, s32, s32, s32, s32, s32);
 typedef void (*BlitColFunc)(struct Unk68988 *, s32, s32, s32, s32);
-
 void BgMapBlitRect(struct Unk68988 *st, s32 x, s32 y, s32 d, s32 e, s32 w, s32 h)
 {
     BlitFunc blit;
-    s32 len1, len2;
+    s32 h2;
     s32 x2;
+    s32 e2;
+    s32 len1;
+    s32 len2;
     s32 d2;
     s32 end;
-    s32 e1, e2, h1, h2;
+    s32 e1;
+    s32 h1;
 
     len1 = w;
     h1 = h;
@@ -25,19 +27,18 @@ void BgMapBlitRect(struct Unk68988 *st, s32 x, s32 y, s32 d, s32 e, s32 w, s32 h
         blit = (BlitFunc)0x0806945D;
     else
         blit = (BlitFunc)gData_080BB8A4[0];
-    end = x + w;
-    if (end > st->unk00)
+    if (x + w > st->unk00)
     {
         len1 = 0;
         if (x < st->unk00)
             len1 = st->unk00 - x;
         len2 = w - len1;
         x2 = x + len1 - st->unk00;
-        d2 += len1;
+        d2 = d + len1;
     }
     if (x < 0)
     {
-        len1 = end;
+        len1 = x + w;
         if (len1 < 0)
             len1 = 0;
         len2 = w - len1;

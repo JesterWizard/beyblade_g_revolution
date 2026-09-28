@@ -282,4 +282,13 @@ extern void *gData_08097700[];
 extern void *gData_08097714[];
 extern void *gData_08097728[];
 
+// Script byte variables (sub_08045EF0)
+extern struct Unk0600 gData_03000600;
+
+// Saved palette buffers: BG/OBJ palette RAM snapshots (sub_08062F90)
+extern u32 **gData_030008D4;
+extern u32 *gData_030008D8;
+extern u32 *gData_030008DC;
+extern u32 **gData_030008E0;
+
 #endif // GUARD_DATA_SYMBOLS_H

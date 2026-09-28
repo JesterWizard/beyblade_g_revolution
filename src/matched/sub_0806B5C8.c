@@ -1,152 +1,57 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806b5c8
-__attribute__((naked))
-void GlyphBlit2x2(void)
+// ORs an 8-row 4bpp glyph from `src` into the 2x2 tile block at `tiles`,
+// shifted right by x & 7 pixels and down by y & 7 rows. Columns that fall
+// off the left (x < 0) or right (x >> 3 > 28) edge are clipped.
+void GlyphBlit2x2(u16 *tiles, s32 base, u32 *src, s32 x, u32 y)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x008\n"
-        "adds r6, r0, #0x0\n"
-        "adds r7, r1, #0x0\n"
-        "str r2, [sp, #0x000]\n"
-        "mov r9, r3\n"
-        "ldr r0, [sp, #0x028]\n"
-        "mov r10, r0\n"
-        "mov r1, r9\n"
-        "asrs r1, r1, #0x03\n"
-        "str r1, [sp, #0x004]\n"
-        "cmp r0, #0x98\n"
-        "bhi _0806B6CA\n"
-        "mov r0, r9\n"
-        "adds r0, #0x07\n"
-        "cmp r0, #0xF6\n"
-        "bhi _0806B6CA\n"
-        "ldrh r1, [r6, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_0806B5B8\n"
-        "adds r5, r0, #0x0\n"
-        "ldrh r1, [r6, #0x02]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_0806B5B8\n"
-        "adds r4, r0, #0x0\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x40\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_0806B5B8\n"
-        "mov r8, r0\n"
-        "adds r0, r6, #0x0\n"
-        "adds r0, #0x42\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_0806B5B8\n"
-        "adds r7, r0, #0x0\n"
-        "movs r0, #0x07\n"
-        "mov r1, r9\n"
-        "ands r1, r0\n"
-        "mov r9, r1\n"
-        "mov r1, r10\n"
-        "ands r1, r0\n"
-        "mov r10, r1\n"
-        "lsls r0, r1, #0x02\n"
-        "adds r5, r5, r0\n"
-        "adds r4, r4, r0\n"
-        "mov r0, r9\n"
-        "lsls r0, r0, #0x02\n"
-        "mov r9, r0\n"
-        "movs r0, #0x20\n"
-        "mov r1, r9\n"
-        "subs r1, r0, r1\n"
-        "mov r12, r1\n"
-        "mov r0, r10\n"
-        "mvns r3, r0\n"
-        "mov r6, r10\n"
-        "adds r3, #0x08\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r3, r0\n"
-        "beq _0806B688\n"
-        "mov r10, r0\n"
-        "_0806B656:\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldm r1!, {r2}\n"
-        "str r1, [sp, #0x000]\n"
-        "adds r1, r2, #0x0\n"
-        "mov r0, r9\n"
-        "lsls r1, r0\n"
-        "mov r0, r12\n"
-        "lsrs r2, r0\n"
-        "ldr r0, [sp, #0x004]\n"
-        "cmp r0, #0x00\n"
-        "blt _0806B672\n"
-        "ldr r0, [r5, #0x00]\n"
-        "orrs r0, r1\n"
-        "str r0, [r5, #0x00]\n"
-        "_0806B672:\n"
-        "ldr r1, [sp, #0x004]\n"
-        "cmp r1, #0x1C\n"
-        "bgt _0806B67E\n"
-        "ldr r0, [r4, #0x00]\n"
-        "orrs r0, r2\n"
-        "str r0, [r4, #0x00]\n"
-        "_0806B67E:\n"
-        "adds r5, #0x04\n"
-        "adds r4, #0x04\n"
-        "subs r3, #0x01\n"
-        "cmp r3, r10\n"
-        "bne _0806B656\n"
-        "_0806B688:\n"
-        "subs r6, #0x01\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r6, r0\n"
-        "beq _0806B6CA\n"
-        "adds r3, r0, #0x0\n"
-        "_0806B694:\n"
-        "ldr r4, [sp, #0x000]\n"
-        "ldm r4!, {r2}\n"
-        "str r4, [sp, #0x000]\n"
-        "adds r1, r2, #0x0\n"
-        "mov r0, r9\n"
-        "lsls r1, r0\n"
-        "mov r4, r12\n"
-        "lsrs r2, r4\n"
-        "ldr r0, [sp, #0x004]\n"
-        "cmp r0, #0x00\n"
-        "blt _0806B6B2\n"
-        "mov r4, r8\n"
-        "ldr r0, [r4, #0x00]\n"
-        "orrs r0, r1\n"
-        "str r0, [r4, #0x00]\n"
-        "_0806B6B2:\n"
-        "ldr r0, [sp, #0x004]\n"
-        "cmp r0, #0x1C\n"
-        "bgt _0806B6BE\n"
-        "ldr r0, [r7, #0x00]\n"
-        "orrs r0, r2\n"
-        "str r0, [r7, #0x00]\n"
-        "_0806B6BE:\n"
-        "movs r1, #0x04\n"
-        "add r8, r1\n"
-        "adds r7, #0x04\n"
-        "subs r6, #0x01\n"
-        "cmp r6, r3\n"
-        "bne _0806B694\n"
-        "_0806B6CA:\n"
-        "add sp, #0x008\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    u32 *tl, *tr, *bl, *br;
+    s32 col;
+    s32 shr;
+    s32 n, m;
+    u32 lo, hi;
+
+    col = x >> 3;
+    if (y > 0x98 || (u32)(x + 7) > 0xF6)
+        return;
+    tl = (u32 *)sub_0806B5B8(base, tiles[0]);
+    tr = (u32 *)sub_0806B5B8(base, tiles[1]);
+    bl = (u32 *)sub_0806B5B8(base, tiles[0x20]);
+    br = (u32 *)sub_0806B5B8(base, tiles[0x21]);
+    x &= 7;
+    y &= 7;
+    tl += y;
+    tr += y;
+    x *= 4;
+    shr = 32 - x;
+    n = 8 - y;
+    m = y;
+    while (--n != -1)
+    {
+        hi = *src++;
+        lo = hi << x;
+        hi >>= shr;
+        if (col >= 0)
+            *tl |= lo;
+        if (col <= 28)
+            *tr |= hi;
+        tl++;
+        tr++;
+    }
+    while (--m != -1)
+    {
+        hi = *src++;
+        lo = hi << x;
+        hi >>= shr;
+        if (col >= 0)
+            *bl |= lo;
+        if (col <= 28)
+            *br |= hi;
+        bl++;
+        br++;
+    }
 }
 

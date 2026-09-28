@@ -8,18 +8,33 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **578/633 (91.3%)** |
-| **Decompiled C (bytes)** | **68,562/90,272 (76.0%)** |
+| **Decompiled C (functions)** | **584/633 (92.3%)** |
+| **Decompiled C (bytes)** | **70,480/90,272 (78.1%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 55/633 (8.7%) |
+| Readable Thumb | 49/633 (7.7%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 141/160 (88.1% fn, 78.5% bytes) |
+| Battle semantic C | 143/160 (89.4% fn, 80.9% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-09-28 — parked-WIP retry (+6/10): 6B2F0, 6B5C8, 67648, 45EF0, 30F38, 62F90
+
+- `sub_0806B2F0` (DigitRowDraw) — `s16` drawn/i, loop bound inline, `|value|` copied into a separate local.
+- `sub_0806B5C8` (GlyphBlit2x2) — `hi = *src++; lo = hi << x; hi >>= shr;` plus `--n != -1` row counters.
+- `sub_08067648` — EEPROM write needed `-O1` (the draft lacked it), `0xE4 - last + vcount` and
+  `&buffer[w + 0x43]` then `ptr--`. The prototype is now `(u16, const u16 *, u8)`; `sub_08067634` casts.
+- `sub_08045EF0` — the old draft had the op codes wrong (11 set, 5 clear, 6/7 inc/dec, 8/9/10 compare).
+  Uses the new `gData_03000600` symbol with old_agbcc.
+- `sub_08030F38` — a local `work` only for the AF0/AF4 pair and a block-scoped B48 part, plus a `step`
+  variable so the clamp compares against a register.
+- `sub_08062F90` — `(bgAllocated = gData_030008E0 != NULL) || ...` stops `-fcse-skip-blocks` from carrying
+  the part-1 addresses into the copy block. Adds `gData_030008D4/D8/DC/E0`.
+- Still parked, notes updated: `sub_08069270` (243/244; one operand), `sub_08035624` (71/114),
+  `sub_08035054` (src/pos priority), `sub_08038438` (loop.c moves the found blocks out of the loops).
 
 ### 2026-09-28 — sub_08045C5C retry (parked, 93/136)
 

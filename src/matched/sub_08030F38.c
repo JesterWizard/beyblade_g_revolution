@@ -1,8 +1,66 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08030f38
-__attribute__((naked))
+// While the AF0 object's unk0C is at most 0x7FF, adds 0x100 to unk0C of the
+// AF0..AFC/B40/B44/BA4/BA8 objects and to unkBB0, and sets the B00/B20 banks
+// to unkBB0. Then moves the B48/B4C pair's unk0C towards unkBAC by 0x100.
 void sub_08030F38(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nldr r1, _08031068 @ =0x03000290\nldr r4, [r1, #0x00]\nmovs r2, #0xAF\nlsls r2, r2, #0x04\nadds r0, r4, r2\nldr r2, [r0, #0x00]\nadds r7, r1, #0x0\ncmp r2, #0x00\nbeq _08031024\nldr r1, [r2, #0x0C]\nldr r0, _0803106C @ =0x000007FF\ncmp r1, r0\nbgt _08031024\nmovs r3, #0x80\nlsls r3, r3, #0x01\nadds r0, r1, r3\nstr r0, [r2, #0x0C]\nldr r1, _08031070 @ =0x00000AF4\nadds r0, r4, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030F6C\nldr r0, [r1, #0x0C]\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\n_08030F6C:\nldr r0, [r7, #0x00]\nldr r2, _08031074 @ =0x00000AF8\nadds r0, r0, r2\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030F7E\nldr r0, [r1, #0x0C]\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\n_08030F7E:\nldr r0, [r7, #0x00]\nldr r1, _08031078 @ =0x00000AFC\nadds r0, r0, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030F90\nldr r0, [r1, #0x0C]\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\n_08030F90:\nldr r0, [r7, #0x00]\nmovs r2, #0xB4\nlsls r2, r2, #0x04\nadds r0, r0, r2\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030FA4\nldr r0, [r1, #0x0C]\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\n_08030FA4:\nldr r0, [r7, #0x00]\nldr r1, _0803107C @ =0x00000B44\nadds r0, r0, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030FB6\nldr r0, [r1, #0x0C]\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\n_08030FB6:\nldr r0, [r7, #0x00]\nldr r2, _08031080 @ =0x00000BA4\nadds r0, r0, r2\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030FC8\nldr r0, [r1, #0x0C]\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\n_08030FC8:\nldr r0, [r7, #0x00]\nldr r1, _08031084 @ =0x00000BA8\nadds r0, r0, r1\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08030FDA\nldr r0, [r1, #0x0C]\nadds r0, r0, r3\nstr r0, [r1, #0x0C]\n_08030FDA:\nldr r0, [r7, #0x00]\nmovs r2, #0xBB\nlsls r2, r2, #0x04\nadds r0, r0, r2\nldr r1, [r0, #0x00]\nadds r1, r1, r3\nstr r1, [r0, #0x00]\nmovs r4, #0x00\nadds r6, r7, #0x0\nadds r5, r2, #0x0\nsubs r2, #0xB0\nmov r12, r2\n_08030FF2:\nldr r3, [r6, #0x00]\nlsls r2, r4, #0x02\nmov r1, r12\nadds r0, r3, r1\nadds r0, r0, r2\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08031008\nadds r0, r3, r5\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x0C]\n_08031008:\nldr r3, [r6, #0x00]\nmovs r1, #0xB2\nlsls r1, r1, #0x04\nadds r0, r3, r1\nadds r0, r0, r2\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _0803101E\nadds r0, r3, r5\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x0C]\n_0803101E:\nadds r4, #0x01\ncmp r4, #0x07\nble _08030FF2\n_08031024:\nldr r1, [r7, #0x00]\nldr r2, _08031088 @ =0x00000B48\nadds r0, r1, r2\nldr r4, [r0, #0x00]\ncmp r4, #0x00\nbeq _08031062\nldr r3, _0803108C @ =0x00000BAC\nadds r0, r1, r3\nldr r3, [r4, #0x0C]\nldr r0, [r0, #0x00]\ncmp r3, r0\nbeq _08031062\nsubs r2, r0, r3\nmovs r0, #0x80\nlsls r0, r0, #0x01\ncmp r2, r0\nble _08031048\nadds r2, r0, #0x0\n_08031048:\ncmp r2, r0\nbge _0803104E\nnegs r2, r0\n_0803104E:\nadds r0, r3, r2\nstr r0, [r4, #0x0C]\nldr r3, _08031090 @ =0x00000B4C\nadds r0, r1, r3\nldr r1, [r0, #0x00]\ncmp r1, #0x00\nbeq _08031062\nldr r0, [r1, #0x0C]\nadds r0, r0, r2\nstr r0, [r1, #0x0C]\n_08031062:\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_08031068: .4byte 0x03000290\n_0803106C: .4byte 0x000007FF\n_08031070: .4byte 0x00000AF4\n_08031074: .4byte 0x00000AF8\n_08031078: .4byte 0x00000AFC\n_0803107C: .4byte 0x00000B44\n_08031080: .4byte 0x00000BA4\n_08031084: .4byte 0x00000BA8\n_08031088: .4byte 0x00000B48\n_0803108C: .4byte 0x00000BAC\n_08031090: .4byte 0x00000B4C");
+    struct BattleWork *work;
+    struct Unk705DC *e;
+    s32 i;
+
+    work = gData_03000290;
+    e = work->unk0AE8.fields.unkAF0;
+    if (e != NULL && (s32)e->unk0C <= 0x7FF)
+    {
+        e->unk0C += 0x100;
+        if (work->unk0AE8.fields.unkAF4 != NULL)
+            work->unk0AE8.fields.unkAF4->unk0C += 0x100;
+        if (gData_03000290->unk0AE8.fields.unkAF8 != NULL)
+            gData_03000290->unk0AE8.fields.unkAF8->unk0C += 0x100;
+        if (gData_03000290->unk0AE8.fields.unkAFC != NULL)
+            gData_03000290->unk0AE8.fields.unkAFC->unk0C += 0x100;
+        if (gData_03000290->unk0AE8.fields.unkB40 != NULL)
+            gData_03000290->unk0AE8.fields.unkB40->unk0C += 0x100;
+        if (gData_03000290->unk0AE8.fields.unkB44 != NULL)
+            gData_03000290->unk0AE8.fields.unkB44->unk0C += 0x100;
+        if (gData_03000290->unkBA4 != NULL)
+            gData_03000290->unkBA4->unk0C += 0x100;
+        if (gData_03000290->unkBA8 != NULL)
+            gData_03000290->unkBA8->unk0C += 0x100;
+        gData_03000290->unkBB0 += 0x100;
+        for (i = 0; i < 8; i++)
+        {
+            if (gData_03000290->unk0AE8.fields.unkB00[i] != NULL)
+                gData_03000290->unk0AE8.fields.unkB00[i]->unk0C = gData_03000290->unkBB0;
+            if (gData_03000290->unk0AE8.fields.unkB20[i] != NULL)
+                gData_03000290->unk0AE8.fields.unkB20[i]->unk0C = gData_03000290->unkBB0;
+        }
+    }
+
+    {
+        struct BattleWork *battle;
+        struct Unk705DC *lead;
+        s32 delta;
+        s32 step;
+
+        battle = gData_03000290;
+        lead = battle->unk0AE8.fields.unkB48;
+        if (lead != NULL && lead->unk0C != battle->unkBAC)
+        {
+            delta = battle->unkBAC - lead->unk0C;
+            step = 0x100;
+            if (delta > step)
+                delta = step;
+            if (delta < step) /* BUG: meant -step */
+                delta = -step;
+            lead->unk0C += delta;
+            if (battle->unk0AE8.fields.unkB4C != NULL)
+                battle->unk0AE8.fields.unkB4C->unk0C += delta;
+        }
+    }
 }
+

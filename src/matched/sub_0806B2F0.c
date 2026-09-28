@@ -1,140 +1,49 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806b2f0
-__attribute__((naked))
-void DigitRowDraw(void)
+// Draws |value| right to left into the digit sprites of `row`, starting at
+// slot `pos` and covering at most `count` slots. Leading zeroes are only
+// drawn when `padZero` is set. Returns the number of digits drawn.
+u16 DigitRowDraw(struct Unk6B2F0 *row, s32 value, u16 pos, u16 count, u8 padZero)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x004\n"
-        "mov r9, r0\n"
-        "ldr r0, [sp, #0x024]\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x000]\n"
-        "movs r0, #0x00\n"
-        "mov r8, r0\n"
-        "cmp r1, #0x00\n"
-        "bge _0806B318\n"
-        "negs r1, r1\n"
-        "_0806B318:\n"
-        "adds r6, r1, #0x0\n"
-        "lsls r0, r2, #0x10\n"
-        "asrs r4, r0, #0x10\n"
-        "mov r1, r9\n"
-        "ldrb r1, [r1, #0x04]\n"
-        "cmp r4, r1\n"
-        "blt _0806B32A\n"
-        "movs r0, #0x00\n"
-        "b _0806B3D2\n"
-        "_0806B32A:\n"
-        "lsrs r7, r0, #0x10\n"
-        "lsls r2, r7, #0x10\n"
-        "asrs r1, r2, #0x10\n"
-        "lsls r0, r3, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "subs r0, r4, r0\n"
-        "movs r3, #0x00\n"
-        "cmp r1, r0\n"
-        "ble _0806B3D0\n"
-        "mov r10, r0\n"
-        "_0806B33E:\n"
-        "asrs r1, r2, #0x10\n"
-        "movs r0, #0xDC\n"
-        "muls r1, r0\n"
-        "mov r2, r9\n"
-        "ldr r0, [r2, #0x00]\n"
-        "adds r4, r0, r1\n"
-        "cmp r6, #0x00\n"
-        "ble _0806B35A\n"
-        "adds r0, r6, #0x0\n"
-        "movs r1, #0x0A\n"
-        "bl sub_080674A4\n"
-        "adds r2, r0, #0x0\n"
-        "b _0806B35C\n"
-        "_0806B35A:\n"
-        "movs r2, #0x00\n"
-        "_0806B35C:\n"
-        "cmp r2, #0x00\n"
-        "bne _0806B38C\n"
-        "cmp r6, #0x00\n"
-        "bne _0806B38C\n"
-        "mov r1, r8\n"
-        "lsls r0, r1, #0x10\n"
-        "asrs r5, r0, #0x10\n"
-        "adds r3, r0, #0x0\n"
-        "cmp r5, #0x00\n"
-        "beq _0806B38C\n"
-        "ldr r2, [sp, #0x000]\n"
-        "cmp r2, #0x00\n"
-        "beq _0806B3D0\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r4, #0x70]\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x00\n"
-        "movs r2, #0x34\n"
-        "bl sub_0806833C\n"
-        "adds r0, r5, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "b _0806B3AA\n"
-        "_0806B38C:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r4, #0x70]\n"
-        "adds r2, #0x34\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x00\n"
-        "bl sub_0806833C\n"
-        "mov r1, r8\n"
-        "lsls r0, r1, #0x10\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x09\n"
-        "adds r0, r0, r2\n"
-        "_0806B3AA:\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r8, r0\n"
-        "cmp r6, #0x00\n"
-        "ble _0806B3BC\n"
-        "adds r0, r6, #0x0\n"
-        "movs r1, #0x0A\n"
-        "bl sub_080674A0\n"
-        "adds r6, r0, #0x0\n"
-        "_0806B3BC:\n"
-        "lsls r0, r7, #0x10\n"
-        "ldr r1, _0806B3E4 @ =0xFFFF0000\n"
-        "adds r0, r0, r1\n"
-        "lsrs r7, r0, #0x10\n"
-        "lsls r2, r7, #0x10\n"
-        "asrs r0, r2, #0x10\n"
-        "mov r1, r8\n"
-        "lsls r3, r1, #0x10\n"
-        "cmp r0, r10\n"
-        "bgt _0806B33E\n"
-        "_0806B3D0:\n"
-        "lsrs r0, r3, #0x10\n"
-        "_0806B3D2:\n"
-        "add sp, #0x004\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        ".byte 0x00, 0x00\n"
-        "_0806B3E4: .4byte 0xFFFF0000\n"
-    );
+    struct Unk68574 *obj;
+    s16 drawn;
+    s16 i;
+    s32 digit;
+    s32 n;
+
+    drawn = 0;
+    if (value < 0)
+        value = -value;
+    n = value;
+    if ((s16)pos >= row->unk04)
+        return 0;
+    for (i = pos; i > (s16)pos - (s16)count; i--)
+    {
+        obj = &row->unk00[i];
+        if (n > 0)
+            digit = DivRemainder(n, 10);
+        else
+            digit = 0;
+        if (digit == 0 && n == 0 && drawn != 0)
+        {
+            if (!padZero)
+                break;
+            obj->unk70 = (void *)-1;
+            sub_0806833C((struct Unk68598 *)obj, 0, 0x34);
+            drawn++;
+        }
+        else
+        {
+            obj->unk70 = (void *)-1;
+            sub_0806833C((struct Unk68598 *)obj, 0, digit + 0x34);
+            drawn++;
+        }
+        if (n > 0)
+            n = Div(n, 10);
+    }
+    return drawn;
 }
 
