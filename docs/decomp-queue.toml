@@ -339,3 +339,27 @@ notes = "src/decompiled/sub_0806B5C8.md"
 status = "8x8 4bpp glyph blit into a 2x2 tile block (tiles[0,1,0x20,0x21] via sub_0806B5B8), shifted by x&7 and y&7. Logic complete; register allocation differs (retail: base/br share r7, x reused as the shift in r9, y&7 in r10, first row count as ~y + 8)."
 next = "Reuse x for the shift and y for the second loop's counter; try n = 7 - y with != -1 tests; then permuter."
 score = "87/274"
+
+[[wip]]
+name = "sub_0806960C"
+seed = "src/decompiled/sub_0806960C.c"
+notes = "src/decompiled/sub_0806960C.md"
+status = "BG map streaming (scroll by dx/dy, stream a column/row of tiles through sub_08069270 when the view crosses the loaded rect, wrap on unk7C bits). Logic complete, same size. Retail spills tile/edge/source/start values to 8 consecutive stack words (sp0C..sp28) and keeps the constant 1 in r10; a local Unk688C8Rect + start[2] gets closest."
+next = "Find the local aggregate shape that yields the sp0C..sp28 layout while keeping CSE of the stored values; one = 1 local helps the prologue."
+score = "226/600"
+
+[[wip]]
+name = "sub_08043DB4"
+seed = "src/decompiled/sub_08043DB4.c"
+notes = "src/decompiled/sub_08043DB4.md"
+status = "Map entry/setup sequence fully mapped (same size). Only remaining diff: retail keeps a -1 in a stack slot (sp18) set right after sub_0806644C and compares unk18B4 against it; every source form tried lets agbcc rematerialise the constant, which shifts the frame by 4 and some registers."
+next = "Find what variable holds that -1 (param reuse and locals tried)."
+score = "1031/1352"
+
+[[wip]]
+name = "sub_08044A8C"
+seed = "src/decompiled/sub_08044A8C.c"
+notes = "src/decompiled/sub_08044A8C.md"
+status = "Save-data verify (EEPROM read retry x8, checksum/magic/size/version checks per slot). Same size; remaining diff is register choice around the hdr/slot HeapAlloc results (retail keeps &gData_03000198 in r4 and buf in r7)."
+next = "Tune the alloc/assignment statement shape at the top; permuter from this seed."
+score = "602/672"

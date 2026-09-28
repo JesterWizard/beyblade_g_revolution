@@ -21,7 +21,7 @@ void sub_08068E54(struct Unk68E54 *a)
     state->unk18 = y;
     state->unk54 = x;
     state->unk58 = y;
-    sub_0806960C(state);
+    sub_0806960C(state, x, y);
     if ((state->unk64 & 1) != 0)
         sub_08068EC0(state);
     scale = state->unk24;

@@ -1,8 +1,126 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08046e7c
-__attribute__((naked))
-void sub_08046E7C(u32 a)
+/* match-compiler: old_agbcc */
+// Per-frame field update: refresh the two main objects' sort keys, tick objects,
+// timers and effects, read d-pad movement (when active and allowed) into a
+// direction for _08041E88, run collision (sub_0806C7D4) and proximity
+// triggers, and handle the countdown and menu buttons.
+void sub_08046E7C(u32 active)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r8\npush {r7}\nadds r7, r0, #0x0\nbl sub_080674B4\nldr r6, _08046FB8 @ =0x03000198\nldr r1, [r6, #0x00]\nmovs r2, #0xDD\nlsls r2, r2, #0x02\nadds r0, r1, r2\nldr r0, [r0, #0x00]\nasrs r0, r0, #0x08\nmvns r0, r0\nmovs r3, #0x85\nlsls r3, r3, #0x03\nadds r2, r1, r3\nstrh r0, [r2, #0x00]\nldr r0, _08046FBC @ =0x00000424\nadds r1, r1, r0\nldr r0, [r1, #0x00]\ncmp r0, #0x00\nbeq _08046EB0\nldrh r1, [r2, #0x00]\nbl sub_08070468\n_08046EB0:\nldr r1, [r6, #0x00]\nmovs r3, #0xA0\nlsls r3, r3, #0x03\nadds r2, r1, r3\nldr r0, [r2, #0x00]\ncmp r0, #0x00\nbeq _08046ED6\nsubs r3, #0xB0\nadds r0, r1, r3\nldr r0, [r0, #0x00]\nasrs r0, r0, #0x08\nmvns r0, r0\nadds r3, #0xB4\nadds r1, r1, r3\nstrh r0, [r1, #0x00]\nldr r0, [r2, #0x00]\nldrh r1, [r1, #0x00]\nbl sub_08070468\n_08046ED6:\nldr r0, [r6, #0x00]\nbl sub_0806EE48\nldr r0, [r6, #0x00]\nmovs r4, #0xDB\nlsls r4, r4, #0x02\nadds r0, r0, r4\nbl sub_08068418\nbl sub_0804188C\nldr r0, [r6, #0x00]\nadds r0, r0, r4\nmovs r1, #0x00\nbl sub_08067CE8\nldr r1, [r6, #0x00]\nldr r2, _08046FC0 @ =0x0000182C\nadds r0, r1, r2\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbeq _08046F14\nadds r4, #0xDC\nadds r0, r1, r4\nbl sub_08068418\nldr r0, [r6, #0x00]\nadds r0, r0, r4\nmovs r1, #0x00\nbl sub_08067CE8\n_08046F14:\nldr r0, _08046FC4 @ =0x080BB888\nldr r0, [r0, #0x00]\nbl _08073C40\nbl sub_0806A6F8\nbl sub_080474AC\nbl sub_08067890\nbl sub_080462D4\nmovs r5, #0x00\nldr r2, [r6, #0x00]\nmovs r3, #0xEB\nlsls r3, r3, #0x02\nadds r0, r2, r3\nstr r5, [r0, #0x00]\nmovs r1, #0xEC\nlsls r1, r1, #0x02\nadds r0, r2, r1\nstr r5, [r0, #0x00]\nldr r3, _08046FC8 @ =0x0000180C\nadds r0, r2, r3\nstr r5, [r0, #0x00]\nldr r1, _08046FCC @ =0x03003F60\nmovs r0, #0x02\nldrh r1, [r1, #0x00]\nands r0, r1\nmovs r1, #0x80\nlsls r1, r1, #0x01\nmov r8, r1\ncmp r0, #0x00\nbeq _08046F68\nsubs r3, #0x40\nadds r0, r2, r3\nldr r0, [r0, #0x00]\ncmp r0, #0x10\nble _08046F68\nmovs r0, #0x80\nlsls r0, r0, #0x02\nmov r8, r0\n_08046F68:\ncmp r7, #0x00\nbne _08046F6E\nb _080470BE\n_08046F6E:\nldr r6, _08046FB8 @ =0x03000198\nldr r1, [r6, #0x00]\nldr r2, _08046FC8 @ =0x0000180C\nadds r0, r1, r2\nldr r0, [r0, #0x00]\nldr r4, _08046FD0 @ =0x03000634\ncmp r0, #0x00\nbeq _08046F80\nb _080470A8\n_08046F80:\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _08046F88\nb _080470AE\n_08046F88:\nldr r3, _08046FD4 @ =0x0000182B\nadds r0, r1, r3\nldrb r0, [r0, #0x00]\ncmp r0, #0x00\nbne _08046F94\nb _080470A8\n_08046F94:\nldr r0, _08046FCC @ =0x03003F60\nldrh r1, [r0, #0x00]\nmovs r0, #0x20\nands r0, r1\ncmp r0, #0x00\nbeq _08046FDC\nmovs r5, #0x01\nldr r0, _08046FD8 @ =0x0300063C\nstr r5, [r0, #0x00]\nmovs r0, #0x00\nbl sub_08047624\nstr r0, [r4, #0x00]\nmovs r0, #0x01\nbl sub_08042784\nb _080470BE\n.byte 0x00, 0x00\n_08046FB8: .4byte 0x03000198\n_08046FBC: .4byte 0x00000424\n_08046FC0: .4byte 0x0000182C\n_08046FC4: .4byte 0x080BB888\n_08046FC8: .4byte 0x0000180C\n_08046FCC: .4byte 0x03003F60\n_08046FD0: .4byte 0x03000634\n_08046FD4: .4byte 0x0000182B\n_08046FD8: .4byte 0x0300063C\n_08046FDC:\nmovs r0, #0x10\nands r0, r1\ncmp r0, #0x00\nbeq _08047000\nmovs r5, #0x02\nldr r0, _08046FFC @ =0x0300063C\nstr r5, [r0, #0x00]\nmovs r0, #0x01\nbl sub_08047624\nstr r0, [r4, #0x00]\nmovs r0, #0x02\nbl sub_08042784\nb _080470BE\n.byte 0x00, 0x00\n_08046FFC: .4byte 0x0300063C\n_08047000:\nmovs r0, #0x40\nands r0, r1\ncmp r0, #0x00\nbeq _08047024\nmovs r5, #0x04\nldr r0, _08047020 @ =0x0300063C\nstr r5, [r0, #0x00]\nmovs r0, #0x02\nbl sub_08047624\nstr r0, [r4, #0x00]\nmovs r0, #0x04\nbl sub_08042784\nb _080470BE\n.byte 0x00, 0x00\n_08047020: .4byte 0x0300063C\n_08047024:\nmovs r0, #0x80\nands r0, r1\ncmp r0, #0x00\nbeq _08047048\nmovs r5, #0x08\nldr r0, _08047044 @ =0x0300063C\nstr r5, [r0, #0x00]\nmovs r0, #0x03\nbl sub_08047624\nstr r0, [r4, #0x00]\nmovs r0, #0x08\nbl sub_08042784\nb _080470BE\n.byte 0x00, 0x00\n_08047044: .4byte 0x0300063C\n_08047048:\nldr r0, _08047058 @ =0x03004060\nldrh r1, [r0, #0x00]\nmovs r0, #0x01\nands r0, r1\ncmp r0, #0x00\nbeq _0804705C\nmovs r5, #0x10\nb _080470BE\n_08047058: .4byte 0x03004060\n_0804705C:\nmovs r7, #0x80\nlsls r7, r7, #0x01\nadds r0, r7, #0x0\nands r0, r1\ncmp r0, #0x00\nbeq _080470BE\nbl sub_08060428\nmovs r0, #0x09\nbl sub_08066390\nldr r4, [r6, #0x00]\nmovs r0, #0xA6\nlsls r0, r0, #0x03\nadds r4, r4, r0\nbl sub_0806639C\nadds r1, r0, #0x0\nadds r0, r4, #0x0\nbl sub_0804109C\nldr r0, [r6, #0x00]\nldr r1, _080470A0 @ =0x0000181C\nadds r0, r0, r1\nmovs r1, #0x04\nstrb r1, [r0, #0x00]\nldr r1, [r6, #0x00]\nldr r2, _080470A4 @ =0x00001808\nadds r1, r1, r2\nldr r0, [r1, #0x00]\norrs r0, r7\nstr r0, [r1, #0x00]\nb _080470BE\n.byte 0x00, 0x00\n_080470A0: .4byte 0x0000181C\n_080470A4: .4byte 0x00001808\n_080470A8:\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _080470BE\n_080470AE:\nldr r0, [r4, #0x00]\nsubs r0, #0x01\nstr r0, [r4, #0x00]\nldr r0, _080471A8 @ =0x0300063C\nldr r5, [r0, #0x00]\nadds r0, r5, #0x0\nbl sub_08042784\n_080470BE:\nadds r0, r5, #0x0\nmov r1, r8\nbl _08041E88\nldr r5, _080471AC @ =0x03000198\nldr r0, [r5, #0x00]\nldr r3, _080471B0 @ =0x00001838\nadds r0, r0, r3\nldr r1, _080471B4 @ =0x0000FFFF\nstrh r1, [r0, #0x00]\nbl sub_08062A14\nadds r1, r0, #0x0\nldr r0, [r5, #0x00]\nmovs r4, #0xDB\nlsls r4, r4, #0x02\nadds r0, r0, r4\nmovs r2, #0x00\nmovs r3, #0x00\nbl sub_0806C7D4\nldr r1, [r5, #0x00]\nldr r2, _080471B8 @ =0x00000524\nadds r0, r1, r2\nadds r1, r1, r4\nbl sub_08062758\nbl sub_0804245C\nbl sub_08059B74\nbl sub_0802D8DC\nldr r1, [r5, #0x00]\nldr r3, _080471BC @ =0x00001788\nadds r2, r1, r3\nldr r0, [r2, #0x00]\nadds r0, #0x01\nstr r0, [r2, #0x00]\nldr r0, _080471C0 @ =0x00001854\nadds r1, r1, r0\nldr r0, [r1, #0x00]\nldr r1, _080471C4 @ =0xFF00FF00\nands r0, r1\nmovs r1, #0x80\nlsls r1, r1, #0x01\ncmp r0, r1\nbne _0804714A\nbl sub_0803E440\ncmp r0, #0x53\nbne _0804714A\nldr r0, [r5, #0x00]\nldr r1, _080471C8 @ =0x00001858\nadds r0, r0, r1\nldrb r1, [r0, #0x00]\nsubs r1, #0x01\nstrb r1, [r0, #0x00]\nlsls r1, r1, #0x18\ncmp r1, #0x00\nbgt _0804714A\nldr r0, [r5, #0x00]\nldr r2, _080471CC @ =0x00001857\nadds r0, r0, r2\nmovs r1, #0x01\nstrb r1, [r0, #0x00]\nldr r1, _080471D0 @ =0x080979EC\nmovs r0, #0x00\nbl sub_08059DC8\n_0804714A:\nldr r1, _080471D4 @ =0x03004060\nmovs r0, #0x08\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nbeq _0804719E\nldr r5, _080471AC @ =0x03000198\nldr r1, [r5, #0x00]\nldr r3, _080471D8 @ =0x0000180C\nadds r0, r1, r3\nldr r0, [r0, #0x00]\ncmp r0, #0x00\nbne _0804719E\nldr r2, _080471DC @ =0x0000185A\nadds r0, r1, r2\nmovs r2, #0x00\nldsb r2, [r0, r2]\ncmp r2, #0x01\nbne _0804719E\nadds r3, #0x41\nadds r0, r1, r3\nstrb r2, [r0, #0x00]\nmovs r0, #0x07\nbl sub_08066390\nldr r4, [r5, #0x00]\nmovs r0, #0xA6\nlsls r0, r0, #0x03\nadds r4, r4, r0\nbl sub_0806639C\nadds r1, r0, #0x0\nadds r0, r4, #0x0\nbl sub_0804109C\nldr r0, [r5, #0x00]\nldr r1, _080471E0 @ =0x0000181C\nadds r0, r0, r1\nmovs r1, #0x03\nstrb r1, [r0, #0x00]\nbl sub_08060428\n_0804719E:\npop {r3}\nmov r8, r3\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_080471A8: .4byte 0x0300063C\n_080471AC: .4byte 0x03000198\n_080471B0: .4byte 0x00001838\n_080471B4: .4byte 0x0000FFFF\n_080471B8: .4byte 0x00000524\n_080471BC: .4byte 0x00001788\n_080471C0: .4byte 0x00001854\n_080471C4: .4byte 0xFF00FF00\n_080471C8: .4byte 0x00001858\n_080471CC: .4byte 0x00001857\n_080471D0: .4byte 0x080979EC\n_080471D4: .4byte 0x03004060\n_080471D8: .4byte 0x0000180C\n_080471DC: .4byte 0x0000185A\n_080471E0: .4byte 0x0000181C");
+    u32 dir;
+    s32 speed;
+    u32 mesh;
+
+    VBlankIntrWait();
+    gData_03000198->unk0428 = ~(gData_03000198->unk0374 >> 8);
+    if (gData_03000198->unk0424 != NULL)
+        sub_08070468((struct Unk6FDB4 *)gData_03000198->unk0424, gData_03000198->unk0428);
+    if (gData_03000198->unk0500 != NULL)
+    {
+        gData_03000198->unk0504 = ~((s32)gData_03000198->unk0450 >> 8);
+        sub_08070468((struct Unk6FDB4 *)gData_03000198->unk0500, gData_03000198->unk0504);
+    }
+    sub_0806EE48((struct Unk6EE48 *)gData_03000198);
+    sub_08068418(&gData_03000198->unk036C);
+    sub_0804188C();
+    sub_08067CE8(&gData_03000198->unk036C, 0);
+    if (gData_03000198->unk182C != 0)
+    {
+        sub_08068418(&gData_03000198->unk0448);
+        sub_08067CE8(&gData_03000198->unk0448, 0);
+    }
+    ((void (*)(void))gData_080BB888[0])();
+    sub_0806A6F8();
+    sub_080474AC();
+    TimerAdvance();
+    sub_080462D4();
+    dir = 0;
+    gData_03000198->unk03AC = 0;
+    gData_03000198->unk03B0 = 0;
+    gData_03000198->unk180C = 0;
+    if ((gData_03003F60 & 2) && gData_03000198->unk17CC > 0x10)
+        speed = 0x200;
+    else
+        speed = 0x100;
+    if (active != 0)
+    {
+        if (gData_03000198->unk180C == 0 && *(u32 *)gData_03000634 == 0 && gData_03000198->unk182B != 0)
+        {
+            if (gData_03003F60 & 0x20)
+            {
+                dir = 1;
+                *(u32 *)gData_0300063C = dir;
+                *(u32 *)gData_03000634 = sub_08047624(0);
+                sub_08042784(1);
+            }
+            else if (gData_03003F60 & 0x10)
+            {
+                dir = 2;
+                *(u32 *)gData_0300063C = dir;
+                *(u32 *)gData_03000634 = sub_08047624(1);
+                sub_08042784(2);
+            }
+            else if (gData_03003F60 & 0x40)
+            {
+                dir = 4;
+                *(u32 *)gData_0300063C = dir;
+                *(u32 *)gData_03000634 = sub_08047624(2);
+                sub_08042784(4);
+            }
+            else if (gData_03003F60 & 0x80)
+            {
+                dir = 8;
+                *(u32 *)gData_0300063C = dir;
+                *(u32 *)gData_03000634 = sub_08047624(3);
+                sub_08042784(8);
+            }
+            else if (gData_03004060 & 1)
+            {
+                dir = 0x10;
+            }
+            else if (gData_03004060 & 0x100)
+            {
+                sub_08060428();
+                sub_08066390(9);
+                sub_0804109C((struct Unk40F4C *)&gData_03000198->unk0530, sub_0806639C());
+                gData_03000198->unk181C = 4;
+                gData_03000198->unk1808 |= 0x100;
+            }
+        }
+        else if (*(u32 *)gData_03000634 != 0)
+        {
+            (*(u32 *)gData_03000634)--;
+            dir = *(u32 *)gData_0300063C;
+            sub_08042784(dir);
+        }
+    }
+    _08041E88((void *)dir, speed);
+    gData_03000198->unk1838 = 0xFFFF;
+    mesh = sub_08062A14();
+    sub_0806C7D4(&gData_03000198->unk036C, mesh, 0, 0);
+    sub_08062758(&gData_03000198->unk0524, (struct Unk68574 *)&gData_03000198->unk036C);
+    sub_0804245C();
+    sub_08059B74();
+    HudRefreshStats();
+    gData_03000198->unk1788++;
+    if ((*(u32 *)&gData_03000198->unk1854 & 0xFF00FF00) == 0x100 && BtlCountLiveSlots() == 0x53)
+    {
+        if (--gData_03000198->unk1858 <= 0)
+        {
+            gData_03000198->unk1857 = 1;
+            sub_08059DC8(0, gData_080979EC);
+        }
+    }
+    if ((gData_03004060 & 8) && gData_03000198->unk180C == 0 && gData_03000198->unk185A == 1)
+    {
+        gData_03000198->unk184D = 1;
+        sub_08066390(7);
+        sub_0804109C((struct Unk40F4C *)&gData_03000198->unk0530, sub_0806639C());
+        gData_03000198->unk181C = 3;
+        sub_08060428();
+    }
 }
+

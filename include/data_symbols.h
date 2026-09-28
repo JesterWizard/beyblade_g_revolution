@@ -259,4 +259,27 @@ extern void *gData_080BB8A8[];
 // Affine BG matrix slots (sub_08068EC0)
 extern struct Unk0068Entry gData_03000068[];
 
+// Battle object / sprite / VRAM-span pools (sub_0806F910)
+extern struct Unk6FBF8Span *gData_0300408C;
+extern struct Unk700CCNode *gData_03004090;
+extern struct Unk6F910Block *gData_03004094;
+extern struct Unk6F910Block *gData_0300409C;
+extern struct Unk6F910Block *gData_030040A0;
+extern struct Unk6F910Spr *gData_030040B0;
+extern u32 gData_0300415C;
+extern u32 gData_03004164;
+
+// Script run when the countdown at MainWork.unk1858 expires (sub_08046E7C)
+extern u32 gData_080979EC[];
+
+// Detail panel list state (sub_0804FFCC)
+extern s16 gData_030006AC;
+extern s16 gData_030006B0;
+extern struct Unk4FFCCWin *gData_030006B4;
+extern struct Unk4FFCCRow *gData_030006BC;
+extern void *gData_080976EC[];
+extern void *gData_08097700[];
+extern void *gData_08097714[];
+extern void *gData_08097728[];
+
 #endif // GUARD_DATA_SYMBOLS_H

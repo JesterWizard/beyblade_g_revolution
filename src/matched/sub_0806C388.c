@@ -1,375 +1,133 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806c388
-__attribute__((naked))
-void sub_0806C388(void)
+/* match-compiler: old_agbcc */
+// Build the collision quadtree over [x0, x1] x [y0, y1]: collect the mesh
+// edges whose (16px-padded) bounds touch the box, and split into four
+// children while more than unk3C edges touch it and it is at least 128px
+// square; otherwise make it a leaf listing those edges (NULL if none).
+typedef u8 (*EdgeFilter)(struct Unk6C388Mesh *, struct Unk6C388Edge *);
+
+struct Unk6C388Node *sub_0806C388(struct Unk6C388Tree *t, struct Unk6C388Node *n, s32 x0, s32 y0, s32 x1, s32 y1, EdgeFilter filter)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x030\n"
-        "mov r8, r0\n"
-        "adds r7, r1, #0x0\n"
-        "mov r10, r2\n"
-        "mov r9, r3\n"
-        "ldr r0, [r0, #0x10]\n"
-        "str r0, [sp, #0x00C]\n"
-        "ldr r6, [r0, #0x0C]\n"
-        "ldr r1, [r0, #0x04]\n"
-        "str r1, [sp, #0x010]\n"
-        "movs r2, #0x00\n"
-        "str r2, [sp, #0x020]\n"
-        "mov r0, r8\n"
-        "ldrh r0, [r0, #0x3A]\n"
-        "str r0, [sp, #0x024]\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x028]\n"
-        "mov r2, r10\n"
-        "str r2, [r7, #0x18]\n"
-        "ldr r0, [sp, #0x050]\n"
-        "str r0, [r7, #0x20]\n"
-        "str r3, [r7, #0x1C]\n"
-        "ldr r1, [sp, #0x054]\n"
-        "str r1, [r7, #0x24]\n"
-        "subs r2, r0, r2\n"
-        "str r2, [sp, #0x014]\n"
-        "mov r2, r9\n"
-        "subs r2, r1, r2\n"
-        "str r2, [sp, #0x018]\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x01C]\n"
-        "ldr r1, [sp, #0x00C]\n"
-        "ldr r0, [r1, #0x00]\n"
-        "ldr r0, [r0, #0x08]\n"
-        "ldr r2, [sp, #0x020]\n"
-        "cmp r2, r0\n"
-        "blt _0806C3DE\n"
-        "b _0806C502\n"
-        "_0806C3DE:\n"
-        "ldr r0, [r6, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "ldr r1, [sp, #0x010]\n"
-        "adds r4, r1, r0\n"
-        "ldr r0, [r6, #0x04]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r5, r1, r0\n"
-        "movs r0, #0x08\n"
-        "ldrb r2, [r6, #0x11]\n"
-        "ands r0, r2\n"
-        "cmp r0, #0x00\n"
-        "bne _0806C4EE\n"
-        "ldr r0, [sp, #0x058]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C40C\n"
-        "ldr r0, [sp, #0x00C]\n"
-        "adds r1, r6, #0x0\n"
-        "ldr r2, [sp, #0x058]\n"
-        "bl _08073C48\n"
-        "lsls r0, r0, #0x18\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C4EE\n"
-        "_0806C40C:\n"
-        "ldr r0, [r6, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "blt _0806C4EE\n"
-        "ldr r0, [r6, #0x04]\n"
-        "cmp r0, #0x00\n"
-        "blt _0806C4EE\n"
-        "ldr r2, [r4, #0x00]\n"
-        "ldr r4, [r4, #0x04]\n"
-        "ldr r3, [r5, #0x00]\n"
-        "ldr r5, [r5, #0x04]\n"
-        "cmp r2, r3\n"
-        "ble _0806C42A\n"
-        "adds r0, r3, #0x0\n"
-        "adds r3, r2, #0x0\n"
-        "adds r2, r0, #0x0\n"
-        "_0806C42A:\n"
-        "cmp r4, r5\n"
-        "ble _0806C434\n"
-        "adds r0, r5, #0x0\n"
-        "adds r5, r4, #0x0\n"
-        "adds r4, r0, #0x0\n"
-        "_0806C434:\n"
-        "subs r2, #0x10\n"
-        "adds r3, #0x10\n"
-        "subs r4, #0x10\n"
-        "adds r5, #0x10\n"
-        "movs r1, #0x00\n"
-        "cmp r2, r10\n"
-        "blt _0806C44A\n"
-        "ldr r0, [sp, #0x050]\n"
-        "cmp r2, r0\n"
-        "bgt _0806C44A\n"
-        "movs r1, #0x01\n"
-        "_0806C44A:\n"
-        "cmp r3, r10\n"
-        "blt _0806C458\n"
-        "ldr r0, [sp, #0x050]\n"
-        "cmp r3, r0\n"
-        "bgt _0806C458\n"
-        "movs r0, #0x01\n"
-        "orrs r1, r0\n"
-        "_0806C458:\n"
-        "cmp r4, r9\n"
-        "blt _0806C46A\n"
-        "ldr r0, [sp, #0x054]\n"
-        "cmp r4, r0\n"
-        "bgt _0806C46A\n"
-        "movs r0, #0x02\n"
-        "orrs r1, r0\n"
-        "lsls r0, r1, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "_0806C46A:\n"
-        "cmp r5, r9\n"
-        "blt _0806C47C\n"
-        "ldr r0, [sp, #0x054]\n"
-        "cmp r5, r0\n"
-        "bgt _0806C47C\n"
-        "movs r0, #0x02\n"
-        "orrs r1, r0\n"
-        "lsls r0, r1, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "_0806C47C:\n"
-        "cmp r2, r10\n"
-        "bgt _0806C490\n"
-        "ldr r0, [sp, #0x050]\n"
-        "cmp r3, r0\n"
-        "blt _0806C490\n"
-        "movs r0, #0x02\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C490\n"
-        "movs r1, #0x03\n"
-        "_0806C490:\n"
-        "cmp r4, r9\n"
-        "bgt _0806C4A4\n"
-        "ldr r0, [sp, #0x054]\n"
-        "cmp r5, r0\n"
-        "blt _0806C4A4\n"
-        "movs r0, #0x01\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C4A4\n"
-        "movs r1, #0x03\n"
-        "_0806C4A4:\n"
-        "cmp r2, r10\n"
-        "bgt _0806C4C0\n"
-        "ldr r2, [sp, #0x050]\n"
-        "cmp r3, r2\n"
-        "blt _0806C4C0\n"
-        "cmp r4, r9\n"
-        "bgt _0806C4C0\n"
-        "ldr r0, [sp, #0x054]\n"
-        "cmp r5, r0\n"
-        "blt _0806C4C0\n"
-        "movs r1, #0x03\n"
-        "ldr r2, [sp, #0x028]\n"
-        "adds r2, #0x01\n"
-        "str r2, [sp, #0x028]\n"
-        "_0806C4C0:\n"
-        "cmp r1, #0x03\n"
-        "bne _0806C4EE\n"
-        "mov r0, r8\n"
-        "adds r0, #0x40\n"
-        "ldr r1, [sp, #0x024]\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r1, r0\n"
-        "bge _0806C4E2\n"
-        "mov r2, r8\n"
-        "ldr r1, [r2, #0x30]\n"
-        "ldr r2, [sp, #0x024]\n"
-        "lsls r0, r2, #0x02\n"
-        "adds r0, r0, r1\n"
-        "str r6, [r0, #0x00]\n"
-        "adds r2, #0x01\n"
-        "str r2, [sp, #0x024]\n"
-        "b _0806C4E8\n"
-        "_0806C4E2:\n"
-        "ldr r0, _0806C5F8 @ =0x083D1EE8\n"
-        "bl sub_08067B98\n"
-        "_0806C4E8:\n"
-        "ldr r0, [sp, #0x020]\n"
-        "adds r0, #0x01\n"
-        "str r0, [sp, #0x020]\n"
-        "_0806C4EE:\n"
-        "adds r6, #0x20\n"
-        "ldr r1, [sp, #0x01C]\n"
-        "adds r1, #0x01\n"
-        "str r1, [sp, #0x01C]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "ldr r0, [r2, #0x00]\n"
-        "ldr r0, [r0, #0x08]\n"
-        "cmp r1, r0\n"
-        "bge _0806C502\n"
-        "b _0806C3DE\n"
-        "_0806C502:\n"
-        "mov r1, r8\n"
-        "ldrh r0, [r1, #0x3C]\n"
-        "ldr r2, [sp, #0x020]\n"
-        "cmp r2, r0\n"
-        "ble _0806C600\n"
-        "ldr r1, [sp, #0x028]\n"
-        "cmp r1, r0\n"
-        "bge _0806C600\n"
-        "ldr r2, [sp, #0x014]\n"
-        "cmp r2, #0x7F\n"
-        "ble _0806C600\n"
-        "ldr r0, [sp, #0x018]\n"
-        "cmp r0, #0x7F\n"
-        "ble _0806C600\n"
-        "ldr r1, [sp, #0x050]\n"
-        "mov r2, r10\n"
-        "subs r0, r1, r2\n"
-        "asrs r0, r0, #0x01\n"
-        "add r0, r10\n"
-        "str r0, [sp, #0x02C]\n"
-        "ldr r1, [sp, #0x054]\n"
-        "mov r2, r9\n"
-        "subs r0, r1, r2\n"
-        "asrs r0, r0, #0x01\n"
-        "adds r6, r2, r0\n"
-        "movs r0, #0x00\n"
-        "str r0, [r7, #0x10]\n"
-        "str r0, [r7, #0x14]\n"
-        "strh r0, [r7, #0x28]\n"
-        "strh r0, [r7, #0x2A]\n"
-        "mov r1, r8\n"
-        "ldrh r0, [r1, #0x38]\n"
-        "adds r0, #0x04\n"
-        "ldrh r2, [r1, #0x3E]\n"
-        "cmp r0, r2\n"
-        "blt _0806C550\n"
-        "ldr r0, _0806C5FC @ =0x083D1F14\n"
-        "bl sub_08067B98\n"
-        "_0806C550:\n"
-        "mov r0, r8\n"
-        "ldrh r1, [r0, #0x38]\n"
-        "adds r0, r1, #0x1\n"
-        "movs r5, #0x2C\n"
-        "adds r2, r1, #0x0\n"
-        "muls r2, r5\n"
-        "adds r1, r2, #0x0\n"
-        "mov r2, r8\n"
-        "ldr r4, [r2, #0x2C]\n"
-        "adds r1, r4, r1\n"
-        "str r1, [r7, #0x00]\n"
-        "adds r2, r0, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "muls r0, r5\n"
-        "adds r0, r4, r0\n"
-        "str r0, [r7, #0x04]\n"
-        "adds r3, r2, #0x1\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r5\n"
-        "adds r0, r4, r0\n"
-        "str r0, [r7, #0x08]\n"
-        "adds r0, r3, #0x1\n"
-        "mov r2, r8\n"
-        "strh r0, [r2, #0x38]\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "adds r0, r3, #0x0\n"
-        "muls r0, r5\n"
-        "adds r4, r4, r0\n"
-        "str r4, [r7, #0x0C]\n"
-        "ldr r0, [sp, #0x02C]\n"
-        "str r0, [sp, #0x000]\n"
-        "str r6, [sp, #0x004]\n"
-        "ldr r2, [sp, #0x058]\n"
-        "str r2, [sp, #0x008]\n"
-        "mov r0, r8\n"
-        "mov r2, r10\n"
-        "mov r3, r9\n"
-        "bl sub_0806C388\n"
-        "str r0, [r7, #0x00]\n"
-        "ldr r1, [r7, #0x04]\n"
-        "ldr r0, [sp, #0x050]\n"
-        "str r0, [sp, #0x000]\n"
-        "str r6, [sp, #0x004]\n"
-        "ldr r2, [sp, #0x058]\n"
-        "str r2, [sp, #0x008]\n"
-        "mov r0, r8\n"
-        "ldr r2, [sp, #0x02C]\n"
-        "mov r3, r9\n"
-        "bl sub_0806C388\n"
-        "str r0, [r7, #0x04]\n"
-        "ldr r1, [r7, #0x08]\n"
-        "ldr r0, [sp, #0x02C]\n"
-        "str r0, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x054]\n"
-        "str r2, [sp, #0x004]\n"
-        "ldr r0, [sp, #0x058]\n"
-        "str r0, [sp, #0x008]\n"
-        "mov r0, r8\n"
-        "mov r2, r10\n"
-        "adds r3, r6, #0x0\n"
-        "bl sub_0806C388\n"
-        "str r0, [r7, #0x08]\n"
-        "ldr r1, [r7, #0x0C]\n"
-        "ldr r2, [sp, #0x050]\n"
-        "str r2, [sp, #0x000]\n"
-        "ldr r0, [sp, #0x054]\n"
-        "str r0, [sp, #0x004]\n"
-        "ldr r2, [sp, #0x058]\n"
-        "str r2, [sp, #0x008]\n"
-        "mov r0, r8\n"
-        "ldr r2, [sp, #0x02C]\n"
-        "adds r3, r6, #0x0\n"
-        "bl sub_0806C388\n"
-        "str r0, [r7, #0x0C]\n"
-        "adds r0, r7, #0x0\n"
-        "b _0806C63E\n"
-        "_0806C5F8: .4byte 0x083D1EE8\n"
-        "_0806C5FC: .4byte 0x083D1F14\n"
-        "_0806C600:\n"
-        "movs r0, #0x00\n"
-        "mov r1, sp\n"
-        "ldrh r1, [r1, #0x20]\n"
-        "strh r1, [r7, #0x28]\n"
-        "strh r0, [r7, #0x2A]\n"
-        "str r0, [r7, #0x14]\n"
-        "mov r2, r8\n"
-        "ldrh r2, [r2, #0x3A]\n"
-        "lsls r1, r2, #0x02\n"
-        "mov r2, r8\n"
-        "ldr r0, [r2, #0x30]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r7, #0x10]\n"
-        "mov r0, sp\n"
-        "ldrh r0, [r0, #0x24]\n"
-        "strh r0, [r2, #0x3A]\n"
-        "ldr r1, [sp, #0x020]\n"
-        "cmp r1, #0x20\n"
-        "ble _0806C62E\n"
-        "ldr r0, _0806C638 @ =0x083D1F5C\n"
-        "movs r2, #0x20\n"
-        "bl sub_08067B98\n"
-        "_0806C62E:\n"
-        "ldr r2, [sp, #0x020]\n"
-        "cmp r2, #0x00\n"
-        "beq _0806C63C\n"
-        "adds r0, r7, #0x0\n"
-        "b _0806C63E\n"
-        "_0806C638: .4byte 0x083D1F5C\n"
-        "_0806C63C:\n"
-        "movs r0, #0x00\n"
-        "_0806C63E:\n"
-        "add sp, #0x030\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk6C388Mesh *mesh;
+    struct Unk6C388Edge *e;
+    struct Unk6C388Vert *verts;
+    struct Unk6C388Vert *a, *b;
+    s32 w, h;
+    s32 i;
+    s32 count;
+    s32 start;
+    s32 full;
+    s32 minX, maxX, minY, maxY, tmp;
+    u16 flags;
+    s32 midX, midY;
+
+    mesh = t->unk10;
+    e = mesh->unk0C;
+    verts = mesh->unk04;
+    count = 0;
+    start = t->unk3A;
+    full = 0;
+    n->unk18 = x0;
+    n->unk20 = x1;
+    n->unk1C = y0;
+    n->unk24 = y1;
+    w = x1 - x0;
+    h = y1 - y0;
+    for (i = 0; i < mesh->unk00->unk08; e++, i++)
+    {
+        a = &verts[e->unk00];
+        b = &verts[e->unk04];
+        if (e->unk11 & 8)
+            continue;
+        if (filter != NULL && !filter(mesh, e))
+            continue;
+        if (e->unk00 < 0 || e->unk04 < 0)
+            continue;
+        minX = a->unk00;
+        minY = a->unk04;
+        maxX = b->unk00;
+        maxY = b->unk04;
+        if (minX > maxX)
+        {
+            tmp = maxX;
+            maxX = minX;
+            minX = tmp;
+        }
+        if (minY > maxY)
+        {
+            tmp = maxY;
+            maxY = minY;
+            minY = tmp;
+        }
+        minX -= 16;
+        maxX += 16;
+        minY -= 16;
+        maxY += 16;
+        flags = 0;
+        if (minX >= x0 && minX <= x1)
+            flags = 1;
+        if (maxX >= x0 && maxX <= x1)
+            flags |= 1;
+        if (minY >= y0 && minY <= y1)
+            flags |= 2;
+        if (maxY >= y0 && maxY <= y1)
+            flags |= 2;
+        if (minX <= x0 && maxX >= x1 && (flags & 2))
+            flags = 3;
+        if (minY <= y0 && maxY >= y1 && (flags & 1))
+            flags = 3;
+        if (minX <= x0 && maxX >= x1 && minY <= y0 && maxY >= y1)
+        {
+            flags = 3;
+            full++;
+        }
+        if (flags == 3)
+        {
+            if (start < t->unk40)
+            {
+                t->unk30[start] = e;
+                start++;
+            }
+            else
+            {
+                DebugPrint((void *)0x083D1EE8);
+            }
+            count++;
+        }
+    }
+    if (count > t->unk3C && full < t->unk3C && w > 0x7F && h > 0x7F)
+    {
+        midX = x0 + ((x1 - x0) >> 1);
+        midY = y0 + ((y1 - y0) >> 1);
+        n->unk10 = NULL;
+        n->unk14 = 0;
+        n->unk28 = 0;
+        n->unk2A = 0;
+        if (t->unk38 + 4 >= t->unk3E)
+            DebugPrint((void *)0x083D1F14);
+        n->unk00 = &t->unk2C[t->unk38++];
+        n->unk04 = &t->unk2C[t->unk38++];
+        n->unk08 = &t->unk2C[t->unk38++];
+        n->unk0C = &t->unk2C[t->unk38++];
+        n->unk00 = sub_0806C388(t, n->unk00, x0, y0, midX, midY, filter);
+        n->unk04 = sub_0806C388(t, n->unk04, midX, y0, x1, midY, filter);
+        n->unk08 = sub_0806C388(t, n->unk08, x0, midY, midX, y1, filter);
+        n->unk0C = sub_0806C388(t, n->unk0C, midX, midY, x1, y1, filter);
+        return n;
+    }
+    n->unk28 = count;
+    n->unk2A = 0;
+    n->unk14 = 0;
+    n->unk10 = &t->unk30[t->unk3A];
+    t->unk3A = start;
+    if (count > 32)
+        DebugPrint((void *)0x083D1F5C, count, 32);
+    if (count == 0)
+        return NULL;
+    return n;
 }
 

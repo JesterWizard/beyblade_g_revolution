@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-28T08:36:07Z_
+_Updated: 2026-09-28T09:32:09Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 575 |
-| Still need semantic C | **58** |
-| Readable Thumb remaining | 58 |
+| Semantic C done | 581 |
+| Still need semantic C | **52** |
+| Readable Thumb remaining | 52 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 20 (138 already semantic) |
+| Battle pending | 15 (143 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 31 |
+| WIP (resume these first) | 34 |
 
 Ranking: **battle** · showing top **40**
 
@@ -57,6 +57,9 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08069270` | 244 | 24/244 | `src/decompiled/sub_08069270.c` | Logic mapped (horizontal wrap split into two blits; fn = 0x0806945D or gData_080BB8A4[0]; wrap-off path uses gData_080BB8A8[0]). Separate e1/e2/h1/h2 copies reproduce retail's stack spills; remaining diff is register choice: retail keeps d in r3 and end in r5, ours copies d to r6 (+2B). Permuter (2 rounds) reached 25 only via uninitialised-variable tricks. | Find a source shape that leaves d in its argument register (d is only read by the first blit); try the permuter from this seed with a longer budget. |
 | `sub_0806B2F0` | 248 | 35/248 | `src/decompiled/sub_0806B2F0.c` | Digit-row renderer (right to left, DivRemainder/Div by 10, frame 0x34 + digit, optional zero padding). Our compile cross-jumps the two sub_0806833C calls; retail keeps them separate because the padded path increments from the (s16)drawn value it just tested. | Make the padded-path increment differ from the normal path (retail: drawn = (s16)drawn + 1 vs drawn++), and keep i/drawn as u16 compared via (s16). |
 | `sub_0806B5C8` | 274 | 87/274 | `src/decompiled/sub_0806B5C8.c` | 8x8 4bpp glyph blit into a 2x2 tile block (tiles[0,1,0x20,0x21] via sub_0806B5B8), shifted by x&7 and y&7. Logic complete; register allocation differs (retail: base/br share r7, x reused as the shift in r9, y&7 in r10, first row count as ~y + 8). | Reuse x for the shift and y for the second loop's counter; try n = 7 - y with != -1 tests; then permuter. |
+| `sub_0806960C` | 600 | 226/600 | `src/decompiled/sub_0806960C.c` | BG map streaming (scroll by dx/dy, stream a column/row of tiles through sub_08069270 when the view crosses the loaded rect, wrap on unk7C bits). Logic complete, same size. Retail spills tile/edge/source/start values to 8 consecutive stack words (sp0C..sp28) and keeps the constant 1 in r10; a local Unk688C8Rect + start[2] gets closest. | Find the local aggregate shape that yields the sp0C..sp28 layout while keeping CSE of the stored values; one = 1 local helps the prologue. |
+| `sub_08043DB4` | 1352 | 1031/1352 | `src/decompiled/sub_08043DB4.c` | Map entry/setup sequence fully mapped (same size). Only remaining diff: retail keeps a -1 in a stack slot (sp18) set right after sub_0806644C and compares unk18B4 against it; every source form tried lets agbcc rematerialise the constant, which shifts the frame by 4 and some registers. | Find what variable holds that -1 (param reuse and locals tried). |
+| `sub_08044A8C` | 672 | 602/672 | `src/decompiled/sub_08044A8C.c` | Save-data verify (EEPROM read retry x8, checksum/magic/size/version checks per slot). Same size; remaining diff is register choice around the hdr/slot HeapAlloc results (retail keeps &gData_03000198 in r4 and buf in r7). | Tune the alloc/assignment statement shape at the top; permuter from this seed. |
 
 Per-function notes: `src/decompiled/<fn>.md`.
 
@@ -64,8 +67,6 @@ Per-function notes: `src/decompiled/<fn>.md`.
 
 | Function | Address | Bytes | Battle refs | Pool | Kind | Notes |
 |----------|---------|------:|------------:|:----:|------|-------|
-| `sub_08046E7C` | `0x08046E7C` | 872 | 3 | pool | asm | (gMainWorkPtr, gBtlInputMask, gBattlerArena/gBtlK) |
-| `sub_0806F910` | `0x0806F910` | 624 | 2 | pool | asm | (gBtlObjListHead, gBtlObjListTail) |
 | `sub_0803E0CC` | `0x0803E0CC` | 296 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08040680` | `0x08040680` | 308 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08065CD0` | `0x08065CD0` | 316 | 1 | pool | asm | (gBattlerArena/gBtlKeysHeld) |
@@ -76,11 +77,6 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_08056BA4` | `0x08056BA4` | 450 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08053690` | `0x08053690` | 528 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08054120` | `0x08054120` | 594 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08044A8C` | `0x08044A8C` | 672 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08045198` | `0x08045198` | 1016 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08045590` | `0x08045590` | 1256 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0806F05C` | `0x0806F05C` | 280 | 0 | pool | asm | |
 | `sub_08069A60` | `0x08069A60` | 280 | 0 | pool | asm | |
 | `sub_0806211C` | `0x0806211C` | 284 | 0 |      | asm | |
@@ -103,7 +99,8 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_08060E48` | `0x08060E48` | 532 | 0 | pool | asm | |
 | `sub_08067CE8` | `0x08067CE8` | 548 | 0 | pool | asm | |
 | `sub_0806B764` | `0x0806B764` | 588 | 0 | pool | asm | |
-| `sub_0806960C` | `0x0806960C` | 600 | 0 |      | asm | |
+| `sub_080706B0` | `0x080706B0` | 626 | 0 | pool | asm | |
+| `sub_0806C7D4` | `0x0806C7D4` | 1302 | 0 |      | asm | |
 
 ## Blocked
 
@@ -146,6 +143,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (43 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (34 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

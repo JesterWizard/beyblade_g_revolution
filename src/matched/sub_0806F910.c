@@ -1,8 +1,128 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806f910
-__attribute__((naked))
-void sub_0806F910(void)
+// Battle object system init: (re)allocate the object pool (nObj <= 0x80 nodes
+// of 0x34), the OAM sprite-slot pool (nSpr <= 0x20 nodes of 0x1C) and the
+// VRAM span list, link each into a free list, then hide all OAM entries.
+#define HeapAllocBlock(size) ((struct Unk6F910Block *(*)(u32))sub_0806A314)(size)
+
+void sub_0806F910(u32 nObj, u32 nSpr)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nadds r7, r0, #0x0\nmov r8, r1\nldr r0, _0806F9C0 @ =0x03004164\nmovs r1, #0x80\nlsls r1, r1, #0x04\nstr r1, [r0, #0x00]\nldr r0, _0806F9C4 @ =0x0300415C\nmovs r6, #0x00\nstr r6, [r0, #0x00]\ncmp r7, #0x80\nbls _0806F932\nmovs r7, #0x80\n_0806F932:\nmov r0, r8\ncmp r0, #0x20\nbls _0806F93C\nmovs r1, #0x20\nmov r8, r1\n_0806F93C:\nldr r3, _0806F9C8 @ =0x030040A0\nmov r9, r3\nldr r0, [r3, #0x00]\ncmp r0, #0x00\nbeq _0806F94E\nbl sub_0806A434\nmov r0, r9\nstr r6, [r0, #0x00]\n_0806F94E:\nldr r4, _0806F9CC @ =0x0300409C\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _0806F95C\nbl sub_0806A434\nstr r6, [r4, #0x00]\n_0806F95C:\nldr r4, _0806F9D0 @ =0x03004094\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _0806F96A\nbl sub_0806A434\nstr r6, [r4, #0x00]\n_0806F96A:\ncmp r7, #0x00\nbeq _0806F984\nmovs r0, #0x34\nmuls r0, r7\nbl sub_0806A314\nmov r1, r9\nstr r0, [r1, #0x00]\ncmp r0, #0x00\nbne _0806F984\nldr r0, _0806F9D4 @ =0x083D20C8\nbl sub_08067A9C\n_0806F984:\nmov r3, r8\ncmp r3, #0x00\nbeq _0806F9A2\nlsls r0, r3, #0x03\nsubs r0, r0, r3\nlsls r0, r0, #0x02\nbl sub_0806A314\nldr r1, _0806F9CC @ =0x0300409C\nstr r0, [r1, #0x00]\ncmp r0, #0x00\nbne _0806F9A2\nldr r0, _0806F9D8 @ =0x083D20E4\nbl sub_08067A9C\n_0806F9A2:\nmovs r0, #0x80\nlsls r0, r0, #0x01\nbl sub_0806A314\nadds r4, r0, #0x0\nldr r0, _0806F9D0 @ =0x03004094\nstr r4, [r0, #0x00]\ncmp r4, #0x00\nbne _0806F9E4\nldr r0, _0806F9DC @ =0x083D2108\nbl sub_08067B98\nldr r0, _0806F9E0 @ =0x0300408C\nstr r4, [r0, #0x00]\nb _0806F9EA\n_0806F9C0: .4byte 0x03004164\n_0806F9C4: .4byte 0x0300415C\n_0806F9C8: .4byte 0x030040A0\n_0806F9CC: .4byte 0x0300409C\n_0806F9D0: .4byte 0x03004094\n_0806F9D4: .4byte 0x083D20C8\n_0806F9D8: .4byte 0x083D20E4\n_0806F9DC: .4byte 0x083D2108\n_0806F9E0: .4byte 0x0300408C\n_0806F9E4:\nldr r1, _0806F9FC @ =0x0300408C\nldr r0, [r4, #0x00]\nstr r0, [r1, #0x00]\n_0806F9EA:\nldr r0, _0806FA00 @ =0x030040A0\nldr r2, [r0, #0x00]\nadds r3, r0, #0x0\ncmp r2, #0x00\nbeq _0806FA08\nldr r1, _0806FA04 @ =0x03004090\nldr r0, [r2, #0x00]\nstr r0, [r1, #0x00]\nb _0806FA0C\n_0806F9FC: .4byte 0x0300408C\n_0806FA00: .4byte 0x030040A0\n_0806FA04: .4byte 0x03004090\n_0806FA08:\nldr r0, _0806FA1C @ =0x03004090\nstr r2, [r0, #0x00]\n_0806FA0C:\nldr r0, _0806FA20 @ =0x0300409C\nldr r2, [r0, #0x00]\ncmp r2, #0x00\nbeq _0806FA28\nldr r1, _0806FA24 @ =0x030040B0\nldr r0, [r2, #0x00]\nstr r0, [r1, #0x00]\nb _0806FA2C\n_0806FA1C: .4byte 0x03004090\n_0806FA20: .4byte 0x0300409C\n_0806FA24: .4byte 0x030040B0\n_0806FA28:\nldr r0, _0806FB50 @ =0x030040B0\nstr r2, [r0, #0x00]\n_0806FA2C:\nldr r0, _0806FB54 @ =0x03004090\nldr r4, [r0, #0x00]\ncmp r4, #0x00\nbeq _0806FA44\nldr r1, _0806FB58 @ =0x080BB8BC\nldr r0, [r3, #0x00]\nldr r2, [r0, #0x04]\nldr r3, [r1, #0x00]\nmovs r0, #0x00\nadds r1, r4, #0x0\nbl _08073C4C\n_0806FA44:\nldr r0, _0806FB50 @ =0x030040B0\nldr r4, [r0, #0x00]\nmov r9, r0\ncmp r4, #0x00\nbeq _0806FA60\nldr r1, _0806FB58 @ =0x080BB8BC\nldr r0, _0806FB5C @ =0x0300409C\nldr r0, [r0, #0x00]\nldr r2, [r0, #0x04]\nldr r3, [r1, #0x00]\nmovs r0, #0x00\nadds r1, r4, #0x0\nbl _08073C4C\n_0806FA60:\nldr r1, _0806FB60 @ =0x0300408C\nmov r10, r1\ncmp r7, #0x00\nbeq _0806FAB0\nldr r3, _0806FB54 @ =0x03004090\nldr r2, [r3, #0x00]\nmov r0, r9\nldr r5, [r0, #0x00]\nmovs r4, #0x00\nsubs r1, r7, #0x2\nmovs r0, #0x01\nnegs r0, r0\nldr r6, _0806FB64 @ =0x030040A4\nldr r3, _0806FB68 @ =0x030040AC\nmov r9, r3\nldr r3, _0806FB6C @ =0x030040B4\nmov r12, r3\ncmp r1, r0\nbeq _0806FA9C\nadds r3, r0, #0x0\n_0806FA88:\nstr r4, [r2, #0x00]\nadds r0, r2, #0x0\nadds r0, #0x34\nstr r0, [r2, #0x04]\nstr r3, [r2, #0x24]\nadds r4, r2, #0x0\nadds r2, r0, #0x0\nsubs r1, #0x01\ncmp r1, r3\nbne _0806FA88\n_0806FA9C:\nstr r4, [r2, #0x00]\nmovs r0, #0x00\nstr r0, [r2, #0x04]\nstr r0, [r6, #0x00]\nldr r1, _0806FB54 @ =0x03004090\nldr r0, [r1, #0x00]\nmov r3, r9\nstr r0, [r3, #0x00]\nmov r0, r12\nstr r7, [r0, #0x00]\n_0806FAB0:\nmov r1, r8\ncmp r1, #0x00\nbeq _0806FAF6\nmovs r4, #0x00\nmovs r2, #0xE0\nlsls r2, r2, #0x13\nsubs r1, #0x02\nmovs r0, #0x01\nnegs r0, r0\nldr r3, _0806FB50 @ =0x030040B0\nmov r9, r3\nldr r7, _0806FB70 @ =0x030040B8\nldr r3, _0806FB74 @ =0x030040A8\ncmp r1, r0\nbeq _0806FAE6\nadds r6, r0, #0x0\n_0806FAD0:\nstr r4, [r5, #0x00]\nadds r0, r5, #0x0\nadds r0, #0x1C\nstr r0, [r5, #0x04]\nstr r2, [r5, #0x08]\nadds r2, #0x20\nadds r4, r5, #0x0\nadds r5, r0, #0x0\nsubs r1, #0x01\ncmp r1, r6\nbne _0806FAD0\n_0806FAE6:\nstr r4, [r5, #0x00]\nmovs r0, #0x00\nstr r0, [r5, #0x04]\nstr r2, [r5, #0x08]\nstr r0, [r7, #0x00]\nmov r1, r9\nldr r0, [r1, #0x00]\nstr r0, [r3, #0x00]\n_0806FAF6:\nmov r0, r10\nldr r3, [r0, #0x00]\ncmp r3, #0x00\nbeq _0806FB30\nldr r0, _0806FB78 @ =0x03004088\nstr r3, [r0, #0x00]\nldr r0, _0806FB7C @ =0x03004098\nadds r2, r3, #0x0\nadds r2, #0x08\nstr r2, [r0, #0x00]\nmovs r1, #0x00\nstrh r1, [r3, #0x00]\nmovs r0, #0x80\nlsls r0, r0, #0x03\nstrh r0, [r3, #0x02]\nstr r1, [r3, #0x04]\nadds r0, r2, #0x0\nmovs r1, #0x1D\nmovs r4, #0x01\nnegs r4, r4\n_0806FB1E:\nadds r2, r0, #0x0\nadds r2, #0x08\nstr r2, [r0, #0x04]\nadds r0, r2, #0x0\nsubs r1, #0x01\ncmp r1, r4\nbne _0806FB1E\nmovs r0, #0x00\nstr r0, [r2, #0x04]\n_0806FB30:\nmovs r1, #0xE0\nlsls r1, r1, #0x13\nmovs r2, #0x80\nlsls r2, r2, #0x03\nldr r0, _0806FB58 @ =0x080BB8BC\nldr r3, [r0, #0x00]\nmovs r0, #0xA0\nbl _08073C4C\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_0806FB50: .4byte 0x030040B0\n_0806FB54: .4byte 0x03004090\n_0806FB58: .4byte 0x080BB8BC\n_0806FB5C: .4byte 0x0300409C\n_0806FB60: .4byte 0x0300408C\n_0806FB64: .4byte 0x030040A4\n_0806FB68: .4byte 0x030040AC\n_0806FB6C: .4byte 0x030040B4\n_0806FB70: .4byte 0x030040B8\n_0806FB74: .4byte 0x030040A8\n_0806FB78: .4byte 0x03004088\n_0806FB7C: .4byte 0x03004098");
+    struct Unk700CCNode *node;
+    struct Unk6F910Spr *spr;
+    void *prev;
+    struct Unk6FBF8Span *span;
+    u32 oam;
+    s32 i;
+
+    gData_03004164 = 0x800;
+    gData_0300415C = 0;
+    if (nObj > 0x80)
+        nObj = 0x80;
+    if (nSpr > 0x20)
+        nSpr = 0x20;
+    if (gData_030040A0 != NULL)
+    {
+        sub_0806A434(gData_030040A0);
+        gData_030040A0 = NULL;
+    }
+    if (gData_0300409C != NULL)
+    {
+        sub_0806A434(gData_0300409C);
+        gData_0300409C = NULL;
+    }
+    if (gData_03004094 != NULL)
+    {
+        sub_0806A434(gData_03004094);
+        gData_03004094 = NULL;
+    }
+    if (nObj != 0)
+    {
+        gData_030040A0 = HeapAllocBlock(0x34 * nObj);
+        if (gData_030040A0 == NULL)
+            sub_08067A9C((void *)0x083D20C8);
+    }
+    if (nSpr != 0)
+    {
+        gData_0300409C = HeapAllocBlock(nSpr * 0x1C);
+        if (gData_0300409C == NULL)
+            sub_08067A9C((void *)0x083D20E4);
+    }
+    gData_03004094 = HeapAllocBlock(0x100);
+    if (gData_03004094 == NULL)
+    {
+        DebugPrint((void *)0x083D2108);
+        gData_0300408C = NULL;
+    }
+    else
+        gData_0300408C = gData_03004094->unk00;
+    if (gData_030040A0 != NULL)
+        gData_03004090 = gData_030040A0->unk00;
+    else
+        gData_03004090 = NULL;
+    if (gData_0300409C != NULL)
+        gData_030040B0 = gData_0300409C->unk00;
+    else
+        gData_030040B0 = NULL;
+    if (gData_03004090 != NULL)
+        ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, gData_03004090, gData_030040A0->unk04);
+    if (gData_030040B0 != NULL)
+        ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, gData_030040B0, gData_0300409C->unk04);
+    if (nObj != 0)
+    {
+        node = gData_03004090;
+        spr = gData_030040B0;
+        prev = NULL;
+        for (i = nObj - 2; i != -1; i--)
+        {
+            node->unk00 = prev;
+            node->unk04 = node + 1;
+            node->unk24 = -1;
+            prev = node;
+            node++;
+        }
+        node->unk00 = prev;
+        node->unk04 = NULL;
+        gData_030040A4 = NULL;
+        gData_030040AC = (struct Unk6FDB4 *)gData_03004090;
+        gData_030040B4 = nObj;
+    }
+    if (nSpr != 0)
+    {
+        prev = NULL;
+        oam = 0x07000000;
+        for (i = nSpr - 2; i != -1; i--)
+        {
+            spr->unk00 = prev;
+            spr->unk04 = spr + 1;
+            spr->unk08 = oam;
+            oam += 0x20;
+            prev = spr;
+            spr++;
+        }
+        spr->unk00 = prev;
+        spr->unk04 = NULL;
+        spr->unk08 = oam;
+        *(void **)gData_030040B8 = NULL;
+        *(void **)gData_030040A8 = gData_030040B0;
+    }
+    if (gData_0300408C != NULL)
+    {
+        gData_03004088 = gData_0300408C;
+        gData_03004098 = gData_0300408C + 1;
+        gData_0300408C->start = 0;
+        gData_0300408C->size = 0x400;
+        gData_0300408C->next = NULL;
+        span = gData_0300408C + 1;
+        for (i = 29; i != -1; i--)
+        {
+            span->next = span + 1;
+            span++;
+        }
+        span->next = NULL;
+    }
+    ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0xA0, (void *)0x07000000, 0x400);
 }
+

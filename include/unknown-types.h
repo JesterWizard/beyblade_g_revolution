@@ -788,6 +788,17 @@ struct Unk16E0 /* 0x08 */
     /* 04 */ s32 unk04;
 };
 
+/* Word view of Unk1688Entry used by the save check (sub_08044A8C). */
+struct Unk1688Words /* 0x18 */
+{
+    /* 00 */ u32 unk00; /* magic 0xFEEDFACE */
+    /* 04 */ u32 unk04; /* checksum */
+    /* 08 */ u32 unk08;
+    /* 0c */ u32 unk0C;
+    /* 10 */ u32 unk10;
+    /* 14 */ u32 unk14;
+};
+
 /* 0x18-stride records pointed to by MainWork.unk1688. sub_08044EE8. */
 struct Unk1688Entry /* 0x18 */
 {
@@ -883,7 +894,7 @@ struct Unk8D0 /* 0x28 */
     /* 22 */ u8 filler_22;
     /* 23 */ u8 unk23; /* sub_0803e1f4 */
     /* 24 */ s8 unk24;
-    /* 25 */ u8 filler_25;
+    /* 25 */ u8 unk25;
     /* 26 */ u16 unk26;
 };
 
@@ -956,6 +967,14 @@ struct Unk5E044Lookup /* >= 0xBC */
     /* B8 */ struct Unk705DC *unkB8;
 };
 
+/* Word count + dest. sub_08062728. */
+struct Unk62728 /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ u32 *unk04;
+    /* 08 */ u32 unk08;
+};
+
 /* Root main-work arena (*gMainWorkPtr). */
 struct MainWork /* >= 0x18B4 */
 {
@@ -978,7 +997,8 @@ struct MainWork /* >= 0x18B4 */
     /* 03B0 */ u32 unk03B0;
     /* 03B4 */ u8 filler_03B4[0x70];
     /* 0424 */ struct Unk705DC *unk0424;
-    /* 0428 */ u8 filler_0428[0x20];
+    /* 0428 */ u16 unk0428; /* unk036C object's sort key (+0xBC) */
+    /* 042A */ u8 filler_042A[0x1E];
     /* 0448 */ struct Unk42718 unk0448;
     /* 044C */ u32 unk044C; /* sub_08044A20, sub_08042784 */
     /* 0450 */ u32 unk0450; /* sub_08042784 */
@@ -991,7 +1011,9 @@ struct MainWork /* >= 0x18B4 */
     /* 048C */ u32 unk048C; /* sub_080424E8 */
     /* 0490 */ u8 filler_0490[0x70];
     /* 0500 */ struct Unk705DC *unk0500;
-    /* 0504 */ u8 filler_0504[0x2C];
+    /* 0504 */ u16 unk0504; /* unk0448 object's sort key (+0xBC) */
+    /* 0506 */ u8 filler_0506[0x1E];
+    /* 0524 */ struct Unk62728 unk0524; /* sub_08046E7C */
     /* 0530 */ u8 unk0530; /* sub_080415FC */
     /* 0531 */ u8 filler_0531[0x24B];
     /* 077c */ void (*unk077C)(u8 *state, struct MainWork *work); /* sub_080415FC */
@@ -1006,12 +1028,14 @@ struct MainWork /* >= 0x18B4 */
     /* 0858 */ u8 filler_0858[0x10];
     /* 0868 */ u32 unk0868;
     /* 086C */ u32 unk086C;
-    /* 0870 */ u8 filler_0870[4];
+    /* 0870 */ u32 unk0870; /* saved, sub_08045198 */
     /* 0874 */ s16 expPoints; /* cumulative experience; level curve at 0x080908BC */
-    /* 0876 */ u8 filler_0876;
+    /* 0876 */ s8 unk0876; /* saved */
     /* 0877 */ u8 unk0877; /* active unk08D0 records, sub_0803DEC8 */
     /* 0878 */ s8 strength; /* 0..99, shown as two HUD digits */
-    /* 0879 */ u8 filler_0879[3];
+    /* 0879 */ u8 unk0879; /* saved */
+    /* 087A */ u8 unk087A;
+    /* 087B */ u8 unk087B;
     /* 087C */ u8 unk087C[0x53]; /* sub_0803E258 */
     /* 08CF */ u8 filler_08CF[1];
     /* 08D0 */ struct Unk8D0 unk08D0[0x53]; /* sub_0803E258 */
@@ -1048,19 +1072,27 @@ struct MainWork /* >= 0x18B4 */
     /* 1780 */ s32 unk1780;
     /* 1784 */ u8 filler_1784[4];
     /* 1788 */ u32 unk1788;
-    /* 178C */ u8 filler_178C[8];
+    /* 178C */ s32 unk178C;
+    /* 1790 */ s32 unk1790;
     /* 1794 */ s32 unk1794;
     /* 1798 */ u32 unk1798;
     /* 179C */ u32 unk179C;
-    /* 17A0 */ u8 filler_17A0[0x14];
+    /* 17A0 */ u8 filler_17A0[8];
+    /* 17A8 */ s32 unk17A8; /* pending position x, -0x4000 = none. sub_08043DB4 */
+    /* 17AC */ s32 unk17AC; /* pending position y */
+    /* 17B0 */ u8 filler_17B0[4];
     /* 17B4 */ u32 unk17B4; /* sub_08044A20 */
     /* 17B8 */ u32 unk17B8; /* sub_08044A20 */
     /* 17BC */ u8 filler_17BC[8];
     /* 17C4 */ u32 unk17C4; /* sub_08044A20 */
     /* 17C8 */ u32 unk17C8; /* sub_08044A20 */
-    /* 17CC */ u8 filler_17CC[0x18];
+    /* 17CC */ s32 unk17CC; /* sub_08046E7C */
+    /* 17D0 */ u8 filler_17D0[0x14];
     /* 17E4 */ s16 unk17E4;
-    /* 17E6 */ u8 filler_17E6[0x0A];
+    /* 17E6 */ u8 filler_17E6[2];
+    /* 17E8 */ u16 unk17E8; /* saved, sub_08045198 */
+    /* 17EA */ u16 unk17EA; /* saved */
+    /* 17EC */ u8 filler_17EC[4];
     /* 17F0 */ u16 unk17F0; /* sub_080449C4, sub_08051BBC — BLDY fade counter (down) */
     /* 17F2 */ u16 unk17F2; /* sub_080449C4, sub_08051BBC — BLDY fade counter (up) */
     /* 17F4 */ u8 filler_17F4[2];
@@ -1082,31 +1114,49 @@ struct MainWork /* >= 0x18B4 */
     /* 181D */ u8 unk181D;
     /* 181E */ u8 filler_181E[1];
     /* 181F */ s8 unk181F;
-    /* 1820 */ u8 filler_1820[4];
+    /* 1820 */ u8 unk1820; /* saved, sub_08045198 */
+    /* 1821 */ u8 filler_1821[3];
     /* 1824 */ u8 unk1824; /* sub_08037508 */
     /* 1825 */ u8 unk1825;
     /* 1826 */ u8 unk1826;
     /* 1827 */ u8 unk1827;
     /* 1828 */ u8 unk1828; /* sub_080429CC */
     /* 1829 */ u8 unk1829; /* sub_08063D68 */
-    /* 182A */ u8 filler_182A[2];
+    /* 182A */ u8 filler_182A[1];
+    /* 182B */ u8 unk182B; /* d-pad moves enabled. sub_08046E7C */
     /* 182C */ u8 unk182C; /* sub_08042784 */
-    /* 182D */ u8 filler_182D[6];
+    /* 182D */ u8 unk182D; /* saved, sub_08045198 */
+    /* 182E */ u8 filler_182E[5];
     /* 1833 */ u8 unk1833;
     /* 1834 */ u8 unk1834;
     /* 1835 */ u8 filler_1835[3];
     /* 1838 */ u16 unk1838;
     /* 183A */ u16 unk183A;
-    /* 183C */ u8 filler_183C[0x10];
+    /* 183C */ u8 filler_183C[7];
+    /* 1843 */ u8 unk1843; /* sub_08043DB4 */
+    /* 1844 */ u8 unk1844; /* saved, sub_08045198 */
+    /* 1845 */ u8 filler_1845[7];
     /* 184C */ s8 unk184C; /* sub_080462D4 */
     /* 184D */ s8 unk184D; /* sub_080462D4 */
     /* 184E */ u8 filler_184E;
     /* 184F */ s8 unk184F; /* sub_0803FFB0 */
-    /* 1850 */ u8 filler_1850[5];
+    /* 1850 */ u8 unk1850; /* saved, sub_08045198 */
+    /* 1851 */ u8 filler_1851[2];
+    /* 1853 */ u8 unk1853; /* saved */
+    /* 1854 */ u8 unk1854; /* read as a u32 with 1855..1857 by sub_08046E7C */
     /* 1855 */ s8 unk1855;
-    /* 1856 */ u8 filler_1856[0x0B];
+    /* 1856 */ u8 filler_1856;
+    /* 1857 */ s8 unk1857; /* sub_08046E7C */
+    /* 1858 */ s8 unk1858; /* countdown. sub_08046E7C */
+    /* 1859 */ u8 filler_1859;
+    /* 185A */ s8 unk185A; /* sub_08046E7C */
+    /* 185B */ s8 unk185B; /* save verify failed. sub_08044A8C */
+    /* 185C */ u8 unk185C; /* save data valid. sub_08044A8C */
+    /* 185D */ u8 filler_185D[2];
+    /* 185F */ s8 unk185F; /* pending entry mode. sub_08043DB4 */
+    /* 1860 */ u8 filler_1860;
     /* 1861 */ s8 unk1861[0x53];
-    /* 18B4 */ u8 filler_18B4[4];
+    /* 18B4 */ s32 unk18B4; /* sub_08043DB4 */
     /* 18B8 */ struct Unk45A84 unk18B8;
 };
 
@@ -1243,13 +1293,6 @@ struct Unk312EC /* >= 0x10 */
     /* 0c */ struct Unk705DC *unk0C;
 };
 
-/* Word count + dest. sub_08062728. */
-struct Unk62728 /* >= 0x0c */
-{
-    /* 00 */ u8 filler_00[4];
-    /* 04 */ u32 *unk04;
-    /* 08 */ u32 unk08;
-};
 
 /* ldrsh at +0, pointer at +4. sub_08033958. */
 /* Key-combo table: length, then that many u16 key masks. sub_080338F0. */
@@ -1641,6 +1684,193 @@ struct Unk68988 /* >= 0x7d */
 };
 
 /* Motion accumulator advanced by sub_08068E54. */
+/* 16-byte list rows at *gData_030006BC, indexed by cursor + scroll. sub_0804FFCC. */
+struct Unk4FFCCRow /* 0x10 */
+{
+    /* 00 */ u8 filler_00[0x0C];
+    /* 0c */ s8 unk0C;
+    /* 0d */ u8 filler_0D;
+    /* 0e */ s8 unk0E;
+    /* 0f */ u8 filler_0F;
+};
+
+struct Unk4FFCCWin /* >= 0x90 */
+{
+    /* 00 */ u8 filler_00[0x60];
+    /* 60 */ struct Unk7069C unk60;
+};
+
+/* Icon entry returned by sub_0803DCFC: sprite source and palette. */
+struct Unk4FFCCIcon /* >= 0x1c */
+{
+    /* 00 */ u8 filler_00[0x14];
+    /* 14 */ struct Unk6FF58Src *unk14;
+    /* 18 */ void *unk18;
+};
+
+/* Detail panel state: six sprite handles at +0x28C. sub_0804FFCC. */
+struct Unk4FFCC /* >= 0x2a4 */
+{
+    /* 000 */ u8 filler_000[0x28C];
+    /* 28c */ struct Unk705DC *unk28C[6];
+};
+
+/* Save-slot image (0x1F60 bytes) written by sub_08045198. */
+struct Unk45198Rec /* 0x0c */
+{
+    /* 00 */ u32 unk00;
+    /* 04 */ u32 unk04;
+    /* 08 */ u32 unk08;
+};
+
+struct Unk45198Item /* 0x0c */
+{
+    /* 00 */ s8 unk00;
+    /* 01 */ u8 unk01;
+    /* 02 */ u8 unk02;
+    /* 03 */ u8 unk03;
+    /* 04 */ u8 unk04;
+    /* 05 */ u8 unk05;
+    /* 06 */ s8 unk06;
+    /* 07 */ u8 unk07;
+    /* 08 */ s8 unk08;
+    /* 09 */ u8 unk09;
+    /* 0a */ u8 filler_0A[2];
+};
+
+struct Unk45198Save /* 0x1f60 */
+{
+    /* 0000 */ u32 unk0000;
+    /* 0004 */ u32 unk0004; /* slot size, 0x1F60 */
+    /* 0008 */ u32 unk0008;
+    /* 000c */ u8 filler_000C[0x20];
+    /* 002c */ s32 unk002C;
+    /* 0030 */ u32 unk0030;
+    /* 0034 */ u32 unk0034;
+    /* 0038 */ u32 unk0038;
+    /* 003c */ u32 unk003C;
+    /* 0040 */ s16 unk0040;
+    /* 0042 */ u16 unk0042;
+    /* 0044 */ u8 unk0044;
+    /* 0045 */ u8 unk0045;
+    /* 0046 */ u8 unk0046;
+    /* 0047 */ s8 unk0047;
+    /* 0048 */ u8 unk0048;
+    /* 0049 */ u8 unk0049;
+    /* 004a */ u8 unk004A;
+    /* 004b */ u8 unk004B;
+    /* 004c */ u8 unk004C;
+    /* 004d */ s8 unk004D;
+    /* 004e */ s8 unk004E;
+    /* 004f */ u8 unk004F;
+    /* 0050 */ u8 unk0050;
+    /* 0051 */ s8 unk0051;
+    /* 0052 */ s8 unk0052;
+    /* 0053 */ u8 unk0053;
+    /* 0054 */ u8 filler_0054[4];
+    /* 0058 */ struct Unk45198Rec unk0058[2];
+    /* 0070 */ u8 filler_0070[0x10];
+    /* 0080 */ u8 unk0080[0x200];
+    /* 0280 */ u32 unk0280;
+    /* 0284 */ u32 unk0284;
+    /* 0288 */ u32 unk0288;
+    /* 028c */ s16 unk028C;
+    /* 028e */ s16 unk028E;
+    /* 0290 */ s8 unk0290;
+    /* 0291 */ u8 unk0291;
+    /* 0292 */ u8 unk0292;
+    /* 0293 */ u8 unk0293;
+    /* 0294 */ u8 unk0294[0x53];
+    /* 02e7 */ u8 filler_02E7;
+    /* 02e8 */ struct Unk45198Item unk02E8[0x53];
+    /* 06cc */ u8 unk06CC[0xF8];
+    /* 07c4 */ u8 unk07C4[0xB88];
+    /* 134c */ u8 unk134C[0xA50];
+    /* 1d9c */ u8 unk1D9C[0x144];
+    /* 1ee0 */ u8 unk1EE0[0x14];
+    /* 1ef4 */ u8 unk1EF4[0x18];
+    /* 1f0c */ s8 unk1F0C[0x53];
+    /* 1f5f */ u8 filler_1F5F;
+};
+
+/* Collision quadtree (sub_0806C388): mesh vertices, edges and node pool. */
+struct Unk6C388Vert /* 0x10 */
+{
+    /* 00 */ s32 unk00; /* x */
+    /* 04 */ s32 unk04; /* y */
+    /* 08 */ u8 filler_08[8];
+};
+
+struct Unk6C388Edge /* 0x20 */
+{
+    /* 00 */ s32 unk00; /* vertex index a */
+    /* 04 */ s32 unk04; /* vertex index b */
+    /* 08 */ u8 filler_08[9];
+    /* 11 */ u8 unk11; /* bit 3: ignored */
+    /* 12 */ u8 filler_12[0x0E];
+};
+
+struct Unk6C388MeshHdr /* >= 0x0c */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08; /* edge count */
+};
+
+struct Unk6C388Mesh /* >= 0x10 */
+{
+    /* 00 */ struct Unk6C388MeshHdr *unk00;
+    /* 04 */ struct Unk6C388Vert *unk04;
+    /* 08 */ u8 filler_08[4];
+    /* 0c */ struct Unk6C388Edge *unk0C;
+};
+
+struct Unk6C388Node /* 0x2c */
+{
+    /* 00 */ struct Unk6C388Node *unk00; /* children: top-left, */
+    /* 04 */ struct Unk6C388Node *unk04; /* top-right, */
+    /* 08 */ struct Unk6C388Node *unk08; /* bottom-left, */
+    /* 0c */ struct Unk6C388Node *unk0C; /* bottom-right */
+    /* 10 */ struct Unk6C388Edge **unk10; /* leaf edge list */
+    /* 14 */ u32 unk14;
+    /* 18 */ s32 unk18; /* x0 */
+    /* 1c */ s32 unk1C; /* y0 */
+    /* 20 */ s32 unk20; /* x1 */
+    /* 24 */ s32 unk24; /* y1 */
+    /* 28 */ u16 unk28; /* leaf edge count */
+    /* 2a */ u16 unk2A;
+};
+
+struct Unk6C388Tree /* >= 0x42 */
+{
+    /* 00 */ u8 filler_00[0x10];
+    /* 10 */ struct Unk6C388Mesh *unk10;
+    /* 14 */ u8 filler_14[0x18];
+    /* 2c */ struct Unk6C388Node *unk2C; /* node pool */
+    /* 30 */ struct Unk6C388Edge **unk30; /* edge list pool */
+    /* 34 */ u8 filler_34[4];
+    /* 38 */ u16 unk38; /* nodes used */
+    /* 3a */ u16 unk3A; /* list entries used */
+    /* 3c */ u16 unk3C; /* split threshold */
+    /* 3e */ u16 unk3E; /* node pool size */
+    /* 40 */ u16 unk40; /* list pool size */
+};
+
+/* Heap block handle returned by sub_0806A314: data pointer and byte size. */
+struct Unk6F910Block /* >= 0x08 */
+{
+    /* 00 */ void *unk00;
+    /* 04 */ u32 unk04;
+};
+
+/* OAM sprite-slot node initialised by sub_0806F910 (0x1C each). */
+struct Unk6F910Spr /* 0x1c */
+{
+    /* 00 */ struct Unk6F910Spr *unk00; /* prev */
+    /* 04 */ struct Unk6F910Spr *unk04; /* next */
+    /* 08 */ u32 unk08; /* OAM entry address */
+    /* 0c */ u8 filler_0C[0x10];
+};
+
 /* Palette fade job for sub_08072A38: rows x cols colours from src + offset. */
 struct Unk72A38 /* >= 0x10 */
 {
@@ -1671,7 +1901,11 @@ struct Unk0068Entry /* 0x18 */
 
 struct Unk68E54 /* >= 0x65 */
 {
-    /* 00 */ u8 filler_00[0x14];
+    /* 00 */ s32 unk00; /* map width in tiles (same object as Unk68988) */
+    /* 04 */ s32 unk04; /* map height in tiles */
+    /* 08 */ struct Unk688C8Rect *unk08; /* visible tile rect */
+    /* 0c */ s32 unk0C; /* scroll x, 8.8 */
+    /* 10 */ s32 unk10; /* scroll y, 8.8 */
     /* 14 */ s32 unk14;
     /* 18 */ s32 unk18;
     /* 1c */ s32 unk1C;
@@ -1683,7 +1917,8 @@ struct Unk68E54 /* >= 0x65 */
     /* 34 */ s32 unk34; /* 8.8, sub_08069A60 arg */
     /* 38 */ s32 unk38; /* added to unk30 each frame */
     /* 3c */ s32 unk3C; /* added to unk34 each frame */
-    /* 40 */ u8 filler_40[8];
+    /* 40 */ s32 unk40; /* BG offset x, 8.8 */
+    /* 44 */ s32 unk44; /* BG offset y, 8.8 */
     /* 48 */ s16 unk48;
     /* 4a */ s16 unk4A;
     /* 4c */ s32 unk4C;
@@ -1692,9 +1927,13 @@ struct Unk68E54 /* >= 0x65 */
     /* 58 */ s32 unk58;
     /* 5c */ u8 filler_5C[2];
     /* 5e */ u8 unk5E; /* affine BG number (2 or 3). sub_08068EC0 */
-    /* 5f */ u8 filler_5F[5];
+    /* 5f */ u8 unk5F; /* log2 visible width */
+    /* 60 */ u8 unk60; /* log2 visible height */
+    /* 61 */ u8 filler_61[3];
     /* 64 */ u16 unk64;
-    /* 66 */ u8 filler_66[0x22];
+    /* 66 */ u8 filler_66[0x16];
+    /* 7c */ u8 unk7C; /* bit 0/1: freeze column/row streaming, bit 2/3: wrap y/x. sub_0806960C */
+    /* 7d */ u8 filler_7D[0x0B];
 };
 
 struct Unk691E4 /* >= 0x61 */
@@ -2161,7 +2400,8 @@ struct Unk1690 /* >= 0x78 */
     /* 04 */ u8 filler_04[0x70];
     /* 74 */ u8 unk74_0 : 2;
     /* 74 */ u8 unk74_2 : 2;
-    /* 74 */ u8 unk74_4 : 4;
+    /* 74 */ u8 unk74_4 : 2;
+    /* 74 */ u8 unk74_6 : 2;
 };
 
 /* Pointer + byte at +0x2D0. sub_0803484C. */
@@ -2729,13 +2969,18 @@ struct Unk59C98Owner /* >= 0xcc */
 };
 
 /* Signed bytes + u8 into ROM tables. sub_0803E328 / 3E374 / 3E3C0. */
-struct Unk3E328 /* >= 0x21 */
+struct Unk3E328 /* 0x28 */
 {
     /* 00 */ u8 filler_00[0x1D];
     /* 1d */ s8 unk1D;
     /* 1e */ s8 unk1E;
     /* 1f */ u8 filler_1F;
     /* 20 */ u8 unk20;
+    /* 21 */ s8 unk21; /* -1 = none. sub_0804FFCC */
+    /* 22 */ u8 filler_22[2];
+    /* 24 */ s8 unk24;
+    /* 25 */ u8 filler_25;
+    /* 26 */ s16 unk26;
 };
 
 /* 4-byte rows in gData_0807BDB8 / gData_0807BB80 / gData_0807B6F0.
