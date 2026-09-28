@@ -9,7 +9,7 @@
 // moving the cursor to that link's map point; held bit 0 with any of unk02's
 // low bits set commits (unk181C = 2); held bit 3 sets unk181C = 3.
 // Phase 1 runs sub_08043420.
-void sub_080436B0(void)
+void MapCursorInput(void)
 {
     struct Unk436B0Entry *entry;
 

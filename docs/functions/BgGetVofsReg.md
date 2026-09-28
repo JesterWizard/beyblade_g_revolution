@@ -22,7 +22,7 @@
 
 ## Callers
 
-- `sub_080688C8`
+- [`BgMapInit`](BgMapInit.md)
 - `sub_08068988`
-- `sub_0806960C`
+- [`BgMapScroll`](BgMapScroll.md)
 - `sub_08069894`

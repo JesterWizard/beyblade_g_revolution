@@ -34,6 +34,6 @@ void sub_08045128(u8 arg0)
   r1 = *((u32 *) (r2 + 8));
   *((u32 *) r3) = r1;
   r1 = 0;
-  sub_08045590((void *) r0, (u8) (*new_var));
+  SaveDataRead((void *) r0, (u8) (*new_var));
 }
 

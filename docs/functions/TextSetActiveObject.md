@@ -42,7 +42,7 @@
 - `sub_0804E17C`
 - `sub_0804E4F4`
 - `sub_0804ED90`
-- `sub_0804FFCC`
+- [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08051444`
 - `sub_08051578`
 - `sub_08052934`

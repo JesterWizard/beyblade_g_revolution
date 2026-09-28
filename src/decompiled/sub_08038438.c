@@ -2,7 +2,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-s32 sub_08038438(void *palette)
+s32 PaletteSlotAcquire(void *palette)
 {
     u16 key;
     s16 i;

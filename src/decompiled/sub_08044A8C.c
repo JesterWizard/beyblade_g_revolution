@@ -10,7 +10,7 @@
         gData_03000198->unk185C = 0;               \
     }
 
-s8 sub_08044A8C(void)
+s8 SaveDataVerify(void)
 {
     u32 *buf;
     u32 **hdrBlock;
@@ -39,7 +39,7 @@ s8 sub_08044A8C(void)
         retry = 0;
         do
         {
-            if (sub_08067584(i, buf) != 0)
+            if (EepromReadBlock(i, buf) != 0)
                 retry++;
             else
                 retry = 0;

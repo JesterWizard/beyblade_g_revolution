@@ -11,6 +11,6 @@ void sub_08033EA4(struct Unk33F30 *a)
     n = 0x80;
     n <<= 1;
     sub_080726A4((struct Unk726A4 *)a, dst, 0, n, 8);
-    sub_08072A38((struct Unk72A38 *)a, 0xC0, 0xC, 4, 3, 0xA, 0xA, 0xA, 0x1F);
+    PaletteFadeByLuma((struct Unk72A38 *)a, 0xC0, 0xC, 4, 3, 0xA, 0xA, 0xA, 0x1F);
 }
 

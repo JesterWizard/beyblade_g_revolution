@@ -9,7 +9,7 @@ void sub_08043638(void)
     gMainWorkPtr->unk1810 = 0x100;
 
     gUnk_03000554->unk01 = 0;
-    sub_080436B0();
+    MapCursorInput();
 
     if (gUnk_03000554->unk01 == 1)
         sub_08043420();

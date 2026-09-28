@@ -24,7 +24,7 @@ s32 sub_0803139C(struct Unk705DC **array, s32 value, s32 count, void *table, u8 
             array[index] = BtlObjPoolAlloc(0x1C2);
             if (array[index] != NULL)
             {
-                palette = sub_08038438(table);
+                palette = PaletteSlotAcquire(table);
                 sub_0806FF58(array[index], table, 0, 0, 0, 0, 0, (u16)(index - 0x30));
                 if (array[index] != NULL)
                     TextEntrySetPaletteBank(array[index], (u8)palette);
@@ -42,7 +42,7 @@ s32 sub_0803139C(struct Unk705DC **array, s32 value, s32 count, void *table, u8 
             array[index] = BtlObjPoolAlloc(0x1C2);
             if (array[index] != NULL)
             {
-                palette = sub_08038438(table);
+                palette = PaletteSlotAcquire(table);
                 sub_0806FF58(array[index], table, 0, 0, 0, 0, 0, (u16)(index - 0x30));
                 if (array[index] != NULL)
                     TextEntrySetPaletteBank(array[index], (u8)palette);

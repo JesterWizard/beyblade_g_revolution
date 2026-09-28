@@ -39,7 +39,7 @@ void sub_080444BC(void)
             sub_0802E048();
         if (p->unk28 & 4)
         {
-            sub_08060C30(gMainWorkPtr->unk15DC, (void *)0x082BCD00, (void *)0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0D, 2);
+            TextWindowOpenEx(gMainWorkPtr->unk15DC, (void *)0x082BCD00, (void *)0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0D, 2);
             sub_08069B78(gMainWorkPtr->unk1690->unk74_0, gMainWorkPtr->unk1690->unk74_2, 1, 0);
         }
     }

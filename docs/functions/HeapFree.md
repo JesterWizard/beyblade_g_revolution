@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806A434` |
 | Size | 164 bytes (58 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806A434` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | reload key from the node; drop the cached key local |
 
 ## Why this name
 
@@ -59,7 +59,7 @@
 - `sub_08063104`
 - `sub_08065CD0`
 - `sub_08068808`
-- `sub_0806F910`
+- [`BtlObjSystemInit`](BtlObjSystemInit.md)
 - `sub_08072CC0`
 - [`BtlObjTableRemove`](BtlObjTableRemove.md)
 

@@ -10,7 +10,7 @@
 // square; otherwise make it a leaf listing those edges (NULL if none).
 typedef u8 (*EdgeFilter)(struct Unk6C388Mesh *, struct Unk6C388Edge *);
 
-struct Unk6C388Node *sub_0806C388(struct Unk6C388Tree *t, struct Unk6C388Node *n, s32 x0, s32 y0, s32 x1, s32 y1, EdgeFilter filter)
+struct Unk6C388Node *CollisionQuadtreeBuild(struct Unk6C388Tree *t, struct Unk6C388Node *n, s32 x0, s32 y0, s32 x1, s32 y1, EdgeFilter filter)
 {
     struct Unk6C388Mesh *mesh;
     struct Unk6C388Edge *e;
@@ -113,10 +113,10 @@ struct Unk6C388Node *sub_0806C388(struct Unk6C388Tree *t, struct Unk6C388Node *n
         n->unk04 = &t->unk2C[t->unk38++];
         n->unk08 = &t->unk2C[t->unk38++];
         n->unk0C = &t->unk2C[t->unk38++];
-        n->unk00 = sub_0806C388(t, n->unk00, x0, y0, midX, midY, filter);
-        n->unk04 = sub_0806C388(t, n->unk04, midX, y0, x1, midY, filter);
-        n->unk08 = sub_0806C388(t, n->unk08, x0, midY, midX, y1, filter);
-        n->unk0C = sub_0806C388(t, n->unk0C, midX, midY, x1, y1, filter);
+        n->unk00 = CollisionQuadtreeBuild(t, n->unk00, x0, y0, midX, midY, filter);
+        n->unk04 = CollisionQuadtreeBuild(t, n->unk04, midX, y0, x1, midY, filter);
+        n->unk08 = CollisionQuadtreeBuild(t, n->unk08, x0, midY, midX, y1, filter);
+        n->unk0C = CollisionQuadtreeBuild(t, n->unk0C, midX, midY, x1, y1, filter);
         return n;
     }
     n->unk28 = count;

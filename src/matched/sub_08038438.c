@@ -2,7 +2,7 @@
 
 // @ 0x08038438
 __attribute__((naked))
-s32 sub_08038438(void *palette)
+s32 PaletteSlotAcquire(void *palette)
 {
     asm(
         ".syntax unified\n"

@@ -5,7 +5,7 @@
 typedef void (*BlitFunc)(struct Unk68988 *, s32, s32, s32, s32, s32, s32);
 typedef void (*BlitColFunc)(struct Unk68988 *, s32, s32, s32, s32);
 
-void sub_08069270(struct Unk68988 *st, s32 x, s32 y, s32 d, s32 e, s32 w, s32 h)
+void BgMapBlitRect(struct Unk68988 *st, s32 x, s32 y, s32 d, s32 e, s32 w, s32 h)
 {
     BlitFunc blit;
     s32 len1, len2;

@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Set up the gData_03000798 window: clear it, record the source and count,
 // lay out its tile block (sub_08061628) and finish with sub_08061308.
-void sub_0806121C(struct Unk617C4 *src, u32 b, u16 count, u16 c, u16 d, u16 e, u16 f, u16 g)
+void TextWindowOpen(struct Unk617C4 *src, u32 b, u16 count, u16 c, u16 d, u16 e, u16 f, u16 g)
 {
     u16 attr;
     struct Unk0798 *st;
@@ -26,7 +26,7 @@ void sub_0806121C(struct Unk617C4 *src, u32 b, u16 count, u16 c, u16 d, u16 e, u
     st->unkA4 = 0;
     st->unkA6 = 0;
     sub_08068BD4(st, 3, count, 0);
-    sub_08061628((u8)e, (u8)f, (u8)c, (u8)d, (u16)(count - 1));
+    TextWindowLayout((u8)e, (u8)f, (u8)c, (u8)d, (u16)(count - 1));
     sub_08061308();
 }
 

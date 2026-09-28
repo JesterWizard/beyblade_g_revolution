@@ -5,7 +5,7 @@
 // @ 0x080688c8
 // Load a BG tile map, set the scroll registers to (x, y), and seed the
 // visible tile rect (x/8, y/8, width 1<<unk5F, height 1<<unk60).
-void sub_080688C8(struct Unk68988 *state, u8 index, void *arg2, u16 limit, u16 mode, s32 x, s32 y)
+void BgMapInit(struct Unk68988 *state, u8 index, void *arg2, u16 limit, u16 mode, s32 x, s32 y)
 {
     struct Unk688C8Rect *rect;
     s32 xt = x >> 3;
@@ -29,6 +29,6 @@ void sub_080688C8(struct Unk68988 *state, u8 index, void *arg2, u16 limit, u16 m
     w = 1 << state->unk5F;
     h = 1 << state->unk60;
     if (!(mode & 2))
-        sub_08069270(state, rect->unk00, rect->unk04, rect->unk10, rect->unk14, w, h);
+        BgMapBlitRect(state, rect->unk00, rect->unk04, rect->unk10, rect->unk14, w, h);
 }
 

@@ -30,5 +30,5 @@
 
 ## Callers
 
-- `sub_080436B0`
-- `sub_08043DB4`
+- [`MapCursorInput`](MapCursorInput.md)
+- [`FieldEnter`](FieldEnter.md)

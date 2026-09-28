@@ -38,7 +38,7 @@
 
 - `sub_0802ECD8`
 - `sub_0802FA94`
-- `sub_08039BD4`
+- [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803E848`
 - `sub_08047A94`
 - `sub_08048DB8`
@@ -55,7 +55,7 @@
 - `sub_0804E4F4`
 - `sub_0804EBF0`
 - `sub_0804ED90`
-- `sub_0804FFCC`
+- [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08051444`
 - `sub_08051578`
 - `sub_08052934`

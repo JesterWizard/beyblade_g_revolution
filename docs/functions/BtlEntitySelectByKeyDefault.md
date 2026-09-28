@@ -36,7 +36,7 @@
 - `sub_080427E8`
 - `sub_08043420`
 - `sub_08043638`
-- `sub_08043DB4`
+- [`FieldEnter`](FieldEnter.md)
 - `sub_08044648`
 - `sub_0804DB28`
 - `sub_08057274`

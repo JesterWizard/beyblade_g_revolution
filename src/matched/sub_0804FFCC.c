@@ -6,7 +6,7 @@
 // Draw the detail panel for the selected list row: five text fields (with
 // language-table fallbacks), the sub_0803E2AC category string, the record's
 // unk26 counter, then rebuild the panel's six sprites from the row's record.
-void sub_0804FFCC(struct Unk4FFCC *panel)
+void DetailPanelDraw(struct Unk4FFCC *panel)
 {
     struct Unk3E328 *rec;
     u8 *buf;

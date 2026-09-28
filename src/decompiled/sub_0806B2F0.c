@@ -2,7 +2,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-u16 sub_0806B2F0(struct Unk6B2F0 *row, s32 value, u16 pos, u16 count, u8 padZero)
+u16 DigitRowDraw(struct Unk6B2F0 *row, s32 value, u16 pos, u16 count, u8 padZero)
 {
     struct Unk68574 *obj;
     u16 drawn;

@@ -75,7 +75,7 @@ void sub_08033188(void)
                 target = -0xC800;
         }
     }
-    sub_08070678((struct Unk7069C *)&text);
+    BtlReleaseEntry((struct Unk7069C *)&text);
     VBlankIntrWait();
     for (i = 0; i <= 1; i++)
     {

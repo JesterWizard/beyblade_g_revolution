@@ -31,6 +31,6 @@
 
 ## Callers
 
-- `sub_08032DC4`
-- `sub_08046E7C`
+- [`BtlFrameUpdate`](BtlFrameUpdate.md)
+- [`FieldUpdateFrame`](FieldUpdateFrame.md)
 - `sub_08052FC8`

@@ -32,7 +32,7 @@
 
 - `sub_0802ECD8`
 - `sub_0802FA94`
-- `sub_08039BD4`
+- [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803E848`
 - `sub_08040680`
 - `sub_08047A94`

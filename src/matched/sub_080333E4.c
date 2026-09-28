@@ -17,7 +17,7 @@ void sub_080333E4(void *arg, s32 x, s32 y, u8 mode)
         sub_08033574();
     if (gBattleWork->unk2088 == 0)
     {
-        id = sub_08038438(gData_08078108[mode]);
+        id = PaletteSlotAcquire(gData_08078108[mode]);
         sub_08067BB8((struct Unk67BB8 *)&gBattleWork->unk1FAC, gData_08078108[mode], 0, (s32)arg, x, y, -1);
         sub_08068584(&gBattleWork->unk1FAC, 0x20, 0x20);
         gBattleWork->unk201C = sub_08067FC8(&gBattleWork->unk1FAC, 0);

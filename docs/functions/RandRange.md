@@ -38,10 +38,10 @@
 
 - `sub_080302E0`
 - `sub_08032D5C`
-- `sub_08032DC4`
+- [`BtlFrameUpdate`](BtlFrameUpdate.md)
 - `sub_08033D90`
 - `sub_08035AE0`
 - `sub_08035C64`
-- `sub_0803715C`
-- `sub_08043DB4`
+- [`BtlApplyClampedScore`](BtlApplyClampedScore.md)
+- [`FieldEnter`](FieldEnter.md)
 - `sub_080474AC`

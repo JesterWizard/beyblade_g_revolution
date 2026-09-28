@@ -19,19 +19,19 @@ void sub_0803531C(struct Unk35258 *a)
     r1 = *(u8 *)r5;
     r0 &= r1;
     if (r0 != 0)
-        sub_08068418(&a->unk1C);
+        SceneObjUpdate(&a->unk1C);
 
     r0 = 4;
     r1 = *(u8 *)r5;
     r0 &= r1;
     if (r0 != 0)
-        sub_08068418(&a->unk1D4);
+        SceneObjUpdate(&a->unk1D4);
 
     r1 = *(u8 *)r5;
     r0 = 2;
     r5 = *(u8 *)r5;
     r0 &= r5;
     if (r0 != 0)
-        sub_08068418(&a->unkF8);
+        SceneObjUpdate(&a->unkF8);
 }
 

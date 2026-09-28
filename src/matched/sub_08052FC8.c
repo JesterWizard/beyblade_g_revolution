@@ -11,7 +11,7 @@ void sub_08052FC8(void)
 
     TimerAdvance();
     wp = gMainWorkPtrLoc;
-    sub_08068418((u8 *)*wp + 0x36C);
+    SceneObjUpdate((u8 *)*wp + 0x36C);
     sub_08067CE8((u8 *)*wp + 0x36C, 0);
     sub_0805D1AC();
     _0802D9A8();

@@ -7,7 +7,7 @@
 // Palette fade over job->unk08 rows: each colour fades toward (d, e, f) if
 // its rough luminance is below c, else toward (g, h, i); the fade amount
 // starts at 0 and grows by (4 * b / rows) / 1024 per row.
-void sub_08072A38(struct Unk72A38 *job, u32 b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h, u32 i)
+void PaletteFadeByLuma(struct Unk72A38 *job, u32 b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h, u32 i)
 {
     s32 step;
     s32 t;

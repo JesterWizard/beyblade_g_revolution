@@ -9,7 +9,7 @@
 // picks the sub_08045EF0 / sub_08045D3C op codes.
 typedef void (*CpuCopyFunc)(const void *, void *, u32);
 
-void sub_08045198(struct Unk45198Save *save, u8 fresh)
+void SaveDataWrite(struct Unk45198Save *save, u8 fresh)
 {
     s32 i;
 

@@ -20,7 +20,7 @@ void sub_0803D284(const u8 *str, s32 b, const u8 *widths, s32 y)
         gBattleWork->unk0BCC[i].unk28 = -0x4000;
         sub_08062238(&gBattleWork->unk0BCC[i]);
     }
-    x = 0x76 - (sub_08073988(str, widths, 0x10, 4) >> 1);
+    x = 0x76 - (TextMeasureWidth(str, widths, 0x10, 4) >> 1);
     for (n = 0, i = 0; str[i] != 0; i++)
     {
         if (str[i] != ' ')
@@ -28,7 +28,7 @@ void sub_0803D284(const u8 *str, s32 b, const u8 *widths, s32 y)
             sub_0806211C(&gBattleWork->unk0BCC[n], 0, b, x, y, 0, 0x28, 0, gData_080BB748[str[i]]);
             x += 0x10 - widths[gData_080BB748[str[i]]];
             sub_08062634(&gBattleWork->unk0BCC[n], -1, n * 2, 0x0803D27D);
-            sub_080705DC(gBattleWork->unk0BCC[n].unk08, 0);
+            TextEntrySetPaletteBank(gBattleWork->unk0BCC[n].unk08, 0);
             sub_08070468((struct Unk6FDB4 *)gBattleWork->unk0BCC[n].unk08, 40000 - n);
             n++;
         }

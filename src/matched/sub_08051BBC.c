@@ -21,7 +21,7 @@ void sub_08051BBC(void)
         cur->unk17F2++;
         REG_BLDCNT = 0x3748;
         REG_BLDALPHA = (cur->unk17F2 << 8) | cur->unk17F0;
-        sub_080674B4();
+        VBlankIntrWait();
         ((void (*)(void))gData_080BB888[0])();
         sub_0806A6F8();
     } while ((*loc)->unk17F0 != 0);

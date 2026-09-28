@@ -21,16 +21,16 @@
 
 ## Callers
 
-- `sub_0802E18C`
+- [`HudWriteDigits`](HudWriteDigits.md)
 - `sub_08030938`
-- `sub_08031124`
+- [`ScaleRatio`](ScaleRatio.md)
 - `sub_0803139C`
 - `sub_08035984`
 - `sub_08035AE0`
 - `sub_08035C64`
 - `sub_080360BC`
-- `sub_0803715C`
-- `sub_0806B2F0`
+- [`BtlApplyClampedScore`](BtlApplyClampedScore.md)
+- [`DigitRowDraw`](DigitRowDraw.md)
 - `sub_0806E420`
 - `sub_08070D44`
 - [`TextFormatInt`](TextFormatInt.md)

@@ -11,8 +11,8 @@ void sub_08037508(void)
     sub_08036190(&gBattleWork37508.unkAA8, 0xEBB0, 0x10000, 0xFFFF2E00);
     sub_080361CC(&gBattleWork37508.unkAA8, &gBattleWork37508.unk08);
     sub_080361CC(&gBattleWork37508.unkAA8, &gBattleWork37508.unk90);
-    sub_08068EC0(&gBattleWork37508.unk08);
-    sub_08068EC0(&gBattleWork37508.unk90);
+    AffineBgUpdate(&gBattleWork37508.unk08);
+    AffineBgUpdate(&gBattleWork37508.unk90);
     sub_08035238((struct Unk35258 *)&gBattleWork37508.unk478);
     sub_08035238((struct Unk35258 *)&gBattleWork37508.unk790);
     sub_08034568(&gBattleWork37508.unk478);

@@ -27,7 +27,7 @@
 
 ## Callers
 
-- `sub_08062790`
+- [`ProximityTriggerCheck`](ProximityTriggerCheck.md)
 
 ## ROM data referenced
 

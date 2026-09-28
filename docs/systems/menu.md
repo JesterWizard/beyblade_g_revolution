@@ -7,14 +7,14 @@
 
 | Tier | Functions |
 |------|----------:|
-| DECOMPILED | 1 |
+| MATCHING | 1 |
 
 ## Functions
 
 | Function | Address | Tier | Size | Callers | Callees | RAM |
 |----------|---------|------|-----:|--------:|--------:|-----|
-| `sub_08040F4C` | `0x08040F4C` | DECOMPILED | 336 | 0 | 15 |  |
+| `sub_080442FC` | `0x080442FC` | MATCHING | 144 | 1 | 5 | gMainWorkPtr |
 
 ## Why these functions are grouped here
 
-- `sub_08040F4C` — note mentions 'menu'
+- `sub_080442FC` — note mentions 'menu'

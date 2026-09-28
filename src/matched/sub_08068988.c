@@ -34,6 +34,6 @@ void sub_08068988(
     if (state->unk04 < height)
         height = state->unk04;
     if ((mode & 2) == 0)
-        sub_08069270(state, 0, 0, 0, 0, width, height);
+        BgMapBlitRect(state, 0, 0, 0, 0, width, height);
 }
 

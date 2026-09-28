@@ -7,7 +7,7 @@
 // EEPROM read: clock out the read command and the unk08-bit address at
 // addr, then pack the 64 returned bits into four halfwords (last first).
 // Returns 0x80FF if addr is past the chip size (unk04).
-s32 sub_08067584(u32 addr, void *out)
+s32 EepromReadBlock(u32 addr, void *out)
 {
     u16 buf[0x44];
     u16 *p;

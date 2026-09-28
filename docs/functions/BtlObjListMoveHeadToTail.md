@@ -32,4 +32,4 @@
 
 ## Callers
 
-- `sub_0807027C`
+- [`BtlObjSetAffine`](BtlObjSetAffine.md)

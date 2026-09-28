@@ -34,5 +34,5 @@
 
 - [`BtlObjPoolFree`](BtlObjPoolFree.md)
 - `sub_080700CC`
-- `sub_0807027C`
+- [`BtlObjSetAffine`](BtlObjSetAffine.md)
 - [`BtlReleaseEntry`](BtlReleaseEntry.md)

@@ -37,9 +37,9 @@ void sub_0804438C(s8 mode)
         sub_08062C80();
         break;
     case 1:
-        sub_08046E7C(0);
-        sub_08046E7C(0);
-        sub_08046E7C(0);
+        FieldUpdateFrame(0);
+        FieldUpdateFrame(0);
+        FieldUpdateFrame(0);
         if (gMainWorkPtr->unk1834 == 1)
             sub_08042718();
         i = 10;
@@ -63,7 +63,7 @@ void sub_0804438C(s8 mode)
             i--;
         }
         sub_08061308();
-        sub_08061628(1, 4, 0x1C, 0x10, 0x1BF);
+        TextWindowLayout(1, 4, 0x1C, 0x10, 0x1BF);
         sub_080602C0(0xB8);
         break;
     }

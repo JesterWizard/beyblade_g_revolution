@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806FE84` |
 | Size | 120 bytes (50 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806FE84` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | readable-thumb |
+| Note | pass unk30 to BtlObjListMoveToHead |
 
 ## Why this name
 
@@ -47,7 +47,7 @@
 - `sub_0803139C`
 - `sub_08032908`
 - [`BtlClearState`](BtlClearState.md)
-- `sub_08039BD4`
+- [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803FFB0`
 - `sub_08040680`
 - `sub_0804745C`
@@ -55,7 +55,7 @@
 - `sub_0804BD38`
 - `sub_0804C8BC`
 - `sub_0804D420`
-- `sub_0804FFCC`
+- [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08053690`
 - `sub_08054120`
 - `sub_08054454`

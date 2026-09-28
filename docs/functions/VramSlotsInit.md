@@ -36,7 +36,7 @@
 
 ## Callers
 
-- `sub_08043DB4`
+- [`FieldEnter`](FieldEnter.md)
 
 ## ROM data referenced
 

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08061D68` |
 | Size | 88 bytes (40 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | graphics |
 | Link label | `sub_08061D68` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | readable-thumb |
+| Note | TextRowSetPaletteBank: scaled index plus addr keeps add operands |
 
 ## Why this name
 
@@ -35,7 +35,7 @@
 - `sub_0802ECD8`
 - `sub_0802F520`
 - `sub_0802FA94`
-- `sub_08039BD4`
+- [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803B078`
 - `sub_0803E934`
 - `sub_08048168`

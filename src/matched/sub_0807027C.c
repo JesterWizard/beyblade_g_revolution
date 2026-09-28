@@ -7,7 +7,7 @@
 // matrix. A NULL obj takes one from the battle-object pool; the identity
 // transform (d 0, scale 0x100) releases it instead. Busy objects (unk19) are
 // left alone and their unk19 is returned.
-struct Unk70354Object *sub_0807027C(struct Unk70354Object *obj, u16 b, u16 c, u8 d)
+struct Unk70354Object *BtlObjSetAffine(struct Unk70354Object *obj, u16 b, u16 c, u8 d)
 {
     bool32 reset;
     s32 cos, sin, sx, sy;

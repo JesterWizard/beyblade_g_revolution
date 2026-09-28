@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T09:32:09Z",
+  "generated": "2026-09-28T09:41:32Z",
   "counts": {
     "matched": 581,
     "wip": 16,
@@ -8,8 +8,8 @@
   },
   "tiers": {
     "UNKNOWN": 36,
-    "DECOMPILED": 16,
-    "UNDERSTOOD": 0,
+    "DECOMPILED": 9,
+    "UNDERSTOOD": 7,
     "MATCHING": 581
   },
   "total": 633,
@@ -2671,8 +2671,8 @@
       "score": "45/240",
       "source": "wip",
       "note": "for-loop seed with slots=&gData_030003CC + _call_via_r3 fn-pointer call is same-size (old_agbcc 45/240). Retail keeps both loops' found-blocks inline (no loop-exit block motion), so *slots reloads every pass; agbcc/old_agbcc move the found blocks out of the loops.",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "PaletteSlotAcquire"
     },
     {
       "name": "sub_08038580",
@@ -3812,7 +3812,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SceneObjsUpdateAll"
     },
     {
       "name": "sub_08041980",
@@ -4477,7 +4477,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MapCursorInput"
     },
     {
       "name": "sub_08043944",
@@ -4647,8 +4647,8 @@
       "score": "1031/1352",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "FieldEnter"
     },
     {
       "name": "sub_080442FC",
@@ -4856,8 +4856,8 @@
       "score": "602/672",
       "source": "attempt",
       "note": "initial m2c seed (m2c-fallback); does not compile",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "SaveDataVerify"
     },
     {
       "name": "sub_08044D8C",
@@ -4971,7 +4971,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SaveDataWrite"
     },
     {
       "name": "sub_08045590",
@@ -4990,7 +4990,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SaveDataRead"
     },
     {
       "name": "sub_08045A84",
@@ -5161,7 +5161,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "FieldUpdateFrame"
     },
     {
       "name": "sub_0804737C",
@@ -5902,7 +5902,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "DetailPanelDraw"
     },
     {
       "name": "sub_080507B8",
@@ -7061,7 +7061,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowOpenEx"
     },
     {
       "name": "sub_08060D28",
@@ -7232,7 +7232,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowOpen"
     },
     {
       "name": "sub_08061308",
@@ -7327,7 +7327,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowLayout"
     },
     {
       "name": "sub_0806171C",
@@ -8030,7 +8030,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ProximityTriggerCheck"
     },
     {
       "name": "sub_080628B4",
@@ -8923,7 +8923,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "EepromReadBlock"
     },
     {
       "name": "sub_08067634",
@@ -9303,7 +9303,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SceneObjUpdate"
     },
     {
       "name": "sub_08068558",
@@ -9379,7 +9379,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "AnimAdvanceFrame"
     },
     {
       "name": "sub_080686B4",
@@ -9512,7 +9512,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgMapInit"
     },
     {
       "name": "sub_08068988",
@@ -9607,7 +9607,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "AffineBgUpdate"
     },
     {
       "name": "sub_080691E4",
@@ -9644,8 +9644,8 @@
       "score": "24/244",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "BgMapBlitRect"
     },
     {
       "name": "sub_0806960C",
@@ -9663,8 +9663,8 @@
       "score": "226/600",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "BgMapScroll"
     },
     {
       "name": "sub_08069894",
@@ -10062,8 +10062,8 @@
       "score": "35/248",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "DigitRowDraw"
     },
     {
       "name": "sub_0806B3E8",
@@ -10119,8 +10119,8 @@
       "score": "87/274",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "GlyphBlit2x2"
     },
     {
       "name": "sub_0806B724",
@@ -10272,7 +10272,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CollisionQuadtreeBuild"
     },
     {
       "name": "sub_0806C704",
@@ -10728,7 +10728,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjSystemInit"
     },
     {
       "name": "sub_0806FBF8",
@@ -10918,7 +10918,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjPoolResizeChain"
     },
     {
       "name": "sub_0807027C",
@@ -10937,7 +10937,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjSetAffine"
     },
     {
       "name": "sub_08070354",
@@ -11621,7 +11621,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteFadeByLuma"
     },
     {
       "name": "sub_08072CC0",

@@ -18,7 +18,7 @@ void sub_08070354(struct Unk70354 *state, u16 b, u16 c, u8 d)
     flags = state->unk10;
     if (object != 0)
     {
-        object = state->unk30 = sub_0807027C(object, b, count, mode);
+        object = state->unk30 = BtlObjSetAffine(object, b, count, mode);
         if (object == 0)
         {
             flags &= 0xC1FFFCFF;
@@ -27,7 +27,7 @@ void sub_08070354(struct Unk70354 *state, u16 b, u16 c, u8 d)
     }
     else
     {
-        object = state->unk30 = sub_0807027C(0, b, count, mode);
+        object = state->unk30 = BtlObjSetAffine(0, b, count, mode);
         if (object != 0)
         {
             flags &= 0xC1FFFDFF;

@@ -7,7 +7,7 @@
 // stats are rebuilt from the template table gData_0807A1F4.
 typedef void (*CpuCopyFunc)(const void *, void *, u32);
 
-void sub_08045590(struct Unk45198Save *save, u8 fresh)
+void SaveDataRead(struct Unk45198Save *save, u8 fresh)
 {
     s32 i;
 

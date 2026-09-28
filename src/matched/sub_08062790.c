@@ -8,7 +8,7 @@
 // centre, run obj's script (unkC4), or for a side-1 object whose profile
 // passes sub_0802BC14, fire the one-shot event for slot. Returns 1 when in
 // range; out of range re-arms the slot's flag.
-s32 sub_08062790(struct Unk68574 *a, struct Unk68574 *obj, u32 rangeX, u32 rangeY, s32 slot)
+s32 ProximityTriggerCheck(struct Unk68574 *a, struct Unk68574 *obj, u32 rangeX, u32 rangeY, s32 slot)
 {
     s32 ax, ay, ox, oy;
     u32 dx, dy;
@@ -24,7 +24,7 @@ s32 sub_08062790(struct Unk68574 *a, struct Unk68574 *obj, u32 rangeX, u32 range
     {
         if (obj->unkD8 == (void *)1)
         {
-            profile = sub_0802B930((s32)obj->unkD4);
+            profile = BeybladeGetProfile((s32)obj->unkD4);
             if (sub_0802BC14(profile) == 0 || profile == -1)
             {
                 if (obj->unkC4 != NULL)

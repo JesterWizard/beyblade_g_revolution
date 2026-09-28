@@ -3,13 +3,12 @@
 
 # graphics subsystem
 
-34 functions — 8 named.
+41 functions — 10 named.
 
 | Tier | Functions |
 |------|----------:|
-| MATCHING | 30 |
+| MATCHING | 40 |
 | UNDERSTOOD | 1 |
-| DECOMPILED | 3 |
 
 ## Functions
 
@@ -17,26 +16,30 @@
 |----------|---------|------|-----:|--------:|--------:|-----|
 | [`TextSetCursor`](../functions/TextSetCursor.md) | `0x080615EC` | MATCHING | 36 | 31 | 0 | gUnk_03000798 |
 | [`TextDrawAlign`](../functions/TextDrawAlign.md) | `0x0806171C` | MATCHING | 104 | 29 | 2 | gUnk_03000798 |
-| [`TextRowSetPaletteBank`](../functions/TextRowSetPaletteBank.md) | `0x08061D68` | UNDERSTOOD | 88 | 29 | 0 | gUnk_03000798 |
+| [`TextRowSetPaletteBank`](../functions/TextRowSetPaletteBank.md) | `0x08061D68` | MATCHING | 88 | 29 | 0 | gUnk_03000798 |
 | [`TextGetAreaWidth`](../functions/TextGetAreaWidth.md) | `0x08061784` | MATCHING | 16 | 20 | 0 | gUnk_03000798 |
+| `sub_08061BE8` | `0x08061BE8` | MATCHING | 96 | 18 | 1 | gUnk_03000770, gUnk_03000794 |
 | [`TextSetActiveObject`](../functions/TextSetActiveObject.md) | `0x080617C4` | MATCHING | 60 | 17 | 0 | gUnk_03000798 |
 | [`TextSetPaletteBank`](../functions/TextSetPaletteBank.md) | `0x08061610` | MATCHING | 24 | 11 | 0 | gUnk_03000798 |
 | [`BgGetHofsReg`](../functions/BgGetHofsReg.md) | `0x08069908` | MATCHING | 64 | 4 | 0 |  |
 | [`BgGetVofsReg`](../functions/BgGetVofsReg.md) | `0x08069948` | MATCHING | 64 | 4 | 0 |  |
-| `sub_0802E048` | `0x0802E048` | DECOMPILED | 228 | 1 | 4 | gMainWorkPtr, gUnk_0300026C |
-| `sub_08031300` | `0x08031300` | DECOMPILED | 78 | 1 | 2 |  |
-| `sub_080442FC` | `0x080442FC` | DECOMPILED | 144 | 1 | 5 | gMainWorkPtr |
+| [`TextRowPulsePalette`](../functions/TextRowPulsePalette.md) | `0x08031300` | UNDERSTOOD | 78 | 1 | 2 |  |
+| `sub_08038580` | `0x08038580` | MATCHING | 92 | 1 | 1 | gUnk_030003CC |
+| `sub_0804EBF0` | `0x0804EBF0` | MATCHING | 202 | 1 | 5 | gUnk_0300069C, gUnk_030006A0 |
 | `sub_080507B8` | `0x080507B8` | MATCHING | 172 | 1 | 1 | gUnk_030006B8 |
 | `sub_08051578` | `0x08051578` | MATCHING | 144 | 1 | 4 |  |
+| `sub_08061D00` | `0x08061D00` | MATCHING | 104 | 1 | 2 | gUnk_03000798 |
 | `sub_080632F8` | `0x080632F8` | MATCHING | 184 | 1 | 9 |  |
 | `sub_0802F520` | `0x0802F520` | MATCHING | 92 | 0 | 1 |  |
 | `sub_0803B078` | `0x0803B078` | MATCHING | 204 | 0 | 3 |  |
 | `sub_0803E934` | `0x0803E934` | MATCHING | 112 | 0 | 3 |  |
+| `sub_0803FFB0` | `0x0803FFB0` | MATCHING | 216 | 0 | 8 | gMainWorkPtr, gUnk_0300047C |
 | `sub_08047A94` | `0x08047A94` | MATCHING | 168 | 0 | 5 |  |
 | `sub_08048168` | `0x08048168` | MATCHING | 116 | 0 | 1 |  |
 | `sub_08049F98` | `0x08049F98` | MATCHING | 144 | 0 | 4 |  |
 | `sub_0804A438` | `0x0804A438` | MATCHING | 168 | 0 | 5 |  |
 | `sub_0804A4E0` | `0x0804A4E0` | MATCHING | 108 | 0 | 2 |  |
+| `sub_0804AC3C` | `0x0804AC3C` | MATCHING | 104 | 0 | 6 |  |
 | `sub_0804B40C` | `0x0804B40C` | MATCHING | 168 | 0 | 5 |  |
 | `sub_0804B4B4` | `0x0804B4B4` | MATCHING | 104 | 0 | 1 |  |
 | `sub_0804C27C` | `0x0804C27C` | MATCHING | 168 | 0 | 5 |  |
@@ -45,24 +48,28 @@
 | `sub_0804E20C` | `0x0804E20C` | MATCHING | 164 | 0 | 1 |  |
 | `sub_0804E4F4` | `0x0804E4F4` | MATCHING | 168 | 0 | 5 |  |
 | `sub_0804ED90` | `0x0804ED90` | MATCHING | 276 | 0 | 6 |  |
+| `sub_080523A4` | `0x080523A4` | MATCHING | 112 | 0 | 2 |  |
 | `sub_08052F0C` | `0x08052F0C` | MATCHING | 188 | 0 | 1 |  |
 | `sub_08053218` | `0x08053218` | MATCHING | 144 | 0 | 4 |  |
 | `sub_08054CF4` | `0x08054CF4` | MATCHING | 180 | 0 | 3 |  |
 | `sub_080553B8` | `0x080553B8` | MATCHING | 180 | 0 | 3 |  |
+| `sub_08063D68` | `0x08063D68` | MATCHING | 216 | 0 | 8 | gMainWorkPtr, gUnk_030008E4 |
+| [`VramCopyStrided`](../functions/VramCopyStrided.md) | `0x08069DBC` | MATCHING | 96 | 0 | 0 |  |
 
 ## Why these functions are grouped here
 
-- `sub_0802E048` — note mentions 'sprite'
 - `sub_0802F520` — note mentions 'draw'
 - `sub_08031300` — note mentions 'sprite'
+- `sub_08038580` — note mentions 'palette'
 - `sub_0803B078` — note mentions 'palette'
 - `sub_0803E934` — note mentions 'palette'
-- `sub_080442FC` — note mentions 'palette'
+- `sub_0803FFB0` — note mentions 'palette'
 - `sub_08047A94` — note mentions 'draw'
 - `sub_08048168` — note mentions 'draw'
 - `sub_08049F98` — note mentions 'draw'
 - `sub_0804A438` — note mentions 'draw'
 - `sub_0804A4E0` — note mentions 'draw'
+- `sub_0804AC3C` — note mentions 'palette'
 - `sub_0804B40C` — note mentions 'draw'
 - `sub_0804B4B4` — note mentions 'draw'
 - `sub_0804C27C` — note mentions 'draw'
@@ -70,11 +77,10 @@
 - `sub_0804E17C` — note mentions 'draw'
 - `sub_0804E20C` — note mentions 'render'
 - `sub_0804E4F4` — note mentions 'draw'
+- `sub_0804EBF0` — note mentions 'render'
 - `sub_0804ED90` — note mentions 'draw'
 - `sub_080507B8` — note mentions 'draw'
 - `sub_08051578` — note mentions 'draw'
+- `sub_080523A4` — note mentions 'render'
 - `sub_08052F0C` — note mentions 'render'
-- `sub_08053218` — note mentions 'draw'
-- `sub_08054CF4` — note mentions 'render'
-- `sub_080553B8` — note mentions 'render'
-- … and 9 more with recorded evidence
+- … and 16 more with recorded evidence

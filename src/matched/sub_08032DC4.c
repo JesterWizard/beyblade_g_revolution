@@ -54,8 +54,8 @@ void BtlFrameUpdate(
             sub_080361CC(
                 (struct Unk36190 *)&gBattleWork->unkAA8,
                 (struct Unk361CCDst *)gBattleWork->unk090);
-            sub_08068EC0(gBattleWork->filler_0008);
-            sub_08068EC0(gBattleWork->unk090);
+            AffineBgUpdate(gBattleWork->filler_0008);
+            AffineBgUpdate(gBattleWork->unk090);
             sub_08035D68(
                 (struct Unk35D68Source *)&gBattleWork->unk328,
                 (struct Unk35D68State *)&gBattleWork->unkAA8);

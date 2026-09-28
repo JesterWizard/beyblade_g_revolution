@@ -7,7 +7,7 @@
 // Fill the window's BG map (screenblock unk5C) with the fill tile, then lay
 // out a w x h block of consecutive tiles at (x, y) and record its pixel size
 // and position.
-void sub_08061628(u32 xArg, u32 yArg, u32 wArg, u32 hArg, u32 fillArg)
+void TextWindowLayout(u32 xArg, u32 yArg, u32 wArg, u32 hArg, u32 fillArg)
 {
     u8 x = xArg;
     u8 y = yArg;

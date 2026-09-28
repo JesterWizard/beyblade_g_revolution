@@ -33,5 +33,5 @@
 
 ## Callers
 
-- `sub_08032DC4`
+- [`BtlFrameUpdate`](BtlFrameUpdate.md)
 - `sub_080348E8`

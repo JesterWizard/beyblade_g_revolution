@@ -12,7 +12,7 @@ void sub_08033530(void)
         else
         {
             sub_080686D8(&gBattleWork->unk1FAC);
-            sub_08068418(&gBattleWork->unk1FAC);
+            SceneObjUpdate(&gBattleWork->unk1FAC);
         }
     }
 }

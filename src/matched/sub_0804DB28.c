@@ -35,21 +35,21 @@ void sub_0804DB28(void)
 
     _08073C4C(gData_080775CC[gData_03000694], (void *)0x050003E0, 0x20, (void *)gData_080BB8C0[0]);
 
-    sub_080680CC((struct Unk680CC *)&gData_03000698[0], 5);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[0], 5);
     gData_03000698[0].unk31 &= 2;
-    sub_080680CC((struct Unk680CC *)&gData_03000698[1], 5);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[1], 5);
     gData_03000698[1].unk31 |= 1;
-    sub_080680CC((struct Unk680CC *)&gData_03000698[2], 6);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[2], 6);
     gData_03000698[2].unk31 = 0;
-    sub_080680CC((struct Unk680CC *)&gData_03000698[3], 7);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[3], 7);
     gData_03000698[3].unk31 = 0;
-    sub_080680CC((struct Unk680CC *)&gData_03000698[4], 8);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[4], 8);
     gData_03000698[4].unk31 &= 2;
-    sub_080680CC((struct Unk680CC *)&gData_03000698[5], 8);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[5], 8);
     gData_03000698[5].unk31 |= 1;
-    sub_080680CC((struct Unk680CC *)&gData_03000698[6], 10);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[6], 10);
     gData_03000698[6].unk31 = 0;
-    sub_080680CC((struct Unk680CC *)&gData_03000698[7], 11);
+    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[7], 11);
     gData_03000698[7].unk31 = 0;
 
     sub_08054558(gData_08098A20[gData_03000694]);
@@ -70,7 +70,7 @@ void sub_0804DB28(void)
     {
         if (gData_03000698[i].unk00 != NULL)
         {
-            sub_08068418(&gData_03000698[i]);
+            SceneObjUpdate(&gData_03000698[i]);
             sub_08067CE8(&gData_03000698[i], 0);
         }
     }

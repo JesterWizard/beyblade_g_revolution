@@ -2,7 +2,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-void sub_0806B5C8(u16 *tiles, s32 base, u32 *src, s32 x, u32 y)
+void GlyphBlit2x2(u16 *tiles, s32 base, u32 *src, s32 x, u32 y)
 {
     u32 *tl, *tr, *bl, *br;
     s32 col;

@@ -7,7 +7,7 @@
 // 0x10000) and the unk30/unk34 pair by their velocities, rebuild the BG's
 // matrix (sub_08069A60) and reference point (sub_080699C8), then damp the
 // velocities by unk24/256, snapping any that stop shrinking to zero.
-void sub_08068EC0(void *arg)
+void AffineBgUpdate(void *arg)
 {
     struct Unk68E54 *st = arg;
     u8 slot;

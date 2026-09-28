@@ -2,7 +2,7 @@
 
 // @ 0x0806b5c8
 __attribute__((naked))
-void sub_0806B5C8(void)
+void GlyphBlit2x2(void)
 {
     asm(
         ".syntax unified\n"

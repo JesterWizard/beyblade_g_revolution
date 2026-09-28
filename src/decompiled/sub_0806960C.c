@@ -2,7 +2,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-void sub_0806960C(struct Unk68E54 *st, s32 dx, s32 dy)
+void BgMapScroll(struct Unk68E54 *st, s32 dx, s32 dy)
 {
     struct Unk688C8Rect v;
     s32 start[2];
@@ -59,7 +59,7 @@ void sub_0806960C(struct Unk68E54 *st, s32 dx, s32 dy)
     }
     if (cols != 0 && !(st->unk7C & 1))
     {
-        sub_08069270((struct Unk68988 *)st, start[0], rect->unk04, v.unk10, rect->unk14, colCount, 32);
+        BgMapBlitRect((struct Unk68988 *)st, start[0], rect->unk04, v.unk10, rect->unk14, colCount, 32);
         st->unk08->unk10 += cols;
         st->unk08->unk00 += cols;
         st->unk08->unk08 += cols;
@@ -83,7 +83,7 @@ void sub_0806960C(struct Unk68E54 *st, s32 dx, s32 dy)
     }
     if (rows != 0 && !(st->unk7C & 2))
     {
-        sub_08069270((struct Unk68988 *)st, st->unk08->unk00, start[1], st->unk08->unk10, v.unk14, 32, rowCount);
+        BgMapBlitRect((struct Unk68988 *)st, st->unk08->unk00, start[1], st->unk08->unk10, v.unk14, 32, rowCount);
         st->unk08->unk14 += rows;
         st->unk08->unk04 += rows;
         st->unk08->unk0C += rows;

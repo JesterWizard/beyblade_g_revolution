@@ -2,7 +2,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-void sub_08043DB4(s32 a, void *b, s32 c, s32 d, s32 e)
+void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
 {
     u32 tmp;
     u32 r;
@@ -55,7 +55,7 @@ void sub_08043DB4(s32 a, void *b, s32 c, s32 d, s32 e)
     }
     sub_080442FC(b, (void *)a, c, e);
     gData_03000198->unk0358 |= 0x800;
-    sub_0806121C((struct Unk617C4 *)0x082BCD00, 0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0F);
+    TextWindowOpen((struct Unk617C4 *)0x082BCD00, 0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0F);
     sub_08069B78(gData_03000198->unk1690->unk74_0, gData_03000198->unk1690->unk74_2, gData_03000198->unk1690->unk74_4, 0);
     sub_08047594();
     sub_080444BC();
@@ -66,9 +66,9 @@ void sub_08043DB4(s32 a, void *b, s32 c, s32 d, s32 e)
         obj = sub_08041DB4(gData_03000198->unk18B4, 0);
         if (obj != NULL)
         {
-            sub_08068418(obj);
+            SceneObjUpdate(obj);
             sub_0806F174((struct Unk6F174 *)gData_03000198, obj);
-            sub_08046E7C(0);
+            FieldUpdateFrame(0);
             for (i = 0; i < 64; i++)
                 sub_0806EE48((struct Unk6EE48 *)gData_03000198);
         }

@@ -25,7 +25,7 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
         sub_08067BB8((struct Unk67BB8 *)&state->unk1C, src, 0, 0, pos, pos, value);
         state->unk2B0 = pos;
         state->unk2B4 = pos;
-        id = sub_08038438(src);
+        id = PaletteSlotAcquire(src);
         state->unk1C.unk3A = (state->unk1C.unk3A & 1) | (id << 1);
         state->unk2C5 |= 1;
         sub_08035624((struct Unk346C0 *)state, 0, type);
@@ -34,7 +34,7 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
         if (state->unk2C5 & 2)
             break;
         sub_08067BB8((struct Unk67BB8 *)&state->unkF8, src, 0, 0, pos, pos, value);
-        id = sub_08038438(src);
+        id = PaletteSlotAcquire(src);
         state->unkF8.unk3A = (state->unkF8.unk3A & 1) | (id << 1);
         state->unk2C5 |= 2;
         sub_08035624((struct Unk346C0 *)state, 1, type);
@@ -47,7 +47,7 @@ void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
                 break;
         }
         sub_08067BB8((struct Unk67BB8 *)&state->unk1D4, src, 0, 0, pos, pos, value);
-        id = sub_08038438(src);
+        id = PaletteSlotAcquire(src);
         state->unk1D4.unk3A = (state->unk1D4.unk3A & 1) | (id << 1);
         state->unk2C5 |= 4;
         sub_08035624((struct Unk346C0 *)state, 2, type);

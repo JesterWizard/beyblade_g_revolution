@@ -8,7 +8,7 @@
 // VRAM span list, link each into a free list, then hide all OAM entries.
 #define HeapAllocBlock(size) ((struct Unk6F910Block *(*)(u32))sub_0806A314)(size)
 
-void sub_0806F910(u32 nObj, u32 nSpr)
+void BtlObjSystemInit(u32 nObj, u32 nSpr)
 {
     struct Unk700CCNode *node;
     struct Unk6F910Spr *spr;
@@ -25,30 +25,30 @@ void sub_0806F910(u32 nObj, u32 nSpr)
         nSpr = 0x20;
     if (gData_030040A0 != NULL)
     {
-        sub_0806A434(gData_030040A0);
+        HeapFree(gData_030040A0);
         gData_030040A0 = NULL;
     }
     if (gData_0300409C != NULL)
     {
-        sub_0806A434(gData_0300409C);
+        HeapFree(gData_0300409C);
         gData_0300409C = NULL;
     }
     if (gData_03004094 != NULL)
     {
-        sub_0806A434(gData_03004094);
+        HeapFree(gData_03004094);
         gData_03004094 = NULL;
     }
     if (nObj != 0)
     {
         gData_030040A0 = HeapAllocBlock(0x34 * nObj);
         if (gData_030040A0 == NULL)
-            sub_08067A9C((void *)0x083D20C8);
+            DebugMessage((void *)0x083D20C8);
     }
     if (nSpr != 0)
     {
         gData_0300409C = HeapAllocBlock(nSpr * 0x1C);
         if (gData_0300409C == NULL)
-            sub_08067A9C((void *)0x083D20E4);
+            DebugMessage((void *)0x083D20E4);
     }
     gData_03004094 = HeapAllocBlock(0x100);
     if (gData_03004094 == NULL)

@@ -7,7 +7,7 @@
 // Resize a battle-object batch to count nodes: grow it in place from the free
 // list (new nodes inherit the batch's key), allocate it fresh if it is empty,
 // or release and reallocate it when shrinking. Returns the batch head.
-struct Unk6FDB4 *sub_08070188(struct Unk700CCHdr *hdr, u16 count, u16 key)
+struct Unk6FDB4 *BtlObjPoolResizeChain(struct Unk700CCHdr *hdr, u16 count, u16 key)
 {
     struct Unk6FDB4 *head;
     struct Unk6FDB4 *tail;
@@ -25,7 +25,7 @@ struct Unk6FDB4 *sub_08070188(struct Unk700CCHdr *hdr, u16 count, u16 key)
             avail = gData_030040B4;
             if (avail < count)
             {
-                sub_08067A9C((void *)0x083D2288);
+                DebugMessage((void *)0x083D2288);
                 return NULL;
             }
             head = gData_030040AC;
@@ -56,7 +56,7 @@ struct Unk6FDB4 *sub_08070188(struct Unk700CCHdr *hdr, u16 count, u16 key)
         BtlObjPoolAllocChain(hdr, count, key);
         return hdr->unk00;
     }
-    sub_08067A9C((void *)0x083D22A4);
+    DebugMessage((void *)0x083D22A4);
     sub_080700CC(hdr);
     return BtlObjPoolAllocChain(hdr, count, key);
 }

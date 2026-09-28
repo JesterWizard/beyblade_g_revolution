@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806FDD0` |
 | Size | 128 bytes (48 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806FDD0` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | success path falls through; reload link pointers |
 
 ## Why this name
 
@@ -44,14 +44,14 @@
 - `sub_0802E048`
 - `sub_0803139C`
 - `sub_08037318`
-- `sub_08039BD4`
+- [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803FFB0`
 - `sub_080473F8`
 - `sub_08048DB8`
 - `sub_0804BD38`
 - `sub_0804C8BC`
 - `sub_0804D420`
-- `sub_0804FFCC`
+- [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08053690`
 - `sub_08054120`
 - `sub_08054494`

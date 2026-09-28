@@ -14,7 +14,7 @@ void sub_08062758(struct Unk62728 *a, struct Unk68574 *b)
         obj = *p;
         if (obj != 0)
         {
-            sub_08062790(b, obj, obj->unkCC, obj->unkD0, i);
+            ProximityTriggerCheck(b, obj, obj->unkCC, obj->unkD0, i);
         }
         p++;
         i++;

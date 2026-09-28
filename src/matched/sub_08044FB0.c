@@ -29,14 +29,14 @@ s32 sub_08044FB0(u32 index)
         streak = 0;
         do
         {
-            hit = sub_08067584(y, base);
+            hit = EepromReadBlock(y, base);
             streak++;
             if (hit == 0)
                 streak = 0;
             if (streak == 8)
             {
                 DebugPrint((void *)0x083A2E30);
-                sub_08044EE8(index);
+                BtlClearUnk1688Entry(index);
                 sub_08044F64(index);
                 return 0;
             }

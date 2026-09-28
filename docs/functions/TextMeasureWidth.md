@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08073988` |
 | Size | 96 bytes (46 instructions) |
-| Tier | UNDERSTOOD |
-| Status | same_size |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08073988` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | string width parser; table[ch] then base[idx] |
+| Note | Jiang: switch + const u8* + old_agbcc |
 
 ## Why this name
 

@@ -22,8 +22,8 @@
 
 ## Callers
 
-- `sub_0802E18C`
+- [`HudWriteDigits`](HudWriteDigits.md)
 - `sub_080593A4`
-- `sub_0806B2F0`
+- [`DigitRowDraw`](DigitRowDraw.md)
 - `sub_08070D44`
 - [`TextFormatInt`](TextFormatInt.md)

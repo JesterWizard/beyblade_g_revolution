@@ -7,7 +7,7 @@
 // Window setup on an explicit window (cf. sub_0806121C for gData_03000798):
 // clear it, record source and count, then lay out (sub_08060D58) and finish
 // (sub_08060D28).
-void sub_08060C30(void *winArg, void *srcArg, void *c, u16 count, u16 y, u16 h, u16 x, u16 w, u16 i, u8 mode)
+void TextWindowOpenEx(void *winArg, void *srcArg, void *c, u16 count, u16 y, u16 h, u16 x, u16 w, u16 i, u8 mode)
 {
     struct Unk0798 *win = winArg;
     struct Unk617C4 *src = srcArg;

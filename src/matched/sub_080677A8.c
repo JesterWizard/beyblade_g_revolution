@@ -23,7 +23,7 @@ u32 sub_080677A8(u32 a, void *b)
     if (x >= gUnk_030009B0->unk04)
         return 0x80FF;
 
-    sub_08067584(x, buf);
+    EepromReadBlock(x, buf);
     p = buf;
     i = 0;
     goto compare;

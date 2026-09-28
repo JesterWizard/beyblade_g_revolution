@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0806A3A4` |
 | Size | 144 bytes (57 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806A3A4` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | arena node alloc from 0x03000B30 pool |
 
 ## Why this name
 
@@ -40,7 +39,7 @@
 ## Callers
 
 - `sub_08043C70`
-- `sub_08044A8C`
+- [`SaveDataVerify`](SaveDataVerify.md)
 - `sub_08045AA8`
 - `sub_080473F8`
 - `sub_08059AE0`

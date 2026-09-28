@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08073114` |
 | Size | 112 bytes (42 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08073114` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | gData_ symbol addressing for BtlObj table |
 
 ## Why this name
 
@@ -49,7 +49,7 @@
 - `sub_08048DB8`
 - `sub_0804AAF0`
 - `sub_0804AE94`
-- `sub_0804FFCC`
+- [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08056BA4`
 - `sub_080735B0`
 - `sub_080737C0`

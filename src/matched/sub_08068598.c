@@ -9,7 +9,7 @@
 // below the global minimum. Steps unk22 forward or back (unk33 bit 1) within
 // the current record's [start, start + len), wrapping or ping-ponging (bit 0),
 // counting loops in unk24; calls sub_08068118 once that reaches unk32.
-void sub_08068598(struct Unk68598 *work)
+void AnimAdvanceFrame(struct Unk68598 *work)
 {
     struct Unk68014Rec *rec;
     struct Unk68598Lookup *lookup;

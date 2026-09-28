@@ -2,7 +2,7 @@
 
 // @ 0x0806b2f0
 __attribute__((naked))
-void sub_0806B2F0(void)
+void DigitRowDraw(void)
 {
     asm(
         ".syntax unified\n"

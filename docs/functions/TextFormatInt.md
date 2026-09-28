@@ -43,7 +43,7 @@
 - `sub_08048DB8`
 - `sub_0804AAF0`
 - `sub_0804AE94`
-- `sub_0804FFCC`
+- [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08056BA4`
 
 ## ROM data referenced

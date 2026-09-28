@@ -10,7 +10,7 @@ void sub_08045AA8(struct Unk45A84 *a)
     {
         a->unk04 = *(void **)a->unk00;
         a->unk08 = 1;
-        sub_08045198(a->unk04, 1);
+        SaveDataWrite(a->unk04, 1);
     }
 }
 

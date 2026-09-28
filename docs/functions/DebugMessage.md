@@ -27,6 +27,6 @@
 - `sub_080686F4`
 - `sub_0806B764`
 - `sub_0806BC0C`
-- `sub_0806F910`
+- [`BtlObjSystemInit`](BtlObjSystemInit.md)
 - [`BtlObjPoolAlloc`](BtlObjPoolAlloc.md)
-- `sub_08070188`
+- [`BtlObjPoolResizeChain`](BtlObjPoolResizeChain.md)

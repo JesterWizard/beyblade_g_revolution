@@ -8,7 +8,7 @@
 // timers and effects, read d-pad movement (when active and allowed) into a
 // direction for _08041E88, run collision (sub_0806C7D4) and proximity
 // triggers, and handle the countdown and menu buttons.
-void sub_08046E7C(u32 active)
+void FieldUpdateFrame(u32 active)
 {
     u32 dir;
     s32 speed;
@@ -24,12 +24,12 @@ void sub_08046E7C(u32 active)
         sub_08070468((struct Unk6FDB4 *)gData_03000198->unk0500, gData_03000198->unk0504);
     }
     sub_0806EE48((struct Unk6EE48 *)gData_03000198);
-    sub_08068418(&gData_03000198->unk036C);
-    sub_0804188C();
+    SceneObjUpdate(&gData_03000198->unk036C);
+    SceneObjsUpdateAll();
     sub_08067CE8(&gData_03000198->unk036C, 0);
     if (gData_03000198->unk182C != 0)
     {
-        sub_08068418(&gData_03000198->unk0448);
+        SceneObjUpdate(&gData_03000198->unk0448);
         sub_08067CE8(&gData_03000198->unk0448, 0);
     }
     ((void (*)(void))gData_080BB888[0])();

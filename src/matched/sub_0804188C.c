@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Per-frame update of the scene objects: tick each one, refresh its sort key
 // (0xFFFF when unkD8 == 1, else ~(unk08 >> 8)) and re-claim its palette slot.
-void sub_0804188C(void)
+void SceneObjsUpdateAll(void)
 {
     s16 i;
     u16 color;
@@ -17,7 +17,7 @@ void sub_0804188C(void)
         sub_08062B9C(3, 0x0F);
         while (i < gData_03000504)
         {
-            sub_08068418(gData_03000480[i]);
+            SceneObjUpdate(gData_03000480[i]);
             if (gData_03000480[i]->unkB8 != NULL)
             {
                 if (gData_03000480[i]->unkD8 == (void *)1)

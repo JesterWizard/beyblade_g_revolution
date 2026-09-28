@@ -7,7 +7,7 @@
 // Per-frame object update: tick its sub-state (sub_08068798), follow its path
 // or apply velocity, accelerate and damp the velocity, count down unk70 by
 // the frame-clock delta, then advance its animation (sub_08068598).
-void sub_08068418(void *arg)
+void SceneObjUpdate(void *arg)
 {
     struct Unk68598 *obj = arg;
     s32 vx, vy, vz;
@@ -68,6 +68,6 @@ void sub_08068418(void *arg)
             obj->unk70 = 0;
     }
     if (obj->unk6C == 0 && !(obj->unk98 & 1))
-        sub_08068598(obj);
+        AnimAdvanceFrame(obj);
 }
 
