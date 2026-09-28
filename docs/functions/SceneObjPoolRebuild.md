@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0804DB28` |
 | Size | 900 bytes (382 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0804DB28` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

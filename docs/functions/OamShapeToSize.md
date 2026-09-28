@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x080691E4` |
 | Size | 138 bytes (69 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080691E4` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08068BD4` |
 | Size | 420 bytes (194 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08068BD4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | gData_03000108/1A8 are scalar u8 symbols |
 
 ## Why this name
 

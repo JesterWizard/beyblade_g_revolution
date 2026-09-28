@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08045198` |
 | Size | 1016 bytes (407 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08045198` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

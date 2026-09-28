@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08061564` |
 | Size | 136 bytes (60 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08061564` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

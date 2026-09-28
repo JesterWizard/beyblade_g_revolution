@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0807027C` |
 | Size | 216 bytes (100 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0807027C` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

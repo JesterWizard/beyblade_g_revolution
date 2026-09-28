@@ -105,7 +105,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
                     TextEntrySetPaletteBank(screen->unk294, 0x0E);
 
                     screen->unk290 = BtlObjPoolAlloc(0);
-                    SpriteInitFromTemplate(screen->unk290, (void *)0x081155BC, 0x700, 0x8100, kind, 0, 0, gMainWorkPtr->unk1818);
+                    SpriteInitFromTemplate(screen->unk290, (void *)0x081155BC, 0x700, 0x8100, kind, 0, 0, gMainWorkPtr->language);
                     TextEntrySetPaletteBank(screen->unk290, 0x0E);
                 }
                 TextSetCursor(0, i * 8 + 0x10);

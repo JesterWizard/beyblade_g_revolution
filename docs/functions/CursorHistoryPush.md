@@ -7,8 +7,8 @@
 |--|--|
 | ROM | `0x08042784` |
 | Size | 100 bytes (44 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08042784` |
 | Confidence | 0.7 |

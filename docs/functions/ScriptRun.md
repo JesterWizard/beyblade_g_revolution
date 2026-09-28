@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08059DC8` |
 | Size | 72 bytes (30 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08059DC8` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | while-loop dispatch; gData_03000734 symbol lets cse thread the entry test |
 
 ## Why this name
 

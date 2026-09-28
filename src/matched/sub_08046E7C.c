@@ -23,7 +23,7 @@ void FieldUpdateFrame(u32 active)
         gData_03000198->unk0504 = ~((s32)gData_03000198->unk0450 >> 8);
         BtlObjListResort((struct Unk6FDB4 *)gData_03000198->unk0500, gData_03000198->unk0504);
     }
-    CameraUpdate((struct Unk6EE48 *)gData_03000198);
+    CameraUpdate((struct MapView *)gData_03000198);
     SceneObjUpdate(&gData_03000198->unk036C);
     SceneObjsUpdateAll();
     sub_08067CE8(&gData_03000198->unk036C, 0);
@@ -101,7 +101,7 @@ void FieldUpdateFrame(u32 active)
     gData_03000198->unk1838 = 0xFFFF;
     mesh = sub_08062A14();
     sub_0806C7D4(&gData_03000198->unk036C, mesh, 0, 0);
-    sub_08062758(&gData_03000198->unk0524, (struct Unk68574 *)&gData_03000198->unk036C);
+    sub_08062758(&gData_03000198->unk0524, (struct Actor *)&gData_03000198->unk036C);
     sub_0804245C();
     TasksRunAll();
     HudRefreshStats();

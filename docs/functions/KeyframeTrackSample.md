@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806E31C` |
 | Size | 148 bytes (69 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806E31C` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | keyframe lerp |
 
 ## Why this name
 

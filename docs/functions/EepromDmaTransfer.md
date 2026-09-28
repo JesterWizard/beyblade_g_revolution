@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08067504` |
 | Size | 128 bytes (47 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08067504` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | -O1 library code |
 
 ## Why this name
 

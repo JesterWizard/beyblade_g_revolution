@@ -10,9 +10,9 @@ void sub_0802E048(void)
   u32 r2;
   u32 r3;
   u32 r4;
-  struct Unk705DC *r5;
+  struct Sprite *r5;
   struct Unk026C *obj;
-  struct Unk705DC *rec;
+  struct Sprite *rec;
   r4 = (u32) (&(*((struct Unk026C **) 0x0300026C)));
   r0 = *((u32 *) r4);
   r0 = *((u32 *) (r0 + 0x0C));
@@ -30,7 +30,7 @@ void sub_0802E048(void)
   rec = BtlObjPoolAlloc((u16) r0);
   r5 = rec;
   r0 = *((u32 *) r4);
-  *((struct Unk705DC **) (r0 + 0x0C)) = r5;
+  *((struct Sprite **) (r0 + 0x0C)) = r5;
   r0 = (u32) ((struct MainWork **) 0x03000198);
   r0 = *((u32 *) r0);
   r1 = 0x1808;
@@ -59,7 +59,7 @@ void sub_0802E048(void)
   r0 = *((u32 *) r4);
   r0 = *((u32 *) (r0 + 0x0C));
   r1 = 2;
-  TextEntrySetPaletteBank((struct Unk705DC *) r0, (s32) r1);
+  TextEntrySetPaletteBank((struct Sprite *) r0, (s32) r1);
   r3 = *((u32 *) r4);
   obj = (struct Unk026C *) r3;
   r0 = (u32) obj->unk0C;

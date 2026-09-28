@@ -7,13 +7,13 @@
 
 | Tier | Functions |
 |------|----------:|
-| DECOMPILED | 1 |
+| MATCHING | 1 |
 
 ## Functions
 
 | Function | Address | Tier | Size | Callers | Callees | RAM |
 |----------|---------|------|-----:|--------:|--------:|-----|
-| [`SoundHwStart`](../functions/SoundHwStart.md) | `0x08071BA0` | DECOMPILED | 148 | 1 | 1 | gUnk_030000B8, gUnk_030000BC |
+| [`SoundHwStart`](../functions/SoundHwStart.md) | `0x08071BA0` | MATCHING | 148 | 1 | 1 | gUnk_030000B8, gUnk_030000BC |
 
 ## Why these functions are grouped here
 

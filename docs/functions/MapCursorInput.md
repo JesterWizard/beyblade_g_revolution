@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x080436B0` |
 | Size | 658 bytes (269 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080436B0` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

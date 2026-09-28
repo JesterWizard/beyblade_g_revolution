@@ -12,15 +12,15 @@
 // register instead of re-materialising it.
 void TextSetActiveObject(struct Unk617C4 *a, u32 b)
 {
-    struct Unk0798 *s;
+    struct TextWindow *s;
 
     if ((a->unk0C & 1) == 0)
         return;
     s = gUnk_03000798;
     s->unk88 = a;
-    s->unk8C = b;
-    s->unkA0 = a->unk04;
-    s->unkA2 = a->unk05;
-    s->unk9C = s->unkA0 >> 2;
+    s->widthTable = b;
+    s->glyphWidth = a->unk04;
+    s->lineHeight = a->unk05;
+    s->spacing = s->glyphWidth >> 2;
 }
 

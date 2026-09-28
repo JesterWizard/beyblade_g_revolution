@@ -11,8 +11,8 @@ void SaveDataRead(struct Unk45198Save *save, u8 fresh)
 {
     s32 i;
 
-    gData_03000198->unk1819 = save->unk0044;
-    gData_03000198->unk181A = save->unk0045;
+    gData_03000198->bgmVolume = save->unk0044;
+    gData_03000198->sfxVolume = save->unk0045;
     gData_03000198->unk181B = save->unk0046;
     gData_03000198->unk1808 = save->unk0008;
     gData_03000198->unk181F = save->unk0047;

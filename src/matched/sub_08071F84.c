@@ -3,10 +3,10 @@
 // @ 0x08071f84
 void SoundStop(s32 a)
 {
-    struct Unk71E84 *p;
+    struct SoundChannel *p;
 
     p = SoundFindChannel(a);
     if (p != 0)
-        p->unk16 = 0;
+        p->state = 0;
 }
 

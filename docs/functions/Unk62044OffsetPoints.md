@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080620D4` |
 | Size | 72 bytes (36 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080620D4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | old_agbcc; non-void return type |
 
 ## Why this name
 

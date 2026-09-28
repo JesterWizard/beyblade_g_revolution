@@ -7,12 +7,12 @@
 // visible tile rect (x/8, y/8, width 1<<unk5F, height 1<<unk60).
 void BgMapInit(struct Unk68988 *state, u8 index, void *arg2, u16 limit, u16 mode, s32 x, s32 y)
 {
-    struct Unk688C8Rect *rect;
+    struct MapTileRect *rect;
     s32 xt = x >> 3;
     s32 yt = y >> 3;
     s32 w, h;
 
-    AffineBgLoad((struct Unk68E54 *)state, index, arg2, limit, mode);
+    AffineBgLoad((struct MapLayer *)state, index, arg2, limit, mode);
     *BgGetHofsReg(index) = x;
     *BgGetVofsReg(index) = y;
     rect = state->unk08;

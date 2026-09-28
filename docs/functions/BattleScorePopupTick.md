@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0803370C` |
 | Size | 362 bytes (153 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0803370C` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

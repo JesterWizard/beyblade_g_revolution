@@ -5,11 +5,11 @@ void SfxStopSlot(u32 idx)
 {
     s32 v;
 
-    v = gMainWorkPtr->unk1710[idx];
+    v = gMainWorkPtr->sfxHandles[idx];
     if (v != -1)
     {
         SoundStop(v);
-        gMainWorkPtr->unk1710[idx] = -1;
+        gMainWorkPtr->sfxHandles[idx] = -1;
     }
 }
 

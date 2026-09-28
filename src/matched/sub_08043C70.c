@@ -10,7 +10,7 @@ typedef void (*CpuCopyFunc)(const void *, void *, u32);
 // Loads map `map`: copies its header to gData_03000560, decompresses each
 // compressed layer into a heap buffer, then places `obj` either at the saved
 // position (`restore`) or at spawn point `spawn`, and sets the camera.
-void sub_08043C70(struct Unk68574 *obj, const struct Unk0560 *map, u32 modeArg, u32 spawnArg, u32 restore)
+void sub_08043C70(struct Actor *obj, const struct Unk0560 *map, u32 modeArg, u32 spawnArg, u32 restore)
 {
     u16 mode = modeArg;
     u16 spawn = spawnArg;
@@ -59,8 +59,8 @@ void sub_08043C70(struct Unk68574 *obj, const struct Unk0560 *map, u32 modeArg, 
     sub_08062988(gData_03000560.unk80);
     if (restore)
     {
-        obj->unk04 = gMainWorkPtr->unk0868;
-        obj->unk08 = gMainWorkPtr->unk086C;
+        obj->x = gMainWorkPtr->unk0868;
+        obj->y = gMainWorkPtr->unk086C;
         x = ((s32)gMainWorkPtr->unk0868 >> 8) - 0x78;
         y = ((s32)gMainWorkPtr->unk086C >> 8) - 0x50;
     }
@@ -68,8 +68,8 @@ void sub_08043C70(struct Unk68574 *obj, const struct Unk0560 *map, u32 modeArg, 
     {
         s32 *pos = (s32 *)PosRecordGet((struct Unk6DEF4 *)sub_08062A14(), spawn);
 
-        obj->unk04 = (pos[0] << 5) - ((obj->unk10 >> 1) << 8);
-        obj->unk08 = (pos[1] << 5) - ((obj->unk11 >> 1) << 8);
+        obj->x = (pos[0] << 5) - ((obj->width >> 1) << 8);
+        obj->y = (pos[1] << 5) - ((obj->height >> 1) << 8);
         x = (pos[0] >> 3) - 0x78;
         y = (pos[1] >> 3) - 0x50;
     }

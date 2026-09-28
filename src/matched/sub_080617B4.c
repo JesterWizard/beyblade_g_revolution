@@ -4,6 +4,6 @@
 
 u16 TextGetSpacing(void)
 {
-    return gUnk_03000798->unk9C;
+    return gUnk_03000798->spacing;
 }
 

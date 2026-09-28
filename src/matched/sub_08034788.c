@@ -3,8 +3,8 @@
 // @ 0x08034788
 void sub_08034788(void *a, u32 b, u32 *c, u32 *d)
 {
-    struct Unk705DC **pa = a;
-    struct Unk705DC **pb = (struct Unk705DC **)b;
+    struct Sprite **pa = a;
+    struct Sprite **pb = (struct Sprite **)b;
 
     if (c != 0 && d != 0)
     {

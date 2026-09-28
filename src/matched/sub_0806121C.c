@@ -9,23 +9,23 @@
 void TextWindowOpen(struct Unk617C4 *src, u32 b, u16 count, u16 c, u16 d, u16 e, u16 f, u16 g)
 {
     u16 attr;
-    struct Unk0798 *st;
+    struct TextWindow *st;
 
     attr = g << 12;
     ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, gData_03000798, 0xAC);
     st = gData_03000798;
     st->unk88 = src;
-    st->unk8C = b;
-    st->unk94 = count;
-    st->unk96 = attr;
-    st->unkA0 = src->unk04;
-    st->unkA2 = src->unk05;
-    st->unk90 = 0;
-    st->unk92 = 0;
-    st->unk9C = st->unkA0 >> 2;
+    st->widthTable = b;
+    st->tileCount = count;
+    st->baseTile = attr;
+    st->glyphWidth = src->unk04;
+    st->lineHeight = src->unk05;
+    st->penX = 0;
+    st->penY = 0;
+    st->spacing = st->glyphWidth >> 2;
     st->unkA4 = 0;
     st->unkA6 = 0;
-    AffineBgInit((struct Unk68E54 *)st, 3, count, 0);
+    AffineBgInit((struct MapLayer *)st, 3, count, 0);
     TextWindowLayout((u8)e, (u8)f, (u8)c, (u8)d, (u16)(count - 1));
     TextWindowClearActiveTiles();
 }

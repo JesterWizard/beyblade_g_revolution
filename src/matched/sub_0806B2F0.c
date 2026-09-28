@@ -8,7 +8,7 @@
 // drawn when `padZero` is set. Returns the number of digits drawn.
 u16 DigitRowDraw(struct Unk6B2F0 *row, s32 value, u16 pos, u16 count, u8 padZero)
 {
-    struct Unk68574 *obj;
+    struct Actor *obj;
     s16 drawn;
     s16 i;
     s32 digit;

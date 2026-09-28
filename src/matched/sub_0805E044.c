@@ -9,7 +9,7 @@
 void sub_0805E044(void *resource)
 {
     s32 i = 0;
-    struct Unk705DC *entry;
+    struct Sprite *entry;
     struct Unk5E044Lookup *lookup;
 
     if (resource == NULL || (gMainWorkPtr->unk1808 & 8) != 0)

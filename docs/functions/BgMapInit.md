@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x080688C8` |
 | Size | 190 bytes (91 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080688C8` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

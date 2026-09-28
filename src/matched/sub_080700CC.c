@@ -7,7 +7,7 @@
 // unlink the run from the active list and clear the batch header.
 void BtlObjPoolReleaseChain(void *a)
 {
-    struct Unk700CCHdr *batch;
+    struct SpriteChain *batch;
     struct Unk700CCNode *node;
     struct Unk700CCNode *head;
     struct Unk700CCNode *tail;
@@ -17,11 +17,11 @@ void BtlObjPoolReleaseChain(void *a)
     u32 i;
 
     batch = a;
-    count = batch->unk08;
+    count = batch->count;
     if (count == 0)
         return;
-    head = (struct Unk700CCNode *)batch->unk00;
-    tail = (struct Unk700CCNode *)batch->unk04;
+    head = (struct Unk700CCNode *)batch->head;
+    tail = (struct Unk700CCNode *)batch->tail;
     prev = head->unk00;
     next = tail->unk04;
     gData_030040B4 += count;
@@ -48,9 +48,9 @@ void BtlObjPoolReleaseChain(void *a)
         next->unk00 = prev;
     tail->unk04 = (struct Unk700CCNode *)gData_030040AC;
     gData_030040AC = (struct Unk6FDB4 *)head;
-    batch->unk08 = 0;
-    batch->unk00 = 0;
-    batch->unk04 = 0;
+    batch->count = 0;
+    batch->head = 0;
+    batch->tail = 0;
     LinkedListValidate((struct Unk6F8C4 *)gData_030040A4);
 }
 

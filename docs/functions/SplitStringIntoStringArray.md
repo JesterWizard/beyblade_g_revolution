@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x080737C0` |
 | Size | 336 bytes (152 instructions) |
-| Tier | UNKNOWN |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080737C0` |

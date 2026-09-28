@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080385DC` |
 | Size | 80 bytes (35 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
-| Subsystem | _unassigned_ |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | graphics |
 | Link label | `sub_080385DC` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | palette slot release; Unk3CC.unk22 is u16; old_agbcc |
 
 ## Why this name
 

@@ -34,7 +34,7 @@ void SparklesCreate(void)
     {
         slot = BtlObjPoolAlloc(2);
         gData_03000630->unk00[i] = slot;
-        SpriteInitFromTemplate((struct Unk705DC *)slot, (void *)0x081193C0, 0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
+        SpriteInitFromTemplate((struct Sprite *)slot, (void *)0x081193C0, 0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
     }
 }
 

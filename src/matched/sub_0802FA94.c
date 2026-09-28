@@ -25,9 +25,9 @@ void ItemListDraw(void)
             {
                 name = _08056428(gData_03000278->items[gData_03000278->top + i].kind, gData_03000278->items[gData_03000278->top + i].id);
                 if (name != 0)
-                    TextGroupSetString((struct Unk7069C *)gData_03000278->text, (void *)name, 15);
+                    TextGroupSetString((struct TextGroup *)gData_03000278->text, (void *)name, 15);
                 else if (gData_03000278->items[gData_03000278->top + i].name != NULL)
-                    TextGroupSetString((struct Unk7069C *)gData_03000278->text, gData_03000278->items[gData_03000278->top + i].name, 15);
+                    TextGroupSetString((struct TextGroup *)gData_03000278->text, gData_03000278->items[gData_03000278->top + i].name, 15);
                 TextSetPaletteBank(14);
                 TextRowSetPaletteBank((u16)(i * 2 + 12), 14, 2, 0x1B);
                 TextRowSetPaletteBank((u16)(i * 2 + 13), 14, 2, 0x1B);
@@ -44,16 +44,16 @@ void ItemListDraw(void)
                 switch (gData_03000278->items[gData_03000278->top + i].id)
                 {
                 case 4:
-                    TextDrawAlign(gData_080970D4[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_080970D4[gData_03000198->language], 0x0C, 2);
                     break;
                 case 3:
-                    TextDrawAlign(gData_080970E8[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_080970E8[gData_03000198->language], 0x0C, 2);
                     break;
                 case 2:
-                    TextDrawAlign(gData_080970FC[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_080970FC[gData_03000198->language], 0x0C, 2);
                     break;
                 case 1:
-                    TextDrawAlign(gData_08097110[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_08097110[gData_03000198->language], 0x0C, 2);
                     break;
                 }
                 break;
@@ -61,16 +61,16 @@ void ItemListDraw(void)
                 switch (gData_03000278->items[gData_03000278->top + i].id)
                 {
                 case 4:
-                    TextDrawAlign(gData_08097084[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_08097084[gData_03000198->language], 0x0C, 2);
                     break;
                 case 3:
-                    TextDrawAlign(gData_08097098[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_08097098[gData_03000198->language], 0x0C, 2);
                     break;
                 case 2:
-                    TextDrawAlign(gData_080970AC[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_080970AC[gData_03000198->language], 0x0C, 2);
                     break;
                 case 1:
-                    TextDrawAlign(gData_080970C0[gData_03000198->unk1818], 0x0C, 2);
+                    TextDrawAlign(gData_080970C0[gData_03000198->language], 0x0C, 2);
                     break;
                 }
                 break;
@@ -100,7 +100,7 @@ void ItemListDraw(void)
                 TextRowSetPaletteBank((u16)(i * 2 + 13), 15, 2, 0x1B);
             }
             TextSetCursor(0, i * 16 + 0x40);
-            TextDrawAlign(gData_08096B5C[gData_03000198->unk1818], 0x0C, 2);
+            TextDrawAlign(gData_08096B5C[gData_03000198->language], 0x0C, 2);
         }
     }
     StringFree(buf);

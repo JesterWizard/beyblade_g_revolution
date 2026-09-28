@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08070468` |
 | Size | 114 bytes (51 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08070468` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | sorted list reposition; list head via gData_030040A4 symbol |
 
 ## Why this name
 

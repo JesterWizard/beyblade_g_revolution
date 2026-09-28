@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08040EF4` |
 | Size | 88 bytes (37 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08040EF4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | keyed per-language word via gData_0808B2E4; old_agbcc |
 
 ## Why this name
 

@@ -3,7 +3,7 @@
 // @ 0x0802d6d4
 void sub_0802D6D4(void)
 {
-    struct Unk705DC *resource;
+    struct Sprite *resource;
     struct Unk026C *w;
 
     resource = BtlObjPoolAlloc(2);
@@ -27,7 +27,7 @@ void sub_0802D6D4(void)
     SpriteInitFromTemplate(
         gUnk_0300026C->unk10, (void *)0x080D6618,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0,
-        gMainWorkPtr->unk1818);
+        gMainWorkPtr->language);
     SpriteInitFromTemplate(
         gUnk_0300026C->playerLevelTens, (void *)0x080D6B68,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);

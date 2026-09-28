@@ -5,8 +5,8 @@ void sub_08041C8C(u32 a, u32 b, u32 c)
 {
     s16 i;
     s16 count;
-    struct Unk68574 **pool;
-    struct Unk68574 *p;
+    struct Actor **pool;
+    struct Actor *p;
     struct Unk41E14Node *node;
     u32 *src;
     struct Unk41C8CDst *dst;
@@ -15,7 +15,7 @@ void sub_08041C8C(u32 a, u32 b, u32 c)
     count = *(s16 *)gUnk_03000504;
     if (count > 0 && i < count)
     {
-        pool = (struct Unk68574 **)gUnk_03000480;
+        pool = (struct Actor **)gUnk_03000480;
         do
         {
             p = pool[i];

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0803139C` |
 | Size | 350 bytes (164 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
-| Subsystem | battle |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | graphics |
 | Link label | `sub_0803139C` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | digit sprite allocator: decimal digits, optional point glyph, free the tail |
 
 ## Why this name
 

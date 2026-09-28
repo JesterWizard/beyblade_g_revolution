@@ -7,16 +7,16 @@ void BeybladeSpawnList(void *arg)
 {
     s32 *ids;
     struct Unk6DEF4 *records;
-    struct Unk6EE48 *state;
+    struct MapView *state;
     s32 id;
     u16 side;
     s32 *pos;
-    struct Unk68574 *obj;
+    struct Actor *obj;
     struct BeybladeDef *def;
 
     ids = arg;
     records = (struct Unk6DEF4 *)sub_08062A14();
-    state = (struct Unk6EE48 *)CameraGetActive((struct Unk6EE48 *)gData_03000198);
+    state = (struct MapView *)CameraGetActive((struct MapView *)gData_03000198);
     while (*ids != -1)
     {
         id = *ids;
@@ -34,8 +34,8 @@ void BeybladeSpawnList(void *arg)
                     obj->unk3B = gData_08075AB8[id].type;
                 if (obj != NULL)
                 {
-                    obj->unk08 -= obj->unk11 << 8;
-                    obj->unk04 -= (obj->unk10 >> 1) << 8;
+                    obj->y -= obj->height << 8;
+                    obj->x -= (obj->width >> 1) << 8;
                     if ((s16)def->flags != -1)
                         BtlEntitySelectByKeyDefault((struct Unk680CC *)obj, def->flags);
                     if (gData_08075AB8[id].script != 0)
@@ -46,7 +46,7 @@ void BeybladeSpawnList(void *arg)
                         obj->unkD0 = 8;
                     }
                     if (gData_08075AB8[id].part != 0)
-                        ((void (*)(u32, struct Unk68574 *))TaskCreateWithOwner)(gData_08075AB8[id].part, obj);
+                        ((void (*)(u32, struct Actor *))TaskCreateWithOwner)(gData_08075AB8[id].part, obj);
                     else
                         obj->unkC8 = (void *)gData_08075AB8[id].part;
                 }

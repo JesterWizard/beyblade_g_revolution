@@ -63,8 +63,8 @@ void AnimObjCreate(struct Unk67BB8 *obj, struct Unk67BB8Source *src, s32 arg2, s
     obj->unk94 = 0;
     obj->unkB0 = 0;
     obj->unkB4 = 0;
-    sub_08068574((struct Unk68574 *)obj, obj->unk10 >> 1, obj->unk11, 0);
-    sub_08068558((struct Unk68574 *)obj, 0, 0, obj->unk10, obj->unk11);
+    sub_08068574((struct Actor *)obj, obj->unk10 >> 1, obj->unk11, 0);
+    sub_08068558((struct Actor *)obj, 0, 0, obj->unk10, obj->unk11);
     obj->unkB8 = 0;
     obj->unkBC = 0;
     sub_08068180((struct Unk68598 *)obj, 0);

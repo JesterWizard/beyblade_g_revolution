@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08060C30` |
 | Size | 248 bytes (118 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08060C30` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

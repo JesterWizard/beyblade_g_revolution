@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08071e44
-void SoundChannelInitFromList(struct Unk71E84 *p, void *a, s16 *idx)
+void SoundChannelInitFromList(struct SoundChannel *p, void *a, s16 *idx)
 {
     s32 val;
     s32 zero;
@@ -14,16 +14,16 @@ void SoundChannelInitFromList(struct Unk71E84 *p, void *a, s16 *idx)
     val = *(s32 *)offset;
     zero = 0;
     one = 1;
-    p->unk16 = one;
-    p->unk00 = val;
+    p->state = one;
+    p->data = val;
     p->unk14 = zero;
     p->unk17 = 0;
-    p->unk10 = 0x100;
+    p->volume = 0x100;
     val += 0x10;
-    p->unk04 = val;
-    p->unk08 = **(s32 **)0x030000C4;
+    p->cursor = val;
+    p->rate = **(s32 **)0x030000C4;
     p->unk0C = zero;
-    p->unk1C = a;
-    p->unk20 = idx;
+    p->list = a;
+    p->listIndex = idx;
     p->unk24 = one;
 }

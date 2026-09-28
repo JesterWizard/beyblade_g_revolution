@@ -4,7 +4,7 @@
 
 void sub_0806225C(struct Unk62634 *a)
 {
-    struct Unk705DC *target;
+    struct Sprite *target;
 
     if (a == 0)
         return;

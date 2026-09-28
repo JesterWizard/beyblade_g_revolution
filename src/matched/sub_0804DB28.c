@@ -62,8 +62,8 @@ void SceneObjPoolRebuild(void)
     }
     else
     {
-        gData_03000698[8].unk04 = -0x4000;
-        gData_03000698[8].unk08 = -0x4000;
+        gData_03000698[8].x = -0x4000;
+        gData_03000698[8].y = -0x4000;
     }
 
     for (i = 0; i <= 8; i++)

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806EEC8` |
 | Size | 404 bytes (197 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806EEC8` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | sibling of sub_0806F05C |
 
 ## Why this name
 

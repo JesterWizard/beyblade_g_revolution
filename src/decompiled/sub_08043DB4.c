@@ -30,14 +30,14 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     {
         do
             r = RandRange(6);
-        while (gData_03000198->unk1780 == r);
+        while (gData_03000198->bgmTrack == r);
         _0805FED4((void *)r);
     }
     ok = sub_0806644C();
     none = -1;
     if (ok >= 0)
     {
-        SceneObjFreeResources((struct Unk68574 *)&gData_03000198->unk036C);
+        SceneObjFreeResources((struct Actor *)&gData_03000198->unk036C);
         sub_0802DEA0();
         TextWindowClose();
         sub_080632F8();
@@ -70,7 +70,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
             CameraSetTarget((struct Unk6F174 *)gData_03000198, obj);
             FieldUpdateFrame(0);
             for (i = 0; i < 64; i++)
-                CameraUpdate((struct Unk6EE48 *)gData_03000198);
+                CameraUpdate((struct MapView *)gData_03000198);
         }
         else
         {

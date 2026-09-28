@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x080416C4` |
 | Size | 176 bytes (79 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080416C4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

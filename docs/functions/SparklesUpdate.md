@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x080474AC` |
 | Size | 232 bytes (99 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080474AC` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

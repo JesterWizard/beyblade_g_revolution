@@ -10,7 +10,7 @@
 bool32 sub_0806211C(struct Unk62634 *a, struct Unk6225CSource *parent, struct Unk6FF58Src *src, s32 x, s32 y,
     u8 objMode, u16 tile, u8 flip, u16 h)
 {
-    struct Unk705DC *obj;
+    struct Sprite *obj;
     u8 priority = 0;
     s32 px, py;
 

@@ -4,6 +4,6 @@
 
 u32 TextGetWidthTable(void)
 {
-    return gUnk_03000798->unk8C;
+    return gUnk_03000798->widthTable;
 }
 

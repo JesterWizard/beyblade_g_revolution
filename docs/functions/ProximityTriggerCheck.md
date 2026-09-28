@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08062790` |
 | Size | 236 bytes (104 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062790` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

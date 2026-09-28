@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08068598` |
 | Size | 284 bytes (135 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08068598` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

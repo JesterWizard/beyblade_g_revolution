@@ -7,8 +7,8 @@
 |--|--|
 | ROM | `0x0806BC0C` |
 | Size | 116 bytes (53 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806BC0C` |
 | Confidence | 0.6 |

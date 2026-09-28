@@ -26,7 +26,7 @@ void TextRowSetPaletteBank(u32 a, u32 b, u32 c, u32 d)
         c = d;
         d = saved;
     }
-    addr = (u16 *)(gUnk_03000798->unk5C << 11);
+    addr = (u16 *)(gUnk_03000798->screenBlock << 11);
     base = 0xC0;
     base <<= 19;
     addr = (u16 *)((u32)addr + base);

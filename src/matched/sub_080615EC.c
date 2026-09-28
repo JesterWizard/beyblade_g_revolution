@@ -7,7 +7,7 @@ void TextSetCursor(u32 x, u32 y)
 {
     u32 r2;
     u32 r3;
-    struct Unk0798 *r0;
+    struct TextWindow *r0;
     u16 *r1;
 
     r2 = x;
@@ -17,8 +17,8 @@ void TextSetCursor(u32 x, u32 y)
     if (r3 > 0x9F)
         r3 = 0;
     r0 = gUnk_03000798;
-    r1 = &r0->unk90;
+    r1 = &r0->penX;
     *r1 = r2;
-    r0->unk92 = r3;
+    r0->penY = r3;
 }
 

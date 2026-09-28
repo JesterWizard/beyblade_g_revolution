@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x080618EC` |
 | Size | 428 bytes (200 instructions) |
-| Tier | UNKNOWN |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | battle |
 | Link label | `sub_080618EC` |

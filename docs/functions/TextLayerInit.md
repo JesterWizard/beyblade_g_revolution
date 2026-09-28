@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x0806B764` |
 | Size | 588 bytes (278 instructions) |
-| Tier | UNKNOWN |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806B764` |

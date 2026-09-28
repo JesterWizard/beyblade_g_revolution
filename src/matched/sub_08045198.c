@@ -15,8 +15,8 @@ void SaveDataWrite(struct Unk45198Save *save, u8 fresh)
 
     SparklesSaveTimers();
     save->unk0004 = 0x1F60;
-    save->unk0044 = gData_03000198->unk1819;
-    save->unk0045 = gData_03000198->unk181A;
+    save->unk0044 = gData_03000198->bgmVolume;
+    save->unk0045 = gData_03000198->sfxVolume;
     save->unk0046 = gData_03000198->unk181B;
     save->unk0008 = gData_03000198->unk1808;
     save->unk0047 = gData_03000198->unk181F;

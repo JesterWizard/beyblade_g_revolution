@@ -11,10 +11,10 @@ void sub_08065560(struct Unk65560 *a)
     const u8 *indices;
     struct Unk65560Source *source;
     s32 i;
-    struct Unk705DC **table;
+    struct Sprite **table;
     const u8 *p;
-    struct Unk705DC **slot;
-    struct Unk705DC **slot2;
+    struct Sprite **slot;
+    struct Sprite **slot2;
 
     switch (a->unk2D5)
     {

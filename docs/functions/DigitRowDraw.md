@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806B2F0` |
 | Size | 248 bytes (117 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
-| Subsystem | _unassigned_ |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | graphics |
 | Link label | `sub_0806B2F0` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | s16 drawn/i; abs copied into separate n |
 
 ## Why this name
 

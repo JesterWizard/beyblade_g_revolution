@@ -4,21 +4,21 @@
 
 // @ 0x08068e54
 /* match-compiler: old_agbcc */
-void sub_08068E54(struct Unk68E54 *a)
+void sub_08068E54(struct MapLayer *a)
 {
-    struct Unk68E54 *state;
+    struct MapLayer *state;
     s32 scale;
     s32 delta_x;
     s32 x;
     s32 y;
 
     state = a;
-    x = state->unk14;
+    x = state->deltaX;
     x += state->unk1C;
-    state->unk14 = x;
-    y = state->unk18;
+    state->deltaX = x;
+    y = state->deltaY;
     y += state->unk20;
-    state->unk18 = y;
+    state->deltaY = y;
     state->unk54 = x;
     state->unk58 = y;
     BgMapScroll(state, x, y);
@@ -27,23 +27,23 @@ void sub_08068E54(struct Unk68E54 *a)
     scale = state->unk24;
     if (scale != 0)
     {
-        y = state->unk14;
+        y = state->deltaX;
         delta_x = (y * scale) >> 8;
-        x = state->unk18;
+        x = state->deltaY;
         scale = (x * scale) >> 8;
         y -= delta_x;
-        state->unk14 = y;
+        state->deltaX = y;
         x -= scale;
-        state->unk18 = x;
+        state->deltaY = x;
         if (delta_x == 0)
         {
             if (y != 0)
-                state->unk14 = delta_x;
+                state->deltaX = delta_x;
         }
         if (scale == 0)
         {
-            if (state->unk18 != 0)
-                state->unk18 = scale;
+            if (state->deltaY != 0)
+                state->deltaY = scale;
         }
     }
 }

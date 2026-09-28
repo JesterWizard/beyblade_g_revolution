@@ -8,22 +8,22 @@
 //    r1, while retail writes r0. The `ldrb` is still shared (agbcc CSEs the two
 //    `*flag_ptr` reads) and the mask must be a `s32` local so agbcc emits
 //    `movs r0,#2; negs r0,r0` instead of folding a literal -2 to `& 0xFE`.
-void CameraUpdate(struct Unk6EE48 *state)
+void CameraUpdate(struct MapView *state)
 {
-    struct Unk6EE48 *work;
+    struct MapView *work;
     void *handler;
     u8 *flag_ptr;
     void *callback;
     u8 i;
 
     work = state;
-    handler = work->unk224;
+    handler = work->target;
     if (handler != 0)
     {
-        flag_ptr = &work->unk354;
+        flag_ptr = &work->flags;
         if ((*flag_ptr & 1) == 0)
         {
-            callback = work->unk344;
+            callback = work->targetHandler;
             if (callback == 0)
                 CameraEaseToTarget(work);
             else
@@ -37,7 +37,7 @@ void CameraUpdate(struct Unk6EE48 *state)
     }
     for (i = 0; i < 4; i++)
     {
-        if (work->unk220->entries[i].unk00 != 0)
-            sub_08068E54(&work->motion[i]);
+        if (work->follow->entries[i].active != 0)
+            sub_08068E54(&work->layers[i]);
     }
 }

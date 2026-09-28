@@ -3,7 +3,7 @@
 // @ 0x080712cc
 void TextGroupSetObjMode(struct Unk712CC *a, u8 v)
 {
-    struct Unk705DC *p;
+    struct Sprite *p;
     s32 n;
 
     p = a->unk14;
@@ -14,7 +14,7 @@ void TextGroupSetObjMode(struct Unk712CC *a, u8 v)
         do
         {
             SpriteSetObjMode(p, v);
-            p = p->unk04;
+            p = p->next;
             n = n - 1;
         } while (n != -1);
     }

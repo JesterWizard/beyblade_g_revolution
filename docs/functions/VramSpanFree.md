@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0806FBF8` |
 | Size | 196 bytes (88 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806FBF8` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

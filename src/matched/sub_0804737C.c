@@ -9,7 +9,7 @@ void sub_0804737C(void)
     idx = sub_08066434();
     sub_08045128(idx);
     sub_080628E4(gMainWorkPtr->unk170C * gMainWorkPtr->unk1788 + (s32)0xFC96FCDE);
-    BgmSetVolume(gMainWorkPtr->unk1819);
-    BtlSetAllUnk1710(gMainWorkPtr->unk181A);
+    BgmSetVolume(gMainWorkPtr->bgmVolume);
+    BtlSetAllUnk1710(gMainWorkPtr->sfxVolume);
     SparklesRestoreTimers();
 }

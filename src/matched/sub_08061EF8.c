@@ -47,9 +47,9 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
                 a->unk0C[a->unk24] = BtlObjPoolAlloc(tile);
                 if (a->unk0C[a->unk24] == NULL)
                     return;
-                SpriteInitFromTemplate((struct Unk705DC *)a->unk0C[a->unk24], a->unk08, x << 8, y << 8, 0, 0, 0, gData_080BB748[c]);
+                SpriteInitFromTemplate((struct Sprite *)a->unk0C[a->unk24], a->unk08, x << 8, y << 8, 0, 0, 0, gData_080BB748[c]);
                 x = 0x10 - a->unk04[gData_080BB748[c]] + x;
-                TextEntrySetPaletteBank((struct Unk705DC *)a->unk0C[a->unk24], palette);
+                TextEntrySetPaletteBank((struct Sprite *)a->unk0C[a->unk24], palette);
                 a->unk24++;
             }
         }

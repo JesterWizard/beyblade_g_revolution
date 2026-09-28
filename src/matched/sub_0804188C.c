@@ -27,7 +27,7 @@ void SceneObjsUpdateAll(void)
                 }
                 else
                 {
-                    gData_03000480[i]->unkBC = ~((s32)gData_03000480[i]->unk08 >> 8);
+                    gData_03000480[i]->unkBC = ~((s32)gData_03000480[i]->y >> 8);
                     BtlObjListResort(gData_03000480[i]->unkB8, gData_03000480[i]->unkBC);
                 }
                 if (gData_03000480[i]->unkD8 == NULL)

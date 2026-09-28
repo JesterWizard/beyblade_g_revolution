@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08072A38` |
 | Size | 250 bytes (124 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08072A38` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

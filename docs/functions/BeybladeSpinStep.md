@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080302E0` |
 | Size | 168 bytes (73 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080302E0` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | spin angle update; old_agbcc; permuter-found dest copy |
 
 ## Why this name
 

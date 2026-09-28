@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x08038438` |
 | Size | 240 bytes (108 instructions) |
-| Tier | DECOMPILED |
+| Tier | UNDERSTOOD |
 | Status | not_started |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08038438` |

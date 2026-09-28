@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08039BD4` |
 | Size | 1552 bytes (632 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
-| Subsystem | _unassigned_ |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | menu |
 | Link label | `sub_08039BD4` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | row y strength-reduced from i; menu globals as symbols |
 
 ## Why this name
 

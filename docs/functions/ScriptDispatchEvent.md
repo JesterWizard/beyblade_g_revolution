@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08056D68` |
 | Size | 540 bytes (190 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08056D68` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | switch on event key; args local |
 
 ## Why this name
 

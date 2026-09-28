@@ -11,23 +11,23 @@
 #define GROUP_APPLY_AFFINE(g, aff)                                  \
     {                                                               \
         u32 bits = ((aff->unk08 & 0x3E0) << 20) | 0x100;            \
-        struct Unk705DC *node = (struct Unk705DC *)g->unk14.unk00;  \
-        s32 n = g->unk14.unk08;                                     \
-        if (!(g->unk08 & 8))                                        \
+        struct Sprite *node = (struct Sprite *)g->glyphs.head;  \
+        s32 n = g->glyphs.count;                                     \
+        if (!(g->flags & 8))                                        \
         {                                                           \
-            if (aff->unk18 != 0)                                    \
+            if (aff->angle != 0)                                    \
             {                                                       \
-                if (aff->unk14 > 0xB0 || aff->unk16 > 0xB0)         \
+                if (aff->scaleX > 0xB0 || aff->scaleY > 0xB0)         \
                     bits |= 0x200;                                  \
             }                                                       \
-            else if (aff->unk14 > 0x100 || aff->unk16 > 0x100)      \
+            else if (aff->scaleX > 0x100 || aff->scaleY > 0x100)      \
                 bits |= 0x200;                                      \
         }                                                           \
         for (n--; n != -1; n--)                                     \
         {                                                           \
-            node->unk30 = (struct Unk705DC *)aff;                   \
+            node->affine = (struct Sprite *)aff;                   \
             node->unk10 = (node->unk10 & 0xC1FFFCFF) | bits;        \
-            node = node->unk04;                                     \
+            node = node->next;                                     \
         }                                                           \
         AffineObjLock(aff);                                          \
     }
@@ -36,37 +36,37 @@
 // glyphs individually (unk08 bit 2), otherwise re-creates the shared affine
 // object and patches every glyph's OAM affine index and double-size bit
 // (cleared again if no affine slot is free).
-void TextGroupSetScale(struct Unk7069C *g, u16 x, u16 y)
+void TextGroupSetScale(struct TextGroup *g, u16 x, u16 y)
 {
-    struct Unk70354Object *aff;
+    struct AffineObj *aff;
 
-    if (g->unk14.unk08 == 0)
+    if (g->glyphs.count == 0)
         return;
-    if (g->unk08 & 4)
+    if (g->flags & 4)
     {
-        struct Unk705DC *node = (struct Unk705DC *)g->unk14.unk00;
+        struct Sprite *node = (struct Sprite *)g->glyphs.head;
         s32 n;
 
-        for (n = g->unk14.unk08 - 1; n != -1; n--)
+        for (n = g->glyphs.count - 1; n != -1; n--)
         {
             sub_080703FC((struct Unk703FC *)node, x, y);
-            node = node->unk04;
+            node = node->next;
         }
     }
-    else if ((aff = g->unk2C) != NULL)
+    else if ((aff = g->affine) != NULL)
     {
         AffineObjUnlock(aff);
-        aff = g->unk2C = BtlObjSetAffine(aff, x, y, aff->unk18);
+        aff = g->affine = BtlObjSetAffine(aff, x, y, aff->angle);
         if (aff == NULL)
         {
-            struct Unk705DC *node = (struct Unk705DC *)g->unk14.unk00;
-            s32 n = g->unk14.unk08;
+            struct Sprite *node = (struct Sprite *)g->glyphs.head;
+            s32 n = g->glyphs.count;
 
             for (n--; n != -1; n--)
             {
-                node->unk30 = NULL;
+                node->affine = NULL;
                 node->unk10 &= 0xC1FFFCFF;
-                node = node->unk04;
+                node = node->next;
             }
         }
         else
@@ -74,7 +74,7 @@ void TextGroupSetScale(struct Unk7069C *g, u16 x, u16 y)
     }
     else
     {
-        aff = g->unk2C = BtlObjSetAffine(NULL, x, y, 0);
+        aff = g->affine = BtlObjSetAffine(NULL, x, y, 0);
         if (aff != NULL)
             GROUP_APPLY_AFFINE(g, aff)
     }

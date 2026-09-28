@@ -9,7 +9,7 @@
 void SceneObjDespawn(void *a, void *b)
 {
     s16 i;
-    struct Unk68574 **slot;
+    struct Actor **slot;
 
     i = 0;
     if (gData_03000504 > 0)
@@ -25,8 +25,8 @@ void SceneObjDespawn(void *a, void *b)
                     (*slot)->unkC8 = NULL;
                 }
                 SceneObjFreeResources(*slot);
-                (*slot)->unk04 = -0x4000;
-                (*slot)->unk08 = -0x4000;
+                (*slot)->x = -0x4000;
+                (*slot)->y = -0x4000;
                 *slot = gData_03000480[--gData_03000504];
                 gData_03000480[gData_03000504] = NULL;
                 return;

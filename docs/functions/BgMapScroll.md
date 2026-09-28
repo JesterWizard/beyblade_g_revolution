@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x0806960C` |
 | Size | 600 bytes (295 instructions) |
-| Tier | UNKNOWN |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806960C` |

@@ -18,7 +18,7 @@ void sub_08053690(void *arg)
 
         TextSetCursor(0, 0x38);
         strings = (u8 **)gData_08097458;
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x14, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x14, 2);
         return;
     }
     if (a->unk274[1] != NULL)

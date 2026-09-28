@@ -13,25 +13,25 @@ void VramSlotLoad(void)
 {
     void **buffer;
     struct Unk0770 *slot;
-    struct Unk0798 *work;
+    struct TextWindow *work;
     u32 n;
     void *vram;
     struct Unk0770 *table;
 
     if (gData_03000794[0] == 4)
         return;
-    buffer = HeapAlloc(gData_03000798->unk94 << 5);
+    buffer = HeapAlloc(gData_03000798->tileCount << 5);
     table = (struct Unk0770 *)gData_03000770;
     table[gData_03000794[0]].unk00 = buffer;
     if (buffer == NULL)
         return;
     work = gData_03000798;
-    vram = (void *)(VRAM + (work->unk5D << 14));
-    ((CopyFunc)gData_080BB8C0[0])(vram, *buffer, work->unk94 << 5);
+    vram = (void *)(VRAM + (work->charBlock << 14));
+    ((CopyFunc)gData_080BB8C0[0])(vram, *buffer, work->tileCount << 5);
     n = gData_03000794[0];
     slot = &table[n];
-    slot->unk04 = gData_03000798->unk90;
-    slot->unk06 = gData_03000798->unk92;
+    slot->unk04 = gData_03000798->penX;
+    slot->unk06 = gData_03000798->penY;
     gData_03000794[0] = n + 1;
 }
 

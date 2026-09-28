@@ -2,7 +2,7 @@
 
 // @ 0x08060d28
 
-void TextWindowClearTiles(struct Unk0798 *a)
+void TextWindowClearTiles(struct TextWindow *a)
 {
     void **fn;
     void *dst;
@@ -12,9 +12,9 @@ void TextWindowClearTiles(struct Unk0798 *a)
     if (a != 0)
     {
         fn = (void **)0x080BB8BC;
-        tmp = a->unk5D;
+        tmp = a->charBlock;
         dst = (void *)((tmp << 14) + (0xC0u << 19));
-        tmp = a->unk94;
+        tmp = a->tileCount;
         n = tmp << 5;
         _08073C4C((void *)0, dst, n, *fn);
     }

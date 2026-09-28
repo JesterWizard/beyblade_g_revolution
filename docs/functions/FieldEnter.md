@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x08043DB4` |
 | Size | 1352 bytes (507 instructions) |
-| Tier | UNKNOWN |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08043DB4` |

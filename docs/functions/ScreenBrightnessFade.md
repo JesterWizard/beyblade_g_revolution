@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0804438C` |
 | Size | 304 bytes (115 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0804438C` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | s16 level shared by both clamps (permuter) |
 
 ## Why this name
 

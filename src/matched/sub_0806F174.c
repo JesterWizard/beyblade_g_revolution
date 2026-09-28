@@ -5,7 +5,7 @@ void CameraSetTarget(struct Unk6F174 *a, void *b)
 {
     a->unk224 = b;
     if (a->unk348 == 0)
-        CameraCenterOnObject((struct Unk6EE48 *)a, b);
+        CameraCenterOnObject((struct MapView *)a, b);
     else
         _08073C4C(b, a, (u32)a, a->unk348);
 }

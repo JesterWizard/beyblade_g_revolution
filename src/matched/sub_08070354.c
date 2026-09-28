@@ -11,7 +11,7 @@ void SpriteApplyAffine(struct Unk70354 *state, u16 b, u16 c, u8 d)
     u16 count = (u16)c;
     u8 mode = d;
     u32 flags;
-    struct Unk70354Object *object;
+    struct AffineObj *object;
     u32 value;
 
     object = state->unk30;
@@ -39,16 +39,16 @@ void SpriteApplyAffine(struct Unk70354 *state, u16 b, u16 c, u8 d)
     }
     if (object != 0)
     {
-        if (object->unk18 != 0)
+        if (object->angle != 0)
         {
-            if (object->unk14 > 0xB0 || object->unk16 > 0xB0)
+            if (object->scaleX > 0xB0 || object->scaleY > 0xB0)
                 flags |= 0x200;
             else
                 flags &= 0xFFFFFDFF;
         }
         else
         {
-            if (object->unk14 > 0x100 || object->unk16 > 0x100)
+            if (object->scaleX > 0x100 || object->scaleY > 0x100)
                 flags |= 0x200;
             else
                 flags &= 0xFFFFFDFF;

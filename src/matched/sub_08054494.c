@@ -28,9 +28,9 @@ void sub_08054494(s32 x, s32 y)
         gUnk_0300070C->unk00[i] = obj;
         SpriteInitFromTemplate(obj, (void *)0x081232A4, (x + i * 16) << 8, y8, 1, 0, 0, 1);
         if (i == 0)
-            ((struct Unk705DC *)gUnk_0300070C->unk00[0])->unk18 = i;
+            ((struct Sprite *)gUnk_0300070C->unk00[0])->unk18 = i;
         if (i == 12)
-            ((struct Unk705DC *)gUnk_0300070C->unk00[12])->unk18 = 2;
+            ((struct Sprite *)gUnk_0300070C->unk00[12])->unk18 = 2;
     }
 
     Unk70604Init((struct Unk70604 *)&gUnk_0300070C->unk34, (struct Unk70604Src *)0x082BB648,

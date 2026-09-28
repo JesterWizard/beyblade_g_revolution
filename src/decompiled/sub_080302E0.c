@@ -24,8 +24,8 @@ void BeybladeSpinStep(struct Unk346C0 *a)
             a->unk00->unk00->unk18 = RandRange(2);
         else
             a->unk00->unk00->unk18 = 2;
-        if (a->unk00->unk00->unk30 != NULL)
-            SpriteApplyAffine((struct Unk70354 *)a->unk00->unk00, a->unk00->unk00->unk30->unk14, a->unk00->unk00->unk30->unk16, angle);
+        if (a->unk00->unk00->affine != NULL)
+            SpriteApplyAffine((struct Unk70354 *)a->unk00->unk00, a->unk00->unk00->affine->unk14, a->unk00->unk00->affine->unk16, angle);
     }
 }
 

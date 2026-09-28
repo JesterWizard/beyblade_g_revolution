@@ -8,9 +8,9 @@ void BtlSetAllUnk1710(u16 a)
     i = 0;
     do
     {
-        SoundSetVolume(gMainWorkPtr->unk1710[i], a);
+        SoundSetVolume(gMainWorkPtr->sfxHandles[i], a);
         i++;
     } while (i <= 0x18);
-    gMainWorkPtr->unk181A = a;
+    gMainWorkPtr->sfxVolume = a;
 }
 

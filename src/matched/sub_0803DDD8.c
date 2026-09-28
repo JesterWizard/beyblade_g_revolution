@@ -12,6 +12,6 @@ void *sub_0803DDD8(s32 a)
 {
     u8 *tbl = gData_0807AEFC;
     u32 *row = (u32 *)(tbl + (a - 1) * 4);
-    return (void *)*(u32 *)((u8 *)*row + gMainWorkPtr->unk1818 * 4);
+    return (void *)*(u32 *)((u8 *)*row + gMainWorkPtr->language * 4);
 }
 

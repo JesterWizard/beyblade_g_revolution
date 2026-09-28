@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0803D284` |
 | Size | 298 bytes (126 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0803D284` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

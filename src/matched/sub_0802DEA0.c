@@ -13,8 +13,8 @@
 // frame and runs the frame callback, then resets unk48 and MainWork unk1838/183A.
 void sub_0802DEA0(void)
 {
-    struct Unk705DC *e;
-    struct Unk705DC *obj;
+    struct Sprite *e;
+    struct Sprite *obj;
     struct MainWork *work;
 
     e = HUD_PTR->unk0C;

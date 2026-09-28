@@ -23,7 +23,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     if ((text = (void *)_080505AC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E, 3)) == NULL)
     {
         strings = ((void **)gData_08097458);
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x10, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x10, 2);
     }
     else
         TextDrawAlign(text, 0xC0, 1);
@@ -31,7 +31,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     if ((text = (void *)_080505AC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E, 0)) == NULL)
     {
         strings = ((void **)gData_08097458);
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x10, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x10, 2);
     }
     else
         TextDrawAlign(text, 0xC0, 1);
@@ -39,7 +39,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     if ((text = (void *)_080505AC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E, 1)) == NULL)
     {
         strings = ((void **)gData_08097458);
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x10, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x10, 2);
     }
     else
         TextDrawAlign(text, 0xC0, 1);
@@ -47,7 +47,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     if ((text = (void *)_080505AC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E, 2)) == NULL)
     {
         strings = ((void **)gData_08097458);
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x10, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x10, 2);
     }
     else
         TextDrawAlign(text, 0xC0, 1);
@@ -55,7 +55,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     if ((text = (void *)_080505AC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E, 4)) == NULL)
     {
         strings = ((void **)gData_08097458);
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x10, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x10, 2);
     }
     else
         TextDrawAlign(text, 0xC0, 1);
@@ -64,19 +64,19 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     {
     case 0:
         strings = gData_080976EC;
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x0E, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x0E, 2);
         break;
     case 1:
         strings = gData_08097700;
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x0E, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x0E, 2);
         break;
     case 2:
         strings = gData_08097714;
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x0E, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x0E, 2);
         break;
     case 3:
         strings = gData_08097728;
-        TextDrawAlign(strings[gData_03000198->unk1818], 0x0E, 2);
+        TextDrawAlign(strings[gData_03000198->language], 0x0E, 2);
         break;
     }
     if (rec != NULL)

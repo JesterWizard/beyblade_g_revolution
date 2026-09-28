@@ -24,7 +24,7 @@ void LaunchShowPowerMeter(s32 a)
     remain = 0x64 - a;
     TextFormatInt(remain, buf_b, 0x20);
     table = gData_080971EC;
-    StringExpandDelim(table[gMainWorkPtr->unk1818], buf_a, buf_b, 0x40, 0x20);
+    StringExpandDelim(table[gMainWorkPtr->language], buf_a, buf_b, 0x40, 0x20);
     sub_08061EF8(&(*btl_loc)->unk1F10, buf_a, 0, 0x3E, 0, 0xFFFF, 0);
     StringFree(buf_a);
     StringFree(buf_b);

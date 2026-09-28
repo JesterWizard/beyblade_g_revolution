@@ -9,14 +9,14 @@
 // velocities by unk24/256, snapping any that stop shrinking to zero.
 void AffineBgUpdate(void *arg)
 {
-    struct Unk68E54 *st = arg;
+    struct MapLayer *st = arg;
     u8 slot;
     s32 angle;
     s32 x, y;
     s32 damp;
     s32 dA, dX, dY;
 
-    slot = st->unk5E - 2;
+    slot = st->bgId - 2;
     angle = st->unk28 + st->unk2C;
     st->unk28 = angle;
     if (angle < 0)
@@ -25,8 +25,8 @@ void AffineBgUpdate(void *arg)
     st->unk30 = x;
     y = st->unk34 + st->unk3C;
     st->unk34 = y;
-    sub_08069A60(st->unk5E, (u8)(st->unk28 >> 8), (u16)(x >> 8), (u16)(y >> 8));
-    BgAffineSetRefPoint(st->unk5E,
+    sub_08069A60(st->bgId, (u8)(st->unk28 >> 8), (u16)(x >> 8), (u16)(y >> 8));
+    BgAffineSetRefPoint(st->bgId,
                  st->unk4C - (gData_03000068[slot].unk08 * st->unk48 - gData_03000068[slot].unk10 * st->unk4A),
                  st->unk50 + (st->unk48 * gData_03000068[slot].unk0C - gData_03000068[slot].unk14 * st->unk4A));
     damp = st->unk24;

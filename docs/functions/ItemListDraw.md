@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0802FA94` |
 | Size | 748 bytes (304 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802FA94` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

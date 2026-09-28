@@ -3,18 +3,22 @@
 
 # menu subsystem
 
-1 functions — 0 named.
+3 functions — 1 named.
 
 | Tier | Functions |
 |------|----------:|
-| MATCHING | 1 |
+| MATCHING | 3 |
 
 ## Functions
 
 | Function | Address | Tier | Size | Callers | Callees | RAM |
 |----------|---------|------|-----:|--------:|--------:|-----|
+| [`PartMenuRebuild`](../functions/PartMenuRebuild.md) | `0x08039BD4` | MATCHING | 1552 | 1 | 17 | gMainWorkPtr, gUnk_03000400 |
 | `sub_080442FC` | `0x080442FC` | MATCHING | 144 | 1 | 5 | gMainWorkPtr |
+| `sub_08066FB8` | `0x08066FB8` | MATCHING | 300 | 0 | 6 | gUnk_03000674, gUnk_03000678 |
 
 ## Why these functions are grouped here
 
+- `sub_08039BD4` — note mentions 'menu'
 - `sub_080442FC` — note mentions 'menu'
+- `sub_08066FB8` — note mentions 'menu'

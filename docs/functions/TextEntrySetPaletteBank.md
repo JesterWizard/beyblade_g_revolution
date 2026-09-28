@@ -9,7 +9,7 @@
 | Size | 28 bytes (11 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | _unassigned_ |
+| Subsystem | graphics |
 | Link label | `sub_080705DC` |
 | Confidence | 0.85 |
 | Provenance | ai |

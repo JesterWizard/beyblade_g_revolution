@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x08069270` |
 | Size | 244 bytes (112 instructions) |
-| Tier | UNKNOWN |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08069270` |

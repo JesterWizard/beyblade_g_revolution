@@ -3,10 +3,10 @@
 // @ 0x080601c4
 void SfxPlayInSlot(u32 a, u32 b)
 {
-    if (gMainWorkPtr->unk1710[a] != -1)
-        SoundStop(gMainWorkPtr->unk1710[a]);
+    if (gMainWorkPtr->sfxHandles[a] != -1)
+        SoundStop(gMainWorkPtr->sfxHandles[a]);
 
-    gMainWorkPtr->unk1710[a] = (s32)SoundPlayIndexed(a, b);
-    SoundSetVolume(gMainWorkPtr->unk1710[a], gMainWorkPtr->unk181A);
+    gMainWorkPtr->sfxHandles[a] = (s32)SoundPlayIndexed(a, b);
+    SoundSetVolume(gMainWorkPtr->sfxHandles[a], gMainWorkPtr->sfxVolume);
 }
 

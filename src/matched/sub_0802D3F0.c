@@ -3,7 +3,7 @@
 // @ 0x0802d3f0
 void sub_0802D3F0(void)
 {
-    struct Unk705DC *q;
+    struct Sprite *q;
     void *slot;
 
     slot = *(void **)0x03000270;

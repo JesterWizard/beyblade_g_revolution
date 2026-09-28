@@ -6,7 +6,7 @@
 void sub_0802D8C4(u16 a)
 {
     u32 r1;
-    struct Unk705DC *r0;
+    struct Sprite *r0;
 
     r1 = a;
     r0 = gUnk_0300026C->unk08;

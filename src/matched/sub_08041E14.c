@@ -7,7 +7,7 @@ s32 sub_08041E14(void *a, void *b)
 {
     s16 i;
     s16 count;
-    struct Unk68574 *obj;
+    struct Actor *obj;
 
     i = 0;
     count = gData_03000504;

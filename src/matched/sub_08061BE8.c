@@ -7,9 +7,9 @@ void TextWindowPopState(void)
 {
     u32 r0;
     u32 r1;
-    struct Unk0798 *r2;
+    struct TextWindow *r2;
     u32 r3;
-    struct Unk0798 **loc;
+    struct TextWindow **loc;
     struct Unk0770 *entry;
     void **handler_slot;
 
@@ -34,14 +34,14 @@ void TextWindowPopState(void)
     r1 += r0;
     r3 = (u32)gData_080BB8C0;
     r0 = (u32)*handler_slot;
-    r2 = (struct Unk0798 *)((u32)r2 + 0x94);
-    r2 = (struct Unk0798 *)(u32)*(u16 *)r2;
-    r2 = (struct Unk0798 *)((u32)r2 << 5);
+    r2 = (struct TextWindow *)((u32)r2 + 0x94);
+    r2 = (struct TextWindow *)(u32)*(u16 *)r2;
+    r2 = (struct TextWindow *)((u32)r2 << 5);
     r3 = *(u32 *)r3;
     _08073C4C((void *)r0, (void *)r1, (u32)r2, (void *)r3);
 
     r1 = (u32)*loc;
-    r2 = (struct Unk0798 *)(u32)entry->unk04;
+    r2 = (struct TextWindow *)(u32)entry->unk04;
     r0 = r1 + 0x90;
     *(u16 *)r0 = (u16)(u32)r2;
     r0 = entry->unk06;

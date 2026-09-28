@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080705a4
-void SpriteSetObjMode(struct Unk705DC *a, s32 b)
+void SpriteSetObjMode(struct Sprite *a, s32 b)
 {
     u32 t;
     u32 v;

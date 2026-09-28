@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0806F910` |
 | Size | 624 bytes (246 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806F910` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

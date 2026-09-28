@@ -5,7 +5,7 @@ void sub_08030F00(struct Unk30F00 *a, struct Unk30F00Src *b)
 {
     struct Unk30F00Mid *mid;
     struct Unk30F00Inner *inner;
-    struct Unk705DC *leaf;
+    struct Sprite *leaf;
     u32 t;
 
     if (a == 0)

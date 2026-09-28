@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x080447E8` |
 | Size | 372 bytes (162 instructions) |
-| Tier | DECOMPILED |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080447E8` |

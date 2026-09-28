@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08046E7C` |
 | Size | 872 bytes (331 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08046E7C` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

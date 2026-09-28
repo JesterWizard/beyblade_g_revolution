@@ -1,15 +1,15 @@
 #include "global.h"
 
 // @ 0x080686b4
-void SceneObjGetPosition(struct Unk68574 *a, u32 *b)
+void SceneObjGetPosition(struct Actor *a, u32 *b)
 {
-    if (a->unkB0 != 0)
-        _08073C4C(a, b, (u32)a, a->unkB0);
+    if (a->positionFn != 0)
+        _08073C4C(a, b, (u32)a, a->positionFn);
     else
     {
-        b[0] = a->unk04;
-        b[1] = a->unk08;
-        b[2] = a->unk0C;
+        b[0] = a->x;
+        b[1] = a->y;
+        b[2] = a->z;
     }
 }
 

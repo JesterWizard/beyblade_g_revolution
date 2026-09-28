@@ -6,7 +6,7 @@
 // Lays out a row of entries: sub_0803139C fills up to 8 of them for `key`, then
 // each non-NULL one gets x = base stepping by -0x900 (mode 0 starts from the far
 // end so the row ends at base) and y = BattleWork.unkBB0.
-void sub_0803114C(struct Unk705DC **entries, u32 key, u32 base, u32 modeArg)
+void sub_0803114C(struct Sprite **entries, u32 key, u32 base, u32 modeArg)
 {
     u8 mode = modeArg;
     s32 count = 0;

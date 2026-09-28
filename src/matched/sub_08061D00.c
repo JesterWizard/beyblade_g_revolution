@@ -13,8 +13,8 @@ void sub_08061D00(u32 a, u32 b)
     u32 lo;
     u32 shifted;
     u32 packed;
-    struct Unk0798 **slot;
-    struct Unk0798 *obj;
+    struct TextWindow **slot;
+    struct TextWindow *obj;
     void *src;
     u32 vram;
     u32 destA;
@@ -32,12 +32,12 @@ void sub_08061D00(u32 a, u32 b)
     src = sub_0806BB38((struct Unk6BB38 *)(*slot)->unk88, lo);
 
     obj = *slot;
-    bankA = obj->unk5C;
+    bankA = obj->screenBlock;
     destA = bankA << 11;
     vram = 0xC0;
     vram <<= 19;
     destA += vram;
-    bankB = obj->unk5D;
+    bankB = obj->charBlock;
 
     _08073C4C(src, (void *)((bankB << 14) + vram), 0x20, *(void **)gData_080BB8C0);
 

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08031300` |
 | Size | 78 bytes (37 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | graphics |
 | Link label | `sub_08031300` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | tick Unk312EC countdown, toggle sprite id |
+| Note | palette pulse: toggle bank every 8 ticks (t & 5) |
 
 ## Why this name
 

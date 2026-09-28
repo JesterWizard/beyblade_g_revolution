@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08061AB8` |
 | Size | 120 bytes (50 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
-| Subsystem | _unassigned_ |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | graphics |
 | Link label | `sub_08061AB8` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | data symbols; vram dst local |
 
 ## Why this name
 

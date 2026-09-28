@@ -20,8 +20,8 @@ void TextWindowLayout(u32 xArg, u32 yArg, u32 wArg, u32 hArg, u32 fillArg)
     u16 row, col;
 
     tile = 0;
-    base = gData_03000798->unk96;
-    map = (u16 *)(gData_03000798->unk5C * 0x800 + 0x06000000);
+    base = gData_03000798->baseTile;
+    map = (u16 *)(gData_03000798->screenBlock * 0x800 + 0x06000000);
     ((void (*)(u32, void *, u32))gData_080BB8BC[0])((fill >> 16) | fill | base, map, 0x800);
     map += y * 32 + x;
     for (row = 0; row < h; row++)
@@ -32,8 +32,8 @@ void TextWindowLayout(u32 xArg, u32 yArg, u32 wArg, u32 hArg, u32 fillArg)
             tile++;
         }
     }
-    gData_03000798->unk98 = w << 3;
-    gData_03000798->unk9A = h << 3;
+    gData_03000798->width = w << 3;
+    gData_03000798->height = h << 3;
     gData_03000798->unkA4 = x;
     gData_03000798->unkA6 = y;
 }

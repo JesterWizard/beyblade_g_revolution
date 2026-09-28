@@ -3,11 +3,11 @@
 // @ 0x08041980
 void sub_08041980(void)
 {
-    struct Unk68574 **p;
+    struct Actor **p;
     s32 n;
-    struct Unk68574 *z;
+    struct Actor *z;
 
-    p = (struct Unk68574 **)gUnk_03000480;
+    p = (struct Actor **)gUnk_03000480;
     z = 0;
     n = 31;
     do

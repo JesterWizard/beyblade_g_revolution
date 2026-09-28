@@ -18,8 +18,8 @@ void sub_08051444(void *a, void *b)
     pal = (u32)gData_080B7429;
     TextSetActiveObject(gfx, pal);
     TextDrawAlign((void *)gData_083A858C, TextGetAreaWidth() >> 1, 0);
-    sub_08051578((u32)a, 0, gData_080969CC[gMainWorkPtr->unk1818]);
-    sub_08051578((u32)a, 1, gData_080969E0[gMainWorkPtr->unk1818]);
+    sub_08051578((u32)a, 0, gData_080969CC[gMainWorkPtr->language]);
+    sub_08051578((u32)a, 1, gData_080969E0[gMainWorkPtr->language]);
     TextSetActiveObject(gfx, pal);
     TextSetCursor(0, 0x28);
     TextDrawAlign((void *)gData_083A8598, TextGetAreaWidth() >> 1, 0);

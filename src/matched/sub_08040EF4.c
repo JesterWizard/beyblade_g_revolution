@@ -11,7 +11,7 @@ s32 GetPlayerKeyedWord(void *key)
     for (i = 0; gData_0808B2E4[i].unk00 != -1; i++)
     {
         if (gData_0808B2E4[i].unk00 == (u32)key)
-            return ((u32 *)gData_0808B2E4[i].unk04)[gMainWorkPtr->unk1818];
+            return ((u32 *)gData_0808B2E4[i].unk04)[gMainWorkPtr->language];
     }
     return 0;
 }

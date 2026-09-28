@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x080419B0` |
 | Size | 172 bytes (77 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080419B0` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

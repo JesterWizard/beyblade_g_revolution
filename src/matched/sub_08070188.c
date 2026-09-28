@@ -7,7 +7,7 @@
 // Resize a battle-object batch to count nodes: grow it in place from the free
 // list (new nodes inherit the batch's key), allocate it fresh if it is empty,
 // or release and reallocate it when shrinking. Returns the batch head.
-struct Unk6FDB4 *BtlObjPoolResizeChain(struct Unk700CCHdr *hdr, u16 count, u16 key)
+struct Unk6FDB4 *BtlObjPoolResizeChain(struct SpriteChain *hdr, u16 count, u16 key)
 {
     struct Unk6FDB4 *head;
     struct Unk6FDB4 *tail;
@@ -15,13 +15,13 @@ struct Unk6FDB4 *BtlObjPoolResizeChain(struct Unk700CCHdr *hdr, u16 count, u16 k
     struct Unk6FDB4 *prev;
     u32 avail;
 
-    if (hdr->unk08 == count)
-        return hdr->unk00;
-    if (hdr->unk08 < count)
+    if (hdr->count == count)
+        return hdr->head;
+    if (hdr->count < count)
     {
-        if (hdr->unk08 != 0)
+        if (hdr->count != 0)
         {
-            count -= hdr->unk08;
+            count -= hdr->count;
             avail = gData_030040B4;
             if (avail < count)
             {
@@ -30,11 +30,11 @@ struct Unk6FDB4 *BtlObjPoolResizeChain(struct Unk700CCHdr *hdr, u16 count, u16 k
             }
             head = gData_030040AC;
             cur = head;
-            tail = hdr->unk04;
+            tail = hdr->tail;
             prev = head;
-            key = hdr->unk00->unk22;
+            key = hdr->head->unk22;
             gData_030040B4 = avail - count;
-            hdr->unk08 += count;
+            hdr->count += count;
             head->unk22 = key;
             while (--count != 0)
             {
@@ -49,12 +49,12 @@ struct Unk6FDB4 *BtlObjPoolResizeChain(struct Unk700CCHdr *hdr, u16 count, u16 k
             cur->unk04 = tail->unk04;
             tail->unk04 = head;
             head->unk00 = tail;
-            hdr->unk04 = cur;
+            hdr->tail = cur;
             LinkedListValidate((struct Unk6F8C4 *)gData_030040A4);
-            return hdr->unk00;
+            return hdr->head;
         }
         BtlObjPoolAllocChain(hdr, count, key);
-        return hdr->unk00;
+        return hdr->head;
     }
     DebugMessage((void *)0x083D22A4);
     BtlObjPoolReleaseChain(hdr);

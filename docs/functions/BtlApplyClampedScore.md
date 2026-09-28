@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0803715C` |
 | Size | 444 bytes (189 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803715C` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

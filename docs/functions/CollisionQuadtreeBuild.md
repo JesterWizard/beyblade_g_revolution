@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x0806C388` |
 | Size | 710 bytes (341 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806C388` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

@@ -4,7 +4,7 @@
 
 void sub_0802D598(void)
 {
-    struct Unk705DC *q;
+    struct Sprite *q;
 
     gUnk_0300026C->unk00 = 0;
     q = gUnk_0300026C->unk08;

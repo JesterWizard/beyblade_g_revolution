@@ -31,9 +31,9 @@ void sub_0802ECD8(void)
         {
             name = _080563A8(gData_03000278->entries[gData_03000278->top + i].unk0D, gData_03000278->entries[gData_03000278->top + i].unk0C);
             if (name != 0)
-                TextGroupSetString((struct Unk7069C *)gData_03000278->text, (void *)name, 15);
+                TextGroupSetString((struct TextGroup *)gData_03000278->text, (void *)name, 15);
             else
-                TextGroupSetString((struct Unk7069C *)gData_03000278->text, gData_03000278->entries[gData_03000278->top + i].name, 15);
+                TextGroupSetString((struct TextGroup *)gData_03000278->text, gData_03000278->entries[gData_03000278->top + i].name, 15);
             TextSetPaletteBank(14);
             TextRowSetPaletteBank((u16)(i * 2 + 12), 14, 2, 0x1B);
             TextRowSetPaletteBank((u16)(i * 2 + 13), 14, 2, 0x1B);

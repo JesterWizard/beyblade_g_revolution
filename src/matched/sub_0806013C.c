@@ -5,12 +5,12 @@ void BgmStop(void)
 {
     s32 v;
 
-    v = gMainWorkPtr->unk177C;
+    v = gMainWorkPtr->bgmHandle;
     if (v != -1)
     {
         SoundStop(v);
-        gMainWorkPtr->unk177C = -1;
-        gMainWorkPtr->unk1780 = -1;
+        gMainWorkPtr->bgmHandle = -1;
+        gMainWorkPtr->bgmTrack = -1;
     }
 }
 

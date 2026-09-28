@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x08044FB0` |
 | Size | 156 bytes (62 instructions) |
-| Tier | DECOMPILED |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08044FB0` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
 
 ## Why this name
 

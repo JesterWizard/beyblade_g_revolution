@@ -7,15 +7,15 @@ void SceneObjSpawnList(void *arg)
 {
     s32 *ids = arg;
     struct Unk6DEF4 *records;
-    struct Unk6EE48 *state;
+    struct MapView *state;
     s32 id;
     s32 *pos;
-    struct Unk68574 *obj;
+    struct Actor *obj;
     struct Unk7BE04 *def;
     struct Unk59C98Src *part;
 
     records = (struct Unk6DEF4 *)sub_08062A14();
-    state = (struct Unk6EE48 *)CameraGetActive((struct Unk6EE48 *)gData_03000198);
+    state = (struct MapView *)CameraGetActive((struct MapView *)gData_03000198);
     while (*ids != -1)
     {
         id = *ids;
@@ -30,8 +30,8 @@ void SceneObjSpawnList(void *arg)
                 obj->unkD8 = NULL;
                 if (obj != NULL)
                 {
-                    obj->unk08 -= obj->unk11 << 8;
-                    obj->unk04 -= (obj->unk10 >> 1) << 8;
+                    obj->y -= obj->height << 8;
+                    obj->x -= (obj->width >> 1) << 8;
                     if (gData_0807BE04[id].unk08 != NULL)
                     {
                         obj->unkC4 = gData_0807BE04[id].unk08;

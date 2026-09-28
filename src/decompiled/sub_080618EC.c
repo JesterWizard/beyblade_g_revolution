@@ -4,7 +4,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-s32 TextTypewriterTick(struct Unk618EC *t, s32 x, u32 align, u32 stopLine)
+s32 TextTypewriterTick(struct TextTypewriter *t, s32 x, u32 align, u32 stopLine)
 {
     u8 *str;
     u8 c;
@@ -43,23 +43,23 @@ s32 TextTypewriterTick(struct Unk618EC *t, s32 x, u32 align, u32 stopLine)
             t->state = 0xFF;
             return -1;
         }
-        width = TextMeasureWidth(t->lines[t->line], (const u8 *)gData_03000798->unk8C, gData_03000798->unkA0, gData_03000798->unk9C);
+        width = TextMeasureWidth(t->lines[t->line], (const u8 *)gData_03000798->widthTable, gData_03000798->glyphWidth, gData_03000798->spacing);
         switch (align)
         {
         case 0:
-            gData_03000798->unk90 = x - ((u32)width >> 1);
+            gData_03000798->penX = x - ((u32)width >> 1);
             break;
         case 1:
-            gData_03000798->unk90 = x - width;
+            gData_03000798->penX = x - width;
             break;
         case 2:
-            gData_03000798->unk90 = x;
+            gData_03000798->penX = x;
             break;
         }
-        gData_03000798->unk92 += gData_03000798->unkA2;
+        gData_03000798->penY += gData_03000798->lineHeight;
         if (stopLine == t->line && t->len != 0)
         {
-            gData_03000798->unk92 -= gData_03000798->unkA2;
+            gData_03000798->penY -= gData_03000798->lineHeight;
             return 2;
         }
     }

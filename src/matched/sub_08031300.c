@@ -5,7 +5,7 @@
 // @ 0x08031300
 void TextRowPulsePalette(struct Unk312EC *a)
 {
-    struct Unk705DC *p;
+    struct Sprite *p;
     u32 bank;
 
     if (a->unk08 == 0)

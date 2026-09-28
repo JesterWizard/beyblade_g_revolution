@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x08044648` |
 | Size | 364 bytes (159 instructions) |
-| Tier | DECOMPILED |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08044648` |

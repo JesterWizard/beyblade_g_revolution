@@ -12,7 +12,7 @@ void sub_08041B74(void *a, void *b)
 {
   s16 i;
   s16 count;
-  struct Unk68574 **slot;
+  struct Actor **slot;
   i = 0;
   count = gData_03000504[0];
   if (count > 0)
@@ -28,7 +28,7 @@ void sub_08041B74(void *a, void *b)
           (*slot)->unkC8 = (void *) 0;
         }
         sub_08068808(*slot);
-        (*slot)->unk08 = ((*slot)->unk04 = -0x4000);
+        (*slot)->y = ((*slot)->x = -0x4000);
         *slot = gData_03000480[(s16) (--gData_03000504[0])];
         gData_03000480[(s16) gData_03000504[0]] = (void *) (s32) (count = 0);
         return;

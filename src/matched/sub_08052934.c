@@ -16,7 +16,7 @@ void sub_08052934(u32 a)
     off = (u32)gData_080995AC;
     off += 0xC;
     idx += off;
-    id = &gMainWorkPtr->unk1818;
+    id = &gMainWorkPtr->language;
     table = *(void ***)idx;
     TextDrawAlign(table[*id], 0x24, 2);
 }

@@ -9,23 +9,23 @@
 // (sub_08060D28).
 void TextWindowOpenEx(void *winArg, void *srcArg, void *c, u16 count, u16 y, u16 h, u16 x, u16 w, u16 i, u8 mode)
 {
-    struct Unk0798 *win = winArg;
+    struct TextWindow *win = winArg;
     struct Unk617C4 *src = srcArg;
     u16 attr = i << 12;
 
     ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, win, 0xAC);
     win->unk88 = src;
-    win->unk8C = (u32)c;
-    win->unk94 = count;
-    win->unk96 = attr;
-    win->unkA0 = src->unk04;
-    win->unkA2 = src->unk05;
-    win->unk90 = 0;
-    win->unk92 = 0;
-    win->unk9C = win->unkA0 >> 2;
+    win->widthTable = (u32)c;
+    win->tileCount = count;
+    win->baseTile = attr;
+    win->glyphWidth = src->unk04;
+    win->lineHeight = src->unk05;
+    win->penX = 0;
+    win->penY = 0;
+    win->spacing = win->glyphWidth >> 2;
     win->unkA4 = 0;
     win->unkA6 = 0;
-    AffineBgInit((struct Unk68E54 *)win, mode, count, 0);
+    AffineBgInit((struct MapLayer *)win, mode, count, 0);
     TextWindowFillMap(win, (u8)x, (u8)w, (u8)y, (u8)h, (u16)(count - 1));
     TextWindowClearTiles(win);
 }

@@ -4,6 +4,6 @@
 
 u16 TextGetAreaWidth(void)
 {
-    return gUnk_03000798->unk98;
+    return gUnk_03000798->width;
 }
 

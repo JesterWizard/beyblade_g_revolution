@@ -31,7 +31,7 @@
 
 struct Unk310F0Inner1;
 struct Unk310F0Inner2;
-struct Unk705DC;
+struct Sprite;
 struct Unk312EC;
 struct Unk346C0;
 struct Unk361CCDst;
@@ -97,14 +97,14 @@ struct Unk346A8 /* >= 0x2f4 */
 };
 
 /* Packed u16s at +0x9a..+0xae. sub_08068574, sub_08068584, sub_08068558. */
-struct Unk68574 /* 0xdc */
+struct Actor /* 0xdc */
 {
     /* 00 */ void *unk00;
-    /* 04 */ u32 unk04;
-    /* 08 */ u32 unk08;
-    /* 0c */ u32 unk0C;
-    /* 10 */ u8 unk10; /* width; centre x = unk04 + (unk10 / 2 << 8). sub_08062790 */
-    /* 11 */ u8 unk11; /* height. sub_08062790 */
+    /* 04 */ u32 x;
+    /* 08 */ u32 y;
+    /* 0c */ u32 z;
+    /* 10 */ u8 width; /* centre x = x + (width / 2 << 8). sub_08062790 */
+    /* 11 */ u8 height; /* height. sub_08062790 */
     /* 12 */ u8 filler_12[8];
     /* 1a */ s16 unk1A; /* sub_0803559C */
     /* 1c */ u8 filler_1C[0x15];
@@ -130,7 +130,7 @@ struct Unk68574 /* 0xdc */
     /* aa */ u16 unkAA;
     /* ac */ u16 unkAC;
     /* ae */ u16 unkAE;
-    /* b0 */ void *unkB0;
+    /* b0 */ void *positionFn;
     /* b4 */ u8 filler_B4[4];
     /* b8 */ void *unkB8;
     /* bc */ u16 unkBC; /* sub_0804188C */
@@ -259,9 +259,9 @@ struct Unk35258 /* >= 0x2c6 */
 {
     /* 000 */ struct Unk346C0Inner *unk00;
     /* 004 */ u8 filler_04[0x18];
-    /* 01c */ struct Unk68574 unk1C;
-    /* 0f8 */ struct Unk68574 unkF8;
-    /* 1d4 */ struct Unk68574 unk1D4;
+    /* 01c */ struct Actor unk1C;
+    /* 0f8 */ struct Actor unkF8;
+    /* 1d4 */ struct Actor unk1D4;
     /* 2b0 */ u32 unk2B0;
     /* 2b4 */ u32 unk2B4;
     /* 2b8 */ u8 filler_2B8[0xD];
@@ -348,31 +348,31 @@ struct Unk62A74 /* >= 0x42 */
 
 /* Halfword at +4, object at +0x14, pointer at +0x2C. sub_0807069C, sub_08070678. */
 /* Pending battle-object batch released by sub_080700CC. */
-struct Unk700CCHdr /* >= 0x0c */
+struct SpriteChain /* >= 0x0c */
 {
-    /* 00 */ struct Unk6FDB4 *unk00;
-    /* 04 */ struct Unk6FDB4 *unk04;
-    /* 08 */ u32 unk08;
+    /* 00 */ struct Unk6FDB4 *head;
+    /* 04 */ struct Unk6FDB4 *tail;
+    /* 08 */ u32 count;
 };
 
-struct Unk7069C /* >= 0x30 */
+struct TextGroup /* >= 0x30 */
 {
     /* 00 */ u32 unk00;
     /* 04 */ u16 unk04;
     /* 06 */ u8 filler_06[2];
-    /* 08 */ u16 unk08;
-    /* 0a */ u16 unk0A;
+    /* 08 */ u16 flags;
+    /* 0a */ u16 penX;
     /* 0c */ u8 filler_0C[2];
-    /* 0e */ u8 unk0E; /* sub_08070930 */
+    /* 0e */ u8 objMode; /* sub_08070930 */
     /* 0f */ u8 filler_0F[5];
-    /* 14 */ struct Unk700CCHdr unk14; /* glyph sprite chain; unk14.unk08 = count */
-    /* 20 */ u8 *unk20; /* per-glyph width table, may be NULL */
-    /* 24 */ struct Unk6FF58Src *unk24; /* font */
-    /* 28 */ u8 unk28; /* space width */
-    /* 29 */ s8 unk29; /* letter spacing */
+    /* 14 */ struct SpriteChain glyphs; /* one sprite per glyph */
+    /* 20 */ u8 *widthTable; /* per-glyph width table, may be NULL */
+    /* 24 */ struct Unk6FF58Src *font; /* font */
+    /* 28 */ u8 spaceWidth; /* space width */
+    /* 29 */ s8 letterSpacing; /* letter spacing */
     /* 2a */ u8 filler_2A;
     /* 2b */ u8 unk2B;
-    /* 2c */ struct Unk70354Object *unk2C; /* shared affine object */
+    /* 2c */ struct AffineObj *affine; /* shared affine object */
 };
 
 /* Linked entry with a position word pair. sub_08038F30. */
@@ -385,17 +385,17 @@ struct Unk38F30Entry /* >= 0x10 */
 struct Unk30D4CResourceFields /* 0x6c */
 {
     /* 00 */ u32 filler_00[2];
-    /* 08 */ struct Unk705DC *unkAF0;
-    /* 0c */ struct Unk705DC *unkAF4;
-    /* 10 */ struct Unk705DC *unkAF8;
-    /* 14 */ struct Unk705DC *unkAFC;
-    /* 18 */ struct Unk705DC *unkB00[8];
-    /* 38 */ struct Unk705DC *unkB20[8];
-    /* 58 */ struct Unk705DC *unkB40;
-    /* 5c */ struct Unk705DC *unkB44;
-    /* 60 */ struct Unk705DC *unkB48;
-    /* 64 */ struct Unk705DC *unkB4C;
-    /* 68 */ struct Unk705DC *unkB50;
+    /* 08 */ struct Sprite *unkAF0;
+    /* 0c */ struct Sprite *unkAF4;
+    /* 10 */ struct Sprite *unkAF8;
+    /* 14 */ struct Sprite *unkAFC;
+    /* 18 */ struct Sprite *unkB00[8];
+    /* 38 */ struct Sprite *unkB20[8];
+    /* 58 */ struct Sprite *unkB40;
+    /* 5c */ struct Sprite *unkB44;
+    /* 60 */ struct Sprite *unkB48;
+    /* 64 */ struct Sprite *unkB4C;
+    /* 68 */ struct Sprite *unkB50;
 };
 
 union Unk30D4CResource /* 0x6c */
@@ -471,7 +471,7 @@ struct Unk62634 /* >= 0x64 */
 {
     /* 00 */ struct Unk62358Anim *unk00; /* frame list, ends at unk02 == -1 */
     /* 04 */ struct Unk6225CSource *unk04;
-    /* 08 */ struct Unk705DC *unk08;
+    /* 08 */ struct Sprite *unk08;
     /* 0c */ s32 unk0C;
     /* 10 */ s32 unk10;
     /* 14 */ struct Unk6FF58Src *unk14;
@@ -513,7 +513,7 @@ struct Unk6225C /* >= 0x61 */
 {
     /* 00 */ void *unk00;
     /* 04 */ struct Unk6225CSource *unk04;
-    /* 08 */ struct Unk705DC *unk08;
+    /* 08 */ struct Sprite *unk08;
     /* 0C */ u8 filler_0C[0x0C];
     /* 18 */ u32 unk18;
     /* 1C */ s32 unk1C;
@@ -558,7 +558,7 @@ struct Unk65560Source /* 0x08 */
 struct Unk65560 /* >= 0x2D6 */
 {
     /* 000 */ u8 filler_000[0x274];
-    /* 274 */ struct Unk705DC *unk274[24];
+    /* 274 */ struct Sprite *unk274[24];
     /* 2D4 */ s8 filler_2D4;
     /* 2D5 */ s8 unk2D5;
 };
@@ -604,7 +604,7 @@ struct Unk66224 /* >= 0x70 */
     /* 30 */ u8 filler_30[0x0C];
     /* 3C */ u16 unk3C;
     /* 3E */ u8 filler_3E[2];
-    /* 40 */ struct Unk7069C unk40;
+    /* 40 */ struct TextGroup unk40;
 };
 
 struct Unk66FB8Table /* 0x10 */
@@ -669,7 +669,7 @@ struct Unk593A4 /* >= 0xa8 */
     /* 04 */ u8 filler_04[0x2C];
     /* 30 */ struct Unk593A4Pos *unk30;
     /* 34 */ u8 filler_34[0x18];
-    /* 4c */ struct Unk705DC *unk4C[8];
+    /* 4c */ struct Sprite *unk4C[8];
     /* 6c */ u8 filler_6C[0x38];
     /* a4 */ s32 unkA4;
 };
@@ -704,7 +704,7 @@ struct BattleWork /* >= 0x208A */
     /* 0134 */ u8 filler_0134[8];
     /* 013C */ union Unk013C unk013C;
     /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
-    /* 023C */ struct Unk7069C unk023C[4]; /* sub_08038D10 */
+    /* 023C */ struct TextGroup unk023C[4]; /* sub_08038D10 */
     /* 02FC */ struct Unk62044 unk2FC;
     /* 0324 */ struct Unk38F30Entry *unk324; /* sub_08038F30 */
     /* 0328 */ struct Unk360BC unk328; /* battler A motion; sub_08032DC4 */
@@ -731,8 +731,8 @@ struct BattleWork /* >= 0x208A */
     /* 0B81 */ u8 filler_0B81[3];
     /* 0B84 */ u8 unkB84[0x10];
     /* 0B94 */ u8 unkB94[0x10];
-    /* 0BA4 */ struct Unk705DC *unkBA4;
-    /* 0BA8 */ struct Unk705DC *unkBA8;
+    /* 0BA4 */ struct Sprite *unkBA4;
+    /* 0BA8 */ struct Sprite *unkBA8;
     /* 0BAC */ s32 unkBAC;
     /* 0BB0 */ s32 unkBB0;
     /* 0BB4 */ s32 unkBB4;
@@ -991,7 +991,7 @@ struct Unk6114C /* >= 0x5D */
 struct Unk5E044Lookup /* >= 0xBC */
 {
     /* 00 */ u8 filler_00[0xB8];
-    /* B8 */ struct Unk705DC *unkB8;
+    /* B8 */ struct Sprite *unkB8;
 };
 
 /* Word count + dest. sub_08062728. */
@@ -1023,7 +1023,7 @@ struct MainWork /* >= 0x18B4 */
     /* 03AC */ u32 unk03AC;
     /* 03B0 */ u32 unk03B0;
     /* 03B4 */ u8 filler_03B4[0x70];
-    /* 0424 */ struct Unk705DC *unk0424;
+    /* 0424 */ struct Sprite *unk0424;
     /* 0428 */ u16 unk0428; /* unk036C object's sort key (+0xBC) */
     /* 042A */ u8 filler_042A[0x1E];
     /* 0448 */ struct Unk42718 unk0448;
@@ -1037,7 +1037,7 @@ struct MainWork /* >= 0x18B4 */
     /* 0488 */ u32 unk0488; /* sub_080424E8 */
     /* 048C */ u32 unk048C; /* sub_080424E8 */
     /* 0490 */ u8 filler_0490[0x70];
-    /* 0500 */ struct Unk705DC *unk0500;
+    /* 0500 */ struct Sprite *unk0500;
     /* 0504 */ u16 unk0504; /* unk0448 object's sort key (+0xBC) */
     /* 0506 */ u8 filler_0506[0x1E];
     /* 0524 */ struct Unk62728 unk0524; /* sub_08046E7C */
@@ -1092,11 +1092,11 @@ struct MainWork /* >= 0x18B4 */
     /* 16EC */ u8 filler_16EC[0x1C]; /* sub_0805D99C */
     /* 1708 */ u32 unk1708; /* sub_0805D99C */
     /* 170C */ s32 unk170C;
-    /* 1710 */ s32 unk1710[25];
+    /* 1710 */ s32 sfxHandles[25];
     /* 1774 */ s32 unk1774; /* sub_08045C5C */
     /* 1778 */ s32 unk1778; /* sub_08045C5C */
-    /* 177C */ s32 unk177C;
-    /* 1780 */ s32 unk1780;
+    /* 177C */ s32 bgmHandle;
+    /* 1780 */ s32 bgmTrack;
     /* 1784 */ u8 filler_1784[4];
     /* 1788 */ u32 unk1788;
     /* 178C */ s32 unk178C;
@@ -1133,9 +1133,9 @@ struct MainWork /* >= 0x18B4 */
     /* 180C */ u32 unk180C;
     /* 1810 */ u32 unk1810;
     /* 1814 */ u8 filler_1814[4];
-    /* 1818 */ u8 unk1818;
-    /* 1819 */ u8 unk1819;
-    /* 181A */ u8 unk181A;
+    /* 1818 */ u8 language;
+    /* 1819 */ u8 bgmVolume;
+    /* 181A */ u8 sfxVolume;
     /* 181B */ u8 unk181B; /* sub_080449C4 */
     /* 181C */ u8 unk181C; /* sub_0803fdd0, sub_0805d99c */
     /* 181D */ u8 unk181D;
@@ -1230,24 +1230,24 @@ struct Unk71F84 /* >= 0x17 */
 };
 
 /* *gUnk_03000798. sub_08061784 family, sub_080615EC. */
-struct Unk0798 /* >= 0xa8 */
+struct TextWindow /* >= 0xa8 */
 {
     /* 00 */ u8 filler_00[0x5C];
-    /* 5c */ u8 unk5C;
-    /* 5d */ u8 unk5D;
+    /* 5c */ u8 screenBlock;
+    /* 5d */ u8 charBlock;
     /* 5e */ u8 filler_5E[0x2A];
     /* 88 */ void *unk88;
-    /* 8c */ u32 unk8C;
-    /* 90 */ u16 unk90;
-    /* 92 */ u16 unk92;
-    /* 94 */ u16 unk94;
-    /* 96 */ u16 unk96;
-    /* 98 */ u16 unk98;
-    /* 9a */ u16 unk9A;
-    /* 9c */ u16 unk9C;
+    /* 8c */ u32 widthTable;
+    /* 90 */ u16 penX;
+    /* 92 */ u16 penY;
+    /* 94 */ u16 tileCount;
+    /* 96 */ u16 baseTile;
+    /* 98 */ u16 width;
+    /* 9a */ u16 height;
+    /* 9c */ u16 spacing;
     /* 9e */ u8 filler_9E[2];
-    /* a0 */ u16 unkA0;
-    /* a2 */ u16 unkA2;
+    /* a0 */ u16 glyphWidth;
+    /* a2 */ u16 lineHeight;
     /* a4 */ u16 unkA4;
     /* a6 */ u16 unkA6;
 };
@@ -1306,7 +1306,7 @@ struct Unk61BDC /* >= 0x15 */
     /* 14 */ u8 unk14;
 };
 
-struct Unk705DC; /* word at +0x14. sub_08031300. */
+struct Sprite; /* word at +0x14. sub_08031300. */
 
 /* Bytes + words + pointer. sub_08031294, sub_080312EC. */
 struct Unk312EC /* >= 0x10 */
@@ -1317,7 +1317,7 @@ struct Unk312EC /* >= 0x10 */
     /* 04 */ s32 unk04;
     /* 08 */ u8 unk08;
     /* 09 */ u8 filler_09[3];
-    /* 0c */ struct Unk705DC *unk0C;
+    /* 0c */ struct Sprite *unk0C;
 };
 
 
@@ -1429,21 +1429,21 @@ struct Unk026C /* >= 0x50 */
 {
     /* 00 */ u32 unk00;
     /* 04 */ u32 unk04;
-    /* 08 */ struct Unk705DC *unk08;
-    /* 0c */ struct Unk705DC *unk0C;
-    /* 10 */ struct Unk705DC *unk10;
-    /* 14 */ struct Unk705DC *playerLevelTens;
-    /* 18 */ struct Unk705DC *playerLevelOnes;
-    /* 1c */ struct Unk705DC *playerStrengthTens;
-    /* 20 */ struct Unk705DC *playerStrengthOnes;
-    /* 24 */ struct Unk705DC *playerExpBar;
-    /* 28 */ struct Unk705DC *unk28;
-    /* 2c */ struct Unk705DC *unk2C;
-    /* 30 */ struct Unk705DC *bitBeastLevelTens;
-    /* 34 */ struct Unk705DC *bitBeastLevelOnes;
-    /* 38 */ struct Unk705DC *bladeStrengthTens;
-    /* 3c */ struct Unk705DC *bladeStrengthOnes;
-    /* 40 */ struct Unk705DC *bitBeastExpBar;
+    /* 08 */ struct Sprite *unk08;
+    /* 0c */ struct Sprite *unk0C;
+    /* 10 */ struct Sprite *unk10;
+    /* 14 */ struct Sprite *playerLevelTens;
+    /* 18 */ struct Sprite *playerLevelOnes;
+    /* 1c */ struct Sprite *playerStrengthTens;
+    /* 20 */ struct Sprite *playerStrengthOnes;
+    /* 24 */ struct Sprite *playerExpBar;
+    /* 28 */ struct Sprite *unk28;
+    /* 2c */ struct Sprite *unk2C;
+    /* 30 */ struct Sprite *bitBeastLevelTens;
+    /* 34 */ struct Sprite *bitBeastLevelOnes;
+    /* 38 */ struct Sprite *bladeStrengthTens;
+    /* 3c */ struct Sprite *bladeStrengthOnes;
+    /* 40 */ struct Sprite *bitBeastExpBar;
     /* 44 */ void *unk44;
     /* 48 */ u8 unk48;
     /* 49 */ u8 filler_49[3];
@@ -1496,7 +1496,7 @@ struct Unk40680 /* >= 0x304 */
     /* 000 */ u8 filler_000[0x220];
     /* 220 */ struct Unk40680Text *unk220;
     /* 224 */ u8 filler_224[0x50];
-    /* 274 */ struct Unk705DC *unk274;
+    /* 274 */ struct Sprite *unk274;
     /* 278 */ u8 filler_278[0x84];
     /* 2fc */ s32 unk2FC;
     /* 300 */ u32 unk300;
@@ -1698,7 +1698,7 @@ struct Unk68798 /* >= 0x80 */
 };
 
 /* Tile-map blit rect pointed to by Unk68988.unk08. sub_080688C8. */
-struct Unk688C8Rect /* >= 0x18 */
+struct MapTileRect /* >= 0x18 */
 {
     /* 00 */ s32 unk00;
     /* 04 */ s32 unk04;
@@ -1713,7 +1713,7 @@ struct Unk68988 /* >= 0x7d */
 {
     /* 00 */ s32 unk00;
     /* 04 */ s32 unk04;
-    /* 08 */ struct Unk688C8Rect *unk08;
+    /* 08 */ struct MapTileRect *unk08;
     /* 0c */ s32 unk0C;
     /* 10 */ s32 unk10;
     /* 14 */ u8 filler_14[0x2C];
@@ -1742,7 +1742,7 @@ struct Unk4FFCCRow /* 0x10 */
 struct Unk4FFCCWin /* >= 0x90 */
 {
     /* 00 */ u8 filler_00[0x60];
-    /* 60 */ struct Unk7069C unk60;
+    /* 60 */ struct TextGroup unk60;
 };
 
 /* Icon entry returned by sub_0803DCFC: sprite source and palette. */
@@ -1759,7 +1759,7 @@ struct Unk4FFCCIcon /* >= 0x22 */
 struct Unk4FFCC /* >= 0x2a4 */
 {
     /* 000 */ u8 filler_000[0x28C];
-    /* 28c */ struct Unk705DC *unk28C[6];
+    /* 28c */ struct Sprite *unk28C[6];
 };
 
 /* Save-slot image (0x1F60 bytes) written by sub_08045198. */
@@ -1932,7 +1932,7 @@ struct Unk72A38 /* >= 0x10 */
 /* Row of digit sprites drawn by sub_0806B2F0. */
 struct Unk6B2F0 /* >= 0x05 */
 {
-    /* 00 */ struct Unk68574 *unk00; /* digit objects, 0xDC each */
+    /* 00 */ struct Actor *unk00; /* digit objects, 0xDC each */
     /* 04 */ u8 unk04; /* digit count */
 };
 
@@ -1950,15 +1950,15 @@ struct Unk0068Entry /* 0x18 */
     /* 14 */ s32 unk14;
 };
 
-struct Unk68E54 /* >= 0x88 */
+struct MapLayer /* >= 0x88 */
 {
-    /* 00 */ s32 unk00; /* map width in tiles (same object as Unk68988) */
-    /* 04 */ s32 unk04; /* map height in tiles */
-    /* 08 */ struct Unk688C8Rect *unk08; /* visible tile rect */
-    /* 0c */ s32 unk0C; /* scroll x, 8.8 */
-    /* 10 */ s32 unk10; /* scroll y, 8.8 */
-    /* 14 */ s32 unk14;
-    /* 18 */ s32 unk18;
+    /* 00 */ s32 widthTiles; /* map width in tiles (same object as Unk68988) */
+    /* 04 */ s32 heightTiles; /* map height in tiles */
+    /* 08 */ struct MapTileRect *visible; /* visible tile rect */
+    /* 0c */ s32 scrollX; /* scroll x, 8.8 */
+    /* 10 */ s32 scrollY; /* scroll y, 8.8 */
+    /* 14 */ s32 deltaX;
+    /* 18 */ s32 deltaY;
     /* 1c */ s32 unk1C;
     /* 20 */ s32 unk20;
     /* 24 */ s32 unk24; /* velocity damping (x/256 per frame) */
@@ -1968,19 +1968,19 @@ struct Unk68E54 /* >= 0x88 */
     /* 34 */ s32 unk34; /* 8.8, sub_08069A60 arg */
     /* 38 */ s32 unk38; /* added to unk30 each frame */
     /* 3c */ s32 unk3C; /* added to unk34 each frame */
-    /* 40 */ s32 unk40; /* BG offset x, 8.8 */
-    /* 44 */ s32 unk44; /* BG offset y, 8.8 */
+    /* 40 */ s32 offsetX; /* BG offset x, 8.8 */
+    /* 44 */ s32 offsetY; /* BG offset y, 8.8 */
     /* 48 */ s16 unk48;
     /* 4a */ s16 unk4A;
     /* 4c */ s32 unk4C;
     /* 50 */ s32 unk50;
     /* 54 */ s32 unk54;
     /* 58 */ s32 unk58;
-    /* 5c */ u8 unk5C; /* screen base block. sub_08068BD4 */
-    /* 5d */ u8 unk5D; /* char base block. sub_08068BD4 */
-    /* 5e */ u8 unk5E; /* affine BG number (2 or 3). sub_08068EC0 */
-    /* 5f */ u8 unk5F; /* log2 visible width */
-    /* 60 */ u8 unk60; /* log2 visible height */
+    /* 5c */ u8 screenBlock; /* screen base block. sub_08068BD4 */
+    /* 5d */ u8 charBlock; /* char base block. sub_08068BD4 */
+    /* 5e */ u8 bgId; /* affine BG number (2 or 3). sub_08068EC0 */
+    /* 5f */ u8 log2Width; /* log2 visible width */
+    /* 60 */ u8 log2Height; /* log2 visible height */
     /* 61 */ u8 unk61; /* sub_08068A08 */
     /* 62 */ u8 filler_62[2];
     /* 64 */ u16 unk64;
@@ -1988,7 +1988,7 @@ struct Unk68E54 /* >= 0x88 */
     /* 68 */ s32 unk68;
     /* 6c */ s32 unk6C;
     /* 70 */ s32 unk70;
-    /* 74 */ u32 unk74; /* tile data size in bytes. sub_08068BD4 */
+    /* 74 */ u32 tileBytes; /* tile data size in bytes. sub_08068BD4 */
     /* 78 */ s32 unk78;
     /* 7c */ u8 unk7C; /* bit 0/1: freeze column/row streaming, bit 2/3: wrap y/x. sub_0806960C */
     /* 7d */ u8 filler_7D[3];
@@ -2078,32 +2078,32 @@ struct Unk6C704 /* >= 0xa0 */
     /* 9e */ s16 unk9E;
 };
 
-struct Unk6EE48Entry /* 0x18 */
+struct MapFollowEntry /* 0x18 */
 {
-    /* 00 */ void *unk00;
+    /* 00 */ void *active;
     /* 04 */ u8 filler_04[0x10];
-    /* 14 */ s32 unk14; /* follow ratio in 1/32 steps (read as s16), sub_0806F05C */
+    /* 14 */ s32 ratio; /* follow ratio in 1/32 steps (read as s16), sub_0806F05C */
 };
 
-struct Unk6EE48Table /* >= 0x74 */
+struct MapFollowTable /* >= 0x74 */
 {
     /* 00 */ u8 filler_00[0x14];
-    /* 14 */ struct Unk6EE48Entry entries[4];
+    /* 14 */ struct MapFollowEntry entries[4];
 };
 
-struct Unk6EE48 /* >= 0x362 */
+struct MapView /* >= 0x362 */
 {
-    /* 000 */ struct Unk68E54 motion[4];
-    /* 220 */ struct Unk6EE48Table *unk220;
-    /* 224 */ void *unk224;
+    /* 000 */ struct MapLayer layers[4];
+    /* 220 */ struct MapFollowTable *follow;
+    /* 224 */ void *target;
     /* 228 */ u8 filler_228[0x11C];
-    /* 344 */ void *unk344;
+    /* 344 */ void *targetHandler;
     /* 348 */ u8 filler_348[0x0C];
-    /* 354 */ u8 unk354;
+    /* 354 */ u8 flags;
     /* 355 */ u8 filler_355[7];
-    /* 35c */ u16 unk35C; /* camera min x (pixels), sub_0806EEC8 */
+    /* 35c */ u16 minX; /* camera min x (pixels), sub_0806EEC8 */
     /* 35e */ u8 filler_35E[2];
-    /* 360 */ u16 unk360; /* camera right margin (pixels), sub_0806EEC8 */
+    /* 360 */ u16 rightMargin; /* camera right margin (pixels), sub_0806EEC8 */
 };
 
 /* Entry of the scrolling list at *0x03000664 (sub_08056250). */
@@ -2119,7 +2119,7 @@ struct Unk56250Entry /* 0x10 */
 struct Unk56250 /* >= 0x288 */
 {
     /* 000 */ u8 filler_000[0x284];
-    /* 284 */ struct Unk705DC *unk284; /* cursor icon */
+    /* 284 */ struct Sprite *unk284; /* cursor icon */
 };
 
 /* Scene display parameters for sub_08065CD0. */
@@ -2173,7 +2173,7 @@ struct Unk4BD38Label /* 0x08 */
 struct Unk4BD38 /* >= 0x288 */
 {
     /* 000 */ u8 filler_000[0x274];
-    /* 274 */ struct Unk705DC *unk274[5];
+    /* 274 */ struct Sprite *unk274[5];
 };
 
 struct Unk38438 /* 0x42, index bitmap + per-slot counts */
@@ -2225,18 +2225,18 @@ struct Unk6FE84 /* >= 0x34 */
     /* 30 */ void *unk30;
 };
 
-struct Unk70354Object /* >= 0x1A */
+struct AffineObj /* >= 0x1A */
 {
     /* 00 */ u8 filler_00[8];
     /* 08 */ u32 unk08;
-    /* 0C */ s16 unk0C;
-    /* 0E */ s16 unk0E;
-    /* 10 */ s16 unk10;
-    /* 12 */ s16 unk12;
-    /* 14 */ u16 unk14;
-    /* 16 */ u16 unk16;
-    /* 18 */ u8 unk18;
-    /* 19 */ u8 unk19;
+    /* 0C */ s16 pa;
+    /* 0E */ s16 pb;
+    /* 10 */ s16 pc;
+    /* 12 */ s16 pd;
+    /* 14 */ u16 scaleX;
+    /* 16 */ u16 scaleY;
+    /* 18 */ u8 angle;
+    /* 19 */ u8 locked;
 };
 
 struct Unk70354 /* >= 0x34 */
@@ -2248,7 +2248,7 @@ struct Unk70354 /* >= 0x34 */
     /* 14 */ u8 filler_14[8];
     /* 1C */ u16 unk1C;
     /* 1E */ u8 filler_1E[0x12];
-    /* 30 */ struct Unk70354Object *unk30;
+    /* 30 */ struct AffineObj *unk30;
 };
 
 /* Owner of the sprite placed by sub_08035468. */
@@ -2278,7 +2278,7 @@ struct Unk361A8 /* >= 0x20 */
 /* Pointer + fields at +0x30..+0x4C. sub_080346C0. */
 struct Unk346C0Inner /* >= 0x54 */
 {
-    /* 00 */ struct Unk705DC *unk00;
+    /* 00 */ struct Sprite *unk00;
     /* 04 */ u8 filler_04[8];
     /* 0c */ s32 unk0C;
     /* 10 */ s32 unk10;
@@ -2337,14 +2337,14 @@ struct Unk346C0 /* >= 0x2f8 */
     /* 020 */ u8 filler_20[0x6C];
     /* 08c */ u32 unk08C; /* sub_080348E8 */
     /* 090 */ u8 filler_90[0x44];
-    /* 0d4 */ struct Unk705DC *unkD4; /* sub_08035624 */
+    /* 0d4 */ struct Sprite *unkD4; /* sub_08035624 */
     /* 0d8 */ u16 unkD8; /* sub_08035624 */
     /* 0da */ u16 unkDA; /* sub_08035624 */
     /* 0dc */ u8 filler_DC[0xD4];
-    /* 1b0 */ struct Unk705DC *unk1B0; /* sub_08035624 */
+    /* 1b0 */ struct Sprite *unk1B0; /* sub_08035624 */
     /* 1b4 */ u16 unk1B4; /* sub_08035624 */
     /* 1b6 */ u8 filler_1B6[0xD6];
-    /* 28c */ struct Unk705DC *unk28C; /* sub_08035624 */
+    /* 28c */ struct Sprite *unk28C; /* sub_08035624 */
     /* 290 */ u16 unk290; /* sub_08035624 */
     /* 292 */ u8 filler_292[0x1E];
     /* 2b0 */ u32 unk2B0; /* sub_08034568 */
@@ -2649,11 +2649,11 @@ struct Unk40D4 /* >= 0x10 */
     /* 0c */ void **unk0C;
 };
 
-/* Nested Unk7069C at +0x34. sub_08054558, sub_08054454. */
+/* Nested TextGroup at +0x34. sub_08054558, sub_08054454. */
 struct Unk070C /* >= 0x44 */
 {
     /* 00 */ void *unk00[13];
-    /* 34 */ struct Unk7069C unk34;
+    /* 34 */ struct TextGroup unk34;
 };
 
 /* Fields at +0x224 / +0x348. sub_0806F174. */
@@ -2822,10 +2822,10 @@ struct Unk67F3C /* >= 0x99 */
     /* 98 */ u8 unk98;
 };
 
-struct Unk705DC /* >= 0x30 */
+struct Sprite /* >= 0x30 */
 {
     /* 00 */ u8 filler_00[4];
-    /* 04 */ struct Unk705DC *unk04;
+    /* 04 */ struct Sprite *next;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;
     /* 10 */ u32 unk10;
@@ -2840,7 +2840,7 @@ struct Unk705DC /* >= 0x30 */
     /* 24 */ s32 unk24;
     /* 28 */ void *unk28;
     /* 2c */ void *unk2C;
-    /* 30 */ struct Unk705DC *unk30;
+    /* 30 */ struct Sprite *affine;
 };
 
 /* Sprite template read by sub_0806FF58: OAM shape/size at +7, colour
@@ -2867,7 +2867,7 @@ struct Unk35D68Output
     /* 08 */ s32 unk08;
     /* 0c */ s32 unk0C;
     /* 10 */ u8 filler_10[0x20];
-    /* 30 */ struct Unk70354Object *unk30;
+    /* 30 */ struct AffineObj *unk30;
 };
 
 struct Unk35D68Source
@@ -2918,7 +2918,7 @@ struct Unk2ECD8 /* >= 0x13c */
     /* 008 */ struct Unk2FA94Entry *items;
     /* 00c */ struct Unk2ECD8Entry *entries;
     /* 010 */ u8 filler_010[0xE8];
-    /* 0f8 */ u8 text[0x38]; /* Unk7069C text object */
+    /* 0f8 */ u8 text[0x38]; /* TextGroup text object */
     /* 130 */ s32 count;
     /* 134 */ s32 top;
     /* 138 */ s32 cursor;
@@ -2980,13 +2980,13 @@ struct Unk7179C /* >= 0x20 */
     /* 1c */ s32 unk1C;
 };
 
-/* Linked Unk705DC list + flag. sub_080712CC. */
+/* Linked Sprite list + flag. sub_080712CC. */
 struct Unk712CC /* >= 0x20 */
 {
     /* 00 */ u8 filler_00[0xE];
     /* 0e */ u8 unk0E;
     /* 0f */ u8 filler_0F[5];
-    /* 14 */ struct Unk705DC *unk14;
+    /* 14 */ struct Sprite *unk14;
     /* 18 */ u8 filler_18[4];
     /* 1c */ s32 unk1C;
 };
@@ -3032,7 +3032,7 @@ struct Unk30F00Inner /* >= 0x34 */
     /* 08 */ s32 unk08;
     /* 0c */ s32 unk0C;
     /* 10 */ u8 filler_10[0x20];
-    /* 30 */ struct Unk705DC *unk30;
+    /* 30 */ struct Sprite *unk30;
 };
 
 struct Unk30F00Mid /* >= 0x04 */
@@ -3148,20 +3148,20 @@ struct Unk6D748 /* >= 0x98 */
 };
 
 /* Stride-0x28 slot. sub_08071E84 / sub_08071EE4 / sub_08071E44. */
-struct Unk71E84 /* 0x28 */
+struct SoundChannel /* 0x28 */
 {
-    /* 00 */ s32 unk00;
-    /* 04 */ s32 unk04;
-    /* 08 */ s32 unk08;
+    /* 00 */ s32 data;
+    /* 04 */ s32 cursor;
+    /* 08 */ s32 rate;
     /* 0c */ s32 unk0C;
-    /* 10 */ u16 unk10;
+    /* 10 */ u16 volume;
     /* 12 */ u8 filler_12[2];
     /* 14 */ u16 unk14;
-    /* 16 */ u8 unk16;
+    /* 16 */ u8 state;
     /* 17 */ u8 unk17;
-    /* 18 */ u32 unk18;
-    /* 1c */ void *unk1C;
-    /* 20 */ void *unk20;
+    /* 18 */ u32 handle;
+    /* 1c */ void *list;
+    /* 20 */ void *listIndex;
     /* 24 */ u16 unk24;
 };
 
@@ -3460,12 +3460,12 @@ struct BeybladeDef /* 0x1c */
     /* 18 */ u32 param;
 };
 
-/* Source record copied into an Unk59AE0Node. sub_08059AE0. */
-struct Unk59AE0Src /* >= 0x24 */
+/* Source record copied into an Task. sub_08059AE0. */
+struct TaskTemplate /* >= 0x24 */
 {
-    /* 00 */ u32 unk00;
-    /* 04 */ u32 unk04;
-    /* 08 */ u32 unk08;
+    /* 00 */ u32 initFn;
+    /* 04 */ u32 updateFn;
+    /* 08 */ u32 destroyFn;
     /* 0c */ u32 unk0C;
     /* 10 */ u32 unk10;
     /* 14 */ u32 unk14;
@@ -3475,19 +3475,19 @@ struct Unk59AE0Src /* >= 0x24 */
 };
 
 /* Freelist node type pointed to by gUnk_03000730. sub_08059AE0. */
-struct Unk59AE0Node /* 0x3c */
+struct Task /* 0x3c */
 {
-    /* 00 */ u32 unk00;
-    /* 04 */ u32 unk04;
-    /* 08 */ u32 unk08;
-    /* 0c */ u32 unk0C;
+    /* 00 */ u32 initFn;
+    /* 04 */ u32 updateFn;
+    /* 08 */ u32 destroyFn;
+    /* 0c */ u32 heap;
     /* 10 */ u32 unk10;
-    /* 14 */ u32 unk14;
+    /* 14 */ u32 stage;
     /* 18 */ u32 unk18;
     /* 1c */ u32 unk1C;
     /* 20 */ u32 unk20;
     /* 24 */ u32 unk24;
-    /* 28 */ struct Unk59AE0Src *unk28;
+    /* 28 */ struct TaskTemplate *unk28;
     /* 2c */ u32 unk2C;
     /* 30 */ u32 unk30;
     /* 34 */ u32 unk34;
@@ -3498,8 +3498,8 @@ struct Unk59AE0Node /* 0x3c */
 struct Unk38D68 /* >= 0x304 */
 {
     /* 000 */ u8 filler_000[0x28C];
-    /* 28c */ struct Unk705DC *unk28C;
-    /* 290 */ struct Unk705DC *unk290;
+    /* 28c */ struct Sprite *unk28C;
+    /* 290 */ struct Sprite *unk290;
     /* 294 */ u8 filler_294[0x68];
     /* 2fc */ s32 unk2FC;
     /* 300 */ s32 unk300;
@@ -3508,8 +3508,8 @@ struct Unk38D68 /* >= 0x304 */
 struct Unk37508Resource /* 0x6c */
 {
     /* 00 */ u8 filler_00[0x18];
-    /* 18 */ struct Unk705DC *unkB00[8];
-    /* 38 */ struct Unk705DC *unkB20[8];
+    /* 18 */ struct Sprite *unkB00[8];
+    /* 38 */ struct Sprite *unkB20[8];
     /* 58 */ u8 filler_58[0x14];
 };
 
@@ -3584,16 +3584,16 @@ struct Unk39BD4Part /* >= 0x25 */
 struct Unk39BD4 /* >= 0x2b4 */
 {
     /* 000 */ u8 filler_000[0x284];
-    /* 284 */ struct Unk705DC *unk284;
-    /* 288 */ struct Unk705DC *unk288;
-    /* 28c */ struct Unk705DC *unk28C;
-    /* 290 */ struct Unk705DC *unk290;
-    /* 294 */ struct Unk705DC *unk294;
-    /* 298 */ struct Unk705DC *unk298;
-    /* 29c */ struct Unk705DC *unk29C;
-    /* 2a0 */ struct Unk705DC *unk2A0;
+    /* 284 */ struct Sprite *unk284;
+    /* 288 */ struct Sprite *unk288;
+    /* 28c */ struct Sprite *unk28C;
+    /* 290 */ struct Sprite *unk290;
+    /* 294 */ struct Sprite *unk294;
+    /* 298 */ struct Sprite *unk298;
+    /* 29c */ struct Sprite *unk29C;
+    /* 2a0 */ struct Sprite *unk2A0;
     /* 2a4 */ u8 filler_2A4[0xC];
-    /* 2b0 */ struct Unk705DC *unk2B0;
+    /* 2b0 */ struct Sprite *unk2B0;
 };
 
 /* 8-byte list rows at 0x080989F0 (id < 0 = empty row, label text). sub_0804C8BC. */
@@ -3606,7 +3606,7 @@ struct Unk4C8BCRow /* 0x08 */
 
 /* BG resource header passed to sub_08068A08: offsets are relative to the
  * header. */
-struct Unk68A08Res /* >= 0x20 */
+struct AffineBgResource /* >= 0x20 */
 {
     /* 00 */ u8 filler_00[4];
     /* 04 */ s32 tilesOffset;
@@ -3624,7 +3624,7 @@ struct Unk68A08Res /* >= 0x20 */
 
 /* Typewriter text state: prints lines[line] one character per `delay`
  * frames. sub_080618EC. */
-struct Unk618EC /* 0x16 */
+struct TextTypewriter /* 0x16 */
 {
     /* 00 */ u8 **lines;
     /* 04 */ u32 len; /* length of the current line, 0 = not started */

@@ -7,7 +7,7 @@
 void sub_08041C8C(void *a, void *b, u32 *src)
 {
     s16 i;
-    struct Unk68574 *obj;
+    struct Actor *obj;
     struct Unk41E14Node *node;
     struct Unk41C8CDst *dst;
 

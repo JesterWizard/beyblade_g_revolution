@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08051BBC` |
 | Size | 124 bytes (44 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08051BBC` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | old_agbcc; block-scoped loop local |
 
 ## Why this name
 

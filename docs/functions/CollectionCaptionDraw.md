@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0804AE94` |
 | Size | 300 bytes (109 instructions) |
-| Tier | UNKNOWN |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0804AE94` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | record caption string; gData symbols |
 
 ## Why this name
 

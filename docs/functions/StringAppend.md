@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080733E4` |
 | Size | 90 bytes (45 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080733E4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | strcat-like append |
 
 ## Why this name
 

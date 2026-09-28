@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08071BA0` |
 | Size | 148 bytes (50 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | audio |
 | Link label | `sub_08071BA0` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | enable sound DMA1 to FIFO A and program timers |
+| Note | sound FIFO A DMA1 + timer init |
 
 ## Why this name
 

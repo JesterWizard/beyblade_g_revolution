@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x08044A8C` |
 | Size | 672 bytes (274 instructions) |
-| Tier | DECOMPILED |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08044A8C` |

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080444BC` |
 | Size | 396 bytes (145 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080444BC` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | map scene setup from Unk447CC descriptor |
 
 ## Why this name
 

@@ -11,7 +11,7 @@
 s32 GetBeybladeNameWithIndex(s32 a)
 {
     u8 *base = (u8 *)gData_0807A1F4;
-    u32 off = gMainWorkPtr->unk1818 * 4 + a * 40;
+    u32 off = gMainWorkPtr->language * 4 + a * 40;
 
     return *(s32 *)(base + off);
 }

@@ -9,7 +9,7 @@
 void sub_08030F38(void)
 {
     struct BattleWork *work;
-    struct Unk705DC *e;
+    struct Sprite *e;
     s32 i;
 
     work = gData_03000290;
@@ -43,7 +43,7 @@ void sub_08030F38(void)
 
     {
         struct BattleWork *battle;
-        struct Unk705DC *lead;
+        struct Sprite *lead;
         s32 delta;
         s32 step;
 

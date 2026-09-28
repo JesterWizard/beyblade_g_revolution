@@ -5,9 +5,9 @@ void BgmSetVolume(u16 a)
 {
     s32 v;
 
-    v = gMainWorkPtr->unk177C;
+    v = gMainWorkPtr->bgmHandle;
     if (v != -1)
         SoundSetVolume(v, a);
-    gMainWorkPtr->unk1819 = a;
+    gMainWorkPtr->bgmVolume = a;
 }
 

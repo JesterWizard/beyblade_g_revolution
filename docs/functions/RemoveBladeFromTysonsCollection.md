@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x0803E0CC` |
 | Size | 296 bytes (123 instructions) |
-| Tier | DECOMPILED |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803E0CC` |

@@ -7,7 +7,7 @@
 // matrix. A NULL obj takes one from the battle-object pool; the identity
 // transform (d 0, scale 0x100) releases it instead. Busy objects (unk19) are
 // left alone and their unk19 is returned.
-struct Unk70354Object *BtlObjSetAffine(struct Unk70354Object *obj, u16 b, u16 c, u8 d)
+struct AffineObj *BtlObjSetAffine(struct AffineObj *obj, u16 b, u16 c, u8 d)
 {
     bool32 reset;
     s32 cos, sin, sx, sy;
@@ -17,8 +17,8 @@ struct Unk70354Object *BtlObjSetAffine(struct Unk70354Object *obj, u16 b, u16 c,
         reset = TRUE;
     if (obj != NULL)
     {
-        if (obj->unk19 != 0)
-            return (struct Unk70354Object *)(u32)obj->unk19;
+        if (obj->locked != 0)
+            return (struct AffineObj *)(u32)obj->locked;
         if (reset)
         {
             BtlObjListMoveToHead((struct BtlObj *)obj);
@@ -29,31 +29,31 @@ struct Unk70354Object *BtlObjSetAffine(struct Unk70354Object *obj, u16 b, u16 c,
     {
         if (reset)
             return NULL;
-        obj = (struct Unk70354Object *)BtlObjListMoveHeadToTail();
+        obj = (struct AffineObj *)BtlObjListMoveHeadToTail();
         if (obj == NULL)
             return NULL;
     }
-    obj->unk14 = b;
-    obj->unk16 = c;
-    obj->unk18 = d;
+    obj->scaleX = b;
+    obj->scaleY = c;
+    obj->angle = d;
     if (d != 0)
     {
         cos = gData_083C9544[d + 0x40];
         sx = gData_083A9544[b];
-        obj->unk0C = (cos * sx) >> 8;
+        obj->pa = (cos * sx) >> 8;
         sin = gData_083C9544[d];
-        obj->unk0E = (sin * sx) >> 8;
+        obj->pb = (sin * sx) >> 8;
         sin = -sin;
         sy = gData_083A9544[c];
-        obj->unk10 = (sin * sy) >> 8;
-        obj->unk12 = (cos * sy) >> 8;
+        obj->pc = (sin * sy) >> 8;
+        obj->pd = (cos * sy) >> 8;
     }
     else
     {
-        obj->unk0C = gData_083A9544[b];
-        obj->unk0E = d;
-        obj->unk10 = d;
-        obj->unk12 = gData_083A9544[c];
+        obj->pa = gData_083A9544[b];
+        obj->pb = d;
+        obj->pc = d;
+        obj->pd = gData_083A9544[c];
     }
     return obj;
 }

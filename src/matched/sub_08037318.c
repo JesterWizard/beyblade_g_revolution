@@ -11,7 +11,7 @@ void sub_08037318(struct Unk346C0 *a, u32 index_arg)
     u32 r5;
     struct Unk002A0Record *record;
     void *p;
-    struct Unk705DC **slot;
+    struct Sprite **slot;
 
     index = (u8)index_arg;
     p = BtlObjPoolAlloc(0);

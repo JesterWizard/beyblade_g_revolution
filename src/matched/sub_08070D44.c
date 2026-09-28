@@ -4,7 +4,7 @@
 
 // @ 0x08070d44
 /* match-compiler: old_agbcc */
-u8 TextGroupAppendNumber(struct Unk7069C *a, s32 value, u8 b)
+u8 TextGroupAppendNumber(struct TextGroup *a, s32 value, u8 b)
 {
     u8 buf[0x10];
     u32 neg;
@@ -26,7 +26,7 @@ u8 TextGroupAppendNumber(struct Unk7069C *a, s32 value, u8 b)
             *--p = 0x30;
             break;
         }
-        if ((a->unk08 & 0x40) == 0) {
+        if ((a->flags & 0x40) == 0) {
             commas--;
             if (commas == 0xFF) {
                 *--p = 0x2C;

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08031368
-void sub_08031368(struct Unk705DC **arr, s32 n, u32 *out08, u32 *out0C)
+void sub_08031368(struct Sprite **arr, s32 n, u32 *out08, u32 *out0C)
 {
     s32 i = n - 1;
 
@@ -9,7 +9,7 @@ void sub_08031368(struct Unk705DC **arr, s32 n, u32 *out08, u32 *out0C)
     {
         do
         {
-            struct Unk705DC *entry = arr[i];
+            struct Sprite *entry = arr[i];
 
             if (entry != 0)
             {

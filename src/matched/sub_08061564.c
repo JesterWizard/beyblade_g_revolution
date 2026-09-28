@@ -11,7 +11,7 @@ void TextDraw(u8 *data)
     u8 op;
     u8 x;
     u8 *cur;
-    struct Unk0798 *work;
+    struct TextWindow *work;
 
     if (data == NULL || (op = *data) == 0)
         return;
@@ -22,10 +22,10 @@ void TextDraw(u8 *data)
         {
         case 10:
             work = gUnk_03000798;
-            work->unk90 = 0;
-            work->unk92 = work->unk92 + work->unkA2;
-            if ((s16)work->unk92 > (work->unk9A >> 3) - 1)
-                work->unk92 = 0;
+            work->penX = 0;
+            work->penY = work->penY + work->lineHeight;
+            if ((s16)work->penY > (work->height >> 3) - 1)
+                work->penY = 0;
         case 7:
             x = *cur++;
             TextSetCursor(x, *cur++);

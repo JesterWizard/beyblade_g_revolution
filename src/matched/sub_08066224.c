@@ -16,7 +16,7 @@ void sub_08066224(struct Unk66224 *a, s32 index)
     struct Unk66224Entry *current;
     struct Unk66224Entry *entry;
     struct Unk66224Object *entryObj;
-    struct Unk7069C *state;
+    struct TextGroup *state;
     s32 *scaledp;
     s32 lookup;
     s32 *unk0Cp;

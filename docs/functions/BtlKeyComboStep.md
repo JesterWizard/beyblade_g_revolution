@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080338F0` |
 | Size | 104 bytes (49 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080338F0` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | key-combo tracker; mismatch resets both fields |
 
 ## Why this name
 

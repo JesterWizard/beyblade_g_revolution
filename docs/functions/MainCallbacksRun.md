@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080415FC` |
 | Size | 200 bytes (77 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080415FC` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | phase callbacks via typed fn-ptr fields |
 
 ## Why this name
 

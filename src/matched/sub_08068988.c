@@ -24,7 +24,7 @@ void sub_08068988(
     index = (u8)index_arg;
     limit = (u16)limit_arg;
     mode = (u16)mode_arg;
-    AffineBgLoad((struct Unk68E54 *)state, index, (void *)unused, limit, mode);
+    AffineBgLoad((struct MapLayer *)state, index, (void *)unused, limit, mode);
     *BgGetHofsReg(index) = 0;
     *BgGetVofsReg(index) = 0;
     width = 1 << state->unk5F;

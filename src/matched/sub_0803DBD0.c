@@ -16,14 +16,14 @@ u32 sub_0803DBD0(u32 a)
     if (row >= 0)
     {
         table = gData_080796DC;
-        value = gMainWorkPtr->unk1818;
+        value = gMainWorkPtr->language;
         offset = value * 4 + row * 40;
         value = *(u32 *)(table + offset);
     }
     else
     {
         fallback = (u32 *)gData_08097458;
-        value = fallback[gMainWorkPtr->unk1818];
+        value = fallback[gMainWorkPtr->language];
     }
     return value;
 }

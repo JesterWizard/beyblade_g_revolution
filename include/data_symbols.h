@@ -56,13 +56,13 @@ extern u32 gData_08079068[];
 extern u32 gData_08079358[];
 extern struct Unk002A0Record gData_030002A0[];
 extern void *gData_03000508[];
-extern struct Unk68574 *gData_03000534; /* pool of 0x20 objects, sub_080419B0 */
+extern struct Actor *gData_03000534; /* pool of 0x20 objects, sub_080419B0 */
 extern s16 gData_03000504;
 extern void *gData_030003E0[];
-extern struct Unk68574 *gData_03000480[];
+extern struct Actor *gData_03000480[];
 extern u8 gData_03000770[];
 extern u32 gData_03000794[];
-extern struct Unk0798 *gData_03000798;
+extern struct TextWindow *gData_03000798;
 extern struct Unk09B0 *gData_030009B0;
 
 extern u8 gData_083A7404[];
@@ -190,7 +190,7 @@ extern struct Unk2E2F8 gData_08077AC0[];
 // Scene object pool (9 x 0xDC) and the scene index its tables are keyed by
 // (sub_0804DB28)
 extern u32 gData_03000694;
-extern struct Unk68574 *gData_03000698;
+extern struct Actor *gData_03000698;
 
 // Per-scene tables indexed by gData_03000694 (sub_0804DB28)
 extern struct Unk7BE04 gData_0807BE04[];
@@ -312,7 +312,7 @@ extern struct Unk6FF58Src *gData_080989D8[];
 extern void *gData_080989E4[];
 extern s16 gData_03000688;
 extern s16 gData_03000684;
-extern struct Unk688C8Rect gData_03000008[];
+extern struct MapTileRect gData_03000008[];
 extern s16 *gData_03000648;
 extern s16 gData_0300064C;
 extern u8 *gData_08097430[];

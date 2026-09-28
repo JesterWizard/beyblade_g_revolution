@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08043420` |
 | Size | 438 bytes (166 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08043420` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | old_agbcc; direct gMainWorkPtr accesses |
 
 ## Why this name
 

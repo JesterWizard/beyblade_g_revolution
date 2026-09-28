@@ -78,7 +78,7 @@
 #define gUnk_030002A0 (*(struct Unk002A0 *)0x030002A0)
 #define gUnk_0300047CLoc ((struct Unk047C **)0x0300047C)
 #define gUnk_0300047C (*(struct Unk047C **)0x0300047C)
-#define gUnk_03000798 (*(struct Unk0798 **)0x03000798)
+#define gUnk_03000798 (*(struct TextWindow **)0x03000798)
 #define gUnk_030003CC (*(struct Unk3CC **)0x030003CC)
 #define gUnk_03000554 (*(struct Unk0554 **)0x03000554)
 #define gUnk_03000538 (*(struct Unk0538 **)0x03000538)

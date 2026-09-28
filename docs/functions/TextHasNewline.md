@@ -7,13 +7,12 @@
 |--|--|
 | ROM | `0x080739E8` |
 | Size | 36 bytes (18 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080739E8` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | readable-thumb |
 
 ## Why this name
 

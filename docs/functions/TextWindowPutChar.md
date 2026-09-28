@@ -7,7 +7,7 @@
 |--|--|
 | ROM | `0x08060E48` |
 | Size | 532 bytes (261 instructions) |
-| Tier | UNKNOWN |
+| Tier | UNDERSTOOD |
 | Status | size_mismatch |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08060E48` |

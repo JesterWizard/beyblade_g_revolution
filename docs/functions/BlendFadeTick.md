@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080607BC` |
 | Size | 128 bytes (55 instructions) |
-| Tier | DECOMPILED |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080607BC` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | switch on submode; fade local |
 
 ## Why this name
 

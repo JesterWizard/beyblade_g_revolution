@@ -34,7 +34,7 @@ void BattleBannerScroll(void)
     held = gBtlKeysHeldU16;
     keysNew = *(u16 *)gBtlKeysNew;
     Unk70604Init(&text.hdr, (struct Unk70604Src *)0x082BF600, 0x080B72F3, -0xF0, 0x50, 0xF0, 2);
-    TextGroupSetString((struct Unk7069C *)&text, gData_080780EC[gMainWorkPtr->unk1818], 0);
+    TextGroupSetString((struct TextGroup *)&text, gData_080780EC[gMainWorkPtr->language], 0);
     sub_0807179C((struct Unk7179C *)&text);
     PaletteHighlightRestore((struct Unk312EC *)gBattleWork->unkB84);
     PaletteHighlightRestore((struct Unk312EC *)gBattleWork->unkB94);
@@ -75,7 +75,7 @@ void BattleBannerScroll(void)
                 target = -0xC800;
         }
     }
-    BtlReleaseEntry((struct Unk7069C *)&text);
+    BtlReleaseEntry((struct TextGroup *)&text);
     VBlankIntrWait();
     for (i = 0; i <= 1; i++)
     {

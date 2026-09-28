@@ -4,6 +4,6 @@
 
 u16 TextGetGlyphWidth(void)
 {
-    return gUnk_03000798->unkA0;
+    return gUnk_03000798->glyphWidth;
 }
 

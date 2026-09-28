@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08042BE8` |
 | Size | 82 bytes (38 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08042BE8` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | exp bracket lookup via gData_080908BC |
 
 ## Why this name
 

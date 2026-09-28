@@ -9,18 +9,18 @@
 // the sum in one expression makes agbcc accumulate `lo + arg0*stride` first.
 void TextWindowClearRow(u16 arg0)
 {
-    struct Unk0798 *p = gUnk_03000798;
+    struct TextWindow *p = gUnk_03000798;
     s32 lo;
     u16 h;
     s32 stride;
     s32 off;
 
-    if (arg0 >= (p->unk9A >> 3) - 1)
+    if (arg0 >= (p->height >> 3) - 1)
         return;
 
-    lo = (s32)p->unk5D;
+    lo = (s32)p->charBlock;
     lo <<= 0xE;
-    h = p->unk98;
+    h = p->width;
     stride = (h >> 3) << 5;
     off = arg0 * stride + 0x06000000;
     _08073C4C((void *)0, (void *)(lo + off), stride, *(void **)0x080BB8BC);
