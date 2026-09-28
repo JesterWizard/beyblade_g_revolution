@@ -8,7 +8,7 @@
 // command, the address and the four data halfwords (MSB first), then polls the
 // chip's ready bit, giving up after 0x88 scanlines. Returns 0x80FF if address
 // is past the chip size and 0xC001 on a timeout.
-u16 sub_08067648(u16 address, const u16 *data, u8 mode)
+u16 EepromWriteBlockEx(u16 address, const u16 *data, u8 mode)
 {
     u16 buffer[0x52];
     vu16 status;

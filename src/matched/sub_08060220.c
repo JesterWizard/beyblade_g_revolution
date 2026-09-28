@@ -8,7 +8,7 @@ void sub_08060220(u32 idx)
     v = gMainWorkPtr->unk1710[idx];
     if (v != -1)
     {
-        sub_08071F84(v);
+        SoundStop(v);
         gMainWorkPtr->unk1710[idx] = -1;
     }
 }

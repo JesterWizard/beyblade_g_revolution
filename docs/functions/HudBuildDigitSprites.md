@@ -28,8 +28,8 @@
 - `sub_08041394`
 - `sub_08065E0C`
 - [`VBlankIntrWait`](VBlankIntrWait.md)
-- `sub_080679A4`
-- `sub_080679C0`
+- [`BgPaletteLoad`](BgPaletteLoad.md)
+- [`ObjPaletteLoad`](ObjPaletteLoad.md)
 - `sub_08069894`
 - [`BgSetPriorities`](BgSetPriorities.md)
 

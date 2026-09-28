@@ -40,4 +40,4 @@
 - `sub_0804CE2C`
 - `sub_0804E4F4`
 - [`TextDraw`](TextDraw.md)
-- `sub_080618EC`
+- [`TextTypewriterTick`](TextTypewriterTick.md)

@@ -29,9 +29,9 @@ s8 SaveDataVerify(void)
     slotBlock = HeapAlloc(0x1F60);
     gData_03000198->unk1688 = (struct Unk1688Entry *)(buf = *hdrBlock);
     gData_03000198->unk168C = *slotBlock;
-    sub_080674BC(0x40);
+    EepromSetType(0x40);
     VBlankIntrWait();
-    sub_08071B4C();
+    SoundHwStop();
     REG_IME = 0;
     invalid = 0;
     for (i = 0; i < n; i++)
@@ -45,7 +45,7 @@ s8 SaveDataVerify(void)
                 retry = 0;
             if (retry == 8)
             {
-                sub_08071BA0();
+                SoundHwStart();
                 REG_IME = 1;
                 for (i = 0; i < 1; i++)
                 {
@@ -83,7 +83,7 @@ s8 SaveDataVerify(void)
             SAVE_FAIL(i);
         }
     }
-    sub_08071BA0();
+    SoundHwStart();
     REG_IME = 1;
     return gData_03000198->unk185B;
 }

@@ -37,6 +37,6 @@
 - [`MapCursorMoveStep`](MapCursorMoveStep.md)
 - `sub_08043638`
 - [`FieldEnter`](FieldEnter.md)
-- `sub_08044648`
+- [`BeybladeSpawnList`](BeybladeSpawnList.md)
 - [`SceneObjPoolRebuild`](SceneObjPoolRebuild.md)
 - `sub_08057274`

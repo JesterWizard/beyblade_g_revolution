@@ -47,4 +47,4 @@
 - `sub_08061EF8`
 - `sub_0806211C`
 - `sub_08063D68`
-- `sub_08070930`
+- [`TextGroupAppendString`](TextGroupAppendString.md)

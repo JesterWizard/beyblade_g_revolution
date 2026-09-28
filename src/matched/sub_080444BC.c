@@ -22,7 +22,7 @@ void sub_080444BC(void)
         if (p->unk04 != NULL)
             sub_080447E8(p->unk04);
         if (p->unk08 != NULL)
-            sub_08044648(p->unk08);
+            BeybladeSpawnList(p->unk08);
         if (p->unk0C != NULL)
             sub_08062A1C((u32)p->unk0C);
         if (p->unk10 != NULL)

@@ -29,7 +29,7 @@
 
 - [`BtlObjListMoveToHead`](BtlObjListMoveToHead.md)
 - [`BtlObjPoolReleaseChain`](BtlObjPoolReleaseChain.md)
-- `sub_080705D4`
+- [`AffineObjUnlock`](AffineObjUnlock.md)
 
 ## Callers
 

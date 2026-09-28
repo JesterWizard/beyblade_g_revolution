@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080679a4
-void sub_080679A4(void *src)
+void BgPaletteLoad(void *src)
 {
     void **cpuSet;
     u32 dst;

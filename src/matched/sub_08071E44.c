@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08071e44
-void sub_08071E44(struct Unk71E84 *p, void *a, s16 *idx)
+void SoundChannelInitFromList(struct Unk71E84 *p, void *a, s16 *idx)
 {
     s32 val;
     s32 zero;

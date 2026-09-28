@@ -35,6 +35,6 @@ void sub_08054494(s32 x, s32 y)
 
     Unk70604Init((struct Unk70604 *)&gUnk_0300070C->unk34, (struct Unk70604Src *)0x082BB648,
                  (s32)0x080B7258, xEnd, yEnd, 0xF0, 0);
-    sub_080712CC((struct Unk712CC *)&gUnk_0300070C->unk34, 1);
+    TextGroupSetObjMode((struct Unk712CC *)&gUnk_0300070C->unk34, 1);
 }
 

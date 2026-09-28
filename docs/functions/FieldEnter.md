@@ -60,7 +60,7 @@
 - `sub_0806644C`
 - [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
 - [`SceneObjUpdate`](SceneObjUpdate.md)
-- `sub_08068808`
+- [`SceneObjFreeResources`](SceneObjFreeResources.md)
 - `sub_08069894`
 - [`BgSetPriorities`](BgSetPriorities.md)
 - `sub_0806EE24`

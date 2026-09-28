@@ -17,7 +17,7 @@ void sub_0804AE94(void)
     if (gData_03000654 <= 0x36)
     {
         TextFormatInt(gData_03000654, num, 0x80);
-        sub_08073218((u8 *)0x083A7510, line, 0x80);
+        StringCopy((u8 *)0x083A7510, line, 0x80);
         StringAppend(num, line, 0x80);
         StringAppend((const u8 *)0x083A7518, line, 0x80);
         StringAppend((const u8 *)sub_0803DD88(gData_03000660->unk1C), line, 0x80);
@@ -28,7 +28,7 @@ void sub_0804AE94(void)
     else
     {
         TextFormatInt(gData_03000654, num, 0x80);
-        sub_08073218((u8 *)0x083A7510, line, 0x80);
+        StringCopy((u8 *)0x083A7510, line, 0x80);
         StringAppend(num, line, 0x80);
         StringAppend((const u8 *)0x083A7518, line, 0x80);
         StringAppend((const u8 *)sub_0803DD88(gData_03000660->unk1C), line, 0x80);

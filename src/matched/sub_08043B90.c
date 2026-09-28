@@ -14,7 +14,7 @@ s32 BtlFindUnk16E0(void)
         return -1;
     while (node->unk00 != 0)
     {
-        if (sub_08073440(node->unk00, gMainWorkPtr->unk16C8) == 0)
+        if (StringCompare(node->unk00, gMainWorkPtr->unk16C8) == 0)
             return node->unk04;
         node++;
     }

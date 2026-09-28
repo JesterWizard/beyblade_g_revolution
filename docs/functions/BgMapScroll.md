@@ -28,7 +28,7 @@
 - [`BgMapBlitRect`](BgMapBlitRect.md)
 - [`BgGetHofsReg`](BgGetHofsReg.md)
 - [`BgGetVofsReg`](BgGetVofsReg.md)
-- `sub_080699C8`
+- [`BgAffineSetRefPoint`](BgAffineSetRefPoint.md)
 
 ## Callers
 

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08071808
-u16 sub_08071808(void)
+u16 SoundGetMasterVolume(void)
 {
     return *(u16 *)gUnk_030000CC;
 }

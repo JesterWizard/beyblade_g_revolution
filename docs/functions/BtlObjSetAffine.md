@@ -31,7 +31,7 @@
 ## Callers
 
 - [`SpriteApplyAffine`](SpriteApplyAffine.md)
-- `sub_08070AF8`
+- [`TextGroupSetScale`](TextGroupSetScale.md)
 
 ## ROM data referenced
 

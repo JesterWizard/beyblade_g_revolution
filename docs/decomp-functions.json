@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T18:58:45Z",
+  "generated": "2026-09-28T19:18:49Z",
   "counts": {
     "matched": 605,
     "wip": 18,
@@ -8,8 +8,8 @@
   },
   "tiers": {
     "UNKNOWN": 10,
-    "DECOMPILED": 13,
-    "UNDERSTOOD": 5,
+    "DECOMPILED": 10,
+    "UNDERSTOOD": 8,
     "MATCHING": 605
   },
   "total": 633,
@@ -4723,8 +4723,8 @@
       "score": "135/364",
       "source": "attempt",
       "note": "initial m2c seed (m2c-fallback); does not compile",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "BeybladeSpawnList"
     },
     {
       "name": "sub_080447B4",
@@ -7478,8 +7478,8 @@
       "score": "108/428",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "TextTypewriterTick"
     },
     {
       "name": "sub_08061A98",
@@ -8885,7 +8885,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "EepromSetType"
     },
     {
       "name": "sub_08067504",
@@ -8942,7 +8942,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "EepromWriteBlock"
     },
     {
       "name": "sub_08067648",
@@ -8961,7 +8961,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "EepromWriteBlockEx"
     },
     {
       "name": "sub_080677A8",
@@ -8980,7 +8980,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "EepromVerifyBlock"
     },
     {
       "name": "sub_08067890",
@@ -9018,7 +9018,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgPaletteLoad"
     },
     {
       "name": "sub_080679C0",
@@ -9037,7 +9037,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ObjPaletteLoad"
     },
     {
       "name": "sub_08067A9C",
@@ -9398,7 +9398,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SceneObjGetPosition"
     },
     {
       "name": "sub_080686D8",
@@ -9474,7 +9474,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SceneObjFreeResources"
     },
     {
       "name": "sub_08068884",
@@ -9550,7 +9550,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "AffineBgLoad"
     },
     {
       "name": "sub_08068BD4",
@@ -9569,7 +9569,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "AffineBgInit"
     },
     {
       "name": "sub_08068E54",
@@ -9740,7 +9740,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgGetCntReg"
     },
     {
       "name": "sub_080699C8",
@@ -9759,7 +9759,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgAffineSetRefPoint"
     },
     {
       "name": "sub_08069A18",
@@ -9778,7 +9778,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgAffineSetMatrix"
     },
     {
       "name": "sub_08069A60",
@@ -10025,7 +10025,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringCountNonSpace"
     },
     {
       "name": "sub_0806B064",
@@ -10614,7 +10614,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CameraEaseToTarget"
     },
     {
       "name": "sub_0806F05C",
@@ -10633,7 +10633,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CameraCenterOnObject"
     },
     {
       "name": "sub_0806F174",
@@ -11013,7 +11013,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SpriteSetObjMode"
     },
     {
       "name": "sub_080705CC",
@@ -11032,7 +11032,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "AffineObjLock"
     },
     {
       "name": "sub_080705D4",
@@ -11051,7 +11051,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "AffineObjUnlock"
     },
     {
       "name": "sub_080705DC",
@@ -11127,7 +11127,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGroupClear"
     },
     {
       "name": "sub_080706B0",
@@ -11164,8 +11164,8 @@
       "score": "199/420",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "TextGroupAppendString"
     },
     {
       "name": "sub_08070AD4",
@@ -11184,7 +11184,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGroupSetString"
     },
     {
       "name": "sub_08070AF8",
@@ -11203,7 +11203,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGroupSetScale"
     },
     {
       "name": "sub_08070C98",
@@ -11222,7 +11222,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGroupMoveBy"
     },
     {
       "name": "sub_08070D44",
@@ -11241,7 +11241,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGroupAppendNumber"
     },
     {
       "name": "sub_08070DF4",
@@ -11260,7 +11260,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGroupSetNumber"
     },
     {
       "name": "sub_080712CC",
@@ -11279,7 +11279,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGroupSetObjMode"
     },
     {
       "name": "sub_0807179C",
@@ -11317,7 +11317,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundSetMasterVolume"
     },
     {
       "name": "sub_08071808",
@@ -11336,7 +11336,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundGetMasterVolume"
     },
     {
       "name": "sub_08071B4C",
@@ -11355,7 +11355,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundHwStop"
     },
     {
       "name": "sub_08071BA0",
@@ -11374,7 +11374,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundHwStart"
     },
     {
       "name": "sub_08071E04",
@@ -11393,7 +11393,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundChannelInit"
     },
     {
       "name": "sub_08071E44",
@@ -11412,7 +11412,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundChannelInitFromList"
     },
     {
       "name": "sub_08071E84",
@@ -11431,7 +11431,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundPlayFromList"
     },
     {
       "name": "sub_08071EE4",
@@ -11450,7 +11450,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundPlay"
     },
     {
       "name": "sub_08071F44",
@@ -11469,7 +11469,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundFindChannel"
     },
     {
       "name": "sub_08071F84",
@@ -11488,7 +11488,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundStop"
     },
     {
       "name": "sub_08071F98",
@@ -11507,7 +11507,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundPause"
     },
     {
       "name": "sub_08071FAC",
@@ -11526,7 +11526,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundResume"
     },
     {
       "name": "sub_08071FC8",
@@ -11545,7 +11545,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundSetVolume"
     },
     {
       "name": "sub_080720F0",
@@ -11564,7 +11564,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SoundPlayIndexed"
     },
     {
       "name": "sub_080726A4",
@@ -11678,7 +11678,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringLength"
     },
     {
       "name": "sub_0807309C",
@@ -11754,7 +11754,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringClear"
     },
     {
       "name": "sub_08073218",
@@ -11773,7 +11773,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringCopy"
     },
     {
       "name": "sub_0807339C",
@@ -11792,7 +11792,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringRemoveLast"
     },
     {
       "name": "sub_080733BC",
@@ -11811,7 +11811,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringAppendChar"
     },
     {
       "name": "sub_080733E4",
@@ -11849,7 +11849,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringCompare"
     },
     {
       "name": "sub_08073568",
@@ -11868,7 +11868,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjTableAddArray"
     },
     {
       "name": "sub_080735B0",
@@ -11887,7 +11887,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjTableRemoveArray"
     },
     {
       "name": "sub_080735DC",
@@ -12001,7 +12001,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "StringInsertChar"
     },
     {
       "name": "sub_08073AEC",

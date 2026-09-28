@@ -21,8 +21,8 @@ u32 sub_08044F64(u32 idx)
             count = 0;
             do
             {
-                sub_08067634(i, table);
-                if (sub_080677A8(i, (void *)table) != 0)
+                EepromWriteBlock(i, table);
+                if (EepromVerifyBlock(i, (void *)table) != 0)
                     count++;
                 else
                     count = 0;

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08073440
-s32 sub_08073440(void *a, void *b)
+s32 StringCompare(void *a, void *b)
 {
     u8 *pa = a;
     u8 *pb = b;

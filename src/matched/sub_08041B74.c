@@ -24,7 +24,7 @@ void SceneObjDespawn(void *a, void *b)
                     sub_08059D08((struct Unk59D08 *)(*slot)->unkC8);
                     (*slot)->unkC8 = NULL;
                 }
-                sub_08068808(*slot);
+                SceneObjFreeResources(*slot);
                 (*slot)->unk04 = -0x4000;
                 (*slot)->unk08 = -0x4000;
                 *slot = gData_03000480[--gData_03000504];

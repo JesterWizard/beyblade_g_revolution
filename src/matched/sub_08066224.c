@@ -50,6 +50,6 @@ void sub_08066224(struct Unk66224 *a, s32 index)
     lookup <<= 2;
     ptr = ((u32)entryObj) + 4;
     ptr += lookup;
-    sub_08070AD4(state, *((void **)ptr), obj->unk2C->unk00->unk0A);
+    TextGroupSetString(state, *((void **)ptr), obj->unk2C->unk00->unk0A);
 }
 

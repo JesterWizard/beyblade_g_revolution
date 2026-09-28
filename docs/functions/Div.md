@@ -32,5 +32,5 @@
 - [`BtlApplyClampedScore`](BtlApplyClampedScore.md)
 - [`DigitRowDraw`](DigitRowDraw.md)
 - `sub_0806E420`
-- `sub_08070D44`
+- [`TextGroupAppendNumber`](TextGroupAppendNumber.md)
 - [`TextFormatInt`](TextFormatInt.md)

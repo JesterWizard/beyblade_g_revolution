@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08071b4c
-void sub_08071B4C(void)
+void SoundHwStop(void)
 {
     u32 w = (u32)gData_04000084;
     u32 z = 0;

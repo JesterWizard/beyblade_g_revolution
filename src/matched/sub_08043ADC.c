@@ -16,7 +16,7 @@ void sub_08043ADC(void)
         n = 7;
         do
         {
-            sub_08068808((struct Unk68574 *)((u8 *)*saved + off));
+            SceneObjFreeResources((struct Unk68574 *)((u8 *)*saved + off));
             off += 0xDC;
             n--;
         } while (n >= 0);

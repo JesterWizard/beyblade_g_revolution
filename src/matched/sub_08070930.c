@@ -2,7 +2,7 @@
 
 // @ 0x08070930
 __attribute__((naked))
-u8 sub_08070930(struct Unk7069C *a, void *b, u8 c)
+u8 TextGroupAppendString(struct Unk7069C *a, void *b, u8 c)
 {
     asm(
         ".syntax unified\n"

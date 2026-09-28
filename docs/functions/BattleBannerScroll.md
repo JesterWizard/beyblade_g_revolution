@@ -42,8 +42,8 @@
 - `sub_0806A954`
 - [`Unk70604Init`](Unk70604Init.md)
 - [`BtlReleaseEntry`](BtlReleaseEntry.md)
-- `sub_08070AD4`
-- `sub_08070C98`
+- [`TextGroupSetString`](TextGroupSetString.md)
+- [`TextGroupMoveBy`](TextGroupMoveBy.md)
 - `sub_0807179C`
 - `sub_08073C40` _(not one of the 633 functions)_
 

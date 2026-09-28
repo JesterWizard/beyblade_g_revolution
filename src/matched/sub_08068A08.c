@@ -7,7 +7,7 @@
 // Initialises an affine BG layer from a resource header: like sub_08068BD4, but
 // the map size, tile data and map pointers come from the header and the tiles
 // are copied (not cleared) into the reserved char blocks.
-void sub_08068A08(struct Unk68E54 *st, u8 bg, void *resArg, u16 cnt, u16 mode)
+void AffineBgLoad(struct Unk68E54 *st, u8 bg, void *resArg, u16 cnt, u16 mode)
 {
     struct Unk68A08Res *res = resArg;
     u32 size;
@@ -85,7 +85,7 @@ void sub_08068A08(struct Unk68E54 *st, u8 bg, void *resArg, u16 cnt, u16 mode)
     {
         st->unk5C = gData_030001A8 -= size >> 11;
     }
-    reg = sub_08069988(bg);
+    reg = BgGetCntReg(bg);
     *reg = (st->unk5C << 8) | cnt | (st->unk5D << 2) | (((flags & 1) ^ 1) << 7);
 }
 

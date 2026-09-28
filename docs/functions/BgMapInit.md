@@ -25,7 +25,7 @@
 
 ## Callees
 
-- `sub_08068A08`
+- [`AffineBgLoad`](AffineBgLoad.md)
 - [`BgMapBlitRect`](BgMapBlitRect.md)
 - [`BgGetHofsReg`](BgGetHofsReg.md)
 - [`BgGetVofsReg`](BgGetVofsReg.md)

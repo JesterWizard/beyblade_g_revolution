@@ -34,12 +34,12 @@
 - `sub_08044F64`
 - [`SaveSlotLoadFromEeprom`](SaveSlotLoadFromEeprom.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
-- `sub_080674BC`
+- [`EepromSetType`](EepromSetType.md)
 - [`EepromReadBlock`](EepromReadBlock.md)
 - [`DebugPrint`](DebugPrint.md)
 - [`HeapAlloc`](HeapAlloc.md)
-- `sub_08071B4C`
-- `sub_08071BA0`
+- [`SoundHwStop`](SoundHwStop.md)
+- [`SoundHwStart`](SoundHwStart.md)
 
 ## Callers
 

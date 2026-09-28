@@ -13,7 +13,7 @@ void sub_08041980(void)
     do
     {
         if (*p != 0)
-            sub_08068808(*p);
+            SceneObjFreeResources(*p);
         *p = z;
         p++;
         n--;

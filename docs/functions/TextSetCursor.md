@@ -59,5 +59,5 @@
 - `sub_08056250`
 - `sub_08056BA4`
 - [`TextDraw`](TextDraw.md)
-- `sub_080618EC`
+- [`TextTypewriterTick`](TextTypewriterTick.md)
 - `sub_08066FB8`

@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08071ba0
-void sub_08071BA0(void)
+void SoundHwStart(void)
 {
     u32 buffer;
     vu32 *timer;

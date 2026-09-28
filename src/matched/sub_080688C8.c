@@ -12,7 +12,7 @@ void BgMapInit(struct Unk68988 *state, u8 index, void *arg2, u16 limit, u16 mode
     s32 yt = y >> 3;
     s32 w, h;
 
-    sub_08068A08((struct Unk68E54 *)state, index, arg2, limit, mode);
+    AffineBgLoad((struct Unk68E54 *)state, index, arg2, limit, mode);
     *BgGetHofsReg(index) = x;
     *BgGetVofsReg(index) = y;
     rect = state->unk08;

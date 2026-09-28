@@ -4,7 +4,7 @@
 
 // @ 0x08069988
 /* match-flags: -fprologue-bugfix */
-void *sub_08069988(u8 a)
+void *BgGetCntReg(u8 a)
 {
   u32 r0;
   unsigned short r1;

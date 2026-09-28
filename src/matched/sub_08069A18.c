@@ -2,7 +2,7 @@
 
 // @ 0x08069a18
 
-void sub_08069A18(u8 a, s16 b, s16 c, s16 d, s16 e)
+void BgAffineSetMatrix(u8 a, s16 b, s16 c, s16 d, s16 e)
 {
     volatile u16 *reg;
 

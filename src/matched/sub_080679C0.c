@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080679c0
-void sub_080679C0(void *src)
+void ObjPaletteLoad(void *src)
 {
     void **cpuSet;
     void *dst;

@@ -30,7 +30,7 @@
 
 - [`Div`](Div.md)
 - [`DivRemainder`](DivRemainder.md)
-- `sub_08073218`
+- [`StringCopy`](StringCopy.md)
 - `sub_08075A58` _(not one of the 633 functions)_
 
 ## Callers

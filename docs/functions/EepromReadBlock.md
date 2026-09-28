@@ -35,4 +35,4 @@
 
 - [`SaveDataVerify`](SaveDataVerify.md)
 - [`SaveSlotLoadFromEeprom`](SaveSlotLoadFromEeprom.md)
-- `sub_080677A8`
+- [`EepromVerifyBlock`](EepromVerifyBlock.md)

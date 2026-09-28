@@ -12,9 +12,9 @@ void BgSetPriorities(u32 a, u32 b, u32 c, u32 d)
     u8 bg2 = c;
     u8 bg3 = d;
 
-    ((struct BgCnt *)sub_08069988(0))->priority = bg0;
-    ((struct BgCnt *)sub_08069988(1))->priority = bg1;
-    ((struct BgCnt *)sub_08069988(2))->priority = bg2;
-    ((struct BgCnt *)sub_08069988(3))->priority = bg3;
+    ((struct BgCnt *)BgGetCntReg(0))->priority = bg0;
+    ((struct BgCnt *)BgGetCntReg(1))->priority = bg1;
+    ((struct BgCnt *)BgGetCntReg(2))->priority = bg2;
+    ((struct BgCnt *)BgGetCntReg(3))->priority = bg3;
 }
 

@@ -30,4 +30,4 @@
 ## Callers
 
 - [`EepromReadBlock`](EepromReadBlock.md)
-- `sub_08067648`
+- [`EepromWriteBlockEx`](EepromWriteBlockEx.md)

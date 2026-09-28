@@ -37,7 +37,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     none = -1;
     if (ok >= 0)
     {
-        sub_08068808((struct Unk68574 *)&gData_03000198->unk036C);
+        SceneObjFreeResources((struct Unk68574 *)&gData_03000198->unk036C);
         sub_0802DEA0();
         sub_080611F0();
         sub_080632F8();

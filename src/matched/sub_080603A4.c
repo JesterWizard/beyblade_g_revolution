@@ -7,7 +7,7 @@ void sub_080603A4(u16 a)
 
     v = gMainWorkPtr->unk177C;
     if (v != -1)
-        sub_08071FC8(v, a);
+        SoundSetVolume(v, a);
     gMainWorkPtr->unk1819 = a;
 }
 

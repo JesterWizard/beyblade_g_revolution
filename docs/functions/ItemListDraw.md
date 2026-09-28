@@ -37,10 +37,10 @@
 - [`TextDrawAlign`](TextDrawAlign.md)
 - [`TextGetAreaWidth`](TextGetAreaWidth.md)
 - [`TextRowSetPaletteBank`](TextRowSetPaletteBank.md)
-- `sub_08070AD4`
+- [`TextGroupSetString`](TextGroupSetString.md)
 - [`BtlObjTableAdd`](BtlObjTableAdd.md)
 - [`BtlObjTableRemove`](BtlObjTableRemove.md)
-- `sub_080731F4`
+- [`StringClear`](StringClear.md)
 - [`TextFormatInt`](TextFormatInt.md)
 
 ## Callers

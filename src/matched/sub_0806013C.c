@@ -8,7 +8,7 @@ void sub_0806013C(void)
     v = gMainWorkPtr->unk177C;
     if (v != -1)
     {
-        sub_08071F84(v);
+        SoundStop(v);
         gMainWorkPtr->unk177C = -1;
         gMainWorkPtr->unk1780 = -1;
     }

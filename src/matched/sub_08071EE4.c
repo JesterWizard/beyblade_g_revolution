@@ -5,7 +5,7 @@
 // @ 0x08071ee4
 /* match-compiler: old_agbcc */
 // Same free-slot search as sub_08071E84, calling sub_08071E04 instead.
-void *sub_08071EE4(void *a, u32 b)
+void *SoundPlay(void *a, u32 b)
 {
     struct Unk71E84 *e = *(struct Unk71E84 **)gData_030040E4;
     s32 i;
@@ -15,7 +15,7 @@ void *sub_08071EE4(void *a, u32 b)
     {
         if (e->unk16 == 0)
         {
-            sub_08071E04(e, a, b);
+            SoundChannelInit(e, a, b);
             id = *(u32 *)gData_030000C8;
             e->unk18 = id;
             id++;

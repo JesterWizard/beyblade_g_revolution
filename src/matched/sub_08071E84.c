@@ -8,7 +8,7 @@
 // `i != -1` must stay a compare against a materialised -1; plain agbcc folds the
 // entry test to `cmp r0,#0`. `id` has to be a local so the counter increment
 // reuses the value just stored into unk18.
-void *sub_08071E84(void *a, u32 b)
+void *SoundPlayFromList(void *a, u32 b)
 {
     struct Unk71E84 *e = *(struct Unk71E84 **)gData_030040E4;
     s32 i;
@@ -18,7 +18,7 @@ void *sub_08071E84(void *a, u32 b)
     {
         if (e->unk16 == 0)
         {
-            sub_08071E44(e, a, (s16 *)b);
+            SoundChannelInitFromList(e, a, (s16 *)b);
             id = *(u32 *)gData_030000C8;
             e->unk18 = id;
             id++;

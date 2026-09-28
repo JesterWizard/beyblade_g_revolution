@@ -18,7 +18,7 @@ check:
     q = p;
     do
     {
-        if (sub_08073440(q->unk04, a) == 0)
+        if (StringCompare(q->unk04, a) == 0)
             goto found;
         q++;
     } while (q->unk04 != 0);

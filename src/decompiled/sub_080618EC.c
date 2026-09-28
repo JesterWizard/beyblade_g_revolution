@@ -4,7 +4,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-s32 sub_080618EC(struct Unk618EC *t, s32 x, u32 align, u32 stopLine)
+s32 TextTypewriterTick(struct Unk618EC *t, s32 x, u32 align, u32 stopLine)
 {
     u8 *str;
     u8 c;
@@ -36,7 +36,7 @@ s32 sub_080618EC(struct Unk618EC *t, s32 x, u32 align, u32 stopLine)
             t->state = state | 0xFF;
             return -1;
         }
-        t->len = sub_08073078(t->lines[t->line]);
+        t->len = StringLength(t->lines[t->line]);
         if (t->len == 0)
         {
         finish:

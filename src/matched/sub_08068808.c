@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08068808
-void sub_08068808(struct Unk68574 *a)
+void SceneObjFreeResources(struct Unk68574 *a)
 {
     if (a->unkB8 != 0)
     {

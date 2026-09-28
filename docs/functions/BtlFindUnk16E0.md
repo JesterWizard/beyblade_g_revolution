@@ -29,7 +29,7 @@
 
 ## Callees
 
-- `sub_08073440`
+- [`StringCompare`](StringCompare.md)
 
 ## Callers
 

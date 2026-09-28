@@ -51,7 +51,7 @@
 - `sub_0804AE94`
 - [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08056BA4`
-- `sub_080735B0`
+- [`BtlObjTableRemoveArray`](BtlObjTableRemoveArray.md)
 - `sub_080737C0`
 
 ## ROM data referenced

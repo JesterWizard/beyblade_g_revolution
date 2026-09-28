@@ -29,9 +29,9 @@ void HudBuildDigitSprites(struct Unk40F4C *a)
         walk += 0x88;
     }
     if (desc->unk40 != NULL)
-        sub_080679A4(desc->unk40);
+        BgPaletteLoad(desc->unk40);
     if (desc->unk44 != NULL)
-        sub_080679C0(desc->unk44);
+        ObjPaletteLoad(desc->unk44);
     VBlankIntrWait();
     REG_DISPCNT = dispFlags | 0x1040;
     BgSetPriorities(0, 1, 2, 3);

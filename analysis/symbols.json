@@ -1,6 +1,6 @@
 {
-  "count": 176,
-  "generated": "2026-09-28T09:52:16Z",
+  "count": 228,
+  "generated": "2026-09-28T19:16:37Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -904,6 +904,19 @@
       "symbol": "ScreenBrightnessFade",
       "updated": "2026-09-28"
     },
+    "0x08044648": {
+      "aliases": [
+        "sub_08044648"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "walks a -1-terminated list of Beyblade ids and spawns a SceneObj from each roster record (gData_08075AB8), or parks its position record for side 2"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeSpawnList",
+      "updated": "2026-09-28"
+    },
     "0x08044A8C": {
       "aliases": [
         "sub_08044A8C"
@@ -1267,6 +1280,19 @@
       "symbol": "TextSetActiveObject",
       "updated": "2026-09-22"
     },
+    "0x080618EC": {
+      "aliases": [
+        "sub_080618EC"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "per-frame typewriter: delay countdown (quartered while fast keys held), starts/measures lines, prints one glyph or control code (7 cursor, 8 palette)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextTypewriterTick",
+      "updated": "2026-09-28"
+    },
     "0x08061AB8": {
       "aliases": [
         "sub_08061AB8"
@@ -1532,6 +1558,19 @@
       "symbol": "VBlankIntrWait",
       "updated": "2026-09-22"
     },
+    "0x080674BC": {
+      "aliases": [
+        "sub_080674BC"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "selects the chip descriptor at 0x030009B0: 4 -> 0x083A93C8, 0x40 -> 0x083A93D4, anything else defaults to the first and returns 1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "EepromSetType",
+      "updated": "2026-09-28"
+    },
     "0x08067504": {
       "aliases": [
         "sub_08067504"
@@ -1558,6 +1597,45 @@
       "symbol": "EepromReadBlock",
       "updated": "2026-09-28"
     },
+    "0x08067634": {
+      "aliases": [
+        "sub_08067634"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "EepromWriteBlockEx(address, data, 1)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "EepromWriteBlock",
+      "updated": "2026-09-28"
+    },
+    "0x08067648": {
+      "aliases": [
+        "sub_08067648"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "writes one 64-bit block (command, address, four halfwords) and polls the ready bit; 0x80FF out of range, 0xC001 timeout"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "EepromWriteBlockEx",
+      "updated": "2026-09-28"
+    },
+    "0x080677A8": {
+      "aliases": [
+        "sub_080677A8"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "reads a block with EepromReadBlock and compares it with the given data; 0x80FF when the address is out of range"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "EepromVerifyBlock",
+      "updated": "2026-09-28"
+    },
     "0x08067890": {
       "aliases": [
         "sub_08067890"
@@ -1572,6 +1650,32 @@
       "source": "ai",
       "symbol": "TimerAdvance",
       "updated": "2026-09-22"
+    },
+    "0x080679A4": {
+      "aliases": [
+        "sub_080679A4"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "CpuSet copy of 0x200 bytes into BG palette RAM (0x05000000)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgPaletteLoad",
+      "updated": "2026-09-28"
+    },
+    "0x080679C0": {
+      "aliases": [
+        "sub_080679C0"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "CpuSet copy of 0x200 bytes into OBJ palette RAM (0x05000200)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ObjPaletteLoad",
+      "updated": "2026-09-28"
     },
     "0x08067A9C": {
       "aliases": [
@@ -1711,6 +1815,32 @@
       "symbol": "AnimAdvanceFrame",
       "updated": "2026-09-28"
     },
+    "0x080686B4": {
+      "aliases": [
+        "sub_080686B4"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "writes x/y/z (unk04/08/0C) to out[0..2], or calls the object's position callback unkB0 when set"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneObjGetPosition",
+      "updated": "2026-09-28"
+    },
+    "0x08068808": {
+      "aliases": [
+        "sub_08068808"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "frees the unkB8 sprite and the unk7C heap block and resets the unk74 slot count to -1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneObjFreeResources",
+      "updated": "2026-09-28"
+    },
     "0x08068884": {
       "aliases": [
         "sub_08068884"
@@ -1735,6 +1865,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BgMapInit",
+      "updated": "2026-09-28"
+    },
+    "0x08068A08": {
+      "aliases": [
+        "sub_08068A08"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "AffineBgInit variant driven by a resource header: map size, tile/map pointers, tiles copied into the reserved char blocks; called by BgMapInit"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AffineBgLoad",
+      "updated": "2026-09-28"
+    },
+    "0x08068BD4": {
+      "aliases": [
+        "sub_08068BD4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "resets an affine BG layer's scroll/scale state, reserves char/screen blocks for the tile data, clears that VRAM and writes BGxCNT"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AffineBgInit",
       "updated": "2026-09-28"
     },
     "0x08068EC0": {
@@ -1816,6 +1972,45 @@
       "symbol": "BgGetVofsReg",
       "updated": "2026-09-22"
     },
+    "0x08069988": {
+      "aliases": [
+        "sub_08069988"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "returns &REG_BG0CNT..&REG_BG3CNT (0x04000008 + 2*bg); sub_08068BD4 writes the BGxCNT value through it"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgGetCntReg",
+      "updated": "2026-09-28"
+    },
+    "0x080699C8": {
+      "aliases": [
+        "sub_080699C8"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "writes BG2X/BG2Y or BG3X/BG3Y (low and high halves)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgAffineSetRefPoint",
+      "updated": "2026-09-28"
+    },
+    "0x08069A18": {
+      "aliases": [
+        "sub_08069A18"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "writes BGxPA/PB/PC/PD for BG2 (0x04000020) or BG3 (0x04000030)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgAffineSetMatrix",
+      "updated": "2026-09-28"
+    },
     "0x08069B78": {
       "aliases": [
         "sub_08069B78"
@@ -1882,6 +2077,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "HeapRegionInsert",
+      "updated": "2026-09-28"
+    },
+    "0x0806AC68": {
+      "aliases": [
+        "sub_0806AC68"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "counts characters of a NUL-terminated string other than 0x20; used to size text sprite chains"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringCountNonSpace",
       "updated": "2026-09-28"
     },
     "0x0806B2F0": {
@@ -1987,6 +2195,32 @@
       "source": "ai",
       "symbol": "SegCrossSide",
       "updated": "2026-09-25"
+    },
+    "0x0806EEC8": {
+      "aliases": [
+        "sub_0806EEC8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "same as CameraCenterOnObject but moves half the distance per call towards state->unk224, clamping every camera"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CameraEaseToTarget",
+      "updated": "2026-09-28"
+    },
+    "0x0806F05C": {
+      "aliases": [
+        "sub_0806F05C"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "sets the active camera's scroll delta so obj sits at screen centre (0x78, 0x50 + unkA2), clamped to the map; other cameras follow by their ratio"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CameraCenterOnObject",
+      "updated": "2026-09-28"
     },
     "0x0806F1A0": {
       "aliases": [
@@ -2179,6 +2413,45 @@
       "symbol": "BtlObjListResort",
       "updated": "2026-09-28"
     },
+    "0x080705A4": {
+      "aliases": [
+        "sub_080705A4"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "writes (b & 3) into bits 10-11 of the packed attr0 word (OBJ mode); sub_08070930 passes the same value as SpriteInitFromTemplate's objMode"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SpriteSetObjMode",
+      "updated": "2026-09-28"
+    },
+    "0x080705CC": {
+      "aliases": [
+        "sub_080705CC"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "sets unk19 = 1; BtlObjSetAffine leaves objects with unk19 set untouched"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AffineObjLock",
+      "updated": "2026-09-28"
+    },
+    "0x080705D4": {
+      "aliases": [
+        "sub_080705D4"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "clears unk19 before BtlObjSetAffine rebuilds or releases the object"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AffineObjUnlock",
+      "updated": "2026-09-28"
+    },
     "0x080705DC": {
       "aliases": [
         "sub_080705DC"
@@ -2223,6 +2496,292 @@
       "symbol": "BtlReleaseEntry",
       "updated": "2026-09-22"
     },
+    "0x0807069C": {
+      "aliases": [
+        "sub_0807069C"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "releases the glyph sprite chain (&a->unk14) and resets the pen x (unk0A) to 0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupClear",
+      "updated": "2026-09-28"
+    },
+    "0x08070930": {
+      "aliases": [
+        "sub_08070930"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "spawns one glyph sprite per character at x = unk0A, advancing by font/width-table widths; space uses unk28"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupAppendString",
+      "updated": "2026-09-28"
+    },
+    "0x08070AD4": {
+      "aliases": [
+        "sub_08070AD4"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "TextGroupClear then TextGroupAppendString"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupSetString",
+      "updated": "2026-09-28"
+    },
+    "0x08070AF8": {
+      "aliases": [
+        "sub_08070AF8"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "passes (x, y) to BtlObjSetAffine as the scale of the shared affine object (or per glyph) and patches OAM affine/double-size bits"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupSetScale",
+      "updated": "2026-09-28"
+    },
+    "0x08070C98": {
+      "aliases": [
+        "sub_08070C98"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "adds (dx, dy) in whole pixels to the 8.8 position at +0/+4, then re-lays out the group (sub_080706B0)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupMoveBy",
+      "updated": "2026-09-28"
+    },
+    "0x08070D44": {
+      "aliases": [
+        "sub_08070D44"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "formats a signed int into decimal with comma grouping (unless unk08 bit 6) and appends it"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupAppendNumber",
+      "updated": "2026-09-28"
+    },
+    "0x08070DF4": {
+      "aliases": [
+        "sub_08070DF4"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "TextGroupClear then TextGroupAppendNumber"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupSetNumber",
+      "updated": "2026-09-28"
+    },
+    "0x080712CC": {
+      "aliases": [
+        "sub_080712CC"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "applies sub_080705A4 to every glyph in the chain and stores the mode in unk0E"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGroupSetObjMode",
+      "updated": "2026-09-28"
+    },
+    "0x080717F0": {
+      "aliases": [
+        "sub_080717F0"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "stores a value clamped to 0x100 in the global at 0x030000CC"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundSetMasterVolume",
+      "updated": "2026-09-28"
+    },
+    "0x08071808": {
+      "aliases": [
+        "sub_08071808"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "returns the u16 at 0x030000CC set by sub_080717F0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundGetMasterVolume",
+      "updated": "2026-09-28"
+    },
+    "0x08071B4C": {
+      "aliases": [
+        "sub_08071B4C"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "zeroes SOUNDCNT_X/H, DMA1/DMA2 control and both timers, then clears the mix buffer"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundHwStop",
+      "updated": "2026-09-28"
+    },
+    "0x08071BA0": {
+      "aliases": [
+        "sub_08071BA0"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "enables DirectSound: SOUNDCNT_X/H, DMA1 to FIFO_A from the mix buffer, timer 0/1 at the mixing rate"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundHwStart",
+      "updated": "2026-09-28"
+    },
+    "0x08071E04": {
+      "aliases": [
+        "sub_08071E04"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "fills a 0x28-byte channel: data ptr, cursor = data+0x10, rate entry from the 0x030000C4 table (index clamped to 0x7F), volume 0x100, state 1 (playing)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundChannelInit",
+      "updated": "2026-09-28"
+    },
+    "0x08071E44": {
+      "aliases": [
+        "sub_08071E44"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "like SoundChannelInit but the sample comes from list[*idx] and the list/index are kept (unk1C/unk20) for chaining"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundChannelInitFromList",
+      "updated": "2026-09-28"
+    },
+    "0x08071E84": {
+      "aliases": [
+        "sub_08071E84"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "same free-channel search as SoundPlay using SoundChannelInitFromList"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundPlayFromList",
+      "updated": "2026-09-28"
+    },
+    "0x08071EE4": {
+      "aliases": [
+        "sub_08071EE4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "claims the first free channel (state 0), SoundChannelInit, assigns and returns a new handle from the 0x030000C8 counter"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundPlay",
+      "updated": "2026-09-28"
+    },
+    "0x08071F44": {
+      "aliases": [
+        "sub_08071F44"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "returns the active channel (state != 0) whose handle (unk18) matches"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundFindChannel",
+      "updated": "2026-09-28"
+    },
+    "0x08071F84": {
+      "aliases": [
+        "sub_08071F84"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "SoundFindChannel then state = 0 (free)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundStop",
+      "updated": "2026-09-28"
+    },
+    "0x08071F98": {
+      "aliases": [
+        "sub_08071F98"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "SoundFindChannel then state = 2"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundPause",
+      "updated": "2026-09-28"
+    },
+    "0x08071FAC": {
+      "aliases": [
+        "sub_08071FAC"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "state 2 -> 1 on the channel with this handle"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundResume",
+      "updated": "2026-09-28"
+    },
+    "0x08071FC8": {
+      "aliases": [
+        "sub_08071FC8"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "sets channel unk10, clamped to 0x100 (SoundChannelInit's default)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundSetVolume",
+      "updated": "2026-09-28"
+    },
+    "0x080720F0": {
+      "aliases": [
+        "sub_080720F0"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "SoundPlay(table->unk0C[i], b) when i is below the table count"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SoundPlayIndexed",
+      "updated": "2026-09-28"
+    },
     "0x08072A38": {
       "aliases": [
         "sub_08072A38"
@@ -2249,6 +2808,19 @@
       "source": "ai",
       "symbol": "GetBtlLookupByte",
       "updated": "2026-09-22"
+    },
+    "0x08073078": {
+      "aliases": [
+        "sub_08073078"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "counts bytes up to the NUL terminator; returns -1 for a NULL string"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringLength",
+      "updated": "2026-09-28"
     },
     "0x0807309C": {
       "aliases": [
@@ -2295,6 +2867,58 @@
       "symbol": "MemClear",
       "updated": "2026-09-22"
     },
+    "0x080731F4": {
+      "aliases": [
+        "sub_080731F4"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "zeroes every non-NUL byte of the string and returns how many were cleared"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringClear",
+      "updated": "2026-09-28"
+    },
+    "0x08073218": {
+      "aliases": [
+        "sub_08073218"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "copies src to dst (incl. NUL) bounded by n, forcing dst[n-1]=0 on overflow; returns bytes copied"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringCopy",
+      "updated": "2026-09-28"
+    },
+    "0x0807339C": {
+      "aliases": [
+        "sub_0807339C"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "drops the last character: s[StringLength(s)-1] = 0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringRemoveLast",
+      "updated": "2026-09-28"
+    },
+    "0x080733BC": {
+      "aliases": [
+        "sub_080733BC"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "appends one char plus NUL when length+1 < capacity"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringAppendChar",
+      "updated": "2026-09-28"
+    },
     "0x080733E4": {
       "aliases": [
         "sub_080733E4"
@@ -2306,6 +2930,45 @@
       "kind": "function",
       "source": "ai",
       "symbol": "StringAppend",
+      "updated": "2026-09-28"
+    },
+    "0x08073440": {
+      "aliases": [
+        "sub_08073440"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "strcmp: returns 1/-1 at the first differing byte, 0 when both end together, -2 for NULL"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringCompare",
+      "updated": "2026-09-28"
+    },
+    "0x08073568": {
+      "aliases": [
+        "sub_08073568"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "fills out[0..count) with BtlObjTableAdd(size); returns the number allocated, DebugPrint on failure"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjTableAddArray",
+      "updated": "2026-09-28"
+    },
+    "0x080735B0": {
+      "aliases": [
+        "sub_080735B0"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "BtlObjTableRemove on each non-NULL entry of an n-entry array (inverse of sub_08073568)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjTableRemoveArray",
       "updated": "2026-09-28"
     },
     "0x080735DC": {
@@ -2363,6 +3026,19 @@
       "source": "ai",
       "symbol": "TextHasNewline",
       "updated": "2026-09-25"
+    },
+    "0x08073A28": {
+      "aliases": [
+        "sub_08073A28"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "shifts the tail right by one and stores c at position n-1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StringInsertChar",
+      "updated": "2026-09-28"
     },
     "0x08073AEC": {
       "aliases": [

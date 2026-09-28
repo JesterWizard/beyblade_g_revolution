@@ -17,7 +17,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
         return;
     rec = sub_0803E1F4(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E);
     buf = BtlObjTableAdd(8);
-    sub_08070AD4(&gData_030006B4->unk60, (void *)sub_0803DD88(gData_030006BC[gData_030006AC + gData_030006B0].unk0C), 13);
+    TextGroupSetString(&gData_030006B4->unk60, (void *)sub_0803DD88(gData_030006BC[gData_030006AC + gData_030006B0].unk0C), 13);
     TextSetActiveObject((struct Unk617C4 *)0x082C44A8, (u32)gData_080B7258);
     TextSetCursor(0, 0x10);
     if ((text = (void *)_080505AC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E, 3)) == NULL)

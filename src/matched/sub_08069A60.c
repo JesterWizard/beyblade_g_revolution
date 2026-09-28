@@ -23,6 +23,6 @@ void sub_08069A60(u8 bg, u8 angle, u16 scaleX, u16 scaleY)
     gData_03000068[slot].unk0C = (s16)sub_08069F00(gData_083C9544[e->unk00], gData_083A9544[e->unk02]);
     gData_03000068[slot].unk10 = (s16)sub_08069F00(-gData_083C9544[e->unk00], gData_083A9544[e->unk04]);
     gData_03000068[slot].unk14 = (s16)sub_08069F00(gData_083C9544[e->unk00 + 0x40], gData_083A9544[e->unk04]);
-    sub_08069A18(bg, gData_03000068[slot].unk08, gData_03000068[slot].unk0C, gData_03000068[slot].unk10, gData_03000068[slot].unk14);
+    BgAffineSetMatrix(bg, gData_03000068[slot].unk08, gData_03000068[slot].unk0C, gData_03000068[slot].unk10, gData_03000068[slot].unk14);
 }
 

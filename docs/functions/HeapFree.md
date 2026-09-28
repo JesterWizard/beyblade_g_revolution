@@ -58,7 +58,7 @@
 - `sub_0806306C`
 - `sub_08063104`
 - `sub_08065CD0`
-- `sub_08068808`
+- [`SceneObjFreeResources`](SceneObjFreeResources.md)
 - [`BtlObjSystemInit`](BtlObjSystemInit.md)
 - `sub_08072CC0`
 - [`BtlObjTableRemove`](BtlObjTableRemove.md)

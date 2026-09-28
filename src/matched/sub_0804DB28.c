@@ -13,7 +13,7 @@ void SceneObjPoolRebuild(void)
     s32 i;
 
     for (i = 0; i < 9; i++)
-        sub_08068808(&gData_03000698[i]);
+        SceneObjFreeResources(&gData_03000698[i]);
 
     AnimObjCreate((struct Unk67BB8 *)&gData_03000698[0], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x34, 0, -1);
     AnimObjCreate((struct Unk67BB8 *)&gData_03000698[1], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x34, 0, -1);

@@ -110,5 +110,5 @@ void BgMapScroll(struct Unk68E54 *st, s32 dx, s32 dy)
         *BgGetVofsReg(st->unk5E) = st->unk44 >> 8;
     }
     else
-        sub_080699C8(st->unk5E, st->unk40, st->unk44);
+        BgAffineSetRefPoint(st->unk5E, st->unk40, st->unk44);
 }

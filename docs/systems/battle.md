@@ -3,7 +3,7 @@
 
 # battle subsystem
 
-93 functions — 42 named.
+93 functions — 44 named.
 
 | Tier | Functions |
 |------|----------:|
@@ -25,7 +25,7 @@
 | [`SceneObjUpdate`](../functions/SceneObjUpdate.md) | `0x08068418` | UNKNOWN | 272 | 9 | 3 | gUnk_03000180 |
 | `sub_0806A6F8` | `0x0806A6F8` | UNKNOWN | 436 | 8 | 0 | gBtlInputMask, gBtlKeyQueueCount |
 | `sub_08067CE8` | `0x08067CE8` | UNKNOWN | 548 | 7 | 5 |  |
-| `sub_08070AD4` | `0x08070AD4` | MATCHING | 34 | 7 | 2 |  |
+| [`TextGroupSetString`](../functions/TextGroupSetString.md) | `0x08070AD4` | MATCHING | 34 | 7 | 2 |  |
 | `sub_080601C4` | `0x080601C4` | MATCHING | 92 | 5 | 3 | gMainWorkPtr |
 | [`BtlReleaseEntry`](../functions/BtlReleaseEntry.md) | `0x08070678` | MATCHING | 36 | 5 | 3 |  |
 | `sub_080474AC` | `0x080474AC` | DECOMPILED | 232 | 4 | 1 | gMainWorkPtr, gUnk_03000630 |
@@ -104,7 +104,7 @@
 | `sub_08060438` | `0x08060438` | MATCHING | 14 | 0 | 1 |  |
 | `sub_08060448` | `0x08060448` | MATCHING | 14 | 0 | 1 |  |
 | `sub_08060458` | `0x08060458` | MATCHING | 14 | 0 | 1 |  |
-| `sub_080618EC` | `0x080618EC` | UNKNOWN | 428 | 0 | 5 | gBtlInputMask, gUnk_03000798 |
+| [`TextTypewriterTick`](../functions/TextTypewriterTick.md) | `0x080618EC` | UNKNOWN | 428 | 0 | 5 | gBtlInputMask, gUnk_03000798 |
 | `sub_08065CD0` | `0x08065CD0` | UNKNOWN | 316 | 0 | 9 | gBtlKeysHeld |
 | `sub_08066224` | `0x08066224` | MATCHING | 112 | 0 | 2 |  |
 | [`BtlObjSystemInit`](../functions/BtlObjSystemInit.md) | `0x0806F910` | UNKNOWN | 624 | 0 | 5 | gBtlObjListHead, gBtlObjListTail |

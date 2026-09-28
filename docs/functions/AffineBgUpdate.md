@@ -29,7 +29,7 @@
 
 ## Callees
 
-- `sub_080699C8`
+- [`BgAffineSetRefPoint`](BgAffineSetRefPoint.md)
 - `sub_08069A60`
 
 ## Callers

@@ -4,7 +4,7 @@
 
 // @ 0x08073078
 /* match-compiler: old_agbcc */
-s32 sub_08073078(u8 *s)
+s32 StringLength(u8 *s)
 {
     s32 n = 0;
 

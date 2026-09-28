@@ -19,7 +19,7 @@ void sub_08065CD0(struct Unk65CD0 *s, u16 fade, void *check)
     timer = s->unk08;
     sub_08069894();
     handle = sub_08065E0C(scene, 0, s->unk00, 0, 1);
-    sub_080679A4(s->unk04);
+    BgPaletteLoad(s->unk04);
     VBlankIntrWait();
     REG_DISPCNT = 0x1140;
     switch (s->unk0A)

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080735b0
-void sub_080735B0(void **a, u32 n)
+void BtlObjTableRemoveArray(void **a, u32 n)
 {
     u32 i;
 

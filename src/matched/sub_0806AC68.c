@@ -3,7 +3,7 @@
 // @ 0x0806ac68
 /* match-flags: -fprologue-bugfix */
 
-u32 sub_0806AC68(u8 *s)
+u32 StringCountNonSpace(u8 *s)
 {
     u32 r2;
     u32 r1;

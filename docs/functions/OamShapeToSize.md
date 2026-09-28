@@ -25,5 +25,5 @@
 
 ## Callers
 
-- `sub_08068A08`
-- `sub_08068BD4`
+- [`AffineBgLoad`](AffineBgLoad.md)
+- [`AffineBgInit`](AffineBgInit.md)

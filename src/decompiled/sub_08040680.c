@@ -11,7 +11,7 @@ void sub_08040680(struct Unk40680 *a)
 
     if (a->unk274 != NULL)
     {
-        sub_0806FE84(a->unk274);
+        BtlObjPoolFree(a->unk274);
         a->unk274 = NULL;
     }
     for (i = 0; i <= 8; i++)
@@ -21,7 +21,7 @@ void sub_08040680(struct Unk40680 *a)
     _080408E4(value);
     TextSetActiveObject((struct Unk617C4 *)0x082BCD00, 0x080B738E);
     d = sub_08061A98();
-    y = sub_08061784() - 0x28;
+    y = TextGetAreaWidth() - 0x28;
     f = sub_08061AA8();
     a->unk2FC = sub_080737C0(gUnk_0300047C->unk810, gUnk_0300047C->unk834, 9, d, y, f, sub_080617B4(), 0x60);
     BtlObjTableRemove(gUnk_0300047C->unk834);

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08071e04
-void sub_08071E04(struct Unk71E84 *p, void *a, u32 n)
+void SoundChannelInit(struct Unk71E84 *p, void *a, u32 n)
 {
     p->unk16 = 1;
     p->unk00 = (s32)a;

@@ -29,4 +29,4 @@
 
 ## Callers
 
-- `sub_08044648`
+- [`BeybladeSpawnList`](BeybladeSpawnList.md)

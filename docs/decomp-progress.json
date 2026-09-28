@@ -1,9 +1,9 @@
 {
-  "generated": "2026-09-28T18:58:43Z",
+  "generated": "2026-09-28T19:18:49Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "tiers": {
-    "generated": "2026-09-28T18:58:43Z",
+    "generated": "2026-09-28T19:18:49Z",
     "total": 633,
     "tiers": {
       "UNKNOWN": {
@@ -11,24 +11,24 @@
         "pct": 1.3
       },
       "DECOMPILED": {
-        "functions": 26,
-        "pct": 4.1
+        "functions": 12,
+        "pct": 1.9
       },
       "UNDERSTOOD": {
-        "functions": 5,
-        "pct": 0.8
+        "functions": 8,
+        "pct": 1.3
       },
       "MATCHING": {
-        "functions": 594,
-        "pct": 93.8
+        "functions": 605,
+        "pct": 95.6
       }
     },
     "flags": {
       "has_c": 622,
-      "named": 176,
-      "matches": 594
+      "named": 228,
+      "matches": 605
     },
-    "pct_named": 27.8
+    "pct_named": 36.0
   },
   "src_matched": 633,
   "linked_in_rom": 633,
@@ -2079,7 +2079,7 @@
       "pct_bytes": 80.4
     },
     {
-      "generated": "2026-09-28T18:58:43Z",
+      "generated": "2026-09-28T19:18:49Z",
       "semantic": 602,
       "readable_asm": 31,
       "opcode": 0,

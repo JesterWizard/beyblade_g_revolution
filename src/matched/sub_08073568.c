@@ -2,7 +2,7 @@
 
 // @ 0x08073568
 
-u8 sub_08073568(void **out, u8 count, u32 size)
+u8 BtlObjTableAddArray(void **out, u8 count, u32 size)
 {
     u32 i;
     void **p;

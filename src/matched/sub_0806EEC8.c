@@ -7,7 +7,7 @@
 // Eases the active camera halfway towards centring state->unk224, clamped to
 // the map, then drags every other targeted camera by its follow ratio; each
 // camera is clamped the same way.
-void sub_0806EEC8(void *arg)
+void CameraEaseToTarget(void *arg)
 {
     struct Unk6EE48 *state = arg;
     struct Unk68E54 *cam;
@@ -18,7 +18,7 @@ void sub_0806EEC8(void *arg)
 
     cam = sub_0806EEC4(state);
     obj = state->unk224;
-    sub_080686B4(obj, (u32 *)pos);
+    SceneObjGetPosition(obj, (u32 *)pos);
     cam->unk14 = (pos[0] - (cam->unk40 + ((0x78 - (obj->unk10 >> 1)) << 8))) >> 1;
     cam->unk18 = (pos[1] - (cam->unk44 + (((y = (s16)obj->unkA2 + 0x50) - (obj->unk11 >> 1)) << 8))) >> 1;
     if (cam->unk40 + cam->unk14 < state->unk35C)

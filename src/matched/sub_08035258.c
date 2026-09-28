@@ -16,7 +16,7 @@ void sub_08035258(struct Unk35258 *a, u32 b)
         if (a->unk2C5 & 1)
         {
             sub_08038638(a->unk1C.unk3A >> 1);
-            sub_08068808(&a->unk1C);
+            SceneObjFreeResources(&a->unk1C);
             a->unk2B0 = 0;
             a->unk2B4 = 0;
             a->unk2C5 &= ~1;
@@ -26,7 +26,7 @@ void sub_08035258(struct Unk35258 *a, u32 b)
         if (a->unk2C5 & 2)
         {
             sub_08038638(a->unkF8.unk3A >> 1);
-            sub_08068808(&a->unkF8);
+            SceneObjFreeResources(&a->unkF8);
             a->unk2C5 &= ~2;
         }
         break;
@@ -34,7 +34,7 @@ void sub_08035258(struct Unk35258 *a, u32 b)
         if (a->unk2C5 & 4)
         {
             sub_08038638(a->unk1D4.unk3A >> 1);
-            sub_08068808(&a->unk1D4);
+            SceneObjFreeResources(&a->unk1D4);
             a->unk2C5 &= ~4;
         }
         break;

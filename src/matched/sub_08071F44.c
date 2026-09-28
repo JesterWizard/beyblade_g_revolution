@@ -13,7 +13,7 @@
 // The two addresses MUST come from data_symbols.s: they are 0x20 apart, and with plain
 // literals agbcc substitutes the second pool load with `subs r0, #0x20` (60 bytes,
 // size mismatch). As symbols it emits two independent pool words like retail.
-struct Unk71E84 *sub_08071F44(s32 a)
+struct Unk71E84 *SoundFindChannel(s32 a)
 {
     struct Unk71E84 *p = *(struct Unk71E84 **)gData_030040E4;
     s32 i;

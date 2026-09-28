@@ -39,4 +39,4 @@
 
 - [`BtlObjPoolResizeChain`](BtlObjPoolResizeChain.md)
 - [`BtlReleaseEntry`](BtlReleaseEntry.md)
-- `sub_0807069C`
+- [`TextGroupClear`](TextGroupClear.md)

@@ -6,7 +6,7 @@
 /* match-flags: -fprologue-bugfix */
 #include "global.h"
 
-void sub_080699C8(u32 bg, s32 x, s32 y)
+void BgAffineSetRefPoint(u32 bg, s32 x, s32 y)
 {
     switch ((u8)bg)
     {

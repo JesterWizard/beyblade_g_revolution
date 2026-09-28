@@ -34,7 +34,7 @@ void BattleBannerScroll(void)
     held = gBtlKeysHeldU16;
     keysNew = *(u16 *)gBtlKeysNew;
     Unk70604Init(&text.hdr, (struct Unk70604Src *)0x082BF600, 0x080B72F3, -0xF0, 0x50, 0xF0, 2);
-    sub_08070AD4((struct Unk7069C *)&text, gData_080780EC[gMainWorkPtr->unk1818], 0);
+    TextGroupSetString((struct Unk7069C *)&text, gData_080780EC[gMainWorkPtr->unk1818], 0);
     sub_0807179C((struct Unk7179C *)&text);
     sub_080312EC((struct Unk312EC *)gBattleWork->unkB84);
     sub_080312EC((struct Unk312EC *)gBattleWork->unkB94);
@@ -61,7 +61,7 @@ void BattleBannerScroll(void)
         {
             delta = sub_08033158(delta, 0x10);
             sub_0807179C((struct Unk7179C *)&text);
-            sub_08070C98((struct Unk70C98 *)&text, (s16)delta, 0);
+            TextGroupMoveBy((struct Unk70C98 *)&text, (s16)delta, 0);
             sub_0807179C((struct Unk7179C *)&text);
         }
         ((void (*)(void))gData_080BB888[0])();

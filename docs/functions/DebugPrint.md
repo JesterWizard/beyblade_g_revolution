@@ -46,9 +46,9 @@
 - [`BtlObjSystemInit`](BtlObjSystemInit.md)
 - [`VramSpanFree`](VramSpanFree.md)
 - [`BtlObjPoolAllocChain`](BtlObjPoolAllocChain.md)
-- `sub_08070930`
-- `sub_08071E84`
-- `sub_08071EE4`
+- [`TextGroupAppendString`](TextGroupAppendString.md)
+- [`SoundPlayFromList`](SoundPlayFromList.md)
+- [`SoundPlay`](SoundPlay.md)
 - [`BtlObjTableRemove`](BtlObjTableRemove.md)
-- `sub_08073568`
+- [`BtlObjTableAddArray`](BtlObjTableAddArray.md)
 - `sub_080737C0`

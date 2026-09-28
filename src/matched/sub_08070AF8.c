@@ -29,13 +29,14 @@
             node->unk10 = (node->unk10 & 0xC1FFFCFF) | bits;        \
             node = node->unk04;                                     \
         }                                                           \
-        sub_080705CC(aff);                                          \
+        AffineObjLock(aff);                                          \
     }
 
-// Moves a text sprite group to (x, y): per glyph for scaled groups, otherwise
-// re-creates the shared affine object and patches every glyph's OAM affine
-// index and double-size bit (cleared again if no affine slot is free).
-void sub_08070AF8(struct Unk7069C *g, u16 x, u16 y)
+// Sets a text sprite group's scale (x, y): per glyph when the group scales its
+// glyphs individually (unk08 bit 2), otherwise re-creates the shared affine
+// object and patches every glyph's OAM affine index and double-size bit
+// (cleared again if no affine slot is free).
+void TextGroupSetScale(struct Unk7069C *g, u16 x, u16 y)
 {
     struct Unk70354Object *aff;
 
@@ -54,7 +55,7 @@ void sub_08070AF8(struct Unk7069C *g, u16 x, u16 y)
     }
     else if ((aff = g->unk2C) != NULL)
     {
-        sub_080705D4(aff);
+        AffineObjUnlock(aff);
         aff = g->unk2C = BtlObjSetAffine(aff, x, y, aff->unk18);
         if (aff == NULL)
         {

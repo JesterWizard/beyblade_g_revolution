@@ -3,7 +3,7 @@
 
 // Walks a -1-terminated list of Beyblade ids and spawns a scene object for
 // each roster entry (side 1), or parks its position record (side 2).
-void sub_08044648(void *arg)
+void BeybladeSpawnList(void *arg)
 {
     s32 *ids;
     struct Unk6DEF4 *records;

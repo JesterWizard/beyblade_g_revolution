@@ -25,7 +25,7 @@
 
 ## Callees
 
-- `sub_08069988`
+- [`BgGetCntReg`](BgGetCntReg.md)
 
 ## Callers
 

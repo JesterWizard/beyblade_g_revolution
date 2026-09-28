@@ -35,7 +35,7 @@
 - `sub_08067CE8`
 - [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
 - [`SceneObjUpdate`](SceneObjUpdate.md)
-- `sub_08068808`
+- [`SceneObjFreeResources`](SceneObjFreeResources.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 
 ## ROM data referenced

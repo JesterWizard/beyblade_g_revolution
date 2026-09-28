@@ -66,4 +66,4 @@
 - `sub_08062238`
 - `sub_08063D68`
 - `sub_08067CE8`
-- `sub_08068808`
+- [`SceneObjFreeResources`](SceneObjFreeResources.md)

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080686b4
-void sub_080686B4(struct Unk68574 *a, u32 *b)
+void SceneObjGetPosition(struct Unk68574 *a, u32 *b)
 {
     if (a->unkB0 != 0)
         _08073C4C(a, b, (u32)a, a->unkB0);

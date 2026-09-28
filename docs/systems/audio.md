@@ -3,7 +3,7 @@
 
 # audio subsystem
 
-1 functions — 0 named.
+1 functions — 1 named.
 
 | Tier | Functions |
 |------|----------:|
@@ -13,7 +13,7 @@
 
 | Function | Address | Tier | Size | Callers | Callees | RAM |
 |----------|---------|------|-----:|--------:|--------:|-----|
-| `sub_08071BA0` | `0x08071BA0` | DECOMPILED | 148 | 1 | 1 | gUnk_030000B8, gUnk_030000BC |
+| [`SoundHwStart`](../functions/SoundHwStart.md) | `0x08071BA0` | DECOMPILED | 148 | 1 | 1 | gUnk_030000B8, gUnk_030000BC |
 
 ## Why these functions are grouped here
 

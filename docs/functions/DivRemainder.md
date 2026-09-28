@@ -25,5 +25,5 @@
 - [`HudWriteDigits`](HudWriteDigits.md)
 - `sub_080593A4`
 - [`DigitRowDraw`](DigitRowDraw.md)
-- `sub_08070D44`
+- [`TextGroupAppendNumber`](TextGroupAppendNumber.md)
 - [`TextFormatInt`](TextFormatInt.md)

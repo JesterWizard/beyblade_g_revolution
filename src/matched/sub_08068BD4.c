@@ -8,7 +8,7 @@
 // its visible-rect slot, reserves char blocks (gData_03000108 grows upwards)
 // and screen blocks (gData_030001A8 grows downwards) for the tile data,
 // clears that VRAM and writes the BGxCNT value.
-void sub_08068BD4(struct Unk68E54 *st, u8 bg, u16 tiles, u16 cnt)
+void AffineBgInit(struct Unk68E54 *st, u8 bg, u16 tiles, u16 cnt)
 {
     u32 size;
     struct Unk688C8Rect *rect;
@@ -85,7 +85,7 @@ void sub_08068BD4(struct Unk68E54 *st, u8 bg, u16 tiles, u16 cnt)
     }
     vram = (void *)(st->unk5C * 0x800 + 0x06000000);
     ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, vram, size);
-    reg = sub_08069988(bg);
+    reg = BgGetCntReg(bg);
     *reg = (st->unk5C << 8) | cnt | (st->unk5D << 2);
 }
 

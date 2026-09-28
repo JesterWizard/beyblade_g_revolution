@@ -28,7 +28,7 @@ void sub_08038F30(s32 dir)
         if (table[(*battle)->unk12F].unk1C == 0)
         {
             for (i = 0; i <= 3; i++)
-                sub_08070C98((struct Unk70C98 *)&(*battle)->unk023C[i], 0, -4);
+                TextGroupMoveBy((struct Unk70C98 *)&(*battle)->unk023C[i], 0, -4);
         }
         else
             Unk62044OffsetPoints(&(*battle)->unk2FC, 0, -4);
@@ -44,7 +44,7 @@ void sub_08038F30(s32 dir)
         if (table[(*battle)->unk12F].unk1C == 0)
         {
             for (i = 0; i <= 3; i++)
-                sub_08070C98((struct Unk70C98 *)&(*battle)->unk023C[i], 0, 4);
+                TextGroupMoveBy((struct Unk70C98 *)&(*battle)->unk023C[i], 0, 4);
         }
         else
             Unk62044OffsetPoints(&(*battle)->unk2FC, 0, 4);

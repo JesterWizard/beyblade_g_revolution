@@ -20,9 +20,9 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
     u32 c;
 
     sub_0806209C(a);
-    if (sub_08073568((void **)lines, 4, 0x60) < 4)
+    if (BtlObjTableAddArray((void **)lines, 4, 0x60) < 4)
     {
-        sub_080735B0((void **)lines, 4);
+        BtlObjTableRemoveArray((void **)lines, 4);
         return;
     }
     count = sub_080737C0((void **)lines, (u8 *)text, 4, (u32)a->unk04, a->unk1C, a->unk20, a->unk20 >> 2, 0x60);
@@ -44,10 +44,10 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
             }
             else
             {
-                a->unk0C[a->unk24] = sub_0806FDD0(tile);
+                a->unk0C[a->unk24] = BtlObjPoolAlloc(tile);
                 if (a->unk0C[a->unk24] == NULL)
                     return;
-                sub_0806FF58((struct Unk705DC *)a->unk0C[a->unk24], a->unk08, x << 8, y << 8, 0, 0, 0, gData_080BB748[c]);
+                SpriteInitFromTemplate((struct Unk705DC *)a->unk0C[a->unk24], a->unk08, x << 8, y << 8, 0, 0, 0, gData_080BB748[c]);
                 x = 0x10 - a->unk04[gData_080BB748[c]] + x;
                 TextEntrySetPaletteBank((struct Unk705DC *)a->unk0C[a->unk24], palette);
                 a->unk24++;
@@ -55,6 +55,6 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
         }
         y += a->unk22;
     }
-    sub_080735B0((void **)lines, 4);
+    BtlObjTableRemoveArray((void **)lines, 4);
 }
 

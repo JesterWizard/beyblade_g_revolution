@@ -23,14 +23,14 @@ s32 sub_080737C0(u8 **lines, const u8 *text, u8 count, const u8 *widths, u16 max
     word = BtlObjTableAdd(0x40);
     if (word == NULL)
     {
-        sub_08067B98((void *)0x083D2720);
+        DebugPrint((void *)0x083D2720);
         return -1;
     }
     while (!done)
     {
         MemClear(word, 0x40);
         used = StringNextWord(text, word, 0x40);
-        w = sub_08073078(word);
+        w = StringLength(word);
         if (used == 0 || w == 0)
         {
             done = TRUE;
@@ -46,12 +46,12 @@ s32 sub_080737C0(u8 **lines, const u8 *text, u8 count, const u8 *widths, u16 max
             }
             if (line >= count)
             {
-                sub_08067B98((void *)0x083D2760);
+                DebugPrint((void *)0x083D2760);
                 break;
             }
             if (x != 0)
             {
-                sub_080733BC(lines[line], ' ', lineSize);
+                StringAppendChar(lines[line], ' ', lineSize);
                 x += space;
             }
             if (TextHasNewline(word) == 1)

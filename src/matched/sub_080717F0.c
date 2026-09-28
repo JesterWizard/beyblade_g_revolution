@@ -4,7 +4,7 @@
 
 // @ 0x080717f0
 /* match-compiler: old_agbcc */
-void sub_080717F0(u32 a)
+void SoundSetMasterVolume(u32 a)
 {
     if (a > 0x100)
         a = 0x100;

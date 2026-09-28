@@ -31,4 +31,4 @@
 ## Callees
 
 - `sub_08059D08`
-- `sub_08068808`
+- [`SceneObjFreeResources`](SceneObjFreeResources.md)

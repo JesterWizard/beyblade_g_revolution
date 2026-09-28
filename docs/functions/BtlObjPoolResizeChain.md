@@ -38,7 +38,7 @@
 
 ## Callers
 
-- `sub_08070930`
+- [`TextGroupAppendString`](TextGroupAppendString.md)
 
 ## ROM data referenced
 

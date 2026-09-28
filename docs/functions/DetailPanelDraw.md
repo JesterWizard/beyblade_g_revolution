@@ -52,7 +52,7 @@
 - [`BtlObjPoolFree`](BtlObjPoolFree.md)
 - [`SpriteInitFromTemplate`](SpriteInitFromTemplate.md)
 - [`TextEntrySetPaletteBank`](TextEntrySetPaletteBank.md)
-- `sub_08070AD4`
+- [`TextGroupSetString`](TextGroupSetString.md)
 - [`BtlObjTableAdd`](BtlObjTableAdd.md)
 - [`BtlObjTableRemove`](BtlObjTableRemove.md)
 - [`TextFormatInt`](TextFormatInt.md)

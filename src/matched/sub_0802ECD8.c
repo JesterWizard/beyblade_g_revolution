@@ -31,9 +31,9 @@ void sub_0802ECD8(void)
         {
             name = _080563A8(gData_03000278->entries[gData_03000278->top + i].unk0D, gData_03000278->entries[gData_03000278->top + i].unk0C);
             if (name != 0)
-                sub_08070AD4((struct Unk7069C *)gData_03000278->text, (void *)name, 15);
+                TextGroupSetString((struct Unk7069C *)gData_03000278->text, (void *)name, 15);
             else
-                sub_08070AD4((struct Unk7069C *)gData_03000278->text, gData_03000278->entries[gData_03000278->top + i].name, 15);
+                TextGroupSetString((struct Unk7069C *)gData_03000278->text, gData_03000278->entries[gData_03000278->top + i].name, 15);
             TextSetPaletteBank(14);
             TextRowSetPaletteBank((u16)(i * 2 + 12), 14, 2, 0x1B);
             TextRowSetPaletteBank((u16)(i * 2 + 13), 14, 2, 0x1B);
@@ -46,7 +46,7 @@ void sub_0802ECD8(void)
         }
         if (gData_03000278->top + i < gData_03000278->count - 1)
         {
-            sub_080731F4(buf);
+            StringClear(buf);
             if ((u8)gData_03000278->entries[gData_03000278->top + i].unk0D == 1)
             {
                 rec = sub_0803E1F4(gData_03000278->entries[gData_03000278->top + i].unk0C, gData_03000278->entries[gData_03000278->top + i].unk0E);

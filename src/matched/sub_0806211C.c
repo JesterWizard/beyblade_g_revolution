@@ -16,14 +16,14 @@ bool32 sub_0806211C(struct Unk62634 *a, struct Unk6225CSource *parent, struct Un
 
     if (a == NULL || src == NULL)
         return FALSE;
-    obj = sub_0806FDD0(tile);
+    obj = BtlObjPoolAlloc(tile);
     if (obj == NULL)
         return FALSE;
     if (parent != NULL)
         priority = sub_08069C14((struct Unk69C14 *)parent);
     px = x << 8;
     py = y << 8;
-    sub_0806FF58(obj, src, px, py, objMode, priority, flip, h);
+    SpriteInitFromTemplate(obj, src, px, py, objMode, priority, flip, h);
     a->unk04 = parent;
     a->unk08 = obj;
     a->unk30 = 0;

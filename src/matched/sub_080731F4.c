@@ -4,7 +4,7 @@
 
 // @ 0x080731f4
 /* match-compiler: old_agbcc */
-s32 sub_080731F4(u8 *s)
+s32 StringClear(u8 *s)
 {
     s32 n = 0;
 

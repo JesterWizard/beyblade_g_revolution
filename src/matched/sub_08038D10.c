@@ -19,7 +19,7 @@ void sub_08038D10(struct Unk38D10 *a)
         void *entry = table[a->unk2FC + i];
 
         if (entry != 0)
-            sub_08070AD4(&gBattleWork->unk023C[i], entry, 1);
+            TextGroupSetString(&gBattleWork->unk023C[i], entry, 1);
         else
             BtlReleaseEntry(&gBattleWork->unk023C[i]);
     }

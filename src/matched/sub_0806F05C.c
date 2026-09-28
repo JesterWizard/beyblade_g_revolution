@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Centres the active camera on obj (clamped to the map), then moves every other
 // camera that has a target by its own follow ratio (1/32 steps) of that shift.
-void sub_0806F05C(struct Unk6EE48 *state, struct Unk68574 *obj)
+void CameraCenterOnObject(struct Unk6EE48 *state, struct Unk68574 *obj)
 {
     struct Unk68E54 *cam;
     s32 pos[3];
@@ -14,7 +14,7 @@ void sub_0806F05C(struct Unk6EE48 *state, struct Unk68574 *obj)
     s32 y;
 
     cam = sub_0806EEC4(state);
-    sub_080686B4(obj, (u32 *)pos);
+    SceneObjGetPosition(obj, (u32 *)pos);
     state->unk354 |= 1;
     cam->unk14 = pos[0] - (cam->unk40 + ((0x78 - (obj->unk10 >> 1)) << 8));
     cam->unk18 = pos[1] - (cam->unk44 + (((y = (s16)obj->unkA2 + 0x50) - (obj->unk11 >> 1)) << 8));

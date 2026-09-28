@@ -25,9 +25,9 @@ void ItemListDraw(void)
             {
                 name = _08056428(gData_03000278->items[gData_03000278->top + i].kind, gData_03000278->items[gData_03000278->top + i].id);
                 if (name != 0)
-                    sub_08070AD4((struct Unk7069C *)gData_03000278->text, (void *)name, 15);
+                    TextGroupSetString((struct Unk7069C *)gData_03000278->text, (void *)name, 15);
                 else if (gData_03000278->items[gData_03000278->top + i].name != NULL)
-                    sub_08070AD4((struct Unk7069C *)gData_03000278->text, gData_03000278->items[gData_03000278->top + i].name, 15);
+                    TextGroupSetString((struct Unk7069C *)gData_03000278->text, gData_03000278->items[gData_03000278->top + i].name, 15);
                 TextSetPaletteBank(14);
                 TextRowSetPaletteBank((u16)(i * 2 + 12), 14, 2, 0x1B);
                 TextRowSetPaletteBank((u16)(i * 2 + 13), 14, 2, 0x1B);
@@ -80,7 +80,7 @@ void ItemListDraw(void)
             }
             if (gData_03000278->top + i < gData_03000278->count - 1)
             {
-                sub_080731F4(buf);
+                StringClear(buf);
                 TextFormatInt(gData_03000278->items[gData_03000278->top + i].count, buf, 0x10);
                 TextDrawAlign(buf, 0xD4, 1);
             }

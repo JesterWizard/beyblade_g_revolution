@@ -31,7 +31,7 @@
 
 - `sub_08061308`
 - [`TextWindowLayout`](TextWindowLayout.md)
-- `sub_08068BD4`
+- [`AffineBgInit`](AffineBgInit.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 
 ## Callers

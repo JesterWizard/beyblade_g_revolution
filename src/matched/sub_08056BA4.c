@@ -27,7 +27,7 @@ void sub_08056BA4(void *arg)
     for (i = 0; i < 8; i++)
     {
         TextSetCursor(0, i * 8 + 0x10);
-        sub_08073218(gData_08097430[gData_03000198->unk1818], line, 0x80);
+        StringCopy(gData_08097430[gData_03000198->unk1818], line, 0x80);
         TextFormatInt(gData_03000674 + i + 1, num, 0x80);
         StringAppend(num, line, 0x80);
         if (gData_03000710[gData_03000674 + i] >= 0)

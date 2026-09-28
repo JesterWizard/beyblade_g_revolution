@@ -12,7 +12,7 @@ void sub_0803E0CC(u16 id)
     {
         if (gData_03000198->unk08D0[i].unk23 == (s16)id && gData_03000198->unk087C[i] == 1)
         {
-            sub_08067B98((void *)0x0833D34C, (void *)0x0833D358);
+            DebugPrint((void *)0x0833D34C, (void *)0x0833D358);
             gData_03000198->unk08D0[i].unk1D |= 0xFF;
             gData_03000198->unk08D0[i].unk21 |= 0xFF;
             gData_03000198->unk08D0[i].unk20 |= 0xFF;

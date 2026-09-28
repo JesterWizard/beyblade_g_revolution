@@ -52,5 +52,5 @@
 - `sub_0804AE94`
 - [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08056BA4`
-- `sub_08073568`
+- [`BtlObjTableAddArray`](BtlObjTableAddArray.md)
 - `sub_080737C0`

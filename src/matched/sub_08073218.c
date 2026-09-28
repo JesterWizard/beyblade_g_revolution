@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08073218
-s32 sub_08073218(u8 *src, u8 *dst, u32 n)
+s32 StringCopy(u8 *src, u8 *dst, u32 n)
 {
     u32 i = 0;
 

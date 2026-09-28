@@ -4,7 +4,7 @@
 
 // @ 0x08070d44
 /* match-compiler: old_agbcc */
-u8 sub_08070D44(struct Unk7069C *a, s32 value, u8 b)
+u8 TextGroupAppendNumber(struct Unk7069C *a, s32 value, u8 b)
 {
     u8 buf[0x10];
     u32 neg;
@@ -40,6 +40,6 @@ u8 sub_08070D44(struct Unk7069C *a, s32 value, u8 b)
     } while (value != 0 && digits != 0);
     if (neg != 0)
         *--p = 0x2D;
-    return sub_08070930(a, p, b);
+    return TextGroupAppendString(a, p, b);
 }
 

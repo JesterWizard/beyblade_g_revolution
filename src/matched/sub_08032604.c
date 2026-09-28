@@ -12,7 +12,7 @@ void sub_08032604(void)
     sub_08069894();
     gBattleWork->unk00 = sub_08065E0C(gBattleWork->filler_0008, 2, gData_0807800C[(s8)mode].layer0, 0x8000, 0);
     gBattleWork->unk04 = sub_08065E0C(gBattleWork->unk090, 3, gData_0807800C[(s8)mode].layer1, 0x8000, 0);
-    sub_080679A4(gData_0807800C[(s8)mode].palette);
+    BgPaletteLoad(gData_0807800C[(s8)mode].palette);
     BgSetPriorities(1, 2, 3, 0);
     REG_DISPCNT = 0x1C42;
     work = gBattleWork;

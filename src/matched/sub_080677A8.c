@@ -6,7 +6,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-u32 sub_080677A8(u32 a, void *b)
+u32 EepromVerifyBlock(u32 a, void *b)
 {
     u16 *arg1;
     u16 x;

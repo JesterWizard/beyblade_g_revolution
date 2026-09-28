@@ -26,7 +26,7 @@ void AffineBgUpdate(void *arg)
     y = st->unk34 + st->unk3C;
     st->unk34 = y;
     sub_08069A60(st->unk5E, (u8)(st->unk28 >> 8), (u16)(x >> 8), (u16)(y >> 8));
-    sub_080699C8(st->unk5E,
+    BgAffineSetRefPoint(st->unk5E,
                  st->unk4C - (gData_03000068[slot].unk08 * st->unk48 - gData_03000068[slot].unk10 * st->unk4A),
                  st->unk50 + (st->unk48 * gData_03000068[slot].unk0C - gData_03000068[slot].unk14 * st->unk4A));
     damp = st->unk24;

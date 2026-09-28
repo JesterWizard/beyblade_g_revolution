@@ -25,7 +25,7 @@ void sub_0806EE48(struct Unk6EE48 *state)
         {
             callback = work->unk344;
             if (callback == 0)
-                sub_0806EEC8(work);
+                CameraEaseToTarget(work);
             else
                 _08073C48(handler, work, callback);
         }

@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x080735dc
-s32 sub_08073218(u8 *src, u8 *dst, u32 n);
+s32 StringCopy(u8 *src, u8 *dst, u32 n);
 
 void TextFormatInt(s32 num, void *dst, u32 n)
 {
@@ -19,7 +19,7 @@ void TextFormatInt(s32 num, void *dst, u32 n)
         sign = 0;
     }
     if (num == 0)
-        sub_08073218(gData_083D2708, dst, n);
+        StringCopy(gData_083D2708, dst, n);
     else {
         while (num > 0) {
             u8 digit = DivRemainder(num, 10);
@@ -29,6 +29,6 @@ void TextFormatInt(s32 num, void *dst, u32 n)
             buf[slot] = digit + 0x30;
             num = Div(num, 10);
         }
-        sub_08073218(buf + pos + sign, dst, n);
+        StringCopy(buf + pos + sign, dst, n);
     }
 }

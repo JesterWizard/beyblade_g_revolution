@@ -9,7 +9,7 @@ void sub_08054558(void *a)
     if (p != 0)
     {
         if (a != 0)
-            sub_08070AD4(&p->unk34, a, 2);
+            TextGroupSetString(&p->unk34, a, 2);
         else
             BtlReleaseEntry(&p->unk34);
     }

@@ -2,7 +2,7 @@
 
 // @ 0x08073a28
 
-void sub_08073A28(u8 *s, u8 c, u16 n)
+void StringInsertChar(u8 *s, u8 c, u16 n)
 {
     s32 len;
     s32 i;
@@ -14,7 +14,7 @@ void sub_08073A28(u8 *s, u8 c, u16 n)
         return;
     if (n == 0)
         return;
-    len = sub_08073078(s);
+    len = StringLength(s);
     n = (u16)(n - 1);
     if ((s32)orig > len)
         return;

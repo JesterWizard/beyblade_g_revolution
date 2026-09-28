@@ -1,12 +1,12 @@
 /* match-compiler: old_agbcc */
-#define sub_08070930 sub_08070930_x
+#define TextGroupAppendString sub_08070930_x
 #include "global.h"
-#undef sub_08070930
+#undef TextGroupAppendString
 // Appends the glyphs of a string to a text sprite group at x = unk0A, growing
 // the sprite chain and advancing x by each glyph width (space: unk28).
 #include "ram_map.h"
 
-u8 sub_08070930(struct Unk7069C *a, u8 *s, u8 pal)
+u8 TextGroupAppendString(struct Unk7069C *a, u8 *s, u8 pal)
 {
     u32 count;
     struct Unk705DC *first;
@@ -22,7 +22,7 @@ u8 sub_08070930(struct Unk7069C *a, u8 *s, u8 pal)
     u8 c;
     u16 w;
 
-    len = sub_0806AC68(s);
+    len = StringCountNonSpace(s);
     defWidth = a->unk24->unk04;
     widths = a->unk20;
     count = a->unk14.unk08;
@@ -69,7 +69,7 @@ u8 sub_08070930(struct Unk7069C *a, u8 *s, u8 pal)
                 c = gData_080BB748[c];
                 SpriteInitFromTemplate(node, a->unk24, 0, 0, 0, mode, 0, c);
                 TextEntrySetPaletteBank(node, pal);
-                sub_080705A4(node, a->unk0E);
+                SpriteSetObjMode(node, a->unk0E);
                 if (widths != NULL)
                     w = w - widths[c];
                 w = w + a->unk29;
