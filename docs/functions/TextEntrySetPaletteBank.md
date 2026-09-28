@@ -32,9 +32,9 @@
 - `sub_0802D6D4`
 - `sub_0802DCDC`
 - `sub_0802E048`
-- `sub_080312EC`
+- [`PaletteHighlightRestore`](PaletteHighlightRestore.md)
 - [`TextRowPulsePalette`](TextRowPulsePalette.md)
-- `sub_0803139C`
+- [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
 - `sub_08034810`
 - `sub_0803484C`
 - `sub_08037318`

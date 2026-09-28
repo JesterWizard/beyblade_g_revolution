@@ -2,7 +2,7 @@
 
 // @ 0x080312b0
 /* match-compiler: old_agbcc */
-void sub_080312B0(struct Unk312EC *a, struct Unk705DC *b, u8 c, s32 d)
+void PaletteHighlightBegin(struct Unk312EC *a, struct Unk705DC *b, u8 c, s32 d)
 {
     u16 val;
     u32 shifted;

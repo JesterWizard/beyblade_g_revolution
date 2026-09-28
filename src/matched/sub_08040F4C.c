@@ -17,11 +17,11 @@ void MenuDispatchLoop(void)
         _08073C4C(0, &state, sizeof(state), (void *)*src);
     }
     sub_0804109C(&state, sub_0806639C());
-    sub_08060468();
+    WindowEffectCreate();
     sub_08060758();
     do
     {
-        sub_080604C8();
+        WindowEffectApply();
         BlendFadeTick();
         VBlankIntrWait();
         sub_0806A6F8();
@@ -74,7 +74,7 @@ void MenuDispatchLoop(void)
             _08073C44(&state, state.unk258);
     } while (!done);
     sub_08041394((struct Unk41394 *)&state);
-    sub_080604A4();
+    WindowEffectDestroy();
     sub_08060798();
 }
 

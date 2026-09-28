@@ -29,6 +29,6 @@
 
 ## Callers
 
-- `sub_080601C4`
-- `sub_080603A4`
+- [`SfxPlayInSlot`](SfxPlayInSlot.md)
+- [`BgmSetVolume`](BgmSetVolume.md)
 - [`BtlSetAllUnk1710`](BtlSetAllUnk1710.md)

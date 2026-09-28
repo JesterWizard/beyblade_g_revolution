@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x0804745c
-void sub_0804745C(void)
+void SparklesDestroy(void)
 {
   struct Unk473F8 **slot;
   s32 i;

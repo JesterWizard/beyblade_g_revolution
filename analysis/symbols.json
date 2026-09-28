@@ -1,6 +1,6 @@
 {
-  "count": 228,
-  "generated": "2026-09-28T19:16:37Z",
+  "count": 314,
+  "generated": "2026-09-28T19:25:25Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -60,6 +60,19 @@
       "source": "ai",
       "symbol": "BtlUnk1694FindAndMark",
       "updated": "2026-09-22"
+    },
+    "0x0802C6AC": {
+      "aliases": [
+        "sub_0802C6AC"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "prints DebugPrint(\"(%s)\\n\", \"initTournament\") with its own name"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "InitTournament",
+      "updated": "2026-09-28"
     },
     "0x0802D8DC": {
       "aliases": [
@@ -179,6 +192,19 @@
       "symbol": "BeybladeSteerByDpad",
       "updated": "2026-09-28"
     },
+    "0x08030D4C": {
+      "aliases": [
+        "sub_08030D4C"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "prints \"(%s)\" with the string \"cleanBattleOverlays\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CleanBattleOverlays",
+      "updated": "2026-09-28"
+    },
     "0x08031124": {
       "aliases": [
         "sub_08031124"
@@ -192,6 +218,58 @@
       "symbol": "ScaleRatio",
       "updated": "2026-09-25"
     },
+    "0x08031294": {
+      "aliases": [
+        "sub_08031294"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "clears the highlight record (banks 0xFF, timer -1, no sprite)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteHighlightReset",
+      "updated": "2026-09-28"
+    },
+    "0x080312B0": {
+      "aliases": [
+        "sub_080312B0"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "records a sprite, its original palette bank (unk14 >> 12), a highlight bank and a timer, once per highlight"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteHighlightBegin",
+      "updated": "2026-09-28"
+    },
+    "0x080312D8": {
+      "aliases": [
+        "sub_080312D8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "PaletteHighlightRestore then PaletteHighlightReset"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteHighlightEnd",
+      "updated": "2026-09-28"
+    },
+    "0x080312EC": {
+      "aliases": [
+        "sub_080312EC"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "puts the recorded sprite back on its original palette bank"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteHighlightRestore",
+      "updated": "2026-09-28"
+    },
     "0x08031300": {
       "aliases": [
         "sub_08031300"
@@ -204,6 +282,19 @@
       "source": "ai",
       "symbol": "TextRowPulsePalette",
       "updated": "2026-09-25"
+    },
+    "0x0803139C": {
+      "aliases": [
+        "sub_0803139C"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "writes a number into an array of digit sprites (least significant first), allocating and palette-binding missing ones"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "DigitSpritesSetValue",
+      "updated": "2026-09-28"
     },
     "0x080314FC": {
       "aliases": [
@@ -562,6 +653,32 @@
       "symbol": "BattleTextGlyphRow",
       "updated": "2026-09-28"
     },
+    "0x0803DCFC": {
+      "aliases": [
+        "sub_0803DCFC"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "debug message \"(%s) NULL ID %d\" with \"getBeyBladeWithIndex\"; returns the Beyblade record for an id"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GetBeybladeWithIndex",
+      "updated": "2026-09-28"
+    },
+    "0x0803DD88": {
+      "aliases": [
+        "sub_0803DD88"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "localised string lookup (40-byte rows at 0x0807A1F4 by language unk1818) keyed by the same id passed to GetBeybladeWithIndex; drawn as the row label in the collection lists"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GetBeybladeNameWithIndex",
+      "updated": "2026-09-28"
+    },
     "0x0803DEC8": {
       "aliases": [
         "sub_0803DEC8"
@@ -573,6 +690,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BeybladeRecordClaim",
+      "updated": "2026-09-28"
+    },
+    "0x0803E0CC": {
+      "aliases": [
+        "sub_0803E0CC"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "debug message \"(%s) : %d\" with \"removeBladeFromTysonsCollection\"; releases every collection slot with that id"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "RemoveBladeFromTysonsCollection",
+      "updated": "2026-09-28"
+    },
+    "0x0803E1F4": {
+      "aliases": [
+        "sub_0803E1F4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns &MainWork.unk08D0[i] for the active slot (unk087C[i] == 1) whose unk1C/unk23 match; same slot table RemoveBladeFromTysonsCollection releases"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionFindEntry",
       "updated": "2026-09-28"
     },
     "0x0803E258": {
@@ -760,6 +903,45 @@
       "symbol": "CursorHistoryPush",
       "updated": "2026-09-28"
     },
+    "0x08042B00": {
+      "aliases": [
+        "sub_08042B00"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "returns table[language][id] from the localised table at 0x08090FF0; drawn as the Beyblade's name in the collection panels"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeGetName",
+      "updated": "2026-09-28"
+    },
+    "0x08042B28": {
+      "aliases": [
+        "sub_08042B28"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns the actor sprite template for a Beyblade id; debug message \"(%s) ID %d have a NULL actor data\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeGetActorSprite",
+      "updated": "2026-09-28"
+    },
+    "0x08042B50": {
+      "aliases": [
+        "sub_08042B50"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns the actor palette for a Beyblade id (loaded to 0x050003E0 after the sprite); same NULL actor data message"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeGetActorPalette",
+      "updated": "2026-09-28"
+    },
     "0x08042B78": {
       "aliases": [
         "sub_08042B78"
@@ -812,6 +994,19 @@
       "symbol": "BeybladeCollectionEntry",
       "updated": "2026-09-28"
     },
+    "0x08042F4C": {
+      "aliases": [
+        "sub_08042F4C"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "debug message \"(%s) raise %d from %d to %d exp difficulty %d\" with \"matchBladerExperience\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MatchBladerExperience",
+      "updated": "2026-09-28"
+    },
     "0x080433F4": {
       "aliases": [
         "sub_080433F4"
@@ -850,6 +1045,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "MapCursorInput",
+      "updated": "2026-09-28"
+    },
+    "0x08043B58": {
+      "aliases": [
+        "sub_08043B58"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns the entry of the table at 0x08096794 whose key equals the current map id (MainWork.unk1690->unk00)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MapGetEntry",
       "updated": "2026-09-28"
     },
     "0x08043B90": {
@@ -904,6 +1112,19 @@
       "symbol": "ScreenBrightnessFade",
       "updated": "2026-09-28"
     },
+    "0x080444BC": {
+      "aliases": [
+        "sub_080444BC"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "loads the field OBJ palettes, then runs the map entry's script and spawns its object/Beyblade lists"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MapLoadObjects",
+      "updated": "2026-09-28"
+    },
     "0x08044648": {
       "aliases": [
         "sub_08044648"
@@ -917,6 +1138,45 @@
       "symbol": "BeybladeSpawnList",
       "updated": "2026-09-28"
     },
+    "0x080447B4": {
+      "aliases": [
+        "sub_080447B4"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "TaskCreate for each template of a NULL-terminated list"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TaskCreateList",
+      "updated": "2026-09-28"
+    },
+    "0x080447CC": {
+      "aliases": [
+        "sub_080447CC"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "runs the current map entry's unk18 script via ScriptRun"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MapRunEntryScript",
+      "updated": "2026-09-28"
+    },
+    "0x080447E8": {
+      "aliases": [
+        "sub_080447E8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "BeybladeSpawnList sibling for the 0x0807BE04 object table: spawns kind-1 entries, parks the position records of kind 2"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneObjSpawnList",
+      "updated": "2026-09-28"
+    },
     "0x08044A8C": {
       "aliases": [
         "sub_08044A8C"
@@ -928,6 +1188,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "SaveDataVerify",
+      "updated": "2026-09-28"
+    },
+    "0x08044D8C": {
+      "aliases": [
+        "sub_08044D8C"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "sums words 1..0x7D7 of a save image; SaveDataVerify compares it with the header checksum"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SaveDataChecksum",
       "updated": "2026-09-28"
     },
     "0x08044EE8": {
@@ -945,17 +1218,31 @@
       "symbol": "BtlClearUnk1688Entry",
       "updated": "2026-09-22"
     },
-    "0x08044FB0": {
+    "0x08044F64": {
       "aliases": [
-        "sub_08044FB0"
+        "sub_08044F64"
       ],
-      "confidence": 0.8,
+      "confidence": 0.6,
       "evidence": [
-        "clears save slot `index` (0x1F60 bytes) and fills it from 8-byte EEPROM blocks via EepromReadBlock with retries"
+        "writes the three default EEPROM blocks from 0x08096938 for slot idx, retrying until EepromVerifyBlock passes"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "SaveSlotLoadFromEeprom",
+      "symbol": "SaveSlotWriteDefault",
+      "updated": "2026-09-28"
+    },
+    "0x08044FB0": {
+      "aliases": [
+        "sub_08044FB0",
+        "SaveSlotLoadFromEeprom"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "its failure message is \"loadGameSave - Read failure.\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "LoadGameSave",
       "updated": "2026-09-28"
     },
     "0x08045198": {
@@ -982,6 +1269,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "SaveDataRead",
+      "updated": "2026-09-28"
+    },
+    "0x08045A84": {
+      "aliases": [
+        "sub_08045A84"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "frees the 0x1F60-byte save image buffer if one is held"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SaveBufferFree",
+      "updated": "2026-09-28"
+    },
+    "0x08045AA8": {
+      "aliases": [
+        "sub_08045AA8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "allocates a 0x1F60-byte save image and fills it with SaveDataWrite(buf, 1)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SaveBufferCreate",
       "updated": "2026-09-28"
     },
     "0x08045D3C": {
@@ -1036,6 +1349,84 @@
       "symbol": "FieldUpdateFrame",
       "updated": "2026-09-28"
     },
+    "0x080473F8": {
+      "aliases": [
+        "sub_080473F8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "allocates the pool, seeds its timer and initialises the 16 sprites off-screen"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SparklesCreate",
+      "updated": "2026-09-28"
+    },
+    "0x0804745C": {
+      "aliases": [
+        "sub_0804745C"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "frees the 16 pool sprites"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SparklesDestroy",
+      "updated": "2026-09-28"
+    },
+    "0x080474AC": {
+      "aliases": [
+        "sub_080474AC"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "per-frame update of the 16-sprite pool at gData_03000630: random re-arm delay, scatter while active, park off-screen when done"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SparklesUpdate",
+      "updated": "2026-09-28"
+    },
+    "0x08047594": {
+      "aliases": [
+        "sub_08047594"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "moves all 16 pool sprites to -0x4000 (off-screen)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SparklesHide",
+      "updated": "2026-09-28"
+    },
+    "0x080475C4": {
+      "aliases": [
+        "sub_080475C4"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "copies the pool timers unk40/44 into MainWork.unk1798/179C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SparklesSaveTimers",
+      "updated": "2026-09-28"
+    },
+    "0x080475F4": {
+      "aliases": [
+        "sub_080475F4"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "restores the pool timers from MainWork.unk1798/179C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SparklesRestoreTimers",
+      "updated": "2026-09-28"
+    },
     "0x08047624": {
       "aliases": [
         "sub_08047624"
@@ -1047,6 +1438,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "CursorStepsToTile",
+      "updated": "2026-09-28"
+    },
+    "0x0804AAF0": {
+      "aliases": [
+        "sub_0804AAF0"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "prints the selected collection record's detail lines, including the spin direction (\"Left spin\"/\"Right spin\"/\"None\")"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionDetailsDraw",
+      "updated": "2026-09-28"
+    },
+    "0x0804AE94": {
+      "aliases": [
+        "sub_0804AE94"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "builds \"Blade <n>\" (or \"Tyson\") plus the record's name for the collection browser cursor"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionCaptionDraw",
       "updated": "2026-09-28"
     },
     "0x0804DB28": {
@@ -1101,6 +1518,84 @@
       "symbol": "ScriptDispatchEvent",
       "updated": "2026-09-28"
     },
+    "0x08059AE0": {
+      "aliases": [
+        "sub_08059AE0"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "claims a free node of the 20-entry task pool (gUnk_03000730) and copies init/update/destroy callbacks and data from a template"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TaskCreate",
+      "updated": "2026-09-28"
+    },
+    "0x08059B74": {
+      "aliases": [
+        "sub_08059B74"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "per-frame: stage 1 runs the init callback until done, stage 2 the update callback, stage 3 destroys the task"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TasksRunAll",
+      "updated": "2026-09-28"
+    },
+    "0x08059BD8": {
+      "aliases": [
+        "sub_08059BD8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "finds the task whose update callback matches, calls its destroy callback and clears/frees the node"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TaskDestroyByUpdateFn",
+      "updated": "2026-09-28"
+    },
+    "0x08059C6C": {
+      "aliases": [
+        "sub_08059C6C"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "TaskDestroyByUpdateFn for every live node of the pool"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TasksDestroyAll",
+      "updated": "2026-09-28"
+    },
+    "0x08059C98": {
+      "aliases": [
+        "sub_08059C98"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "TaskCreate variant that also records an owner object and two extra args (used to attach parts to spawned scene objects)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TaskCreateWithOwner",
+      "updated": "2026-09-28"
+    },
+    "0x08059D08": {
+      "aliases": [
+        "sub_08059D08"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "calls the node's destroy callback, clears its callbacks and frees its heap block"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TaskDestroy",
+      "updated": "2026-09-28"
+    },
     "0x08059DC8": {
       "aliases": [
         "sub_08059DC8"
@@ -1112,6 +1607,71 @@
       "kind": "function",
       "source": "ai",
       "symbol": "ScriptRun",
+      "updated": "2026-09-28"
+    },
+    "0x0806013C": {
+      "aliases": [
+        "sub_0806013C"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "stops the music handle MainWork.unk177C and clears it and the current track id unk1780"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgmStop",
+      "updated": "2026-09-28"
+    },
+    "0x080601C4": {
+      "aliases": [
+        "sub_080601C4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "stops the handle in MainWork.unk1710[slot], plays SoundPlayIndexed(slot, id) into it and applies the SFX volume unk181A"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SfxPlayInSlot",
+      "updated": "2026-09-28"
+    },
+    "0x08060220": {
+      "aliases": [
+        "sub_08060220"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "stops and clears the sound handle in MainWork.unk1710[slot]"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SfxStopSlot",
+      "updated": "2026-09-28"
+    },
+    "0x08060254": {
+      "aliases": [
+        "sub_08060254"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "SfxPlayInSlot(slot, id + ((gUnk_03000180 >> 4) & mask)): picks a random variant from a run of sound ids"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SfxPlayVariant",
+      "updated": "2026-09-28"
+    },
+    "0x080603A4": {
+      "aliases": [
+        "sub_080603A4"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "SoundSetVolume on the music handle unk177C and remembers the level in unk1819"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgmSetVolume",
       "updated": "2026-09-28"
     },
     "0x080603E0": {
@@ -1129,6 +1689,45 @@
       "symbol": "BtlSetAllUnk1710",
       "updated": "2026-09-22"
     },
+    "0x08060468": {
+      "aliases": [
+        "sub_08060468"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "allocates and zeroes the 0x18-byte window-register effect block (gUnk_03000750/75C)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "WindowEffectCreate",
+      "updated": "2026-09-28"
+    },
+    "0x080604A4": {
+      "aliases": [
+        "sub_080604A4"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "frees the window-register effect block"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "WindowEffectDestroy",
+      "updated": "2026-09-28"
+    },
+    "0x080604C8": {
+      "aliases": [
+        "sub_080604C8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "packs the block's byte edges into WIN0H/WIN1H/WIN0V/WIN1V/WININ/WINOUT values and writes them from 0x04000040"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "WindowEffectApply",
+      "updated": "2026-09-28"
+    },
     "0x080607BC": {
       "aliases": [
         "sub_080607BC"
@@ -1140,6 +1739,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "BlendFadeTick",
+      "updated": "2026-09-28"
+    },
+    "0x080608D4": {
+      "aliases": [
+        "sub_080608D4"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "zeroes the six halfwords WIN0H..WINOUT at 0x04000040"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "WindowRegsClear",
       "updated": "2026-09-28"
     },
     "0x08060C30": {
@@ -1155,6 +1767,71 @@
       "symbol": "TextWindowOpenEx",
       "updated": "2026-09-28"
     },
+    "0x08060D28": {
+      "aliases": [
+        "sub_08060D28"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "zero-fills unk94 tiles of the window's char block (unk5D)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowClearTiles",
+      "updated": "2026-09-28"
+    },
+    "0x08060D58": {
+      "aliases": [
+        "sub_08060D58"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "fills the window's screen block with a pattern then lays a width x height run of consecutive tile ids at (x, y)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowFillMap",
+      "updated": "2026-09-28"
+    },
+    "0x08060E48": {
+      "aliases": [
+        "sub_08060E48"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "per-character worker of TextWindowPutString"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowPutChar",
+      "updated": "2026-09-28"
+    },
+    "0x0806105C": {
+      "aliases": [
+        "sub_0806105C"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "calls sub_08060E48 for every character of a NUL-terminated string"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowPutString",
+      "updated": "2026-09-28"
+    },
+    "0x080610A8": {
+      "aliases": [
+        "sub_080610A8"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "measures text with the window font and sets pen x (unk90) for centre (0), right (1) or left (2) alignment at `index`"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextSetCursorAligned",
+      "updated": "2026-09-28"
+    },
     "0x080611A4": {
       "aliases": [
         "sub_080611A4"
@@ -1168,6 +1845,19 @@
       "symbol": "VramSlotsInit",
       "updated": "2026-09-23"
     },
+    "0x080611F0": {
+      "aliases": [
+        "sub_080611F0"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "VramSlotsRelease, frees the window buffer at gUnk_03000790 and clears the active window pointer"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowClose",
+      "updated": "2026-09-28"
+    },
     "0x0806121C": {
       "aliases": [
         "sub_0806121C"
@@ -1179,6 +1869,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "TextWindowOpen",
+      "updated": "2026-09-28"
+    },
+    "0x08061308": {
+      "aliases": [
+        "sub_08061308"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "TextWindowClearTiles for the active window gUnk_03000798"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowClearActiveTiles",
       "updated": "2026-09-28"
     },
     "0x08061564": {
@@ -1265,6 +1968,19 @@
       "symbol": "TextGetAreaWidth",
       "updated": "2026-09-22"
     },
+    "0x080617B4": {
+      "aliases": [
+        "sub_080617B4"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "returns the active window's unk9C, passed as the spacing argument of TextMeasureWidth"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGetSpacing",
+      "updated": "2026-09-28"
+    },
     "0x080617C4": {
       "aliases": [
         "sub_080617C4"
@@ -1280,6 +1996,32 @@
       "symbol": "TextSetActiveObject",
       "updated": "2026-09-22"
     },
+    "0x08061800": {
+      "aliases": [
+        "sub_08061800"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "zero-fills tile row `row` (width unk98/8 tiles) of the active window's char block"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowClearRow",
+      "updated": "2026-09-28"
+    },
+    "0x080618A8": {
+      "aliases": [
+        "sub_080618A8"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "initialises a typewriter state (same layout TextTypewriterTick reads): lines, count, delay, fast/skip keys, state 1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextTypewriterInit",
+      "updated": "2026-09-28"
+    },
     "0x080618EC": {
       "aliases": [
         "sub_080618EC"
@@ -1291,6 +2033,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "TextTypewriterTick",
+      "updated": "2026-09-28"
+    },
+    "0x08061A98": {
+      "aliases": [
+        "sub_08061A98"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "returns the active window's unk8C, the per-glyph width table passed to TextMeasureWidth"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGetWidthTable",
+      "updated": "2026-09-28"
+    },
+    "0x08061AA8": {
+      "aliases": [
+        "sub_08061AA8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "returns the active window's unkA0, the glyph width passed to TextMeasureWidth"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextGetGlyphWidth",
       "updated": "2026-09-28"
     },
     "0x08061AB8": {
@@ -1319,6 +2087,32 @@
       "source": "ai",
       "symbol": "VramSlotsRelease",
       "updated": "2026-09-23"
+    },
+    "0x08061BDC": {
+      "aliases": [
+        "sub_08061BDC"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "sets the typewriter state byte (unk14) back to 1 (printing)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextTypewriterResume",
+      "updated": "2026-09-28"
+    },
+    "0x08061BE8": {
+      "aliases": [
+        "sub_08061BE8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "takes the top entry of the window state stack (gData_03000770/794), copies its saved tiles back and restores the pen position"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowPopState",
+      "updated": "2026-09-28"
     },
     "0x08061C48": {
       "aliases": [
@@ -1352,6 +2146,32 @@
       "source": "ai",
       "symbol": "TextRowSetPaletteBank",
       "updated": "2026-09-22"
+    },
+    "0x08061DC0": {
+      "aliases": [
+        "sub_08061DC0"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "CpuSet-copies tile row a onto tile row b of the active window's char block"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextWindowCopyRow",
+      "updated": "2026-09-28"
+    },
+    "0x08061E40": {
+      "aliases": [
+        "sub_08061E40"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "resets timer, line, position and length of a typewriter state"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextTypewriterRestart",
+      "updated": "2026-09-28"
     },
     "0x080620D4": {
       "aliases": [
@@ -1421,6 +2241,19 @@
       "symbol": "ObjPalLoadSlot",
       "updated": "2026-09-25"
     },
+    "0x08062AC0": {
+      "aliases": [
+        "sub_08062AC0"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "zero-fills the 0x44-byte palette slot table at gUnk_030008D0 and OBJ palette RAM"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ObjPaletteSlotsReset",
+      "updated": "2026-09-28"
+    },
     "0x08062AF8": {
       "aliases": [
         "sub_08062AF8"
@@ -1434,6 +2267,71 @@
       "symbol": "ScenePaletteAcquire",
       "updated": "2026-09-28"
     },
+    "0x08062B9C": {
+      "aliases": [
+        "sub_08062B9C"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "clears slot bits/pointers lo..hi (swapped if reversed) in the gUnk_030008D0 palette slot table"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ObjPaletteSlotsReleaseRange",
+      "updated": "2026-09-28"
+    },
+    "0x08062BF0": {
+      "aliases": [
+        "sub_08062BF0"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "BLDCNT = 0xFF (brighten all layers), ramps BLDY up to 31 by `a` per frame with VBlank + frame callback"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "FadeToWhite",
+      "updated": "2026-09-28"
+    },
+    "0x08062C38": {
+      "aliases": [
+        "sub_08062C38"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "BLDCNT = 0xFF, ramps BLDY from 31 down to 0 by `a` per frame"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "FadeFromWhite",
+      "updated": "2026-09-28"
+    },
+    "0x08062C80": {
+      "aliases": [
+        "sub_08062C80"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "clears the window registers, forces full brightness (BLDY 31) and zero-fills BG and OBJ palette RAM"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ScreenWhiteoutClearPalettes",
+      "updated": "2026-09-28"
+    },
+    "0x08062CC8": {
+      "aliases": [
+        "sub_08062CC8"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "reads OBJ palette entry idx (0x05000200) and splits BGR555 into out[0..2]; inverse of ObjPaletteSetRgb"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ObjPaletteGetRgb",
+      "updated": "2026-09-28"
+    },
     "0x08062CF4": {
       "aliases": [
         "sub_08062CF4"
@@ -1445,6 +2343,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "ObjPaletteSetRgb",
+      "updated": "2026-09-28"
+    },
+    "0x08062D24": {
+      "aliases": [
+        "sub_08062D24"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "reads BG palette entry idx (0x05000000) into out[0..2] r/g/b; inverse of BgPaletteSetRgb"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgPaletteGetRgb",
       "updated": "2026-09-28"
     },
     "0x08062D50": {
@@ -1484,6 +2395,45 @@
       "kind": "function",
       "source": "ai",
       "symbol": "ObjPaletteShiftRange",
+      "updated": "2026-09-28"
+    },
+    "0x08062F90": {
+      "aliases": [
+        "sub_08062F90"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "copies BG and OBJ palette RAM into two fresh 0x200-byte heap buffers unless a snapshot is held"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteSnapshotSave",
+      "updated": "2026-09-28"
+    },
+    "0x0806306C": {
+      "aliases": [
+        "sub_0806306C"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "copies both snapshot buffers back to BG/OBJ palette RAM and frees them"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteSnapshotRestore",
+      "updated": "2026-09-28"
+    },
+    "0x08063104": {
+      "aliases": [
+        "sub_08063104"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "restores only the BG palette half of the snapshot and frees that buffer"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteSnapshotRestoreBg",
       "updated": "2026-09-28"
     },
     "0x080674A0": {
@@ -1828,6 +2778,32 @@
       "symbol": "SceneObjGetPosition",
       "updated": "2026-09-28"
     },
+    "0x080686F4": {
+      "aliases": [
+        "sub_080686F4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "error message \"Error allocating memory for actor motion modifiers\"; appends to the 4-entry list at unk78 (heap block unk7C, count unk74)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ActorAddMotionModifier",
+      "updated": "2026-09-28"
+    },
+    "0x08068798": {
+      "aliases": [
+        "sub_08068798"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "walks the unk74 motion modifier entries added by ActorAddMotionModifier"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ActorApplyMotionModifiers",
+      "updated": "2026-09-28"
+    },
     "0x08068808": {
       "aliases": [
         "sub_08068808"
@@ -2037,6 +3013,19 @@
       "symbol": "VramCopyStrided",
       "updated": "2026-09-25"
     },
+    "0x0806A314": {
+      "aliases": [
+        "sub_0806A314"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "error message \"Error in fastAllocate(), unable to allocate %i bytes\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "FastAllocate",
+      "updated": "2026-09-28"
+    },
     "0x0806A3A4": {
       "aliases": [
         "sub_0806A3A4",
@@ -2079,6 +3068,19 @@
       "symbol": "HeapRegionInsert",
       "updated": "2026-09-28"
     },
+    "0x0806A580": {
+      "aliases": [
+        "sub_0806A580"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "error message \"Error in getValidAllocatedBlock(), no further AllocatedBlocks available\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GetValidAllocatedBlock",
+      "updated": "2026-09-28"
+    },
     "0x0806AC68": {
       "aliases": [
         "sub_0806AC68"
@@ -2116,6 +3118,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "GlyphBlit2x2",
+      "updated": "2026-09-28"
+    },
+    "0x0806B764": {
+      "aliases": [
+        "sub_0806B764"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "error message \"textLayer error: font or background 256 colours.\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextLayerInit",
       "updated": "2026-09-28"
     },
     "0x0806BC0C": {
@@ -2157,6 +3172,32 @@
       "symbol": "CollisionQuadtreeBuild",
       "updated": "2026-09-28"
     },
+    "0x0806DEC8": {
+      "aliases": [
+        "sub_0806DEC8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "walks variable-size chunks (size word at +4) and returns the index-th"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ChunkListAt",
+      "updated": "2026-09-28"
+    },
+    "0x0806DEF4": {
+      "aliases": [
+        "sub_0806DEF4"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "returns &records[b] (16-byte records) when b is below the count, else NULL; spawn lists take x/y from it"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PosRecordGet",
+      "updated": "2026-09-28"
+    },
     "0x0806DF38": {
       "aliases": [
         "sub_0806DF38"
@@ -2196,6 +3237,32 @@
       "symbol": "SegCrossSide",
       "updated": "2026-09-25"
     },
+    "0x0806EE48": {
+      "aliases": [
+        "sub_0806EE48"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "per-frame camera: runs the handler/callback for the target then scans the 4 motion slots"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CameraUpdate",
+      "updated": "2026-09-28"
+    },
+    "0x0806EEC4": {
+      "aliases": [
+        "sub_0806EEC4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns state->motion, the slot the camera follows"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CameraGetActive",
+      "updated": "2026-09-28"
+    },
     "0x0806EEC8": {
       "aliases": [
         "sub_0806EEC8"
@@ -2222,6 +3289,19 @@
       "symbol": "CameraCenterOnObject",
       "updated": "2026-09-28"
     },
+    "0x0806F174": {
+      "aliases": [
+        "sub_0806F174"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "stores the camera target (unk224) and centres on it, or calls the custom follow callback unk348"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CameraSetTarget",
+      "updated": "2026-09-28"
+    },
     "0x0806F1A0": {
       "aliases": [
         "sub_0806F1A0"
@@ -2235,6 +3315,19 @@
       "source": "ai",
       "symbol": "Unk84FindIndexByKey",
       "updated": "2026-09-23"
+    },
+    "0x0806F8C4": {
+      "aliases": [
+        "sub_0806F8C4"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "debug: walks a doubly linked list and DebugPrints when prev/next links disagree"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "LinkedListValidate",
+      "updated": "2026-09-28"
     },
     "0x0806F910": {
       "aliases": [
@@ -2260,6 +3353,19 @@
       "kind": "function",
       "source": "ai",
       "symbol": "VramSpanFree",
+      "updated": "2026-09-28"
+    },
+    "0x0806FDB4": {
+      "aliases": [
+        "sub_0806FDB4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns the node after which a key belongs in a list sorted by unk22 (NULL for the head)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlObjListFindInsertPoint",
       "updated": "2026-09-28"
     },
     "0x0806FDD0": {
@@ -2824,34 +3930,31 @@
     },
     "0x0807309C": {
       "aliases": [
-        "sub_0807309C"
+        "sub_0807309C",
+        "BtlObjTableAdd"
       ],
       "confidence": 0.85,
       "evidence": [
-        "scans gBtlObjTable (0x03004150) for the first null slot, bounded by gBtlObjTableCount (0x03004154)",
-        "creates the object via sub_0806A3A4(arg) and stores it in the free slot",
-        "increments gBtlObjLiveCount (0x03004158) and returns the object's key at +0",
-        "returns 0 when the table is null or full"
+        "the string pool's allocator: StringFree's error is \"deallocateString - String buffer not found\" and StringArrayAlloc's is \"allocateStringArray - String allocation failure\""
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlObjTableAdd",
-      "updated": "2026-09-22"
+      "symbol": "StringAlloc",
+      "updated": "2026-09-28"
     },
     "0x08073114": {
       "aliases": [
-        "sub_08073114"
+        "sub_08073114",
+        "BtlObjTableRemove"
       ],
-      "confidence": 0.85,
+      "confidence": 0.9,
       "evidence": [
-        "scans gBtlObjTable (0x03004150) for the slot whose object key at +0 equals the argument",
-        "calls sub_0806A434 on the match, clears the slot and decrements gBtlObjLiveCount (0x03004158)",
-        "falls through to sub_08067B98(0x083D2690) when no slot matches"
+        "error message \"deallocateString - String buffer not found.\""
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlObjTableRemove",
-      "updated": "2026-09-22"
+      "symbol": "StringFree",
+      "updated": "2026-09-28"
     },
     "0x08073184": {
       "aliases": [
@@ -2947,28 +4050,30 @@
     },
     "0x08073568": {
       "aliases": [
-        "sub_08073568"
+        "sub_08073568",
+        "BtlObjTableAddArray"
       ],
-      "confidence": 0.7,
+      "confidence": 0.9,
       "evidence": [
-        "fills out[0..count) with BtlObjTableAdd(size); returns the number allocated, DebugPrint on failure"
+        "error message \"allocateStringArray - String allocation failure\""
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlObjTableAddArray",
+      "symbol": "StringArrayAlloc",
       "updated": "2026-09-28"
     },
     "0x080735B0": {
       "aliases": [
-        "sub_080735B0"
+        "sub_080735B0",
+        "BtlObjTableRemoveArray"
       ],
-      "confidence": 0.7,
+      "confidence": 0.8,
       "evidence": [
-        "BtlObjTableRemove on each non-NULL entry of an n-entry array (inverse of sub_08073568)"
+        "StringFree on each non-NULL entry; inverse of allocateStringArray"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlObjTableRemoveArray",
+      "symbol": "StringArrayFree",
       "updated": "2026-09-28"
     },
     "0x080735DC": {
@@ -2986,6 +4091,19 @@
       "source": "ai",
       "symbol": "TextFormatInt",
       "updated": "2026-09-22"
+    },
+    "0x080737C0": {
+      "aliases": [
+        "sub_080737C0"
+      ],
+      "confidence": 0.9,
+      "evidence": [
+        "error messages \"splitStringIntoStringArray - ...\"; word-wraps text into at most `count` lines of maxWidth"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SplitStringIntoStringArray",
+      "updated": "2026-09-28"
     },
     "0x08073910": {
       "aliases": [

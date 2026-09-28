@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0806dec8
-u8 *sub_0806DEC8(struct UnkDEC8 *a, s32 index)
+u8 *ChunkListAt(struct UnkDEC8 *a, s32 index)
 {
     u8 *node;
     s32 i;

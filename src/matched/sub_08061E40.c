@@ -4,7 +4,7 @@
 
 /* match-flags: -fprologue-bugfix */
 
-void sub_08061E40(struct Unk61E40 *a)
+void TextTypewriterRestart(struct Unk61E40 *a)
 {
     if (a != 0)
     {

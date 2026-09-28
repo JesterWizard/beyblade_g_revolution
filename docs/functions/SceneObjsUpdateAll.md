@@ -31,7 +31,7 @@
 ## Callees
 
 - [`ScenePaletteAcquire`](ScenePaletteAcquire.md)
-- `sub_08062B9C`
+- [`ObjPaletteSlotsReleaseRange`](ObjPaletteSlotsReleaseRange.md)
 - `sub_08067CE8`
 - [`SceneObjUpdate`](SceneObjUpdate.md)
 - [`BtlObjListResort`](BtlObjListResort.md)

@@ -25,5 +25,5 @@
 
 ## Callees
 
-- `sub_08062D24`
+- [`BgPaletteGetRgb`](BgPaletteGetRgb.md)
 - [`BgPaletteSetRgb`](BgPaletteSetRgb.md)

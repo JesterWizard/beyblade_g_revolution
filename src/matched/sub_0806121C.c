@@ -27,6 +27,6 @@ void TextWindowOpen(struct Unk617C4 *src, u32 b, u16 count, u16 c, u16 d, u16 e,
     st->unkA6 = 0;
     AffineBgInit((struct Unk68E54 *)st, 3, count, 0);
     TextWindowLayout((u8)e, (u8)f, (u8)c, (u8)d, (u16)(count - 1));
-    sub_08061308();
+    TextWindowClearActiveTiles();
 }
 

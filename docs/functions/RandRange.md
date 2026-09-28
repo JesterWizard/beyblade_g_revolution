@@ -44,4 +44,4 @@
 - [`BeybladeHomeToward`](BeybladeHomeToward.md)
 - [`BtlApplyClampedScore`](BtlApplyClampedScore.md)
 - [`FieldEnter`](FieldEnter.md)
-- `sub_080474AC`
+- [`SparklesUpdate`](SparklesUpdate.md)

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08044f64
-u32 sub_08044F64(u32 idx)
+u32 SaveSlotWriteDefault(u32 idx)
 {
     u32 product;
     u32 i;

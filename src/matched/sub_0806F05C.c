@@ -13,7 +13,7 @@ void CameraCenterOnObject(struct Unk6EE48 *state, struct Unk68574 *obj)
     s16 i;
     s32 y;
 
-    cam = sub_0806EEC4(state);
+    cam = CameraGetActive(state);
     SceneObjGetPosition(obj, (u32 *)pos);
     state->unk354 |= 1;
     cam->unk14 = pos[0] - (cam->unk40 + ((0x78 - (obj->unk10 >> 1)) << 8));

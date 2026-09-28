@@ -2,7 +2,7 @@
 
 // @ 0x080737c0
 __attribute__((naked))
-s32 sub_080737C0(void **lines, u8 *buf, u8 count, u32 d, u16 e, u16 f, u16 g, u32 h)
+s32 SplitStringIntoStringArray(void **lines, u8 *buf, u8 count, u32 d, u16 e, u16 f, u16 g, u32 h)
 {
     asm(
         ".syntax unified\n"

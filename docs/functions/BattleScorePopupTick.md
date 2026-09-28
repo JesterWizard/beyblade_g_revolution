@@ -30,7 +30,7 @@
 ## Callees
 
 - `sub_08031368`
-- `sub_0803139C`
+- [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
 - [`BtlClearState`](BtlClearState.md)
 
 ## Callers

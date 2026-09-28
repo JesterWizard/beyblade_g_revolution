@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08062d24
-void sub_08062D24(u32 idx, u8 *out)
+void BgPaletteGetRgb(u32 idx, u8 *out)
 {
   u32 shifted = idx << 24;
   u32 *new_var;

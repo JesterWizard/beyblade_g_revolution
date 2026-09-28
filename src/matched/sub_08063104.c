@@ -7,7 +7,7 @@
 #include "data_symbols.h"
 
 // @ 0x08063104
-void sub_08063104(void)
+void PaletteSnapshotRestoreBg(void)
 {
     void **slotA;
     void **slotB;

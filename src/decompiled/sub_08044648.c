@@ -16,7 +16,7 @@ void BeybladeSpawnList(void *arg)
 
     ids = arg;
     records = (struct Unk6DEF4 *)sub_08062A14();
-    state = (struct Unk6EE48 *)sub_0806EEC4((struct Unk6EE48 *)gData_03000198);
+    state = (struct Unk6EE48 *)CameraGetActive((struct Unk6EE48 *)gData_03000198);
     while (*ids != -1)
     {
         id = *ids;
@@ -24,7 +24,7 @@ void BeybladeSpawnList(void *arg)
         if (side == 1)
         {
             def = &gData_08075AB8[id];
-            pos = (s32 *)sub_0806DEF4(records, def->variant);
+            pos = (s32 *)PosRecordGet(records, def->variant);
             if (pos != NULL)
             {
                 obj = SceneObjSpawn((u32)state, gData_08075AB8[id].param, pos[0] >> 3, pos[1] >> 3);
@@ -46,7 +46,7 @@ void BeybladeSpawnList(void *arg)
                         obj->unkD0 = 8;
                     }
                     if (gData_08075AB8[id].part != 0)
-                        ((void (*)(u32, struct Unk68574 *))sub_08059C98)(gData_08075AB8[id].part, obj);
+                        ((void (*)(u32, struct Unk68574 *))TaskCreateWithOwner)(gData_08075AB8[id].part, obj);
                     else
                         obj->unkC8 = (void *)gData_08075AB8[id].part;
                 }
@@ -54,7 +54,7 @@ void BeybladeSpawnList(void *arg)
         }
         else if (GetIndexedRecordWord((s16)*ids) == 2)
         {
-            pos = (s32 *)sub_0806DEF4(records, gData_08075AB8[id].variant);
+            pos = (s32 *)PosRecordGet(records, gData_08075AB8[id].variant);
             if (pos != NULL)
             {
                 pos[0] = -0x400;

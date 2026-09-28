@@ -14,8 +14,8 @@ void sub_08056BA4(void *arg)
     struct Unk4FFCCIcon *icon;
     s32 i;
 
-    line = BtlObjTableAdd(0x80);
-    num = BtlObjTableAdd(0x80);
+    line = StringAlloc(0x80);
+    num = StringAlloc(0x80);
     icon = NULL;
     if (gData_0300066C == 0)
         return;
@@ -33,14 +33,14 @@ void sub_08056BA4(void *arg)
         if (gData_03000710[gData_03000674 + i] >= 0)
         {
             StringAppend((const u8 *)0x083A89E0, line, 0x80);
-            StringAppend((const u8 *)sub_0803DD88(gData_03000710[gData_03000674 + i]), line, 0x80);
+            StringAppend((const u8 *)GetBeybladeNameWithIndex(gData_03000710[gData_03000674 + i]), line, 0x80);
         }
         TextDrawAlign(line, 0x4A, 2);
         if (i == gData_03000678)
         {
             TextRowSetPaletteBank((u16)(i + 6), 0xE, 0xA, 0x1A);
             DebugPrint((void *)0x083A89E4, gData_03000710[gData_03000674 + i]);
-            icon = sub_0803DCFC(gData_03000710[gData_03000674 + i]);
+            icon = GetBeybladeWithIndex(gData_03000710[gData_03000674 + i]);
             if (icon != NULL)
             {
                 a->unk274[4] = BtlObjPoolAlloc(0);
@@ -54,7 +54,7 @@ void sub_08056BA4(void *arg)
             TextRowSetPaletteBank((u16)(i + 6), 0xF, 0xA, 0x1A);
         }
     }
-    BtlObjTableRemove(num);
-    BtlObjTableRemove(line);
+    StringFree(num);
+    StringFree(line);
 }
 

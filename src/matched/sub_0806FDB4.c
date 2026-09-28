@@ -4,7 +4,7 @@
 
 // @ 0x0806fdb4
 /* match-compiler: old_agbcc */
-struct Unk6FDB4 *sub_0806FDB4(struct Unk6FDB4 *p, u16 key)
+struct Unk6FDB4 *BtlObjListFindInsertPoint(struct Unk6FDB4 *p, u16 key)
 {
     struct Unk6FDB4 *prev = 0;
 

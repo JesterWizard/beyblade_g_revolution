@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08060468
-void sub_08060468(void)
+void WindowEffectCreate(void)
 {
     void **slotA;
     void **slotB;

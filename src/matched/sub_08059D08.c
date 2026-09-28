@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08059d08
-void sub_08059D08(struct Unk59D08 *a)
+void TaskDestroy(struct Unk59D08 *a)
 {
     void *z;
     void *cb;

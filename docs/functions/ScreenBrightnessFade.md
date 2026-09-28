@@ -34,11 +34,11 @@
 - `sub_08052FC8`
 - `sub_080602C0`
 - `sub_08060394`
-- `sub_08061308`
+- [`TextWindowClearActiveTiles`](TextWindowClearActiveTiles.md)
 - [`TextWindowLayout`](TextWindowLayout.md)
 - [`TextSetActiveObject`](TextSetActiveObject.md)
 - `sub_08061D00`
-- `sub_08062C80`
+- [`ScreenWhiteoutClearPalettes`](ScreenWhiteoutClearPalettes.md)
 
 ## Callers
 

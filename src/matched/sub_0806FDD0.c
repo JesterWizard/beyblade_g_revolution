@@ -20,7 +20,7 @@ void *BtlObjPoolAlloc(u16 key_arg)
     if (node != 0)
     {
         head_loc = (struct Unk6FDB4 **)0x030040A4;
-        previous = sub_0806FDB4(*head_loc, key);
+        previous = BtlObjListFindInsertPoint(*head_loc, key);
         node->unk22 = key;
         *free_loc = node->unk04;
         if (previous == 0)
@@ -43,7 +43,7 @@ void *BtlObjPoolAlloc(u16 key_arg)
     }
     else
         DebugMessage((void *)0x083D2230);
-    sub_0806F8C4((struct Unk6F8C4 *)gUnk_030040A4);
+    LinkedListValidate((struct Unk6F8C4 *)gUnk_030040A4);
     return node;
 }
 

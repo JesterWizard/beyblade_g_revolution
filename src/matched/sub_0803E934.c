@@ -10,7 +10,7 @@ void sub_0803E934(struct Unk2F520 *a)
 
     value1 = a->unk2D5;
     value2 = a->unk2FC;
-    sub_08061BE8();
+    TextWindowPopState();
     _0803E9A4();
     value2_shifted = ((s32)value2 << 24) >> 23;
     TextRowSetPaletteBank((u16)(value2_shifted + 5), 0x0F, 4, 0x1A);

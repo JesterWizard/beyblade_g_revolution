@@ -6,7 +6,7 @@
 // Battle object system init: (re)allocate the object pool (nObj <= 0x80 nodes
 // of 0x34), the OAM sprite-slot pool (nSpr <= 0x20 nodes of 0x1C) and the
 // VRAM span list, link each into a free list, then hide all OAM entries.
-#define HeapAllocBlock(size) ((struct Unk6F910Block *(*)(u32))sub_0806A314)(size)
+#define HeapAllocBlock(size) ((struct Unk6F910Block *(*)(u32))FastAllocate)(size)
 
 void BtlObjSystemInit(u32 nObj, u32 nSpr)
 {

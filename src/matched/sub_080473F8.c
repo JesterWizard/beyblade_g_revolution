@@ -17,7 +17,7 @@ struct Unk474ACSlot;
 // 0, 0)` (the seed had the last four arguments reversed), and both pool words go
 // through distinct symbols (asm/data_symbols.s) -- as literals agbcc folds the
 // second address into an offset off the first and picks the wrong registers.
-void sub_080473F8(void)
+void SparklesCreate(void)
 {
     void *tmp;
     struct Unk473F8 *pool;

@@ -66,7 +66,7 @@ void sub_08043C70(struct Unk68574 *obj, const struct Unk0560 *map, u32 modeArg, 
     }
     else
     {
-        s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), spawn);
+        s32 *pos = (s32 *)PosRecordGet((struct Unk6DEF4 *)sub_08062A14(), spawn);
 
         obj->unk04 = (pos[0] << 5) - ((obj->unk10 >> 1) << 8);
         obj->unk08 = (pos[1] << 5) - ((obj->unk11 >> 1) << 8);

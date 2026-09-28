@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080611f0
-void sub_080611F0(void)
+void TextWindowClose(void)
 {
     void *p;
 

@@ -17,8 +17,8 @@ void sub_0804AC3C(struct Unk2F520 *a)
     obj = a;
     pal = *(u8 *)&obj->unk2D5;
     cur = *(u8 *)&obj->unk2FC;
-    sub_08061BE8();
-    sub_0804AAF0(obj);
+    TextWindowPopState();
+    CollectionDetailsDraw(obj);
     cur <<= 24;
     cur = (u32)((s32)cur >> 8);
     base = 0xE0;
@@ -36,6 +36,6 @@ void sub_0804AC3C(struct Unk2F520 *a)
     VBlankIntrWait();
     fn = (void **)gData_080BB888;
     _08073C40(*fn);
-    sub_0804AE94();
+    CollectionCaptionDraw();
 }
 

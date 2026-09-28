@@ -8,7 +8,7 @@
 //    r1, while retail writes r0. The `ldrb` is still shared (agbcc CSEs the two
 //    `*flag_ptr` reads) and the mask must be a `s32` local so agbcc emits
 //    `movs r0,#2; negs r0,r0` instead of folding a literal -2 to `& 0xFE`.
-void sub_0806EE48(struct Unk6EE48 *state)
+void CameraUpdate(struct Unk6EE48 *state)
 {
     struct Unk6EE48 *work;
     void *handler;

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080608d4
-void sub_080608D4(void)
+void WindowRegsClear(void)
 {
     u16 *p;
     u16 z;

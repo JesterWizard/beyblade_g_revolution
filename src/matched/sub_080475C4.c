@@ -3,7 +3,7 @@
 // @ 0x080475c4
 /* match-flags: -fprologue-bugfix */
 
-void sub_080475C4(void)
+void SparklesSaveTimers(void)
 {
     struct Unk473F8 *src;
 

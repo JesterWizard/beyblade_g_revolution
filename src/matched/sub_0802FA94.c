@@ -15,7 +15,7 @@ void ItemListDraw(void)
     s32 name;
 
     TextGetAreaWidth();
-    buf = BtlObjTableAdd(0x10);
+    buf = StringAlloc(0x10);
     for (i = 0; i <= 2; i++)
     {
         if (gData_03000278->items[gData_03000278->top + i].count > 0)
@@ -75,7 +75,7 @@ void ItemListDraw(void)
                 }
                 break;
             case 1:
-                TextDrawAlign((void *)sub_0803DD88(gData_03000278->items[gData_03000278->top + i].id), 0x0C, 2);
+                TextDrawAlign((void *)GetBeybladeNameWithIndex(gData_03000278->items[gData_03000278->top + i].id), 0x0C, 2);
                 break;
             }
             if (gData_03000278->top + i < gData_03000278->count - 1)
@@ -103,6 +103,6 @@ void ItemListDraw(void)
             TextDrawAlign(gData_08096B5C[gData_03000198->unk1818], 0x0C, 2);
         }
     }
-    BtlObjTableRemove(buf);
+    StringFree(buf);
 }
 

@@ -25,6 +25,6 @@
 
 ## Callers
 
-- `sub_0804AE94`
+- [`CollectionCaptionDraw`](CollectionCaptionDraw.md)
 - `sub_08056BA4`
-- `sub_080737C0`
+- [`SplitStringIntoStringArray`](SplitStringIntoStringArray.md)

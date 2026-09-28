@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08059c98
-void *sub_08059C98(struct Unk59C98Src *src, struct Unk59C98Owner *owner, void *a2, void *a3)
+void *TaskCreateWithOwner(struct Unk59C98Src *src, struct Unk59C98Owner *owner, void *a2, void *a3)
 {
     struct Unk59C6C *p;
     s32 i;

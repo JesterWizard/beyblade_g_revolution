@@ -4,7 +4,7 @@
 
 // @ 0x0803139c
 
-s32 sub_0803139C(struct Unk705DC **array, s32 value, s32 count, void *table, u8 withPoint)
+s32 DigitSpritesSetValue(struct Unk705DC **array, s32 value, s32 count, void *table, u8 withPoint)
 {
     s32 index;
     s32 quotient;

@@ -16,7 +16,7 @@ void BeybladeUpdate(struct Unk346C0 *a, u32 b)
 
     a->unk30E = BeybladeHomeToward(a->unk00, 0x10000, 0x10000, 0xC8, 0x8000);
     if (sub_08035D1C(a->unk00, 0x10000, 0x10000) == 1)
-        sub_08060254(4, 0x38, 7);
+        SfxPlayVariant(4, 0x38, 7);
     BeybladeMotionStep((struct Unk35984 *)a->unk00);
     if (a->unk18 == 1)
         sub_08035884(&a->unk08);

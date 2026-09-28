@@ -41,8 +41,8 @@
 - [`LaunchShowPowerMeter`](LaunchShowPowerMeter.md)
 - [`LaunchShowBoostMeter`](LaunchShowBoostMeter.md)
 - `sub_08048DB8`
-- `sub_0804AAF0`
-- `sub_0804AE94`
+- [`CollectionDetailsDraw`](CollectionDetailsDraw.md)
+- [`CollectionCaptionDraw`](CollectionCaptionDraw.md)
 - [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08056BA4`
 

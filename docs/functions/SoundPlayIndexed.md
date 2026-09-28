@@ -32,4 +32,4 @@
 
 ## Callers
 
-- `sub_080601C4`
+- [`SfxPlayInSlot`](SfxPlayInSlot.md)

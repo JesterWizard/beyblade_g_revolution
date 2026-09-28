@@ -5,7 +5,7 @@
 #define SAVE_FAIL(slot)                            \
     {                                              \
         BtlClearUnk1688Entry(slot);                \
-        sub_08044F64(slot);                        \
+        SaveSlotWriteDefault(slot);                        \
         gData_03000198->unk185B = 1;               \
         gData_03000198->unk185C = 0;               \
     }
@@ -50,7 +50,7 @@ s8 SaveDataVerify(void)
                 for (i = 0; i < 1; i++)
                 {
                     BtlClearUnk1688Entry(i);
-                    sub_08044F64(i);
+                    SaveSlotWriteDefault(i);
                 }
                 gData_03000198->unk185B = 1;
                 gData_03000198->unk185C = invalid;
@@ -60,15 +60,15 @@ s8 SaveDataVerify(void)
         buf += 2;
     }
     for (i = 0; i < 1; i++)
-        SaveSlotLoadFromEeprom(i);
+        LoadGameSave(i);
     for (i = 0; i < 1; i++)
     {
-        sub_08044D8C((u32 *)&gData_03000198->unk168C[i]);
-        if (sub_08044D8C((u32 *)&gData_03000198->unk168C[i]) == 0)
+        SaveDataChecksum((u32 *)&gData_03000198->unk168C[i]);
+        if (SaveDataChecksum((u32 *)&gData_03000198->unk168C[i]) == 0)
             gData_03000198->unk185C = 0;
         hdr = (struct Unk1688Words *)gData_03000198->unk1688;
         hdr += i;
-        if (hdr->unk04 != sub_08044D8C((u32 *)&gData_03000198->unk168C[i]))
+        if (hdr->unk04 != SaveDataChecksum((u32 *)&gData_03000198->unk168C[i]))
             SAVE_FAIL(i);
         if (((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk00 != 0xFEEDFACE)
             SAVE_FAIL(i);

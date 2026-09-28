@@ -8,7 +8,7 @@ struct Unk3114C
     s32 unk0C;
 };
 
-s32 sub_0803139C(
+s32 DigitSpritesSetValue(
     struct Unk3114C **entries, s32 key, s32 count, void *table, s32 mode);
 
 void sub_0803114C(void *array, u32 key, u32 base, u32 mode)
@@ -20,7 +20,7 @@ void sub_0803114C(void *array, u32 key, u32 base, u32 mode)
     struct Unk3114C *entry;
 
     entries = (struct Unk3114C **)array;
-    count = sub_0803139C(
+    count = DigitSpritesSetValue(
         entries, key, 8, (void *)0x0810B208, 0);
     if ((u8)mode == 0)
     {

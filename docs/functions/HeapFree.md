@@ -44,24 +44,24 @@
 - `sub_08041858`
 - `sub_08043ADC`
 - `sub_08043C28`
-- `sub_08045A84`
-- `sub_0804745C`
-- `sub_08059BD8`
-- `sub_08059D08`
-- `sub_080604A4`
+- [`SaveBufferFree`](SaveBufferFree.md)
+- [`SparklesDestroy`](SparklesDestroy.md)
+- [`TaskDestroyByUpdateFn`](TaskDestroyByUpdateFn.md)
+- [`TaskDestroy`](TaskDestroy.md)
+- [`WindowEffectDestroy`](WindowEffectDestroy.md)
 - `sub_08060798`
-- `sub_080611F0`
+- [`TextWindowClose`](TextWindowClose.md)
 - [`VramSlotsRelease`](VramSlotsRelease.md)
 - [`VramSlotReleaseLast`](VramSlotReleaseLast.md)
 - `sub_08062044`
 - `sub_08062960`
-- `sub_0806306C`
-- `sub_08063104`
+- [`PaletteSnapshotRestore`](PaletteSnapshotRestore.md)
+- [`PaletteSnapshotRestoreBg`](PaletteSnapshotRestoreBg.md)
 - `sub_08065CD0`
 - [`SceneObjFreeResources`](SceneObjFreeResources.md)
 - [`BtlObjSystemInit`](BtlObjSystemInit.md)
 - `sub_08072CC0`
-- [`BtlObjTableRemove`](BtlObjTableRemove.md)
+- [`StringFree`](StringFree.md)
 
 ## ROM data referenced
 

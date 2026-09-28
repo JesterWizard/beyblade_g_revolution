@@ -2,7 +2,7 @@
 
 // @ 0x080618a8
 
-void sub_080618A8(struct Unk618A8 *a, void *b, u16 c, u16 d, u16 e, u16 f)
+void TextTypewriterInit(struct Unk618A8 *a, void *b, u16 c, u16 d, u16 e, u16 f)
 {
     if (a == 0)
         return;

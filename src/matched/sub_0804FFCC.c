@@ -15,9 +15,9 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
 
     if (gData_030006BC[gData_030006AC + gData_030006B0].unk0C < 0)
         return;
-    rec = sub_0803E1F4(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E);
-    buf = BtlObjTableAdd(8);
-    TextGroupSetString(&gData_030006B4->unk60, (void *)sub_0803DD88(gData_030006BC[gData_030006AC + gData_030006B0].unk0C), 13);
+    rec = CollectionFindEntry(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E);
+    buf = StringAlloc(8);
+    TextGroupSetString(&gData_030006B4->unk60, (void *)GetBeybladeNameWithIndex(gData_030006BC[gData_030006AC + gData_030006B0].unk0C), 13);
     TextSetActiveObject((struct Unk617C4 *)0x082C44A8, (u32)gData_080B7258);
     TextSetCursor(0, 0x10);
     if ((text = (void *)_080505AC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C, gData_030006BC[gData_030006AC + gData_030006B0].unk0E, 3)) == NULL)
@@ -142,7 +142,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     TextEntrySetPaletteBank(panel->unk28C[4], 14);
     TextEntrySetPaletteBank(panel->unk28C[5], 14);
     /* rec is reused for the icon entry (one variable in the original). */
-    rec = sub_0803DCFC(gData_030006BC[gData_030006AC + gData_030006B0].unk0C);
+    rec = GetBeybladeWithIndex(gData_030006BC[gData_030006AC + gData_030006B0].unk0C);
     if (rec != NULL)
     {
         panel->unk28C[0] = BtlObjPoolAlloc(0);
@@ -150,6 +150,6 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
         TextEntrySetPaletteBank(panel->unk28C[0], 15);
         ((void (*)(const void *, void *, u32))gData_080BB8C0[0])(((struct Unk4FFCCIcon *)rec)->unk18, (void *)0x050003E0, 0x20);
     }
-    BtlObjTableRemove(buf);
+    StringFree(buf);
 }
 

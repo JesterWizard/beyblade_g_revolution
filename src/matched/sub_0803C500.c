@@ -17,8 +17,8 @@ void LaunchShowPowerMeter(s32 a)
     void *buf_b;
     void **table;
 
-    buf_a = BtlObjTableAdd(0x20);
-    buf_b = BtlObjTableAdd(0x20);
+    buf_a = StringAlloc(0x20);
+    buf_b = StringAlloc(0x20);
     btl_loc = gBattleWorkPtrLoc;
     sub_08061E8C((struct Unk61E8C *)&(*btl_loc)->unk1F10, (void *)gData_080B72F3, (struct Unk61E8CSrc *)gData_082BF600, 0xF0, 0x78);
     remain = 0x64 - a;
@@ -26,8 +26,8 @@ void LaunchShowPowerMeter(s32 a)
     table = gData_080971EC;
     StringExpandDelim(table[gMainWorkPtr->unk1818], buf_a, buf_b, 0x40, 0x20);
     sub_08061EF8(&(*btl_loc)->unk1F10, buf_a, 0, 0x3E, 0, 0xFFFF, 0);
-    BtlObjTableRemove(buf_a);
-    BtlObjTableRemove(buf_b);
+    StringFree(buf_a);
+    StringFree(buf_b);
     DebugPrint((void *)gData_0833C79C, remain);
     btl = *btl_loc;
     btl->unk1F74 = 0x64 - a;

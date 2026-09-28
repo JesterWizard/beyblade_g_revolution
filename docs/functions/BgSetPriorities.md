@@ -32,5 +32,5 @@
 - `sub_08032604`
 - [`HudBuildDigitSprites`](HudBuildDigitSprites.md)
 - [`FieldEnter`](FieldEnter.md)
-- `sub_080444BC`
+- [`MapLoadObjects`](MapLoadObjects.md)
 - `sub_0806EC20`

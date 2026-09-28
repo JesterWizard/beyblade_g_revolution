@@ -25,5 +25,5 @@
 
 ## Callers
 
-- `sub_0806A314`
+- [`FastAllocate`](FastAllocate.md)
 - [`HeapAlloc`](HeapAlloc.md)

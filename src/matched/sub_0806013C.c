@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0806013c
-void sub_0806013C(void)
+void BgmStop(void)
 {
     s32 v;
 

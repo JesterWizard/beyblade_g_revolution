@@ -7,7 +7,7 @@
 // bx-r3 trampoline _08073C4C with the stride and a table entry.
 // `a0 = lo + b0` must be materialised before `b1` is computed: retail serialises
 // addr0 fully before it starts addr1, so the first `add lo` cannot be sunk.
-void sub_08061DC0(u16 arg0, u16 arg1)
+void TextWindowCopyRow(u16 arg0, u16 arg1)
 {
     s32 stride;
     s32 lo;

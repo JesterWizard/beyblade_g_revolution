@@ -23,7 +23,7 @@ void BattleScorePopupTick(void)
             if (gData_03000290->unk0B64 > gData_03000290->unk0B68)
                 gData_03000290->unk0B64 = gData_03000290->unk0B68;
         }
-        count = sub_0803139C((struct Unk705DC **)gData_03000290->unk0B54, gData_03000290->unk0B64, 4, gData_0810B4E0, 1);
+        count = DigitSpritesSetValue((struct Unk705DC **)gData_03000290->unk0B54, gData_03000290->unk0B64, 4, gData_0810B4E0, 1);
         x = gData_03000290->unk0B7C + (count - 1) * 0x700;
         for (i = 0; i < count; i++)
         {

@@ -28,5 +28,5 @@
 - `sub_08066B10`
 - [`StringRemoveLast`](StringRemoveLast.md)
 - [`StringAppendChar`](StringAppendChar.md)
-- `sub_080737C0`
+- [`SplitStringIntoStringArray`](SplitStringIntoStringArray.md)
 - [`StringInsertChar`](StringInsertChar.md)

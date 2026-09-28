@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802c6ac
-void sub_0802C6AC(void)
+void InitTournament(void)
 {
     struct MainWork **loc;
     void *base;

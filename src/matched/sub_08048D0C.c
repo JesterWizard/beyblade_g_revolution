@@ -4,7 +4,7 @@
 void sub_08048D0C(void *a)
 {
     VBlankIntrWait();
-    sub_08061BE8();
+    TextWindowPopState();
     sub_08048DB8(a);
 }
 

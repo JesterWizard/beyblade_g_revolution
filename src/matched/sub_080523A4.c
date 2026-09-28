@@ -19,7 +19,7 @@ void sub_080523A4(struct Unk2F520 *a)
     if (obj)
     {
         obj = a;
-        sub_08061BE8();
+        TextWindowPopState();
         sub_0805264C(obj, 0);
         sub_0805264C(obj, 1);
         sub_0805264C(obj, 2);
@@ -43,7 +43,7 @@ void sub_080523A4(struct Unk2F520 *a)
     else
     {
         obj = a;
-        sub_08061BE8();
+        TextWindowPopState();
         sub_0805264C(obj, 0);
         sub_0805264C(obj, 1);
         sub_0805264C(obj, 2);

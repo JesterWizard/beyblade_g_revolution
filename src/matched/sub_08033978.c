@@ -19,7 +19,7 @@ void sub_08033978(struct Unk33A5C *a, struct Unk346C0 *b, struct Unk346C0 *c, u8
     b->unk310 = 1;
     c->unk2CC = 6;
     b->unk310 = 1;
-    sub_08060254(0xB, 0x38, d);
+    SfxPlayVariant(0xB, 0x38, d);
     a->unk0D = 0;
 }
 

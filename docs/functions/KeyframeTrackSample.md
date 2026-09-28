@@ -25,8 +25,8 @@
 
 ## Callees
 
-- `sub_0806DEC8`
-- `sub_0806DEF4`
+- [`ChunkListAt`](ChunkListAt.md)
+- [`PosRecordGet`](PosRecordGet.md)
 
 ## Callers
 

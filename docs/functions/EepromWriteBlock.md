@@ -24,4 +24,4 @@
 
 ## Callers
 
-- `sub_08044F64`
+- [`SaveSlotWriteDefault`](SaveSlotWriteDefault.md)

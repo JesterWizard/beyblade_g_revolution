@@ -2,7 +2,7 @@
 
 // @ 0x08061a98
 
-u32 sub_08061A98(void)
+u32 TextGetWidthTable(void)
 {
     return gUnk_03000798->unk8C;
 }

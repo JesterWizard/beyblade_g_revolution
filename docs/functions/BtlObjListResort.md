@@ -29,7 +29,7 @@
 
 ## Callees
 
-- `sub_0806FDB4`
+- [`BtlObjListFindInsertPoint`](BtlObjListFindInsertPoint.md)
 
 ## Callers
 

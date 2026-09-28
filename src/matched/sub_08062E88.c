@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08062e88
-void sub_08062CC8(u32 idx, u8 *out);
+void ObjPaletteGetRgb(u32 idx, u8 *out);
 void ObjPaletteSetRgb(u32 idx, struct Unk62D50 *rgb);
 
 // Twin of sub_08062D80. Reads with sub_08062CC8 and writes with sub_08062CF4.
@@ -26,7 +26,7 @@ add:
     for (i = a; i <= b; i++)
     {
         idx = (u8)i;
-        sub_08062CC8(idx, (u8 *)&rgb);
+        ObjPaletteGetRgb(idx, (u8 *)&rgb);
         v0 = rgb.unk00 + d;
         rgb.unk00 = v0;
         rgb.unk01 = d + rgb.unk01;
@@ -47,7 +47,7 @@ sub:
     for (i = a; i <= b; i++)
     {
         idx = (u8)i;
-        sub_08062CC8(idx, (u8 *)&rgb);
+        ObjPaletteGetRgb(idx, (u8 *)&rgb);
         v0 = rgb.unk00 - d;
         rgb.unk00 = v0;
         rgb.unk01 = rgb.unk01 - d;

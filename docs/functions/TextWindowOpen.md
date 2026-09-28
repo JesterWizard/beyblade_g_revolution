@@ -29,7 +29,7 @@
 
 ## Callees
 
-- `sub_08061308`
+- [`TextWindowClearActiveTiles`](TextWindowClearActiveTiles.md)
 - [`TextWindowLayout`](TextWindowLayout.md)
 - [`AffineBgInit`](AffineBgInit.md)
 - `sub_08073C4C` _(not one of the 633 functions)_

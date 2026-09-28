@@ -33,7 +33,7 @@
 
 ## Callers
 
-- `sub_0803139C`
+- [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
 - `sub_080333E4`
 - `sub_08035054`
 

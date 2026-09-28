@@ -31,7 +31,7 @@
 
 ## Callees
 
-- `sub_0806F8C4`
+- [`LinkedListValidate`](LinkedListValidate.md)
 - [`VramSpanFree`](VramSpanFree.md)
 - [`BtlObjListMoveToHead`](BtlObjListMoveToHead.md)
 

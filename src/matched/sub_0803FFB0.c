@@ -43,9 +43,9 @@ void sub_0803FFB0(struct MainWork *a, s32 b)
     base = base + off;
     str = *(void **)(base + b);
 
-    t0 = sub_08061A98();
-    t1 = sub_08061AA8();
-    t2 = sub_080617B4();
+    t0 = TextGetWidthTable();
+    t1 = TextGetGlyphWidth();
+    t2 = TextGetSpacing();
     x = TextMeasureWidth((const u8 *)str, (const u8 *)t0, t1, t2);
     x = (x >> 1) + 0x79;
 

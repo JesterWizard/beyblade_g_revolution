@@ -29,12 +29,12 @@
 - `sub_08038D68`
 - [`BattleTextGlyphRow`](BattleTextGlyphRow.md)
 - `sub_0803FFB0`
-- `sub_080610A8`
+- [`TextSetCursorAligned`](TextSetCursorAligned.md)
 - [`TextDrawAlign`](TextDrawAlign.md)
 - [`TextTypewriterTick`](TextTypewriterTick.md)
 - `sub_08061EF8`
 - `sub_08063D68`
-- `sub_080737C0`
+- [`SplitStringIntoStringArray`](SplitStringIntoStringArray.md)
 
 ## ROM data referenced
 

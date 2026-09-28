@@ -4,7 +4,7 @@
 void sub_08050864(void *a)
 {
     VBlankIntrWait();
-    sub_08061BE8();
+    TextWindowPopState();
     DetailPanelDraw(a);
 }
 

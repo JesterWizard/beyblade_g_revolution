@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080735b0
-void BtlObjTableRemoveArray(void **a, u32 n)
+void StringArrayFree(void **a, u32 n)
 {
     u32 i;
 
@@ -11,7 +11,7 @@ void BtlObjTableRemoveArray(void **a, u32 n)
     for (i = 0; i < n; i++)
     {
         if (a[i] != 0)
-            BtlObjTableRemove(a[i]);
+            StringFree(a[i]);
     }
 }
 

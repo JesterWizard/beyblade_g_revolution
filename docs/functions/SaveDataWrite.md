@@ -36,12 +36,12 @@
 - `sub_08043974`
 - [`EventFlagOp`](EventFlagOp.md)
 - `sub_08045EF0`
-- `sub_080475C4`
+- [`SparklesSaveTimers`](SparklesSaveTimers.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 
 ## Callers
 
-- `sub_08045AA8`
+- [`SaveBufferCreate`](SaveBufferCreate.md)
 
 ## ROM data referenced
 

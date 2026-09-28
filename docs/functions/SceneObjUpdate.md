@@ -30,7 +30,7 @@
 ## Callees
 
 - [`AnimAdvanceFrame`](AnimAdvanceFrame.md)
-- `sub_08068798`
+- [`ActorApplyMotionModifiers`](ActorApplyMotionModifiers.md)
 - `sub_0806D998` _(not one of the 633 functions)_
 
 ## Callers

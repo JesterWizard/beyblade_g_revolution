@@ -28,9 +28,9 @@
 - `sub_0804109C`
 - `sub_080411EC`
 - `sub_08041394`
-- `sub_08060468`
-- `sub_080604A4`
-- `sub_080604C8`
+- [`WindowEffectCreate`](WindowEffectCreate.md)
+- [`WindowEffectDestroy`](WindowEffectDestroy.md)
+- [`WindowEffectApply`](WindowEffectApply.md)
 - `sub_08060758`
 - `sub_08060798`
 - [`BlendFadeTick`](BlendFadeTick.md)

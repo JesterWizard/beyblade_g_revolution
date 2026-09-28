@@ -3,7 +3,7 @@
 
 # graphics subsystem
 
-41 functions — 10 named.
+41 functions — 11 named.
 
 | Tier | Functions |
 |------|----------:|
@@ -18,7 +18,7 @@
 | [`TextDrawAlign`](../functions/TextDrawAlign.md) | `0x0806171C` | MATCHING | 104 | 29 | 2 | gUnk_03000798 |
 | [`TextRowSetPaletteBank`](../functions/TextRowSetPaletteBank.md) | `0x08061D68` | MATCHING | 88 | 29 | 0 | gUnk_03000798 |
 | [`TextGetAreaWidth`](../functions/TextGetAreaWidth.md) | `0x08061784` | MATCHING | 16 | 20 | 0 | gUnk_03000798 |
-| `sub_08061BE8` | `0x08061BE8` | MATCHING | 96 | 18 | 1 | gUnk_03000770, gUnk_03000794 |
+| [`TextWindowPopState`](../functions/TextWindowPopState.md) | `0x08061BE8` | MATCHING | 96 | 18 | 1 | gUnk_03000770, gUnk_03000794 |
 | [`TextSetActiveObject`](../functions/TextSetActiveObject.md) | `0x080617C4` | MATCHING | 60 | 17 | 0 | gUnk_03000798 |
 | [`TextSetPaletteBank`](../functions/TextSetPaletteBank.md) | `0x08061610` | MATCHING | 24 | 11 | 0 | gUnk_03000798 |
 | [`BgGetHofsReg`](../functions/BgGetHofsReg.md) | `0x08069908` | MATCHING | 64 | 4 | 0 |  |

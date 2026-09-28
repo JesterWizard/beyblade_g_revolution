@@ -24,7 +24,7 @@
 - [`HudWriteDigits`](HudWriteDigits.md)
 - `sub_08030938`
 - [`ScaleRatio`](ScaleRatio.md)
-- `sub_0803139C`
+- [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
 - [`BeybladeMotionStep`](BeybladeMotionStep.md)
 - [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
 - [`BeybladeHomeToward`](BeybladeHomeToward.md)

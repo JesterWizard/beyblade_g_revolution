@@ -30,7 +30,7 @@
 
 ## Callees
 
-- `sub_0803DD88`
+- [`GetBeybladeNameWithIndex`](GetBeybladeNameWithIndex.md)
 - `sub_08056428` _(not one of the 633 functions)_
 - [`TextSetCursor`](TextSetCursor.md)
 - [`TextSetPaletteBank`](TextSetPaletteBank.md)
@@ -38,8 +38,8 @@
 - [`TextGetAreaWidth`](TextGetAreaWidth.md)
 - [`TextRowSetPaletteBank`](TextRowSetPaletteBank.md)
 - [`TextGroupSetString`](TextGroupSetString.md)
-- [`BtlObjTableAdd`](BtlObjTableAdd.md)
-- [`BtlObjTableRemove`](BtlObjTableRemove.md)
+- [`StringAlloc`](StringAlloc.md)
+- [`StringFree`](StringFree.md)
 - [`StringClear`](StringClear.md)
 - [`TextFormatInt`](TextFormatInt.md)
 

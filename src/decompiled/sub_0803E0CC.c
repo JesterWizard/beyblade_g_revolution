@@ -1,10 +1,10 @@
 /* match-compiler: old_agbcc */
-#define sub_0803E0CC sub_0803E0CC_x
+#define RemoveBladeFromTysonsCollection sub_0803E0CC_x
 #include "global.h"
 #include "ram_map.h"
-#undef sub_0803E0CC
+#undef RemoveBladeFromTysonsCollection
 
-void sub_0803E0CC(u16 id)
+void RemoveBladeFromTysonsCollection(u16 id)
 {
     s32 i;
 

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08059bd8
-void sub_08059BD8(void *a, u32 b)
+void TaskDestroyByUpdateFn(void *a, u32 b)
 {
     struct Unk59AE0Node *node = *(struct Unk59AE0Node **)gUnk_03000730;
     s32 i = 0;

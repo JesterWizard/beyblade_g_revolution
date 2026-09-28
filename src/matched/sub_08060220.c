@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08060220
-void sub_08060220(u32 idx)
+void SfxStopSlot(u32 idx)
 {
     s32 v;
 

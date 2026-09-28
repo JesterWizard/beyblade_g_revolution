@@ -22,7 +22,7 @@ void MapCursorInput(void)
             {
                 if (gData_03000558->unk34[0] >= 0)
                 {
-                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[0]);
+                    s32 *pos = (s32 *)PosRecordGet((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[0]);
                     gData_03000554->unk04 = pos[0] >> 3;
                     gData_03000554->unk06 = (pos[1] >> 3) - 16;
                 }
@@ -39,7 +39,7 @@ void MapCursorInput(void)
             {
                 if (gData_03000558->unk34[1] >= 0)
                 {
-                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[1]);
+                    s32 *pos = (s32 *)PosRecordGet((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[1]);
                     gData_03000554->unk04 = pos[0] >> 3;
                     gData_03000554->unk06 = (pos[1] >> 3) - 16;
                 }
@@ -56,7 +56,7 @@ void MapCursorInput(void)
             {
                 if (gData_03000558->unk34[2] >= 0)
                 {
-                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[2]);
+                    s32 *pos = (s32 *)PosRecordGet((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[2]);
                     gData_03000554->unk04 = pos[0] >> 3;
                     gData_03000554->unk06 = (pos[1] >> 3) - 16;
                 }
@@ -73,7 +73,7 @@ void MapCursorInput(void)
             {
                 if (gData_03000558->unk34[3] >= 0)
                 {
-                    s32 *pos = (s32 *)sub_0806DEF4((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[3]);
+                    s32 *pos = (s32 *)PosRecordGet((struct Unk6DEF4 *)sub_08062A14(), gData_03000558->unk34[3]);
                     gData_03000554->unk04 = pos[0] >> 3;
                     gData_03000554->unk06 = (pos[1] >> 3) - 16;
                 }
@@ -88,7 +88,7 @@ void MapCursorInput(void)
         {
             if (gData_03000554->unk02 & 0x0F)
             {
-                sub_08045AA8(&gData_03000198->unk18B8);
+                SaveBufferCreate(&gData_03000198->unk18B8);
                 gData_03000198->unk1833 = 1;
                 gData_03000198->unk181C = 2;
                 gData_03000554->unk01 = 0xFF;

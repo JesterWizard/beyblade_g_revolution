@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08062d80
-void sub_08062D24(u32 idx, u8 *out);
+void BgPaletteGetRgb(u32 idx, u8 *out);
 void BgPaletteSetRgb(u32 idx, struct Unk62D50 *rgb);
 
 // Walk palette indices a..b. c == 0 adds d to each RGB byte and clamps at 31;
@@ -28,7 +28,7 @@ add:
     for (i = a; i <= b; i++)
     {
         idx = (u8)i;
-        sub_08062D24(idx, (u8 *)&rgb);
+        BgPaletteGetRgb(idx, (u8 *)&rgb);
         v0 = rgb.unk00 + d;
         rgb.unk00 = v0;
         rgb.unk01 = d + rgb.unk01;
@@ -49,7 +49,7 @@ sub:
     for (i = a; i <= b; i++)
     {
         idx = (u8)i;
-        sub_08062D24(idx, (u8 *)&rgb);
+        BgPaletteGetRgb(idx, (u8 *)&rgb);
         v0 = rgb.unk00 - d;
         rgb.unk00 = v0;
         rgb.unk01 = rgb.unk01 - d;

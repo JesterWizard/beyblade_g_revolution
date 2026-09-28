@@ -25,14 +25,14 @@ void sub_08037318(struct Unk346C0 *a, u32 index_arg)
     record = (struct Unk002A0Record *)r5;
     SpriteInitFromTemplate(
         *slot,
-        sub_08042B28(record->unk00),
+        BeybladeGetActorSprite(record->unk00),
         0xFC00,
         0x2E00,
         0,
         0,
         0,
         0);
-    sub_08038580(sub_08042B50(record->unk00), 0x0E);
+    sub_08038580(BeybladeGetActorPalette(record->unk00), 0x0E);
     TextEntrySetPaletteBank(*slot, 0x0E);
 }
 

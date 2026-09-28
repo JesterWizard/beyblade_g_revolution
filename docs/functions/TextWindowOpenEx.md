@@ -25,14 +25,14 @@
 
 ## Callees
 
-- `sub_08060D28`
-- `sub_08060D58`
+- [`TextWindowClearTiles`](TextWindowClearTiles.md)
+- [`TextWindowFillMap`](TextWindowFillMap.md)
 - [`AffineBgInit`](AffineBgInit.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 
 ## Callers
 
-- `sub_080444BC`
+- [`MapLoadObjects`](MapLoadObjects.md)
 
 ## ROM data referenced
 

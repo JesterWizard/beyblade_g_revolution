@@ -43,6 +43,6 @@ void BtlObjPoolFree(void *arg)
         state->unk30 = 0;
     }
     gUnk_030040B4++;
-    sub_0806F8C4((struct Unk6F8C4 *)(*(void **)(void *)&gUnk_030040A4));
+    LinkedListValidate((struct Unk6F8C4 *)(*(void **)(void *)&gUnk_030040A4));
 }
 

@@ -2,7 +2,7 @@
 
 // @ 0x08061aa8
 
-u16 sub_08061AA8(void)
+u16 TextGetGlyphWidth(void)
 {
     return gUnk_03000798->unkA0;
 }

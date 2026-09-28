@@ -2,7 +2,7 @@
 
 // @ 0x0806b764
 __attribute__((naked))
-void sub_0806B764(void)
+void TextLayerInit(void)
 {
     asm(
         ".syntax unified\n"

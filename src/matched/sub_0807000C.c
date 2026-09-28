@@ -20,7 +20,7 @@ struct Unk6FDB4 *BtlObjPoolAllocChain(struct Unk700CCHdr *hdr, u16 count, u16 ke
     gData_030040B4 -= count;
     head = gData_030040AC;
     cur = head;
-    after = sub_0806FDB4(gData_030040A4, key);
+    after = BtlObjListFindInsertPoint(gData_030040A4, key);
     prev = head;
     hdr->unk08 = count;
     hdr->unk00 = head;
@@ -50,7 +50,7 @@ struct Unk6FDB4 *BtlObjPoolAllocChain(struct Unk700CCHdr *hdr, u16 count, u16 ke
         head->unk00 = after;
         after->unk04 = head;
     }
-    sub_0806F8C4((struct Unk6F8C4 *)gData_030040A4);
+    LinkedListValidate((struct Unk6F8C4 *)gData_030040A4);
     return head;
 }
 

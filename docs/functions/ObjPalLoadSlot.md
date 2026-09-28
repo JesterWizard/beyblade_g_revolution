@@ -33,7 +33,7 @@
 
 ## Callers
 
-- `sub_080444BC`
+- [`MapLoadObjects`](MapLoadObjects.md)
 
 ## ROM data referenced
 

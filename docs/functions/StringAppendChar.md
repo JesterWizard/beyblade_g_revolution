@@ -29,4 +29,4 @@
 ## Callers
 
 - `sub_08066B10`
-- `sub_080737C0`
+- [`SplitStringIntoStringArray`](SplitStringIntoStringArray.md)

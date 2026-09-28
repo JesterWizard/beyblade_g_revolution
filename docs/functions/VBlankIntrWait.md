@@ -55,9 +55,9 @@
 - `sub_08056380`
 - `sub_08056AF0`
 - `sub_08062988`
-- `sub_08062BF0`
-- `sub_08062C38`
-- `sub_08062C80`
+- [`FadeToWhite`](FadeToWhite.md)
+- [`FadeFromWhite`](FadeFromWhite.md)
+- [`ScreenWhiteoutClearPalettes`](ScreenWhiteoutClearPalettes.md)
 - `sub_080632F8`
 - `sub_08065CD0`
 - `sub_08065E0C`

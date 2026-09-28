@@ -25,7 +25,7 @@
 
 ## Callees
 
-- `sub_080312D8`
+- [`PaletteHighlightEnd`](PaletteHighlightEnd.md)
 - [`TextEntrySetPaletteBank`](TextEntrySetPaletteBank.md)
 
 ## Callers

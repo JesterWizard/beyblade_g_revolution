@@ -23,7 +23,7 @@ void ResourceBind(void *arg, void *source_arg)
         DebugMessage((void *)0x083D1D3C, source);
     }
     for (i = 0; i < count; i++)
-        state->unk14[i] = sub_0806DEC8((struct UnkDEC8 *)state, i);
+        state->unk14[i] = ChunkListAt((struct UnkDEC8 *)state, i);
     state->unk114 = 0;
     state->unk10 = 0;
     state->unk118 = 0;

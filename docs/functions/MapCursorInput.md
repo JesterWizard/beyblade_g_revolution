@@ -37,12 +37,12 @@
 - [`BtlClearUnk1834`](BtlClearUnk1834.md)
 - [`MapCursorMoveStep`](MapCursorMoveStep.md)
 - `sub_080435D8`
-- `sub_08045AA8`
+- [`SaveBufferCreate`](SaveBufferCreate.md)
 - `sub_08060428`
 - `sub_08062A14`
 - `sub_08066390`
 - `sub_0806639C`
-- `sub_0806DEF4`
+- [`PosRecordGet`](PosRecordGet.md)
 
 ## Callers
 

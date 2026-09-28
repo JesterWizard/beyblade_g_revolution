@@ -3,7 +3,7 @@
 // @ 0x08061bdc
 /* match-flags: -fprologue-bugfix */
 
-void sub_08061BDC(struct Unk61BDC *a)
+void TextTypewriterResume(struct Unk61BDC *a)
 {
     struct Unk61BDC *r1;
     u32 r0;

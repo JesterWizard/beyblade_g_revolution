@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0807309c
-void *BtlObjTableAdd(u32 size)
+void *StringAlloc(u32 size)
 {
     struct BtlObj **table;
     u8 count;

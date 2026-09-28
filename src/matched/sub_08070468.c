@@ -17,7 +17,7 @@ void BtlObjListResort(struct Unk6FDB4 *node, u16 key)
     if (node->unk04 != NULL)
         node->unk04->unk00 = node->unk00;
     node->unk22 = key;
-    found = sub_0806FDB4(gData_030040A4, key);
+    found = BtlObjListFindInsertPoint(gData_030040A4, key);
     if (found == NULL)
     {
         if (gData_030040A4 != NULL)

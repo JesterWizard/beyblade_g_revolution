@@ -17,10 +17,10 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     gData_03000198->unk185A = 0;
     if (d != 0)
         ScreenBrightnessFade(-1);
-    sub_080447CC();
+    MapRunEntryScript();
     BufferClearWords(&gData_03000198->unk0524);
     sub_08041980();
-    sub_08059C6C();
+    TasksDestroyAll();
     VramSlotsRelease();
     sub_0802D598();
     sub_0802DEA0();
@@ -39,7 +39,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     {
         SceneObjFreeResources((struct Unk68574 *)&gData_03000198->unk036C);
         sub_0802DEA0();
-        sub_080611F0();
+        TextWindowClose();
         sub_080632F8();
         VramSlotsInit();
         sub_08069894();
@@ -57,8 +57,8 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     gData_03000198->unk0358 |= 0x800;
     TextWindowOpen((struct Unk617C4 *)0x082BCD00, 0x080B738E, 0x1C0, 0x1C, 0x10, 1, 4, 0x0F);
     BgSetPriorities(gData_03000198->unk1690->unk74_0, gData_03000198->unk1690->unk74_2, gData_03000198->unk1690->unk74_4, 0);
-    sub_08047594();
-    sub_080444BC();
+    SparklesHide();
+    MapLoadObjects();
     sub_0806EE24((struct Unk6EE24 *)gData_03000198);
     sub_080473E4();
     if (gData_03000198->unk1843 == 1 && gData_03000198->unk18B4 != none)
@@ -67,19 +67,19 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
         if (obj != NULL)
         {
             SceneObjUpdate(obj);
-            sub_0806F174((struct Unk6F174 *)gData_03000198, obj);
+            CameraSetTarget((struct Unk6F174 *)gData_03000198, obj);
             FieldUpdateFrame(0);
             for (i = 0; i < 64; i++)
-                sub_0806EE48((struct Unk6EE48 *)gData_03000198);
+                CameraUpdate((struct Unk6EE48 *)gData_03000198);
         }
         else
         {
-            sub_0806F174((struct Unk6F174 *)gData_03000198, b);
+            CameraSetTarget((struct Unk6F174 *)gData_03000198, b);
         }
     }
     else
     {
-        sub_0806F174((struct Unk6F174 *)gData_03000198, b);
+        CameraSetTarget((struct Unk6F174 *)gData_03000198, b);
     }
     gData_03000198->unk1794 = -1;
     gData_03000198->unk17E4 = -1;

@@ -67,7 +67,7 @@ void sub_08065CD0(struct Unk65CD0 *s, u16 fade, void *check)
             REG_BLDCNT = 0xFF;
         else
             REG_BLDCNT = 0xBF;
-        sub_08062BF0(s->unk10);
+        FadeToWhite(s->unk10);
     }
     HeapFree(handle);
 }

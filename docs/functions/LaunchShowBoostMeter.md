@@ -32,8 +32,8 @@
 
 - `sub_08061E8C`
 - `sub_08061EF8`
-- [`BtlObjTableAdd`](BtlObjTableAdd.md)
-- [`BtlObjTableRemove`](BtlObjTableRemove.md)
+- [`StringAlloc`](StringAlloc.md)
+- [`StringFree`](StringFree.md)
 - [`TextFormatInt`](TextFormatInt.md)
 - [`StringExpandDelim`](StringExpandDelim.md)
 

@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08042b50
-void *sub_08042B50(u32 i)
+void *BeybladeGetActorPalette(u32 i)
 {
     u32 *t = gData_080910E8;
 

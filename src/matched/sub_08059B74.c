@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08059b74
-void sub_08059B74(void)
+void TasksRunAll(void)
 {
     struct Unk59AE0Node *node = *(struct Unk59AE0Node **)gUnk_03000730;
     s32 i;
@@ -37,7 +37,7 @@ void sub_08059B74(void)
             break;
 
         case 3:
-            sub_08059BD8((void *)node->unk04, 1);
+            TaskDestroyByUpdateFn((void *)node->unk04, 1);
             break;
 
         default:

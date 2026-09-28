@@ -6,7 +6,7 @@
 // Clear save slot `index` (a 0x1F60-byte Unk45D3CEntry), then fill it from
 // its 8-byte EEPROM blocks via sub_08067584, retrying a block while that
 // returns nonzero. Eight failures in a row log, drop the slot and return 0.
-s32 SaveSlotLoadFromEeprom(u32 index)
+s32 LoadGameSave(u32 index)
 {
     u8 *base;
     u32 y;
@@ -37,7 +37,7 @@ s32 SaveSlotLoadFromEeprom(u32 index)
             {
                 DebugPrint((void *)0x083A2E30);
                 BtlClearUnk1688Entry(index);
-                sub_08044F64(index);
+                SaveSlotWriteDefault(index);
                 return 0;
             }
         } while (streak != 0);

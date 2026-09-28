@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T19:18:49Z",
+  "generated": "2026-09-28T19:26:39Z",
   "counts": {
     "matched": 605,
     "wip": 18,
@@ -7,9 +7,9 @@
     "blocked": 2
   },
   "tiers": {
-    "UNKNOWN": 10,
-    "DECOMPILED": 10,
-    "UNDERSTOOD": 8,
+    "UNKNOWN": 8,
+    "DECOMPILED": 7,
+    "UNDERSTOOD": 13,
     "MATCHING": 605
   },
   "total": 633,
@@ -335,7 +335,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "InitTournament"
     },
     {
       "name": "sub_0802D2C0",
@@ -848,7 +848,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CleanBattleOverlays"
     },
     {
       "name": "sub_08030F00",
@@ -1000,7 +1000,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteHighlightReset"
     },
     {
       "name": "sub_080312B0",
@@ -1019,7 +1019,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteHighlightBegin"
     },
     {
       "name": "sub_080312D8",
@@ -1038,7 +1038,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteHighlightEnd"
     },
     {
       "name": "sub_080312EC",
@@ -1057,7 +1057,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteHighlightRestore"
     },
     {
       "name": "sub_08031300",
@@ -1114,7 +1114,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "DigitSpritesSetValue"
     },
     {
       "name": "sub_080314FC",
@@ -3014,7 +3014,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "GetBeybladeWithIndex"
     },
     {
       "name": "sub_0803DD60",
@@ -3052,7 +3052,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "GetBeybladeNameWithIndex"
     },
     {
       "name": "sub_0803DDB0",
@@ -3127,8 +3127,8 @@
       "score": "170/296",
       "source": "attempt",
       "note": "initial m2c seed (m2c-fallback); does not compile",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "RemoveBladeFromTysonsCollection"
     },
     {
       "name": "sub_0803E1F4",
@@ -3147,7 +3147,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CollectionFindEntry"
     },
     {
       "name": "sub_0803E258",
@@ -4230,7 +4230,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeGetName"
     },
     {
       "name": "sub_08042B28",
@@ -4249,7 +4249,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeGetActorSprite"
     },
     {
       "name": "sub_08042B50",
@@ -4268,7 +4268,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BeybladeGetActorPalette"
     },
     {
       "name": "sub_08042B78",
@@ -4382,7 +4382,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MatchBladerExperience"
     },
     {
       "name": "sub_080433F4",
@@ -4553,7 +4553,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MapGetEntry"
     },
     {
       "name": "sub_08043B90",
@@ -4705,7 +4705,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MapLoadObjects"
     },
     {
       "name": "sub_08044648",
@@ -4743,7 +4743,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TaskCreateList"
     },
     {
       "name": "sub_080447CC",
@@ -4762,7 +4762,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "MapRunEntryScript"
     },
     {
       "name": "sub_080447E8",
@@ -4780,8 +4780,8 @@
       "score": "232/372",
       "source": "attempt",
       "note": "initial m2c seed (m2c-fallback); does not compile",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "SceneObjSpawnList"
     },
     {
       "name": "sub_0804495C",
@@ -4876,7 +4876,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SaveDataChecksum"
     },
     {
       "name": "sub_08044EE8",
@@ -4914,7 +4914,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SaveSlotWriteDefault"
     },
     {
       "name": "sub_08044FB0",
@@ -4933,7 +4933,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "SaveSlotLoadFromEeprom"
+      "symbol": "LoadGameSave"
     },
     {
       "name": "sub_08045128",
@@ -5009,7 +5009,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SaveBufferFree"
     },
     {
       "name": "sub_08045AA8",
@@ -5028,7 +5028,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SaveBufferCreate"
     },
     {
       "name": "sub_08045C5C",
@@ -5218,7 +5218,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SparklesCreate"
     },
     {
       "name": "sub_0804745C",
@@ -5237,7 +5237,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SparklesDestroy"
     },
     {
       "name": "sub_080474AC",
@@ -5256,7 +5256,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SparklesUpdate"
     },
     {
       "name": "sub_08047594",
@@ -5275,7 +5275,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SparklesHide"
     },
     {
       "name": "sub_080475C4",
@@ -5294,7 +5294,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SparklesSaveTimers"
     },
     {
       "name": "sub_080475F4",
@@ -5313,7 +5313,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SparklesRestoreTimers"
     },
     {
       "name": "sub_08047624",
@@ -5503,7 +5503,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CollectionDetailsDraw"
     },
     {
       "name": "sub_0804AC3C",
@@ -5541,7 +5541,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CollectionCaptionDraw"
     },
     {
       "name": "sub_0804B40C",
@@ -6491,7 +6491,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TaskCreate"
     },
     {
       "name": "sub_08059B74",
@@ -6510,7 +6510,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TasksRunAll"
     },
     {
       "name": "sub_08059BD8",
@@ -6529,7 +6529,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TaskDestroyByUpdateFn"
     },
     {
       "name": "sub_08059C6C",
@@ -6548,7 +6548,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TasksDestroyAll"
     },
     {
       "name": "sub_08059C98",
@@ -6567,7 +6567,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TaskCreateWithOwner"
     },
     {
       "name": "sub_08059D08",
@@ -6586,7 +6586,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TaskDestroy"
     },
     {
       "name": "sub_08059DC8",
@@ -6700,7 +6700,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgmStop"
     },
     {
       "name": "sub_080601C4",
@@ -6719,7 +6719,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SfxPlayInSlot"
     },
     {
       "name": "sub_08060220",
@@ -6738,7 +6738,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SfxStopSlot"
     },
     {
       "name": "sub_08060254",
@@ -6757,7 +6757,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SfxPlayVariant"
     },
     {
       "name": "sub_080602C0",
@@ -6814,7 +6814,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgmSetVolume"
     },
     {
       "name": "sub_080603E0",
@@ -6928,7 +6928,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "WindowEffectCreate"
     },
     {
       "name": "sub_080604A4",
@@ -6947,7 +6947,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "WindowEffectDestroy"
     },
     {
       "name": "sub_080604C8",
@@ -6966,7 +6966,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "WindowEffectApply"
     },
     {
       "name": "sub_08060758",
@@ -7042,7 +7042,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "WindowRegsClear"
     },
     {
       "name": "sub_08060C30",
@@ -7080,7 +7080,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowClearTiles"
     },
     {
       "name": "sub_08060D58",
@@ -7099,7 +7099,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowFillMap"
     },
     {
       "name": "sub_08060E48",
@@ -7117,8 +7117,8 @@
       "score": "0/532",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "UNKNOWN",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "TextWindowPutChar"
     },
     {
       "name": "sub_0806105C",
@@ -7137,7 +7137,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowPutString"
     },
     {
       "name": "sub_080610A8",
@@ -7156,7 +7156,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextSetCursorAligned"
     },
     {
       "name": "sub_0806114C",
@@ -7213,7 +7213,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowClose"
     },
     {
       "name": "sub_0806121C",
@@ -7251,7 +7251,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowClearActiveTiles"
     },
     {
       "name": "sub_08061564",
@@ -7384,7 +7384,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGetSpacing"
     },
     {
       "name": "sub_080617C4",
@@ -7422,7 +7422,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowClearRow"
     },
     {
       "name": "sub_0806184C",
@@ -7460,7 +7460,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextTypewriterInit"
     },
     {
       "name": "sub_080618EC",
@@ -7498,7 +7498,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGetWidthTable"
     },
     {
       "name": "sub_08061AA8",
@@ -7517,7 +7517,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextGetGlyphWidth"
     },
     {
       "name": "sub_08061AB8",
@@ -7574,7 +7574,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextTypewriterResume"
     },
     {
       "name": "sub_08061BE8",
@@ -7593,7 +7593,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowPopState"
     },
     {
       "name": "sub_08061C48",
@@ -7669,7 +7669,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextWindowCopyRow"
     },
     {
       "name": "sub_08061E40",
@@ -7688,7 +7688,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextTypewriterRestart"
     },
     {
       "name": "sub_08061E8C",
@@ -8182,7 +8182,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ObjPaletteSlotsReset"
     },
     {
       "name": "sub_08062AF8",
@@ -8220,7 +8220,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ObjPaletteSlotsReleaseRange"
     },
     {
       "name": "sub_08062BF0",
@@ -8239,7 +8239,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "FadeToWhite"
     },
     {
       "name": "sub_08062C38",
@@ -8258,7 +8258,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "FadeFromWhite"
     },
     {
       "name": "sub_08062C80",
@@ -8277,7 +8277,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ScreenWhiteoutClearPalettes"
     },
     {
       "name": "sub_08062CC8",
@@ -8296,7 +8296,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ObjPaletteGetRgb"
     },
     {
       "name": "sub_08062CF4",
@@ -8334,7 +8334,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BgPaletteGetRgb"
     },
     {
       "name": "sub_08062D50",
@@ -8410,7 +8410,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteSnapshotSave"
     },
     {
       "name": "sub_0806306C",
@@ -8429,7 +8429,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteSnapshotRestore"
     },
     {
       "name": "sub_08063104",
@@ -8448,7 +8448,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PaletteSnapshotRestoreBg"
     },
     {
       "name": "sub_0806314C",
@@ -9436,7 +9436,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ActorAddMotionModifier"
     },
     {
       "name": "sub_08068798",
@@ -9455,7 +9455,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ActorApplyMotionModifiers"
     },
     {
       "name": "sub_08068808",
@@ -9892,7 +9892,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "FastAllocate"
     },
     {
       "name": "sub_0806A3A4",
@@ -9968,7 +9968,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "GetValidAllocatedBlock"
     },
     {
       "name": "sub_0806A6F8",
@@ -10157,8 +10157,8 @@
       "score": "0/588",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "UNKNOWN",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "TextLayerInit"
     },
     {
       "name": "sub_0806BB38",
@@ -10386,7 +10386,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "ChunkListAt"
     },
     {
       "name": "sub_0806DEF4",
@@ -10405,7 +10405,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "PosRecordGet"
     },
     {
       "name": "sub_0806DF38",
@@ -10576,7 +10576,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CameraUpdate"
     },
     {
       "name": "sub_0806EEC4",
@@ -10595,7 +10595,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CameraGetActive"
     },
     {
       "name": "sub_0806EEC8",
@@ -10652,7 +10652,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CameraSetTarget"
     },
     {
       "name": "sub_0806F1A0",
@@ -10709,7 +10709,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "LinkedListValidate"
     },
     {
       "name": "sub_0806F910",
@@ -10766,7 +10766,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlObjListFindInsertPoint"
     },
     {
       "name": "sub_0806FDD0",
@@ -11697,7 +11697,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "BtlObjTableAdd"
+      "symbol": "StringAlloc"
     },
     {
       "name": "sub_08073114",
@@ -11716,7 +11716,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "BtlObjTableRemove"
+      "symbol": "StringFree"
     },
     {
       "name": "sub_08073184",
@@ -11868,7 +11868,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "BtlObjTableAddArray"
+      "symbol": "StringArrayAlloc"
     },
     {
       "name": "sub_080735B0",
@@ -11887,7 +11887,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": "BtlObjTableRemoveArray"
+      "symbol": "StringArrayFree"
     },
     {
       "name": "sub_080735DC",
@@ -11924,8 +11924,8 @@
       "score": "61/336",
       "source": "attempt",
       "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
-      "symbol": ""
+      "tier": "UNDERSTOOD",
+      "symbol": "SplitStringIntoStringArray"
     },
     {
       "name": "sub_08073910",

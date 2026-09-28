@@ -4,7 +4,7 @@
 
 // @ 0x080686f4
 /* match-compiler: old_agbcc */
-void sub_080686F4(struct Unk68798 *a, s32 b, s32 c, s32 d, s32 e)
+void ActorAddMotionModifier(struct Unk68798 *a, s32 b, s32 c, s32 d, s32 e)
 {
     struct Unk68798Heap *hp;
     struct Unk68798Entry *slot;

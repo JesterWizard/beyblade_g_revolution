@@ -36,7 +36,7 @@
 - [`BeybladeMotionStep`](BeybladeMotionStep.md)
 - [`BeybladeHomeToward`](BeybladeHomeToward.md)
 - `sub_08035D1C`
-- `sub_08060254`
+- [`SfxPlayVariant`](SfxPlayVariant.md)
 - [`AnimDurationForKey`](AnimDurationForKey.md)
 
 ## Callers

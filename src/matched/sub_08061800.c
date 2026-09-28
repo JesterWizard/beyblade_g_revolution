@@ -7,7 +7,7 @@
 // `off = arg0 * stride + 0x06000000` must be a separate local: retail forms
 // `arg0*stride + 0x06000000` first and adds `lo` last, while left-associating
 // the sum in one expression makes agbcc accumulate `lo + arg0*stride` first.
-void sub_08061800(u16 arg0)
+void TextWindowClearRow(u16 arg0)
 {
     struct Unk0798 *p = gUnk_03000798;
     s32 lo;

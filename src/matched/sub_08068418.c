@@ -14,7 +14,7 @@ void SceneObjUpdate(void *arg)
     s32 d, dx, dy, dz;
     s32 t;
 
-    sub_08068798((struct Unk68798 *)obj);
+    ActorApplyMotionModifiers((struct Unk68798 *)obj);
     if (obj->unk80 != NULL && obj->unk84 >= 0)
         _0806D998(obj);
     if (obj->unk80 == NULL && obj->unk84 == -1)

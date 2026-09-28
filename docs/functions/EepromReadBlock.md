@@ -34,5 +34,5 @@
 ## Callers
 
 - [`SaveDataVerify`](SaveDataVerify.md)
-- [`SaveSlotLoadFromEeprom`](SaveSlotLoadFromEeprom.md)
+- [`LoadGameSave`](LoadGameSave.md)
 - [`EepromVerifyBlock`](EepromVerifyBlock.md)

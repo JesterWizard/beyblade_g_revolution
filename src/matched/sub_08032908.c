@@ -20,7 +20,7 @@ void BattleTeardown(void)
         HeapFree(gBattleWork->unk04);
         gBattleWork->unk04 = 0;
     }
-    sub_08030D4C();
+    CleanBattleOverlays();
     if (gBattleWork->unk324 != 0)
     {
         BtlObjPoolFree(gBattleWork->unk324);

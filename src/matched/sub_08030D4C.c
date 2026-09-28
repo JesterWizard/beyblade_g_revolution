@@ -2,7 +2,7 @@
 
 // @ 0x08030d4c
 
-void sub_08030D4C(void)
+void CleanBattleOverlays(void)
 {
     s32 i;
 

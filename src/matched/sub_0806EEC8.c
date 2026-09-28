@@ -16,7 +16,7 @@ void CameraEaseToTarget(void *arg)
     s16 i;
     s32 y;
 
-    cam = sub_0806EEC4(state);
+    cam = CameraGetActive(state);
     obj = state->unk224;
     SceneObjGetPosition(obj, (u32 *)pos);
     cam->unk14 = (pos[0] - (cam->unk40 + ((0x78 - (obj->unk10 >> 1)) << 8))) >> 1;

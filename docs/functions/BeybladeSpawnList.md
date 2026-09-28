@@ -31,16 +31,16 @@
 
 - [`GetIndexedRecordWord`](GetIndexedRecordWord.md)
 - [`SceneObjSpawn`](SceneObjSpawn.md)
-- `sub_08059C98`
+- [`TaskCreateWithOwner`](TaskCreateWithOwner.md)
 - `sub_080626B8`
 - `sub_08062A14`
 - [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
-- `sub_0806DEF4`
-- `sub_0806EEC4`
+- [`PosRecordGet`](PosRecordGet.md)
+- [`CameraGetActive`](CameraGetActive.md)
 
 ## Callers
 
-- `sub_080444BC`
+- [`MapLoadObjects`](MapLoadObjects.md)
 
 ## ROM data referenced
 

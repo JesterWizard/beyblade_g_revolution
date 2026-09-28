@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080603a4
-void sub_080603A4(u16 a)
+void BgmSetVolume(u16 a)
 {
     s32 v;
 

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08047594
-void sub_08047594(void)
+void SparklesHide(void)
 {
     s32 i;
     u32 base;

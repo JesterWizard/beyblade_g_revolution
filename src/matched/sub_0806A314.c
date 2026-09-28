@@ -7,7 +7,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-void *sub_0806A314(struct Unk6A314 *state)
+void *FastAllocate(struct Unk6A314 *state)
 {
     struct Unk6A4D8Node *node;
     void *buffer;
@@ -29,7 +29,7 @@ void *sub_0806A314(struct Unk6A314 *state)
         *(u32 *)0x03000B40 = *(u32 *)buffer;
         gUnk_03003F4C = current_value;
     }
-    buffer = sub_0806A580(*(void **)pool, 0x20);
+    buffer = GetValidAllocatedBlock(*(void **)pool, 0x20);
     if (buffer == 0)
         DebugPrint((void *)0x083D1AC8, state);
     node = HeapRegionInsert(

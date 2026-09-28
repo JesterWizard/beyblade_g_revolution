@@ -73,7 +73,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
             switch (kind = MENU_ROW(i)->unk0D)
             {
             case 1:
-                part = sub_0803E1F4(MENU_ROW(i)->unk0C, MENU_ROW(i)->unk0E);
+                part = CollectionFindEntry(MENU_ROW(i)->unk0C, MENU_ROW(i)->unk0E);
                 if (part != NULL)
                 {
                     screen->unk284 = BtlObjPoolAlloc(0);

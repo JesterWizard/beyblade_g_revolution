@@ -2,7 +2,7 @@
 
 // @ 0x08062bf0
 
-void sub_08062BF0(u16 a)
+void FadeToWhite(u16 a)
 {
     s16 b;
     void **src;
@@ -21,7 +21,7 @@ void sub_08062BF0(u16 a)
         VBlankIntrWait();
         src = (void **)0x080BB888;
         _08073C40(*src);
-        sub_080474AC();
+        SparklesUpdate();
     } while (b != 0x1F);
 }
 

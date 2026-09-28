@@ -14,7 +14,7 @@ void SceneObjsUpdateAll(void)
     i = 0;
     if (gData_03000504 > 0)
     {
-        sub_08062B9C(3, 0x0F);
+        ObjPaletteSlotsReleaseRange(3, 0x0F);
         while (i < gData_03000504)
         {
             SceneObjUpdate(gData_03000480[i]);

@@ -28,11 +28,11 @@
 - `sub_0802D6D4`
 - `sub_0802DCDC`
 - `sub_0802E048`
-- `sub_0803139C`
+- [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
 - `sub_08037318`
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803FFB0`
-- `sub_080473F8`
+- [`SparklesCreate`](SparklesCreate.md)
 - `sub_08048DB8`
 - `sub_0804BD38`
 - `sub_0804C8BC`

@@ -21,7 +21,7 @@ void sub_0802ECD8(void)
     struct Unk2C314 info;
 
     TextGetAreaWidth();
-    buf = BtlObjTableAdd(0x10);
+    buf = StringAlloc(0x10);
     for (i = 0; i <= 2; i++)
     {
         if (gData_03000278->entries[gData_03000278->top + i].unk0C < 0)
@@ -49,7 +49,7 @@ void sub_0802ECD8(void)
             StringClear(buf);
             if ((u8)gData_03000278->entries[gData_03000278->top + i].unk0D == 1)
             {
-                rec = sub_0803E1F4(gData_03000278->entries[gData_03000278->top + i].unk0C, gData_03000278->entries[gData_03000278->top + i].unk0E);
+                rec = CollectionFindEntry(gData_03000278->entries[gData_03000278->top + i].unk0C, gData_03000278->entries[gData_03000278->top + i].unk0E);
                 value = sub_0802E2F8(gData_03000278->entries[gData_03000278->top + i].unk0D,
                                      gData_03000278->entries[gData_03000278->top + i].unk0C, 100 - rec->unk24);
             }
@@ -67,6 +67,6 @@ void sub_0802ECD8(void)
         }
         TextDrawAlign(gData_03000278->entries[gData_03000278->top + i].name, 0x0C, 2);
     }
-    BtlObjTableRemove(buf);
+    StringFree(buf);
 }
 

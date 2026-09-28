@@ -29,6 +29,6 @@
 
 ## Callers
 
-- `sub_0806013C`
-- `sub_080601C4`
-- `sub_08060220`
+- [`BgmStop`](BgmStop.md)
+- [`SfxPlayInSlot`](SfxPlayInSlot.md)
+- [`SfxStopSlot`](SfxStopSlot.md)

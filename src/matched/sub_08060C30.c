@@ -26,7 +26,7 @@ void TextWindowOpenEx(void *winArg, void *srcArg, void *c, u16 count, u16 y, u16
     win->unkA4 = 0;
     win->unkA6 = 0;
     AffineBgInit((struct Unk68E54 *)win, mode, count, 0);
-    sub_08060D58(win, (u8)x, (u8)w, (u8)y, (u8)h, (u16)(count - 1));
-    sub_08060D28(win);
+    TextWindowFillMap(win, (u8)x, (u8)w, (u8)y, (u8)h, (u16)(count - 1));
+    TextWindowClearTiles(win);
 }
 

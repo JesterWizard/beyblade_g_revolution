@@ -13,7 +13,7 @@ void sub_0803114C(struct Unk705DC **entries, u32 key, u32 base, u32 modeArg)
     s32 i = 0;
     s32 value;
 
-    count = sub_0803139C(entries, key, 8, (void *)0x0810B208, count);
+    count = DigitSpritesSetValue(entries, key, 8, (void *)0x0810B208, count);
     if (mode == 0)
     {
         for (value = base + (count - 1) * 0x900; i < count; i++)

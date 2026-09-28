@@ -25,6 +25,6 @@
 
 ## Callers
 
-- `sub_0804AE94`
+- [`CollectionCaptionDraw`](CollectionCaptionDraw.md)
 - `sub_08056BA4`
 - [`TextFormatInt`](TextFormatInt.md)

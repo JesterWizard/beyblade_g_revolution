@@ -41,9 +41,9 @@
 - `sub_0804245C`
 - [`CursorHistoryPush`](CursorHistoryPush.md)
 - `sub_080462D4`
-- `sub_080474AC`
+- [`SparklesUpdate`](SparklesUpdate.md)
 - [`CursorStepsToTile`](CursorStepsToTile.md)
-- `sub_08059B74`
+- [`TasksRunAll`](TasksRunAll.md)
 - [`ScriptRun`](ScriptRun.md)
 - `sub_08060428`
 - `sub_08062758`
@@ -56,7 +56,7 @@
 - [`SceneObjUpdate`](SceneObjUpdate.md)
 - `sub_0806A6F8`
 - `sub_0806C7D4`
-- `sub_0806EE48`
+- [`CameraUpdate`](CameraUpdate.md)
 - [`BtlObjListResort`](BtlObjListResort.md)
 - `sub_08073C40` _(not one of the 633 functions)_
 

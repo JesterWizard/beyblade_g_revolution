@@ -30,7 +30,7 @@
 
 ## Callees
 
-- `sub_080611F0`
+- [`TextWindowClose`](TextWindowClose.md)
 - [`HeapAlloc`](HeapAlloc.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 

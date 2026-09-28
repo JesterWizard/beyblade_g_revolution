@@ -6,7 +6,7 @@
 #include "global.h"
 #include "data_symbols.h"
 
-void sub_08042F4C(s32 expBase, s32 strengthBase, s32 bladeId, s32 gained)
+void MatchBladerExperience(s32 expBase, s32 strengthBase, s32 bladeId, s32 gained)
 {
     struct Unk42E78 *row;
     s32 old;

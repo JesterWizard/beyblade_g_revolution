@@ -4,7 +4,7 @@
 
 // @ 0x0803dcfc
 /* match-compiler: old_agbcc */
-void *sub_0803DCFC(u32 a)
+void *GetBeybladeWithIndex(u32 a)
 {
   u32 new_var3[2];
   u32 off;

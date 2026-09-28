@@ -8,7 +8,7 @@
 // at gMainWorkPtr+0x1818. `off` must be a separate local and old_agbcc is
 // required: that combination gives retail's `ldrb r1,[r1]` / `lsls r2,r1,#2`
 // index handling instead of the default agbcc allocation.
-s32 sub_0803DD88(s32 a)
+s32 GetBeybladeNameWithIndex(s32 a)
 {
     u8 *base = (u8 *)gData_0807A1F4;
     u32 off = gMainWorkPtr->unk1818 * 4 + a * 40;

@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Fill the BG screen block with the fill pattern, then lay a width x height
 // run of consecutive tile ids (| baseTile) at (x, y) and record the window.
-void sub_08060D58(struct Unk0798 *state, u32 x_arg, u32 y_arg, u32 w_arg, u32 h_arg, u32 tile_arg)
+void TextWindowFillMap(struct Unk0798 *state, u32 x_arg, u32 y_arg, u32 w_arg, u32 h_arg, u32 tile_arg)
 {
     u8 x = x_arg;
     u8 y = y_arg;

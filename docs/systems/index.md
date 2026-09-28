@@ -9,6 +9,6 @@ Grouped deterministically by hardware address ranges, named RAM symbols, and han
 | Subsystem | Functions | Named |
 |-----------|----------:|------:|
 | [audio](audio.md) | 1 | 1 |
-| [battle](battle.md) | 93 | 44 |
-| [graphics](graphics.md) | 41 | 10 |
+| [battle](battle.md) | 93 | 50 |
+| [graphics](graphics.md) | 41 | 11 |
 | [menu](menu.md) | 1 | 0 |

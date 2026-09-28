@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08068798
-void sub_08068798(struct Unk68798 *state)
+void ActorApplyMotionModifiers(struct Unk68798 *state)
 {
     struct Unk68798 *work;
     s32 count;

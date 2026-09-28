@@ -6,7 +6,7 @@
 // Per-frame update of the gData_03000630 sparkle pool: count unk44 down to
 // re-arm unk40 with a random delay, then count unk40 down, scattering the 16
 // sprites randomly each frame and parking them off-screen when it expires.
-void sub_080474AC(void)
+void SparklesUpdate(void)
 {
     s32 i;
 

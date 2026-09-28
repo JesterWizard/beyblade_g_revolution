@@ -45,7 +45,7 @@
 
 - [`DebugMessage`](DebugMessage.md)
 - [`DebugPrint`](DebugPrint.md)
-- `sub_0806A314`
+- [`FastAllocate`](FastAllocate.md)
 - [`HeapFree`](HeapFree.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 

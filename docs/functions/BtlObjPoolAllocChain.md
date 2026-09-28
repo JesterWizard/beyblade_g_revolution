@@ -32,8 +32,8 @@
 ## Callees
 
 - [`DebugPrint`](DebugPrint.md)
-- `sub_0806F8C4`
-- `sub_0806FDB4`
+- [`LinkedListValidate`](LinkedListValidate.md)
+- [`BtlObjListFindInsertPoint`](BtlObjListFindInsertPoint.md)
 
 ## Callers
 

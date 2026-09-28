@@ -2,7 +2,7 @@
 
 // @ 0x08060d28
 
-void sub_08060D28(struct Unk0798 *a)
+void TextWindowClearTiles(struct Unk0798 *a)
 {
     void **fn;
     void *dst;

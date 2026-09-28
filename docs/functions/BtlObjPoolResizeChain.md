@@ -32,7 +32,7 @@
 ## Callees
 
 - [`DebugMessage`](DebugMessage.md)
-- `sub_0806F8C4`
+- [`LinkedListValidate`](LinkedListValidate.md)
 - [`BtlObjPoolAllocChain`](BtlObjPoolAllocChain.md)
 - [`BtlObjPoolReleaseChain`](BtlObjPoolReleaseChain.md)
 

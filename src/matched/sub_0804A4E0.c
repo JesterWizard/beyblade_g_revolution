@@ -9,7 +9,7 @@ void sub_0804A4E0(struct Unk2F520 *a)
 
     field2D5 = a->unk2D5;
     field2FC = a->unk2FC;
-    sub_08061BE8();
+    TextWindowPopState();
     doubled = ((s32)field2FC << 24) >> 23;
     TextRowSetPaletteBank((u16)(doubled + 5), 0xF, 4, 0x1A);
     doubled = doubled + 6;

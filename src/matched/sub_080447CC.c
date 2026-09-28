@@ -1,12 +1,12 @@
 #include "global.h"
 
 // @ 0x080447cc
-void sub_080447CC(void)
+void MapRunEntryScript(void)
 {
     struct Unk447CC *p;
     void *v;
 
-    p = sub_08043B58();
+    p = MapGetEntry();
     if (p != 0)
     {
         v = p->unk18;

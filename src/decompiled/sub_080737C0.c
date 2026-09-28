@@ -1,12 +1,12 @@
 /* match-compiler: old_agbcc */
-#define sub_080737C0 sub_080737C0_x
+#define SplitStringIntoStringArray sub_080737C0_x
 #include "global.h"
 #include "ram_map.h"
-#undef sub_080737C0
+#undef SplitStringIntoStringArray
 
 s32 StringNextWord(const u8 *src, u8 *dst, s32 size);
 
-s32 sub_080737C0(u8 **lines, const u8 *text, u8 count, const u8 *widths, u16 maxWidth, u16 glyph, u16 space, u32 lineSize)
+s32 SplitStringIntoStringArray(u8 **lines, const u8 *text, u8 count, const u8 *widths, u16 maxWidth, u16 glyph, u16 space, u32 lineSize)
 {
     u32 x;
     u8 line;
@@ -20,7 +20,7 @@ s32 sub_080737C0(u8 **lines, const u8 *text, u8 count, const u8 *widths, u16 max
     done = FALSE;
     if (lines == NULL || text == NULL || widths == NULL || *text == 0 || count == 0)
         return -1;
-    word = BtlObjTableAdd(0x40);
+    word = StringAlloc(0x40);
     if (word == NULL)
     {
         DebugPrint((void *)0x083D2720);
@@ -67,7 +67,7 @@ s32 sub_080737C0(u8 **lines, const u8 *text, u8 count, const u8 *widths, u16 max
             }
         }
     }
-    BtlObjTableRemove(word);
+    StringFree(word);
     return line + 1;
 }
 

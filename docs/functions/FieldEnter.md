@@ -39,18 +39,18 @@
 - `sub_08043ADC`
 - `sub_080442FC`
 - [`ScreenBrightnessFade`](ScreenBrightnessFade.md)
-- `sub_080444BC`
-- `sub_080447CC`
+- [`MapLoadObjects`](MapLoadObjects.md)
+- [`MapRunEntryScript`](MapRunEntryScript.md)
 - `sub_08044A20`
 - [`EventFlagOp`](EventFlagOp.md)
 - [`FieldUpdateFrame`](FieldUpdateFrame.md)
 - `sub_080473E4`
-- `sub_08047594`
-- `sub_08059C6C`
+- [`SparklesHide`](SparklesHide.md)
+- [`TasksDestroyAll`](TasksDestroyAll.md)
 - `sub_0805DA70`
 - `sub_0805FED4` _(not one of the 633 functions)_
 - [`VramSlotsInit`](VramSlotsInit.md)
-- `sub_080611F0`
+- [`TextWindowClose`](TextWindowClose.md)
 - [`TextWindowOpen`](TextWindowOpen.md)
 - [`VramSlotsRelease`](VramSlotsRelease.md)
 - [`BufferClearWords`](BufferClearWords.md)
@@ -64,8 +64,8 @@
 - `sub_08069894`
 - [`BgSetPriorities`](BgSetPriorities.md)
 - `sub_0806EE24`
-- `sub_0806EE48`
-- `sub_0806F174`
+- [`CameraUpdate`](CameraUpdate.md)
+- [`CameraSetTarget`](CameraSetTarget.md)
 
 ## Callers
 

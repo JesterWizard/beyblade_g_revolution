@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0806a580
-void *sub_0806A580(struct Unk6A580 *p, u32 n)
+void *GetValidAllocatedBlock(struct Unk6A580 *p, u32 n)
 {
     u32 t;
 

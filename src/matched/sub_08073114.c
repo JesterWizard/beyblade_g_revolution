@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08073114
-void BtlObjTableRemove(void *a)
+void StringFree(void *a)
 {
     struct BtlObj **table;
     u32 i;

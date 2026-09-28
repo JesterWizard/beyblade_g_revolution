@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0806f8c4
-void sub_0806F8C4(struct Unk6F8C4 *a)
+void LinkedListValidate(struct Unk6F8C4 *a)
 {
     struct Unk6F8C4 *p;
     struct Unk6F8C4 *n;

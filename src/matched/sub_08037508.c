@@ -5,7 +5,7 @@
 
 void sub_08037508(void)
 {
-    sub_08062BF0(5);
+    FadeToWhite(5);
     BattleTeardown();
     sub_08032604();
     sub_08036190(&gBattleWork37508.unkAA8, 0xEBB0, 0x10000, 0xFFFF2E00);
@@ -17,8 +17,8 @@ void sub_08037508(void)
     sub_08035238((struct Unk35258 *)&gBattleWork37508.unk790);
     sub_08034568(&gBattleWork37508.unk478);
     sub_08034568(&gBattleWork37508.unk790);
-    sub_08031294(&gBattleWork37508.unkB84);
-    sub_08031294(&gBattleWork37508.unkB94);
+    PaletteHighlightReset(&gBattleWork37508.unkB84);
+    PaletteHighlightReset(&gBattleWork37508.unkB94);
     gBattleWork37508.unk128 = -1;
     gBattleWork37508.unk1FA0 = -1;
     gBattleWork37508.unk1F9C = -1;
@@ -28,7 +28,7 @@ void sub_08037508(void)
     sub_0803403C(&gBattleWork37508.unk20A4);
     sub_08033F48(&gBattleWork37508.unk20A4);
     BtlSetTimer118();
-    sub_08062C38(5);
+    FadeFromWhite(5);
     sub_0803114C(gBattleWork37508.unkAE8.unkB00, 0, 0x1900, 0);
     sub_0803114C(gBattleWork37508.unkAE8.unkB20, 0, 0xD400, 1);
     gBattleWork37508.unk144 = 0;

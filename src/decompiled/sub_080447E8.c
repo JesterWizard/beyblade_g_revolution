@@ -3,7 +3,7 @@
 
 // Walks a -1-terminated id list and spawns a scene object for each kind-1
 // entry of the 0x0807BE04 table, or parks the two position records of kind 2.
-void sub_080447E8(void *arg)
+void SceneObjSpawnList(void *arg)
 {
     s32 *ids = arg;
     struct Unk6DEF4 *records;
@@ -15,14 +15,14 @@ void sub_080447E8(void *arg)
     struct Unk59C98Src *part;
 
     records = (struct Unk6DEF4 *)sub_08062A14();
-    state = (struct Unk6EE48 *)sub_0806EEC4((struct Unk6EE48 *)gData_03000198);
+    state = (struct Unk6EE48 *)CameraGetActive((struct Unk6EE48 *)gData_03000198);
     while (*ids != -1)
     {
         id = *ids;
         if (sub_0803EDF0(id) == 1)
         {
             def = &gData_0807BE04[id];
-            pos = (s32 *)sub_0806DEF4(records, def->unk02);
+            pos = (s32 *)PosRecordGet(records, def->unk02);
             if (pos != NULL)
             {
                 obj = SceneObjSpawn((u32)state, (u32)gData_0807BE04[id].unk10, pos[0] >> 3, pos[1] >> 3);
@@ -42,7 +42,7 @@ void sub_080447E8(void *arg)
                     part = gData_0807BE04[id].unk0C;
                     if (part != NULL)
                     {
-                        sub_08059C98(part, (struct Unk59C98Owner *)obj, def, (void *)sub_0803EDC8(id));
+                        TaskCreateWithOwner(part, (struct Unk59C98Owner *)obj, def, (void *)sub_0803EDC8(id));
                         if (gData_0807BE04[id].unk18 >= 0)
                             obj->unk3B = gData_0807BE04[id].unk18;
                     }
@@ -54,13 +54,13 @@ void sub_080447E8(void *arg)
         else if (sub_0803EDF0(id) == 2)
         {
             def = &gData_0807BE04[id];
-            pos = (s32 *)sub_0806DEF4(records, def->unk02);
+            pos = (s32 *)PosRecordGet(records, def->unk02);
             if (pos != NULL)
             {
                 pos[0] = -0x400;
                 pos[1] = -0x400;
             }
-            pos = (s32 *)sub_0806DEF4(records, def->unk02 + 1);
+            pos = (s32 *)PosRecordGet(records, def->unk02 + 1);
             if (pos != NULL)
             {
                 pos[0] = -0x400;

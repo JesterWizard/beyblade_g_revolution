@@ -27,7 +27,7 @@ void VramSlotsInit(void)
     }
     else
     {
-        sub_080611F0();
+        TextWindowClose();
     }
 }
 

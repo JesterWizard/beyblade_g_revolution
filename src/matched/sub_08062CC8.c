@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08062cc8
-void sub_08062CC8(u32 idx, u8 *out)
+void ObjPaletteGetRgb(u32 idx, u8 *out)
 {
     u32 shifted;
     u32 base;

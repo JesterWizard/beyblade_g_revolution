@@ -5,7 +5,7 @@
 // @ 0x080610a8
 #include "global.h"
 
-void sub_080610A8(
+void TextSetCursorAligned(
     struct Unk610A8 *base,
     u8 *text,
     u32 index,
@@ -28,6 +28,6 @@ void sub_080610A8(
         base->unk90 = index - value;
         break;
     }
-    sub_0806105C(base, text);
+    TextWindowPutString(base, text);
 }
 

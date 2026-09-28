@@ -6,7 +6,7 @@
 void sub_08066FB8(void)
 {
     VBlankIntrWait();
-    sub_08061BE8();
+    TextWindowPopState();
     TextRowSetPaletteBank(5, 0x0F, 3, 0x1A);
     TextRowSetPaletteBank(6, 0x0F, 3, 0x1A);
     TextRowSetPaletteBank(7, 0x0F, 3, 0x1A);

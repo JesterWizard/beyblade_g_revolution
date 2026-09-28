@@ -18,7 +18,7 @@ u16 KeyframeFindHits(struct UnkDEC8 *a, struct UnkDF38Entry *out, void *skip, u1
     count = 0;
     for (idx = 0; idx < a->unk00->unk04; idx++)
     {
-        track = (struct Unk6E31CTrack *)sub_0806DEC8(a, idx);
+        track = (struct Unk6E31CTrack *)ChunkListAt(a, idx);
         if (track == NULL)
             break;
         if (track == skip)

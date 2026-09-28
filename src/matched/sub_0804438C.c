@@ -34,7 +34,7 @@ void ScreenBrightnessFade(s8 mode)
             i++;
         }
         sub_080602C0(0);
-        sub_08062C80();
+        ScreenWhiteoutClearPalettes();
         break;
     case 1:
         FieldUpdateFrame(0);
@@ -62,7 +62,7 @@ void ScreenBrightnessFade(s8 mode)
             REG_DISPCNT = gMainWorkPtr->unk0358;
             i--;
         }
-        sub_08061308();
+        TextWindowClearActiveTiles();
         TextWindowLayout(1, 4, 0x1C, 0x10, 0x1BF);
         sub_080602C0(0xB8);
         break;

@@ -24,8 +24,8 @@
 
 ## Callers
 
-- `sub_080686F4`
-- `sub_0806B764`
+- [`ActorAddMotionModifier`](ActorAddMotionModifier.md)
+- [`TextLayerInit`](TextLayerInit.md)
 - [`ResourceBind`](ResourceBind.md)
 - [`BtlObjSystemInit`](BtlObjSystemInit.md)
 - [`BtlObjPoolAlloc`](BtlObjPoolAlloc.md)

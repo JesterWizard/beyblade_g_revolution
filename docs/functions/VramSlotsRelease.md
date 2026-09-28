@@ -34,4 +34,4 @@
 ## Callers
 
 - [`FieldEnter`](FieldEnter.md)
-- `sub_080611F0`
+- [`TextWindowClose`](TextWindowClose.md)

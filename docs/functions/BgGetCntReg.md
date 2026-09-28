@@ -25,4 +25,4 @@
 - [`AffineBgInit`](AffineBgInit.md)
 - [`BgSetPriorities`](BgSetPriorities.md)
 - `sub_08069C14`
-- `sub_0806B764`
+- [`TextLayerInit`](TextLayerInit.md)

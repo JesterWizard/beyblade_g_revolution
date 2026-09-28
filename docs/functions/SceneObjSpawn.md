@@ -36,4 +36,4 @@
 ## Callers
 
 - [`BeybladeSpawnList`](BeybladeSpawnList.md)
-- `sub_080447E8`
+- [`SceneObjSpawnList`](SceneObjSpawnList.md)

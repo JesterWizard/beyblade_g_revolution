@@ -21,7 +21,7 @@ void SceneObjDespawn(void *a, void *b)
             {
                 if ((*slot)->unkC8 != NULL)
                 {
-                    sub_08059D08((struct Unk59D08 *)(*slot)->unkC8);
+                    TaskDestroy((struct Unk59D08 *)(*slot)->unkC8);
                     (*slot)->unkC8 = NULL;
                 }
                 SceneObjFreeResources(*slot);

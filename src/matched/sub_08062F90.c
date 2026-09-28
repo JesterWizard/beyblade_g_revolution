@@ -8,7 +8,7 @@ typedef void (*CpuCopyFunc)(const void *, void *, u32);
 
 // Snapshots BG and OBJ palette RAM into two freshly allocated 0x200-byte
 // buffers, unless a snapshot is already held (see sub_0806306C).
-void sub_08062F90(void)
+void PaletteSnapshotSave(void)
 {
     bool32 bgAllocated;
 

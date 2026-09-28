@@ -3,7 +3,7 @@
 // @ 0x0804d58c
 void sub_0804D58C(void *a)
 {
-    sub_08061BE8();
+    TextWindowPopState();
     sub_0804D420(a);
     VBlankIntrWait();
     _08073C40(*(void **)0x080BB888);

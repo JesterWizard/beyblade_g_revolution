@@ -50,7 +50,7 @@ struct Unk6FDB4 *BtlObjPoolResizeChain(struct Unk700CCHdr *hdr, u16 count, u16 k
             tail->unk04 = head;
             head->unk00 = tail;
             hdr->unk04 = cur;
-            sub_0806F8C4((struct Unk6F8C4 *)gData_030040A4);
+            LinkedListValidate((struct Unk6F8C4 *)gData_030040A4);
             return hdr->unk00;
         }
         BtlObjPoolAllocChain(hdr, count, key);

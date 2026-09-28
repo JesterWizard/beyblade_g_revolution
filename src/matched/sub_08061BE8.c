@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08061be8
-void sub_08061BE8(void)
+void TextWindowPopState(void)
 {
     u32 r0;
     u32 r1;

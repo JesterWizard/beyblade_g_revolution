@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08042b28
-void *sub_08042B28(u32 i)
+void *BeybladeGetActorSprite(u32 i)
 {
     u32 *t = gData_08091004;
 

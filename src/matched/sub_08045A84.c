@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08045a84
-void sub_08045A84(struct Unk45A84 *a)
+void SaveBufferFree(struct Unk45A84 *a)
 {
     if (a->unk08 != 0)
     {

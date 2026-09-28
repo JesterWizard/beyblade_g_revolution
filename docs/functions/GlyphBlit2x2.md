@@ -29,4 +29,4 @@
 
 ## Callers
 
-- `sub_0806B764`
+- [`TextLayerInit`](TextLayerInit.md)

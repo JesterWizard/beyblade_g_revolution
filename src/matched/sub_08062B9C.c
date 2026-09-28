@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 #include "global.h"
 
-void sub_08062B9C(u32 arg0, u32 arg1)
+void ObjPaletteSlotsReleaseRange(u32 arg0, u32 arg1)
 {
     s32 hi;
     s32 lo;

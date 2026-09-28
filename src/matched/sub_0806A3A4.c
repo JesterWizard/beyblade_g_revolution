@@ -25,7 +25,7 @@ void *HeapAlloc(u32 size)
         gUnk_03000B34 = *(u32 *)buffer;
         gUnk_03000B38 = current_value;
     }
-    buffer = sub_0806A580(*(void **)pool, 0x60);
+    buffer = GetValidAllocatedBlock(*(void **)pool, 0x60);
     if (buffer == 0)
         DebugPrint((void *)0x083D1B00, (void *)size);
     node = HeapRegionInsert(

@@ -38,7 +38,7 @@
 - `sub_08048DB8`
 - `sub_08049F98`
 - `sub_0804A438`
-- `sub_0804AAF0`
+- [`CollectionDetailsDraw`](CollectionDetailsDraw.md)
 - `sub_0804B40C`
 - `sub_0804BD38`
 - `sub_0804C27C`

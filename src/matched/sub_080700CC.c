@@ -51,6 +51,6 @@ void BtlObjPoolReleaseChain(void *a)
     batch->unk08 = 0;
     batch->unk00 = 0;
     batch->unk04 = 0;
-    sub_0806F8C4((struct Unk6F8C4 *)gData_030040A4);
+    LinkedListValidate((struct Unk6F8C4 *)gData_030040A4);
 }
 

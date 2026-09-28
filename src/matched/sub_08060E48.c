@@ -2,7 +2,7 @@
 
 // @ 0x08060e48
 __attribute__((naked))
-void sub_08060E48(void *a, u32 c)
+void TextWindowPutChar(void *a, u32 c)
 {
     asm(
         ".syntax unified\n"

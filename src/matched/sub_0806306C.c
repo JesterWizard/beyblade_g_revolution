@@ -7,7 +7,7 @@
 #include "data_symbols.h"
 
 // @ 0x0806306c
-void sub_0806306C(void)
+void PaletteSnapshotRestore(void)
 {
     u32 *d;
 

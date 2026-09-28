@@ -36,7 +36,7 @@
 - `sub_0803DDB0`
 - `sub_0803DDD8`
 - `sub_0803DE00` _(not one of the 633 functions)_
-- `sub_0803E1F4`
+- [`CollectionFindEntry`](CollectionFindEntry.md)
 - [`BeybladeAttackRating`](BeybladeAttackRating.md)
 - [`BeybladeDefenseRating`](BeybladeDefenseRating.md)
 - [`BeybladeEnduranceRating`](BeybladeEnduranceRating.md)

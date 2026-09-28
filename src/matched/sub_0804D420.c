@@ -40,10 +40,10 @@ void sub_0804D420(void *arg)
     for (i = 0; i < 5; i++)
     {
         TextSetCursor(0, i * 16 + 0x18);
-        TextDrawAlign((void *)sub_0803DD88((s16)gData_03000674 + i), 0x1C, 2);
+        TextDrawAlign((void *)GetBeybladeNameWithIndex((s16)gData_03000674 + i), 0x1C, 2);
         if (i == (s16)gData_03000678)
         {
-            icon = sub_0803DCFC((s16)gData_03000674 + i);
+            icon = GetBeybladeWithIndex((s16)gData_03000674 + i);
             if (icon != NULL)
             {
                 a->unk274[i + 11] = BtlObjPoolAlloc(0);

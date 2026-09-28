@@ -2,7 +2,7 @@
 
 // @ 0x08073568
 
-u8 BtlObjTableAddArray(void **out, u8 count, u32 size)
+u8 StringArrayAlloc(void **out, u8 count, u32 size)
 {
     u32 i;
     void **p;
@@ -16,7 +16,7 @@ u8 BtlObjTableAddArray(void **out, u8 count, u32 size)
         p = out;
         do
         {
-            *p = BtlObjTableAdd(size);
+            *p = StringAlloc(size);
             if (*p == 0)
             {
                 DebugPrint((void *)0x083D26C0);

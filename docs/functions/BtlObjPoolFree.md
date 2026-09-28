@@ -33,7 +33,7 @@
 
 ## Callees
 
-- `sub_0806F8C4`
+- [`LinkedListValidate`](LinkedListValidate.md)
 - [`VramSpanFree`](VramSpanFree.md)
 - [`BtlObjListMoveToHead`](BtlObjListMoveToHead.md)
 
@@ -43,14 +43,14 @@
 - `sub_0802DCDC`
 - `sub_0802DEA0`
 - `sub_0802E048`
-- `sub_08030D4C`
-- `sub_0803139C`
+- [`CleanBattleOverlays`](CleanBattleOverlays.md)
+- [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
 - [`BattleTeardown`](BattleTeardown.md)
 - [`BtlClearState`](BtlClearState.md)
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803FFB0`
 - `sub_08040680`
-- `sub_0804745C`
+- [`SparklesDestroy`](SparklesDestroy.md)
 - `sub_08048DB8`
 - `sub_0804BD38`
 - `sub_0804C8BC`

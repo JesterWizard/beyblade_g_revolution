@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08059ae0
-void *sub_08059AE0(struct Unk59AE0Src *src)
+void *TaskCreate(struct Unk59AE0Src *src)
 {
     struct Unk59AE0Node *node = *(struct Unk59AE0Node **)gUnk_03000730;
     s32 i = 0;

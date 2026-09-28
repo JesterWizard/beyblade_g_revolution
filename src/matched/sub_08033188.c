@@ -36,8 +36,8 @@ void BattleBannerScroll(void)
     Unk70604Init(&text.hdr, (struct Unk70604Src *)0x082BF600, 0x080B72F3, -0xF0, 0x50, 0xF0, 2);
     TextGroupSetString((struct Unk7069C *)&text, gData_080780EC[gMainWorkPtr->unk1818], 0);
     sub_0807179C((struct Unk7179C *)&text);
-    sub_080312EC((struct Unk312EC *)gBattleWork->unkB84);
-    sub_080312EC((struct Unk312EC *)gBattleWork->unkB94);
+    PaletteHighlightRestore((struct Unk312EC *)gBattleWork->unkB84);
+    PaletteHighlightRestore((struct Unk312EC *)gBattleWork->unkB94);
     sub_0803484C((struct Unk3484C *)gBattleWork->unk478);
     sub_0803484C((struct Unk3484C *)&gBattleWork->unk478[0x318]);
     for (; i <= 1; i++)

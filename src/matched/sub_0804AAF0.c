@@ -5,11 +5,11 @@
 // @ 0x0804aaf0
 /* match-compiler: old_agbcc */
 // Select the record at the browser cursor and print its detail lines.
-void sub_0804AAF0(void *a)
+void CollectionDetailsDraw(void *a)
 {
     void *buffer;
 
-    buffer = BtlObjTableAdd(0x10);
+    buffer = StringAlloc(0x10);
     gUnk_03000660 = gData_03000658[gData_03000654];
     TextSetCursor(0, 0x18);
     TextDrawAlign((void *)sub_0803EBB0(gUnk_03000660->unk1D), 0xC4, 1);
@@ -37,6 +37,6 @@ void sub_0804AAF0(void *a)
     TextDrawAlign(buffer, 0xC4, 1);
     TextSetCursor(0, 0x48);
     TextDrawAlign((void *)sub_0803DD60(gUnk_03000660->unk1F & 3), 0xC4, 1);
-    BtlObjTableRemove(buffer);
+    StringFree(buffer);
 }
 

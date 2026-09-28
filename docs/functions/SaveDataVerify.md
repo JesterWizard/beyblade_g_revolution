@@ -29,10 +29,10 @@
 
 ## Callees
 
-- `sub_08044D8C`
+- [`SaveDataChecksum`](SaveDataChecksum.md)
 - [`BtlClearUnk1688Entry`](BtlClearUnk1688Entry.md)
-- `sub_08044F64`
-- [`SaveSlotLoadFromEeprom`](SaveSlotLoadFromEeprom.md)
+- [`SaveSlotWriteDefault`](SaveSlotWriteDefault.md)
+- [`LoadGameSave`](LoadGameSave.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`EepromSetType`](EepromSetType.md)
 - [`EepromReadBlock`](EepromReadBlock.md)

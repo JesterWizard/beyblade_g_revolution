@@ -18,6 +18,6 @@ void sub_08052FC8(void)
     _08073C40(*(void **)0x080BB888);
     VBlankIntrWait();
     sub_0806A6F8();
-    sub_080474AC();
+    SparklesUpdate();
 }
 

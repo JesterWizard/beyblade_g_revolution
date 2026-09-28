@@ -34,10 +34,10 @@
 ## Callees
 
 - [`ScaleRatio`](ScaleRatio.md)
-- `sub_0803DCFC`
-- `sub_0803DD88`
+- [`GetBeybladeWithIndex`](GetBeybladeWithIndex.md)
+- [`GetBeybladeNameWithIndex`](GetBeybladeNameWithIndex.md)
 - `sub_0803DE00` _(not one of the 633 functions)_
-- `sub_0803E1F4`
+- [`CollectionFindEntry`](CollectionFindEntry.md)
 - [`BeybladeGetType`](BeybladeGetType.md)
 - [`BeybladeAttackRating`](BeybladeAttackRating.md)
 - [`BeybladeDefenseRating`](BeybladeDefenseRating.md)
@@ -53,8 +53,8 @@
 - [`SpriteInitFromTemplate`](SpriteInitFromTemplate.md)
 - [`TextEntrySetPaletteBank`](TextEntrySetPaletteBank.md)
 - [`TextGroupSetString`](TextGroupSetString.md)
-- [`BtlObjTableAdd`](BtlObjTableAdd.md)
-- [`BtlObjTableRemove`](BtlObjTableRemove.md)
+- [`StringAlloc`](StringAlloc.md)
+- [`StringFree`](StringFree.md)
 - [`TextFormatInt`](TextFormatInt.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080601c4
-void sub_080601C4(u32 a, u32 b)
+void SfxPlayInSlot(u32 a, u32 b)
 {
     if (gMainWorkPtr->unk1710[a] != -1)
         SoundStop(gMainWorkPtr->unk1710[a]);

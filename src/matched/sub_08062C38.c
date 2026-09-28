@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08062c38
-void sub_08062C38(u16 arg0)
+void FadeFromWhite(u16 arg0)
 {
   u16 counter;
   s32 diff;
@@ -21,7 +21,7 @@ void sub_08062C38(u16 arg0)
     *((u16 *) 0x04000054) = counter;
     VBlankIntrWait();
     _08073C40(*((void **) 0x080BB888));
-    sub_080474AC();
+    SparklesUpdate();
   }
   while (counter != 0);
 }

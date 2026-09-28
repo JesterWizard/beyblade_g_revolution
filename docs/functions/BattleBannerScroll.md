@@ -34,7 +34,7 @@
 
 ## Callees
 
-- `sub_080312EC`
+- [`PaletteHighlightRestore`](PaletteHighlightRestore.md)
 - `sub_08033158`
 - `sub_0803484C`
 - [`VBlankIntrWait`](VBlankIntrWait.md)

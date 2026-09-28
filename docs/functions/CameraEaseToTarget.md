@@ -26,8 +26,8 @@
 ## Callees
 
 - [`SceneObjGetPosition`](SceneObjGetPosition.md)
-- `sub_0806EEC4`
+- [`CameraGetActive`](CameraGetActive.md)
 
 ## Callers
 
-- `sub_0806EE48`
+- [`CameraUpdate`](CameraUpdate.md)

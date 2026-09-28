@@ -2,7 +2,7 @@
 
 // @ 0x080617b4
 
-u16 sub_080617B4(void)
+u16 TextGetSpacing(void)
 {
     return gUnk_03000798->unk9C;
 }

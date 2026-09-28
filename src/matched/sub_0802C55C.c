@@ -22,6 +22,6 @@ void sub_0802C55C(u16 a, u8 b, s16 i)
     gMainWorkPtr->unk1694[i].unk02 = 0;
     gMainWorkPtr->unk1694[i].unk01 = 0;
     if (kind == 1)
-        sub_0803E0CC(i);
+        RemoveBladeFromTysonsCollection(i);
 }
 

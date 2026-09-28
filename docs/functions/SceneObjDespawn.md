@@ -30,5 +30,5 @@
 
 ## Callees
 
-- `sub_08059D08`
+- [`TaskDestroy`](TaskDestroy.md)
 - [`SceneObjFreeResources`](SceneObjFreeResources.md)

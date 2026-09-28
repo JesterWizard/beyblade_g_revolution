@@ -7,7 +7,7 @@
 #include "data_symbols.h"
 
 // @ 0x08062ac0
-void sub_08062AC0(void)
+void ObjPaletteSlotsReset(void)
 {
     if (gUnk_030008D0 != 0)
     {

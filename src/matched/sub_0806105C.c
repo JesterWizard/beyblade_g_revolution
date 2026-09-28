@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x0806105c
-void sub_0806105C(void *a, u8 *s)
+void TextWindowPutString(void *a, u8 *s)
 {
   u8 *sp;
   s32 i;
@@ -15,7 +15,7 @@ void sub_0806105C(void *a, u8 *s)
   }
   do
   {
-    sub_08060E48(a, c);
+    TextWindowPutChar(a, c);
     c = sp[i];
     i++;
   }

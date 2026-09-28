@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0803e1f4
-void *sub_0803E1F4(s16 a, s16 b)
+void *CollectionFindEntry(s16 a, s16 b)
 {
     s32 i;
 

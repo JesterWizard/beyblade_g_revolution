@@ -20,12 +20,12 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
     u32 c;
 
     sub_0806209C(a);
-    if (BtlObjTableAddArray((void **)lines, 4, 0x60) < 4)
+    if (StringArrayAlloc((void **)lines, 4, 0x60) < 4)
     {
-        BtlObjTableRemoveArray((void **)lines, 4);
+        StringArrayFree((void **)lines, 4);
         return;
     }
-    count = sub_080737C0((void **)lines, (u8 *)text, 4, (u32)a->unk04, a->unk1C, a->unk20, a->unk20 >> 2, 0x60);
+    count = SplitStringIntoStringArray((void **)lines, (u8 *)text, 4, (u32)a->unk04, a->unk1C, a->unk20, a->unk20 >> 2, 0x60);
     for (i = 0; i < count; i++)
     {
         p = lines[i];
@@ -55,6 +55,6 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
         }
         y += a->unk22;
     }
-    BtlObjTableRemoveArray((void **)lines, 4);
+    StringArrayFree((void **)lines, 4);
 }
 

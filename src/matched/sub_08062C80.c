@@ -1,12 +1,12 @@
 #include "global.h"
 
 // @ 0x08062c80
-void sub_08062C80(void)
+void ScreenWhiteoutClearPalettes(void)
 {
     void **src;
 
     VBlankIntrWait();
-    sub_080608D4();
+    WindowRegsClear();
 
     *(u16 *)0x04000050 = 0xFF;
     *(u16 *)0x04000054 = 0x1F;

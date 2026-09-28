@@ -37,7 +37,7 @@ void sub_0802DCDC(void *arg)
         p->unk48 = 0;
         gUnk_0300026C->unk04 = 1;
         gUnk_0300026C->unk44 = arg;
-        gMainWorkPtr->unk16D4 = sub_08042B00(gUnk_0300026C->unk4E);
+        gMainWorkPtr->unk16D4 = BeybladeGetName(gUnk_0300026C->unk4E);
         return;
     }
     if (current == p->unk4C || (s8)p->unk48 != 2)
@@ -54,7 +54,7 @@ void sub_0802DCDC(void *arg)
     q->unk4C = m2->unk1838;
     q->unk4E = m2->unk183A;
     q->unk44 = arg;
-    gMainWorkPtr->unk16D4 = sub_08042B00(q->unk4E);
+    gMainWorkPtr->unk16D4 = BeybladeGetName(q->unk4E);
     }
     if (gUnk_0300026C->unk28 != NULL)
     {
@@ -62,9 +62,9 @@ void sub_0802DCDC(void *arg)
         gUnk_0300026C->unk28 = NULL;
     }
     gUnk_0300026C->unk28 = BtlObjPoolAlloc(1);
-    SpriteInitFromTemplate(gUnk_0300026C->unk28, sub_08042B28(gUnk_0300026C->unk4E), x, y, 0, 1, 1, 0);
+    SpriteInitFromTemplate(gUnk_0300026C->unk28, BeybladeGetActorSprite(gUnk_0300026C->unk4E), x, y, 0, 1, 1, 0);
     palette = gData_080BB8C0;
-    _08073C4C(sub_08042B50(gUnk_0300026C->unk4E), (void *)0x05000380, 0x20, (void *)*palette);
+    _08073C4C(BeybladeGetActorPalette(gUnk_0300026C->unk4E), (void *)0x05000380, 0x20, (void *)*palette);
     TextEntrySetPaletteBank(gUnk_0300026C->unk28, 0x0C);
     HudWriteDigits((struct Unk310F0b *)gUnk_0300026C->bladeStrengthTens, (struct Unk310F0b *)gUnk_0300026C->bladeStrengthOnes, (s8)row->strength);
     tens = (struct Unk310F0b *)gUnk_0300026C->bitBeastLevelTens;

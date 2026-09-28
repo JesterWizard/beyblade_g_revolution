@@ -27,5 +27,5 @@
 ## Callers
 
 - `sub_08040680`
-- [`BtlObjTableAdd`](BtlObjTableAdd.md)
-- `sub_080737C0`
+- [`StringAlloc`](StringAlloc.md)
+- [`SplitStringIntoStringArray`](SplitStringIntoStringArray.md)

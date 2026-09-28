@@ -33,8 +33,8 @@
 
 ## Callers
 
-- `sub_080444BC`
-- `sub_080447CC`
+- [`MapLoadObjects`](MapLoadObjects.md)
+- [`MapRunEntryScript`](MapRunEntryScript.md)
 - [`FieldUpdateFrame`](FieldUpdateFrame.md)
 - [`ScriptDispatchEvent`](ScriptDispatchEvent.md)
 - `sub_08056F84`

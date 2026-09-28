@@ -28,7 +28,7 @@ void TextRowPulsePalette(struct Unk312EC *a)
     }
     else
     {
-        sub_080312D8(a);
+        PaletteHighlightEnd(a);
     }
 }
 

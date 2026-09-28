@@ -23,7 +23,7 @@ void FieldUpdateFrame(u32 active)
         gData_03000198->unk0504 = ~((s32)gData_03000198->unk0450 >> 8);
         BtlObjListResort((struct Unk6FDB4 *)gData_03000198->unk0500, gData_03000198->unk0504);
     }
-    sub_0806EE48((struct Unk6EE48 *)gData_03000198);
+    CameraUpdate((struct Unk6EE48 *)gData_03000198);
     SceneObjUpdate(&gData_03000198->unk036C);
     SceneObjsUpdateAll();
     sub_08067CE8(&gData_03000198->unk036C, 0);
@@ -34,7 +34,7 @@ void FieldUpdateFrame(u32 active)
     }
     ((void (*)(void))gData_080BB888[0])();
     sub_0806A6F8();
-    sub_080474AC();
+    SparklesUpdate();
     TimerAdvance();
     sub_080462D4();
     dir = 0;
@@ -103,7 +103,7 @@ void FieldUpdateFrame(u32 active)
     sub_0806C7D4(&gData_03000198->unk036C, mesh, 0, 0);
     sub_08062758(&gData_03000198->unk0524, (struct Unk68574 *)&gData_03000198->unk036C);
     sub_0804245C();
-    sub_08059B74();
+    TasksRunAll();
     HudRefreshStats();
     gData_03000198->unk1788++;
     if ((*(u32 *)&gData_03000198->unk1854 & 0xFF00FF00) == 0x100 && BtlCountLiveSlots() == 0x53)

@@ -34,27 +34,27 @@
 
 - [`DebugPrint`](DebugPrint.md)
 - [`HeapRegionInsert`](HeapRegionInsert.md)
-- `sub_0806A580`
+- [`GetValidAllocatedBlock`](GetValidAllocatedBlock.md)
 
 ## Callers
 
 - `sub_08043C70`
 - [`SaveDataVerify`](SaveDataVerify.md)
-- `sub_08045AA8`
-- `sub_080473F8`
-- `sub_08059AE0`
-- `sub_08059BD8`
-- `sub_08059C98`
-- `sub_08060468`
+- [`SaveBufferCreate`](SaveBufferCreate.md)
+- [`SparklesCreate`](SparklesCreate.md)
+- [`TaskCreate`](TaskCreate.md)
+- [`TaskDestroyByUpdateFn`](TaskDestroyByUpdateFn.md)
+- [`TaskCreateWithOwner`](TaskCreateWithOwner.md)
+- [`WindowEffectCreate`](WindowEffectCreate.md)
 - `sub_08060758`
 - [`VramSlotsInit`](VramSlotsInit.md)
 - [`VramSlotLoad`](VramSlotLoad.md)
 - `sub_08061E8C`
-- `sub_08062F90`
+- [`PaletteSnapshotSave`](PaletteSnapshotSave.md)
 - `sub_08065E0C`
-- `sub_080686F4`
+- [`ActorAddMotionModifier`](ActorAddMotionModifier.md)
 - `sub_080726A4`
-- [`BtlObjTableAdd`](BtlObjTableAdd.md)
+- [`StringAlloc`](StringAlloc.md)
 
 ## ROM data referenced
 

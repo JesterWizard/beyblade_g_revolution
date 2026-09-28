@@ -32,7 +32,7 @@
 - `sub_0802DCDC`
 - [`BitBeastLevel`](BitBeastLevel.md)
 - [`BeybladeRecordClaim`](BeybladeRecordClaim.md)
-- `sub_08042F4C`
+- [`MatchBladerExperience`](MatchBladerExperience.md)
 - [`SaveDataWrite`](SaveDataWrite.md)
 - [`SaveDataRead`](SaveDataRead.md)
 - `sub_08048DB8`

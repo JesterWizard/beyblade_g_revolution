@@ -30,7 +30,7 @@
 
 ## Callees
 
-- `sub_08030D4C`
+- [`CleanBattleOverlays`](CleanBattleOverlays.md)
 - `sub_08062044`
 - `sub_08062238`
 - [`HeapFree`](HeapFree.md)

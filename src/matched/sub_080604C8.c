@@ -4,7 +4,7 @@
 
 // @ 0x080604c8
 /* match-compiler: old_agbcc */
-void sub_080604C8(void)
+void WindowEffectApply(void)
 {
     struct Unk604C8 *p = *(struct Unk604C8 **)gUnk_03000750;
     u32 w;

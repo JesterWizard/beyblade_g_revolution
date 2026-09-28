@@ -4,7 +4,7 @@
 
 // @ 0x08043b58
 /* match-compiler: old_agbcc */
-struct Unk447CC *sub_08043B58(void)
+struct Unk447CC *MapGetEntry(void)
 {
     u32 key = gMainWorkPtr->unk1690->unk00;
     struct Unk447CC *p = *gData_08096794;

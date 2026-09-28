@@ -25,5 +25,5 @@
 
 ## Callees
 
-- `sub_08062CC8`
+- [`ObjPaletteGetRgb`](ObjPaletteGetRgb.md)
 - [`ObjPaletteSetRgb`](ObjPaletteSetRgb.md)
