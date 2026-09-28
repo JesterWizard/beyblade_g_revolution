@@ -4,7 +4,7 @@
 
 // @ 0x0802bc14
 /* A free Unk1694 slot reads as the word 0xFF0000FF (unk00 = unk03 = 0xFF). */
-s32 sub_0802BC14(u16 a)
+s32 sub_0802BC14(s16 a)
 {
     s32 count;
     s32 limit;

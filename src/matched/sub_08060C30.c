@@ -1,130 +1,32 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08060c30
-__attribute__((naked))
-void sub_08060C30(void *a, void *b, void *c, u32 d, u32 e, u32 f, u32 g, u32 h, u32 i, u32 j)
+/* match-compiler: old_agbcc */
+// Window setup on an explicit window (cf. sub_0806121C for gData_03000798):
+// clear it, record source and count, then lay out (sub_08060D58) and finish
+// (sub_08060D28).
+void sub_08060C30(void *winArg, void *srcArg, void *c, u16 count, u16 y, u16 h, u16 x, u16 w, u16 i, u8 mode)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x014\n"
-        "adds r7, r0, #0x0\n"
-        "str r1, [sp, #0x008]\n"
-        "str r2, [sp, #0x00C]\n"
-        "adds r4, r3, #0x0\n"
-        "ldr r0, [sp, #0x034]\n"
-        "mov r9, r0\n"
-        "ldr r5, [sp, #0x038]\n"
-        "ldr r6, [sp, #0x03C]\n"
-        "ldr r1, [sp, #0x040]\n"
-        "mov r8, r1\n"
-        "ldr r3, [sp, #0x044]\n"
-        "mov r10, r3\n"
-        "ldr r0, [sp, #0x048]\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "mov r1, r9\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "mov r9, r1\n"
-        "lsls r5, r5, #0x10\n"
-        "lsrs r5, r5, #0x10\n"
-        "lsls r6, r6, #0x10\n"
-        "lsrs r6, r6, #0x10\n"
-        "mov r3, r8\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "mov r8, r3\n"
-        "lsls r1, r0, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "str r1, [sp, #0x010]\n"
-        "mov r0, r10\n"
-        "lsls r0, r0, #0x1C\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r10, r0\n"
-        "ldr r0, _08060D24 @ =0x080BB8BC\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "adds r1, r7, #0x0\n"
-        "movs r2, #0xAC\n"
-        "bl _08073C4C\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x88\n"
-        "ldr r1, [sp, #0x008]\n"
-        "str r1, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "ldr r3, [sp, #0x00C]\n"
-        "str r3, [r0, #0x00]\n"
-        "adds r0, #0x08\n"
-        "movs r2, #0x00\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "mov r1, r10\n"
-        "strh r1, [r0, #0x00]\n"
-        "ldr r3, [sp, #0x008]\n"
-        "ldrb r0, [r3, #0x04]\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0xA0\n"
-        "strh r0, [r1, #0x00]\n"
-        "ldrb r0, [r3, #0x05]\n"
-        "adds r3, r7, #0x0\n"
-        "adds r3, #0xA2\n"
-        "strh r0, [r3, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x90\n"
-        "strh r2, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strh r2, [r0, #0x00]\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "lsrs r1, r1, #0x02\n"
-        "adds r0, #0x0A\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r0, #0x08\n"
-        "strh r2, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strh r2, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x010]\n"
-        "adds r2, r4, #0x0\n"
-        "movs r3, #0x00\n"
-        "bl sub_08068BD4\n"
-        "lsls r6, r6, #0x18\n"
-        "lsrs r6, r6, #0x18\n"
-        "mov r0, r8\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r8, r0\n"
-        "mov r1, r9\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "mov r9, r1\n"
-        "lsls r5, r5, #0x18\n"
-        "lsrs r5, r5, #0x18\n"
-        "str r5, [sp, #0x000]\n"
-        "subs r4, #0x01\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "str r4, [sp, #0x004]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r1, r6, #0x0\n"
-        "mov r2, r8\n"
-        "mov r3, r9\n"
-        "bl sub_08060D58\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08060D28\n"
-        "add sp, #0x014\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08060D24: .4byte 0x080BB8BC\n"
-    );
+    struct Unk0798 *win = winArg;
+    struct Unk617C4 *src = srcArg;
+    u16 attr = i << 12;
+
+    ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, win, 0xAC);
+    win->unk88 = src;
+    win->unk8C = (u32)c;
+    win->unk94 = count;
+    win->unk96 = attr;
+    win->unkA0 = src->unk04;
+    win->unkA2 = src->unk05;
+    win->unk90 = 0;
+    win->unk92 = 0;
+    win->unk9C = win->unkA0 >> 2;
+    win->unkA4 = 0;
+    win->unkA6 = 0;
+    sub_08068BD4(win, mode, count, 0);
+    sub_08060D58(win, (u8)x, (u8)w, (u8)y, (u8)h, (u16)(count - 1));
+    sub_08060D28(win);
 }
 

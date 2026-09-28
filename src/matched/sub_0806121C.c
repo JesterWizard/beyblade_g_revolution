@@ -1,123 +1,32 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806121c
-__attribute__((naked))
-void sub_0806121C(void)
+/* match-compiler: old_agbcc */
+// Set up the gData_03000798 window: clear it, record the source and count,
+// lay out its tile block (sub_08061628) and finish with sub_08061308.
+void sub_0806121C(struct Unk617C4 *src, u32 b, u16 count, u16 c, u16 d, u16 e, u16 f, u16 g)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x010\n"
-        "adds r7, r0, #0x0\n"
-        "str r1, [sp, #0x004]\n"
-        "adds r4, r2, #0x0\n"
-        "mov r9, r3\n"
-        "ldr r0, [sp, #0x030]\n"
-        "mov r10, r0\n"
-        "ldr r5, [sp, #0x034]\n"
-        "ldr r6, [sp, #0x038]\n"
-        "ldr r0, [sp, #0x03C]\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "mov r1, r9\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "mov r9, r1\n"
-        "mov r2, r10\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "mov r10, r2\n"
-        "lsls r5, r5, #0x10\n"
-        "lsrs r5, r5, #0x10\n"
-        "lsls r6, r6, #0x10\n"
-        "lsrs r6, r6, #0x10\n"
-        "str r6, [sp, #0x00C]\n"
-        "lsls r0, r0, #0x1C\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x008]\n"
-        "ldr r0, _08061300 @ =0x080BB8BC\n"
-        "ldr r6, _08061304 @ =0x03000798\n"
-        "ldr r1, [r6, #0x00]\n"
-        "ldr r3, [r0, #0x00]\n"
-        "movs r0, #0x00\n"
-        "movs r2, #0xAC\n"
-        "bl _08073C4C\n"
-        "ldr r3, [r6, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x88\n"
-        "str r7, [r0, #0x00]\n"
-        "adds r0, #0x04\n"
-        "ldr r1, [sp, #0x004]\n"
-        "str r1, [r0, #0x00]\n"
-        "adds r0, #0x08\n"
-        "movs r2, #0x00\n"
-        "strh r4, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "mov r6, sp\n"
-        "ldrh r6, [r6, #0x08]\n"
-        "strh r6, [r0, #0x00]\n"
-        "ldrb r0, [r7, #0x04]\n"
-        "adds r1, r3, #0x0\n"
-        "adds r1, #0xA0\n"
-        "strh r0, [r1, #0x00]\n"
-        "ldrb r0, [r7, #0x05]\n"
-        "movs r6, #0xA2\n"
-        "strh r0, [r6, r3]\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x90\n"
-        "strh r2, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strh r2, [r0, #0x00]\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "lsrs r1, r1, #0x02\n"
-        "adds r0, #0x0A\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r0, #0x08\n"
-        "strh r2, [r0, #0x00]\n"
-        "adds r0, #0x02\n"
-        "strh r2, [r0, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "movs r1, #0x03\n"
-        "adds r2, r4, #0x0\n"
-        "movs r3, #0x00\n"
-        "bl sub_08068BD4\n"
-        "lsls r5, r5, #0x18\n"
-        "lsrs r5, r5, #0x18\n"
-        "ldr r0, [sp, #0x00C]\n"
-        "lsls r6, r0, #0x18\n"
-        "lsrs r6, r6, #0x18\n"
-        "mov r1, r9\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "mov r9, r1\n"
-        "mov r2, r10\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "mov r10, r2\n"
-        "subs r4, #0x01\n"
-        "lsls r4, r4, #0x10\n"
-        "lsrs r4, r4, #0x10\n"
-        "str r4, [sp, #0x000]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r6, #0x0\n"
-        "mov r2, r9\n"
-        "mov r3, r10\n"
-        "bl sub_08061628\n"
-        "bl sub_08061308\n"
-        "add sp, #0x010\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08061300: .4byte 0x080BB8BC\n"
-        "_08061304: .4byte 0x03000798\n"
-    );
+    u16 attr;
+    struct Unk0798 *st;
+
+    attr = g << 12;
+    ((void (*)(u32, void *, u32))gData_080BB8BC[0])(0, gData_03000798, 0xAC);
+    st = gData_03000798;
+    st->unk88 = src;
+    st->unk8C = b;
+    st->unk94 = count;
+    st->unk96 = attr;
+    st->unkA0 = src->unk04;
+    st->unkA2 = src->unk05;
+    st->unk90 = 0;
+    st->unk92 = 0;
+    st->unk9C = st->unkA0 >> 2;
+    st->unkA4 = 0;
+    st->unkA6 = 0;
+    sub_08068BD4(st, 3, count, 0);
+    sub_08061628((u8)e, (u8)f, (u8)c, (u8)d, (u16)(count - 1));
+    sub_08061308();
 }
 

@@ -1,7 +1,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-s32 sub_0802BC14(u16 a)
+s32 sub_0802BC14(s16 a)
 {
     s32 count;
     s32 limit;

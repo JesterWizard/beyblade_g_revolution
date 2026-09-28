@@ -1,136 +1,49 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068ec0
-__attribute__((naked))
-void sub_08068EC0(void *a)
+// Per-frame affine BG update: advance the rotation angle (wrapping at
+// 0x10000) and the unk30/unk34 pair by their velocities, rebuild the BG's
+// matrix (sub_08069A60) and reference point (sub_080699C8), then damp the
+// velocities by unk24/256, snapping any that stop shrinking to zero.
+void sub_08068EC0(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r6, r0, #0x0\n"
-        "adds r4, r6, #0x0\n"
-        "adds r4, #0x5E\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "subs r0, #0x02\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r5, r0, #0x18\n"
-        "ldr r1, [r6, #0x28]\n"
-        "ldr r0, [r6, #0x2C]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r6, #0x28]\n"
-        "cmp r0, #0x00\n"
-        "bge _08068EE4\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x09\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r6, #0x28]\n"
-        "_08068EE4:\n"
-        "ldr r2, [r6, #0x30]\n"
-        "ldr r0, [r6, #0x38]\n"
-        "adds r2, r2, r0\n"
-        "str r2, [r6, #0x30]\n"
-        "ldr r3, [r6, #0x34]\n"
-        "ldr r0, [r6, #0x3C]\n"
-        "adds r3, r3, r0\n"
-        "str r3, [r6, #0x34]\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "ldr r1, [r6, #0x28]\n"
-        "asrs r1, r1, #0x08\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "lsls r2, r2, #0x08\n"
-        "lsrs r2, r2, #0x10\n"
-        "lsls r3, r3, #0x08\n"
-        "lsrs r3, r3, #0x10\n"
-        "bl sub_08069A60\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "ldr r7, _08068FB4 @ =0x03000068\n"
-        "mov r12, r7\n"
-        "lsls r3, r5, #0x01\n"
-        "adds r3, r3, r5\n"
-        "lsls r3, r3, #0x03\n"
-        "mov r1, r12\n"
-        "adds r1, #0x08\n"
-        "adds r1, r3, r1\n"
-        "adds r2, r6, #0x0\n"
-        "adds r2, #0x48\n"
-        "movs r5, #0x00\n"
-        "ldsh r4, [r2, r5]\n"
-        "ldr r1, [r1, #0x00]\n"
-        "adds r2, r1, #0x0\n"
-        "muls r2, r4\n"
-        "mov r1, r12\n"
-        "adds r1, #0x10\n"
-        "adds r1, r3, r1\n"
-        "adds r5, r6, #0x0\n"
-        "adds r5, #0x4A\n"
-        "movs r7, #0x00\n"
-        "ldsh r5, [r5, r7]\n"
-        "ldr r1, [r1, #0x00]\n"
-        "muls r1, r5\n"
-        "subs r2, r2, r1\n"
-        "ldr r1, [r6, #0x4C]\n"
-        "subs r1, r1, r2\n"
-        "mov r2, r12\n"
-        "adds r2, #0x0C\n"
-        "adds r2, r3, r2\n"
-        "ldr r2, [r2, #0x00]\n"
-        "muls r4, r2\n"
-        "mov r2, r12\n"
-        "adds r2, #0x14\n"
-        "adds r3, r3, r2\n"
-        "ldr r2, [r3, #0x00]\n"
-        "muls r2, r5\n"
-        "subs r4, r4, r2\n"
-        "ldr r2, [r6, #0x50]\n"
-        "adds r2, r2, r4\n"
-        "bl sub_080699C8\n"
-        "ldr r4, [r6, #0x24]\n"
-        "cmp r4, #0x00\n"
-        "beq _08068FAC\n"
-        "ldr r3, [r6, #0x2C]\n"
-        "adds r0, r3, #0x0\n"
-        "muls r0, r4\n"
-        "asrs r5, r0, #0x08\n"
-        "ldr r2, [r6, #0x38]\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r4\n"
-        "asrs r7, r0, #0x08\n"
-        "ldr r1, [r6, #0x3C]\n"
-        "adds r0, r1, #0x0\n"
-        "muls r0, r4\n"
-        "asrs r4, r0, #0x08\n"
-        "subs r3, r3, r5\n"
-        "str r3, [r6, #0x2C]\n"
-        "subs r2, r2, r7\n"
-        "str r2, [r6, #0x38]\n"
-        "subs r1, r1, r4\n"
-        "str r1, [r6, #0x3C]\n"
-        "cmp r5, #0x00\n"
-        "bne _08068F94\n"
-        "cmp r3, #0x00\n"
-        "beq _08068F94\n"
-        "str r5, [r6, #0x2C]\n"
-        "_08068F94:\n"
-        "cmp r7, #0x00\n"
-        "bne _08068FA0\n"
-        "ldr r0, [r6, #0x38]\n"
-        "cmp r0, #0x00\n"
-        "beq _08068FA0\n"
-        "str r7, [r6, #0x38]\n"
-        "_08068FA0:\n"
-        "cmp r4, #0x00\n"
-        "bne _08068FAC\n"
-        "ldr r0, [r6, #0x3C]\n"
-        "cmp r0, #0x00\n"
-        "beq _08068FAC\n"
-        "str r4, [r6, #0x3C]\n"
-        "_08068FAC:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08068FB4: .4byte 0x03000068\n"
-    );
+    struct Unk68E54 *st = arg;
+    u8 slot;
+    s32 angle;
+    s32 x, y;
+    s32 damp;
+    s32 dA, dX, dY;
+
+    slot = st->unk5E - 2;
+    angle = st->unk28 + st->unk2C;
+    st->unk28 = angle;
+    if (angle < 0)
+        st->unk28 = angle + 0x10000;
+    x = st->unk30 + st->unk38;
+    st->unk30 = x;
+    y = st->unk34 + st->unk3C;
+    st->unk34 = y;
+    sub_08069A60(st->unk5E, (u8)(st->unk28 >> 8), (u16)(x >> 8), (u16)(y >> 8));
+    sub_080699C8(st->unk5E,
+                 st->unk4C - (gData_03000068[slot].unk08 * st->unk48 - gData_03000068[slot].unk10 * st->unk4A),
+                 st->unk50 + (st->unk48 * gData_03000068[slot].unk0C - gData_03000068[slot].unk14 * st->unk4A));
+    damp = st->unk24;
+    if (damp != 0)
+    {
+        dA = (st->unk2C * damp) >> 8;
+        dX = (st->unk38 * damp) >> 8;
+        dY = (st->unk3C * damp) >> 8;
+        st->unk2C -= dA;
+        st->unk38 -= dX;
+        st->unk3C -= dY;
+        if (dA == 0 && st->unk2C != 0)
+            st->unk2C = 0;
+        if (dX == 0 && st->unk38 != 0)
+            st->unk38 = 0;
+        if (dY == 0 && st->unk3C != 0)
+            st->unk3C = 0;
+    }
 }
 

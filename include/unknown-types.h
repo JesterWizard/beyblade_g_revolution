@@ -103,7 +103,9 @@ struct Unk68574 /* 0xdc */
     /* 04 */ u32 unk04;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;
-    /* 10 */ u8 filler_10[0x0A];
+    /* 10 */ u8 unk10; /* width; centre x = unk04 + (unk10 / 2 << 8). sub_08062790 */
+    /* 11 */ u8 unk11; /* height. sub_08062790 */
+    /* 12 */ u8 filler_12[8];
     /* 1a */ s16 unk1A; /* sub_0803559C */
     /* 1c */ u8 filler_1C[0x15];
     /* 31 */ u8 unk31; /* sub_0804DB28 */
@@ -131,9 +133,11 @@ struct Unk68574 /* 0xdc */
     /* b4 */ u8 filler_B4[4];
     /* b8 */ void *unkB8;
     /* bc */ u16 unkBC; /* sub_0804188C */
-    /* be */ u8 filler_BE[0x0A];
+    /* be */ u8 filler_BE[6];
+    /* c4 */ void *unkC4; /* script, sub_08062790 */
     /* c8 */ struct Unk41E14Node *unkC8;
-    /* cc */ u8 filler_CC[8];
+    /* cc */ u32 unkCC; /* x range, sub_08062758 */
+    /* d0 */ u32 unkD0; /* y range, sub_08062758 */
     /* d4 */ void *unkD4; /* sub_08041DB4 */
     /* d8 */ void *unkD8; /* sub_08041DB4 */
 };
@@ -1543,7 +1547,10 @@ struct Unk68598Lookup /* >= 0x04 */
 struct Unk68598 /* >= 0xc4 */
 {
     /* 00 */ struct Unk68014 *unk00;
-    /* 04 */ u8 filler_04[0x1C];
+    /* 04 */ s32 unk04; /* position x, 8.8 */
+    /* 08 */ s32 unk08; /* position y */
+    /* 0c */ s32 unk0C; /* position z */
+    /* 10 */ u8 filler_10[0x10];
     /* 20 */ u16 unk20;
     /* 22 */ s16 unk22;
     /* 24 */ u8 unk24;
@@ -1555,11 +1562,24 @@ struct Unk68598 /* >= 0xc4 */
     /* 33 */ u8 unk33;
     /* 34 */ u16 unk34;
     /* 36 */ s16 unk36;
-    /* 38 */ u8 filler_38[0x20];
+    /* 38 */ u8 filler_38[8];
+    /* 40 */ s32 unk40; /* velocity x. sub_08068418 */
+    /* 44 */ s32 unk44;
+    /* 48 */ s32 unk48;
+    /* 4c */ s32 unk4C; /* acceleration x */
+    /* 50 */ s32 unk50;
+    /* 54 */ s32 unk54;
     /* 58 */ u32 unk58;
     /* 5c */ u8 filler_5C[4];
     /* 60 */ u16 unk60;
-    /* 62 */ u8 filler_62[0x36];
+    /* 62 */ u8 filler_62[6];
+    /* 68 */ s32 unk68; /* velocity damping, x/256 per frame */
+    /* 6c */ s32 unk6C;
+    /* 70 */ s32 unk70; /* countdown in frame-clock ticks */
+    /* 74 */ u8 filler_74[0x0C];
+    /* 80 */ void *unk80;
+    /* 84 */ s32 unk84;
+    /* 88 */ u8 filler_88[0x10];
     /* 98 */ u8 unk98;
     /* 99 */ u8 filler_99[0x0B];
     /* a4 */ u8 unkA4;
@@ -1601,7 +1621,7 @@ struct Unk688C8Rect /* >= 0x18 */
 };
 
 /* Bounds and bit shifts consumed by sub_08068988 / sub_080688C8. */
-struct Unk68988 /* >= 0x61 */
+struct Unk68988 /* >= 0x7d */
 {
     /* 00 */ s32 unk00;
     /* 04 */ s32 unk04;
@@ -1614,9 +1634,41 @@ struct Unk68988 /* >= 0x61 */
     /* 48 */ u8 filler_48[0x17];
     /* 5f */ u8 unk5F;
     /* 60 */ u8 unk60;
+    /* 61 */ u8 filler_61[3];
+    /* 64 */ u16 unk64; /* bit 0: blit mode, sub_08069270 */
+    /* 66 */ u8 filler_66[0x16];
+    /* 7c */ u8 unk7C; /* bit 3: wrap horizontally, sub_08069270 */
 };
 
 /* Motion accumulator advanced by sub_08068E54. */
+/* Palette fade job for sub_08072A38: rows x cols colours from src + offset. */
+struct Unk72A38 /* >= 0x10 */
+{
+    /* 00 */ u16 *unk00; /* source palette */
+    /* 04 */ u16 unk04; /* source offset (colours) */
+    /* 06 */ u16 unk06; /* colours per row */
+    /* 08 */ s16 unk08; /* rows */
+    /* 0a */ u8 filler_0A[2];
+    /* 0c */ u16 *unk0C; /* destination */
+};
+
+/* Row of digit sprites drawn by sub_0806B2F0. */
+struct Unk6B2F0 /* >= 0x05 */
+{
+    /* 00 */ struct Unk68574 *unk00; /* digit objects, 0xDC each */
+    /* 04 */ u8 unk04; /* digit count */
+};
+
+/* Affine BG matrix slots at IWRAM 0x03000068, one per affine BG (2, 3). */
+struct Unk0068Entry /* 0x18 */
+{
+    /* 00 */ u8 filler_00[8];
+    /* 08 */ s32 unk08;
+    /* 0c */ s32 unk0C;
+    /* 10 */ s32 unk10;
+    /* 14 */ s32 unk14;
+};
+
 struct Unk68E54 /* >= 0x65 */
 {
     /* 00 */ u8 filler_00[0x14];
@@ -1624,11 +1676,23 @@ struct Unk68E54 /* >= 0x65 */
     /* 18 */ s32 unk18;
     /* 1c */ s32 unk1C;
     /* 20 */ s32 unk20;
-    /* 24 */ s32 unk24;
-    /* 28 */ u8 filler_28[0x2C];
+    /* 24 */ s32 unk24; /* velocity damping (x/256 per frame) */
+    /* 28 */ s32 unk28; /* rotation angle, 8.8 over 0x10000. sub_08068EC0 */
+    /* 2c */ s32 unk2C; /* angular velocity */
+    /* 30 */ s32 unk30; /* 8.8, sub_08069A60 arg */
+    /* 34 */ s32 unk34; /* 8.8, sub_08069A60 arg */
+    /* 38 */ s32 unk38; /* added to unk30 each frame */
+    /* 3c */ s32 unk3C; /* added to unk34 each frame */
+    /* 40 */ u8 filler_40[8];
+    /* 48 */ s16 unk48;
+    /* 4a */ s16 unk4A;
+    /* 4c */ s32 unk4C;
+    /* 50 */ s32 unk50;
     /* 54 */ s32 unk54;
     /* 58 */ s32 unk58;
-    /* 5c */ u8 filler_5C[8];
+    /* 5c */ u8 filler_5C[2];
+    /* 5e */ u8 unk5E; /* affine BG number (2 or 3). sub_08068EC0 */
+    /* 5f */ u8 filler_5F[5];
     /* 64 */ u16 unk64;
     /* 66 */ u8 filler_66[0x22];
 };
@@ -2349,14 +2413,6 @@ struct Unk4109CInput /* >= 0x4f */
     /* 4a */ u16 unk4A;
     /* 4c */ u16 unk4C;
     /* 4e */ u8 unk4E;
-};
-
-/* Fields at +0xCC / +0xD0. sub_08062758. */
-struct Unk62790Obj /* >= 0xd4 */
-{
-    /* 00 */ u8 filler_00[0xCC];
-    /* CC */ u32 unkCC;
-    /* D0 */ u32 unkD0;
 };
 
 /* Halfword stride blit. sub_080726E0. */

@@ -1,145 +1,63 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08072a38
-__attribute__((naked))
-void sub_08072A38(void *a, u32 b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h, u32 i)
+/* match-compiler: old_agbcc */
+// Palette fade over job->unk08 rows: each colour fades toward (d, e, f) if
+// its rough luminance is below c, else toward (g, h, i); the fade amount
+// starts at 0 and grows by (4 * b / rows) / 1024 per row.
+void sub_08072A38(struct Unk72A38 *job, u32 b, u32 c, u32 d, u32 e, u32 f, u32 g, u32 h, u32 i)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x00C\n"
-        "adds r7, r0, #0x0\n"
-        "adds r0, r1, #0x0\n"
-        "str r2, [sp, #0x000]\n"
-        "str r3, [sp, #0x004]\n"
-        "lsls r0, r0, #0x0A\n"
-        "asrs r0, r0, #0x08\n"
-        "movs r1, #0x08\n"
-        "ldsh r4, [r7, r1]\n"
-        "adds r1, r4, #0x0\n"
-        "bl _080740B0\n"
-        "str r0, [sp, #0x008]\n"
-        "movs r5, #0x00\n"
-        "ldr r2, [r7, #0x0C]\n"
-        "mov r12, r2\n"
-        "movs r2, #0x00\n"
-        "cmp r2, r4\n"
-        "bge _08072B22\n"
-        "_08072A68:\n"
-        "ldrh r0, [r7, #0x04]\n"
-        "lsls r1, r0, #0x01\n"
-        "ldr r0, [r7, #0x00]\n"
-        "adds r6, r0, r1\n"
-        "movs r1, #0x00\n"
-        "mov r8, r1\n"
-        "ldr r0, [sp, #0x008]\n"
-        "adds r0, r0, r5\n"
-        "mov r9, r0\n"
-        "adds r2, #0x01\n"
-        "mov r10, r2\n"
-        "ldrh r1, [r7, #0x06]\n"
-        "cmp r8, r1\n"
-        "bge _08072B16\n"
-        "_08072A84:\n"
-        "ldrh r1, [r6, #0x00]\n"
-        "movs r4, #0x1F\n"
-        "ands r4, r1\n"
-        "adds r0, r1, #0x0\n"
-        "movs r2, #0xF8\n"
-        "lsls r2, r2, #0x02\n"
-        "ands r0, r2\n"
-        "lsrs r3, r0, #0x05\n"
-        "movs r0, #0xF8\n"
-        "lsls r0, r0, #0x07\n"
-        "ands r1, r0\n"
-        "lsrs r2, r1, #0x0A\n"
-        "asrs r1, r4, #0x02\n"
-        "asrs r0, r3, #0x01\n"
-        "adds r1, r1, r0\n"
-        "asrs r0, r2, #0x01\n"
-        "adds r1, r1, r0\n"
-        "cmp r1, #0x1F\n"
-        "ble _08072AAC\n"
-        "movs r1, #0x1F\n"
-        "_08072AAC:\n"
-        "ldr r0, [sp, #0x000]\n"
-        "cmp r1, r0\n"
-        "bge _08072ACA\n"
-        "ldr r1, [sp, #0x004]\n"
-        "subs r0, r1, r4\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r4, r4, r0\n"
-        "ldr r1, [sp, #0x02C]\n"
-        "subs r0, r1, r3\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r3, r3, r0\n"
-        "ldr r1, [sp, #0x030]\n"
-        "b _08072AE0\n"
-        "_08072ACA:\n"
-        "ldr r1, [sp, #0x034]\n"
-        "subs r0, r1, r4\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r4, r4, r0\n"
-        "ldr r1, [sp, #0x038]\n"
-        "subs r0, r1, r3\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r3, r3, r0\n"
-        "ldr r1, [sp, #0x03C]\n"
-        "_08072AE0:\n"
-        "subs r0, r1, r2\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r2, r2, r0\n"
-        "cmp r4, #0x1F\n"
-        "ble _08072AEE\n"
-        "movs r4, #0x1F\n"
-        "_08072AEE:\n"
-        "cmp r3, #0x1F\n"
-        "ble _08072AF4\n"
-        "movs r3, #0x1F\n"
-        "_08072AF4:\n"
-        "cmp r2, #0x1F\n"
-        "ble _08072AFA\n"
-        "movs r2, #0x1F\n"
-        "_08072AFA:\n"
-        "lsls r0, r3, #0x05\n"
-        "adds r0, r4, r0\n"
-        "lsls r1, r2, #0x0A\n"
-        "adds r0, r0, r1\n"
-        "mov r2, r12\n"
-        "strh r0, [r2, #0x00]\n"
-        "movs r0, #0x02\n"
-        "add r12, r0\n"
-        "adds r6, #0x02\n"
-        "movs r1, #0x01\n"
-        "add r8, r1\n"
-        "ldrh r2, [r7, #0x06]\n"
-        "cmp r8, r2\n"
-        "blt _08072A84\n"
-        "_08072B16:\n"
-        "mov r5, r9\n"
-        "mov r2, r10\n"
-        "movs r1, #0x08\n"
-        "ldsh r0, [r7, r1]\n"
-        "cmp r2, r0\n"
-        "blt _08072A68\n"
-        "_08072B22:\n"
-        "add sp, #0x00C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    s32 step;
+    s32 t;
+    s32 row;
+    s32 col;
+    u16 *src;
+    u16 *dst;
+    s32 r, gr, bl;
+    s32 lum;
+    u16 color;
+
+    step = b;
+    step = ((step << 10) >> 8) / job->unk08;
+    t = 0;
+    dst = job->unk0C;
+    for (row = 0; row < job->unk08; row++)
+    {
+        src = &job->unk00[job->unk04];
+        for (col = 0; col < job->unk06; col++)
+        {
+            color = *src;
+            r = 0x1F;
+            r &= color;
+            gr = (color & 0x3E0) >> 5;
+            bl = (color & 0x7C00) >> 10;
+            lum = (r >> 2) + (gr >> 1) + (bl >> 1);
+            if (lum > 31)
+                lum = 31;
+            if (lum < (s32)c)
+            {
+                r += ((s32)(d - r) * t) >> 10;
+                gr += ((s32)(e - gr) * t) >> 10;
+                bl += ((s32)(f - bl) * t) >> 10;
+            }
+            else
+            {
+                r += ((s32)(g - r) * t) >> 10;
+                gr += ((s32)(h - gr) * t) >> 10;
+                bl += ((s32)(i - bl) * t) >> 10;
+            }
+            if (r > 31)
+                r = 31;
+            if (gr > 31)
+                gr = 31;
+            if (bl > 31)
+                bl = 31;
+            *dst++ = r + (gr << 5) + (bl << 10);
+            src++;
+        }
+        t += step;
+    }
 }
 

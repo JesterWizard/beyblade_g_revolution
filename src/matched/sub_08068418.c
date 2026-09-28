@@ -1,157 +1,73 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08068418
-__attribute__((naked))
-void sub_08068418(void *a)
+/* match-compiler: old_agbcc */
+// Per-frame object update: tick its sub-state (sub_08068798), follow its path
+// or apply velocity, accelerate and damp the velocity, count down unk70 by
+// the frame-clock delta, then advance its animation (sub_08068598).
+void sub_08068418(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "adds r4, r0, #0x0\n"
-        "bl sub_08068798\n"
-        "adds r5, r4, #0x0\n"
-        "adds r5, #0x80\n"
-        "ldr r0, [r5, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08068446\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x84\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "blt _0806843A\n"
-        "adds r0, r4, #0x0\n"
-        "bl _0806D998\n"
-        "_0806843A:\n"
-        "ldr r0, [r5, #0x00]\n"
-        "ldr r2, [r4, #0x40]\n"
-        "ldr r3, [r4, #0x44]\n"
-        "ldr r7, [r4, #0x48]\n"
-        "cmp r0, #0x00\n"
-        "bne _0806846C\n"
-        "_08068446:\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x84\n"
-        "ldr r1, [r0, #0x00]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "ldr r2, [r4, #0x40]\n"
-        "ldr r3, [r4, #0x44]\n"
-        "ldr r7, [r4, #0x48]\n"
-        "cmp r1, r0\n"
-        "bne _0806846C\n"
-        "ldr r0, [r4, #0x04]\n"
-        "adds r0, r0, r2\n"
-        "str r0, [r4, #0x04]\n"
-        "ldr r0, [r4, #0x08]\n"
-        "adds r0, r0, r3\n"
-        "str r0, [r4, #0x08]\n"
-        "ldr r0, [r4, #0x0C]\n"
-        "adds r0, r0, r7\n"
-        "str r0, [r4, #0x0C]\n"
-        "_0806846C:\n"
-        "ldr r0, [r4, #0x4C]\n"
-        "adds r6, r2, r0\n"
-        "str r6, [r4, #0x40]\n"
-        "ldr r0, [r4, #0x50]\n"
-        "adds r5, r3, r0\n"
-        "str r5, [r4, #0x44]\n"
-        "ldr r0, [r4, #0x54]\n"
-        "adds r3, r7, r0\n"
-        "str r3, [r4, #0x48]\n"
-        "ldr r2, [r4, #0x68]\n"
-        "cmp r2, #0x00\n"
-        "beq _080684E8\n"
-        "adds r1, r6, #0x0\n"
-        "muls r1, r2\n"
-        "asrs r1, r1, #0x08\n"
-        "adds r0, r5, #0x0\n"
-        "muls r0, r2\n"
-        "asrs r7, r0, #0x08\n"
-        "adds r0, r3, #0x0\n"
-        "muls r0, r2\n"
-        "asrs r0, r0, #0x08\n"
-        "mov r12, r0\n"
-        "subs r2, r6, r1\n"
-        "str r2, [r4, #0x40]\n"
-        "subs r0, r5, r7\n"
-        "str r0, [r4, #0x44]\n"
-        "mov r5, r12\n"
-        "subs r0, r3, r5\n"
-        "str r0, [r4, #0x48]\n"
-        "cmp r1, #0x00\n"
-        "bne _080684BA\n"
-        "cmp r2, #0x00\n"
-        "beq _080684BA\n"
-        "cmp r2, #0x00\n"
-        "ble _080684B6\n"
-        "subs r0, r2, #0x1\n"
-        "b _080684B8\n"
-        "_080684B6:\n"
-        "adds r0, r2, #0x1\n"
-        "_080684B8:\n"
-        "str r0, [r4, #0x40]\n"
-        "_080684BA:\n"
-        "cmp r7, #0x00\n"
-        "bne _080684D0\n"
-        "ldr r0, [r4, #0x44]\n"
-        "cmp r0, #0x00\n"
-        "beq _080684D0\n"
-        "cmp r0, #0x00\n"
-        "ble _080684CC\n"
-        "subs r0, #0x01\n"
-        "b _080684CE\n"
-        "_080684CC:\n"
-        "adds r0, #0x01\n"
-        "_080684CE:\n"
-        "str r0, [r4, #0x44]\n"
-        "_080684D0:\n"
-        "mov r0, r12\n"
-        "cmp r0, #0x00\n"
-        "bne _080684E8\n"
-        "ldr r0, [r4, #0x48]\n"
-        "cmp r0, #0x00\n"
-        "beq _080684E8\n"
-        "cmp r0, #0x00\n"
-        "ble _080684E4\n"
-        "subs r0, #0x01\n"
-        "b _080684E6\n"
-        "_080684E4:\n"
-        "adds r0, #0x01\n"
-        "_080684E6:\n"
-        "str r0, [r4, #0x48]\n"
-        "_080684E8:\n"
-        "ldr r2, [r4, #0x70]\n"
-        "cmp r2, #0x00\n"
-        "ble _08068502\n"
-        "ldr r0, _08068524 @ =0x03000180\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r0, [r0, #0x04]\n"
-        "subs r1, r1, r0\n"
-        "subs r1, r2, r1\n"
-        "str r1, [r4, #0x70]\n"
-        "cmp r1, #0x00\n"
-        "bge _08068502\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x70]\n"
-        "_08068502:\n"
-        "ldr r0, [r4, #0x6C]\n"
-        "cmp r0, #0x00\n"
-        "bne _0806851C\n"
-        "adds r1, r4, #0x0\n"
-        "adds r1, #0x98\n"
-        "movs r0, #0x01\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _0806851C\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08068598\n"
-        "_0806851C:\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08068524: .4byte 0x03000180\n"
-    );
+    struct Unk68598 *obj = arg;
+    s32 vx, vy, vz;
+    s32 d, dx, dy, dz;
+    s32 t;
+
+    sub_08068798((struct Unk68798 *)obj);
+    if (obj->unk80 != NULL && obj->unk84 >= 0)
+        _0806D998(obj);
+    if (obj->unk80 == NULL && obj->unk84 == -1)
+    {
+        obj->unk04 += obj->unk40;
+        obj->unk08 += obj->unk44;
+        obj->unk0C += obj->unk48;
+    }
+    vx = obj->unk40 + obj->unk4C;
+    obj->unk40 = vx;
+    vy = obj->unk44 + obj->unk50;
+    obj->unk44 = vy;
+    vz = obj->unk48 + obj->unk54;
+    obj->unk48 = vz;
+    d = obj->unk68;
+    if (d != 0)
+    {
+        dx = (vx * d) >> 8;
+        dy = (vy * d) >> 8;
+        dz = (vz * d) >> 8;
+        obj->unk40 = vx - dx;
+        obj->unk44 = vy - dy;
+        obj->unk48 = vz - dz;
+        if (dx == 0 && obj->unk40 != 0)
+            {
+            if (obj->unk40 > 0)
+                obj->unk40--;
+            else
+                obj->unk40++;
+        }
+        if (dy == 0 && obj->unk44 != 0)
+            {
+            if (obj->unk44 > 0)
+                obj->unk44--;
+            else
+                obj->unk44++;
+        }
+        if (dz == 0 && obj->unk48 != 0)
+            {
+            if (obj->unk48 > 0)
+                obj->unk48--;
+            else
+                obj->unk48++;
+        }
+    }
+    if (obj->unk70 > 0)
+    {
+        t = obj->unk70 - (gData_03000180.unk00 - gData_03000180.unk04);
+        obj->unk70 = t;
+        if (t < 0)
+            obj->unk70 = 0;
+    }
+    if (obj->unk6C == 0 && !(obj->unk98 & 1))
+        sub_08068598(obj);
 }
 

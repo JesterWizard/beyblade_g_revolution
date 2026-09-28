@@ -1,130 +1,63 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08070188
-__attribute__((naked))
-void sub_08070188(void)
+/* match-compiler: old_agbcc */
+// Resize a battle-object batch to count nodes: grow it in place from the free
+// list (new nodes inherit the batch's key), allocate it fresh if it is empty,
+// or release and reallocate it when shrinking. Returns the batch head.
+struct Unk6FDB4 *sub_08070188(struct Unk700CCHdr *hdr, u16 count, u16 key)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x004\n"
-        "adds r5, r0, #0x0\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "adds r4, r1, #0x0\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r3, r2, #0x10\n"
-        "adds r7, r3, #0x0\n"
-        "ldr r2, [r5, #0x08]\n"
-        "cmp r2, r1\n"
-        "bne _080701AC\n"
-        "ldr r0, [r5, #0x00]\n"
-        "b _08070266\n"
-        "_080701AC:\n"
-        "cmp r2, r1\n"
-        "bcs _08070250\n"
-        "cmp r2, #0x00\n"
-        "beq _08070244\n"
-        "subs r0, r1, r2\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r4, r0, #0x10\n"
-        "ldr r0, _080701D0 @ =0x030040B4\n"
-        "mov r9, r0\n"
-        "ldr r1, [r0, #0x00]\n"
-        "mov r8, r1\n"
-        "cmp r8, r4\n"
-        "bcs _080701D8\n"
-        "ldr r0, _080701D4 @ =0x083D2288\n"
-        "bl sub_08067A9C\n"
-        "movs r0, #0x00\n"
-        "b _08070266\n"
-        "_080701D0: .4byte 0x030040B4\n"
-        "_080701D4: .4byte 0x083D2288\n"
-        "_080701D8:\n"
-        "ldr r1, _0807023C @ =0x030040AC\n"
-        "ldr r3, [r1, #0x00]\n"
-        "mov r10, r3\n"
-        "ldr r6, [r5, #0x04]\n"
-        "mov r12, r6\n"
-        "str r3, [sp, #0x000]\n"
-        "ldr r0, [r5, #0x00]\n"
-        "ldrh r7, [r0, #0x22]\n"
-        "mov r0, r8\n"
-        "subs r0, r0, r4\n"
-        "mov r6, r9\n"
-        "str r0, [r6, #0x00]\n"
-        "adds r0, r2, r4\n"
-        "str r0, [r5, #0x08]\n"
-        "strh r7, [r3, #0x22]\n"
-        "subs r0, r4, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r4, r0, #0x10\n"
-        "ldr r2, _08070240 @ =0x030040A4\n"
-        "cmp r4, #0x00\n"
-        "beq _08070216\n"
-        "_08070202:\n"
-        "ldr r3, [r3, #0x04]\n"
-        "strh r7, [r3, #0x22]\n"
-        "ldr r0, [sp, #0x000]\n"
-        "str r0, [r3, #0x00]\n"
-        "str r3, [sp, #0x000]\n"
-        "subs r0, r4, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r4, r0, #0x10\n"
-        "cmp r4, #0x00\n"
-        "bne _08070202\n"
-        "_08070216:\n"
-        "ldr r0, [r3, #0x04]\n"
-        "str r0, [r1, #0x00]\n"
-        "mov r1, r12\n"
-        "ldr r0, [r1, #0x04]\n"
-        "cmp r0, #0x00\n"
-        "beq _08070224\n"
-        "str r3, [r0, #0x00]\n"
-        "_08070224:\n"
-        "mov r6, r12\n"
-        "ldr r0, [r6, #0x04]\n"
-        "str r0, [r3, #0x04]\n"
-        "mov r0, r10\n"
-        "str r0, [r6, #0x04]\n"
-        "str r6, [r0, #0x00]\n"
-        "str r3, [r5, #0x04]\n"
-        "ldr r0, [r2, #0x00]\n"
-        "bl sub_0806F8C4\n"
-        "ldr r0, [r5, #0x00]\n"
-        "b _08070266\n"
-        "_0807023C: .4byte 0x030040AC\n"
-        "_08070240: .4byte 0x030040A4\n"
-        "_08070244:\n"
-        "adds r0, r5, #0x0\n"
-        "adds r2, r3, #0x0\n"
-        "bl sub_0807000C\n"
-        "ldr r0, [r5, #0x00]\n"
-        "b _08070266\n"
-        "_08070250:\n"
-        "ldr r0, _08070278 @ =0x083D22A4\n"
-        "bl sub_08067A9C\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_080700CC\n"
-        "adds r0, r5, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "adds r2, r7, #0x0\n"
-        "bl sub_0807000C\n"
-        "_08070266:\n"
-        "add sp, #0x004\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        ".byte 0x00, 0x00\n"
-        "_08070278: .4byte 0x083D22A4\n"
-    );
+    struct Unk6FDB4 *head;
+    struct Unk6FDB4 *tail;
+    struct Unk6FDB4 *cur;
+    struct Unk6FDB4 *prev;
+    u32 avail;
+
+    if (hdr->unk08 == count)
+        return hdr->unk00;
+    if (hdr->unk08 < count)
+    {
+        if (hdr->unk08 != 0)
+        {
+            count -= hdr->unk08;
+            avail = gData_030040B4;
+            if (avail < count)
+            {
+                sub_08067A9C((void *)0x083D2288);
+                return NULL;
+            }
+            head = gData_030040AC;
+            cur = head;
+            tail = hdr->unk04;
+            prev = head;
+            key = hdr->unk00->unk22;
+            gData_030040B4 = avail - count;
+            hdr->unk08 += count;
+            head->unk22 = key;
+            while (--count != 0)
+            {
+                cur = cur->unk04;
+                cur->unk22 = key;
+                cur->unk00 = prev;
+                prev = cur;
+            }
+            gData_030040AC = cur->unk04;
+            if (tail->unk04 != NULL)
+                tail->unk04->unk00 = cur;
+            cur->unk04 = tail->unk04;
+            tail->unk04 = head;
+            head->unk00 = tail;
+            hdr->unk04 = cur;
+            sub_0806F8C4((struct Unk6F8C4 *)gData_030040A4);
+            return hdr->unk00;
+        }
+        BtlObjPoolAllocChain(hdr, count, key);
+        return hdr->unk00;
+    }
+    sub_08067A9C((void *)0x083D22A4);
+    sub_080700CC(hdr);
+    return BtlObjPoolAllocChain(hdr, count, key);
 }
 

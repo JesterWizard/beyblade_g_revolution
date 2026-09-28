@@ -1,128 +1,49 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08062790
-__attribute__((naked))
-void sub_08062790(u32 a, struct Unk62790Obj *obj, u32 c, u32 d, u32 i)
+/* match-compiler: old_agbcc */
+// Proximity trigger: if obj's centre is within (rangeX, rangeY) pixels of a's
+// centre, run obj's script (unkC4), or for a side-1 object whose profile
+// passes sub_0802BC14, fire the one-shot event for slot. Returns 1 when in
+// range; out of range re-arms the slot's flag.
+s32 sub_08062790(struct Unk68574 *a, struct Unk68574 *obj, u32 rangeX, u32 rangeY, s32 slot)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r8\n"
-        "push {r7}\n"
-        "adds r4, r1, #0x0\n"
-        "mov r12, r2\n"
-        "mov r8, r3\n"
-        "ldr r7, [sp, #0x018]\n"
-        "ldrb r2, [r0, #0x10]\n"
-        "lsrs r1, r2, #0x01\n"
-        "lsls r1, r1, #0x08\n"
-        "ldr r2, [r0, #0x04]\n"
-        "adds r6, r2, r1\n"
-        "ldrb r2, [r0, #0x11]\n"
-        "lsrs r1, r2, #0x01\n"
-        "lsls r1, r1, #0x08\n"
-        "ldr r0, [r0, #0x08]\n"
-        "adds r3, r0, r1\n"
-        "ldrb r1, [r4, #0x10]\n"
-        "lsrs r0, r1, #0x01\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [r4, #0x04]\n"
-        "adds r2, r1, r0\n"
-        "ldrb r1, [r4, #0x11]\n"
-        "lsrs r0, r1, #0x01\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [r4, #0x08]\n"
-        "adds r5, r1, r0\n"
-        "subs r0, r6, r2\n"
-        "cmp r0, #0x00\n"
-        "bge _080627CE\n"
-        "subs r0, r2, r6\n"
-        "_080627CE:\n"
-        "asrs r1, r0, #0x08\n"
-        "subs r0, r3, r5\n"
-        "cmp r0, #0x00\n"
-        "bge _080627D8\n"
-        "subs r0, r5, r3\n"
-        "_080627D8:\n"
-        "asrs r0, r0, #0x08\n"
-        "cmp r1, r12\n"
-        "bhi _0806285C\n"
-        "cmp r0, r8\n"
-        "bhi _0806285C\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0xD8\n"
-        "ldr r6, [r0, #0x00]\n"
-        "cmp r6, #0x01\n"
-        "bne _08062848\n"
-        "subs r0, #0x04\n"
-        "ldr r0, [r0, #0x00]\n"
-        "bl sub_0802B930\n"
-        "adds r5, r0, #0x0\n"
-        "lsls r0, r5, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "bl sub_0802BC14\n"
-        "cmp r0, #0x00\n"
-        "beq _0806280A\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r5, r0\n"
-        "bne _0806281C\n"
-        "_0806280A:\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0xC4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _08062858\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08059DC8\n"
-        "b _08062858\n"
-        "_0806281C:\n"
-        "cmp r7, r0\n"
-        "beq _08062858\n"
-        "ldr r0, _08062840 @ =0x03000510\n"
-        "adds r4, r7, r0\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r4, r0]\n"
-        "cmp r0, #0x00\n"
-        "bne _08062858\n"
-        "bl sub_080473E4\n"
-        "bl sub_08041F88\n"
-        "ldr r0, _08062844 @ =0x00000A72\n"
-        "bl sub_0803FDD0\n"
-        "strb r6, [r4, #0x00]\n"
-        "b _08062858\n"
-        ".byte 0x00, 0x00\n"
-        "_08062840: .4byte 0x03000510\n"
-        "_08062844: .4byte 0x00000A72\n"
-        "_08062848:\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0xC4\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _08062858\n"
-        "adds r0, r4, #0x0\n"
-        "bl sub_08059DC8\n"
-        "_08062858:\n"
-        "movs r0, #0x01\n"
-        "b _0806286E\n"
-        "_0806285C:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "cmp r7, r0\n"
-        "beq _0806286C\n"
-        "ldr r0, _08062878 @ =0x03000510\n"
-        "adds r0, r7, r0\n"
-        "movs r1, #0x00\n"
-        "strb r1, [r0, #0x00]\n"
-        "_0806286C:\n"
-        "movs r0, #0x00\n"
-        "_0806286E:\n"
-        "pop {r3}\n"
-        "mov r8, r3\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        "_08062878: .4byte 0x03000510\n"
-    );
+    s32 ax, ay, ox, oy;
+    u32 dx, dy;
+    s32 profile;
+
+    ax = a->unk04 + ((a->unk10 >> 1) << 8);
+    ay = a->unk08 + ((a->unk11 >> 1) << 8);
+    ox = obj->unk04 + ((obj->unk10 >> 1) << 8);
+    oy = obj->unk08 + ((obj->unk11 >> 1) << 8);
+    dx = (ax - ox >= 0 ? ax - ox : ox - ax) >> 8;
+    dy = (ay - oy >= 0 ? ay - oy : oy - ay) >> 8;
+    if (dx <= rangeX && dy <= rangeY)
+    {
+        if (obj->unkD8 == (void *)1)
+        {
+            profile = sub_0802B930((s32)obj->unkD4);
+            if (sub_0802BC14(profile) == 0 || profile == -1)
+            {
+                if (obj->unkC4 != NULL)
+                    sub_08059DC8((u32)obj, obj->unkC4);
+            }
+            else if (slot != -1 && gData_03000510[slot] == 0)
+            {
+                sub_080473E4();
+                sub_08041F88();
+                sub_0803FDD0(0xA72);
+                gData_03000510[slot] = 1;
+            }
+        }
+        else if (obj->unkC4 != NULL)
+            sub_08059DC8((u32)obj, obj->unkC4);
+        return 1;
+    }
+    if (slot != -1)
+        gData_03000510[slot] = 0;
+    return 0;
 }
 

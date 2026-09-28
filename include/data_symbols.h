@@ -249,4 +249,14 @@ extern struct Unk0558 *gData_03000558;
 // Frame clock triple (sub_08068598)
 extern struct Unk0180 gData_03000180;
 
+// Per-slot one-shot flags (sub_08062790)
+extern s8 gData_03000510[];
+
+// Tile-map blit routines (sub_08069270)
+extern void *gData_080BB8A4[];
+extern void *gData_080BB8A8[];
+
+// Affine BG matrix slots (sub_08068EC0)
+extern struct Unk0068Entry gData_03000068[];
+
 #endif // GUARD_DATA_SYMBOLS_H

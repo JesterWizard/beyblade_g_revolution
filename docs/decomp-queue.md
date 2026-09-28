@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-28T07:34:45Z_
+_Updated: 2026-09-28T08:36:07Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 567 |
-| Still need semantic C | **66** |
-| Readable Thumb remaining | 66 |
+| Semantic C done | 575 |
+| Still need semantic C | **58** |
+| Readable Thumb remaining | 58 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 20 (138 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 28 |
+| WIP (resume these first) | 31 |
 
 Ranking: **battle** · showing top **40**
 
@@ -54,6 +54,9 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0803715C` | 0 | 33/444 | `src/decompiled/sub_0803715C.c` | 33/444 size mismatch (424 vs 444); algorithm transcribed, a is kept in r4 instead of r8 and about 20 bytes of reloads are folded | do not hand-chase registers; only revisit if a same-size seed appears, then permuter |
 | `sub_08038438` | 240 | 45/240 | `src/decompiled/sub_08038438.c` | for-loop seed with slots=&gData_030003CC + _call_via_r3 fn-pointer call is same-size (old_agbcc 45/240). Retail keeps both loops' found-blocks inline (no loop-exit block motion), so *slots reloads every pass; agbcc/old_agbcc move the found blocks out of the loops. | Find a loop shape that stops loop.c moving the exit blocks (break + flag, goto-free) while keeping the hoisted r7/r8/r5 in loop 2. |
 | `sub_08045C5C` | 136 | 93/136 | `src/decompiled/sub_08045C5C.c` | Same-size semantic seed 93/136; permuter best 255 in 60s. Retail keeps a in r7 and builds 0xFC00 in r1 before copying the mask pointer; agbcc puts a in r6, the constant in r2, and swaps the mask copy with the halfword load. | Need a in r7 and sentinel in r1 so the mask pointer is copied before the halfword load. Do not re-run this seed until that register shape exists. |
+| `sub_08069270` | 244 | 24/244 | `src/decompiled/sub_08069270.c` | Logic mapped (horizontal wrap split into two blits; fn = 0x0806945D or gData_080BB8A4[0]; wrap-off path uses gData_080BB8A8[0]). Separate e1/e2/h1/h2 copies reproduce retail's stack spills; remaining diff is register choice: retail keeps d in r3 and end in r5, ours copies d to r6 (+2B). Permuter (2 rounds) reached 25 only via uninitialised-variable tricks. | Find a source shape that leaves d in its argument register (d is only read by the first blit); try the permuter from this seed with a longer budget. |
+| `sub_0806B2F0` | 248 | 35/248 | `src/decompiled/sub_0806B2F0.c` | Digit-row renderer (right to left, DivRemainder/Div by 10, frame 0x34 + digit, optional zero padding). Our compile cross-jumps the two sub_0806833C calls; retail keeps them separate because the padded path increments from the (s16)drawn value it just tested. | Make the padded-path increment differ from the normal path (retail: drawn = (s16)drawn + 1 vs drawn++), and keep i/drawn as u16 compared via (s16). |
+| `sub_0806B5C8` | 274 | 87/274 | `src/decompiled/sub_0806B5C8.c` | 8x8 4bpp glyph blit into a 2x2 tile block (tiles[0,1,0x20,0x21] via sub_0806B5B8), shifted by x&7 and y&7. Logic complete; register allocation differs (retail: base/br share r7, x reused as the shift in r9, y&7 in r10, first row count as ~y + 8). | Reuse x for the shift and y for the second loop's counter; try n = 7 - y with != -1 tests; then permuter. |
 
 Per-function notes: `src/decompiled/<fn>.md`.
 
@@ -78,17 +81,6 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_08045590` | `0x08045590` | 1256 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_08043DB4` | `0x08043DB4` | 1352 | 1 | pool | asm | (gMainWorkPtr) |
 | `sub_0804FFCC` | `0x0804FFCC` | 1504 | 1 | pool | asm | (gMainWorkPtr) |
-| `sub_0806121C` | `0x0806121C` | 236 | 0 | pool | asm | |
-| `sub_08062790` | `0x08062790` | 236 | 0 | pool | asm | |
-| `sub_08061628` | `0x08061628` | 244 | 0 | pool | asm | |
-| `sub_08069270` | `0x08069270` | 244 | 0 | pool | asm | |
-| `sub_08070188` | `0x08070188` | 244 | 0 | pool | asm | |
-| `sub_08068EC0` | `0x08068EC0` | 248 | 0 | pool | asm | |
-| `sub_0806B2F0` | `0x0806B2F0` | 248 | 0 | pool | asm | |
-| `sub_08060C30` | `0x08060C30` | 248 | 0 | pool | asm | |
-| `sub_08072A38` | `0x08072A38` | 250 | 0 |      | asm | |
-| `sub_08068418` | `0x08068418` | 272 | 0 | pool | asm | |
-| `sub_0806B5C8` | `0x0806B5C8` | 274 | 0 |      | asm | |
 | `sub_0806F05C` | `0x0806F05C` | 280 | 0 | pool | asm | |
 | `sub_08069A60` | `0x08069A60` | 280 | 0 | pool | asm | |
 | `sub_0806211C` | `0x0806211C` | 284 | 0 |      | asm | |
@@ -101,6 +93,17 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_0804C8BC` | `0x0804C8BC` | 372 | 0 | pool | asm | |
 | `sub_0806314C` | `0x0806314C` | 404 | 0 | pool | asm | |
 | `sub_0806EEC8` | `0x0806EEC8` | 404 | 0 | pool | asm | |
+| `sub_08070AF8` | `0x08070AF8` | 416 | 0 | pool | asm | |
+| `sub_08068BD4` | `0x08068BD4` | 420 | 0 | pool | asm | |
+| `sub_08070930` | `0x08070930` | 420 | 0 | pool | asm | |
+| `sub_08048DB8` | `0x08048DB8` | 440 | 0 | pool | asm | |
+| `sub_08068A08` | `0x08068A08` | 460 | 0 | pool | asm | |
+| `sub_0806E060` | `0x0806E060` | 492 | 0 | pool | asm | |
+| `sub_0806EC20` | `0x0806EC20` | 516 | 0 | pool | asm | |
+| `sub_08060E48` | `0x08060E48` | 532 | 0 | pool | asm | |
+| `sub_08067CE8` | `0x08067CE8` | 548 | 0 | pool | asm | |
+| `sub_0806B764` | `0x0806B764` | 588 | 0 | pool | asm | |
+| `sub_0806960C` | `0x0806960C` | 600 | 0 |      | asm | |
 
 ## Blocked
 
@@ -143,6 +146,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (54 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (43 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)
