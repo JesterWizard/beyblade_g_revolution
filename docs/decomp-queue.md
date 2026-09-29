@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-28T19:46:57Z_
+_Updated: 2026-09-29T18:32:06Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 605 |
-| Still need semantic C | **28** |
-| Readable Thumb remaining | 28 |
+| Semantic C done | 606 |
+| Still need semantic C | **27** |
+| Readable Thumb remaining | 27 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 7 (151 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 18 |
+| WIP (resume these first) | 24 |
 
 Ranking: **battle** · showing top **40**
 
@@ -44,6 +44,12 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0804C8BC` | 372 | 74/372 | `src/decompiled/sub_0804C8BC.c` | New semantic draft (the old one was a junk stub): five list rows from gData_080989F0 (struct Unk4C8BCRow). Logic exact, 4 bytes long. Retail has five loop givs (palette pointer, i*4, two row givs, i*16) and copies the i*16 giv into a stack local for the sprite y; every shape tried either drops the i*16 giv or adds a (y+0x38)<<8 giv. | Find the source form of the sprite y ((i*16 + 0x38) << 8) that reuses the i*16 giv through a copy. |
 | `sub_08070930` | 420 | 199/420 | `src/decompiled/sub_08070930.c` | New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top. | Find why retail has two pseudos for the affine pointer; that also un-merges the loop tests. |
 | `sub_080618EC` | 428 | 108/428 | `src/decompiled/sub_080618EC.c` | New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF. | Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail. |
+| `sub_0806314C` | 404 | 175/404 | `src/decompiled/sub_0806314C.c` | palette fade step, 400/404 | offset i*2 spilled at sp+8 in retail |
+| `sub_08060E48` | 532 | 92/532 | `src/decompiled/sub_08060E48.c` | text glyph blit 528/532; regalloc: retail spills 9 address pseudos | gw in r9, rows/yt next-iter in sp24/28; permuter |
+| `sub_0806EC20` | 516 | ?/516 | `src/decompiled/sub_0806EC20.c` | BG setup 500/516; param copy order matches | a in r5,b in r8 (ours r7/r10); i<<24 copy r6 |
+| `sub_0806E060` | 492 | 89/492 | `src/decompiled/sub_0806E060.c` | bezier keyframe sampler 468/492 | idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded |
+| `sub_0806B764` | 0 | 509/588 | `src/decompiled/sub_0806B764.c` | TextLayerInit same-size 509/588, old_agbcc | a reload gets r4 not r7; 0x80 test operand order |
+| `sub_08067CE8` | 548 | 258/548 | `src/decompiled/sub_08067CE8.c` | AnimObjDraw same-size 548, structure matches; only regalloc (a=r5,px=r4,py=r7,slot=r6 in retail) | raise px priority over a; m3 mask var, pin vars, out[3] all matter |
 
 Per-function notes: `src/decompiled/<fn>.md`.
 
@@ -51,12 +57,6 @@ Per-function notes: `src/decompiled/<fn>.md`.
 
 | Function | Address | Bytes | Battle refs | Pool | Kind | Notes |
 |----------|---------|------:|------------:|:----:|------|-------|
-| `sub_0806314C` | `0x0806314C` | 404 | 0 | pool | asm | |
-| `sub_0806E060` | `0x0806E060` | 492 | 0 | pool | asm | |
-| `sub_0806EC20` | `0x0806EC20` | 516 | 0 | pool | asm | |
-| `sub_08060E48` | `0x08060E48` | 532 | 0 | pool | asm | |
-| `sub_08067CE8` | `0x08067CE8` | 548 | 0 | pool | asm | |
-| `sub_0806B764` | `0x0806B764` | 588 | 0 | pool | asm | |
 | `sub_080706B0` | `0x080706B0` | 626 | 0 | pool | asm | |
 | `sub_0806C7D4` | `0x0806C7D4` | 1302 | 0 |      | asm | |
 
@@ -101,6 +101,6 @@ python3 tools/decomp/c_patterns.py --list
 python3 tools/decomp/battle_scan.py -n 20
 ```
 
-Full ranked backlog (8 functions): [`decomp-queue.json`](decomp-queue.json)
+Full ranked backlog (2 functions): [`decomp-queue.json`](decomp-queue.json)
 
 Patterns: [`decomp-patterns.md`](decomp-patterns.md)

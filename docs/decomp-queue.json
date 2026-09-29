@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-28T19:46:57Z",
+  "generated": "2026-09-29T18:32:06Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 28,
-    "semantic_done": 605,
-    "readable_asm": 28,
+    "pending": 27,
+    "semantic_done": 606,
+    "readable_asm": 27,
     "opcode": 0,
     "battle_pending": 7,
     "battle_semantic": 151,
     "blocked": 20,
-    "wip": 18
+    "wip": 24
   },
   "pinned": [],
   "wip": [
@@ -213,81 +213,75 @@
       "status": "New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF.",
       "next": "Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail.",
       "score": "108/428"
-    }
-  ],
-  "recommended": [
+    },
     {
       "name": "sub_0806314C",
       "addr": "0x0806314C",
       "kind": "asm",
       "bytes": 404,
-      "score": 193,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806E060",
-      "addr": "0x0806E060",
-      "kind": "asm",
-      "bytes": 492,
-      "score": 244,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806EC20",
-      "addr": "0x0806EC20",
-      "kind": "asm",
-      "bytes": 516,
-      "score": 261,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
+      "seed": "src/decompiled/sub_0806314C.c",
+      "notes": "src/decompiled/sub_0806314C.md",
+      "status": "palette fade step, 400/404",
+      "next": "offset i*2 spilled at sp+8 in retail",
+      "score": "175/404"
     },
     {
       "name": "sub_08060E48",
       "addr": "0x08060E48",
       "kind": "asm",
       "bytes": 532,
-      "score": 264,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
+      "seed": "src/decompiled/sub_08060E48.c",
+      "notes": "src/decompiled/sub_08060E48.md",
+      "status": "text glyph blit 528/532; regalloc: retail spills 9 address pseudos",
+      "next": "gw in r9, rows/yt next-iter in sp24/28; permuter",
+      "score": "92/532"
+    },
+    {
+      "name": "sub_0806EC20",
+      "addr": "0x0806EC20",
+      "kind": "asm",
+      "bytes": 516,
+      "seed": "src/decompiled/sub_0806EC20.c",
+      "notes": "src/decompiled/sub_0806EC20.md",
+      "status": "BG setup 500/516; param copy order matches",
+      "next": "a in r5,b in r8 (ours r7/r10); i<<24 copy r6",
+      "score": "?/516"
+    },
+    {
+      "name": "sub_0806E060",
+      "addr": "0x0806E060",
+      "kind": "asm",
+      "bytes": 492,
+      "seed": "src/decompiled/sub_0806E060.c",
+      "notes": "src/decompiled/sub_0806E060.md",
+      "status": "bezier keyframe sampler 468/492",
+      "next": "idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded",
+      "score": "89/492"
+    },
+    {
+      "name": "sub_0806B764",
+      "addr": "0x0806B764",
+      "kind": "missing",
+      "bytes": 0,
+      "seed": "src/decompiled/sub_0806B764.c",
+      "notes": "src/decompiled/sub_0806B764.md",
+      "status": "TextLayerInit same-size 509/588, old_agbcc",
+      "next": "a reload gets r4 not r7; 0x80 test operand order",
+      "score": "509/588"
     },
     {
       "name": "sub_08067CE8",
       "addr": "0x08067CE8",
       "kind": "asm",
       "bytes": 548,
-      "score": 279,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806B764",
-      "addr": "0x0806B764",
-      "kind": "asm",
-      "bytes": 588,
-      "score": 296,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
+      "seed": "src/decompiled/sub_08067CE8.c",
+      "notes": "src/decompiled/sub_08067CE8.md",
+      "status": "AnimObjDraw same-size 548, structure matches; only regalloc (a=r5,px=r4,py=r7,slot=r6 in retail)",
+      "next": "raise px priority over a; m3 mask var, pin vars, out[3] all matter",
+      "score": "258/548"
+    }
+  ],
+  "recommended": [
     {
       "name": "sub_080706B0",
       "addr": "0x080706B0",
@@ -456,78 +450,6 @@
     }
   ],
   "backlog": [
-    {
-      "name": "sub_0806314C",
-      "addr": "0x0806314C",
-      "kind": "asm",
-      "bytes": 404,
-      "score": 193,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806E060",
-      "addr": "0x0806E060",
-      "kind": "asm",
-      "bytes": 492,
-      "score": 244,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806EC20",
-      "addr": "0x0806EC20",
-      "kind": "asm",
-      "bytes": 516,
-      "score": 261,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08060E48",
-      "addr": "0x08060E48",
-      "kind": "asm",
-      "bytes": 532,
-      "score": 264,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_08067CE8",
-      "addr": "0x08067CE8",
-      "kind": "asm",
-      "bytes": 548,
-      "score": 279,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806B764",
-      "addr": "0x0806B764",
-      "kind": "asm",
-      "bytes": 588,
-      "score": 296,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
     {
       "name": "sub_080706B0",
       "addr": "0x080706B0",
