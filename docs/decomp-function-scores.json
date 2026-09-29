@@ -1145,14 +1145,15 @@
       "note": "Semantic draft from asm (old_agbcc, 620/626 B): layout/word-wrap logic complete; spacing spill, glyph-width reg and case-1 tail cross-jump left"
     },
     "sub_08044A8C": {
-      "matched_bytes": 0,
+      "matched_bytes": 617,
       "retail_bytes": 672,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "status": "size_mismatch",
-      "score": "0/672",
-      "updated": "2026-09-24T10:58:36Z",
-      "note": "initial m2c seed (m2c-fallback); does not compile"
+      "compiled_bytes": 672,
+      "pct": 91.8,
+      "diff_bytes": 55,
+      "status": "same_size",
+      "score": "617/672",
+      "updated": "2026-09-29T21:57:38Z",
+      "note": "old_agbcc; unk185B = i = 0 places the zero; left: buf is a copy of the *hdrBlock temp in retail (r3->r7) and &gData stays in r4 across the retry loop (ours gives retry r4)"
     },
     "sub_0806C388": {
       "matched_bytes": 0,

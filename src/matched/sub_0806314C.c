@@ -1,223 +1,55 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806314c
-__attribute__((naked))
-void sub_0806314C(void)
+
+struct PalRgb
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x014\n"
-        "str r3, [sp, #0x000]\n"
-        "lsls r0, r0, #0x18\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "movs r6, #0x01\n"
-        "movs r3, #0xA0\n"
-        "lsls r3, r3, #0x13\n"
-        "str r3, [sp, #0x004]\n"
-        "cmp r0, #0x00\n"
-        "bne _08063174\n"
-        "ldr r7, _08063214 @ =0x05000200\n"
-        "str r7, [sp, #0x004]\n"
-        "_08063174:\n"
-        "str r1, [sp, #0x010]\n"
-        "lsls r0, r2, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "str r0, [sp, #0x00C]\n"
-        "ldr r0, [sp, #0x010]\n"
-        "cmp r0, r1\n"
-        "bls _08063184\n"
-        "b _080632CE\n"
-        "_08063184:\n"
-        "movs r1, #0x1F\n"
-        "mov r10, r1\n"
-        "ldr r2, _08063218 @ =0xFFFFFF00\n"
-        "mov r9, r2\n"
-        "ldr r3, _0806321C @ =0xFFFF00FF\n"
-        "mov r8, r3\n"
-        "ldr r7, _08063220 @ =0xFF00FFFF\n"
-        "mov r12, r7\n"
-        "_08063194:\n"
-        "ldr r0, [sp, #0x010]\n"
-        "lsls r2, r0, #0x01\n"
-        "ldr r1, [sp, #0x004]\n"
-        "adds r0, r2, r1\n"
-        "ldrh r3, [r0, #0x00]\n"
-        "ldr r7, [sp, #0x000]\n"
-        "adds r0, r2, r7\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "adds r0, r3, #0x0\n"
-        "mov r7, r10\n"
-        "ands r0, r7\n"
-        "mov r7, r9\n"
-        "ands r4, r7\n"
-        "orrs r4, r0\n"
-        "adds r0, r3, #0x0\n"
-        "movs r7, #0xF8\n"
-        "lsls r7, r7, #0x02\n"
-        "ands r0, r7\n"
-        "lsls r0, r0, #0x03\n"
-        "mov r7, r8\n"
-        "ands r4, r7\n"
-        "orrs r4, r0\n"
-        "movs r0, #0xF8\n"
-        "lsls r0, r0, #0x07\n"
-        "ands r3, r0\n"
-        "lsls r0, r3, #0x06\n"
-        "mov r3, r12\n"
-        "ands r4, r3\n"
-        "orrs r4, r0\n"
-        "adds r0, r1, #0x0\n"
-        "mov r7, r10\n"
-        "ands r0, r7\n"
-        "mov r3, r9\n"
-        "ands r5, r3\n"
-        "orrs r5, r0\n"
-        "adds r0, r1, #0x0\n"
-        "movs r7, #0xF8\n"
-        "lsls r7, r7, #0x02\n"
-        "ands r0, r7\n"
-        "lsls r0, r0, #0x03\n"
-        "mov r3, r8\n"
-        "ands r5, r3\n"
-        "orrs r5, r0\n"
-        "movs r7, #0xF8\n"
-        "lsls r7, r7, #0x07\n"
-        "ands r1, r7\n"
-        "lsls r1, r1, #0x06\n"
-        "mov r0, r12\n"
-        "ands r5, r0\n"
-        "orrs r5, r1\n"
-        "lsls r0, r4, #0x18\n"
-        "asrs r1, r0, #0x18\n"
-        "lsls r0, r5, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "str r2, [sp, #0x008]\n"
-        "cmp r1, r0\n"
-        "bge _08063224\n"
-        "adds r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r1, r9\n"
-        "ands r4, r1\n"
-        "b _08063232\n"
-        ".byte 0x00, 0x00\n"
-        "_08063214: .4byte 0x05000200\n"
-        "_08063218: .4byte 0xFFFFFF00\n"
-        "_0806321C: .4byte 0xFFFF00FF\n"
-        "_08063220: .4byte 0xFF00FFFF\n"
-        "_08063224:\n"
-        "cmp r1, r0\n"
-        "ble _08063236\n"
-        "subs r0, r4, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r2, r9\n"
-        "ands r4, r2\n"
-        "_08063232:\n"
-        "orrs r4, r0\n"
-        "movs r6, #0x00\n"
-        "_08063236:\n"
-        "lsls r0, r4, #0x10\n"
-        "asrs r2, r0, #0x18\n"
-        "lsls r0, r5, #0x10\n"
-        "adds r1, r2, #0x0\n"
-        "asrs r0, r0, #0x18\n"
-        "cmp r1, r0\n"
-        "bge _08063250\n"
-        "adds r0, r2, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r3, r8\n"
-        "ands r4, r3\n"
-        "b _0806325E\n"
-        "_08063250:\n"
-        "cmp r1, r0\n"
-        "ble _08063262\n"
-        "subs r0, r2, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r7, r8\n"
-        "ands r4, r7\n"
-        "_0806325E:\n"
-        "orrs r4, r0\n"
-        "movs r6, #0x00\n"
-        "_08063262:\n"
-        "lsls r0, r4, #0x08\n"
-        "asrs r2, r0, #0x18\n"
-        "lsls r0, r5, #0x08\n"
-        "adds r1, r2, #0x0\n"
-        "asrs r0, r0, #0x18\n"
-        "cmp r1, r0\n"
-        "bge _08063280\n"
-        "adds r0, r2, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x08\n"
-        "mov r1, r12\n"
-        "ands r4, r1\n"
-        "orrs r4, r0\n"
-        "movs r6, #0x00\n"
-        "b _08063296\n"
-        "_08063280:\n"
-        "cmp r1, r0\n"
-        "ble _08063292\n"
-        "subs r0, r2, #0x1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x08\n"
-        "mov r2, r12\n"
-        "ands r4, r2\n"
-        "orrs r4, r0\n"
-        "movs r6, #0x00\n"
-        "_08063292:\n"
-        "cmp r6, #0x00\n"
-        "bne _080632BC\n"
-        "_08063296:\n"
-        "adds r3, r4, #0x0\n"
-        "mov r7, r10\n"
-        "ands r3, r7\n"
-        "lsls r0, r4, #0x10\n"
-        "asrs r0, r0, #0x18\n"
-        "movs r1, #0x1F\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x05\n"
-        "orrs r3, r0\n"
-        "lsls r0, r4, #0x08\n"
-        "asrs r0, r0, #0x18\n"
-        "mov r1, r10\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x0A\n"
-        "orrs r3, r0\n"
-        "ldr r2, [sp, #0x008]\n"
-        "ldr r7, [sp, #0x004]\n"
-        "adds r0, r2, r7\n"
-        "strh r3, [r0, #0x00]\n"
-        "_080632BC:\n"
-        "ldr r0, [sp, #0x010]\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r1, r0, #0x10\n"
-        "str r1, [sp, #0x010]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "cmp r0, r2\n"
-        "bhi _080632CE\n"
-        "b _08063194\n"
-        "_080632CE:\n"
-        "adds r0, r6, #0x0\n"
-        "add sp, #0x014\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s32 r : 8;
+    s32 g : 8;
+    s32 b : 8;
+};
+
+// Step every palette colour in [start, end] one unit per channel toward
+// target; returns 1 once all of them already match (fade finished).
+u32 sub_0806314C(u8 useObjPal, u8 start, u8 end, u16 *target)
+{
+    u32 done = 1;
+    u16 *pal = (u16 *)0x05000000;
+    u16 i;
+
+    if (!useObjPal)
+        pal = (u16 *)0x05000200;
+    for (i = start; i <= (u16)end; i++)
+    {
+        struct PalRgb cur;
+        struct PalRgb dst;
+        u16 c = pal[i];
+        u16 t = target[i];
+
+        cur.r = c & 0x1F;
+        cur.g = (c & 0x3E0) >> 5;
+        cur.b = (c & 0x7C00) >> 10;
+        dst.r = t & 0x1F;
+        dst.g = (t & 0x3E0) >> 5;
+        dst.b = (t & 0x7C00) >> 10;
+
+        if (cur.r < dst.r) { cur.r++; done = 0; }
+        else if (cur.r > dst.r) { cur.r--; done = 0; }
+        if (cur.g < dst.g) { cur.g++; done = 0; }
+        else if (cur.g > dst.g) { cur.g--; done = 0; }
+        if (cur.b < dst.b) { cur.b++; done = 0; }
+        else if (cur.b > dst.b) { cur.b--; done = 0; }
+        if (!done)
+        {
+            c = (cur.r & 0x1F) | ((cur.g & 0x1F) << 5) | ((cur.b & 0x1F) << 10);
+            // Load-bearing (permuter): the empty loop keeps the i*2 offset spilled
+            // across the body, as in retail.
+            do { } while (0);
+            pal[i] = c;
+        }
+    }
+    return done;
 }
 

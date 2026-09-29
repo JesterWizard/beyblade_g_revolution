@@ -141,14 +141,6 @@ next = "Find a source shape that leaves d in its argument register (d is only re
 score = "24/244"
 
 [[wip]]
-name = "sub_0806960C"
-seed = "src/decompiled/sub_0806960C.c"
-notes = "src/decompiled/sub_0806960C.md"
-status = "BG map streaming (scroll by dx/dy, stream a column/row of tiles through sub_08069270 when the view crosses the loaded rect, wrap on unk7C bits). Logic complete, same size. Retail spills tile/edge/source/start values to 8 consecutive stack words (sp0C..sp28) and keeps the constant 1 in r10; a local Unk688C8Rect + start[2] gets closest."
-next = "Find the local aggregate shape that yields the sp0C..sp28 layout while keeping CSE of the stored values; one = 1 local helps the prologue."
-score = "226/600"
-
-[[wip]]
 name = "sub_08043DB4"
 seed = "src/decompiled/sub_08043DB4.c"
 notes = "src/decompiled/sub_08043DB4.md"
@@ -235,14 +227,6 @@ notes = "src/decompiled/sub_080618EC.md"
 status = "New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF."
 next = "Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail."
 score = "108/428"
-
-[[wip]]
-name = "sub_0806314C"
-seed = "src/decompiled/sub_0806314C.c"
-notes = "src/decompiled/sub_0806314C.md"
-status = "palette fade step, 400/404"
-next = "offset i*2 spilled at sp+8 in retail"
-score = "175/404"
 
 [[wip]]
 name = "sub_08060E48"

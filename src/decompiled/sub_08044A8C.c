@@ -22,8 +22,7 @@ s8 SaveDataVerify(void)
     struct Unk1688Words *hdr;
 
     n = 3;
-    i = 0;
-    gData_03000198->unk185B = 0;
+    gData_03000198->unk185B = i = 0;
     gData_03000198->unk185C = 1;
     hdrBlock = HeapAlloc(0x18);
     slotBlock = HeapAlloc(0x1F60);

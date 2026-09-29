@@ -1,318 +1,126 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806960c
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
 void BgMapScroll(struct MapLayer *st, s32 dx, s32 dy)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x03C\n"
-        "adds r5, r0, #0x0\n"
-        "movs r7, #0x00\n"
-        "movs r0, #0x00\n"
-        "mov r9, r0\n"
-        "mov r12, r0\n"
-        "movs r3, #0x00\n"
-        "str r3, [sp, #0x02C]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x64\n"
-        "movs r4, #0x01\n"
-        "mov r10, r4\n"
-        "mov r3, r10\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "ands r0, r3\n"
-        "str r0, [sp, #0x030]\n"
-        "adds r4, r5, #0x0\n"
-        "adds r4, #0x5F\n"
-        "str r4, [sp, #0x034]\n"
-        "mov r0, r10\n"
-        "ldrb r3, [r4, #0x00]\n"
-        "lsls r0, r3\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r8, r0\n"
-        "adds r3, r5, #0x0\n"
-        "adds r3, #0x60\n"
-        "mov r0, r10\n"
-        "ldrb r3, [r3, #0x00]\n"
-        "lsls r0, r3\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x038]\n"
-        "ldr r4, [r5, #0x0C]\n"
-        "adds r4, r4, r1\n"
-        "str r4, [r5, #0x0C]\n"
-        "ldr r3, [r5, #0x10]\n"
-        "adds r3, r3, r2\n"
-        "str r3, [r5, #0x10]\n"
-        "ldr r0, [r5, #0x40]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r5, #0x40]\n"
-        "ldr r0, [r5, #0x44]\n"
-        "adds r0, r0, r2\n"
-        "str r0, [r5, #0x44]\n"
-        "asrs r4, r4, #0x0B\n"
-        "asrs r6, r3, #0x0B\n"
-        "str r4, [sp, #0x00C]\n"
-        "str r6, [sp, #0x010]\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x1E\n"
-        "str r0, [sp, #0x014]\n"
-        "adds r3, r6, #0x0\n"
-        "adds r3, #0x14\n"
-        "str r3, [sp, #0x018]\n"
-        "ldr r2, [r5, #0x08]\n"
-        "ldr r1, [r2, #0x08]\n"
-        "cmp r0, r1\n"
-        "ble _0806969A\n"
-        "subs r7, r0, r1\n"
-        "ldr r0, [r2, #0x10]\n"
-        "add r0, r8\n"
-        "str r0, [sp, #0x01C]\n"
-        "adds r1, #0x01\n"
-        "str r1, [sp, #0x024]\n"
-        "mov r12, r7\n"
-        "_0806969A:\n"
-        "ldr r1, [r2, #0x00]\n"
-        "cmp r4, r1\n"
-        "bge _080696B0\n"
-        "subs r7, r4, r1\n"
-        "ldr r0, [r2, #0x10]\n"
-        "adds r0, r0, r7\n"
-        "str r0, [sp, #0x01C]\n"
-        "adds r1, r1, r7\n"
-        "str r1, [sp, #0x024]\n"
-        "negs r4, r7\n"
-        "mov r12, r4\n"
-        "_080696B0:\n"
-        "ldr r1, [r2, #0x0C]\n"
-        "cmp r3, r1\n"
-        "ble _080696CA\n"
-        "subs r3, r3, r1\n"
-        "mov r9, r3\n"
-        "ldr r0, [r2, #0x14]\n"
-        "ldr r3, [sp, #0x038]\n"
-        "adds r0, r0, r3\n"
-        "str r0, [sp, #0x020]\n"
-        "adds r1, #0x01\n"
-        "str r1, [sp, #0x028]\n"
-        "mov r4, r9\n"
-        "str r4, [sp, #0x02C]\n"
-        "_080696CA:\n"
-        "ldr r4, [r2, #0x04]\n"
-        "cmp r6, r4\n"
-        "bge _080696E6\n"
-        "subs r6, r6, r4\n"
-        "mov r9, r6\n"
-        "ldr r0, [r2, #0x14]\n"
-        "add r0, r9\n"
-        "str r0, [sp, #0x020]\n"
-        "mov r0, r9\n"
-        "adds r0, r4, r0\n"
-        "str r0, [sp, #0x028]\n"
-        "mov r1, r9\n"
-        "negs r1, r1\n"
-        "str r1, [sp, #0x02C]\n"
-        "_080696E6:\n"
-        "cmp r7, #0x00\n"
-        "beq _08069792\n"
-        "movs r3, #0x7C\n"
-        "adds r3, r3, r5\n"
-        "mov r8, r3\n"
-        "mov r0, r10\n"
-        "ldrb r1, [r3, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _08069792\n"
-        "movs r1, #0x20\n"
-        "ldr r0, [r2, #0x14]\n"
-        "str r0, [sp, #0x000]\n"
-        "mov r2, r12\n"
-        "str r2, [sp, #0x004]\n"
-        "str r1, [sp, #0x008]\n"
-        "adds r0, r5, #0x0\n"
-        "ldr r1, [sp, #0x024]\n"
-        "adds r2, r4, #0x0\n"
-        "ldr r3, [sp, #0x01C]\n"
-        "bl sub_08069270\n"
-        "ldr r1, [r5, #0x08]\n"
-        "ldr r0, [r1, #0x10]\n"
-        "adds r6, r0, r7\n"
-        "str r6, [r1, #0x10]\n"
-        "ldr r0, [r1, #0x00]\n"
-        "adds r3, r0, r7\n"
-        "str r3, [r1, #0x00]\n"
-        "ldr r0, [r1, #0x08]\n"
-        "adds r4, r0, r7\n"
-        "str r4, [r1, #0x08]\n"
-        "movs r0, #0x08\n"
-        "mov r7, r8\n"
-        "ldrb r7, [r7, #0x00]\n"
-        "ands r0, r7\n"
-        "cmp r0, #0x00\n"
-        "beq _08069792\n"
-        "ldr r2, [r5, #0x00]\n"
-        "cmp r4, r2\n"
-        "blt _0806975E\n"
-        "cmp r3, r2\n"
-        "blt _0806975E\n"
-        "subs r0, r3, r2\n"
-        "str r0, [r1, #0x00]\n"
-        "ldr r0, [r5, #0x00]\n"
-        "subs r0, r4, r0\n"
-        "str r0, [r1, #0x08]\n"
-        "mov r0, r10\n"
-        "ldr r2, [sp, #0x034]\n"
-        "ldrb r2, [r2, #0x00]\n"
-        "lsls r0, r2\n"
-        "subs r0, #0x01\n"
-        "ands r6, r0\n"
-        "str r6, [r1, #0x10]\n"
-        "ldr r1, [r5, #0x00]\n"
-        "lsls r1, r1, #0x0B\n"
-        "ldr r0, [r5, #0x0C]\n"
-        "subs r0, r0, r1\n"
-        "b _08069790\n"
-        "_0806975E:\n"
-        "ldr r3, [r5, #0x08]\n"
-        "ldr r1, [r3, #0x08]\n"
-        "cmp r1, #0x00\n"
-        "bge _08069792\n"
-        "ldr r0, [r3, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bge _08069792\n"
-        "adds r0, r0, r2\n"
-        "str r0, [r3, #0x00]\n"
-        "ldr r0, [r5, #0x00]\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r3, #0x08]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x5F\n"
-        "movs r1, #0x01\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0\n"
-        "subs r1, #0x01\n"
-        "ldr r0, [r3, #0x10]\n"
-        "ands r0, r1\n"
-        "str r0, [r3, #0x10]\n"
-        "ldr r1, [r5, #0x00]\n"
-        "lsls r1, r1, #0x0B\n"
-        "ldr r0, [r5, #0x0C]\n"
-        "adds r0, r0, r1\n"
-        "_08069790:\n"
-        "str r0, [r5, #0x0C]\n"
-        "_08069792:\n"
-        "mov r3, r9\n"
-        "cmp r3, #0x00\n"
-        "beq _08069822\n"
-        "adds r6, r5, #0x0\n"
-        "adds r6, #0x7C\n"
-        "movs r0, #0x02\n"
-        "ldrb r4, [r6, #0x00]\n"
-        "ands r0, r4\n"
-        "cmp r0, #0x00\n"
-        "bne _08069822\n"
-        "movs r2, #0x20\n"
-        "ldr r0, [r5, #0x08]\n"
-        "ldr r1, [r0, #0x00]\n"
-        "ldr r3, [r0, #0x10]\n"
-        "ldr r7, [sp, #0x020]\n"
-        "str r7, [sp, #0x000]\n"
-        "str r2, [sp, #0x004]\n"
-        "ldr r0, [sp, #0x02C]\n"
-        "str r0, [sp, #0x008]\n"
-        "adds r0, r5, #0x0\n"
-        "ldr r2, [sp, #0x028]\n"
-        "bl sub_08069270\n"
-        "ldr r1, [r5, #0x08]\n"
-        "ldr r0, [r1, #0x14]\n"
-        "add r0, r9\n"
-        "str r0, [r1, #0x14]\n"
-        "ldr r0, [r1, #0x04]\n"
-        "mov r2, r9\n"
-        "adds r3, r0, r2\n"
-        "str r3, [r1, #0x04]\n"
-        "ldr r0, [r1, #0x0C]\n"
-        "adds r4, r0, r2\n"
-        "str r4, [r1, #0x0C]\n"
-        "movs r0, #0x04\n"
-        "ldrb r6, [r6, #0x00]\n"
-        "ands r0, r6\n"
-        "cmp r0, #0x00\n"
-        "beq _08069822\n"
-        "ldr r2, [r5, #0x04]\n"
-        "cmp r4, r2\n"
-        "blt _08069800\n"
-        "ldr r0, [r5, #0x00]\n"
-        "cmp r3, r0\n"
-        "blt _08069800\n"
-        "subs r0, r3, r2\n"
-        "str r0, [r1, #0x04]\n"
-        "ldr r0, [r5, #0x04]\n"
-        "subs r0, r4, r0\n"
-        "str r0, [r1, #0x0C]\n"
-        "ldr r1, [r5, #0x04]\n"
-        "lsls r1, r1, #0x0B\n"
-        "ldr r0, [r5, #0x10]\n"
-        "subs r0, r0, r1\n"
-        "b _08069820\n"
-        "_08069800:\n"
-        "ldr r1, [r5, #0x08]\n"
-        "ldr r3, [r1, #0x0C]\n"
-        "cmp r3, #0x00\n"
-        "bge _08069822\n"
-        "ldr r0, [r1, #0x04]\n"
-        "cmp r0, #0x00\n"
-        "bge _08069822\n"
-        "adds r0, r0, r2\n"
-        "str r0, [r1, #0x04]\n"
-        "ldr r0, [r5, #0x04]\n"
-        "adds r0, r3, r0\n"
-        "str r0, [r1, #0x0C]\n"
-        "ldr r1, [r5, #0x04]\n"
-        "lsls r1, r1, #0x0B\n"
-        "ldr r0, [r5, #0x10]\n"
-        "adds r0, r0, r1\n"
-        "_08069820:\n"
-        "str r0, [r5, #0x10]\n"
-        "_08069822:\n"
-        "ldr r3, [sp, #0x030]\n"
-        "cmp r3, #0x00\n"
-        "bne _08069846\n"
-        "adds r4, r5, #0x0\n"
-        "adds r4, #0x5E\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "bl sub_08069908\n"
-        "ldr r1, [r5, #0x40]\n"
-        "asrs r1, r1, #0x08\n"
-        "strh r1, [r0, #0x00]\n"
-        "ldrb r0, [r4, #0x00]\n"
-        "bl sub_08069948\n"
-        "ldr r1, [r5, #0x44]\n"
-        "asrs r1, r1, #0x08\n"
-        "strh r1, [r0, #0x00]\n"
-        "b _08069854\n"
-        "_08069846:\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x5E\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "ldr r1, [r5, #0x40]\n"
-        "ldr r2, [r5, #0x44]\n"
-        "bl sub_080699C8\n"
-        "_08069854:\n"
-        "add sp, #0x03C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct { s32 x0, y0, x1, y1; } v;
+    s32 sx, sy, ax, ay;
+    s32 cols, rows;
+    s32 colCount, rowCount;
+    u8 affine;
+    u8 *pw;
+    u8 w, h;
+    s32 x, y, tx, ty, k, k2;
+    struct MapTileRect *rect;
+
+    cols = 0;
+    rows = 0;
+    colCount = 0;
+    rowCount = 0;
+    affine = st->unk64 & 1;
+    pw = &st->log2Width;
+    w = 1 << *pw;
+    h = 1 << st->log2Height;
+    x = st->scrollX += dx;
+    y = st->scrollY += dy;
+    st->offsetX += dx;
+    st->offsetY += dy;
+    tx = x >> 11;
+    ty = y >> 11;
+    v.x0 = tx;
+    v.y0 = ty;
+    v.x1 = v.x0 + 30;
+    v.y1 = v.y0 + 20;
+    rect = st->visible;
+    if (v.x1 > rect->unk08)
+    {
+        cols = v.x1 - rect->unk08;
+        sx = rect->unk10 + w;
+        ax = rect->unk08 + 1;
+        colCount = cols;
+    }
+    if (v.x0 < rect->unk00)
+    {
+        cols = v.x0 - rect->unk00;
+        sx = rect->unk10 + cols;
+        ax = rect->unk00 + cols;
+        colCount = -cols;
+    }
+    if (v.y1 > rect->unk0C)
+    {
+        rows = v.y1 - rect->unk0C;
+        sy = rect->unk14 + h;
+        ay = rect->unk0C + 1;
+        rowCount = rows;
+    }
+    if (v.y0 < rect->unk04)
+    {
+        rows = v.y0 - rect->unk04;
+        sy = rect->unk14 + rows;
+        ay = rect->unk04 + rows;
+        rowCount = -rows;
+    }
+    if (cols != 0 && !(st->unk7C & 1))
+    {
+        k = 32;
+        BgMapBlitRect((struct Unk68988 *)st, ax, rect->unk04, sx, rect->unk14, colCount, k);
+        st->visible->unk10 += cols;
+        st->visible->unk00 += cols;
+        st->visible->unk08 += cols;
+        if (st->unk7C & 8)
+        {
+            if (st->visible->unk08 >= st->widthTiles && st->visible->unk00 >= st->widthTiles)
+            {
+                st->visible->unk00 -= st->widthTiles;
+                st->visible->unk08 -= st->widthTiles;
+                st->visible->unk10 &= (1 << st->log2Width) - 1;
+                st->scrollX -= st->widthTiles << 11;
+            }
+            else if (st->visible->unk08 < 0 && st->visible->unk00 < 0)
+            {
+                st->visible->unk00 += st->widthTiles;
+                st->visible->unk08 += st->widthTiles;
+                st->visible->unk10 &= (1 << st->log2Width) - 1;
+                st->scrollX += st->widthTiles << 11;
+            }
+        }
+    }
+    if (rows != 0 && !(st->unk7C & 2))
+    {
+        k2 = 32;
+        BgMapBlitRect((struct Unk68988 *)st, st->visible->unk00, ay, st->visible->unk10, sy, k2, rowCount);
+        st->visible->unk14 += rows;
+        st->visible->unk04 += rows;
+        st->visible->unk0C += rows;
+        if (st->unk7C & 4)
+        {
+            /* BUG: the top edge is tested against the map width. */
+            if (st->visible->unk0C >= st->heightTiles && st->visible->unk04 >= st->widthTiles)
+            {
+                st->visible->unk04 -= st->heightTiles;
+                st->visible->unk0C -= st->heightTiles;
+                st->scrollY -= st->heightTiles << 11;
+            }
+            else if (st->visible->unk0C < 0 && st->visible->unk04 < 0)
+            {
+                st->visible->unk04 += st->heightTiles;
+                st->visible->unk0C += st->heightTiles;
+                st->scrollY += st->heightTiles << 11;
+            }
+        }
+    }
+    if (!affine)
+    {
+        *BgGetHofsReg(st->bgId) = st->offsetX >> 8;
+        *BgGetVofsReg(st->bgId) = st->offsetY >> 8;
+    }
+    else
+        BgAffineSetRefPoint(st->bgId, st->offsetX, st->offsetY);
 }
 
