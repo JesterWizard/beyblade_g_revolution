@@ -1,709 +1,261 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806c7d4
-__attribute__((naked))
-void sub_0806C7D4(void *obj, u32 mesh, u32 c, u16 d)
+/* match-compiler: old_agbcc */
+// Sweep `body` (bounding box + this frame's velocity) against every edge of
+// `mesh`. Edge endpoints are 19.5 fixed point. A crossed horizontal side snaps
+// the body to it and reflects vy by the edge's bounce factor (x likewise).
+// Edges overlapping on both axes are collected into `out` (up to `max`) and
+// reported to hooks->onTouch; any bounce is reported to hooks->onBounce.
+u16 sub_0806C7D4(struct CollisionBody *body, struct Unk6C388Mesh *mesh, struct Unk6C388Edge **out, u16 max)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x054\n"
-        "adds r7, r0, #0x0\n"
-        "str r1, [sp, #0x000]\n"
-        "str r2, [sp, #0x004]\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "str r3, [sp, #0x008]\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x010]\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x014]\n"
-        "movs r2, #0x00\n"
-        "str r2, [sp, #0x018]\n"
-        "ldr r3, [sp, #0x000]\n"
-        "ldr r0, [r3, #0x00]\n"
-        "ldr r0, [r0, #0x08]\n"
-        "ldr r5, [sp, #0x010]\n"
-        "cmp r5, r0\n"
-        "blt _0806C806\n"
-        "b _0806CCD8\n"
-        "_0806C806:\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x03C]\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x038]\n"
-        "ldr r2, [sp, #0x018]\n"
-        "lsls r1, r2, #0x05\n"
-        "ldr r3, [sp, #0x000]\n"
-        "ldr r0, [r3, #0x0C]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [sp, #0x00C]\n"
-        "ldrb r5, [r0, #0x10]\n"
-        "mov r10, r5\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x040]\n"
-        "mov r9, r0\n"
-        "ldr r1, [sp, #0x00C]\n"
-        "ldr r0, [r1, #0x00]\n"
-        "lsls r0, r0, #0x04\n"
-        "ldr r1, [r3, #0x04]\n"
-        "adds r5, r1, r0\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "ldr r0, [r2, #0x04]\n"
-        "lsls r0, r0, #0x04\n"
-        "adds r4, r1, r0\n"
-        "ldr r2, [r5, #0x00]\n"
-        "lsls r6, r2, #0x05\n"
-        "ldr r0, [r5, #0x04]\n"
-        "lsls r0, r0, #0x05\n"
-        "mov r8, r0\n"
-        "ldr r1, [r4, #0x00]\n"
-        "lsls r3, r1, #0x05\n"
-        "ldr r0, [r4, #0x04]\n"
-        "lsls r0, r0, #0x05\n"
-        "mov r12, r0\n"
-        "cmp r2, r1\n"
-        "bge _0806C854\n"
-        "str r6, [sp, #0x030]\n"
-        "str r3, [sp, #0x034]\n"
-        "b _0806C858\n"
-        "_0806C854:\n"
-        "str r3, [sp, #0x030]\n"
-        "str r6, [sp, #0x034]\n"
-        "_0806C858:\n"
-        "ldr r1, [r5, #0x04]\n"
-        "ldr r0, [r4, #0x04]\n"
-        "cmp r1, r0\n"
-        "bge _0806C86A\n"
-        "mov r3, r8\n"
-        "str r3, [sp, #0x01C]\n"
-        "mov r5, r12\n"
-        "str r5, [sp, #0x020]\n"
-        "b _0806C872\n"
-        "_0806C86A:\n"
-        "mov r0, r12\n"
-        "str r0, [sp, #0x01C]\n"
-        "mov r1, r8\n"
-        "str r1, [sp, #0x020]\n"
-        "_0806C872:\n"
-        "adds r2, r7, #0x0\n"
-        "adds r2, #0xAA\n"
-        "movs r3, #0x00\n"
-        "ldsh r0, [r2, r3]\n"
-        "lsls r6, r0, #0x08\n"
-        "adds r1, r7, #0x0\n"
-        "adds r1, #0xAE\n"
-        "movs r5, #0x00\n"
-        "ldsh r0, [r1, r5]\n"
-        "lsls r5, r0, #0x08\n"
-        "ldr r3, [r7, #0x08]\n"
-        "ldr r4, [r7, #0x50]\n"
-        "str r2, [sp, #0x048]\n"
-        "str r1, [sp, #0x050]\n"
-        "ldr r0, [r7, #0x44]\n"
-        "mov r8, r0\n"
-        "cmp r0, #0x00\n"
-        "ble _0806C8A8\n"
-        "adds r5, r3, r5\n"
-        "str r5, [sp, #0x024]\n"
-        "adds r0, r5, #0x0\n"
-        "add r0, r8\n"
-        "adds r0, r0, r4\n"
-        "str r0, [sp, #0x028]\n"
-        "adds r6, r3, r6\n"
-        "str r0, [sp, #0x02C]\n"
-        "b _0806C8B8\n"
-        "_0806C8A8:\n"
-        "adds r6, r3, r6\n"
-        "str r6, [sp, #0x028]\n"
-        "adds r0, r6, #0x0\n"
-        "add r0, r8\n"
-        "adds r6, r0, r4\n"
-        "str r6, [sp, #0x024]\n"
-        "adds r3, r3, r5\n"
-        "str r3, [sp, #0x02C]\n"
-        "_0806C8B8:\n"
-        "adds r3, r7, #0x0\n"
-        "adds r3, #0xA8\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r3, r1]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [r7, #0x04]\n"
-        "adds r4, r1, r0\n"
-        "adds r2, r7, #0x0\n"
-        "adds r2, #0xAC\n"
-        "movs r5, #0x00\n"
-        "ldsh r0, [r2, r5]\n"
-        "lsls r0, r0, #0x08\n"
-        "adds r1, r1, r0\n"
-        "str r3, [sp, #0x044]\n"
-        "str r2, [sp, #0x04C]\n"
-        "ldr r0, [sp, #0x030]\n"
-        "cmp r1, r0\n"
-        "blt _0806C8E2\n"
-        "ldr r2, [sp, #0x034]\n"
-        "cmp r2, r4\n"
-        "bge _0806C8F4\n"
-        "_0806C8E2:\n"
-        "ldr r3, [sp, #0x02C]\n"
-        "ldr r5, [sp, #0x01C]\n"
-        "cmp r3, r5\n"
-        "bge _0806C8EC\n"
-        "b _0806CCC6\n"
-        "_0806C8EC:\n"
-        "ldr r0, [sp, #0x020]\n"
-        "cmp r0, r6\n"
-        "bge _0806C8F4\n"
-        "b _0806CCC6\n"
-        "_0806C8F4:\n"
-        "ldr r2, [sp, #0x030]\n"
-        "cmp r1, r2\n"
-        "bgt _0806C8FC\n"
-        "b _0806CA70\n"
-        "_0806C8FC:\n"
-        "ldr r3, [sp, #0x034]\n"
-        "cmp r3, r4\n"
-        "bgt _0806C904\n"
-        "b _0806CA70\n"
-        "_0806C904:\n"
-        "movs r0, #0x01\n"
-        "ldr r5, [sp, #0x03C]\n"
-        "orrs r5, r0\n"
-        "str r5, [sp, #0x03C]\n"
-        "ldr r0, [sp, #0x024]\n"
-        "ldr r1, [sp, #0x01C]\n"
-        "cmp r0, r1\n"
-        "bgt _0806C9BE\n"
-        "ldr r2, [sp, #0x028]\n"
-        "cmp r2, r1\n"
-        "blt _0806C9BE\n"
-        "movs r0, #0x03\n"
-        "mov r3, r10\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C9BE\n"
-        "ldr r5, [sp, #0x040]\n"
-        "cmp r5, #0x00\n"
-        "bne _0806C964\n"
-        "ldr r0, [r7, #0x44]\n"
-        "cmp r0, #0x00\n"
-        "ble _0806C93A\n"
-        "movs r0, #0x01\n"
-        "mov r1, r9\n"
-        "orrs r1, r0\n"
-        "mov r9, r1\n"
-        "b _0806C946\n"
-        "_0806C93A:\n"
-        "mov r2, r9\n"
-        "movs r3, #0x02\n"
-        "orrs r2, r3\n"
-        "lsls r0, r2, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r9, r0\n"
-        "_0806C946:\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "mov r3, r9\n"
-        "bl sub_0806D748\n"
-        "lsls r0, r0, #0x18\n"
-        "cmp r0, #0x00\n"
-        "bne _0806C95C\n"
-        "movs r5, #0x00\n"
-        "mov r10, r5\n"
-        "_0806C95C:\n"
-        "movs r0, #0x01\n"
-        "str r0, [sp, #0x040]\n"
-        "ldr r1, [r7, #0x44]\n"
-        "mov r8, r1\n"
-        "_0806C964:\n"
-        "mov r2, r8\n"
-        "cmp r2, #0x00\n"
-        "ble _0806C992\n"
-        "movs r0, #0x01\n"
-        "mov r3, r10\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C9BE\n"
-        "ldr r5, [sp, #0x050]\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r5, r1]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r2, [sp, #0x01C]\n"
-        "subs r0, r2, r0\n"
-        "str r0, [r7, #0x08]\n"
-        "str r2, [sp, #0x02C]\n"
-        "movs r3, #0x01\n"
-        "str r3, [sp, #0x038]\n"
-        "movs r0, #0x01\n"
-        "ldr r5, [sp, #0x014]\n"
-        "orrs r5, r0\n"
-        "str r5, [sp, #0x014]\n"
-        "b _0806C9BE\n"
-        "_0806C992:\n"
-        "movs r0, #0x02\n"
-        "mov r1, r10\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806C9BE\n"
-        "ldr r2, [sp, #0x048]\n"
-        "movs r3, #0x00\n"
-        "ldsh r0, [r2, r3]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r5, [sp, #0x01C]\n"
-        "subs r0, r5, r0\n"
-        "adds r0, #0x80\n"
-        "str r0, [r7, #0x08]\n"
-        "ldr r6, [sp, #0x01C]\n"
-        "movs r0, #0x01\n"
-        "str r0, [sp, #0x038]\n"
-        "ldr r1, [sp, #0x014]\n"
-        "movs r2, #0x02\n"
-        "orrs r1, r2\n"
-        "lsls r0, r1, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x014]\n"
-        "_0806C9BE:\n"
-        "ldr r3, [sp, #0x024]\n"
-        "ldr r5, [sp, #0x020]\n"
-        "cmp r3, r5\n"
-        "bgt _0806CA70\n"
-        "ldr r0, [sp, #0x028]\n"
-        "cmp r0, r5\n"
-        "blt _0806CA70\n"
-        "movs r0, #0x0C\n"
-        "mov r1, r10\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CA70\n"
-        "ldr r2, [sp, #0x040]\n"
-        "cmp r2, #0x00\n"
-        "bne _0806CA16\n"
-        "ldr r0, [r7, #0x44]\n"
-        "cmp r0, #0x00\n"
-        "ble _0806C9EC\n"
-        "movs r0, #0x04\n"
-        "mov r3, r9\n"
-        "orrs r3, r0\n"
-        "lsls r0, r3, #0x10\n"
-        "b _0806C9F4\n"
-        "_0806C9EC:\n"
-        "movs r0, #0x08\n"
-        "mov r5, r9\n"
-        "orrs r5, r0\n"
-        "lsls r0, r5, #0x10\n"
-        "_0806C9F4:\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r9, r0\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "mov r3, r9\n"
-        "bl sub_0806D748\n"
-        "lsls r0, r0, #0x18\n"
-        "cmp r0, #0x00\n"
-        "bne _0806CA0E\n"
-        "movs r0, #0x00\n"
-        "mov r10, r0\n"
-        "_0806CA0E:\n"
-        "movs r1, #0x01\n"
-        "str r1, [sp, #0x040]\n"
-        "ldr r2, [r7, #0x44]\n"
-        "mov r8, r2\n"
-        "_0806CA16:\n"
-        "mov r3, r8\n"
-        "cmp r3, #0x00\n"
-        "ble _0806CA44\n"
-        "movs r0, #0x04\n"
-        "mov r5, r10\n"
-        "ands r0, r5\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CA70\n"
-        "ldr r1, [sp, #0x050]\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r1, r2]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r3, [sp, #0x020]\n"
-        "subs r0, r3, r0\n"
-        "str r0, [r7, #0x08]\n"
-        "str r3, [sp, #0x02C]\n"
-        "movs r5, #0x01\n"
-        "str r5, [sp, #0x038]\n"
-        "movs r0, #0x04\n"
-        "ldr r1, [sp, #0x014]\n"
-        "orrs r1, r0\n"
-        "lsls r0, r1, #0x10\n"
-        "b _0806CA6C\n"
-        "_0806CA44:\n"
-        "movs r0, #0x08\n"
-        "mov r2, r10\n"
-        "ands r0, r2\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CA70\n"
-        "ldr r3, [sp, #0x048]\n"
-        "movs r5, #0x00\n"
-        "ldsh r0, [r3, r5]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [sp, #0x020]\n"
-        "subs r0, r1, r0\n"
-        "adds r0, #0x80\n"
-        "str r0, [r7, #0x08]\n"
-        "ldr r6, [sp, #0x020]\n"
-        "movs r2, #0x01\n"
-        "str r2, [sp, #0x038]\n"
-        "movs r0, #0x08\n"
-        "ldr r3, [sp, #0x014]\n"
-        "orrs r3, r0\n"
-        "lsls r0, r3, #0x10\n"
-        "_0806CA6C:\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x014]\n"
-        "_0806CA70:\n"
-        "ldr r2, [r7, #0x40]\n"
-        "cmp r2, #0x00\n"
-        "ble _0806CA8A\n"
-        "ldr r5, [sp, #0x04C]\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r5, r1]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [r7, #0x04]\n"
-        "adds r4, r1, r0\n"
-        "adds r1, r4, r2\n"
-        "ldr r0, [r7, #0x4C]\n"
-        "adds r5, r1, r0\n"
-        "b _0806CA9C\n"
-        "_0806CA8A:\n"
-        "ldr r3, [sp, #0x044]\n"
-        "movs r5, #0x00\n"
-        "ldsh r0, [r3, r5]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [r7, #0x04]\n"
-        "adds r5, r1, r0\n"
-        "adds r1, r5, r2\n"
-        "ldr r0, [r7, #0x4C]\n"
-        "adds r4, r1, r0\n"
-        "_0806CA9C:\n"
-        "ldr r0, [sp, #0x02C]\n"
-        "ldr r1, [sp, #0x01C]\n"
-        "cmp r0, r1\n"
-        "bgt _0806CAA6\n"
-        "b _0806CC18\n"
-        "_0806CAA6:\n"
-        "ldr r3, [sp, #0x020]\n"
-        "cmp r3, r6\n"
-        "bgt _0806CAAE\n"
-        "b _0806CC18\n"
-        "_0806CAAE:\n"
-        "ldr r0, [sp, #0x03C]\n"
-        "movs r1, #0x02\n"
-        "orrs r0, r1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x03C]\n"
-        "ldr r3, [sp, #0x030]\n"
-        "cmp r4, r3\n"
-        "bgt _0806CB66\n"
-        "cmp r5, r3\n"
-        "blt _0806CB66\n"
-        "movs r0, #0x30\n"
-        "mov r1, r10\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CB66\n"
-        "ldr r3, [sp, #0x040]\n"
-        "cmp r3, #0x00\n"
-        "bne _0806CB0C\n"
-        "ldr r0, [r7, #0x40]\n"
-        "cmp r0, #0x00\n"
-        "ble _0806CAE4\n"
-        "movs r0, #0x10\n"
-        "mov r1, r9\n"
-        "orrs r1, r0\n"
-        "lsls r0, r1, #0x10\n"
-        "b _0806CAEC\n"
-        "_0806CAE4:\n"
-        "movs r0, #0x20\n"
-        "mov r2, r9\n"
-        "orrs r2, r0\n"
-        "lsls r0, r2, #0x10\n"
-        "_0806CAEC:\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r9, r0\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "mov r3, r9\n"
-        "bl sub_0806D748\n"
-        "lsls r0, r0, #0x18\n"
-        "cmp r0, #0x00\n"
-        "bne _0806CB06\n"
-        "movs r3, #0x00\n"
-        "mov r10, r3\n"
-        "_0806CB06:\n"
-        "movs r0, #0x01\n"
-        "str r0, [sp, #0x040]\n"
-        "ldr r2, [r7, #0x40]\n"
-        "_0806CB0C:\n"
-        "cmp r2, #0x00\n"
-        "ble _0806CB34\n"
-        "movs r0, #0x10\n"
-        "mov r1, r10\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CB66\n"
-        "ldr r3, [sp, #0x04C]\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r3, r1]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r3, [sp, #0x030]\n"
-        "subs r0, r3, r0\n"
-        "str r0, [r7, #0x04]\n"
-        "movs r0, #0x02\n"
-        "ldr r1, [sp, #0x038]\n"
-        "orrs r0, r1\n"
-        "str r0, [sp, #0x038]\n"
-        "movs r0, #0x10\n"
-        "b _0806CB5C\n"
-        "_0806CB34:\n"
-        "movs r0, #0x20\n"
-        "mov r1, r10\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CB66\n"
-        "ldr r3, [sp, #0x044]\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r3, r1]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r3, [sp, #0x030]\n"
-        "subs r0, r3, r0\n"
-        "adds r0, #0x80\n"
-        "str r0, [r7, #0x04]\n"
-        "ldr r0, [sp, #0x038]\n"
-        "movs r1, #0x02\n"
-        "orrs r0, r1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x038]\n"
-        "movs r0, #0x20\n"
-        "_0806CB5C:\n"
-        "ldr r3, [sp, #0x014]\n"
-        "orrs r3, r0\n"
-        "lsls r0, r3, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x014]\n"
-        "_0806CB66:\n"
-        "ldr r0, [sp, #0x034]\n"
-        "cmp r4, r0\n"
-        "bgt _0806CC18\n"
-        "cmp r5, r0\n"
-        "blt _0806CC18\n"
-        "movs r0, #0xC0\n"
-        "mov r1, r10\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CC18\n"
-        "ldr r3, [sp, #0x040]\n"
-        "cmp r3, #0x00\n"
-        "bne _0806CBB4\n"
-        "ldr r0, [r7, #0x40]\n"
-        "cmp r0, #0x00\n"
-        "ble _0806CB90\n"
-        "movs r0, #0x40\n"
-        "mov r5, r9\n"
-        "orrs r5, r0\n"
-        "lsls r0, r5, #0x10\n"
-        "b _0806CB98\n"
-        "_0806CB90:\n"
-        "movs r0, #0x80\n"
-        "mov r1, r9\n"
-        "orrs r1, r0\n"
-        "lsls r0, r1, #0x10\n"
-        "_0806CB98:\n"
-        "lsrs r0, r0, #0x10\n"
-        "mov r9, r0\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "mov r3, r9\n"
-        "bl sub_0806D748\n"
-        "lsls r0, r0, #0x18\n"
-        "cmp r0, #0x00\n"
-        "bne _0806CBB2\n"
-        "movs r2, #0x00\n"
-        "mov r10, r2\n"
-        "_0806CBB2:\n"
-        "ldr r2, [r7, #0x40]\n"
-        "_0806CBB4:\n"
-        "cmp r2, #0x00\n"
-        "ble _0806CBE6\n"
-        "movs r0, #0x40\n"
-        "mov r3, r10\n"
-        "ands r3, r0\n"
-        "cmp r3, #0x00\n"
-        "beq _0806CC18\n"
-        "ldr r5, [sp, #0x04C]\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r5, r1]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r2, [sp, #0x034]\n"
-        "subs r0, r2, r0\n"
-        "str r0, [r7, #0x04]\n"
-        "ldr r3, [sp, #0x038]\n"
-        "movs r5, #0x02\n"
-        "orrs r3, r5\n"
-        "lsls r0, r3, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x038]\n"
-        "movs r0, #0x40\n"
-        "ldr r1, [sp, #0x014]\n"
-        "orrs r1, r0\n"
-        "lsls r0, r1, #0x10\n"
-        "b _0806CC14\n"
-        "_0806CBE6:\n"
-        "movs r0, #0x80\n"
-        "mov r2, r10\n"
-        "ands r2, r0\n"
-        "cmp r2, #0x00\n"
-        "beq _0806CC18\n"
-        "ldr r3, [sp, #0x044]\n"
-        "movs r5, #0x00\n"
-        "ldsh r0, [r3, r5]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [sp, #0x034]\n"
-        "subs r0, r1, r0\n"
-        "adds r0, #0x80\n"
-        "str r0, [r7, #0x04]\n"
-        "ldr r2, [sp, #0x038]\n"
-        "movs r3, #0x02\n"
-        "orrs r2, r3\n"
-        "lsls r0, r2, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x038]\n"
-        "movs r0, #0x80\n"
-        "ldr r5, [sp, #0x014]\n"
-        "orrs r5, r0\n"
-        "lsls r0, r5, #0x10\n"
-        "_0806CC14:\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x014]\n"
-        "_0806CC18:\n"
-        "ldr r0, [sp, #0x03C]\n"
-        "cmp r0, #0x03\n"
-        "bne _0806CC58\n"
-        "ldr r1, [sp, #0x004]\n"
-        "cmp r1, #0x00\n"
-        "beq _0806CC3E\n"
-        "ldr r2, [sp, #0x010]\n"
-        "ldr r3, [sp, #0x008]\n"
-        "cmp r2, r3\n"
-        "bcs _0806CC3E\n"
-        "lsls r0, r2, #0x02\n"
-        "adds r0, r0, r1\n"
-        "ldr r5, [sp, #0x00C]\n"
-        "str r5, [r0, #0x00]\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x010]\n"
-        "_0806CC3E:\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x94\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CC58\n"
-        "ldr r3, [r0, #0x04]\n"
-        "cmp r3, #0x00\n"
-        "beq _0806CC58\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "bl _08073C4C\n"
-        "_0806CC58:\n"
-        "movs r0, #0x01\n"
-        "ldr r1, [sp, #0x038]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CC7E\n"
-        "ldr r0, [r7, #0x44]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "ldrb r2, [r2, #0x0D]\n"
-        "muls r0, r2\n"
-        "asrs r0, r0, #0x07\n"
-        "adds r1, r0, #0x0\n"
-        "cmp r0, #0x00\n"
-        "bge _0806CC74\n"
-        "negs r1, r0\n"
-        "_0806CC74:\n"
-        "cmp r1, #0xFF\n"
-        "bgt _0806CC7A\n"
-        "movs r0, #0x00\n"
-        "_0806CC7A:\n"
-        "negs r0, r0\n"
-        "str r0, [r7, #0x44]\n"
-        "_0806CC7E:\n"
-        "movs r0, #0x02\n"
-        "ldr r3, [sp, #0x038]\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CCA4\n"
-        "ldr r0, [r7, #0x40]\n"
-        "ldr r5, [sp, #0x00C]\n"
-        "ldrb r5, [r5, #0x0D]\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x07\n"
-        "adds r1, r0, #0x0\n"
-        "cmp r0, #0x00\n"
-        "bge _0806CC9A\n"
-        "negs r1, r0\n"
-        "_0806CC9A:\n"
-        "cmp r1, #0xFF\n"
-        "bgt _0806CCA0\n"
-        "movs r0, #0x00\n"
-        "_0806CCA0:\n"
-        "negs r0, r0\n"
-        "str r0, [r7, #0x40]\n"
-        "_0806CCA4:\n"
-        "ldr r0, [sp, #0x038]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CCC6\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x94\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806CCC6\n"
-        "ldr r4, [r0, #0x00]\n"
-        "cmp r4, #0x00\n"
-        "beq _0806CCC6\n"
-        "adds r0, r7, #0x0\n"
-        "ldr r1, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "ldr r3, [sp, #0x014]\n"
-        "bl _08073C50\n"
-        "_0806CCC6:\n"
-        "ldr r1, [sp, #0x018]\n"
-        "adds r1, #0x01\n"
-        "str r1, [sp, #0x018]\n"
-        "ldr r2, [sp, #0x000]\n"
-        "ldr r0, [r2, #0x00]\n"
-        "ldr r0, [r0, #0x08]\n"
-        "cmp r1, r0\n"
-        "bge _0806CCD8\n"
-        "b _0806C806\n"
-        "_0806CCD8:\n"
-        "ldr r0, [sp, #0x010]\n"
-        "add sp, #0x054\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk6C388Edge *e;
+    u16 count;
+    u16 hitMask;
+    s32 i;
+    s32 minY, maxY;
+    s32 sweepMin, sweepMax;
+    s32 bottom;
+    s32 minX, maxX;
+    u8 bounced;
+    u8 overlap;
+    s32 checked;
+    u8 solid;
+    u16 side;
+    struct Unk6C388Vert *a, *b;
+    s32 aX, aY, bX, bY;
+    s32 xMin, xMax;
+    s32 top;
+    s32 left, right;
+    s32 topOff, bottomOff, y, ay;
+
+    count = 0;
+    hitMask = 0;
+    for (i = 0; i < mesh->unk00->unk08; i++)
+    {
+        overlap = 0;
+        bounced = 0;
+        e = &mesh->unk0C[i];
+        solid = e->solid;
+        checked = 0;
+        side = 0;
+        a = &mesh->unk04[e->unk00];
+        b = &mesh->unk04[e->unk04];
+        aX = a->unk00 << 5;
+        aY = a->unk04 << 5;
+        bX = b->unk00 << 5;
+        bY = b->unk04 << 5;
+
+        if (a->unk00 < b->unk00)
+        {
+            minX = aX;
+            maxX = bX;
+        }
+        else
+        {
+            minX = bX;
+            maxX = aX;
+        }
+        if (a->unk04 < b->unk04)
+        {
+            minY = aY;
+            maxY = bY;
+        }
+        else
+        {
+            minY = bY;
+            maxY = aY;
+        }
+
+        topOff = body->top << 8;
+        bottomOff = body->bottom << 8;
+        y = body->y;
+        ay = body->ay;
+        if (body->vy > 0)
+        {
+            sweepMin = y + bottomOff;
+            sweepMax = sweepMin + body->vy + ay;
+            top = y + topOff;
+            bottom = sweepMax;
+        }
+        else
+        {
+            sweepMax = y + topOff;
+            sweepMin = sweepMax + body->vy + ay;
+            top = sweepMin;
+            bottom = y + bottomOff;
+        }
+        left = body->x + (body->left << 8);
+        right = body->x + (body->right << 8);
+
+        if ((right < minX || maxX < left) && (bottom < minY || maxY < top))
+            continue;
+
+        if (right > minX && maxX > left)
+        {
+            overlap |= 1;
+            if (sweepMin <= minY && sweepMax >= minY && (solid & 3))
+            {
+                if (!checked)
+                {
+                    if (body->vy > 0)
+                        side |= 1;
+                    else
+                        side |= 2;
+                    if (!sub_0806D748((struct Unk6D748 *)body, mesh, (u32)e, side))
+                        solid = 0;
+                    checked = 1;
+                }
+                if (body->vy > 0)
+                {
+                    if (solid & 1)
+                    {
+                        body->y = minY - (body->bottom << 8);
+                        bottom = minY;
+                        bounced = 1;
+                        hitMask |= 1;
+                    }
+                }
+                else if (solid & 2)
+                {
+                    body->y = minY - (body->top << 8) + 0x80;
+                    top = minY;
+                    bounced = 1;
+                    hitMask |= 2;
+                }
+            }
+            if (sweepMin <= maxY && sweepMax >= maxY && (solid & 0xC))
+            {
+                if (!checked)
+                {
+                    if (body->vy > 0)
+                        side |= 4;
+                    else
+                        side |= 8;
+                    if (!sub_0806D748((struct Unk6D748 *)body, mesh, (u32)e, side))
+                        solid = 0;
+                    checked = 1;
+                }
+                if (body->vy > 0)
+                {
+                    if (solid & 4)
+                    {
+                        body->y = maxY - (body->bottom << 8);
+                        bottom = maxY;
+                        bounced = 1;
+                        hitMask |= 4;
+                    }
+                }
+                else if (solid & 8)
+                {
+                    body->y = maxY - (body->top << 8) + 0x80;
+                    top = maxY;
+                    bounced = 1;
+                    hitMask |= 8;
+                }
+            }
+        }
+
+        if (body->vx > 0)
+        {
+            xMin = body->x + (body->right << 8);
+            xMax = xMin + body->vx + body->ax;
+        }
+        else
+        {
+            xMax = body->x + (body->left << 8);
+            xMin = xMax + body->vx + body->ax;
+        }
+        if (bottom > minY && maxY > top)
+        {
+            overlap |= 2;
+            if (xMin <= minX && xMax >= minX && (solid & 0x30))
+            {
+                if (!checked)
+                {
+                    if (body->vx > 0)
+                        side |= 0x10;
+                    else
+                        side |= 0x20;
+                    if (!sub_0806D748((struct Unk6D748 *)body, mesh, (u32)e, side))
+                        solid = 0;
+                    checked = 1;
+                }
+                if (body->vx > 0)
+                {
+                    if (solid & 0x10)
+                    {
+                        body->x = minX - (body->right << 8);
+                        bounced |= 2;
+                        hitMask |= 0x10;
+                    }
+                }
+                else if (solid & 0x20)
+                {
+                    body->x = minX - (body->left << 8) + 0x80;
+                    bounced |= 2;
+                    hitMask |= 0x20;
+                }
+            }
+            if (xMin <= maxX && xMax >= maxX && (solid & 0xC0))
+            {
+                if (!checked)
+                {
+                    if (body->vx > 0)
+                        side |= 0x40;
+                    else
+                        side |= 0x80;
+                    if (!sub_0806D748((struct Unk6D748 *)body, mesh, (u32)e, side))
+                        solid = 0;
+                    checked = 1;
+                }
+                if (body->vx > 0)
+                {
+                    if (solid & 0x40)
+                    {
+                        body->x = maxX - (body->right << 8);
+                        bounced |= 2;
+                        hitMask |= 0x40;
+                    }
+                }
+                else if (solid & 0x80)
+                {
+                    body->x = maxX - (body->left << 8) + 0x80;
+                    bounced |= 2;
+                    hitMask |= 0x80;
+                }
+            }
+        }
+
+        if (overlap == 3)
+        {
+            if (out != NULL && count < max)
+            {
+                out[count] = e;
+                count++;
+            }
+            if (body->hooks != NULL && body->hooks->onTouch != NULL)
+                body->hooks->onTouch(body, mesh, e);
+        }
+        if (bounced & 1)
+        {
+            s32 v = (body->vy * e->bounce) >> 7;
+            if ((v < 0 ? -v : v) <= 0xFF)
+                v = 0;
+            body->vy = -v;
+        }
+        if (bounced & 2)
+        {
+            s32 v = (body->vx * e->bounce) >> 7;
+            if ((v < 0 ? -v : v) <= 0xFF)
+                v = 0;
+            body->vx = -v;
+        }
+        if (bounced != 0 && body->hooks != NULL && body->hooks->onBounce != NULL)
+            body->hooks->onBounce(body, mesh, e, hitMask);
+    }
+    return count;
 }
 

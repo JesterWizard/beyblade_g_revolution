@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-29T20:11:54Z",
+  "generated": "2026-09-29T21:40:00Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 26,
-    "semantic_done": 607,
-    "readable_asm": 26,
+    "pending": 24,
+    "semantic_done": 609,
+    "readable_asm": 24,
     "opcode": 0,
-    "battle_pending": 7,
-    "battle_semantic": 152,
+    "battle_pending": 6,
+    "battle_semantic": 153,
     "blocked": 20,
-    "wip": 24
+    "wip": 25
   },
   "pinned": [],
   "wip": [
@@ -96,8 +96,8 @@
     {
       "name": "sub_08043DB4",
       "addr": "0x08043DB4",
-      "kind": "asm",
-      "bytes": 1352,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08043DB4.c",
       "notes": "src/decompiled/sub_08043DB4.md",
       "status": "Fixed REG_BLDY -> REG_BLDALPHA (retail stores 0 to 0x04000052). Remaining: retail keeps the -1 compared against unk18B4 in a stack slot (sp+0x18). local-alloc's update_equiv_regs moves a set-once/used-once constant next to its use, so any `none = -1` local is rematerialised.",
@@ -279,34 +279,20 @@
       "status": "AnimObjDraw same-size 548, structure matches; only regalloc (a=r5,px=r4,py=r7,slot=r6 in retail)",
       "next": "raise px priority over a; m3 mask var, pin vars, out[3] all matter",
       "score": "258/548"
-    }
-  ],
-  "recommended": [
+    },
     {
       "name": "sub_080706B0",
       "addr": "0x080706B0",
       "kind": "asm",
       "bytes": 626,
-      "score": 301,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806C7D4",
-      "addr": "0x0806C7D4",
-      "kind": "asm",
-      "bytes": 1302,
-      "score": 663,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
+      "seed": "src/decompiled/sub_080706B0.c",
+      "notes": "src/decompiled/sub_080706B0.md",
+      "status": "logic complete, old_agbcc, 620/626 B",
+      "next": "retail spills spacing (sp24) and keeps glyph width in r8 in the per-glyph check; case 1 tail is cross-jumped with the no-widths path; first=head load sits between count-- and the loop test",
+      "score": "61/626"
     }
   ],
+  "recommended": [],
   "blocked": [
     {
       "name": "sub_0802C62C",
@@ -449,30 +435,5 @@
       "bytes": 2
     }
   ],
-  "backlog": [
-    {
-      "name": "sub_080706B0",
-      "addr": "0x080706B0",
-      "kind": "asm",
-      "bytes": 626,
-      "score": 301,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": true,
-      "blocked": false,
-      "block_reason": ""
-    },
-    {
-      "name": "sub_0806C7D4",
-      "addr": "0x0806C7D4",
-      "kind": "asm",
-      "bytes": 1302,
-      "score": 663,
-      "battle_refs": 0,
-      "battle_syms": [],
-      "has_pool": false,
-      "blocked": false,
-      "block_reason": ""
-    }
-  ]
+  "backlog": []
 }

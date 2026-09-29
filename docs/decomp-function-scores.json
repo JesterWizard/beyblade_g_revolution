@@ -1134,14 +1134,15 @@
       "note": "m2c failed; initial seed attempt"
     },
     "sub_080706B0": {
-      "matched_bytes": 0,
+      "matched_bytes": 61,
       "retail_bytes": 626,
-      "compiled_bytes": 0,
-      "pct": 0.0,
+      "compiled_bytes": 620,
+      "pct": 9.7,
+      "diff_bytes": 565,
       "status": "size_mismatch",
-      "score": "0/626",
-      "updated": "2026-09-24T10:58:34Z",
-      "note": "m2c failed; initial seed attempt"
+      "score": "61/626",
+      "updated": "2026-09-29T21:40:13Z",
+      "note": "Semantic draft from asm (old_agbcc, 620/626 B): layout/word-wrap logic complete; spacing spill, glyph-width reg and case-1 tail cross-jump left"
     },
     "sub_08044A8C": {
       "matched_bytes": 0,

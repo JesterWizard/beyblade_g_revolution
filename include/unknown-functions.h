@@ -438,7 +438,7 @@ u32 sub_08043974(void);
 void sub_08045EF0(u8 index, u8 value, u32 op, u32 *out);
 s32 sub_0803E440(void);
 void sub_0804188C(void);
-void sub_0806C7D4(void *obj, u32 mesh, u32 c, u16 d);
+u16 sub_0806C7D4(struct CollisionBody *body, struct Unk6C388Mesh *mesh, struct Unk6C388Edge **out, u16 max);
 void sub_08046E7C(u32 a);
 void sub_08062A74(u32 a, void *src);
 void sub_08062CC8(u32 idx, u8 *out);

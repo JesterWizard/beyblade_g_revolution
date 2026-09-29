@@ -372,20 +372,20 @@ struct SpriteChain /* >= 0x0c */
 
 struct TextGroup /* >= 0x30 */
 {
-    /* 00 */ u32 unk00;
-    /* 04 */ u16 unk04;
-    /* 06 */ u8 filler_06[2];
-    /* 08 */ u16 flags;
+    /* 00 */ s32 x; /* 24.8 origin, sub_080706B0 */
+    /* 04 */ s32 y; /* 24.8 origin */
+    /* 08 */ u16 flags; /* bits 0-1 h-align, 4-5 v-align */
     /* 0a */ u16 penX;
-    /* 0c */ u8 filler_0C[2];
+    /* 0c */ u16 wrapWidth; /* line width for word wrap / alignment */
     /* 0e */ u8 objMode; /* sub_08070930 */
-    /* 0f */ u8 filler_0F[5];
+    /* 0f */ u8 lineCount; /* set by sub_080706B0 */
+    /* 10 */ u8 filler_10[4];
     /* 14 */ struct SpriteChain glyphs; /* one sprite per glyph */
     /* 20 */ u8 *widthTable; /* per-glyph width table, may be NULL */
     /* 24 */ struct Unk6FF58Src *font; /* font */
     /* 28 */ u8 spaceWidth; /* space width */
     /* 29 */ s8 letterSpacing; /* letter spacing */
-    /* 2a */ u8 filler_2A;
+    /* 2a */ s8 lineHeight; /* line advance, sub_080706B0 */
     /* 2b */ u8 unk2B;
     /* 2c */ struct AffineObj *affine; /* shared affine object */
 };
@@ -1868,7 +1868,10 @@ struct Unk6C388Edge /* 0x20 */
 {
     /* 00 */ s32 unk00; /* vertex index a */
     /* 04 */ s32 unk04; /* vertex index b */
-    /* 08 */ u8 filler_08[9];
+    /* 08 */ u8 filler_08[5];
+    /* 0d */ u8 bounce; /* restitution (x/128), sub_0806C7D4 */
+    /* 0e */ u8 filler_0E[2];
+    /* 10 */ u8 solid; /* blocked sides: 1/2 top, 4/8 bottom, 0x10/0x20 left, 0x40/0x80 right */
     /* 11 */ u8 unk11; /* bit 3: ignored */
     /* 12 */ u8 filler_12[0x0E];
 };
@@ -1886,6 +1889,38 @@ struct Unk6C388Mesh /* >= 0x10 */
     /* 08 */ u8 filler_08[4];
     /* 0c */ struct Unk6C388Edge *unk0C;
 };
+
+struct CollisionBody;
+
+/* Collision callbacks of a moving body. sub_0806C7D4, sub_0806D748. */
+struct CollisionHooks /* >= 0x0c */
+{
+    /* 00 */ void (*onBounce)(struct CollisionBody *, struct Unk6C388Mesh *, struct Unk6C388Edge *, u16);
+    /* 04 */ void (*onTouch)(struct CollisionBody *, struct Unk6C388Mesh *, struct Unk6C388Edge *);
+    /* 08 */ void *filter; /* sub_0806D748 */
+};
+
+/* Moving body swept against mesh edges. sub_0806C7D4. */
+struct CollisionBody /* >= 0xb0 */
+{
+    /* 00 */ u8 filler_00[4];
+    /* 04 */ s32 x; /* 24.8 */
+    /* 08 */ s32 y; /* 24.8 */
+    /* 0c */ u8 filler_0C[0x34];
+    /* 40 */ s32 vx;
+    /* 44 */ s32 vy;
+    /* 48 */ u8 filler_48[4];
+    /* 4c */ s32 ax; /* extra x displacement this frame */
+    /* 50 */ s32 ay;
+    /* 54 */ u8 filler_54[0x40];
+    /* 94 */ struct CollisionHooks *hooks;
+    /* 98 */ u8 filler_98[0x10];
+    /* a8 */ s16 left; /* bounding box, pixels */
+    /* aa */ s16 top;
+    /* ac */ s16 right;
+    /* ae */ s16 bottom;
+};
+
 
 struct Unk6C388Node /* 0x2c */
 {
@@ -2840,7 +2875,7 @@ struct Unk67F3C /* >= 0x99 */
 
 struct Sprite /* >= 0x30 */
 {
-    /* 00 */ u8 filler_00[4];
+    /* 00 */ struct Sprite *prev;
     /* 04 */ struct Sprite *next;
     /* 08 */ u32 unk08;
     /* 0c */ u32 unk0C;

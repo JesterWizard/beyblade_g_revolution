@@ -26,11 +26,11 @@ void FieldUpdateFrame(u32 active)
     CameraUpdate((struct MapView *)gData_03000198);
     SceneObjUpdate(&gData_03000198->unk036C);
     SceneObjsUpdateAll();
-    sub_08067CE8(&gData_03000198->unk036C, 0);
+    sub_08067CE8((struct Unk67BB8 *)&gData_03000198->unk036C, 0);
     if (gData_03000198->unk182C != 0)
     {
         SceneObjUpdate(&gData_03000198->unk0448);
-        sub_08067CE8(&gData_03000198->unk0448, 0);
+        sub_08067CE8((struct Unk67BB8 *)&gData_03000198->unk0448, 0);
     }
     ((void (*)(void))gData_080BB888[0])();
     sub_0806A6F8();
@@ -100,7 +100,7 @@ void FieldUpdateFrame(u32 active)
     _08041E88((void *)dir, speed);
     gData_03000198->unk1838 = 0xFFFF;
     mesh = sub_08062A14();
-    sub_0806C7D4(&gData_03000198->unk036C, mesh, 0, 0);
+    sub_0806C7D4((struct CollisionBody *)&gData_03000198->unk036C, (struct Unk6C388Mesh *)mesh, NULL, 0);
     sub_08062758(&gData_03000198->unk0524, (struct Actor *)&gData_03000198->unk036C);
     sub_0804245C();
     TasksRunAll();
