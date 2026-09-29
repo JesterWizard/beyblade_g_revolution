@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-09-29T18:32:07Z_
+_Updated: 2026-09-29T20:11:54Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 606 |
+| matched | 607 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 2 |
-| WIP (parked C) | 23 |
+| WIP (parked C) | 22 |
 | not started | 0 |
 | blocked | 2 |
 | **total** | **633** |
@@ -35,7 +35,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
-| `sub_08045C5C` | WIP (parked C) | 93.4% | 127/136 | Rewritten with the gData_03003F60 / gData_03000198 data symbols (plain reads,… |
 | `sub_08044A8C` | WIP (parked C) | 91.2% | 613/672 | initial m2c seed (m2c-fallback); does not compile |
 | `sub_08038D68` | WIP (parked C) | 76.8% | 86/112 | gData symbols + sel pointer; 2FC/300 address order left |
 | `sub_08043DB4` | WIP (parked C) | 76.3% | 1031/1352 | m2c failed; initial seed attempt |
@@ -63,7 +62,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
-| `sub_08045C5C` | `0x08045C5C` | WIP (parked C) | 93.4% | 127/136 | asm |
 | `sub_08044A8C` | `0x08044A8C` | WIP (parked C) | 91.2% | 613/672 | asm |
 | `sub_08038D68` | `0x08038D68` | WIP (parked C) | 76.8% | 86/112 | asm |
 | `sub_08043DB4` | `0x08043DB4` | WIP (parked C) | 76.3% | 1031/1352 | asm |
@@ -514,6 +512,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080462D4` | `0x080462D4` | matched | 100.0% | 130/130 | semantic |
 | `sub_0803531C` | `0x0803531C` | matched | 100.0% | 132/132 | semantic |
 | `sub_080735DC` | `0x080735DC` | matched | 100.0% | 132/132 | semantic |
+| `sub_08045C5C` | `0x08045C5C` | matched | 100.0% | 136/136 | semantic |
 | `sub_08061564` | `0x08061564` | matched | 100.0% | 136/136 | semantic |
 | `sub_0806C704` | `0x0806C704` | matched | 100.0% | 136/136 | semantic |
 | `sub_080691E4` | `0x080691E4` | matched | 100.0% | 138/138 | semantic |

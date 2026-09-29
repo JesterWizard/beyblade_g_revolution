@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-29T18:32:06Z_
+_Updated: 2026-09-29T20:11:54Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 606 |
-| Still need semantic C | **27** |
-| Readable Thumb remaining | 27 |
+| Semantic C done | 607 |
+| Still need semantic C | **26** |
+| Readable Thumb remaining | 26 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 7 (151 already semantic) |
+| Battle pending | 7 (152 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 24 |
 
@@ -30,7 +30,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08038D68` | 112 | 37/112 | `src/decompiled/sub_08038D68.c` | two attempts: direct semantic seed 15/112 (108B); pinned base/table registers 37/112 but expanded to 120B. Data flow and both Unk705DC output writes are correct; register pressure/order remains | Use the direct field algorithm with a targeted r5 base/r2 table search; avoid the current over-constraining dual register pins and preserve the 112-byte retail size |
 | `sub_08035054` | 432 | 80/432 | `src/decompiled/sub_08035054.c` | Rewritten seed (old_agbcc, u16 id local, data symbols) is structurally exact; only register allocation differs: retail src=r7, pos=r8, ours pos=r7, src=r8, which costs 8B (mov via r8). Permuter best 301 (376/432 same-size) only by dropping the src=NULL init. | Find the source shape that gives src higher global-alloc priority than pos (decl/init order sweeps, u8 params and else-NULL all failed). |
 | `sub_08038438` | 240 | 45/240 | `src/decompiled/sub_08038438.c` | for-loop seed with slots=&gData_030003CC + _call_via_r3 fn-pointer call is same-size (old_agbcc 45/240). Retail keeps both loops' found-blocks inline (no loop-exit block motion), so *slots reloads every pass; agbcc/old_agbcc move the found blocks out of the loops. | Find a loop shape that stops loop.c moving the exit blocks (break + flag, goto-free) while keeping the hoisted r7/r8/r5 in loop 2. |
-| `sub_08045C5C` | 136 | 127/136 | `src/decompiled/sub_08045C5C.c` | Rewritten with the gData_03003F60 / gData_03000198 data symbols (plain reads, no local pointers): 93/136 -> 127/136, same size. Only the prologue differs: retail loads the 0xFC00 sentinel before copying the mask address into r4 and does the ldrh through r4. | Find the shape that puts `movs r1,#0xFC; lsls` between the address load and the copy (sentinel local, comparison order and volatile views tried). Permuter 480s: best 220. |
+| `sub_08045C5C` | 0 | 127/136 | `src/decompiled/sub_08045C5C.c` | Rewritten with the gData_03003F60 / gData_03000198 data symbols (plain reads, no local pointers): 93/136 -> 127/136, same size. Only the prologue differs: retail loads the 0xFC00 sentinel before copying the mask address into r4 and does the ldrh through r4. | Find the shape that puts `movs r1,#0xFC; lsls` between the address load and the copy (sentinel local, comparison order and volatile views tried). Permuter 480s: best 220. |
 | `sub_08069270` | 244 | 24/244 | `src/decompiled/sub_08069270.c` | Logic mapped (horizontal wrap split into two blits; fn = 0x0806945D or gData_080BB8A4[0]; wrap-off path uses gData_080BB8A8[0]). Separate e1/e2/h1/h2 copies reproduce retail's stack spills; remaining diff is register choice: retail keeps d in r3 and end in r5, ours copies d to r6 (+2B). Permuter (2 rounds) reached 25 only via uninitialised-variable tricks. | Find a source shape that leaves d in its argument register (d is only read by the first blit); try the permuter from this seed with a longer budget. |
 | `sub_0806960C` | 600 | 226/600 | `src/decompiled/sub_0806960C.c` | BG map streaming (scroll by dx/dy, stream a column/row of tiles through sub_08069270 when the view crosses the loaded rect, wrap on unk7C bits). Logic complete, same size. Retail spills tile/edge/source/start values to 8 consecutive stack words (sp0C..sp28) and keeps the constant 1 in r10; a local Unk688C8Rect + start[2] gets closest. | Find the local aggregate shape that yields the sp0C..sp28 layout while keeping CSE of the stored values; one = 1 local helps the prologue. |
 | `sub_08043DB4` | 1352 | 1031/1352 | `src/decompiled/sub_08043DB4.c` | Fixed REG_BLDY -> REG_BLDALPHA (retail stores 0 to 0x04000052). Remaining: retail keeps the -1 compared against unk18B4 in a stack slot (sp+0x18). local-alloc's update_equiv_regs moves a set-once/used-once constant next to its use, so any `none = -1` local is rematerialised. | The -1 needs a pseudo with a second, different set (no REG_EQUIV) that still gets no hard register. A volatile local gives the right 0x1C frame but the wrong slot order (sp10 instead of sp18). |
@@ -70,7 +70,7 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_08034894` | `0x08034894` | 0 | docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields) |
 | `sub_08038314` | `0x08038314` | 0 | battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero) |
 | `sub_080428C4` | `0x080428C4` | 0 | docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family) |
-| `sub_08045C5C` | `0x08045C5C` | 136 | gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter |
+| `sub_08045C5C` | `0x08045C5C` | 0 | gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter |
 | `sub_080473E4` | `0x080473E4` | 0 | dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5) |
 | `sub_08049F98` | `0x08049F98` | 0 | sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter |
 | `sub_0804E17C` | `0x0804E17C` | 0 | byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker |

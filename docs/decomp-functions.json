@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-29T18:32:07Z",
+  "generated": "2026-09-29T20:11:54Z",
   "counts": {
-    "matched": 606,
-    "wip": 23,
+    "matched": 607,
+    "wip": 22,
     "blocked": 2,
     "size_mismatch": 2
   },
   "tiers": {
     "UNKNOWN": 4,
-    "DECOMPILED": 11,
+    "DECOMPILED": 10,
     "UNDERSTOOD": 12,
-    "MATCHING": 606
+    "MATCHING": 607
   },
   "total": 633,
   "functions": [
@@ -5033,20 +5033,20 @@
     {
       "name": "sub_08045C5C",
       "addr": "0x08045C5C",
-      "kind": "asm",
-      "status": "not_started",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": true,
       "wip": true,
       "block_reason": "gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 \u2014 logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter",
       "retail_bytes": 136,
-      "matched_bytes": 127,
-      "compiled_bytes": 0,
-      "pct": 93.4,
-      "score": "127/136",
-      "source": "wip",
-      "note": "Rewritten with the gData_03003F60 / gData_03000198 data symbols (plain reads, no local pointers): 93/136 -> 127/136, same size. Only the prologue differs: retail loads the 0xFC00 sentinel before copying the mask address into r4 and does the ldrh through r4.",
-      "tier": "DECOMPILED",
+      "matched_bytes": 136,
+      "compiled_bytes": 136,
+      "pct": 100.0,
+      "score": "136/136",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {
