@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-29T22:52:05Z",
+  "generated": "2026-09-30T23:02:56Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 22,
-    "semantic_done": 611,
-    "readable_asm": 22,
+    "pending": 20,
+    "semantic_done": 613,
+    "readable_asm": 20,
     "opcode": 0,
-    "battle_pending": 6,
-    "battle_semantic": 153,
+    "battle_pending": 5,
+    "battle_semantic": 154,
     "blocked": 20,
     "wip": 23
   },
@@ -107,8 +107,8 @@
     {
       "name": "sub_08040680",
       "addr": "0x08040680",
-      "kind": "asm",
-      "bytes": 308,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08040680.c",
       "notes": "src/decompiled/sub_08040680.md",
       "status": "logic exact; one diff: BtlObjTableAdd result copied to r1 before the unk834 store in retail (ours stores from r0)",
@@ -184,8 +184,8 @@
     {
       "name": "sub_08070930",
       "addr": "0x08070930",
-      "kind": "asm",
-      "bytes": 420,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08070930.c",
       "notes": "src/decompiled/sub_08070930.md",
       "status": "New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top.",

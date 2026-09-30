@@ -1,15 +1,15 @@
 {
-  "generated": "2026-09-29T22:52:05Z",
+  "generated": "2026-09-30T23:02:56Z",
   "counts": {
-    "matched": 611,
-    "wip": 20,
+    "matched": 613,
+    "wip": 18,
     "blocked": 2
   },
   "tiers": {
     "UNKNOWN": 2,
-    "DECOMPILED": 10,
-    "UNDERSTOOD": 10,
-    "MATCHING": 611
+    "DECOMPILED": 9,
+    "UNDERSTOOD": 9,
+    "MATCHING": 613
   },
   "total": 633,
   "functions": [
@@ -3569,20 +3569,20 @@
     {
       "name": "sub_08040680",
       "addr": "0x08040680",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 308,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/308",
-      "source": "attempt",
-      "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
+      "matched_bytes": 308,
+      "compiled_bytes": 308,
+      "pct": 100.0,
+      "score": "308/308",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {
@@ -11150,20 +11150,20 @@
     {
       "name": "sub_08070930",
       "addr": "0x08070930",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 420,
-      "matched_bytes": 199,
-      "compiled_bytes": 0,
-      "pct": 47.4,
-      "score": "199/420",
-      "source": "attempt",
-      "note": "m2c failed; initial seed attempt",
-      "tier": "UNDERSTOOD",
+      "matched_bytes": 420,
+      "compiled_bytes": 420,
+      "pct": 100.0,
+      "score": "420/420",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": "TextGroupAppendString"
     },
     {

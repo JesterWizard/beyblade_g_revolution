@@ -309,7 +309,7 @@ s32 _08056428(s32 a, s32 b);
 s32 _08032458(void);
 s32 _080672A8(void);
 s32 _0803E9A4(void);
-void _080408E4(s32 a);
+void _080408E4(s32 a, u8 *b);
 void _0805FED4(void *a);
 void _08041E88(void *a, s32 b);
 s32 _080505AC(s32 a, s32 b, s32 c);

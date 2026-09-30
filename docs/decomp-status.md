@@ -8,14 +8,14 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **608/633 (96.1%)** |
-| **Decompiled C (bytes)** | **81,806/90,272 (90.6%)** |
+| **Decompiled C (functions)** | **610/633 (96.4%)** |
+| **Decompiled C (bytes)** | **82,534/90,272 (91.4%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 25/633 (3.9%) |
+| Readable Thumb | 23/633 (3.6%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 151/160 (94.4% fn, 91.8% bytes) |
+| Battle semantic C | 152/160 (95.0% fn, 92.6% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 

@@ -1,8 +1,45 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08040680
-__attribute__((naked))
-void sub_08040680(void)
+#include "global.h"
+#include "ram_map.h"
+
+void sub_08040680(struct Unk40680 *a)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r9\nmov r6, r8\npush {r6, r7}\nadd sp, #-0x010\nadds r7, r0, #0x0\nmovs r0, #0x9D\nlsls r0, r0, #0x02\nadds r4, r7, r0\nldr r0, [r4, #0x00]\ncmp r0, #0x00\nbeq _080406A0\nbl sub_0806FE84\nmovs r0, #0x00\nstr r0, [r4, #0x00]\n_080406A0:\nmovs r4, #0x00\nldr r5, _08040780 @ =0x0300047C\n_080406A4:\nldr r0, [r5, #0x00]\nlsls r1, r4, #0x02\nmovs r2, #0x81\nlsls r2, r2, #0x04\nadds r0, r0, r2\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nmovs r1, #0x60\nbl sub_08073184\nadds r4, #0x01\ncmp r4, #0x08\nble _080406A4\nbl sub_08040618\nadds r4, r0, #0x0\nmovs r0, #0x80\nlsls r0, r0, #0x03\nbl sub_0807309C\nadds r1, r0, #0x0\nldr r3, _08040780 @ =0x0300047C\nmov r8, r3\nldr r0, [r3, #0x00]\nldr r6, _08040784 @ =0x00000834\nadds r0, r0, r6\nstr r1, [r0, #0x00]\nadds r0, r4, #0x0\nbl _080408E4\nldr r0, _08040788 @ =0x082BCD00\nldr r1, _0804078C @ =0x080B738E\nbl sub_080617C4\nbl sub_08061A98\nmov r9, r0\nbl sub_08061784\nadds r4, r0, #0x0\nsubs r4, #0x28\nlsls r4, r4, #0x10\nlsrs r4, r4, #0x10\nbl sub_08061AA8\nadds r5, r0, #0x0\nlsls r5, r5, #0x10\nlsrs r5, r5, #0x10\nbl sub_080617B4\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nmov r2, r8\nldr r1, [r2, #0x00]\nmovs r3, #0x81\nlsls r3, r3, #0x04\nadds r2, r1, r3\nadds r1, r1, r6\nldr r1, [r1, #0x00]\nstr r4, [sp, #0x000]\nstr r5, [sp, #0x004]\nstr r0, [sp, #0x008]\nmovs r0, #0x60\nstr r0, [sp, #0x00C]\nadds r0, r2, #0x0\nmovs r2, #0x09\nmov r3, r9\nbl sub_080737C0\nmovs r2, #0xBF\nlsls r2, r2, #0x02\nadds r1, r7, r2\nstr r0, [r1, #0x00]\nmov r3, r8\nldr r0, [r3, #0x00]\nadds r0, r0, r6\nldr r0, [r0, #0x00]\nbl sub_08073114\nmovs r0, #0xC0\nlsls r0, r0, #0x02\nadds r1, r7, r0\nmovs r0, #0x00\nstr r0, [r1, #0x00]\nmovs r1, #0x88\nlsls r1, r1, #0x02\nadds r4, r7, r1\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x00]\nbl sub_08061BDC\nbl sub_08061BE8\nldr r0, [r4, #0x00]\nldr r0, [r0, #0x00]\nbl sub_08061E40\nldr r0, _08040790 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r2, _08040794 @ =0x0000184F\nadds r0, r0, r2\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\ncmp r0, #0x00\nbeq _0804079C\nldr r1, _08040798 @ =0x03000474\nmovs r0, #0x01\nb _080407A0\n.byte 0x00, 0x00\n_08040780: .4byte 0x0300047C\n_08040784: .4byte 0x00000834\n_08040788: .4byte 0x082BCD00\n_0804078C: .4byte 0x080B738E\n_08040790: .4byte 0x03000198\n_08040794: .4byte 0x0000184F\n_08040798: .4byte 0x03000474\n_0804079C:\nldr r1, _080407B0 @ =0x03000474\nmovs r0, #0x02\n_080407A0:\nstr r0, [r1, #0x00]\nadd sp, #0x010\npop {r3, r4}\nmov r8, r3\nmov r9, r4\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n_080407B0: .4byte 0x03000474");
+    s32 i;
+    s32 value;
+    u32 d;
+    u16 y;
+    u16 f;
+
+    if (a->unk274 != NULL)
+    {
+        BtlObjPoolFree(a->unk274);
+        a->unk274 = NULL;
+    }
+    for (i = 0; i <= 8; i++)
+        MemClear(gUnk_0300047C->unk810[i], 0x60);
+    value = sub_08040618();
+    {
+        u8 *buf = StringAlloc(0x400);
+        gUnk_0300047C->unk834 = buf;
+        _080408E4(value, buf);
+    }
+    TextSetActiveObject((struct Unk617C4 *)0x082BCD00, 0x080B738E);
+    d = TextGetWidthTable();
+    y = TextGetAreaWidth() - 0x28;
+    f = TextGetGlyphWidth();
+    a->unk2FC = SplitStringIntoStringArray(gUnk_0300047C->unk810, gUnk_0300047C->unk834, 9, d, y, f, TextGetSpacing(), 0x60);
+    StringFree(gUnk_0300047C->unk834);
+    a->unk300 = 0;
+    TextTypewriterResume((struct Unk61BDC *)a->unk220->unk00);
+    TextWindowPopState();
+    TextTypewriterRestart((struct Unk61E40 *)a->unk220->unk00);
+    if (gMainWorkPtr->unk184F != 0)
+        *(u32 *)0x03000474 = 1;
+    else
+        *(u32 *)0x03000474 = 2;
 }
+

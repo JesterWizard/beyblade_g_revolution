@@ -17,8 +17,11 @@ void sub_08040680(struct Unk40680 *a)
     for (i = 0; i <= 8; i++)
         MemClear(gUnk_0300047C->unk810[i], 0x60);
     value = sub_08040618();
-    gUnk_0300047C->unk834 = StringAlloc(0x400);
-    _080408E4(value);
+    {
+        u8 *buf = StringAlloc(0x400);
+        gUnk_0300047C->unk834 = buf;
+        _080408E4(value, buf);
+    }
     TextSetActiveObject((struct Unk617C4 *)0x082BCD00, 0x080B738E);
     d = TextGetWidthTable();
     y = TextGetAreaWidth() - 0x28;

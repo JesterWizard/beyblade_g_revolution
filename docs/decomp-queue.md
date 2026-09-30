@@ -2,17 +2,17 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-09-29T22:52:05Z_
+_Updated: 2026-09-30T23:02:56Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 611 |
-| Still need semantic C | **22** |
-| Readable Thumb remaining | 22 |
+| Semantic C done | 613 |
+| Still need semantic C | **20** |
+| Readable Thumb remaining | 20 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 6 (153 already semantic) |
+| Battle pending | 5 (154 already semantic) |
 | Blocked (documented) | 20 |
 | WIP (resume these first) | 23 |
 
@@ -34,14 +34,14 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08069270` | 244 | 24/244 | `src/decompiled/sub_08069270.c` | Logic mapped (horizontal wrap split into two blits; fn = 0x0806945D or gData_080BB8A4[0]; wrap-off path uses gData_080BB8A8[0]). Separate e1/e2/h1/h2 copies reproduce retail's stack spills; remaining diff is register choice: retail keeps d in r3 and end in r5, ours copies d to r6 (+2B). Permuter (2 rounds) reached 25 only via uninitialised-variable tricks. | Find a source shape that leaves d in its argument register (d is only read by the first blit); try the permuter from this seed with a longer budget. |
 | `sub_08043DB4` | 0 | 1031/1352 | `src/decompiled/sub_08043DB4.c` | Fixed REG_BLDY -> REG_BLDALPHA (retail stores 0 to 0x04000052). Remaining: retail keeps the -1 compared against unk18B4 in a stack slot (sp+0x18). local-alloc's update_equiv_regs moves a set-once/used-once constant next to its use, so any `none = -1` local is rematerialised. | The -1 needs a pseudo with a second, different set (no REG_EQUIV) that still gets no hard register. A volatile local gives the right 0x1C frame but the wrong slot order (sp10 instead of sp18). |
 | `sub_08044A8C` | 672 | 613/672 | `src/decompiled/sub_08044A8C.c` | Same size. `hdr = unk1688; hdr += i;` fixed the base-before-index order at both header reads (602 -> 613). Left: buf/retry register swap at the top (retail buf=r7, retry=r5) and the unk1688 base register (retail r4) in the per-slot checks. | Retail copies *hdrBlock into r3 and only later into r7: find the statement shape that creates that copy. Permuter 480s from this seed: best 425. |
-| `sub_08040680` | 308 | one-insn diff (304 vs 308 B) | `src/decompiled/sub_08040680.c` | logic exact; one diff: BtlObjTableAdd result copied to r1 before the unk834 store in retail (ours stores from r0) | local-alloc shape for the buffer store; permuter 5 min found nothing |
+| `sub_08040680` | 0 | one-insn diff (304 vs 308 B) | `src/decompiled/sub_08040680.c` | logic exact; one diff: BtlObjTableAdd result copied to r1 before the unk834 store in retail (ours stores from r0) | local-alloc shape for the buffer store; permuter 5 min found nothing |
 | `sub_0803E0CC` | 296 | 170/296 | `src/decompiled/sub_0803E0CC.c` | Data symbol gData_03000198 plus `unk1C |= (s8)0xFF` (keeps the ldrb/orr/strb instead of folding to strb -1): 56 -> 170/296. Still 4 bytes short: retail hoists the unk1C offset into r10, ours keeps it in r3 and caller-saves it to the stack. | Get the loop-invariant 0x8EC offset into a callee-saved register (r10); old_agbcc is required. |
 | `sub_0804BD38` | 328 | 56 asm diff lines | `src/decompiled/sub_0804BD38.c` | logic mapped (5-row menu redraw); retail makes i*16 a giv in r9 and keeps a on the stack, ours hoists &gData_03000674 instead | find the loop shape that makes the row-y giv; try permuter |
 | `sub_080737C0` | 336 | 61/336 | `src/decompiled/sub_080737C0.c` | logic mapped (word wrap into <=count lines); retail keeps the done flag in a stack slot and tests count from the stack | while(!done) shape is closest (81 diff lines); find what spills done |
 | `sub_08044648` | 364 | 135/364 | `src/decompiled/sub_08044648.c` | New semantic draft from scratch (the old one was a junk stub); roster is gData_08075AB8 (struct BeybladeDef[]). Same size, logic exact. Left: retail loads the table base before computing id*28 (ours computes the offset first), which swaps r6/r7; a `s16 key` local for the two GetIndexedRecordWord calls duplicates the loop test. | Same table-base-first problem as sub_080447E8. A local table pointer gets hoisted out of the loop by loop.c; look for a shape that keeps the symbol load inside the if and before the multiply. |
 | `sub_080447E8` | 372 | 232/372 | `src/decompiled/sub_080447E8.c` | New semantic draft (sibling of sub_08044648, table gData_0807BE04, Unk7BE04 fields named). Logic exact, 4 bytes long; retail loads the table symbol before id*28 and keeps it in r8. | Solve the table-base-first order (see sub_08044648), then the loop-test duplication. |
 | `sub_0804C8BC` | 372 | 74/372 | `src/decompiled/sub_0804C8BC.c` | New semantic draft (the old one was a junk stub): five list rows from gData_080989F0 (struct Unk4C8BCRow). Logic exact, 4 bytes long. Retail has five loop givs (palette pointer, i*4, two row givs, i*16) and copies the i*16 giv into a stack local for the sprite y; every shape tried either drops the i*16 giv or adds a (y+0x38)<<8 giv. | Find the source form of the sprite y ((i*16 + 0x38) << 8) that reuses the i*16 giv through a copy. |
-| `sub_08070930` | 420 | 199/420 | `src/decompiled/sub_08070930.c` | New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top. | Find why retail has two pseudos for the affine pointer; that also un-merges the loop tests. |
+| `sub_08070930` | 0 | 199/420 | `src/decompiled/sub_08070930.c` | New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top. | Find why retail has two pseudos for the affine pointer; that also un-merges the loop tests. |
 | `sub_080618EC` | 428 | 108/428 | `src/decompiled/sub_080618EC.c` | New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF. | Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail. |
 | `sub_08060E48` | 532 | 92/532 | `src/decompiled/sub_08060E48.c` | text glyph blit 528/532; regalloc: retail spills 9 address pseudos | gw in r9, rows/yt next-iter in sp24/28; permuter |
 | `sub_0806EC20` | 516 | ?/516 | `src/decompiled/sub_0806EC20.c` | BG setup 500/516; param copy order matches | a in r5,b in r8 (ours r7/r10); i<<24 copy r6 |
