@@ -1,226 +1,97 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08070930
-__attribute__((naked))
-u8 TextGroupAppendString(struct TextGroup *a, void *b, u8 c)
+/* match-compiler: old_agbcc */
+#define TextGroupAppendString sub_08070930_x
+#include "global.h"
+#undef TextGroupAppendString
+// Appends the glyphs of a string to a text sprite group at x = unk0A, growing
+// the sprite chain and advancing x by each glyph width (space: unk28).
+#include "ram_map.h"
+
+u8 TextGroupAppendString(struct TextGroup *a, u8 *s, u8 pal)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x028\n"
-        "adds r7, r0, #0x0\n"
-        "mov r9, r1\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "str r2, [sp, #0x010]\n"
-        "mov r0, r9\n"
-        "bl sub_0806AC68\n"
-        "adds r2, r0, #0x0\n"
-        "ldr r0, [r7, #0x24]\n"
-        "ldrb r0, [r0, #0x04]\n"
-        "str r0, [sp, #0x014]\n"
-        "ldr r0, [r7, #0x20]\n"
-        "str r0, [sp, #0x018]\n"
-        "ldr r1, [r7, #0x1C]\n"
-        "ldrh r3, [r7, #0x0A]\n"
-        "str r3, [sp, #0x01C]\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x020]\n"
-        "movs r0, #0xC0\n"
-        "lsls r0, r0, #0x01\n"
-        "ldrh r3, [r7, #0x08]\n"
-        "ands r0, r3\n"
-        "lsrs r0, r0, #0x07\n"
-        "str r0, [sp, #0x024]\n"
-        "mov r0, r9\n"
-        "cmp r0, #0x00\n"
-        "bne _08070976\n"
-        "b _08070ABA\n"
-        "_08070976:\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _0807097E\n"
-        "b _08070ABA\n"
-        "_0807097E:\n"
-        "ldr r6, [r7, #0x18]\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x14\n"
-        "adds r1, r2, r1\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "adds r2, r7, #0x0\n"
-        "adds r2, #0x2B\n"
-        "ldrb r2, [r2, #0x00]\n"
-        "bl sub_08070188\n"
-        "cmp r0, #0x00\n"
-        "bne _080709A8\n"
-        "ldr r0, _080709A4 @ =0x083D22D4\n"
-        "mov r1, r9\n"
-        "bl sub_08067B98\n"
-        "movs r0, #0x00\n"
-        "b _08070ABA\n"
-        "_080709A4: .4byte 0x083D22D4\n"
-        "_080709A8:\n"
-        "cmp r6, #0x00\n"
-        "beq _080709AE\n"
-        "ldr r0, [r6, #0x04]\n"
-        "_080709AE:\n"
-        "adds r6, r0, #0x0\n"
-        "ldr r1, [r7, #0x2C]\n"
-        "mov r8, r1\n"
-        "cmp r1, #0x00\n"
-        "beq _08070A04\n"
-        "ldr r0, [r1, #0x08]\n"
-        "movs r1, #0xF8\n"
-        "lsls r1, r1, #0x02\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x14\n"
-        "mov r10, r0\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x01\n"
-        "mov r2, r10\n"
-        "orrs r2, r0\n"
-        "mov r10, r2\n"
-        "movs r0, #0x08\n"
-        "ldrh r3, [r7, #0x08]\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "bne _08070A04\n"
-        "mov r1, r8\n"
-        "ldrb r0, [r1, #0x18]\n"
-        "cmp r0, #0x00\n"
-        "beq _080709EA\n"
-        "ldrh r2, [r1, #0x14]\n"
-        "cmp r2, #0xB0\n"
-        "bhi _080709FA\n"
-        "ldrh r3, [r1, #0x16]\n"
-        "b _080709F6\n"
-        "_080709EA:\n"
-        "mov r2, r8\n"
-        "ldrh r2, [r2, #0x14]\n"
-        "cmp r2, #0xB0\n"
-        "bhi _080709FA\n"
-        "mov r3, r8\n"
-        "ldrh r3, [r3, #0x16]\n"
-        "_080709F6:\n"
-        "cmp r3, #0xB0\n"
-        "bls _08070A04\n"
-        "_080709FA:\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x02\n"
-        "mov r1, r10\n"
-        "orrs r1, r0\n"
-        "mov r10, r1\n"
-        "_08070A04:\n"
-        "mov r2, r9\n"
-        "ldrb r4, [r2, #0x00]\n"
-        "movs r3, #0x01\n"
-        "add r9, r3\n"
-        "cmp r4, #0x00\n"
-        "beq _08070AAC\n"
-        "_08070A10:\n"
-        "ldr r5, [sp, #0x014]\n"
-        "cmp r4, #0x20\n"
-        "bne _08070A24\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x28\n"
-        "ldrb r5, [r0, #0x00]\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x08\n"
-        "str r0, [sp, #0x020]\n"
-        "b _08070A96\n"
-        "_08070A24:\n"
-        "ldr r0, _08070ACC @ =0x080BB748\n"
-        "adds r0, r4, r0\n"
-        "ldrb r4, [r0, #0x00]\n"
-        "ldr r1, [r7, #0x24]\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x000]\n"
-        "ldr r2, [sp, #0x024]\n"
-        "str r2, [sp, #0x004]\n"
-        "str r0, [sp, #0x008]\n"
-        "str r4, [sp, #0x00C]\n"
-        "adds r0, r6, #0x0\n"
-        "movs r2, #0x00\n"
-        "movs r3, #0x00\n"
-        "bl sub_0806FF58\n"
-        "adds r0, r6, #0x0\n"
-        "ldr r1, [sp, #0x010]\n"
-        "bl sub_080705DC\n"
-        "ldrb r1, [r7, #0x0E]\n"
-        "adds r0, r6, #0x0\n"
-        "bl sub_080705A4\n"
-        "ldr r3, [sp, #0x018]\n"
-        "cmp r3, #0x00\n"
-        "beq _08070A62\n"
-        "adds r0, r3, r4\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "subs r0, r5, r0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r5, r0, #0x10\n"
-        "_08070A62:\n"
-        "adds r0, r7, #0x0\n"
-        "adds r0, #0x29\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "adds r0, r5, r0\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r5, r0, #0x10\n"
-        "ldr r0, [sp, #0x01C]\n"
-        "ldr r1, [sp, #0x020]\n"
-        "orrs r0, r1\n"
-        "strh r0, [r6, #0x1E]\n"
-        "movs r3, #0x00\n"
-        "str r3, [sp, #0x020]\n"
-        "mov r0, r8\n"
-        "cmp r0, #0x00\n"
-        "beq _08070A94\n"
-        "ldr r0, [r6, #0x10]\n"
-        "ldr r1, _08070AD0 @ =0xC1FFFCFF\n"
-        "ands r0, r1\n"
-        "mov r1, r10\n"
-        "orrs r0, r1\n"
-        "str r0, [r6, #0x10]\n"
-        "mov r2, r8\n"
-        "str r2, [r6, #0x30]\n"
-        "_08070A94:\n"
-        "ldr r6, [r6, #0x04]\n"
-        "_08070A96:\n"
-        "ldr r3, [sp, #0x01C]\n"
-        "adds r0, r3, r5\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x01C]\n"
-        "mov r0, r9\n"
-        "ldrb r4, [r0, #0x00]\n"
-        "movs r1, #0x01\n"
-        "add r9, r1\n"
-        "cmp r4, #0x00\n"
-        "bne _08070A10\n"
-        "_08070AAC:\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_080706B0\n"
-        "mov r2, sp\n"
-        "ldrh r2, [r2, #0x1C]\n"
-        "strh r2, [r7, #0x0A]\n"
-        "movs r0, #0x01\n"
-        "_08070ABA:\n"
-        "add sp, #0x028\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-        ".byte 0x00, 0x00\n"
-        "_08070ACC: .4byte 0x080BB748\n"
-        "_08070AD0: .4byte 0xC1FFFCFF\n"
-    );
+    u32 count;
+    struct Sprite *first;
+    u32 len;
+    u8 defWidth;
+    u8 *widths;
+    u16 x;
+    u16 flip;
+    u8 mode;
+    struct Sprite *node;
+    struct AffineObj *aff;
+    u32 bits;
+    u8 c;
+    u16 w;
+
+    len = StringCountNonSpace(s);
+    defWidth = a->font->unk04;
+    widths = a->widthTable;
+    count = a->glyphs.count;
+    x = a->penX;
+    flip = 0;
+    mode = (a->flags & 0x180) >> 7;
+    if (s != NULL && *s != 0)
+    {
+        node = (struct Sprite *)a->glyphs.tail;
+        first = (struct Sprite *)BtlObjPoolResizeChain(&a->glyphs, len + count, a->unk2B);
+        if (first == NULL)
+        {
+            DebugPrint((void *)0x083D22D4, s);
+            return 0;
+        }
+        if (node != NULL)
+            first = node->next;
+        node = first;
+        aff = a->affine;
+        if (aff != NULL)
+        {
+            bits = ((aff->unk08 & 0x3E0) << 20) | 0x100;
+            if (!(a->flags & 8))
+            {
+                if (aff->angle != 0)
+                {
+                    if (aff->scaleX > 0xB0 || aff->scaleY > 0xB0)
+                        bits |= 0x200;
+                }
+                else if (aff->scaleX > 0xB0 || aff->scaleY > 0xB0)
+                    bits |= 0x200;
+            }
+        }
+        while ((c = *s++) != 0)
+        {
+            w = defWidth;
+            if (c == ' ')
+            {
+                w = a->spaceWidth;
+                flip = 0x8000;
+            }
+            else
+            {
+                c = gData_080BB748[c];
+                SpriteInitFromTemplate(node, a->font, 0, 0, 0, mode, 0, c);
+                TextEntrySetPaletteBank(node, pal);
+                SpriteSetObjMode(node, a->objMode);
+                if (widths != NULL)
+                    w = w - widths[c];
+                w = w + a->letterSpacing;
+                node->unk1E = x | flip;
+                flip = 0;
+                if (aff != NULL)
+                {
+                    node->unk10 = (node->unk10 & 0xC1FFFCFF) | bits;
+                    node->affine = (struct Sprite *)aff;
+                }
+                node = node->next;
+            }
+            x += w;
+        }
+        sub_080706B0((struct Unk70C98 *)a);
+        a->penX = x;
+        return 1;
+    }
 }
 
