@@ -11,9 +11,9 @@
 // functions only reproduce retail when the table is a symbol, so use these
 // names there instead of `(T *)0x08XXXXXX`.
 //
-// Values live in asm/data_symbols.s; tools/decomp/match_function.py reads that
-// file and passes each value to the assembler with --defsym, so verification
-// reproduces the original addressing.
+// Values live in asm/data_symbols.s. match_function.py / compile_matched.py
+// --defsym them so C blobs match retail pools. ROM symbols are also labels
+// in the peel (`SET_ROM_DATA`); RAM/IO stay `SET_DATA` pins in ram_map.s.
 //
 // Naming: `gData_<8 hex digits>` — deliberately distinct from the numeric
 // `gUnk_*` macros in ram_map_pool.h, which C that matches retail with literal

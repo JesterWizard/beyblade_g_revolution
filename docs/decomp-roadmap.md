@@ -178,8 +178,10 @@ manual address surgery.
 
 `make` now compiles `src/matched/*.c` into a sequential peel (`compile_matched.py`
 + `.rom_body : SUBALIGN(2)`). Head stays at `0x08000000`. Function/gap VMAs are
-gone. Unextracted data still contains absolute `0x08……` pointers, so growing a
-function desyncs those tables.
+gone. Thumb function-entry words and `gData_*` table words in peels are
+`.4byte`; ROM `gData_*` are peel labels (`SET_ROM_DATA`). Matched C keeps live
+BL / ABS32 relocs. Remaining blocker: singleton/pair data-to-data `0x08……`
+words (pointer tables of length ≥3 are `.4byte`).
 
 ### Migration gates (start Phase 5 when ANY is true)
 
@@ -194,7 +196,13 @@ function desyncs those tables.
 2. **Sequential linker script** — `rom.s` → matched `.text` → gap incbins → tail. **Done.**
 3. **Remove** per-function `0x08……` assignments from `rom_layout.ld`. **Done** (head only).
 4. **Audit** hardcoded ROM pointers in C/asm/data → replace with symbols / linker labels.
-5. **`tools/decomp/check_shiftable.py`**: sequential layout gate. **Done.** Remaining: symbolize data pointers; optional `ROM_BASE + 0x1000` rebuild test.
+   Thumb function-entry words and known `gData_*` table words in peels: **Done**.
+   Matched C BLs / `gData_*` pools: **Done** (live `.rel.text`). Pointer tables
+   (runs of ≥3 ROM words) in peels: **Done** (`gRom_*` / `_08*` + `.4byte`).
+   Singleton/pair data-to-data words still absolute.
+5. **`tools/decomp/check_shiftable.py`**: sequential layout + peel pointer/label
+   gates + unmatched `sub_*` + data-pointer tables. **Done.** Remaining:
+   singleton/pair data pointers; optional `ROM_BASE + 0x1000` rebuild test.
 
 ### Handwritten asm
 

@@ -21,6 +21,36 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-10-02 — Phase 5: data-pointer tables in peels
+
+`gen_rom_layout.py` turns runs of ≥3 ROM-window words in peels into `.4byte`
+`gRom_*` / `_08*` (22,756 sites, 14,153 target labels). Thumb ABS32 to peel
+code uses `label + 1` because `.rodata` symbols have no ELF thumb bit.
+Singletons and pairs stay baked (graphics collisions). `make compare`: **OK**.
+`check_shiftable.py`: 22756/22756 table words relocatable. Next: remaining
+singleton/pair `0x08……` words, then a slide-and-rebuild test.
+
+### 2026-10-01 — Phase 5: live BL / ABS32 relocs in matched C
+
+`compile_matched.py` keeps `.rel.text` (THM_CALL + ABS32) instead of baking
+retail-sized blobs. Clone C is `--redefine-sym`'d to the filename stem;
+unmatched `sub_08074xxx` callees are peel labels; `.append_text` no longer
+scoops leftover `.text` / libgcc. `make compare`: **OK**. `check_shiftable.py`: live relocs claimed; 6/6 unmatched `sub_*` labeled.
+
+### 2026-10-01 — Phase 5: peel labels for ROM `gData_*`
+
+`gen_rom_layout.py` places 116 ROM `gData_*` as peel labels and emits 487 table
+words that point at them as `.4byte`. `SET_ROM_DATA` in `asm/data_symbols.s` is a
+no-op in `ram_map.s` so those names are not pinned. `check_shiftable.py` gates
+labels + pointer words. `make compare`: **OK**.
+
+### 2026-10-01 — Phase 5: symbolize function pointers in peels
+
+`gen_rom_layout.py` splices Thumb function-entry words in gap/tail peels as
+`.4byte sub_*` (13 sites; one `05 06 07 08` collision skipped). `check_shiftable.py`
+requires those words not sit inside an `.incbin`. Data-to-data `0x08……` (~33k)
+and `compile_matched.py` BL blobs stay absolute. `make compare`: **OK**.
+
 ### 2026-10-01 — Phase 5 sequential peel (no per-function VMAs)
 
 `gen_rom_layout.py` now emits `.rom_head 0x08000000` plus one `.rom_body : SUBALIGN(2)`
@@ -1736,13 +1766,13 @@ First 4 functions + `src/stubs.c`.
 | `tools/decomp/integrate_match.py` | Link match into ROM peel |
 | `tools/decomp/match_function.py` | Verify scratch C vs asm (now runs CPP; patches Thumb BL relocs) |
 | `tools/decomp/test_variants.py` | Batch a `@@BODY@@` template against a list of source variants |
-| `tools/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
+| `tools/decomp/gen_rom_layout.py` | Sequential peel + `.4byte` ptrs + `gData_*` labels |
 | `tools/decomp/permuter/` | decomp-permuter wrappers (agbcc pool/order search) |
 
 ## Next
 
 - **Phase 4:** Batch names in `analysis/symbols.json` (322/633 named)
-- **Phase 5:** Symbolize ROM pointers in gap/tail data (layout is sequential; `check_shiftable.py` OK)
+- **Phase 5:** Singleton/pair data-to-data `0x08……` words; then a slide-and-rebuild test
 
 ## Blockers
 

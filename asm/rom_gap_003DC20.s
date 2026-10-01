@@ -3,4 +3,12 @@
 	.balign 2
 	.global gRomGap003DC20
 gRomGap003DC20:
-	.incbin "baserom.gba", 0x3DC20, 0xDC
+	.incbin "baserom.gba", 0x3DC20, 0x24
+	.4byte gData_080796DC
+	.incbin "baserom.gba", 0x3DC48, 0x1C
+	.4byte gData_08097458
+	.incbin "baserom.gba", 0x3DC68, 0x6C
+	.4byte gData_080BB8BC
+	.incbin "baserom.gba", 0x3DCD8, 0x4
+	.4byte gData_0807A1F4
+	.incbin "baserom.gba", 0x3DCE0, 0x1C

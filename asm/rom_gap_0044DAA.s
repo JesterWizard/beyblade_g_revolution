@@ -3,4 +3,6 @@
 	.balign 2
 	.global gRomGap0044DAA
 gRomGap0044DAA:
-	.incbin "baserom.gba", 0x44DAA, 0x13E
+	.incbin "baserom.gba", 0x44DAA, 0xF2
+	.4byte gData_080BB8BC
+	.incbin "baserom.gba", 0x44EA0, 0x48

@@ -3,4 +3,7 @@
 	.balign 2
 	.global gRomGap003417C
 gRomGap003417C:
-	.incbin "baserom.gba", 0x3417C, 0x1E4
+	.incbin "baserom.gba", 0x3417C, 0x1AC
+	.4byte gData_080B72F3
+	.4byte gData_082BF600
+	.incbin "baserom.gba", 0x34330, 0x30

@@ -20,6 +20,11 @@
     .set \name, \value
 .endm
 
+@ ROM gData_* labels live in the peel (gen_rom_layout.py). match_function.py
+@ still reads SET_ROM_DATA for --defsym when compiling C blobs.
+.macro SET_ROM_DATA name, value
+.endm
+
 .macro SET_ARRAY name, value, size
     SET_DATA \name, \value
     .global \name\()End

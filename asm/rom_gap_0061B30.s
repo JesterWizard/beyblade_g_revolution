@@ -3,4 +3,5 @@
 	.balign 2
 	.global gRomGap0061B30
 gRomGap0061B30:
-	.incbin "baserom.gba", 0x61B30, 0x7C
+	.incbin "baserom.gba", 0x61B30, 0x78
+	.4byte gData_080BB8C0

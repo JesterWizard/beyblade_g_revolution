@@ -143,7 +143,7 @@ bash build_tools.sh
 | decomp-permuter | `tools/decomp/permuter/` | agbcc literal-pool / instruction-order search |
 | agbcc | `tools/agbcc/bin/agbcc` | Matching compiler |
 | Luvdis | `tools/luvdis/` | Initial disassembly |
-| ROM layout | `tools/decomp/gen_rom_layout.py` | Regenerate `asm/rom_layout.ld` |
+| ROM layout | `tools/decomp/gen_rom_layout.py` | Sequential peel + `.4byte` ptrs + `gData_*` labels |
 | Shiftable check | `tools/decomp/check_shiftable.py` | Phase 5 gate |
 | Status | `tools/decomp/report_status.py` | Progress summary + refresh counter |
 | Semantic allowlist | `tools/decomp/sync_verified.py` | Repair/gate `build/semantic_verified.json` (`make sync-verified`, `make check-verified`) |

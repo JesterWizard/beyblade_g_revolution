@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-01T21:43:28Z",
+  "generated": "2026-10-01T22:44:28Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "tiers": {
-    "generated": "2026-10-01T21:43:28Z",
+    "generated": "2026-10-01T22:44:28Z",
     "total": 633,
     "tiers": {
       "UNKNOWN": {
@@ -25,10 +25,10 @@
     },
     "flags": {
       "has_c": 633,
-      "named": 322,
+      "named": 355,
       "matches": 633
     },
-    "pct_named": 50.9
+    "pct_named": 56.1
   },
   "src_matched": 633,
   "linked_in_rom": 633,
@@ -2079,7 +2079,7 @@
       "pct_bytes": 100.0
     },
     {
-      "generated": "2026-10-01T21:43:28Z",
+      "generated": "2026-10-01T22:44:28Z",
       "semantic": 633,
       "readable_asm": 0,
       "opcode": 0,

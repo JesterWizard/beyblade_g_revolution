@@ -31,5 +31,8 @@ into matching C. Mods are made by editing that source, not by hooking the ROM.
 
 Shrink `asm/rom.s` `.incbin` ranges as real C replaces them.
 `make compare` checks `rom.sha1` against the retail dump. A mod that edits
-`src/matched/` will rebuild from that C. Growing a function slides later peels;
-unextracted pointer tables still hold absolute `0x08……` until those are symbols.
+`src/matched/` will rebuild from that C. Growing a function slides later peels.
+Function-entry words and `gData_*` table words in gap/tail peels are `.4byte`.
+ROM `gData_*` are peel labels. Matched C keeps live BL / ABS32 relocs. Pointer
+tables of three or more ROM words in peels are `.4byte` `gRom_*`. Singleton/pair
+data tables still use absolute `0x08……`.

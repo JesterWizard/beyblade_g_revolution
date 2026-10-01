@@ -216,7 +216,7 @@ $(DATA_ASM_BUILDDIR)/%.o: $(DATA_ASM_SUBDIR)/%.s
 
 # Matched C is always agbcc (per-file compiler / flags / fixups). Do not use
 # the generic cc1 recipe — it ignores match-compiler comments and pads .text.
-$(C_BUILDDIR)/matched/%.o: $(C_SUBDIR)/matched/%.c
+$(C_BUILDDIR)/matched/%.o: $(C_SUBDIR)/matched/%.c tools/decomp/compile_matched.py
 	@mkdir -p $(dir $@)
 	python3 tools/decomp/compile_matched.py $< $@
 

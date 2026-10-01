@@ -179,7 +179,7 @@ def extra_cflags(c_path: Path) -> list[str]:
 
 DATA_SYMBOLS = ROOT / "asm" / "data_symbols.s"
 SET_DATA_RE = re.compile(
-    r"^SET_DATA\s+([A-Za-z_][A-Za-z0-9_]*)\s*,\s*(0x[0-9A-Fa-f]+|\d+)\s*$"
+    r"^(?:SET_DATA|SET_ROM_DATA)\s+([A-Za-z_][A-Za-z0-9_]*)\s*,\s*(0x[0-9A-Fa-f]+|\d+)\s*$"
 )
 
 
@@ -195,18 +195,17 @@ def data_symbol_value(name: str) -> int | None:
 
 
 def data_symbol_defsyms() -> list[str]:
-    """`--defsym` args so `.word gData_…` resolves at assembly time.
+    """`--defsym` args so RAM/IO `gData_…` resolve at assembly time.
 
-    Retail addressed some tables through symbols; agbcc only reproduces those
-    codegen shapes (no constant folding / substitution / re-colouring) when the
-    address is a symbol, not a literal.  Values come from asm/data_symbols.s.
+    ROM symbols are peel labels (`SET_ROM_DATA`); baking those with --defsym
+    would hide R_ARM_ABS32 relocs the linker needs when code slides.
     """
     args: list[str] = []
     if not DATA_SYMBOLS.is_file():
         return args
     for line in DATA_SYMBOLS.read_text().splitlines():
         match = SET_DATA_RE.match(line.split("@")[0].strip())
-        if match:
+        if match and line.split("@")[0].strip().startswith("SET_DATA"):
             args += ["--defsym", f"{match.group(1)}={match.group(2)}"]
     return args
 
@@ -309,33 +308,70 @@ def reloc_target_addr(name: str) -> int | None:
     return None
 
 
-def apply_thm_call_relocs(obj_path: Path, function: str, data: bytes) -> bytes:
-    """Patch unlinked Thumb BL stubs using ROM addresses from symbol names."""
+def iter_text_relocs(obj_path: Path) -> list[tuple[int, str, str]]:
+    """`(offset, reloc_type, symbol)` for `.rel.text` / `.rela.text`."""
     result = subprocess.run(
         ["arm-none-eabi-readelf", "-r", str(obj_path)],
         capture_output=True,
         text=True,
         check=False,
     )
-    if result.returncode != 0 or "R_ARM_THM_CALL" not in result.stdout:
-        return data
-    base = addr_from_name(function)
-    out = bytearray(data)
+    if result.returncode != 0:
+        return []
+    relocs: list[tuple[int, str, str]] = []
+    in_text = False
     for line in result.stdout.splitlines():
-        if "R_ARM_THM_CALL" not in line:
+        if line.startswith("Relocation section"):
+            in_text = ".rel.text" in line or ".rela.text" in line
+            continue
+        if not in_text:
+            continue
+        if "R_ARM_" not in line:
             continue
         parts = line.split()
         if len(parts) < 5:
             continue
-        off = int(parts[0], 16)
-        target_name = parts[-1]
-        target = reloc_target_addr(target_name)
-        if target is None:
+        rtype = next((p for p in parts if p.startswith("R_ARM_")), "")
+        if not rtype:
             continue
-        if off + 4 > len(out):
+        relocs.append((int(parts[0], 16), rtype, parts[-1]))
+    return relocs
+
+
+def abs32_target_addr(name: str) -> int | None:
+    """Linked value for an R_ARM_ABS32 symbol (before in-place addend)."""
+    data = data_symbol_value(name)
+    if data is not None:
+        return data
+    return reloc_target_addr(name)
+
+
+def apply_thm_call_relocs(obj_path: Path, function: str, data: bytes) -> bytes:
+    """Patch unlinked Thumb BL stubs using ROM addresses from symbol names."""
+    base = addr_from_name(function)
+    out = bytearray(data)
+    for off, rtype, target_name in iter_text_relocs(obj_path):
+        if rtype != "R_ARM_THM_CALL":
+            continue
+        target = reloc_target_addr(target_name)
+        if target is None or off + 4 > len(out):
             continue
         encoded = encode_thumb_bl(base + off, target)
         out[off : off + 4] = encoded
+    return bytes(out)
+
+
+def apply_abs32_relocs(obj_path: Path, data: bytes) -> bytes:
+    """Fill unlinked R_ARM_ABS32 pool words for MATCH scoring."""
+    out = bytearray(data)
+    for off, rtype, target_name in iter_text_relocs(obj_path):
+        if rtype != "R_ARM_ABS32" or off + 4 > len(out):
+            continue
+        target = abs32_target_addr(target_name)
+        if target is None:
+            continue
+        addend = int.from_bytes(out[off : off + 4], "little")
+        out[off : off + 4] = (target + addend).to_bytes(4, "little")
     return bytes(out)
 
 
@@ -349,6 +385,7 @@ def obj_text_bytes(obj_path: Path, function: str | None = None) -> bytes:
         data = bin_path.read_bytes()
     if function:
         data = apply_thm_call_relocs(obj_path, function, data)
+        data = apply_abs32_relocs(obj_path, data)
     return data
 
 

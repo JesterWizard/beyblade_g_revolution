@@ -1,16 +1,20 @@
 #!/usr/bin/env python3
 """Compile one src/matched/*.c into a ROM-peel object.
 
-Uses the same agbcc / flags / fixups / BL-reloc patch as match_function.py, then
-emits a .text blob of exactly the retail size. The linker packs these blobs in
-address order after the ROM head (Phase 5 sequential peel). Live relocs and
-symbolized data pointers come later.
+Uses the same agbcc / flags / fixups as match_function.py, verifies .text
+against retail (patching relocs only for the score), then keeps the ELF
+`.text` plus its relocs so the linker can retarget BLs and `gData_*` pools
+when later peels slide. Extra sections are stripped so they cannot leak
+into `.append_rodata`. The object's exported `.text` symbol is the filename
+stem so clone C (`void sub_0804B4B4` in `sub_0804C324.c`) does not collide.
 """
 
 from __future__ import annotations
 
 import argparse
 import re
+import shutil
+import struct
 import subprocess
 import sys
 import tempfile
@@ -19,7 +23,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
-from asm_bytes import write_matching_bytes  # noqa: E402
 from match_function import (  # noqa: E402
     BannedAsmError,
     check_semantic_asm,
@@ -47,6 +50,46 @@ _SKIP_SECTIONS = frozenset(
 )
 
 
+def defined_text_globals(obj_path: Path) -> list[str]:
+    """Global `.text` symbols (`T`), excluding mapping / compiler sentinels."""
+    result = subprocess.run(
+        ["arm-none-eabi-nm", "-g", "--defined-only", str(obj_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    names: list[str] = []
+    for line in result.stdout.splitlines():
+        parts = line.split()
+        if len(parts) < 3 or parts[1] not in {"T", "t"}:
+            continue
+        name = parts[-1]
+        if name.startswith(".") or name.startswith("$"):
+            continue
+        names.append(name)
+    return names
+
+
+def export_filename_symbol(obj_path: Path, stem: str) -> None:
+    """Clone / alias C must link as the filename (`sub_0804C324.o` → `sub_0804C324`)."""
+    names = defined_text_globals(obj_path)
+    if stem in names:
+        return
+    if len(names) != 1:
+        raise SystemExit(
+            f"{obj_path}: expected one global .text symbol to rename to {stem}, "
+            f"got {names}"
+        )
+    subprocess.run(
+        [
+            "arm-none-eabi-objcopy",
+            f"--redefine-sym={names[0]}={stem}",
+            str(obj_path),
+        ],
+        check=True,
+    )
+
+
 def extra_sections(obj_path: Path) -> list[str]:
     """Non-.text sections that would leak into the append ROM if linked raw."""
     result = subprocess.run(
@@ -66,6 +109,69 @@ def extra_sections(obj_path: Path) -> list[str]:
             continue
         bad.append(f"{name} ({size} bytes)")
     return bad
+
+
+def shrink_elf32_text(obj_path: Path, new_size: int) -> None:
+    """Set `.text` sh_size without dropping `.rel.text` (objcopy cannot)."""
+    data = bytearray(obj_path.read_bytes())
+    if data[:4] != b"\x7fELF" or data[4] != 1 or data[5] != 1:
+        raise SystemExit(f"{obj_path}: expected ELF32 little-endian")
+    e_shoff = struct.unpack_from("<I", data, 32)[0]
+    e_shentsize, e_shnum, e_shstrndx = struct.unpack_from("<HHH", data, 46)
+    str_off = struct.unpack_from(
+        "<I", data, e_shoff + e_shstrndx * e_shentsize + 16
+    )[0]
+    for i in range(e_shnum):
+        sh = e_shoff + i * e_shentsize
+        name_off = struct.unpack_from("<I", data, sh)[0]
+        end = data.find(b"\x00", str_off + name_off)
+        name = data[str_off + name_off : end].decode("ascii")
+        if name != ".text":
+            continue
+        struct.pack_into("<I", data, sh + 20, new_size)
+        obj_path.write_bytes(data)
+        return
+    raise SystemExit(f"{obj_path}: no .text section")
+
+
+def emit_text_with_relocs(raw: Path, dest: Path, size: int) -> None:
+    """Keep `.text` and its relocs; drop debug / leftover .rodata."""
+    shutil.copy(raw, dest)
+    subprocess.run(
+        [
+            "arm-none-eabi-objcopy",
+            "--strip-debug",
+            "-R",
+            ".rodata",
+            "-R",
+            ".data",
+            "-R",
+            ".bss",
+            str(dest),
+        ],
+        check=True,
+    )
+    with tempfile.TemporaryDirectory() as tmp:
+        bin_path = Path(tmp) / "fn.bin"
+        subprocess.run(
+            [
+                "arm-none-eabi-objcopy",
+                "-O",
+                "binary",
+                "-j",
+                ".text",
+                str(dest),
+                str(bin_path),
+            ],
+            check=True,
+        )
+        got = bin_path.stat().st_size
+    if got == size:
+        return
+    if got > size:
+        shrink_elf32_text(dest, size)
+        return
+    raise SystemExit(f"{dest}: compiled .text is {got} bytes, retail is {size}")
 
 
 def compile_matched(c_path: Path, obj_path: Path) -> None:
@@ -91,19 +197,8 @@ def compile_matched(c_path: Path, obj_path: Path) -> None:
                 f"({info['score']}, {info['status']}).{hint} "
                 f"Keep matching C; do not land a DIFF in the peel."
             )
-        blob_s = Path(tmp) / "blob.s"
-        write_matching_bytes(name, got, blob_s)
-        subprocess.run(
-            [
-                "arm-none-eabi-as",
-                "-mcpu=arm7tdmi",
-                "-mthumb-interwork",
-                "-o",
-                str(obj_path),
-                str(blob_s),
-            ],
-            check=True,
-        )
+        emit_text_with_relocs(raw, obj_path, size)
+        export_filename_symbol(obj_path, name)
 
 
 def main() -> int:

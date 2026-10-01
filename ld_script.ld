@@ -33,14 +33,12 @@ SECTIONS {
     /* Retail ROM image: sequential peel (head at 0x08000000, then C + gaps). */
     INCLUDE rom_layout.ld
 
-    /* Sections not placed by rom_layout.ld land after the retail image.
-     * Nothing does today, so __append_end is the end of the retail ROM. */
+    /* Extra code for mods. Do not scoop leftover `.text` here: matched C is
+     * already listed in rom_layout.ld, and libgcc veneers are peel labels. */
     __append_start = .;
 
     .append_text :
     {
-        *(.text);
-        *(.text.*);
         *(.append_text);
     } > ROM = 0xFF
 
