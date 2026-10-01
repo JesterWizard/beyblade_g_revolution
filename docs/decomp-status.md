@@ -21,6 +21,14 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-10-01 — Phase 5 sequential peel (no per-function VMAs)
+
+`gen_rom_layout.py` now emits `.rom_head 0x08000000` plus one `.rom_body : SUBALIGN(2)`
+that lists matched `.text` and gap incbins in address order. Gap `.rodata` is
+2-byte aligned so 2-mod-4 sites are not padded. `check_shiftable.py` passes (head
+VMA only). `make compare`: **OK**. Next: symbolize ROM pointers in unextracted
+data so growing a function does not leave stale `0x08……` tables.
+
 ### 2026-10-01 — Phase 5 step 0: link matched C
 
 The ROM peel is built from `src/matched/*.c` (`tools/decomp/compile_matched.py`:
@@ -1734,7 +1742,7 @@ First 4 functions + `src/stubs.c`.
 ## Next
 
 - **Phase 4:** Batch names in `analysis/symbols.json` (322/633 named)
-- **Phase 5:** Drop per-function `0x08……` VMAs (`check_shiftable.py`: C linked, 980 fixed-VMA sections remain)
+- **Phase 5:** Symbolize ROM pointers in gap/tail data (layout is sequential; `check_shiftable.py` OK)
 
 ## Blockers
 

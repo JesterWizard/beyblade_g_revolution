@@ -186,8 +186,9 @@ Every stage is also directly runnable and has a `make` target:
 ## Verifying the C corpus itself
 
 `make compare` proves the **ROM** is reproduced from `src/matched/*.c` (compiled
-by `tools/decomp/compile_matched.py`) plus gap incbins at fixed VMAs. A DIFF
-in matched C fails the peel compile, so `make compare` now catches it.
+by `tools/decomp/compile_matched.py`) plus gap incbins packed in order after the
+ROM head. A DIFF in matched C fails the peel compile, so `make compare` now
+catches it.
 
 `make audit` still compiles every `src/matched/*.c` standalone
 through agbcc (honouring each file's `match-flags` / `match-compiler` comments)

@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x08059E10..0x0805D1AB
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap0059E10
 gRomGap0059E10:
 	.incbin "baserom.gba", 0x59E10, 0x339C

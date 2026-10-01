@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Generate ROM peel asm + linker fragment from build/matched.json.
 
-Matched functions are compiled from src/matched/*.c (see compile_matched.py)
-and placed at their retail VMAs. Sizes still come from asm/matchings/*.s so
+Matched functions are compiled from src/matched/*.c (see compile_matched.py).
+The linker packs head → function .text → gap incbins → tail in order, with
+only the head pinned at 0x08000000. Sizes still come from asm/matchings/*.s so
 gap incbins stay stable without compiling C first.
 """
 
@@ -87,7 +88,8 @@ def write_incbin(path: Path, symbol: str, start: int, length: int, comment: str)
     else:
         text = (
             f"@ {comment}\n"
-            f"\t.section .rodata\n"
+            f'\t.section .rodata,"a",%progbits\n'
+            f"\t.balign 2\n"
             f"\t.global {symbol}\n"
             f"{symbol}:\n"
             f'\t.incbin "baserom.gba", 0x{start:X}, 0x{length:X}\n'
@@ -154,14 +156,14 @@ def main() -> int:
         ld_lines.append(f"    .rom_head {hexaddr(ROM_BASE)} : {{")
         ld_lines.append("        asm/rom.o(.rodata)")
         ld_lines.append("    } > ROM")
+        # SUBALIGN(2): Thumb sites are 2-byte aligned; default .rodata is 4.
+        # Without this the linker pads 2-mod-4 gaps and SHA1 breaks.
+        ld_lines.append("    .rom_body : SUBALIGN(2) {")
 
-        gap_idx = 0
         for i, fn in enumerate(functions):
             addr = int(fn["addr"], 16)
             name = fn["name"]
-            ld_lines.append(f"    .rom_{name} {hexaddr(addr)} : {{")
             ld_lines.append(f"        src/matched/{name}.o(.text)")
-            ld_lines.append("    } > ROM")
             end = addr + fn["size"]
 
             if i + 1 < len(functions):
@@ -181,10 +183,7 @@ def main() -> int:
                         gap_len,
                         f"Unmatched ROM {hexaddr(end)}..{hexaddr(next_addr - 1)}",
                     )
-                    ld_lines.append(f"    .rom_gap_{gap_start:07X} {hexaddr(end)} : {{")
                     ld_lines.append(f"        asm/rom_gap_{gap_start:07X}.o(.rodata)")
-                    ld_lines.append("    } > ROM")
-                    gap_idx += 1
             else:
                 tail_start = end - ROM_BASE
                 tail_len = ROM_SIZE - tail_start
@@ -198,9 +197,9 @@ def main() -> int:
                     tail_len,
                     f"Unmatched ROM tail from {hexaddr(end)}",
                 )
-                ld_lines.append(f"    .rom_tail {hexaddr(end)} : {{")
                 ld_lines.append("        asm/rom_tail.o(.rodata)")
-                ld_lines.append("    } > ROM")
+
+        ld_lines.append("    } > ROM")
 
     LAYOUT_LD.write_text("\n".join(ld_lines) + "\n")
     print(f"gen_rom_layout: {len(functions)} matched function(s)")

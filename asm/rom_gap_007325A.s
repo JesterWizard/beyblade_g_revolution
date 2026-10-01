@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x0807325A..0x0807339B
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap007325A
 gRomGap007325A:
 	.incbin "baserom.gba", 0x7325A, 0x142

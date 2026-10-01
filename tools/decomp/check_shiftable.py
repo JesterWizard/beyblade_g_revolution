@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Preflight checks for Phase 5 (shiftable ROM). Exits 0 when migration is allowed."""
+"""Phase 5 shiftable-ROM checks. Exits 0 when the layout is sequential.
+
+Head may stay pinned at 0x08000000. Function and gap peels must not have
+per-section 0x08…… assignments — the linker packs them in order.
+"""
 
 from __future__ import annotations
 
@@ -13,7 +17,12 @@ MANIFEST = ROOT / "build" / "matched.json"
 LAYOUT = ROOT / "asm" / "rom_layout.ld"
 TOTAL_FUNCTIONS = 633
 
-FIXED_VMA_RE = re.compile(r"\.rom_(?:sub_|gap_|head|tail)")
+# Output-section VMA: `.name 0x08XXXXXX :`
+SECTION_VMA_RE = re.compile(
+    r"^\s*(\.\S+)\s+(0x[0-9A-Fa-f]+)\s*:",
+    re.M,
+)
+ALLOWED_HEAD = {(".rom_head", "0x08000000"), (".rom", "0x08000000")}
 
 
 def main() -> int:
@@ -28,8 +37,21 @@ def main() -> int:
     gates.append((pct >= 80.0, f"matched >= 80% ({linked}/{TOTAL_FUNCTIONS}, {pct:.1f}%)"))
 
     if LAYOUT.is_file():
-        fixed_sections = len(FIXED_VMA_RE.findall(LAYOUT.read_text()))
-        gates.append((fixed_sections == 0, f"no fixed-VMA sections in rom_layout.ld (found {fixed_sections})"))
+        text = LAYOUT.read_text()
+        extra = [
+            f"{name} {addr}"
+            for name, addr in SECTION_VMA_RE.findall(text)
+            if (name, addr) not in ALLOWED_HEAD
+        ]
+        gates.append(
+            (
+                not extra,
+                "no per-function/gap VMAs in rom_layout.ld"
+                + (f" (found {len(extra)}: {extra[0]}…)" if extra else ""),
+            )
+        )
+        sequential = ".rom_body" in text and "SUBALIGN(2)" in text
+        gates.append((sequential, "sequential .rom_body SUBALIGN(2)"))
     else:
         gates.append((False, "rom_layout.ld missing"))
 
@@ -41,10 +63,13 @@ def main() -> int:
         ok_all = ok_all and ok
 
     if ok_all:
-        print("Shiftable migration may proceed.")
+        print(
+            "Layout is sequential. Pointer tables in unextracted data still "
+            "use absolute 0x08…… — growing a function will desync those."
+        )
         return 0
 
-    print("C is linked at fixed VMAs — drop per-function 0x08 addresses next.")
+    print("Not sequential yet — see docs/decomp-roadmap.md Phase 5.")
     return 2
 
 

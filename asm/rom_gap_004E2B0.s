@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x0804E2B0..0x0804E4F3
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap004E2B0
 gRomGap004E2B0:
 	.incbin "baserom.gba", 0x4E2B0, 0x244

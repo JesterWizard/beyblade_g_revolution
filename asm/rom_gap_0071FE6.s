@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x08071FE6..0x080720EF
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap0071FE6
 gRomGap0071FE6:
 	.incbin "baserom.gba", 0x71FE6, 0x10A

@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x0803D3AE..0x0803D4C3
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap003D3AE
 gRomGap003D3AE:
 	.incbin "baserom.gba", 0x3D3AE, 0x116

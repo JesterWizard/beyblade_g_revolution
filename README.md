@@ -158,7 +158,8 @@ appear in the index and on their subsystem page. The scoreboard
 | `make compare` | Must stay `beyblade_g_revolution.gba: OK` |
 
 Matching C is `src/matched/` (one file per function) and is what `make`
-compiles into the ROM, still at retail addresses. Unmatched drafts are
+compiles into the ROM. The linker packs those objects in order after the ROM
+head (retail addresses only while sizes match). Unmatched drafts are
 `src/decompiled/` (not linked). Patterns:
 [docs/decomp-patterns.md](docs/decomp-patterns.md). Queue: `make queue`.
 

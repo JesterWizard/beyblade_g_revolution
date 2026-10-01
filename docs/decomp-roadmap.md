@@ -176,9 +176,10 @@ manual address surgery.
 
 ### Why we're not shiftable yet
 
-`make` now compiles `src/matched/*.c` into the peel (`compile_matched.py`), but
-`gen_rom_layout.py` still assigns each function a **fixed VMA** (`0x08033A94`,
-etc.). That keeps `make compare` green and is not shiftable.
+`make` now compiles `src/matched/*.c` into a sequential peel (`compile_matched.py`
++ `.rom_body : SUBALIGN(2)`). Head stays at `0x08000000`. Function/gap VMAs are
+gone. Unextracted data still contains absolute `0x08……` pointers, so growing a
+function desyncs those tables.
 
 ### Migration gates (start Phase 5 when ANY is true)
 
@@ -188,16 +189,12 @@ etc.). That keeps `make compare` green and is not shiftable.
 
 ### Migration steps
 
-0. **Link matched C** — compile `src/matched/*.c` at retail VMAs (`compile_matched.py`). **Done.**
-1. **Contiguous grouping** — merge adjacent matched regions into single `src/*.o` or asm objects.
-2. **Sequential linker script** — sigma_star_saga style:
-   `rom.s` (head incbin) → `src/foo.o(.text)` → `rom_after_a.s` → …
-3. **Remove** per-function `0x08……` assignments from `rom_layout.ld`.
+0. **Link matched C** — compile `src/matched/*.c` (`compile_matched.py`). **Done.**
+1. **Contiguous grouping** — adjacent functions sit next to each other in `.rom_body`. **Done** (one output section; still one `.o` per function).
+2. **Sequential linker script** — `rom.s` → matched `.text` → gap incbins → tail. **Done.**
+3. **Remove** per-function `0x08……` assignments from `rom_layout.ld`. **Done** (head only).
 4. **Audit** hardcoded ROM pointers in C/asm/data → replace with symbols / linker labels.
-5. **`tools/decomp/check_shiftable.py`**:
-   - No `ORG`/` . = 0x08` in generated layout (except head/tail incbin bounds)
-   - `make compare` OK
-   - Optional: rebuild at `ROM_BASE + 0x1000` test (future)
+5. **`tools/decomp/check_shiftable.py`**: sequential layout gate. **Done.** Remaining: symbolize data pointers; optional `ROM_BASE + 0x1000` rebuild test.
 
 ### Handwritten asm
 

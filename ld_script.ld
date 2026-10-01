@@ -30,7 +30,7 @@ SECTIONS {
         __iwram_end = .;
     } > IWRAM
 
-    /* Retail ROM image: incbin peels + matched C .text at fixed VMAs. */
+    /* Retail ROM image: sequential peel (head at 0x08000000, then C + gaps). */
     INCLUDE rom_layout.ld
 
     /* Sections not placed by rom_layout.ld land after the retail image.

@@ -2,8 +2,9 @@
 """Compile one src/matched/*.c into a ROM-peel object.
 
 Uses the same agbcc / flags / fixups / BL-reloc patch as match_function.py, then
-emits a .text blob of exactly the retail size. The linker still places the
-object at a fixed VMA (Phase 5 step 1); live relocs come later.
+emits a .text blob of exactly the retail size. The linker packs these blobs in
+address order after the ROM head (Phase 5 sequential peel). Live relocs and
+symbolized data pointers come later.
 """
 
 from __future__ import annotations

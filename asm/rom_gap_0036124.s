@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x08036124..0x0803618F
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap0036124
 gRomGap0036124:
 	.incbin "baserom.gba", 0x36124, 0x6C

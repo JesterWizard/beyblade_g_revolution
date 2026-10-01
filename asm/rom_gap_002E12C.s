@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x0802E12C..0x0802E18B
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap002E12C
 gRomGap002E12C:
 	.incbin "baserom.gba", 0x2E12C, 0x60

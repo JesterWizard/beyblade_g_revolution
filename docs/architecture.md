@@ -9,8 +9,9 @@ into matching C. Mods are made by editing that source, not by hooking the ROM.
 2. `src/matched/*.c` holds **decompiled** vanilla functions. `make` compiles
    them (agbcc, per-file `match-compiler` / `match-flags` / `match-fixup`) and
    places each `.text` at its retail address.
-3. `asm/` supplies the rest of the image: `rom.s` / gap incbins / `rom_layout.ld`
-   still pin those functions to retail VMAs until Phase 5 drops the addresses.
+3. `asm/` supplies the rest of the image: `rom.s` (head at 0x08000000) then
+   `rom_layout.ld` packs matched `.text` and gap incbins in order (`SUBALIGN(2)`).
+   Functions land at retail addresses only while they keep retail sizes.
 
 ## Directory map
 
@@ -30,5 +31,5 @@ into matching C. Mods are made by editing that source, not by hooking the ROM.
 
 Shrink `asm/rom.s` `.incbin` ranges as real C replaces them.
 `make compare` checks `rom.sha1` against the retail dump. A mod that edits
-`src/matched/` will rebuild from that C; until the ROM is shiftable, growing a
-function still overlaps the next peel.
+`src/matched/` will rebuild from that C. Growing a function slides later peels;
+unextracted pointer tables still hold absolute `0x08……` until those are symbols.

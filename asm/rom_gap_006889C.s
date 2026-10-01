@@ -1,5 +1,6 @@
 @ Unmatched ROM 0x0806889C..0x080688C7
-	.section .rodata
+	.section .rodata,"a",%progbits
+	.balign 2
 	.global gRomGap006889C
 gRomGap006889C:
 	.incbin "baserom.gba", 0x6889C, 0x2C
