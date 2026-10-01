@@ -6,12 +6,18 @@ gRomGap0048F70:
 	.global _08048F70
 	.thumb_func
 _08048F70:
-	.incbin "baserom.gba", 0x48F70, 0x2F4
+	.incbin "baserom.gba", 0x48F70, 0x2EC
+	.4byte gRom_0811948C
+	.incbin "baserom.gba", 0x49260, 0x4
 	.4byte gRom_081198D4
 	.4byte gRom_08119D1C
 	.4byte gData_080BB8C0
 	.4byte gRom_0811A164
-	.incbin "baserom.gba", 0x49274, 0x14
+	.incbin "baserom.gba", 0x49274, 0x4
+	.4byte gRom_0811A364
+	.incbin "baserom.gba", 0x4927C, 0x4
+	.4byte gRom_0811A564
+	.incbin "baserom.gba", 0x49284, 0x4
 	.4byte gData_080D79CC
 	.4byte gData_080B7429
 	.4byte gRom_083A72E8
@@ -24,7 +30,9 @@ _08048F70:
 	.global _080492B0
 	.thumb_func
 _080492B0:
-	.incbin "baserom.gba", 0x492B0, 0x158
+	.incbin "baserom.gba", 0x492B0, 0x150
+	.4byte gRom_08097FC4
+	.incbin "baserom.gba", 0x49404, 0x4
 	.global _08049408
 	.thumb_func
 _08049408:
@@ -89,4 +97,6 @@ _08049BB0:
 	.4byte gData_080B7429
 	.4byte gRom_083A733C
 	.4byte gRom_08097354
-	.incbin "baserom.gba", 0x49F8C, 0xC
+	.incbin "baserom.gba", 0x49F8C, 0x4
+	.4byte gRom_080977B4
+	.4byte gRom_083A735C

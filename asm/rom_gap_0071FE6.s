@@ -3,4 +3,8 @@
 	.balign 2
 	.global gRomGap0071FE6
 gRomGap0071FE6:
-	.incbin "baserom.gba", 0x71FE6, 0x10A
+	.incbin "baserom.gba", 0x71FE6, 0x46
+	.global _0807202C
+	.thumb_func
+_0807202C:
+	.incbin "baserom.gba", 0x7202C, 0xC4

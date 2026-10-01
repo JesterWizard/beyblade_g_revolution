@@ -30,7 +30,8 @@ SECTIONS {
         __iwram_end = .;
     } > IWRAM
 
-    /* Retail ROM image: sequential peel (head at 0x08000000, then C + gaps). */
+    /* Optional insert after .rom_head: `ld --defsym=__rom_shift_bytes=0x1000`. */
+PROVIDE(__rom_shift_bytes = 0);
     INCLUDE rom_layout.ld
 
     /* Extra code for mods. Do not scoop leftover `.text` here: matched C is

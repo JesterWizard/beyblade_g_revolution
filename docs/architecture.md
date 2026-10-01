@@ -34,5 +34,8 @@ Shrink `asm/rom.s` `.incbin` ranges as real C replaces them.
 `src/matched/` will rebuild from that C. Growing a function slides later peels.
 Function-entry words and `gData_*` table words in gap/tail peels are `.4byte`.
 ROM `gData_*` are peel labels. Matched C keeps live BL / ABS32 relocs. Pointer
-tables of three or more ROM words in peels are `.4byte` `gRom_*`. Singleton/pair
-data tables still use absolute `0x08……`.
+tables of two or more ROM words, and singletons that already point at a peel
+label, are `.4byte` `gRom_*`. Sparse leftover singleton data words are also
+`.4byte`. Dense graphics-like `0x08……` clusters stay absolute. `make shift-test`
+inserts `0x1000` after `.rom_head`; `make grow-test` inserts 4 bytes after the
+first matched `.text`. Mods: `make GROW=1 COMPARE=0 rom`.

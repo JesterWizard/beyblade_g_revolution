@@ -6,7 +6,8 @@ gRomGap004CF3C:
 	.global _0804CF3C
 	.thumb_func
 _0804CF3C:
-	.incbin "baserom.gba", 0x4CF3C, 0x98
+	.incbin "baserom.gba", 0x4CF3C, 0x94
+	.4byte gRom_082BB648
 	.4byte gData_080B7258
 	.global _0804CFD8
 	.thumb_func
@@ -19,7 +20,8 @@ _0804D048:
 	.global _0804D170
 	.thumb_func
 _0804D170:
-	.incbin "baserom.gba", 0x4D170, 0x6C
+	.incbin "baserom.gba", 0x4D170, 0x68
+	.4byte gRom_083A7EF8
 	.global _0804D1DC
 	.thumb_func
 _0804D1DC:

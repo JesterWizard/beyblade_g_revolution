@@ -1,6 +1,9 @@
     .rom_head 0x08000000 : {
         asm/rom.o(.rodata)
     } > ROM
+    .rom_shift : {
+        . = . + __rom_shift_bytes;
+    } > ROM
     .rom_body : SUBALIGN(2) {
         src/matched/sub_0802B8BC.o(.text)
         asm/rom_gap_002B8D0.o(.rodata)

@@ -36,4 +36,6 @@ _0803899C:
 	.incbin "baserom.gba", 0x38B90, 0x164
 	.4byte gData_080B72F3
 	.4byte gData_082BF600
-	.incbin "baserom.gba", 0x38CFC, 0x14
+	.incbin "baserom.gba", 0x38CFC, 0x8
+	.4byte gRom_08096FBC
+	.incbin "baserom.gba", 0x38D08, 0x8

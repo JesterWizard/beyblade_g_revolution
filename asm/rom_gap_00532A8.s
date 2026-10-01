@@ -6,7 +6,8 @@ gRomGap00532A8:
 	.global _080532A8
 	.thumb_func
 _080532A8:
-	.incbin "baserom.gba", 0x532A8, 0xCC
+	.incbin "baserom.gba", 0x532A8, 0xC8
+	.4byte gRom_0811F888
 	.global _08053374
 	.thumb_func
 _08053374:

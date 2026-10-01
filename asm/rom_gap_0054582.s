@@ -3,7 +3,8 @@
 	.balign 2
 	.global gRomGap0054582
 gRomGap0054582:
-	.incbin "baserom.gba", 0x54582, 0x66
+	.incbin "baserom.gba", 0x54582, 0x62
+	.4byte gRom_082BB648
 	.4byte gData_080B7258
 	.global _080545EC
 	.thumb_func

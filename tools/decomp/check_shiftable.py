@@ -263,7 +263,8 @@ def main() -> int:
     gates.append(
         (
             not baked_table,
-            f"data-pointer tables (runs>={MIN_PTR_RUN}) are .4byte "
+            f"high-confidence data pointers (runs>={MIN_PTR_RUN} + labeled refs "
+            f"+ sparse singletons) are .4byte "
             f"({n_table_ok}/{len(table_sites)})"
             + (
                 f"; baked: 0x{baked_table[0][0]:X} {baked_table[0][1]}"
@@ -284,7 +285,8 @@ def main() -> int:
         print(
             "Layout is sequential; function-entry, gData_*, veneer, and data-pointer "
             "table labels in peels relocate. Matched C .text keeps live BL / ABS32 "
-            "relocs. Singleton/pair data-to-data 0x08…… words are still absolute."
+            "relocs. Sparse leftover 0x08…… words in peels relocate; dense "
+            "graphics-like clusters stay absolute."
         )
         return 0
 

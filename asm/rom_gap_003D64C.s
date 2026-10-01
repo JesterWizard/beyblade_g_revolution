@@ -3,13 +3,24 @@
 	.balign 2
 	.global gRomGap003D64C
 gRomGap003D64C:
-	.incbin "baserom.gba", 0x3D64C, 0x64
+	.incbin "baserom.gba", 0x3D64C, 0x24
+	.4byte gRom_0833C870
+	.4byte gRom_08096F6C
+	.incbin "baserom.gba", 0x3D678, 0x28
+	.4byte gRom_0833C880
+	.4byte gRom_08096F58
+	.incbin "baserom.gba", 0x3D6A8, 0x8
 	.4byte gData_082BF600
 	.4byte gData_080B72F3
-	.incbin "baserom.gba", 0x3D6B8, 0x40
+	.incbin "baserom.gba", 0x3D6B8, 0x30
+	.4byte gRom_0833C890
+	.4byte gRom_080977A0
+	.incbin "baserom.gba", 0x3D6F0, 0x8
 	.4byte gData_082BF600
 	.4byte gData_080B72F3
-	.incbin "baserom.gba", 0x3D700, 0x98
+	.incbin "baserom.gba", 0x3D700, 0x88
+	.4byte gRom_080796BC
+	.incbin "baserom.gba", 0x3D78C, 0xC
 	.global _0803D798
 	.thumb_func
 _0803D798:
@@ -39,7 +50,11 @@ _0803D8CC:
 	.global _0803D92C
 	.thumb_func
 _0803D92C:
-	.incbin "baserom.gba", 0x3D92C, 0x34
+	.incbin "baserom.gba", 0x3D92C, 0x18
+	.global _0803D944
+	.thumb_func
+_0803D944:
+	.incbin "baserom.gba", 0x3D944, 0x1C
 	.global _0803D960
 	.thumb_func
 _0803D960:
@@ -55,7 +70,19 @@ _0803D9CC:
 	.global _0803DA20
 	.thumb_func
 _0803DA20:
-	.incbin "baserom.gba", 0x3DA20, 0x188
+	.incbin "baserom.gba", 0x3DA20, 0x48
+	.global _0803DA68
+	.thumb_func
+_0803DA68:
+	.incbin "baserom.gba", 0x3DA68, 0x6C
+	.global _0803DAD4
+	.thumb_func
+_0803DAD4:
+	.incbin "baserom.gba", 0x3DAD4, 0x70
+	.global _0803DB44
+	.thumb_func
+_0803DB44:
+	.incbin "baserom.gba", 0x3DB44, 0x64
 	.4byte gData_0807A1F4
 	.incbin "baserom.gba", 0x3DBAC, 0x1C
 	.4byte gData_0807A1F4

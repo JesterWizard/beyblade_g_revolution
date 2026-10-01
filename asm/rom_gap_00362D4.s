@@ -55,7 +55,11 @@ gRom_080365A0:
 	.global _080365E0
 	.thumb_func
 _080365E0:
-	.incbin "baserom.gba", 0x365E0, 0x138
+	.incbin "baserom.gba", 0x365E0, 0x34
+	.global _08036614
+	.thumb_func
+_08036614:
+	.incbin "baserom.gba", 0x36614, 0x104
 	.4byte gRom_082A478C
 	.4byte gRom_080BAF18
 	.incbin "baserom.gba", 0x36720, 0x4

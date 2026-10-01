@@ -7,7 +7,9 @@ gRomGap0032100:
 	.4byte gData_080BB888
 	.incbin "baserom.gba", 0x32250, 0x10
 	.4byte gData_082BF600
-	.incbin "baserom.gba", 0x32264, 0x1C8
+	.incbin "baserom.gba", 0x32264, 0x5C
+	.4byte gRom_08077FE8
+	.incbin "baserom.gba", 0x322C4, 0x168
 	.4byte gData_080BB8BC
 	.incbin "baserom.gba", 0x32430, 0x28
 	.global _08032458

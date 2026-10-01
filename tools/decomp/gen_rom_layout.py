@@ -161,16 +161,40 @@ def matched_coverage(functions: list[dict], rom_len: int) -> bytearray:
     return covered
 
 
-MIN_PTR_RUN = 3
+MIN_PTR_RUN = 2
+# GBA header; leftover words that "point" here are almost never data pointers.
+ROM_HEADER_SIZE = 0xC0
+# Isolated 0x08…… words in a low-density window are struct fields; a ~0.5
+# fraction is graphics / palettes (leave those baked so a slide keeps pixels).
+PTR_SPARSE_FRAC = 0.25
+PTR_NEIGHBOR_BYTES = 128
+
+
+def rom_window_frac(rom: bytes, off: int, radius: int = PTR_NEIGHBOR_BYTES) -> float:
+    """Fraction of 4-aligned words in `[off-radius, off+radius)` in the ROM window."""
+    lo = max(0, (off - radius) & ~3)
+    hi = min(len(rom), (off + radius + 3) & ~3)
+    total = 0
+    hits = 0
+    pos = lo
+    while pos + 4 <= hi:
+        total += 1
+        word = int.from_bytes(rom[pos : pos + 4], "little")
+        if ROM_BASE <= word < ROM_BASE + ROM_SIZE:
+            hits += 1
+        pos += 4
+    return hits / total if total else 0.0
 
 
 def pointer_table_sites(
     rom: bytes, covered: bytearray, labels: dict[int, list[str]]
 ) -> tuple[dict[int, list[str]], dict[int, str]]:
-    """Runs of ROM pointers in peels → target labels + site `.4byte` map.
+    """High-confidence ROM pointers in peels → target labels + site `.4byte` map.
 
-    Singletons and pairs stay baked: those collide with graphics. A run of
-    `MIN_PTR_RUN` or more 4-aligned words in the ROM window is a table.
+    Runs of `MIN_PTR_RUN` or more 4-aligned words in the ROM window are tables
+    (pairs included). Leftover singletons become `.4byte` when they already
+    point at a peel label, or when they sit in a sparse window (`PTR_SPARSE_FRAC`)
+    with a target past the ROM header — graphics clusters stay baked.
     """
     n = len(rom)
     words: list[tuple[int, int]] = []
@@ -187,7 +211,7 @@ def pointer_table_sites(
     new_labels: dict[int, list[str]] = {}
     sites: dict[int, str] = {}
 
-    def name_at(target_off: int, thumb: bool) -> str | None:
+    def name_at(target_off: int, thumb: bool, create: bool) -> str | None:
         existing = labels.get(target_off) or new_labels.get(target_off)
         if existing:
             if thumb:
@@ -198,10 +222,24 @@ def pointer_table_sites(
                 if name.startswith("gData_") or name.startswith("gRom_"):
                     return name
             return existing[0]
+        if not create:
+            return None
         addr = ROM_BASE + target_off
         name = f"_{addr:08X}" if thumb else f"gRom_{addr:08X}"
         new_labels.setdefault(target_off, []).append(name)
         return name
+
+    def add_site(site: int, word: int, create: bool) -> None:
+        if (word & 3) not in (0, 1):
+            return
+        tgt = (word - ROM_BASE) & ~1
+        if tgt < 0 or tgt >= n or covered[tgt]:
+            return
+        name = name_at(tgt, bool(word & 1), create)
+        if name:
+            # Peel labels live in .rodata; `.thumb_func` does not set the
+            # ELF thumb bit, so ABS32 function pointers need an explicit +1.
+            sites[site] = f"{name} + 1" if word & 1 else name
 
     i = 0
     nw = len(words)
@@ -211,17 +249,20 @@ def pointer_table_sites(
             j += 1
         if j - i >= MIN_PTR_RUN:
             for site, word in words[i:j]:
-                if (word & 3) not in (0, 1):
-                    continue
-                tgt = (word - ROM_BASE) & ~1
-                if tgt < 0 or tgt >= n or covered[tgt]:
-                    continue
-                name = name_at(tgt, bool(word & 1))
-                if name:
-                    # Peel labels live in .rodata; `.thumb_func` does not set the
-                    # ELF thumb bit, so ABS32 function pointers need an explicit +1.
-                    sites[site] = f"{name} + 1" if word & 1 else name
+                add_site(site, word, create=True)
         i = j
+    for site, word in words:
+        if site not in sites:
+            add_site(site, word, create=False)
+    for site, word in words:
+        if site in sites:
+            continue
+        tgt = (word - ROM_BASE) & ~1
+        if tgt < ROM_HEADER_SIZE:
+            continue
+        if rom_window_frac(rom, site) > PTR_SPARSE_FRAC:
+            continue
+        add_site(site, word, create=True)
     return new_labels, sites
 
 
@@ -499,6 +540,10 @@ def main() -> int:
         ld_lines.append(f"    .rom_head {hexaddr(ROM_BASE)} : {{")
         ld_lines.append("        asm/rom.o(.rodata)")
         ld_lines.append("    } > ROM")
+        # Output section so ld keeps the hole; a bare `. = . + N` is ignored.
+        ld_lines.append("    .rom_shift : {")
+        ld_lines.append("        . = . + __rom_shift_bytes;")
+        ld_lines.append("    } > ROM")
         # SUBALIGN(2): Thumb sites are 2-byte aligned; default .rodata is 4.
         # Without this the linker pads 2-mod-4 gaps and SHA1 breaks.
         ld_lines.append("    .rom_body : SUBALIGN(2) {")
@@ -559,7 +604,10 @@ def main() -> int:
     LAYOUT_LD.write_text("\n".join(ld_lines) + "\n")
     print(f"gen_rom_layout: {len(functions)} matched function(s)")
     print(f"gen_rom_layout: {n_relocs} pointer word(s) as .4byte")
-    print(f"gen_rom_layout: {n_table} data-pointer table word(s) (runs>={MIN_PTR_RUN})")
+    print(
+        f"gen_rom_layout: {n_table} high-confidence data-pointer word(s) "
+        f"(runs>={MIN_PTR_RUN} + labeled refs + sparse singletons)"
+    )
     print(f"gen_rom_layout: {n_anon} gRom_/_08* table-target label(s)")
     print(f"gen_rom_layout: {n_labels} peel label(s) (gData_* + veneers + unmatched sub_* + gRom_*)")
     print(f"gen_rom_layout: wrote {LAYOUT_LD}")

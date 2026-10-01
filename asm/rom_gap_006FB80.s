@@ -6,4 +6,6 @@ gRomGap006FB80:
 	.global _0806FB80
 	.thumb_func
 _0806FB80:
-	.incbin "baserom.gba", 0x6FB80, 0x78
+	.incbin "baserom.gba", 0x6FB80, 0x38
+	.4byte gRom_083D213C
+	.incbin "baserom.gba", 0x6FBBC, 0x3C

@@ -25,7 +25,11 @@ _08052504:
 	.incbin "baserom.gba", 0x52504, 0x30
 	.4byte gData_082BCD00
 	.4byte gData_080B738E
-	.incbin "baserom.gba", 0x5253C, 0x58
+	.incbin "baserom.gba", 0x5253C, 0x10
+	.4byte gRom_08096D64
+	.incbin "baserom.gba", 0x52550, 0x18
+	.4byte gRom_08096D50
+	.incbin "baserom.gba", 0x5256C, 0x28
 	.global _08052594
 	.thumb_func
 _08052594:

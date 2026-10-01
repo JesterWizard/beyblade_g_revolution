@@ -28,11 +28,17 @@ _080667EC:
 	.global _080668C8
 	.thumb_func
 _080668C8:
-	.incbin "baserom.gba", 0x668C8, 0xBC
+	.incbin "baserom.gba", 0x668C8, 0x30
+	.4byte gRom_080BB0D4
+	.incbin "baserom.gba", 0x668FC, 0x78
+	.4byte gRom_080BAE54
+	.incbin "baserom.gba", 0x66978, 0xC
 	.global _08066984
 	.thumb_func
 _08066984:
-	.incbin "baserom.gba", 0x66984, 0x70
+	.incbin "baserom.gba", 0x66984, 0x54
+	.4byte gRom_080BAE54
+	.incbin "baserom.gba", 0x669DC, 0x18
 	.global _080669F4
 	.thumb_func
 _080669F4:

@@ -3,4 +3,5 @@
 	.balign 2
 	.global gRomGap0045CE4
 gRomGap0045CE4:
-	.incbin "baserom.gba", 0x45CE4, 0x58
+	.incbin "baserom.gba", 0x45CE4, 0x54
+	.4byte gRom_083A5E38

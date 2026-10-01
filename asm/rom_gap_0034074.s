@@ -3,4 +3,6 @@
 	.balign 2
 	.global gRomGap0034074
 gRomGap0034074:
-	.incbin "baserom.gba", 0x34074, 0xC8
+	.incbin "baserom.gba", 0x34074, 0xC0
+	.4byte gRom_08078C18
+	.4byte gRom_08078B98

@@ -17,7 +17,12 @@ gRom_0802D9DC:
 	.4byte gRom_0802DC3C
 	.global gRom_0802D9F0
 gRom_0802D9F0:
-	.incbin "baserom.gba", 0x2D9F0, 0x1B0
+	.incbin "baserom.gba", 0x2D9F0, 0x198
+	.4byte gRom_080D6618
+	.incbin "baserom.gba", 0x2DB8C, 0x8
+	.4byte gRom_080D6B68
+	.incbin "baserom.gba", 0x2DB98, 0x4
+	.4byte gRom_080D6D50
 	.4byte gData_080BB8C0
 	.incbin "baserom.gba", 0x2DBA4, 0x8
 	.global gRom_0802DBAC

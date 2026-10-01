@@ -178,10 +178,11 @@ manual address surgery.
 
 `make` now compiles `src/matched/*.c` into a sequential peel (`compile_matched.py`
 + `.rom_body : SUBALIGN(2)`). Head stays at `0x08000000`. Function/gap VMAs are
-gone. Thumb function-entry words and `gData_*` table words in peels are
-`.4byte`; ROM `gData_*` are peel labels (`SET_ROM_DATA`). Matched C keeps live
-BL / ABS32 relocs. Remaining blocker: singleton/pair data-to-data `0x08……`
-words (pointer tables of length ≥3 are `.4byte`).
+gone. Thumb function-entry words, `gData_*` tables, pointer-table runs, labeled
+refs, and sparse leftover data pointers in peels are `.4byte`. ROM `gData_*`
+are peel labels (`SET_ROM_DATA`). Matched C keeps live BL / ABS32 relocs.
+`make GROW=1` keeps a non-retail `.text` size so later objects slide. Remaining:
+dense/unaligned singleton `0x08……` words (graphics-like).
 
 ### Migration gates (start Phase 5 when ANY is true)
 
@@ -198,11 +199,16 @@ words (pointer tables of length ≥3 are `.4byte`).
 4. **Audit** hardcoded ROM pointers in C/asm/data → replace with symbols / linker labels.
    Thumb function-entry words and known `gData_*` table words in peels: **Done**.
    Matched C BLs / `gData_*` pools: **Done** (live `.rel.text`). Pointer tables
-   (runs of ≥3 ROM words) in peels: **Done** (`gRom_*` / `_08*` + `.4byte`).
-   Singleton/pair data-to-data words still absolute.
+   (runs of ≥2 ROM words) and labeled singleton refs in peels: **Done**.
+   Unlabeled dense/unaligned singleton data-to-data words still absolute.
 5. **`tools/decomp/check_shiftable.py`**: sequential layout + peel pointer/label
-   gates + unmatched `sub_*` + data-pointer tables. **Done.** Remaining:
-   singleton/pair data pointers; optional `ROM_BASE + 0x1000` rebuild test.
+   gates + unmatched `sub_*` + data-pointer tables. **Done.**
+6. **Slide-and-rebuild** (`make shift-test`, `ROM_BASE + 0x1000` after `.rom_head`).
+   **Done.**
+7. **Grow a function** (`make grow-test` + `GROW=1`): later peels slide when
+   matched `.text` grows. Sparse leftover data pointers are `.4byte`.
+   **Done.** Remaining: ~3,791 dense/unaligned singleton `0x08……` words
+   (graphics-like; converting them would slide pixel values).
 
 ### Handwritten asm
 

@@ -8,7 +8,8 @@ gRomGap004C38C:
 _0804C38C:
 	.incbin "baserom.gba", 0x4C38C, 0xC4
 	.4byte gData_080989F0
-	.incbin "baserom.gba", 0x4C454, 0x20
+	.incbin "baserom.gba", 0x4C454, 0x1C
+	.4byte gRom_082BB648
 	.4byte gData_080B7258
 	.global _0804C478
 	.thumb_func
@@ -21,7 +22,8 @@ _0804C4E8:
 	.global _0804C5FC
 	.thumb_func
 _0804C5FC:
-	.incbin "baserom.gba", 0x4C5FC, 0x94
+	.incbin "baserom.gba", 0x4C5FC, 0x90
+	.4byte gRom_083A7E28
 	.4byte gData_080989F0
 	.incbin "baserom.gba", 0x4C694, 0xC
 	.global _0804C6A0

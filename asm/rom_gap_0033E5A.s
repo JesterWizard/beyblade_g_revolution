@@ -3,4 +3,5 @@
 	.balign 2
 	.global gRomGap0033E5A
 gRomGap0033E5A:
-	.incbin "baserom.gba", 0x33E5A, 0x4A
+	.incbin "baserom.gba", 0x33E5A, 0x46
+	.4byte gRom_08078348

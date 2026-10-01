@@ -14,7 +14,15 @@ _0804D628:
 	.global _0804D6F8
 	.thumb_func
 _0804D6F8:
-	.incbin "baserom.gba", 0x4D6F8, 0x80
+	.incbin "baserom.gba", 0x4D6F8, 0x50
+	.global _0804D748
+	.thumb_func
+_0804D748:
+	.incbin "baserom.gba", 0x4D748, 0x18
+	.global _0804D760
+	.thumb_func
+_0804D760:
+	.incbin "baserom.gba", 0x4D760, 0x18
 	.global _0804D778
 	.thumb_func
 _0804D778:
@@ -27,9 +35,18 @@ _0804D810:
 	.global _0804D888
 	.thumb_func
 _0804D888:
-	.incbin "baserom.gba", 0x4D888, 0x140
+	.incbin "baserom.gba", 0x4D888, 0xF4
+	.global _0804D97C
+	.thumb_func
+_0804D97C:
+	.incbin "baserom.gba", 0x4D97C, 0x48
+	.4byte gRom_0807BE14
 	.4byte gData_08098A20
-	.incbin "baserom.gba", 0x4D9CC, 0x4C
+	.global _0804D9CC
+	.thumb_func
+_0804D9CC:
+	.incbin "baserom.gba", 0x4D9CC, 0x48
+	.4byte gRom_0807BE14
 	.4byte gData_08098A20
 	.incbin "baserom.gba", 0x4DA1C, 0xE8
 	.4byte gData_080D79CC

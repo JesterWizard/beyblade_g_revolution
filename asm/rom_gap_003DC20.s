@@ -11,4 +11,6 @@ gRomGap003DC20:
 	.4byte gData_080BB8BC
 	.incbin "baserom.gba", 0x3DCD8, 0x4
 	.4byte gData_0807A1F4
-	.incbin "baserom.gba", 0x3DCE0, 0x1C
+	.incbin "baserom.gba", 0x3DCE0, 0x14
+	.4byte gRom_0833D19C
+	.4byte gRom_0833D1C4

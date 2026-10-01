@@ -7,6 +7,9 @@ against retail (patching relocs only for the score), then keeps the ELF
 when later peels slide. Extra sections are stripped so they cannot leak
 into `.append_rodata`. The object's exported `.text` symbol is the filename
 stem so clone C (`void sub_0804B4B4` in `sub_0804C324.c`) does not collide.
+
+`--grow` (Makefile `GROW=1`) keeps a longer or shorter `.text` so later
+objects can slide; default still rejects a retail DIFF.
 """
 
 from __future__ import annotations
@@ -174,7 +177,7 @@ def emit_text_with_relocs(raw: Path, dest: Path, size: int) -> None:
     raise SystemExit(f"{dest}: compiled .text is {got} bytes, retail is {size}")
 
 
-def compile_matched(c_path: Path, obj_path: Path) -> None:
+def compile_matched(c_path: Path, obj_path: Path, grow: bool = False) -> None:
     name = c_path.stem
     if not name.startswith("sub_"):
         raise SystemExit(f"compile_matched: expected sub_*.c, got {c_path}")
@@ -187,6 +190,10 @@ def compile_matched(c_path: Path, obj_path: Path) -> None:
     with tempfile.TemporaryDirectory() as tmp:
         raw = Path(tmp) / "raw.o"
         compile_c(c_path, raw)
+        if grow:
+            emit_text_with_relocs(raw, obj_path, len(obj_text_bytes(raw)))
+            export_filename_symbol(obj_path, name)
+            return
         got = normalize_compiled(obj_text_bytes(raw, name), size)
         if got != want:
             info = score_bytes(got, want)
@@ -205,11 +212,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("c_file", type=Path)
     parser.add_argument("obj_file", type=Path)
+    parser.add_argument(
+        "--grow",
+        action="store_true",
+        help="Keep compiled .text size (pokeemerald-style mods). Default rejects a DIFF.",
+    )
     args = parser.parse_args()
     c_path = args.c_file if args.c_file.is_absolute() else ROOT / args.c_file
     obj_path = args.obj_file if args.obj_file.is_absolute() else ROOT / args.obj_file
     try:
-        compile_matched(c_path, obj_path)
+        compile_matched(c_path, obj_path, grow=args.grow)
     except BannedAsmError as exc:
         print(f"BANNED ASM: {exc}", file=sys.stderr)
         return 2

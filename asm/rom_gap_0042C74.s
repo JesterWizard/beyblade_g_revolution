@@ -24,4 +24,6 @@ gRom_08042D1C:
 	.incbin "baserom.gba", 0x42D1C, 0x4
 	.global gRom_08042D20
 gRom_08042D20:
-	.incbin "baserom.gba", 0x42D20, 0x158
+	.incbin "baserom.gba", 0x42D20, 0x130
+	.4byte gRom_080909C4
+	.incbin "baserom.gba", 0x42E54, 0x24

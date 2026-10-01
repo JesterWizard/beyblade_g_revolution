@@ -84,7 +84,13 @@ _call_via_sp:
 	.global _call_via_lr
 	.thumb_func
 _call_via_lr:
-	.incbin "baserom.gba", 0x73C78, 0x438
+	.incbin "baserom.gba", 0x73C78, 0x130
+	.4byte gRom_083D3284
+	.incbin "baserom.gba", 0x73DAC, 0x54
+	.4byte gRom_083D3284
+	.incbin "baserom.gba", 0x73E04, 0x174
+	.4byte gRom_083D3284
+	.incbin "baserom.gba", 0x73F7C, 0x134
 	.global __divsi3
 	.thumb_func
 __divsi3:

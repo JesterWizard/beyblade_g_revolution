@@ -3,7 +3,13 @@
 	.balign 2
 	.global gRomGap0045AD8
 gRomGap0045AD8:
-	.incbin "baserom.gba", 0x45AD8, 0xF0
+	.incbin "baserom.gba", 0x45AD8, 0x20
+	.global _08045AF8
+	.thumb_func
+_08045AF8:
+	.incbin "baserom.gba", 0x45AF8, 0xC4
+	.4byte gRom_0802B7E0
+	.incbin "baserom.gba", 0x45BC0, 0x8
 	.global _08045BC8
 	.thumb_func
 _08045BC8:

@@ -156,6 +156,9 @@ appear in the index and on their subsystem page. The scoreboard
 | `python3 tools/decomp/permuter/auto.py FN` | Local permuter: import → score → search → integrate on score 0 |
 | `python3 tools/decomp/compile_matched.py FN.c FN.o` | Compile one matched C file for the peel |
 | `make compare` | Must stay `beyblade_g_revolution.gba: OK` |
+| `make shift-test` | Relink with `0x1000` after `.rom_head`; live relocs must slide |
+| `make grow-test` | Insert 4 bytes after the first matched `.text`; later peels must slide |
+| `make GROW=1 COMPARE=0 rom` | Allow matched C `.text` to grow or shrink (mods; SHA1 will not match) |
 
 Matching C is `src/matched/` (one file per function) and is what `make`
 compiles into the ROM. The linker packs those objects in order after the ROM

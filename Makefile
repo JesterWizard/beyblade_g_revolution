@@ -79,7 +79,7 @@ SHELL := bash -o pipefail
 .SECONDARY:
 .DELETE_ON_ERROR:
 
-.PHONY: all rom modern compare clean tidy tools check-baserom
+.PHONY: all rom modern compare clean tidy tools check-baserom shift-test grow-test
 .PHONY: analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
 all: rom
 
@@ -120,6 +120,12 @@ $(shell mkdir -p $(SUBDIRS))
 
 modern: all
 compare: all
+
+shift-test:
+	python3 tools/decomp/test_shift.py
+
+grow-test:
+	python3 tools/decomp/test_grow.py
 
 progress:
 	python3 tools/decomp/progress.py --write --top 15
@@ -216,9 +222,15 @@ $(DATA_ASM_BUILDDIR)/%.o: $(DATA_ASM_SUBDIR)/%.s
 
 # Matched C is always agbcc (per-file compiler / flags / fixups). Do not use
 # the generic cc1 recipe — it ignores match-compiler comments and pads .text.
+GROW ?= 0
+COMPILE_MATCHED_FLAGS :=
+ifeq ($(GROW),1)
+COMPILE_MATCHED_FLAGS += --grow
+endif
+
 $(C_BUILDDIR)/matched/%.o: $(C_SUBDIR)/matched/%.c tools/decomp/compile_matched.py
 	@mkdir -p $(dir $@)
-	python3 tools/decomp/compile_matched.py $< $@
+	python3 tools/decomp/compile_matched.py $(COMPILE_MATCHED_FLAGS) $< $@
 
 $(C_BUILDDIR)/%.o: $(C_SUBDIR)/%.c
 ifeq ($(MODERN),0)
@@ -229,10 +241,23 @@ endif
 	$(AS) $(ASFLAGS) -o $@ $(C_BUILDDIR)/$*.s
 
 LD_SCRIPT := ld_script.ld
+SHIFT_BYTES ?= 0
+GROW ?= 0
+PAD_CART ?= 1
+ifneq ($(SHIFT_BYTES),0)
+PAD_CART := 0
+endif
+ifeq ($(GROW),1)
+PAD_CART := 0
+endif
 LDFLAGS = -Map ../../$(MAP) -L ../../asm
+ifneq ($(SHIFT_BYTES),0)
+LDFLAGS += --defsym=__rom_shift_bytes=$(SHIFT_BYTES)
+endif
+EXTRA_OBJS ?=
 
-$(ELF): $(LD_SCRIPT) $(OBJS)
-	cd $(OBJ_DIR) && $(LD) $(LDFLAGS) -T ../../$(LD_SCRIPT) -o ../../$@ $(OBJS_REL) $(LIB)
+$(ELF): $(LD_SCRIPT) asm/rom_layout.ld $(OBJS)
+	cd $(OBJ_DIR) && $(LD) $(LDFLAGS) -T ../../$(LD_SCRIPT) -o ../../$@ $(OBJS_REL) $(EXTRA_OBJS) $(LIB)
 ifneq ($(wildcard $(FIX)),)
 	$(FIX) $@ -t"$(TITLE)" -c$(GAME_CODE) -m$(MAKER_CODE) -r$(REVISION) --silent
 endif
@@ -240,12 +265,16 @@ endif
 $(ROM): $(ELF)
 	$(OBJCOPY) -O binary --gap-fill 0xFF $< $@
 ifneq ($(wildcard $(FIX)),)
+ifeq ($(PAD_CART),1)
 	$(FIX) $@ -p --silent
 endif
-	@# Trim the image to __append_end (the end of the retail ROM).
+endif
+	@# Trim the image to __append_end (retail 4MB, or 4MB+shift/grow).
 	@end=$$(arm-none-eabi-nm $(ELF) | awk '/__append_end$$/{print $$1}'); \
 	 size=$$((0x$$end - 0x08000000)); \
 	 truncate -s $$size $@
 ifneq ($(wildcard $(FIX)),)
+ifeq ($(PAD_CART),1)
 	$(FIX) $@ -p --silent
+endif
 endif

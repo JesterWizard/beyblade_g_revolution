@@ -21,14 +21,36 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-10-02 — Phase 5: pokeemerald-style grow
+
+Sparse leftover `0x08……` words (low ROM-window density, not the ~0.5 graphics
+cluster) are `.4byte` (29,886 peel sites). `compile_matched.py --grow` /
+`make GROW=1 COMPARE=0 rom` keeps a longer `.text`. `make grow-test` inserts
+4 bytes after `sub_0802B8BC`: the next function and live relocs slide.
+~3,791 dense/unaligned singletons stay baked. `make compare`: **OK**.
+
+### 2026-10-02 — Phase 5: slide-and-rebuild (`make shift-test`)
+
+`.rom_shift` is a real output section (`PROVIDE(__rom_shift_bytes = 0)`). A bare
+`. = . + N` between sections was ignored by GNU ld. `make shift-test` relinks
+with `0x1000` after `.rom_head` (does not replace the retail GBA): 27,668
+high-confidence peel pointers and 633 matched-C ABS32 pools slide; 6,092
+unlabeled singleton `0x08……` words stay baked. `gbafix -p` is skipped when
+shifting so the trim to `__append_end` is not padded to 8MB. `make compare`: **OK**.
+
+### 2026-10-02 — Phase 5: pair tables + labeled singleton refs
+
+`pointer_table_sites` now relocates runs of ≥2 ROM-window words and leftover
+singletons that already point at a peel label (27,585 sites, 14,823 `gRom_*` /
+`_08*` targets). Unlabeled singletons stay baked. `make compare`: **OK**. Next:
+slide-and-rebuild test (`ROM_BASE + 0x1000`).
+
 ### 2026-10-02 — Phase 5: data-pointer tables in peels
 
 `gen_rom_layout.py` turns runs of ≥3 ROM-window words in peels into `.4byte`
 `gRom_*` / `_08*` (22,756 sites, 14,153 target labels). Thumb ABS32 to peel
 code uses `label + 1` because `.rodata` symbols have no ELF thumb bit.
-Singletons and pairs stay baked (graphics collisions). `make compare`: **OK**.
-`check_shiftable.py`: 22756/22756 table words relocatable. Next: remaining
-singleton/pair `0x08……` words, then a slide-and-rebuild test.
+`make compare`: **OK**.
 
 ### 2026-10-01 — Phase 5: live BL / ABS32 relocs in matched C
 
@@ -1772,7 +1794,7 @@ First 4 functions + `src/stubs.c`.
 ## Next
 
 - **Phase 4:** Batch names in `analysis/symbols.json` (322/633 named)
-- **Phase 5:** Singleton/pair data-to-data `0x08……` words; then a slide-and-rebuild test
+- **Phase 5:** Dense/unaligned singleton `0x08……` words (~3791); grow-a-function **works**
 
 ## Blockers
 

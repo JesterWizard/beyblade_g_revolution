@@ -18,7 +18,8 @@ gRom_0807218C:
 	.incbin "baserom.gba", 0x7218C, 0x48
 	.global gRom_080721D4
 gRom_080721D4:
-	.incbin "baserom.gba", 0x721D4, 0x114
+	.incbin "baserom.gba", 0x721D4, 0x110
+	.4byte gRom_083D2590
 	.global gRom_080722E8
 gRom_080722E8:
 	.incbin "baserom.gba", 0x722E8, 0x30
@@ -27,4 +28,9 @@ gRom_08072318:
 	.incbin "baserom.gba", 0x72318, 0x1C
 	.global gRom_08072334
 gRom_08072334:
-	.incbin "baserom.gba", 0x72334, 0x370
+	.incbin "baserom.gba", 0x72334, 0xA0
+	.4byte gRom_083D25A0
+	.4byte gRom_083D25D0
+	.incbin "baserom.gba", 0x723DC, 0xE0
+	.4byte gRom_083D2608
+	.incbin "baserom.gba", 0x724C0, 0x1E4

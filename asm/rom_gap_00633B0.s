@@ -21,7 +21,9 @@ _08063490:
 	.global _080634C0
 	.thumb_func
 _080634C0:
-	.incbin "baserom.gba", 0x634C0, 0x80
+	.incbin "baserom.gba", 0x634C0, 0x68
+	.4byte gRom_080B8188
+	.incbin "baserom.gba", 0x6352C, 0x14
 	.global _08063540
 	.thumb_func
 _08063540:

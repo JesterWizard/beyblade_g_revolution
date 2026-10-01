@@ -12,15 +12,23 @@ gRomGap002E366:
 	.4byte gRom_08077F10
 	.incbin "baserom.gba", 0x2E5F4, 0x8
 	.4byte gData_080BB8C0
-	.incbin "baserom.gba", 0x2E600, 0x3C
+	.4byte gRom_082BCB00
+	.incbin "baserom.gba", 0x2E604, 0x38
 	.4byte gData_080BB8BC
-	.incbin "baserom.gba", 0x2E640, 0xA4
+	.incbin "baserom.gba", 0x2E640, 0x3C
+	.global _0802E67C
+	.thumb_func
+_0802E67C:
+	.incbin "baserom.gba", 0x2E67C, 0x68
 	.4byte gData_080BB888
 	.incbin "baserom.gba", 0x2E6E8, 0x10
 	.global _0802E6F8
 	.thumb_func
 _0802E6F8:
-	.incbin "baserom.gba", 0x2E6F8, 0xA4
+	.incbin "baserom.gba", 0x2E6F8, 0x58
+	.global gRom_0802E750
+gRom_0802E750:
+	.incbin "baserom.gba", 0x2E750, 0x4C
 	.global _0802E79C
 	.thumb_func
 _0802E79C:

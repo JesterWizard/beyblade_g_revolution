@@ -31,4 +31,6 @@ _0804E068:
 	.4byte gData_080B7429
 	.4byte gRom_083A83D4
 	.4byte gRom_08097318
-	.incbin "baserom.gba", 0x4E16C, 0x10
+	.incbin "baserom.gba", 0x4E16C, 0x8
+	.4byte gRom_080977B4
+	.4byte gRom_083A83E4

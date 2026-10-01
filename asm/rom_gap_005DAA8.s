@@ -43,4 +43,16 @@ gRom_0805DE28:
 	.incbin "baserom.gba", 0x5DE28, 0x40
 	.global gRom_0805DE68
 gRom_0805DE68:
-	.incbin "baserom.gba", 0x5DE68, 0x1DC
+	.incbin "baserom.gba", 0x5DE68, 0x44
+	.global _0805DEAC
+	.thumb_func
+_0805DEAC:
+	.incbin "baserom.gba", 0x5DEAC, 0x58
+	.global _0805DF04
+	.thumb_func
+_0805DF04:
+	.incbin "baserom.gba", 0x5DF04, 0x50
+	.global _0805DF54
+	.thumb_func
+_0805DF54:
+	.incbin "baserom.gba", 0x5DF54, 0xF0

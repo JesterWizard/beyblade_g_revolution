@@ -20,4 +20,8 @@ _080528B8:
 	.incbin "baserom.gba", 0x528B8, 0x38
 	.4byte gData_082BCD00
 	.4byte gData_080B738E
-	.incbin "baserom.gba", 0x528F8, 0x3C
+	.incbin "baserom.gba", 0x528F8, 0x4
+	.4byte gRom_08097034
+	.incbin "baserom.gba", 0x52900, 0x28
+	.4byte gRom_08097048
+	.incbin "baserom.gba", 0x5292C, 0x8

@@ -35,4 +35,5 @@ _080316FC:
 	.4byte gRom_0833C464
 	.4byte gRom_0833C474
 	.4byte gRom_0833C484
-	.incbin "baserom.gba", 0x31C8C, 0xC
+	.incbin "baserom.gba", 0x31C8C, 0x8
+	.4byte gRom_0833C4C0

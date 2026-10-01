@@ -3,7 +3,11 @@
 	.balign 2
 	.global gRomGap0046356
 gRomGap0046356:
-	.incbin "baserom.gba", 0x46356, 0x306
+	.incbin "baserom.gba", 0x46356, 0x2F6
+	.4byte gRom_08309728
+	.incbin "baserom.gba", 0x46650, 0x4
+	.4byte gRom_083147C8
+	.incbin "baserom.gba", 0x46658, 0x4
 	.4byte gRom_08315B88
 	.4byte gData_080BB8C0
 	.4byte gRom_083006E0
@@ -11,7 +15,9 @@ gRomGap0046356:
 	.4byte gData_08091208
 	.4byte gData_082BCD00
 	.4byte gData_080B738E
-	.incbin "baserom.gba", 0x46684, 0xA0
+	.incbin "baserom.gba", 0x46684, 0x10
+	.4byte gRom_083A5E60
+	.incbin "baserom.gba", 0x46698, 0x8C
 	.4byte gRom_08046728
 	.global gRom_08046728
 gRom_08046728:
@@ -38,4 +44,6 @@ gRom_0804677C:
 gRom_08046788:
 	.incbin "baserom.gba", 0x46788, 0x508
 	.4byte gData_080BB8BC
-	.incbin "baserom.gba", 0x46C94, 0x1E8
+	.incbin "baserom.gba", 0x46C94, 0x1C0
+	.4byte gRom_083A6B98
+	.incbin "baserom.gba", 0x46E58, 0x24
