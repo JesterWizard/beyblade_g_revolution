@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T19:47:16Z",
+  "generated": "2026-10-01T16:13:37Z",
   "structs": {
     "BattleWork": {
       "functions": [
@@ -5557,6 +5557,18 @@
           "name": "filler_00"
         },
         {
+          "offset": "0x04",
+          "width": 1,
+          "ctype": "u8",
+          "name": "unk04"
+        },
+        {
+          "offset": "0x05",
+          "width": 1,
+          "ctype": "u8",
+          "name": "unk05"
+        },
+        {
           "offset": "0x06",
           "width": 1,
           "ctype": "u8",
@@ -5567,6 +5579,18 @@
           "width": 1,
           "ctype": "u8",
           "name": "filler_07"
+        },
+        {
+          "offset": "0x0C",
+          "width": 1,
+          "ctype": "u8",
+          "name": "unk0C"
+        },
+        {
+          "offset": "0x0D",
+          "width": 1,
+          "ctype": "u8",
+          "name": "filler_0D"
         },
         {
           "offset": "0x10",
@@ -5873,40 +5897,10 @@
       "function_count": 1,
       "fields": [
         {
-          "offset": "0x00",
-          "width": 4,
-          "ctype": "u32",
-          "name": "unk00"
-        },
-        {
-          "offset": "0x04",
-          "width": 2,
-          "ctype": "u16",
-          "name": "unk04"
-        },
-        {
-          "offset": "0x06",
+          "offset": "0x10",
           "width": 1,
           "ctype": "u8",
-          "name": "filler_06"
-        },
-        {
-          "offset": "0x0C",
-          "width": 1,
-          "ctype": "u8",
-          "name": "filler_0C"
-        },
-        {
-          "offset": "0x0F",
-          "width": 1,
-          "ctype": "u8",
-          "name": "filler_0F"
-        },
-        {
-          "offset": "0x2A",
-          "width": 1,
-          "ctype": "u8",
-          "name": "filler_2A"
+          "name": "filler_10"
         },
         {
           "offset": "0x2B",

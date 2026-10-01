@@ -7,8 +7,8 @@
 |--|--|
 | ROM | `0x08047594` |
 | Size | 48 bytes (20 instructions) |
-| Tier | MATCHING |
-| Status | matched |
+| Tier | UNDERSTOOD |
+| Status | same_size |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08047594` |
 | Confidence | 0.5 |

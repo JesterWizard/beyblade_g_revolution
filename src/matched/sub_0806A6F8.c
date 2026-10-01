@@ -1,8 +1,80 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806a6f8
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+
+/* sub_0806A6F8 @ 0x0806A6F8 (436 bytes)
+ * Battle input hub: play back / record a u16 key queue (gData_03003F64 == 2 / 1)
+ * or poll REG_KEYINPUT, then refresh the ten Unk6A954 hold slots and the
+ * new / previous / released key masks. */
 void sub_0806A6F8(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nldr r0, _0806A728 @ =0x03003F64\nadds r4, r0, #0x0\nldrh r0, [r4, #0x00]\ncmp r0, #0x02\nbne _0806A73E\nldr r3, _0806A72C @ =0x03004074\nldrh r2, [r3, #0x00]\nadds r0, r2, #0x0\ncmp r0, #0x00\nbeq _0806A734\nldr r0, _0806A730 @ =0x03004070\nldr r1, [r0, #0x00]\nldrh r5, [r1, #0x00]\nadds r1, #0x02\nstr r1, [r0, #0x00]\nsubs r0, r2, #0x1\nstrh r0, [r3, #0x00]\nb _0806A736\n.byte 0x00, 0x00\n_0806A728: .4byte 0x03003F64\n_0806A72C: .4byte 0x03004074\n_0806A730: .4byte 0x03004070\n_0806A734:\nstrh r0, [r4, #0x00]\n_0806A736:\nldr r0, _0806A7E0 @ =0x03004068\nldr r1, _0806A7E4 @ =0x03000180\nldr r1, [r1, #0x00]\nstr r1, [r0, #0x00]\n_0806A73E:\nldrh r1, [r4, #0x00]\ncmp r1, #0x02\nbeq _0806A77C\nldr r0, _0806A7E8 @ =0x04000130\nldrh r0, [r0, #0x00]\nmvns r0, r0\nlsls r0, r0, #0x10\nlsrs r5, r0, #0x10\nldr r0, _0806A7EC @ =0x000003FF\nands r0, r5\ncmp r0, #0x00\nbeq _0806A75E\nldr r0, _0806A7E0 @ =0x03004068\nldr r1, _0806A7E4 @ =0x03000180\nldr r1, [r1, #0x00]\nstr r1, [r0, #0x00]\n_0806A75E:\nldrh r4, [r4, #0x00]\ncmp r4, #0x01\nbne _0806A77C\nldr r2, _0806A7F0 @ =0x03004074\nldrh r0, [r2, #0x00]\ncmp r0, #0x00\nbeq _0806A77C\nldr r0, _0806A7F4 @ =0x03004070\nldr r1, [r0, #0x00]\nstrh r5, [r1, #0x00]\nadds r1, #0x02\nstr r1, [r0, #0x00]\nldrh r0, [r2, #0x00]\nsubs r0, #0x01\nstrh r0, [r2, #0x00]\n_0806A77C:\nldr r4, _0806A7F8 @ =0x03004060\nldr r1, _0806A7FC @ =0x03003F60\nldrh r2, [r1, #0x00]\nadds r0, r5, #0x0\nbics r0, r2\nstrh r0, [r4, #0x00]\nldr r3, _0806A800 @ =0x0300406C\nmovs r0, #0x00\nstrh r0, [r3, #0x00]\nldr r0, _0806A804 @ =0x03004064\nstrh r2, [r0, #0x00]\nstrh r5, [r1, #0x00]\nmovs r5, #0x00\nmov r10, r3\nmovs r2, #0x01\nmov r9, r2\nldr r7, _0806A7E4 @ =0x03000180\nldr r6, _0806A808 @ =0x03003F70\nadds r4, r6, #0x4\nmov r8, r4\nmovs r0, #0x08\nadds r0, r0, r6\nmov r12, r0\n_0806A7AA:\nmov r0, r9\nlsls r0, r5\nldr r1, _0806A7F8 @ =0x03004060\nldrh r1, [r1, #0x00]\nands r0, r1\ncmp r0, #0x00\nble _0806A828\nldr r4, _0806A808 @ =0x03003F70\nlsls r2, r5, #0x01\nadds r0, r2, r5\nlsls r3, r0, #0x03\nmov r0, r8\nadds r1, r3, r0\nadds r0, r4, #0x0\nadds r0, #0x0C\nadds r0, r3, r0\nldr r1, [r1, #0x00]\nldr r0, [r0, #0x00]\nadds r1, r1, r0\nldr r0, [r7, #0x00]\ncmp r0, r1\nbls _0806A80C\nadds r0, r3, r4\nmov r1, r9\nstrh r1, [r0, #0x10]\nb _0806A814\n.byte 0x00, 0x00\n_0806A7E0: .4byte 0x03004068\n_0806A7E4: .4byte 0x03000180\n_0806A7E8: .4byte 0x04000130\n_0806A7EC: .4byte 0x000003FF\n_0806A7F0: .4byte 0x03004074\n_0806A7F4: .4byte 0x03004070\n_0806A7F8: .4byte 0x03004060\n_0806A7FC: .4byte 0x03003F60\n_0806A800: .4byte 0x0300406C\n_0806A804: .4byte 0x03004064\n_0806A808: .4byte 0x03003F70\n_0806A80C:\nadds r1, r3, r4\nldrh r0, [r1, #0x10]\nadds r0, #0x01\nstrh r0, [r1, #0x10]\n_0806A814:\nadds r0, r2, r5\nlsls r0, r0, #0x03\nadds r2, r6, #0x0\nadds r2, #0x14\nadds r2, r0, r2\nadds r0, r0, r6\nldr r1, [r0, #0x00]\nstr r1, [r2, #0x00]\nldr r1, [r7, #0x00]\nstr r1, [r0, #0x00]\n_0806A828:\nmovs r4, #0x01\nadds r3, r4, #0x0\nlsls r3, r5\nadds r0, r3, #0x0\nldr r2, _0806A8A4 @ =0x03003F60\nldrh r2, [r2, #0x00]\nands r0, r2\ncmp r0, #0x00\nble _0806A84E\nlsls r0, r5, #0x01\nadds r0, r0, r5\nlsls r0, r0, #0x03\nmov r1, r12\nadds r2, r0, r1\nadds r0, r0, r6\nldr r1, [r7, #0x00]\nldr r0, [r0, #0x00]\nsubs r1, r1, r0\nstr r1, [r2, #0x00]\n_0806A84E:\nldr r2, _0806A8A4 @ =0x03003F60\nldrh r0, [r2, #0x00]\nasrs r0, r5\nands r0, r4\ncmp r0, #0x00\nbne _0806A88A\nadds r0, r3, #0x0\nldr r4, _0806A8A8 @ =0x03004064\nldrh r4, [r4, #0x00]\nands r0, r4\ncmp r0, #0x00\nble _0806A88A\nlsls r0, r5, #0x01\nadds r0, r0, r5\nlsls r0, r0, #0x03\nmov r1, r8\nadds r2, r0, r1\nldr r1, [r7, #0x00]\nstr r1, [r2, #0x00]\nmov r4, r12\nadds r2, r0, r4\nadds r0, r0, r6\nldr r0, [r0, #0x00]\nsubs r1, r1, r0\nstr r1, [r2, #0x00]\nmov r0, r10\nldrh r0, [r0, #0x00]\norrs r3, r0\nmov r1, r10\nstrh r3, [r1, #0x00]\n_0806A88A:\nadds r0, r5, #0x1\nlsls r0, r0, #0x10\nlsrs r5, r0, #0x10\ncmp r5, #0x09\nbls _0806A7AA\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r0}\nbx r0\n.byte 0x00, 0x00\n_0806A8A4: .4byte 0x03003F60\n_0806A8A8: .4byte 0x03004064");
+    u16 queueCount;
+    u16 keys;
+    u16 prev;
+    u16 i;
+
+    if (gData_03003F64 == 2)
+    {
+        if ((queueCount = gData_03004074) != 0)
+        {
+            keys = *gData_03004070++;
+            gData_03004074 = queueCount - 1;
+        }
+        else
+            gData_03003F64 = 0;
+        gData_03004068 = gData_03000180.unk00;
+    }
+
+    if (gData_03003F64 != 2)
+    {
+        keys = ~REG_KEYINPUT;
+        if ((keys & 0x3FF) != 0)
+            gData_03004068 = gData_03000180.unk00;
+
+        if (gData_03003F64 == 1)
+        {
+            if (gData_03004074 != 0)
+            {
+                *gData_03004070++ = keys;
+                gData_03004074--;
+            }
+        }
+    }
+
+    gData_03004060 = keys & ~(prev = gData_03003F60);
+    gData_0300406C = 0;
+    gData_03004064 = prev;
+    gData_03003F60 = keys;
+
+    for (i = 0; i <= 9; i++)
+    {
+        if ((s32)(gData_03004060 & (1 << i)) > 0)
+        {
+            if (gData_03000180.unk00 > gData_03003F70[i].unk04 + gData_03003F70[i].unk0C)
+                gData_03003F70[i].unk10 = 1;
+            else
+                gData_03003F70[i].unk10++;
+            gData_03003F70[i].unk14 = gData_03003F70[i].unk00;
+            gData_03003F70[i].unk00 = gData_03000180.unk00;
+        }
+
+        if ((s32)(gData_03003F60 & (1 << i)) > 0)
+            gData_03003F70[i].unk08 = gData_03000180.unk00 - gData_03003F70[i].unk00;
+
+        if (((gData_03003F60 >> i) & 1) == 0)
+        {
+            if ((s32)(gData_03004064 & (1 << i)) > 0)
+            {
+                u32 t;
+                gData_03003F70[i].unk04 = t = gData_03000180.unk00;
+                gData_03003F70[i].unk08 = t - gData_03003F70[i].unk00;
+                gData_0300406C |= 1 << i;
+            }
+        }
+    }
 }
+

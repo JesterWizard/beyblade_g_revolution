@@ -8,18 +8,27 @@ _Agent-maintained log. Updated after each batch run._
 | Metric | Value |
 |--------|-------|
 | Linked in ROM | **633/633** (100% peeled) |
-| **Decompiled C (functions)** | **620/633 (97.9%)** |
-| **Decompiled C (bytes)** | **86,442/90,272 (95.8%)** |
+| **Decompiled C (functions)** | **623/633 (98.4%)** |
+| **Decompiled C (bytes)** | **87,546/90,272 (97.0%)** |
 | Not opcode (C + readable Thumb) | 633/633 (100.0% fn, 100.0% bytes) |
-| Readable Thumb | 13/633 (2.1%) |
+| Readable Thumb | 10/633 (1.6%) |
 | Opcode `.byte` embeds | 0/633 (0.0%) |
 | `src/matched/*.c` | 633/633 |
 | Phase | **3b in progress — replace opcode stubs with semantic C / readable Thumb** |
-| Battle semantic C | 156/160 (97.5% fn, 97.1% bytes) |
+| Battle semantic C | 158/160 (98.8% fn, 99.4% bytes) |
 | Counter | [`decomp-progress.svg`](decomp-progress.svg) · [`decomp-progress.json`](decomp-progress.json) · [`decomp-functions.md`](decomp-functions.md) |
 <!-- decomp-progress:end -->
 
 ## Batch log
+
+### 2026-10-01 — sub_0806A6F8 MATCH (436/436, old_agbcc)
+
+Battle input hub landed as semantic C in `src/matched/sub_0806A6F8.c`. `gData_03003F64`
+2/1 plays or records a `u16` key queue; otherwise it polls `REG_KEYINPUT`, then
+refreshes ten `Unk6A954` slots at `gData_03003F70`. Reports were stale (near-miss
+WIP/block, 45/436 in README): pruned superseded drafts, dropped matched `[[block]]`s
+(kept `sub_08074144` / `sub_08038314`), then `make scores` / `make progress` /
+`make queue`.
 
 ### 2026-10-01 — sub_0806A6F8 near-miss (45/436, 348 vs 436)
 
@@ -1666,7 +1675,7 @@ agbcc cannot reproduce these as C (literal-pool / instruction scheduling). They 
 | `sub_0806FEFC` | Freelist pop; agbcc CSEs `gBtlObjListTail` as `head+0x10` |
 | `sub_0806FF28` / `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | C adds `push {lr}` on a retail leaf |
 | `sub_0802C62C` | Same size; count/`want` register swap (`r3` vs `r4`) |
-| `sub_0806A6F8` | Large input hub; seed 45/436 (348 vs 436) — `src/decompiled/sub_0806A6F8.c` |
+| `sub_0806A6F8` | **matched** 436/436 (`old_agbcc`) — `src/matched/sub_0806A6F8.c` |
 
 ### 2026-09-17 — Phase 3 battle subsystem bootstrap
 

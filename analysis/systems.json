@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T19:47:16Z",
+  "generated": "2026-10-01T16:13:37Z",
   "systems": {
     "audio": {
       "functions": [
@@ -86,7 +86,6 @@
         "sub_08066224",
         "sub_08067890",
         "sub_08067B98",
-        "sub_08067CE8",
         "sub_08068418",
         "sub_0806A434",
         "sub_0806A6F8",
@@ -102,15 +101,17 @@
         "sub_080735DC",
         "sub_08073AEC"
       ],
-      "count": 92
+      "count": 91
     },
     "graphics": {
       "functions": [
         "sub_0802F520",
         "sub_08031300",
         "sub_0803139C",
+        "sub_08038438",
         "sub_08038580",
         "sub_080385DC",
+        "sub_08038D68",
         "sub_0803B078",
         "sub_0803E934",
         "sub_0803FFB0",
@@ -138,6 +139,7 @@
         "sub_080553B8",
         "sub_08056250",
         "sub_080593A4",
+        "sub_08060E48",
         "sub_080615EC",
         "sub_08061610",
         "sub_0806171C",
@@ -151,6 +153,7 @@
         "sub_0806211C",
         "sub_080632F8",
         "sub_08063D68",
+        "sub_08067CE8",
         "sub_08069908",
         "sub_08069948",
         "sub_08069DBC",
@@ -158,9 +161,11 @@
         "sub_0806FDD0",
         "sub_0806FF58",
         "sub_080705DC",
-        "sub_08070AF8"
+        "sub_08070930",
+        "sub_08070AF8",
+        "sub_08073988"
       ],
-      "count": 53
+      "count": 59
     },
     "menu": {
       "functions": [
@@ -169,6 +174,12 @@
         "sub_08066FB8"
       ],
       "count": 3
+    },
+    "save": {
+      "functions": [
+        "sub_08044A8C"
+      ],
+      "count": 1
     }
   },
   "membership": {
@@ -410,6 +421,13 @@
         "references gBattleWork"
       ]
     },
+    "sub_08038438": {
+      "system": "graphics",
+      "origin": "note",
+      "evidence": [
+        "note mentions 'palette'"
+      ]
+    },
     "sub_08038580": {
       "system": "graphics",
       "origin": "note",
@@ -429,6 +447,13 @@
       "origin": "direct",
       "evidence": [
         "references gBattleWork"
+      ]
+    },
+    "sub_08038D68": {
+      "system": "graphics",
+      "origin": "note",
+      "evidence": [
+        "note mentions 'sprite'"
       ]
     },
     "sub_08038F30": {
@@ -590,6 +615,13 @@
       "origin": "derived",
       "evidence": [
         "4/5 call neighbours in battle"
+      ]
+    },
+    "sub_08044A8C": {
+      "system": "save",
+      "origin": "note",
+      "evidence": [
+        "note mentions 'save'"
       ]
     },
     "sub_08044EE8": {
@@ -879,6 +911,13 @@
         "note mentions 'battle'"
       ]
     },
+    "sub_08060E48": {
+      "system": "graphics",
+      "origin": "note",
+      "evidence": [
+        "note mentions 'draw'"
+      ]
+    },
     "sub_080615EC": {
       "system": "graphics",
       "origin": "derived",
@@ -1044,14 +1083,14 @@
       "system": "battle",
       "origin": "derived",
       "evidence": [
-        "5/5 call neighbours in battle"
+        "5/7 call neighbours in battle"
       ]
     },
     "sub_08067CE8": {
-      "system": "battle",
-      "origin": "derived",
+      "system": "graphics",
+      "origin": "note",
       "evidence": [
-        "3/3 call neighbours in battle"
+        "note mentions 'sprite'"
       ]
     },
     "sub_08068418": {
@@ -1114,7 +1153,7 @@
       "system": "graphics",
       "origin": "derived",
       "evidence": [
-        "7/8 call neighbours in graphics"
+        "8/9 call neighbours in graphics"
       ]
     },
     "sub_0806FE84": {
@@ -1142,14 +1181,14 @@
       "system": "graphics",
       "origin": "derived",
       "evidence": [
-        "7/8 call neighbours in graphics"
+        "8/9 call neighbours in graphics"
       ]
     },
     "sub_080705DC": {
       "system": "graphics",
       "origin": "derived",
       "evidence": [
-        "6/8 call neighbours in graphics"
+        "7/9 call neighbours in graphics"
       ]
     },
     "sub_08070678": {
@@ -1159,11 +1198,18 @@
         "4/4 call neighbours in battle"
       ]
     },
+    "sub_08070930": {
+      "system": "graphics",
+      "origin": "note",
+      "evidence": [
+        "note mentions 'sprite'"
+      ]
+    },
     "sub_08070AD4": {
       "system": "battle",
       "origin": "derived",
       "evidence": [
-        "3/3 call neighbours in battle"
+        "3/4 call neighbours in battle"
       ]
     },
     "sub_08070AF8": {
@@ -1206,6 +1252,13 @@
       "origin": "derived",
       "evidence": [
         "3/3 call neighbours in battle"
+      ]
+    },
+    "sub_08073988": {
+      "system": "graphics",
+      "origin": "derived",
+      "evidence": [
+        "5/7 call neighbours in graphics"
       ]
     },
     "sub_08073AEC": {
@@ -1322,9 +1375,7 @@
     "sub_08036264",
     "sub_0803715C",
     "sub_08037318",
-    "sub_08038438",
     "sub_08038638",
-    "sub_08038D68",
     "sub_0803A1E4",
     "sub_0803C6B8",
     "sub_0803DBD0",
@@ -1411,7 +1462,6 @@
     "sub_0804495C",
     "sub_080449C4",
     "sub_08044A20",
-    "sub_08044A8C",
     "sub_08044D8C",
     "sub_08044F64",
     "sub_08044FB0",
@@ -1489,7 +1539,6 @@
     "sub_08060C30",
     "sub_08060D28",
     "sub_08060D58",
-    "sub_08060E48",
     "sub_0806105C",
     "sub_080610A8",
     "sub_0806114C",
@@ -1662,7 +1711,6 @@
     "sub_08070604",
     "sub_0807069C",
     "sub_080706B0",
-    "sub_08070930",
     "sub_08070C98",
     "sub_08070D44",
     "sub_08070DF4",
@@ -1697,17 +1745,17 @@
     "sub_080735B0",
     "sub_080737C0",
     "sub_08073910",
-    "sub_08073988",
     "sub_080739E8",
     "sub_08073A28",
     "sub_08074144"
   ],
   "counts": {
     "audio": 1,
-    "battle": 92,
-    "graphics": 53,
+    "battle": 91,
+    "graphics": 59,
     "menu": 3,
-    "unassigned": 484
+    "save": 1,
+    "unassigned": 478
   },
   "notes": {
     "universal_symbols_excluded": [

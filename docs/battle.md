@@ -87,14 +87,16 @@ How experience, level, strength, and the Attack / Defense / Endurance stats beco
 | `sub_08043B90` | **semantic C** — walk `unk16E0` vs `unk16C8`, `-1` if missing |
 | `sub_08043BDC` | **semantic C** — walk `unk16E4` vs `unk16C8` |
 | `sub_08060428` family | **semantic C** — thunks to `sub_080601C4` |
-| `sub_08072F94` | readable Thumb — agbcc loads `gBtlLookupPtr` before the addend (permuter score 50) |
-| `sub_0803DD60` family | readable Thumb — main-work table via `+0x1818` |
-| `sub_08034894` | readable Thumb — agbcc prologue / pool ordering |
-| `sub_0806FEFC` / `sub_0806FF28` | readable Thumb — object freelist (CSE / extra prologue) |
-| `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | readable Thumb — C adds `push {lr}` |
-| `sub_0806A6F8` | readable Thumb — seed 45/436 (348 vs 436), `src/decompiled/sub_0806A6F8.c` |
+| `sub_08072F94` | **semantic C** — `gBtlLookupPtr` addend |
+| `sub_0803DD60` family | **semantic C** — main-work table via `+0x1818` |
+| `sub_08034894` | **semantic C** — `BtlCaptureInput` |
+| `sub_0806FEFC` / `sub_0806FF28` | **semantic C** — object freelist |
+| `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | **semantic C** |
+| `sub_0806A6F8` | **semantic C** — input hub; queue playback/record + `REG_KEYINPUT` + ten `Unk6A954` slots (`old_agbcc`) |
+| `sub_08038314` | readable Thumb — countdown gate, 59/108 |
+| `sub_0807309C` | readable Thumb — `StringAlloc`, 9/120 |
 
-13 / 160 battle functions are semantic C (progress.py); more thunks are semantic C but lack battle IWRAM pools. Remainder is readable Thumb (0 opcode `.byte`).
+158 / 160 battle functions are semantic C (progress.py). Remainder is readable Thumb (0 opcode `.byte`).
 
 ## Tools
 

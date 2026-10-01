@@ -161,6 +161,13 @@ def collect() -> dict[str, Any]:
 
     functions: list[dict[str, Any]] = []
     symbols = load_symbols()
+    verified_rows: dict[str, Any] = {}
+    vpath = ROOT / "build" / "semantic_verified.json"
+    if vpath.is_file():
+        try:
+            verified_rows = json.loads(vpath.read_text()).get("functions") or {}
+        except json.JSONDecodeError:
+            verified_rows = {}
     for path in sorted(MATCHED_SRC.glob("sub_*.c")):
         name = path.stem
         kind = file_kind(path)
@@ -174,9 +181,13 @@ def collect() -> dict[str, Any]:
         addr = f"0x{int(name.replace('sub_', ''), 16):08X}"
         block_reason = blocked.get(name, "")
         attempt = attempts.get(name)
+        vrow = verified_rows.get(name) or {}
 
         naked_only = kind != "semantic" and "must stay naked" in block_reason
-        if kind == "semantic" or naked_only:
+        semantic_ok = kind == "semantic" and (
+            not verified_rows or float(vrow.get("pct") or 0) >= 100.0
+        )
+        if semantic_ok or naked_only:
             status = "matched"
             matched_n = size
             compiled_n = size
@@ -184,6 +195,19 @@ def collect() -> dict[str, Any]:
             score = f"{size}/{size}"
             source = "naked-only" if naked_only else "integrated"
             note = "naked asm is the only matching form" if naked_only else ""
+        elif kind == "semantic" and vrow.get("score"):
+            status = (
+                "size_mismatch"
+                if int(vrow.get("compiled_bytes") or size) != size
+                else "same_size"
+            )
+            score = str(vrow.get("score") or f"0/{size}")
+            parsed = re.match(r"(\d+)\s*/\s*(\d+)", score)
+            matched_n = int(parsed.group(1)) if parsed else int(vrow.get("matched_bytes") or 0)
+            compiled_n = int(vrow.get("compiled_bytes") or size)
+            pct = float(vrow.get("pct") or _pct(matched_n, size or 1))
+            source = "verified"
+            note = "semantic C in src/matched/, not byte-identical"
         elif attempt and not attempt.get("seeded"):
             status = attempt.get("status", "not_started")
             matched_n = int(attempt.get("matched_bytes") or 0)

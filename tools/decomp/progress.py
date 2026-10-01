@@ -494,9 +494,15 @@ def _remaining_unmatched() -> list[tuple[str, str, str, int]]:
         rows: list[tuple[str, str, str, int]] = []
         for fn in payload.get("functions") or []:
             display = fn.get("display")
-            if display not in ("wip", "blocked"):
+            if display == "matched":
                 continue
-            status = "parked" if display == "wip" else "blocked"
+            status = {
+                "wip": "parked",
+                "blocked": "blocked",
+                "same_size": "same-size DIFF",
+                "size_mismatch": "size DIFF",
+                "identical_diff": "byte-identical DIFF",
+            }.get(display, str(display or "unmatched"))
             rows.append(
                 (
                     str(fn.get("name") or ""),

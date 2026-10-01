@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T19:47:16Z",
+  "generated": "2026-10-01T16:13:37Z",
   "total": 633,
   "functions": [
     {
@@ -3721,11 +3721,11 @@
       "name": "sub_08035054",
       "addr": "0x08035054",
       "size": 432,
-      "kind": "asm",
-      "status": "not_started",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "start resource animation for kind 0/1/2",
       "insn_count": 191,
       "offsets": [
         "0x00"
@@ -4714,8 +4714,8 @@
       "addr": "0x08038314",
       "size": 108,
       "kind": "semantic",
-      "status": "matched",
-      "tier": "MATCHING",
+      "status": "same_size",
+      "tier": "UNKNOWN",
       "symbol": "",
       "note": "battle/readable-thumb",
       "insn_count": 45,
@@ -4745,11 +4745,11 @@
       "name": "sub_08038438",
       "addr": "0x08038438",
       "size": 240,
-      "kind": "asm",
-      "status": "not_started",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "PaletteSlotAcquire",
-      "note": "battle/readable-thumb",
+      "note": "palette slot acquire (old_agbcc, load-bearing do-while weights)",
       "insn_count": 108,
       "offsets": [
         "0x00",
@@ -4781,7 +4781,7 @@
         "0x08079358",
         "0x05000200"
       ],
-      "system": ""
+      "system": "graphics"
     },
     {
       "name": "sub_08038580",
@@ -4920,11 +4920,11 @@
       "name": "sub_08038D68",
       "addr": "0x08038D68",
       "size": 112,
-      "kind": "asm",
-      "status": "same_size",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "menu text cursor markers: centre two sprites around measured text width, row Y = (sel*8+0x78)<<8",
       "insn_count": 50,
       "offsets": [
         "0x00",
@@ -4948,7 +4948,7 @@
         "0x030003E0",
         "0x080B7258"
       ],
-      "system": ""
+      "system": "graphics"
     },
     {
       "name": "sub_08038F30",
@@ -5678,11 +5678,11 @@
       "name": "sub_0803E0CC",
       "addr": "0x0803E0CC",
       "size": 296,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "RemoveBladeFromTysonsCollection",
-      "note": "battle/readable-thumb",
+      "note": "release collection slots matching a blade id (logs via DebugPrint with the id as %d)",
       "insn_count": 123,
       "offsets": [
         "0x00"
@@ -6453,11 +6453,11 @@
       "name": "sub_08040680",
       "addr": "0x08040680",
       "size": 308,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "text box buffer setup; _080408E4 takes the buffer as a 2nd arg",
       "insn_count": 122,
       "offsets": [
         "0x00"
@@ -8468,11 +8468,11 @@
       "name": "sub_08043DB4",
       "addr": "0x08043DB4",
       "size": 1352,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "FieldEnter",
-      "note": "battle/readable-thumb",
+      "note": "permuter/nonmatchings/sub_08043DB4/base.c",
       "insn_count": 507,
       "offsets": [
         "0x00"
@@ -8730,11 +8730,11 @@
       "name": "sub_08044648",
       "addr": "0x08044648",
       "size": 364,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "BeybladeSpawnList",
-      "note": "battle/readable-thumb",
+      "note": "BeybladeSpawnList: spawn scene objects for roster id list",
       "insn_count": 159,
       "offsets": [
         "0x00",
@@ -8826,11 +8826,11 @@
       "name": "sub_080447E8",
       "addr": "0x080447E8",
       "size": 372,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "SceneObjSpawnList",
-      "note": "battle/readable-thumb",
+      "note": "walks -1-terminated id list, spawns kind-1 scene objects from gData_0807BE04, parks kind-2 position records",
       "insn_count": 162,
       "offsets": [
         "0x00",
@@ -8974,11 +8974,11 @@
       "name": "sub_08044A8C",
       "addr": "0x08044A8C",
       "size": 672,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "SaveDataVerify",
-      "note": "battle/readable-thumb",
+      "note": "SaveDataVerify: EEPROM save read + checksum/magic validation",
       "insn_count": 274,
       "offsets": [
         "0x00",
@@ -9023,7 +9023,7 @@
         "0x00F6009C",
         "0x083A2E04"
       ],
-      "system": ""
+      "system": "save"
     },
     {
       "name": "sub_08044D8C",
@@ -9429,11 +9429,11 @@
       "name": "sub_08045C5C",
       "addr": "0x08045C5C",
       "size": 136,
-      "kind": "asm",
-      "status": "not_started",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "old_agbcc; data symbols",
       "insn_count": 51,
       "offsets": [
         "0x00"
@@ -9925,8 +9925,8 @@
       "addr": "0x08047594",
       "size": 48,
       "kind": "semantic",
-      "status": "matched",
-      "tier": "MATCHING",
+      "status": "same_size",
+      "tier": "UNDERSTOOD",
       "symbol": "SparklesHide",
       "note": "",
       "insn_count": 20,
@@ -10541,7 +10541,7 @@
       "addr": "0x0804BD38",
       "size": 328,
       "kind": "asm",
-      "status": "size_mismatch",
+      "status": "same_size",
       "tier": "DECOMPILED",
       "symbol": "",
       "note": "readable-thumb",
@@ -13477,11 +13477,11 @@
       "name": "sub_08060E48",
       "addr": "0x08060E48",
       "size": 532,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "TextWindowPutChar",
-      "note": "battle/readable-thumb",
+      "note": "draw one glyph into a text window",
       "insn_count": 261,
       "offsets": [
         "0x00",
@@ -13503,7 +13503,7 @@
         "0x080BB748",
         "0x00000FFF"
       ],
-      "system": ""
+      "system": "graphics"
     },
     {
       "name": "sub_0806105C",
@@ -14187,11 +14187,11 @@
       "name": "sub_080618EC",
       "addr": "0x080618EC",
       "size": 428,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "TextTypewriterTick",
-      "note": "battle/readable-thumb",
+      "note": "typewriter text tick (old_agbcc, signed state local)",
       "insn_count": 200,
       "offsets": [
         "0x00",
@@ -15924,11 +15924,11 @@
       "name": "sub_0806314C",
       "addr": "0x0806314C",
       "size": 404,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNKNOWN",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "permuter: empty do/while between value and store",
       "insn_count": 193,
       "offsets": [
         "0x00"
@@ -17114,11 +17114,11 @@
       "name": "sub_08067CE8",
       "addr": "0x08067CE8",
       "size": 548,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNKNOWN",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "readable-thumb",
+      "note": "AnimObjDraw: per-object sprite slot alloc/update from anim object",
       "insn_count": 264,
       "offsets": [
         "0x00",
@@ -17167,7 +17167,7 @@
         "0x0000FFFF",
         "0xC1FFFFFF"
       ],
-      "system": "battle"
+      "system": "graphics"
     },
     {
       "name": "sub_08067F3C",
@@ -18127,11 +18127,11 @@
       "name": "sub_08069270",
       "addr": "0x08069270",
       "size": 244,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "BgMapBlitRect",
-      "note": "battle/readable-thumb",
+      "note": "tile map rect blit with wrap-around split",
       "insn_count": 112,
       "offsets": [
         "0x00"
@@ -18163,11 +18163,11 @@
       "name": "sub_0806960C",
       "addr": "0x0806960C",
       "size": 600,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "BgMapScroll",
-      "note": "battle/readable-thumb",
+      "note": "BG map scroll/streaming",
       "insn_count": 295,
       "offsets": [
         "0x00",
@@ -18768,11 +18768,11 @@
       "name": "sub_0806A6F8",
       "addr": "0x0806A6F8",
       "size": 436,
-      "kind": "asm",
-      "status": "not_started",
-      "tier": "UNKNOWN",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "battle input hub: key queue playback/record + per-button hold slots (old_agbcc)",
       "insn_count": 183,
       "offsets": [
         "0x00",
@@ -19044,11 +19044,11 @@
       "name": "sub_0806B764",
       "addr": "0x0806B764",
       "size": 588,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "TextLayerInit",
-      "note": "battle/readable-thumb",
+      "note": "tile-map text layout (TextLayerInit)",
       "insn_count": 278,
       "offsets": [
         "0x00",
@@ -19329,11 +19329,11 @@
       "name": "sub_0806C7D4",
       "addr": "0x0806C7D4",
       "size": 1302,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNKNOWN",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "old_agbcc; CollisionBody view, declaration order sets spill slots",
       "insn_count": 645,
       "offsets": [
         "0x00",
@@ -19505,7 +19505,7 @@
       "size": 492,
       "kind": "asm",
       "status": "size_mismatch",
-      "tier": "UNKNOWN",
+      "tier": "DECOMPILED",
       "symbol": "",
       "note": "battle/readable-thumb",
       "insn_count": 235,
@@ -20875,7 +20875,7 @@
       "size": 626,
       "kind": "asm",
       "status": "size_mismatch",
-      "tier": "UNKNOWN",
+      "tier": "DECOMPILED",
       "symbol": "",
       "note": "readable-thumb",
       "insn_count": 301,
@@ -20911,11 +20911,11 @@
       "name": "sub_08070930",
       "addr": "0x08070930",
       "size": 420,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "TextGroupAppendString",
-      "note": "battle/readable-thumb",
+      "note": "append string glyphs to text sprite group",
       "insn_count": 196,
       "offsets": [
         "0x00",
@@ -20958,7 +20958,7 @@
         "0x080BB748",
         "0xC1FFFCFF"
       ],
-      "system": ""
+      "system": "graphics"
     },
     {
       "name": "sub_08070AD4",
@@ -21826,8 +21826,8 @@
       "addr": "0x0807309C",
       "size": 120,
       "kind": "semantic",
-      "status": "matched",
-      "tier": "MATCHING",
+      "status": "same_size",
+      "tier": "UNDERSTOOD",
       "symbol": "StringAlloc",
       "note": "battle/readable-thumb",
       "insn_count": 51,
@@ -22207,11 +22207,11 @@
       "name": "sub_080737C0",
       "addr": "0x080737C0",
       "size": 336,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "UNDERSTOOD",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "SplitStringIntoStringArray",
-      "note": "battle/readable-thumb",
+      "note": "word-wrap a string into up to count line buffers",
       "insn_count": 152,
       "offsets": [
         "0x00"
@@ -22300,7 +22300,7 @@
       "pool": [
         "0x080BB748"
       ],
-      "system": ""
+      "system": "graphics"
     },
     {
       "name": "sub_080739E8",
@@ -22380,8 +22380,8 @@
       "addr": "0x08074144",
       "size": 2,
       "kind": "asm",
-      "status": "not_started",
-      "tier": "UNKNOWN",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
       "note": "toolchain-blocked: mov pc,lr \u2014 not semantic C",
       "insn_count": 1,

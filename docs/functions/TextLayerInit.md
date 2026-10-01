@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806B764` |
 | Size | 588 bytes (278 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806B764` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | tile-map text layout (TextLayerInit) |
 
 ## Why this name
 

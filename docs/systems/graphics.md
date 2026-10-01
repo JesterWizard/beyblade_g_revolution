@@ -3,11 +3,11 @@
 
 # graphics subsystem
 
-53 functions — 19 named.
+59 functions — 23 named.
 
 | Tier | Functions |
 |------|----------:|
-| MATCHING | 53 |
+| MATCHING | 59 |
 
 ## Functions
 
@@ -23,10 +23,14 @@
 | [`TextWindowPopState`](../functions/TextWindowPopState.md) | `0x08061BE8` | MATCHING | 96 | 18 | 1 | gUnk_03000770, gUnk_03000794 |
 | [`TextSetActiveObject`](../functions/TextSetActiveObject.md) | `0x080617C4` | MATCHING | 60 | 17 | 0 | gUnk_03000798 |
 | [`TextSetPaletteBank`](../functions/TextSetPaletteBank.md) | `0x08061610` | MATCHING | 24 | 11 | 0 | gUnk_03000798 |
+| [`TextMeasureWidth`](../functions/TextMeasureWidth.md) | `0x08073988` | MATCHING | 96 | 9 | 0 |  |
+| `sub_08067CE8` | `0x08067CE8` | MATCHING | 548 | 7 | 5 |  |
 | `sub_08061EF8` | `0x08061EF8` | MATCHING | 332 | 4 | 9 |  |
 | [`BgGetHofsReg`](../functions/BgGetHofsReg.md) | `0x08069908` | MATCHING | 64 | 4 | 0 |  |
 | [`BgGetVofsReg`](../functions/BgGetVofsReg.md) | `0x08069948` | MATCHING | 64 | 4 | 0 |  |
+| [`PaletteSlotAcquire`](../functions/PaletteSlotAcquire.md) | `0x08038438` | MATCHING | 240 | 3 | 1 | gUnk_030003CC |
 | [`DigitSpritesSetValue`](../functions/DigitSpritesSetValue.md) | `0x0803139C` | MATCHING | 350 | 2 | 7 |  |
+| [`TextGroupAppendString`](../functions/TextGroupAppendString.md) | `0x08070930` | MATCHING | 420 | 2 | 7 |  |
 | [`TextRowPulsePalette`](../functions/TextRowPulsePalette.md) | `0x08031300` | MATCHING | 78 | 1 | 2 |  |
 | `sub_08038580` | `0x08038580` | MATCHING | 92 | 1 | 1 | gUnk_030003CC |
 | [`PaletteSlotsRelease`](../functions/PaletteSlotsRelease.md) | `0x080385DC` | MATCHING | 80 | 1 | 0 | gUnk_030003CC |
@@ -34,10 +38,12 @@
 | `sub_080507B8` | `0x080507B8` | MATCHING | 172 | 1 | 1 | gUnk_030006B8 |
 | `sub_08051578` | `0x08051578` | MATCHING | 144 | 1 | 4 |  |
 | `sub_08056250` | `0x08056250` | MATCHING | 302 | 1 | 9 | gUnk_03000664, gUnk_0300066C |
+| [`TextWindowPutChar`](../functions/TextWindowPutChar.md) | `0x08060E48` | MATCHING | 532 | 1 | 1 |  |
 | `sub_08061D00` | `0x08061D00` | MATCHING | 104 | 1 | 2 | gUnk_03000798 |
 | `sub_0806211C` | `0x0806211C` | MATCHING | 284 | 1 | 4 |  |
 | `sub_080632F8` | `0x080632F8` | MATCHING | 184 | 1 | 9 |  |
 | `sub_0802F520` | `0x0802F520` | MATCHING | 92 | 0 | 1 |  |
+| `sub_08038D68` | `0x08038D68` | MATCHING | 112 | 0 | 1 | gUnk_030003E0 |
 | `sub_0803B078` | `0x0803B078` | MATCHING | 204 | 0 | 3 |  |
 | `sub_0803E934` | `0x0803E934` | MATCHING | 112 | 0 | 3 |  |
 | `sub_0803FFB0` | `0x0803FFB0` | MATCHING | 216 | 0 | 8 | gMainWorkPtr, gUnk_0300047C |
@@ -72,8 +78,10 @@
 - `sub_0802F520` — note mentions 'draw'
 - `sub_08031300` — note mentions 'palette'
 - `sub_0803139C` — note mentions 'sprite'
+- `sub_08038438` — note mentions 'palette'
 - `sub_08038580` — note mentions 'palette'
 - `sub_080385DC` — note mentions 'palette'
+- `sub_08038D68` — note mentions 'sprite'
 - `sub_0803B078` — note mentions 'palette'
 - `sub_0803E934` — note mentions 'palette'
 - `sub_0803FFB0` — note mentions 'palette'
@@ -92,6 +100,4 @@
 - `sub_0804E4F4` — note mentions 'draw'
 - `sub_0804EBF0` — note mentions 'render'
 - `sub_0804ED90` — note mentions 'draw'
-- `sub_080507B8` — note mentions 'draw'
-- `sub_08051578` — note mentions 'draw'
-- … and 28 more with recorded evidence
+- … and 34 more with recorded evidence

@@ -230,6 +230,11 @@ extern u8 *gData_08097110[];
 
 // Input registers (IWRAM) saved/restored around sub_08033188
 extern u16 gData_03003F60;
+extern u16 gData_03003F64;
+extern struct Unk6A954 gData_03003F70[];
+extern u32 gData_03004068;
+extern u16 *gData_03004070;
+extern u16 gData_03004074;
 extern u16 gData_03004064;
 extern u16 gData_0300406C;
 

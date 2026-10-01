@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0806960C` |
 | Size | 600 bytes (295 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806960C` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | BG map scroll/streaming |
 
 ## Why this name
 

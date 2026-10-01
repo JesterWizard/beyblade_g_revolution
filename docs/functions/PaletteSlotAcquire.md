@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08038438` |
 | Size | 240 bytes (108 instructions) |
-| Tier | UNDERSTOOD |
-| Status | not_started |
-| Subsystem | _unassigned_ |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | graphics |
 | Link label | `sub_08038438` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | palette slot acquire (old_agbcc, load-bearing do-while weights) |
 
 ## Why this name
 

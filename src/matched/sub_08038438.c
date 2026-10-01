@@ -1,135 +1,54 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08038438
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
+// Acquire a palette slot for `palette`: find its table index, then either bump
+// the refcount of the slot already holding it or claim the first free slot,
+// copy the palette in and return the slot index (-1 if the pool is missing or
+// full).
+//
+// The nested `do { } while (0)` wrappers are load-bearing. They add
+// loop-depth weight so global alloc hands out r12/r8/r6/r7/r1/r2 as retail
+// does, and they keep the two "found" blocks inside their loops (loop.c would
+// otherwise move them out and hoist the gData_030003CC load).
 s32 PaletteSlotAcquire(void *palette)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "adds r1, r0, #0x0\n"
-        "movs r6, #0x00\n"
-        "ldr r2, _08038450 @ =0x08079068\n"
-        "ldr r0, [r2, #0x00]\n"
-        "ldr r3, _08038454 @ =0x030003CC\n"
-        "mov r12, r3\n"
-        "b _08038468\n"
-        ".byte 0x00, 0x00\n"
-        "_08038450: .4byte 0x08079068\n"
-        "_08038454: .4byte 0x030003CC\n"
-        "_08038458:\n"
-        "lsls r0, r6, #0x10\n"
-        "movs r6, #0x80\n"
-        "lsls r6, r6, #0x09\n"
-        "adds r0, r0, r6\n"
-        "lsrs r6, r0, #0x10\n"
-        "asrs r0, r0, #0x0E\n"
-        "adds r0, r0, r2\n"
-        "ldr r0, [r0, #0x00]\n"
-        "_08038468:\n"
-        "cmp r0, #0x00\n"
-        "beq _08038470\n"
-        "cmp r0, r1\n"
-        "bne _08038458\n"
-        "_08038470:\n"
-        "mov r7, r12\n"
-        "ldr r0, [r7, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08038518\n"
-        "movs r4, #0x00\n"
-        "lsls r0, r6, #0x10\n"
-        "mov r9, r0\n"
-        "asrs r5, r0, #0x10\n"
-        "_08038480:\n"
-        "mov r1, r12\n"
-        "ldr r3, [r1, #0x00]\n"
-        "lsls r0, r4, #0x10\n"
-        "asrs r1, r0, #0x10\n"
-        "lsls r2, r1, #0x01\n"
-        "adds r0, r3, r2\n"
-        "movs r7, #0x00\n"
-        "ldsh r0, [r0, r7]\n"
-        "cmp r5, r0\n"
-        "bne _080384A2\n"
-        "adds r0, r3, #0x0\n"
-        "adds r0, #0x22\n"
-        "adds r0, r0, r2\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "adds r1, #0x01\n"
-        "strh r1, [r0, #0x00]\n"
-        "b _080384FA\n"
-        "_080384A2:\n"
-        "adds r0, r1, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r4, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, #0x0F\n"
-        "ble _08038480\n"
-        "movs r4, #0x00\n"
-        "movs r5, #0x01\n"
-        "ldr r0, _08038500 @ =0x080BB8C0\n"
-        "mov r8, r0\n"
-        "ldr r1, _08038504 @ =0x08079358\n"
-        "mov r2, r9\n"
-        "asrs r0, r2, #0x0E\n"
-        "adds r7, r0, r1\n"
-        "_080384BE:\n"
-        "mov r3, r12\n"
-        "ldr r2, [r3, #0x00]\n"
-        "lsls r0, r4, #0x10\n"
-        "asrs r3, r0, #0x10\n"
-        "ldrh r0, [r2, #0x20]\n"
-        "asrs r0, r3\n"
-        "ands r0, r5\n"
-        "cmp r0, #0x00\n"
-        "bne _0803850C\n"
-        "lsls r1, r3, #0x01\n"
-        "adds r0, r2, r1\n"
-        "strh r6, [r0, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "lsls r0, r3\n"
-        "ldrh r6, [r2, #0x20]\n"
-        "orrs r0, r6\n"
-        "strh r0, [r2, #0x20]\n"
-        "adds r0, r2, #0x0\n"
-        "adds r0, #0x22\n"
-        "adds r0, r0, r1\n"
-        "strh r5, [r0, #0x00]\n"
-        "ldr r0, [r7, #0x00]\n"
-        "lsls r1, r3, #0x05\n"
-        "ldr r7, _08038508 @ =0x05000200\n"
-        "adds r1, r1, r7\n"
-        "mov r2, r8\n"
-        "ldr r3, [r2, #0x00]\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "_080384FA:\n"
-        "lsls r0, r4, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "b _0803851C\n"
-        "_08038500: .4byte 0x080BB8C0\n"
-        "_08038504: .4byte 0x08079358\n"
-        "_08038508: .4byte 0x05000200\n"
-        "_0803850C:\n"
-        "adds r0, r3, #0x1\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r4, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, #0x0F\n"
-        "ble _080384BE\n"
-        "_08038518:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "_0803851C:\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    s16 key;
+    s16 i;
+
+    key = 0;
+    do { do { do {
+    while (gData_08079068[(s16)key] != 0 && gData_08079068[(s16)key] != (u32)palette)
+        key++;
+    } while (0); } while (0); } while (0);
+    if (gData_030003CC == NULL)
+        return -1;
+    i = 0;
+    while (i < 16)
+    {
+        do { do { if ((s16)key == (s16)gData_030003CC->unk00[i])
+        {
+            gData_030003CC->unk22[i]++;
+            return (s8)i;
+        } } while (0); } while (0);
+        do { do { i++; } while (0); } while (0);
+    }
+    for (i = 0; i < 16; i++)
+    {
+        do { if (((gData_030003CC->unk20 >> i) & 1) == 0)
+        {
+            gData_030003CC->unk00[i] = key;
+            gData_030003CC->unk20 |= 1 << i;
+            gData_030003CC->unk22[i] = 1;
+            ((void (*)(u32, void *, u32))gData_080BB8C0[0])(gData_08079358[(s16)key], (void *)(0x05000200 + i * 32), 0x20);
+            return (s8)i;
+        } } while (0);
+    }
+    return -1;
 }
 

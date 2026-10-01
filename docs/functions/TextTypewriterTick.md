@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080618EC` |
 | Size | 428 bytes (200 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080618EC` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | typewriter text tick (old_agbcc, signed state local) |
 
 ## Why this name
 

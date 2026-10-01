@@ -9,160 +9,23 @@ top = 40
 prefer = "battle"
 
 # Hand-picked targets — shown first, in file order.
-# (sub_0806A6F8 / sub_08034894 unpinned — both confirmed agbcc-hard, see [[block]] below)
 
 # Incomplete C — resume these before picking a new function. See docs/decomp-wip.md
 [[block]]
-name = "sub_080601C4"
-reason = "r8 pool pin — permuter best score ~100"
-
-[[block]]
-name = "sub_0802C62C"
-reason = "counts gMainWorkPtr->unk1694[0..0x7F] entries with unk03==(s8)a — same-size DIFF (64B=64B!) across every declaration-order variant tried, purely a r2/r3/r4 register-choice swap (which var lands in the return register); 7000+ permuter iterations floor at score 95, never zero; needs permuter"
-
-[[block]]
-name = "sub_08033530"
-reason = "battle state branch — subs r2 #0x6C vs direct unk201C pool (same-size DIFF)"
-
-[[block]]
-name = "sub_080473E4"
-reason = "dual IWRAM zero — agbcc pool order / CSE of 0x634 and 0x63C (permuter best ~5)"
-
-[[block]]
-name = "sub_08034894"
-reason = "docs/battle.md: readable Thumb — agbcc prologue / pool ordering (no struct yet for param @ +0x30C flag / +0x300,0x302,0x304 fields)"
-
-[[block]]
-name = "sub_0806A6F8"
-reason = "436B input hub; seed 45/436 size_mismatch 348 vs 436 (loop CSE / gBtlState adds r4,r0) — src/decompiled/sub_0806A6F8.c"
-
-[[block]]
-name = "sub_080428C4"
-reason = "docs/battle.md: readable Thumb — C adds push {lr} (same extra-prologue quirk as sub_0806FEFC family)"
-
-[[block]]
-name = "sub_08073114"
-reason = "BtlObjTable scan+remove (loop over gBtlObjTable[0..gBtlObjTableCount) matching entry->key==obj, calls sub_0806A434/sub_08067B98) — logic reconstructed correctly (same-size DIFF on every variant tried) but agbcc compiles the do-while as pre-test loop + different table-pointer register placement than retail; needs permuter or deeper agbcc loop-codegen trick"
-
-[[block]]
-name = "sub_08062728"
-reason = "u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen"
+name = "sub_08038314"
+reason = "battle countdown gate: same-size DIFF (59/108); mask loaded+ANDed before vs after the #3 immediate. Needs permuter."
 
 [[block]]
 name = "sub_08074144"
 reason = "single instruction 'mov pc, lr' (2B) — semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm"
 
-[[block]]
-name = "sub_08062CF4"
-reason = "BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] -> u16 @ PLTT 0x05000200+idx*2 — logic reconstructed correctly (same-size DIFF, ~1 instruction reordered) across many register-pinned variants; retail keeps r6 live (push {r4,r5,r6,lr}) but my C never needed r6 pressure, changing push set; needs permuter"
-
-[[block]]
-name = "sub_08062C80"
-reason = "calls _08073C4C(0, dst, size, src) at raw address 0x08073C4C twice (VRAM/PLTT clear via CpuFastSet-style primitive) — that callee has no C symbol/prototype anywhere in the codebase yet (only referenced via bl _08073C4C from naked asm in many other unconverted functions); needs the callee named/prototyped first"
-[[block]]
-name = "sub_08030938"
-reason = "computes a->unk2D8/unk2D4/unk00->unk30/unk00->unk34/nested sub_080674A0 fixed-point calls, then sub_080346C0(a, unk30, unk34, unk2D8, 0xB4-nested) with 5th arg on stack — logic correct across several forms but push-set (r4-r7 vs r4-r6) and stack-arg store ordering differ; needs permuter"
-
-[[block]]
-name = "sub_080604C8"
-reason = "byte-swaps 6 u8 pairs from *gUnk_03000750 into u16 fields, writes them to REG_BG palette-ish IO regs 0x04000040-0x0400004A — logic correct; real remaining gap is a 4-byte tail-fold (agbcc collapses the last out=out+2;*out=val into strh [r0,#2] when out isn't used again, unlike retail which keeps the explicit adds+strh[0]); several dependency-shape rewrites (loop, pre-increment, reordering) all land 4B short; needs permuter"
-
-[[block]]
-name = "sub_08049F98"
-reason = "sound/anim trigger sequencer: sub_080617C4 x2, sub_080615EC x3 with idx<<4+8/+0x10 offsets, sub_0806171C x3 with sub_08061784()<<16>>17 — m2c fails to reconstruct (r8 stack-saved 3rd param); multiple hand-written + register-pinned C forms all land 8 bytes over; needs permuter"
-
-[[block]]
-name = "sub_0804E17C"
-reason = "byte-identical to sub_08049F98 (different embedded const 0x083A83F4); same blocker"
-
-[[block]]
-name = "sub_08051578"
-reason = "byte-identical to sub_08049F98 (different embedded const 0x083A85A4); same blocker"
-
-[[block]]
-name = "sub_08053218"
-reason = "byte-identical to sub_08049F98 (different embedded const 0x083A8724); same blocker"
-
-[[block]]
-name = "sub_08038314"
-reason = "battle countdown gate: a->unk304-- then flush-condition on gBtlKeysHeld&3, else store v to a->unk2FC and sub_08062044 x4 on gBattleWork->unk19C[0..3] — logic reconstructed correctly (same-size DIFF, 5/108 bytes), several source shapes (inline expr, cached local, array-index cast) all land agbcc on the same reordering (mask loaded+ANDed before vs after the #3 immediate load); needs permuter (base score 70, 20k+ iterations without a zero)"
-
-[[block]]
-name = "sub_08045C5C"
-reason = "gMainWorkPtr->unk1710[25..26] input-repeat debouncer keyed on gBtlInputMask==0xFC00 — logic reconstructed correctly but agbcc drops r7 from the push set (r4-r6+lr, 140B) vs retail's r4-r7+lr (136B); tried inline/cached-local/branch-order variants, all land on the same 4B-over shape; needs permuter"
 [[wip]]
 name = "sub_08035624"
 seed = "src/decompiled/sub_08035624.c"
 notes = "src/decompiled/sub_08035624.md"
-status = "two attempts: 20/114 bytes, 112B candidate both times; logic and fields match, but agbcc omits retail's pushed r5/type-copy register and changes the prologue"
-next = "Force a genuinely live selector copy in r5 or use a targeted source/permuter register search; preserve signed-byte delta and Unk705DC +0x22"
-score = "20/114"
-
-[[wip]]
-name = "sub_08038D68"
-seed = "src/decompiled/sub_08038D68.c"
-notes = "src/decompiled/sub_08038D68.md"
-status = "two attempts: direct semantic seed 15/112 (108B); pinned base/table registers 37/112 but expanded to 120B. Data flow and both Unk705DC output writes are correct; register pressure/order remains"
-next = "Use the direct field algorithm with a targeted r5 base/r2 table search; avoid the current over-constraining dual register pins and preserve the 112-byte retail size"
-score = "37/112"
-
-[[wip]]
-name = "sub_08035054"
-seed = "src/decompiled/sub_08035054.c"
-notes = "src/decompiled/sub_08035054.md"
-status = "Rewritten seed (old_agbcc, u16 id local, data symbols) is structurally exact; only register allocation differs: retail src=r7, pos=r8, ours pos=r7, src=r8, which costs 8B (mov via r8). Permuter best 301 (376/432 same-size) only by dropping the src=NULL init."
-next = "Find the source shape that gives src higher global-alloc priority than pos (decl/init order sweeps, u8 params and else-NULL all failed)."
-score = "80/432"
-
-[[wip]]
-name = "sub_08038438"
-seed = "src/decompiled/sub_08038438.c"
-notes = "src/decompiled/sub_08038438.md"
-status = "for-loop seed with slots=&gData_030003CC + _call_via_r3 fn-pointer call is same-size (old_agbcc 45/240). Retail keeps both loops' found-blocks inline (no loop-exit block motion), so *slots reloads every pass; agbcc/old_agbcc move the found blocks out of the loops."
-next = "Find a loop shape that stops loop.c moving the exit blocks (break + flag, goto-free) while keeping the hoisted r7/r8/r5 in loop 2."
-score = "45/240"
-
-[[wip]]
-name = "sub_08045C5C"
-seed = "src/decompiled/sub_08045C5C.c"
-notes = "src/decompiled/sub_08045C5C.md"
-status = "Rewritten with the gData_03003F60 / gData_03000198 data symbols (plain reads, no local pointers): 93/136 -> 127/136, same size. Only the prologue differs: retail loads the 0xFC00 sentinel before copying the mask address into r4 and does the ldrh through r4."
-next = "Find the shape that puts `movs r1,#0xFC; lsls` between the address load and the copy (sentinel local, comparison order and volatile views tried). Permuter 480s: best 220."
-score = "127/136"
-
-
-
-[[wip]]
-name = "sub_08069270"
-seed = "src/decompiled/sub_08069270.c"
-notes = "src/decompiled/sub_08069270.md"
-status = "Logic mapped (horizontal wrap split into two blits; fn = 0x0806945D or gData_080BB8A4[0]; wrap-off path uses gData_080BB8A8[0]). Separate e1/e2/h1/h2 copies reproduce retail's stack spills; remaining diff is register choice: retail keeps d in r3 and end in r5, ours copies d to r6 (+2B). Permuter (2 rounds) reached 25 only via uninitialised-variable tricks."
-next = "Find a source shape that leaves d in its argument register (d is only read by the first blit); try the permuter from this seed with a longer budget."
-score = "24/244"
-
-[[wip]]
-name = "sub_08043DB4"
-seed = "src/decompiled/sub_08043DB4.c"
-notes = "src/decompiled/sub_08043DB4.md"
-status = "Fixed REG_BLDY -> REG_BLDALPHA (retail stores 0 to 0x04000052). Remaining: retail keeps the -1 compared against unk18B4 in a stack slot (sp+0x18). local-alloc's update_equiv_regs moves a set-once/used-once constant next to its use, so any `none = -1` local is rematerialised."
-next = "The -1 needs a pseudo with a second, different set (no REG_EQUIV) that still gets no hard register. A volatile local gives the right 0x1C frame but the wrong slot order (sp10 instead of sp18)."
-score = "1031/1352"
-
-[[wip]]
-name = "sub_08040680"
-seed = "src/decompiled/sub_08040680.c"
-notes = "src/decompiled/sub_08040680.md"
-status = "logic exact; one diff: BtlObjTableAdd result copied to r1 before the unk834 store in retail (ours stores from r0)"
-next = "local-alloc shape for the buffer store; permuter 5 min found nothing"
-score = "one-insn diff (304 vs 308 B)"
-
-[[wip]]
-name = "sub_0803E0CC"
-seed = "src/decompiled/sub_0803E0CC.c"
-notes = "src/decompiled/sub_0803E0CC.md"
-status = "Data symbol gData_03000198 plus `unk1C |= (s8)0xFF` (keeps the ldrb/orr/strb instead of folding to strb -1): 56 -> 170/296. Still 4 bytes short: retail hoists the unk1C offset into r10, ours keeps it in r3 and caller-saves it to the stack."
-next = "Get the loop-invariant 0x8EC offset into a callee-saved register (r10); old_agbcc is required."
-score = "170/296"
+status = "structure matches; only key/list/scratch register choice differs (retail key=r4, list=r2, const scratch=r0; ours r0/r0/r2). 37 differing insns vs 59 for the old seed"
+next = "find C that makes key addr r4 and list addr r2 (forcing them with a debug compiler makes output equal retail); try permuter on this draft with a time limit"
+score = "45/114 (size 112 vs 114; old 71/114 seed saved only in scratch)"
 
 [[wip]]
 name = "sub_0804BD38"
@@ -173,52 +36,12 @@ next = "first two s16 loads: retail base r3/zero r4 then base r0/zero r2; ours r
 score = "302/328"
 
 [[wip]]
-name = "sub_080737C0"
-seed = "src/decompiled/sub_080737C0.c"
-notes = "src/decompiled/sub_080737C0.md"
-status = "logic mapped (word wrap into <=count lines); retail keeps the done flag in a stack slot and tests count from the stack"
-next = "while(!done) shape is closest (81 diff lines); find what spills done"
-score = "61/336"
-
-[[wip]]
-name = "sub_080447E8"
-seed = "src/decompiled/sub_080447E8.c"
-notes = "src/decompiled/sub_080447E8.md"
-status = "New semantic draft (sibling of sub_08044648, table gData_0807BE04, Unk7BE04 fields named). Logic exact, 4 bytes long; retail loads the table symbol before id*28 and keeps it in r8."
-next = "Solve the table-base-first order (see sub_08044648), then the loop-test duplication."
-score = "232/372"
-
-[[wip]]
 name = "sub_0804C8BC"
 seed = "src/decompiled/sub_0804C8BC.c"
 notes = "src/decompiled/sub_0804C8BC.md"
 status = "New semantic draft (the old one was a junk stub): five list rows from gData_080989F0 (struct Unk4C8BCRow). Logic exact, 4 bytes long. Retail has five loop givs (palette pointer, i*4, two row givs, i*16) and copies the i*16 giv into a stack local for the sprite y; every shape tried either drops the i*16 giv or adds a (y+0x38)<<8 giv."
 next = "Find the source form of the sprite y ((i*16 + 0x38) << 8) that reuses the i*16 giv through a copy."
 score = "74/372"
-
-[[wip]]
-name = "sub_08070930"
-seed = "src/decompiled/sub_08070930.c"
-notes = "src/decompiled/sub_08070930.md"
-status = "New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top."
-next = "Find why retail has two pseudos for the affine pointer; that also un-merges the loop tests."
-score = "199/420"
-
-[[wip]]
-name = "sub_080618EC"
-seed = "src/decompiled/sub_080618EC.c"
-notes = "src/decompiled/sub_080618EC.md"
-status = "old_agbcc, no goto/locals: one-line diff vs retail. Switch(align) cases 0,2,1 and second switch case order 10,7,8,default match; keys inline as 'gData_03003F60 & t->skipKeys' matches. Left: ours 'ldrb r0,[r4,#20]; adds r3,r0,#0' (gcse PRE copy that cprop never sees) vs retail 'ldrb r3,[r4,#20]' direct (+2 bytes, size 432 vs 428)."
-next = "Alt shape with 'done = 0xFF' pseudo (set before the timer test, declared s8 done, s32 state, 't->state = state | done') gets ldrb r3 direct, keys r2 and 'movs r0,#255; orrs r0,r3' but adds 'lsls/asrs #24' for the s8 done; u32/u8 done give state r2/keys r3 and [state,done] operand order. Try shapes that keep the s8 pseudo effect without the extension."
-score = "375/428"
-
-[[wip]]
-name = "sub_08060E48"
-seed = "src/decompiled/sub_08060E48.c"
-notes = "src/decompiled/sub_08060E48.md"
-status = "text glyph blit 528/532; regalloc: retail spills 9 address pseudos"
-next = "gw in r9, rows/yt next-iter in sp24/28; permuter"
-score = "92/532"
 
 [[wip]]
 name = "sub_0806EC20"
@@ -237,14 +60,6 @@ next = "idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded"
 score = "89/492"
 
 [[wip]]
-name = "sub_0806B764"
-seed = "src/decompiled/sub_0806B764.c"
-notes = "src/decompiled/sub_0806B764.md"
-status = "TextLayerInit same-size 509/588, old_agbcc"
-next = "a reload gets r4 not r7; 0x80 test operand order"
-score = "509/588"
-
-[[wip]]
 name = "sub_080706B0"
 seed = "src/decompiled/sub_080706B0.c"
 notes = "src/decompiled/sub_080706B0.md"
@@ -252,10 +67,3 @@ status = "logic complete, old_agbcc, 620/626 B"
 next = "retail spills spacing (sp24) and keeps glyph width in r8 in the per-glyph check; case 1 tail is cross-jumped with the no-widths path; first=head load sits between count-- and the loop test"
 score = "61/626"
 
-[[wip]]
-name = "sub_0806A6F8"
-seed = "src/decompiled/sub_0806A6F8.c"
-notes = "src/decompiled/sub_0806A6F8.md"
-status = "size_mismatch 348 vs 436; prologue skips adds r4,r0; loop CSE'd"
-next = "un-hoist slot; pin one=1 and table base; tmp[] for gBtlState copy; grow to 436 then permuter"
-score = "45/436"

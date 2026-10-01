@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080447E8` |
 | Size | 372 bytes (162 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080447E8` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | walks -1-terminated id list, spawns kind-1 scene objects from gData_0807BE04, parks kind-2 position records |
 
 ## Why this name
 

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x080737C0` |
 | Size | 336 bytes (152 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080737C0` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | word-wrap a string into up to count line buffers |
 
 ## Why this name
 

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08044648` |
 | Size | 364 bytes (159 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08044648` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | BeybladeSpawnList: spawn scene objects for roster id list |
 
 ## Why this name
 

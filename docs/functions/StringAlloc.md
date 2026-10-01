@@ -7,8 +7,8 @@
 |--|--|
 | ROM | `0x0807309C` |
 | Size | 120 bytes (51 instructions) |
-| Tier | MATCHING |
-| Status | matched |
+| Tier | UNDERSTOOD |
+| Status | same_size |
 | Subsystem | battle |
 | Link label | `sub_0807309C` |
 | Confidence | 0.85 |

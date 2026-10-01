@@ -3,14 +3,13 @@
 
 # battle subsystem
 
-92 functions — 50 named.
+91 functions — 50 named.
 
 | Tier | Functions |
 |------|----------:|
-| MATCHING | 87 |
+| MATCHING | 89 |
 | UNDERSTOOD | 1 |
-| DECOMPILED | 2 |
-| UNKNOWN | 2 |
+| UNKNOWN | 1 |
 
 ## Functions
 
@@ -19,13 +18,12 @@
 | [`DebugPrint`](../functions/DebugPrint.md) | `0x08067B98` | MATCHING | 6 | 30 | 0 |  |
 | [`BtlObjPoolFree`](../functions/BtlObjPoolFree.md) | `0x0806FE84` | MATCHING | 120 | 28 | 3 | gUnk_030040A4, gUnk_030040AC |
 | [`HeapFree`](../functions/HeapFree.md) | `0x0806A434` | MATCHING | 164 | 25 | 1 | gUnk_03000B30, gUnk_03000B3C |
-| [`StringAlloc`](../functions/StringAlloc.md) | `0x0807309C` | MATCHING | 120 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
+| [`StringAlloc`](../functions/StringAlloc.md) | `0x0807309C` | UNDERSTOOD | 120 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
 | [`StringFree`](../functions/StringFree.md) | `0x08073114` | MATCHING | 112 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
 | [`TextFormatInt`](../functions/TextFormatInt.md) | `0x080735DC` | MATCHING | 132 | 10 | 4 |  |
 | [`RandRange`](../functions/RandRange.md) | `0x080628B4` | MATCHING | 48 | 9 | 1 | gMainWorkPtr |
 | [`SceneObjUpdate`](../functions/SceneObjUpdate.md) | `0x08068418` | MATCHING | 272 | 9 | 3 | gUnk_03000180 |
-| `sub_0806A6F8` | `0x0806A6F8` | UNKNOWN | 436 | 8 | 0 | gBtlInputMask, gBtlKeyQueueCount |
-| `sub_08067CE8` | `0x08067CE8` | UNKNOWN | 548 | 7 | 5 |  |
+| `sub_0806A6F8` | `0x0806A6F8` | MATCHING | 436 | 8 | 0 | gBtlInputMask, gBtlKeyQueueCount |
 | [`TextGroupSetString`](../functions/TextGroupSetString.md) | `0x08070AD4` | MATCHING | 34 | 7 | 2 |  |
 | [`SfxPlayInSlot`](../functions/SfxPlayInSlot.md) | `0x080601C4` | MATCHING | 92 | 5 | 3 | gMainWorkPtr |
 | [`BtlReleaseEntry`](../functions/BtlReleaseEntry.md) | `0x08070678` | MATCHING | 36 | 5 | 3 |  |
@@ -71,7 +69,7 @@
 | [`MapCursorInput`](../functions/MapCursorInput.md) | `0x080436B0` | MATCHING | 658 | 1 | 10 | gBtlInputMask, gBtlKeysHeld |
 | [`BtlFindUnk16E4`](../functions/BtlFindUnk16E4.md) | `0x08043BDC` | MATCHING | 76 | 1 | 1 | gMainWorkPtr |
 | [`ScreenBrightnessFade`](../functions/ScreenBrightnessFade.md) | `0x0804438C` | MATCHING | 304 | 1 | 10 | gMainWorkPtr |
-| `sub_08045C5C` | `0x08045C5C` | DECOMPILED | 136 | 1 | 0 | gBtlInputMask, gMainWorkPtr |
+| `sub_08045C5C` | `0x08045C5C` | MATCHING | 136 | 1 | 0 | gBtlInputMask, gMainWorkPtr |
 | `sub_08048DB8` | `0x08048DB8` | MATCHING | 440 | 1 | 17 | gUnk_03000648, gUnk_0300064C |
 | `sub_08052FC8` | `0x08052FC8` | MATCHING | 72 | 1 | 9 | gMainWorkPtr |
 | `sub_080602C0` | `0x080602C0` | MATCHING | 14 | 1 | 1 |  |
@@ -88,7 +86,7 @@
 | [`Unk346C0Init`](../functions/Unk346C0Init.md) | `0x08034420` | MATCHING | 328 | 0 | 1 |  |
 | `sub_08036A68` | `0x08036A68` | MATCHING | 240 | 0 | 9 | gBattleWork, gMainWorkPtr |
 | `sub_08037508` | `0x08037508` | MATCHING | 452 | 0 | 17 | gBattleWork, gMainWorkPtr |
-| `sub_08038314` | `0x08038314` | MATCHING | 108 | 0 | 1 | gBattleWork, gBtlKeysHeld |
+| `sub_08038314` | `0x08038314` | UNKNOWN | 108 | 0 | 1 | gBattleWork, gBtlKeysHeld |
 | `sub_08038D10` | `0x08038D10` | MATCHING | 86 | 0 | 2 | gBattleWork, gUnk_030003E0 |
 | `sub_08038F30` | `0x08038F30` | MATCHING | 316 | 0 | 2 | gBattleWork, gMainWorkPtr |
 | `sub_080392D0` | `0x080392D0` | MATCHING | 116 | 0 | 2 | gBattleWork |
@@ -96,7 +94,7 @@
 | [`LaunchShowBoostMeter`](../functions/LaunchShowBoostMeter.md) | `0x0803C5DC` | MATCHING | 220 | 0 | 6 | gBattleWork, gMainWorkPtr |
 | [`BattleTextGlyphRow`](../functions/BattleTextGlyphRow.md) | `0x0803D284` | MATCHING | 298 | 0 | 6 | gBattleWork |
 | `sub_0803D51C` | `0x0803D51C` | MATCHING | 304 | 0 | 3 | gBattleWork, gMainWorkPtr |
-| `sub_08040680` | `0x08040680` | DECOMPILED | 308 | 0 | 15 | gMainWorkPtr, gUnk_03000474 |
+| `sub_08040680` | `0x08040680` | MATCHING | 308 | 0 | 15 | gMainWorkPtr, gUnk_03000474 |
 | `sub_08041858` | `0x08041858` | MATCHING | 52 | 0 | 2 | gUnk_03000504, gUnk_03000508 |
 | `sub_08051444` | `0x08051444` | MATCHING | 192 | 0 | 7 | gMainWorkPtr |
 | [`BgmStop`](../functions/BgmStop.md) | `0x0806013C` | MATCHING | 56 | 0 | 1 | gMainWorkPtr |
@@ -104,7 +102,7 @@
 | `sub_08060438` | `0x08060438` | MATCHING | 14 | 0 | 1 |  |
 | `sub_08060448` | `0x08060448` | MATCHING | 14 | 0 | 1 |  |
 | `sub_08060458` | `0x08060458` | MATCHING | 14 | 0 | 1 |  |
-| [`TextTypewriterTick`](../functions/TextTypewriterTick.md) | `0x080618EC` | UNDERSTOOD | 428 | 0 | 5 | gBtlInputMask, gUnk_03000798 |
+| [`TextTypewriterTick`](../functions/TextTypewriterTick.md) | `0x080618EC` | MATCHING | 428 | 0 | 5 | gBtlInputMask, gUnk_03000798 |
 | `sub_08065CD0` | `0x08065CD0` | MATCHING | 316 | 0 | 9 | gBtlKeysHeld |
 | `sub_08066224` | `0x08066224` | MATCHING | 112 | 0 | 2 |  |
 | [`BtlObjSystemInit`](../functions/BtlObjSystemInit.md) | `0x0806F910` | MATCHING | 624 | 0 | 5 | gBtlObjListHead, gBtlObjListTail |
@@ -136,4 +134,4 @@
 - `sub_08033878` — references gBattleWork
 - `sub_08034420` — note mentions 'battle'
 - `sub_08034894` — references gBtlInputMask
-- … and 67 more with recorded evidence
+- … and 66 more with recorded evidence

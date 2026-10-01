@@ -1,8 +1,100 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080618ec
-__attribute__((naked))
-void TextTypewriterTick(void)
+/* match-compiler: old_agbcc */
+// Typewriter text tick: counts down the per-character delay (quartered while
+// fastKeys are held), starts and measures a new line, and prints one glyph or
+// control code (7 = cursor, 8 = palette).
+#include "global.h"
+#include "ram_map.h"
+
+// `state` is a signed local on purpose: it keeps one multi-bit pseudo live to the
+// `|= 0xFF` below, so the load goes straight into r3 and the OR is not folded.
+s32 TextTypewriterTick(struct TextTypewriter *t, s32 x, u32 align, u32 stopLine)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r8\npush {r7}\nadds r4, r0, #0x0\nadds r7, r1, #0x0\nadds r6, r2, #0x0\nmov r8, r3\ncmp r4, #0x00\nbne _08061904\nmovs r0, #0x01\nnegs r0, r0\nb _08061A8A\n_08061904:\nldrb r3, [r4, #0x14]\ncmp r3, #0x01\nbeq _08061910\nmovs r0, #0x14\nldsb r0, [r4, r0]\nb _08061A8A\n_08061910:\nldr r0, _0806192C @ =0x03003F60\nldrh r2, [r0, #0x00]\nldrh r0, [r4, #0x0E]\nands r0, r2\ncmp r0, #0x00\nbne _08061974\nldrh r1, [r4, #0x10]\nmovs r5, #0x10\nldsh r0, [r4, r5]\ncmp r0, #0x00\nble _08061930\nsubs r0, r1, #0x1\nstrh r0, [r4, #0x10]\nb _08061A88\n_0806192C: .4byte 0x03003F60\n_08061930:\nldrh r0, [r4, #0x0C]\nands r0, r2\ncmp r0, #0x00\nbeq _08061940\nldrh r1, [r4, #0x12]\nlsls r0, r1, #0x10\nasrs r0, r0, #0x12\nb _08061942\n_08061940:\nldrh r0, [r4, #0x12]\n_08061942:\nstrh r0, [r4, #0x10]\nmovs r0, #0x15\nldsb r0, [r4, r0]\ncmp r0, #0x00\nbne _08061A00\nldr r0, [r4, #0x04]\ncmp r0, #0x00\nbne _08061A00\nldrh r2, [r4, #0x0A]\nldrh r5, [r4, #0x08]\ncmp r2, r5\nbcc _08061960\nmovs r0, #0xFF\norrs r0, r3\nb _08061976\n_08061960:\nldr r1, [r4, #0x00]\nldrh r2, [r4, #0x0A]\nlsls r0, r2, #0x02\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nbl sub_08073078\nstr r0, [r4, #0x04]\ncmp r0, #0x00\nbne _0806197E\n_08061974:\nmovs r0, #0xFF\n_08061976:\nstrb r0, [r4, #0x14]\nmovs r0, #0x01\nnegs r0, r0\nb _08061A8A\n_0806197E:\nldr r1, [r4, #0x00]\nldrh r5, [r4, #0x0A]\nlsls r0, r5, #0x02\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nldr r5, _080619B0 @ =0x03000798\nldr r3, [r5, #0x00]\nadds r1, r3, #0x0\nadds r1, #0x8C\nldr r1, [r1, #0x00]\nadds r2, r3, #0x0\nadds r2, #0xA0\nldrh r2, [r2, #0x00]\nadds r3, #0x9C\nldrh r3, [r3, #0x00]\nbl sub_08073988\nadds r2, r0, #0x0\ncmp r6, #0x01\nbeq _080619C8\ncmp r6, #0x01\nbcc _080619B4\ncmp r6, #0x02\nbeq _080619C0\nb _080619D0\n_080619B0: .4byte 0x03000798\n_080619B4:\nldr r1, [r5, #0x00]\nlsrs r0, r2, #0x01\nsubs r0, r7, r0\nadds r1, #0x90\nstrh r0, [r1, #0x00]\nb _080619D0\n_080619C0:\nldr r0, [r5, #0x00]\nadds r0, #0x90\nstrh r7, [r0, #0x00]\nb _080619D0\n_080619C8:\nldr r0, [r5, #0x00]\nsubs r1, r7, r2\nadds r0, #0x90\nstrh r1, [r0, #0x00]\n_080619D0:\nldr r0, _080619FC @ =0x03000798\nldr r0, [r0, #0x00]\nadds r1, r0, #0x0\nadds r1, #0x92\nadds r3, r0, #0x0\nadds r3, #0xA2\nldrh r0, [r1, #0x00]\nldrh r5, [r3, #0x00]\nadds r2, r0, r5\nstrh r2, [r1, #0x00]\nldrh r0, [r4, #0x0A]\ncmp r8, r0\nbne _08061A00\nldr r0, [r4, #0x04]\ncmp r0, #0x00\nbeq _08061A00\nldrh r3, [r3, #0x00]\nsubs r0, r2, r3\nstrh r0, [r1, #0x00]\nmovs r0, #0x02\nb _08061A8A\n.byte 0x00, 0x00\n_080619FC: .4byte 0x03000798\n_08061A00:\nldr r1, [r4, #0x00]\nldrh r2, [r4, #0x0A]\nlsls r0, r2, #0x02\nadds r0, r0, r1\nldr r5, [r0, #0x00]\nldrb r0, [r4, #0x15]\nadds r3, r0, #0x1\nstrb r3, [r4, #0x15]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\nadds r0, r5, r0\nldrb r2, [r0, #0x00]\ncmp r2, #0x08\nbeq _08061A4E\ncmp r2, #0x08\nbgt _08061A26\ncmp r2, #0x07\nbeq _08061A2C\nb _08061A66\n_08061A26:\ncmp r2, #0x0A\nbne _08061A66\nb _08061A88\n_08061A2C:\nadds r1, r3, #0x1\nstrb r1, [r4, #0x15]\nlsls r0, r3, #0x18\nasrs r0, r0, #0x18\nadds r0, r5, r0\nldrb r0, [r0, #0x00]\nsubs r0, #0x01\nadds r2, r1, #0x1\nstrb r2, [r4, #0x15]\nlsls r1, r1, #0x18\nasrs r1, r1, #0x18\nadds r1, r5, r1\nldrb r1, [r1, #0x00]\nsubs r1, #0x01\nbl sub_080615EC\nb _08061A88\n_08061A4E:\nadds r0, r3, #0x1\nstrb r0, [r4, #0x15]\nlsls r0, r3, #0x18\nasrs r0, r0, #0x18\nadds r0, r5, r0\nldrb r0, [r0, #0x00]\nsubs r0, #0x01\nlsls r0, r0, #0x10\nlsrs r0, r0, #0x10\nbl sub_08061610\nb _08061A88\n_08061A66:\nmovs r1, #0x15\nldsb r1, [r4, r1]\nldr r0, [r4, #0x04]\ncmp r1, r0\nbls _08061A7E\nmovs r0, #0x00\nstrb r0, [r4, #0x15]\nstr r0, [r4, #0x04]\nldrh r0, [r4, #0x0A]\nadds r0, #0x01\nstrh r0, [r4, #0x0A]\nb _08061A88\n_08061A7E:\nldr r0, _08061A94 @ =0x080BB644\nldr r1, [r0, #0x00]\nadds r0, r2, #0x0\nbl _08073C44\n_08061A88:\nmovs r0, #0x01\n_08061A8A:\npop {r3}\nmov r8, r3\npop {r4, r5, r6, r7}\npop {r1}\nbx r1\n_08061A94: .4byte 0x080BB644");
+    u8 *str;
+    s8 state;
+    u8 c;
+    s32 width;
+
+    if (t == NULL)
+        return -1;
+    if ((state = t->state) != 1)
+        return (s8)t->state;
+    if (gData_03003F60 & t->skipKeys)
+    {
+        t->state = 0xFF;
+        return -1;
+    }
+    if (t->timer > 0)
+    {
+        t->timer--;
+        return 1;
+    }
+    if (gData_03003F60 & t->fastKeys)
+        t->timer = (s16)t->delay >> 2;
+    else
+        t->timer = t->delay;
+    if (t->pos == 0 && t->len == 0)
+    {
+        if (t->line >= t->lineCount)
+        {
+            t->state |= 0xFF;
+            return -1;
+        }
+        t->len = StringLength(t->lines[t->line]);
+        if (t->len == 0)
+        {
+            t->state = 0xFF;
+            return -1;
+        }
+        width = TextMeasureWidth(t->lines[t->line], (const u8 *)gData_03000798->widthTable, gData_03000798->glyphWidth, gData_03000798->spacing);
+        switch (align)
+        {
+        case 0:
+            gData_03000798->penX = x - ((u32)width >> 1);
+            break;
+        case 2:
+            gData_03000798->penX = x;
+            break;
+        case 1:
+            gData_03000798->penX = x - width;
+            break;
+        }
+        gData_03000798->penY += gData_03000798->lineHeight;
+        if (stopLine == t->line && t->len != 0)
+        {
+            gData_03000798->penY -= gData_03000798->lineHeight;
+            return 2;
+        }
+    }
+    str = t->lines[t->line];
+    c = str[t->pos++];
+    switch (c)
+    {
+    case 10:
+        break;
+    case 7:
+        TextSetCursor(str[t->pos++] - 1, str[t->pos++] - 1);
+        break;
+    case 8:
+        TextSetPaletteBank(str[t->pos++] - 1);
+        break;
+    default:
+        if (t->pos > t->len)
+        {
+            t->pos = 0;
+            t->len = 0;
+            t->line++;
+        }
+        else
+        {
+            ((void (*)(u32))gData_080BB644[0])(c);
+        }
+        break;
+    }
+    return 1;
 }
+

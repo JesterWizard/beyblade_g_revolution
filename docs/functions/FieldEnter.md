@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08043DB4` |
 | Size | 1352 bytes (507 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08043DB4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | permuter/nonmatchings/sub_08043DB4/base.c |
 
 ## Why this name
 

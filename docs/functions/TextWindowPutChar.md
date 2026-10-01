@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08060E48` |
 | Size | 532 bytes (261 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
-| Subsystem | _unassigned_ |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | graphics |
 | Link label | `sub_08060E48` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | draw one glyph into a text window |
 
 ## Why this name
 

@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08070930` |
 | Size | 420 bytes (196 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
-| Subsystem | _unassigned_ |
+| Tier | MATCHING |
+| Status | matched |
+| Subsystem | graphics |
 | Link label | `sub_08070930` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | append string glyphs to text sprite group |
 
 ## Why this name
 

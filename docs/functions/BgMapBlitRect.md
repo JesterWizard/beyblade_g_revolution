@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x08069270` |
 | Size | 244 bytes (112 instructions) |
-| Tier | UNDERSTOOD |
-| Status | size_mismatch |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08069270` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | tile map rect blit with wrap-around split |
 
 ## Why this name
 
