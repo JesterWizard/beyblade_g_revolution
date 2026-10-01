@@ -45,3 +45,7 @@ Thumbs.db
 __pycache__/
 *.pyc
 scratch.c
+scratch*.c
+scratch_*.c
+scratch_vars.txt
+x.i

@@ -19,19 +19,3 @@ reason = "battle countdown gate: same-size DIFF (59/108); mask loaded+ANDed befo
 name = "sub_08074144"
 reason = "single instruction 'mov pc, lr' (2B) — semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm"
 
-[[wip]]
-name = "sub_08035624"
-seed = "src/decompiled/sub_08035624.c"
-notes = "src/decompiled/sub_08035624.md"
-status = "structure matches; only key/list/scratch register choice differs (retail key=r4, list=r2, const scratch=r0; ours r0/r0/r2). 37 differing insns vs 59 for the old seed"
-next = "find C that makes key addr r4 and list addr r2 (forcing them with a debug compiler makes output equal retail); try permuter on this draft with a time limit"
-score = "45/114"
-
-[[wip]]
-name = "sub_080706B0"
-seed = "src/decompiled/sub_080706B0.c"
-notes = "src/decompiled/sub_080706B0.md"
-status = "same-size DIFF after permuter, allocation only"
-next = "init-load order of locals, spacing spill (sp24), glyph width kept in r8"
-score = "452/626"
-
