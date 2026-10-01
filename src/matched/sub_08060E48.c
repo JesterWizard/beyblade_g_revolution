@@ -1,283 +1,94 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08060e48
-__attribute__((naked))
-void TextWindowPutChar(struct TextWindow *a, u32 c)
+/* match-compiler: old_agbcc */
+// Draw one glyph of `chArg` at the window's pen: point the tilemap cells the
+// glyph covers at the window's tiles (baseTile palette bits), OR the 4bpp glyph
+// rows into the tile graphics shifted by the pen's sub-tile x offset (spilling
+// into the next tile column), then advance penX. A space only advances by
+// `spacing`; glyphs that would cross the window edge are skipped.
+void TextWindowPutChar(struct TextWindow *w, u32 chArg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x044\n"
-        "adds r5, r0, #0x0\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "str r1, [sp, #0x000]\n"
-        "cmp r1, #0x20\n"
-        "bne _08060E70\n"
-        "adds r0, #0x90\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x9C\n"
-        "ldrh r2, [r0, #0x00]\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "adds r1, r2, r1\n"
-        "strh r1, [r0, #0x00]\n"
-        "b _08061044\n"
-        "_08060E70:\n"
-        "adds r4, r5, #0x0\n"
-        "adds r4, #0xA0\n"
-        "ldrh r3, [r4, #0x00]\n"
-        "mov r9, r3\n"
-        "movs r6, #0xA2\n"
-        "adds r6, r6, r5\n"
-        "mov r8, r6\n"
-        "ldrh r7, [r6, #0x00]\n"
-        "ldr r0, _08061054 @ =0x080BB748\n"
-        "ldr r1, [sp, #0x000]\n"
-        "adds r0, r1, r0\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "str r0, [sp, #0x000]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x88\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r1, [sp, #0x000]\n"
-        "bl sub_0806BB38\n"
-        "str r0, [sp, #0x010]\n"
-        "adds r2, r5, #0x0\n"
-        "adds r2, #0x90\n"
-        "movs r3, #0x00\n"
-        "ldsh r1, [r2, r3]\n"
-        "adds r3, r5, #0x0\n"
-        "adds r3, #0x8C\n"
-        "ldr r0, [r3, #0x00]\n"
-        "ldr r6, [sp, #0x000]\n"
-        "adds r0, r0, r6\n"
-        "mov r6, r9\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "subs r0, r6, r0\n"
-        "adds r1, r1, r0\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x98\n"
-        "mov r10, r2\n"
-        "str r4, [sp, #0x03C]\n"
-        "str r3, [sp, #0x030]\n"
-        "str r0, [sp, #0x038]\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "cmp r1, r0\n"
-        "bcc _08060EC6\n"
-        "b _08061044\n"
-        "_08060EC6:\n"
-        "adds r2, #0x02\n"
-        "movs r1, #0x00\n"
-        "ldsh r6, [r2, r1]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x9A\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "cmp r6, r1\n"
-        "blt _08060ED8\n"
-        "b _08061044\n"
-        "_08060ED8:\n"
-        "mov r3, r8\n"
-        "ldrh r3, [r3, #0x00]\n"
-        "adds r0, r3, r6\n"
-        "cmp r0, r1\n"
-        "blt _08060EE4\n"
-        "b _08061044\n"
-        "_08060EE4:\n"
-        "mov r4, r10\n"
-        "ldrh r1, [r4, #0x00]\n"
-        "lsls r0, r1, #0x10\n"
-        "asrs r0, r0, #0x13\n"
-        "lsls r0, r0, #0x05\n"
-        "str r0, [sp, #0x008]\n"
-        "ldrh r2, [r2, #0x00]\n"
-        "lsls r0, r2, #0x10\n"
-        "asrs r6, r0, #0x13\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0xA6\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "str r0, [sp, #0x00C]\n"
-        "movs r0, #0x07\n"
-        "ands r0, r1\n"
-        "str r0, [sp, #0x004]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x5C\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0, #0x0B\n"
-        "movs r0, #0xC0\n"
-        "lsls r0, r0, #0x13\n"
-        "adds r1, r1, r0\n"
-        "str r1, [sp, #0x014]\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x5D\n"
-        "str r1, [sp, #0x020]\n"
-        "adds r2, r5, #0x0\n"
-        "adds r2, #0xA4\n"
-        "str r2, [sp, #0x040]\n"
-        "adds r5, #0x96\n"
-        "str r5, [sp, #0x034]\n"
-        "ldr r3, [sp, #0x004]\n"
-        "lsls r3, r3, #0x02\n"
-        "str r3, [sp, #0x02C]\n"
-        "str r4, [sp, #0x018]\n"
-        "movs r0, #0x08\n"
-        "ldr r5, [sp, #0x004]\n"
-        "subs r0, r0, r5\n"
-        "str r0, [sp, #0x01C]\n"
-        "_08060F34:\n"
-        "ldr r0, [sp, #0x020]\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r1, r0, #0x0E\n"
-        "ldr r2, [sp, #0x008]\n"
-        "movs r3, #0xC0\n"
-        "lsls r3, r3, #0x13\n"
-        "adds r0, r2, r3\n"
-        "adds r1, r1, r0\n"
-        "ldr r4, [sp, #0x038]\n"
-        "ldrh r4, [r4, #0x00]\n"
-        "lsrs r0, r4, #0x03\n"
-        "lsls r0, r0, #0x05\n"
-        "muls r0, r6\n"
-        "adds r3, r1, r0\n"
-        "ldr r5, [sp, #0x040]\n"
-        "ldrh r2, [r5, #0x00]\n"
-        "ldr r1, [sp, #0x00C]\n"
-        "adds r0, r6, r1\n"
-        "subs r7, #0x08\n"
-        "str r7, [sp, #0x024]\n"
-        "adds r6, #0x01\n"
-        "str r6, [sp, #0x028]\n"
-        "lsls r0, r0, #0x06\n"
-        "ldr r4, [sp, #0x014]\n"
-        "adds r7, r0, r4\n"
-        "_08060F66:\n"
-        "ldr r5, [sp, #0x018]\n"
-        "ldrh r5, [r5, #0x00]\n"
-        "lsls r0, r5, #0x10\n"
-        "asrs r0, r0, #0x13\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r7\n"
-        "ldr r1, _08061058 @ =0x00000FFF\n"
-        "ldrh r6, [r0, #0x00]\n"
-        "ands r1, r6\n"
-        "strh r1, [r0, #0x00]\n"
-        "ldr r1, [sp, #0x018]\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "lsls r0, r1, #0x10\n"
-        "asrs r0, r0, #0x13\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r7\n"
-        "ldrh r1, [r0, #0x00]\n"
-        "ldr r4, [sp, #0x034]\n"
-        "ldrh r4, [r4, #0x00]\n"
-        "orrs r1, r4\n"
-        "strh r1, [r0, #0x00]\n"
-        "ldr r5, [sp, #0x004]\n"
-        "cmp r5, #0x00\n"
-        "beq _08060FC8\n"
-        "mov r6, r10\n"
-        "ldrh r6, [r6, #0x00]\n"
-        "lsls r0, r6, #0x10\n"
-        "asrs r0, r0, #0x13\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r7\n"
-        "ldr r1, _08061058 @ =0x00000FFF\n"
-        "ldrh r4, [r0, #0x02]\n"
-        "ands r1, r4\n"
-        "strh r1, [r0, #0x02]\n"
-        "mov r5, r10\n"
-        "ldrh r5, [r5, #0x00]\n"
-        "lsls r0, r5, #0x10\n"
-        "asrs r0, r0, #0x13\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r7\n"
-        "ldrh r1, [r0, #0x02]\n"
-        "ldr r6, [sp, #0x034]\n"
-        "ldrh r6, [r6, #0x00]\n"
-        "orrs r1, r6\n"
-        "strh r1, [r0, #0x02]\n"
-        "_08060FC8:\n"
-        "movs r6, #0x00\n"
-        "movs r0, #0x08\n"
-        "negs r0, r0\n"
-        "add r0, r9\n"
-        "mov r12, r0\n"
-        "adds r2, #0x01\n"
-        "mov r8, r2\n"
-        "ldr r5, [sp, #0x02C]\n"
-        "ldr r1, [sp, #0x01C]\n"
-        "lsls r4, r1, #0x02\n"
-        "_08060FDC:\n"
-        "ldr r2, [sp, #0x010]\n"
-        "ldm r2!, {r1}\n"
-        "str r2, [sp, #0x010]\n"
-        "adds r2, r1, #0x0\n"
-        "lsls r1, r5\n"
-        "lsrs r2, r4\n"
-        "ldr r0, [r3, #0x00]\n"
-        "orrs r0, r1\n"
-        "str r0, [r3, #0x00]\n"
-        "ldr r0, [r3, #0x20]\n"
-        "orrs r0, r2\n"
-        "str r0, [r3, #0x20]\n"
-        "adds r3, #0x04\n"
-        "ldr r0, [sp, #0x010]\n"
-        "ldm r0!, {r1}\n"
-        "str r0, [sp, #0x010]\n"
-        "adds r2, r1, #0x0\n"
-        "lsls r1, r5\n"
-        "lsrs r2, r4\n"
-        "ldr r0, [r3, #0x00]\n"
-        "orrs r0, r1\n"
-        "str r0, [r3, #0x00]\n"
-        "ldr r0, [r3, #0x20]\n"
-        "orrs r0, r2\n"
-        "str r0, [r3, #0x20]\n"
-        "adds r3, #0x04\n"
-        "adds r6, #0x01\n"
-        "cmp r6, #0x03\n"
-        "bls _08060FDC\n"
-        "mov r9, r12\n"
-        "mov r2, r8\n"
-        "mov r1, r9\n"
-        "cmp r1, #0x00\n"
-        "bne _08060F66\n"
-        "ldr r7, [sp, #0x024]\n"
-        "ldr r6, [sp, #0x028]\n"
-        "ldr r2, [sp, #0x03C]\n"
-        "ldrh r2, [r2, #0x00]\n"
-        "mov r9, r2\n"
-        "cmp r7, #0x00\n"
-        "bne _08060F34\n"
-        "ldr r3, [sp, #0x030]\n"
-        "ldr r0, [r3, #0x00]\n"
-        "ldr r4, [sp, #0x000]\n"
-        "adds r0, r0, r4\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "subs r0, r2, r0\n"
-        "mov r5, r10\n"
-        "ldrh r5, [r5, #0x00]\n"
-        "adds r0, r5, r0\n"
-        "mov r6, r10\n"
-        "strh r0, [r6, #0x00]\n"
-        "_08061044:\n"
-        "add sp, #0x044\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08061054: .4byte 0x080BB748\n"
-        "_08061058: .4byte 0x00000FFF\n"
-    );
+    u8 ch;
+    u32 sx;
+    s32 xt;
+    u32 unkA6;
+    u32 *glyph;
+    u32 mapBase;
+    u32 gw;
+    u32 rows;
+    s32 yt;
+
+    ch = chArg;
+    if (ch == 0x20)
+    {
+        w->penX += w->spacing;
+        return;
+    }
+    gw = w->glyphWidth;
+    rows = w->lineHeight;
+    ch = gData_080BB748[ch];
+    glyph = sub_0806BB38(w->unk88, ch);
+    if ((u32)((s16)w->penX + (gw - ((u8 *)w->widthTable)[ch])) >= w->width)
+        return;
+    if ((s16)w->penY >= w->height)
+        return;
+    if (w->lineHeight + (s16)w->penY >= w->height)
+        return;
+
+    xt = ((s16)w->penX >> 3) << 5;
+    yt = (s16)w->penY >> 3;
+    unkA6 = w->unkA6;
+    sx = w->penX & 7;
+    mapBase = 0x06000000 + (w->screenBlock << 11);
+
+    do
+    {
+        u32 *t = (u32 *)((u8 *)(w->charBlock << 14) + (xt + 0x06000000) + ((w->width >> 3) << 5) * yt);
+        s32 col = w->unkA4;
+
+        do
+        {
+            u32 k;
+            u16 *map = (u16 *)(((yt + unkA6) << 6) + mapBase);
+
+            map[((s16)w->penX >> 3) + col] &= 0xFFF;
+            map[((s16)w->penX >> 3) + col] |= w->baseTile;
+            if (sx != 0)
+            {
+                map[((s16)w->penX >> 3) + col + 1] &= 0xFFF;
+                map[((s16)w->penX >> 3) + col + 1] |= w->baseTile;
+            }
+            for (k = 0; k < 4; k++)
+            {
+                u32 v, hi;
+                u32 shl = sx * 4;
+                u32 rsh = (8 - sx) * 4;
+
+                v = *glyph++;
+                hi = v;
+                v <<= shl;
+                hi >>= rsh;
+                t[0] |= v;
+                t[8] |= hi;
+                t++;
+                v = *glyph++;
+                hi = v;
+                v <<= shl;
+                hi >>= rsh;
+                t[0] |= v;
+                t[8] |= hi;
+                t++;
+            }
+            gw -= 8;
+            col++;
+        } while (gw != 0);
+        rows -= 8;
+        yt++;
+        gw = w->glyphWidth;
+    } while (rows != 0);
+    w->penX += gw - ((u8 *)w->widthTable)[ch];
 }
 

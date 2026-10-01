@@ -1,176 +1,82 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080737c0
-__attribute__((naked))
-s32 SplitStringIntoStringArray(void **lines, u8 *buf, u8 count, u32 d, u16 e, u16 f, u16 g, u32 h)
+/* match-compiler: old_agbcc */
+s32 StringNextWord(const u8 *src, u8 *dst, s32 size);
+
+// Word-wrap `text` into at most `count` line buffers of `lineSize` bytes, breaking
+// before a word that would reach `maxWidth` (glyph metrics from `widths`) and
+// after a word that ends in a newline. Returns the number of lines used, or -1.
+s32 SplitStringIntoStringArray(void **lines, u8 *text, u8 count, u32 widths, u16 maxWidth, u16 glyph, u16 space, u32 lineSize)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x018\n"
-        "mov r8, r0\n"
-        "adds r7, r1, #0x0\n"
-        "str r3, [sp, #0x004]\n"
-        "ldr r0, [sp, #0x038]\n"
-        "ldr r1, [sp, #0x03C]\n"
-        "ldr r3, [sp, #0x040]\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "str r2, [sp, #0x000]\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x008]\n"
-        "lsls r1, r1, #0x10\n"
-        "lsrs r1, r1, #0x10\n"
-        "str r1, [sp, #0x00C]\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "str r3, [sp, #0x010]\n"
-        "movs r0, #0x00\n"
-        "mov r10, r0\n"
-        "mov r9, r0\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x014]\n"
-        "mov r4, r8\n"
-        "cmp r4, #0x00\n"
-        "beq _08073816\n"
-        "cmp r7, #0x00\n"
-        "beq _08073816\n"
-        "ldr r0, [sp, #0x004]\n"
-        "cmp r0, #0x00\n"
-        "beq _08073816\n"
-        "ldrb r0, [r7, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _08073816\n"
-        "ldr r1, [sp, #0x000]\n"
-        "cmp r1, #0x00\n"
-        "bne _0807381C\n"
-        "_08073816:\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "b _08073900\n"
-        "_0807381C:\n"
-        "movs r0, #0x40\n"
-        "bl sub_0807309C\n"
-        "adds r5, r0, #0x0\n"
-        "cmp r5, #0x00\n"
-        "bne _08073834\n"
-        "ldr r0, _08073830 @ =0x083D2720\n"
-        "bl sub_08067B98\n"
-        "b _08073816\n"
-        "_08073830: .4byte 0x083D2720\n"
-        "_08073834:\n"
-        "adds r0, r5, #0x0\n"
-        "movs r1, #0x40\n"
-        "bl sub_08073184\n"
-        "adds r0, r7, #0x0\n"
-        "adds r1, r5, #0x0\n"
-        "movs r2, #0x40\n"
-        "bl sub_08073910\n"
-        "adds r4, r0, #0x0\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08073078\n"
-        "adds r6, r0, #0x0\n"
-        "cmp r4, #0x00\n"
-        "beq _080738EC\n"
-        "cmp r6, #0x00\n"
-        "beq _080738EC\n"
-        "adds r7, r7, r4\n"
-        "adds r0, r5, #0x0\n"
-        "ldr r1, [sp, #0x004]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "ldr r3, [sp, #0x010]\n"
-        "bl sub_08073988\n"
-        "adds r6, r0, #0x0\n"
-        "mov r4, r10\n"
-        "adds r0, r4, r6\n"
-        "ldr r1, [sp, #0x010]\n"
-        "adds r0, r0, r1\n"
-        "ldr r4, [sp, #0x008]\n"
-        "cmp r0, r4\n"
-        "bcc _08073884\n"
-        "movs r0, #0x00\n"
-        "mov r10, r0\n"
-        "mov r0, r9\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r9, r0\n"
-        "_08073884:\n"
-        "ldr r1, [sp, #0x000]\n"
-        "cmp r9, r1\n"
-        "bcs _080738E0\n"
-        "mov r0, r9\n"
-        "lsls r4, r0, #0x02\n"
-        "mov r1, r10\n"
-        "cmp r1, #0x00\n"
-        "beq _080738A6\n"
-        "mov r1, r8\n"
-        "adds r0, r4, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r1, #0x20\n"
-        "ldr r2, [sp, #0x044]\n"
-        "bl sub_080733BC\n"
-        "ldr r0, [sp, #0x010]\n"
-        "add r10, r0\n"
-        "_080738A6:\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_080739E8\n"
-        "cmp r0, #0x01\n"
-        "bne _080738CE\n"
-        "mov r1, r8\n"
-        "adds r0, r4, r1\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "ldr r2, [sp, #0x044]\n"
-        "bl sub_080733E4\n"
-        "movs r4, #0x00\n"
-        "mov r10, r4\n"
-        "mov r0, r9\n"
-        "adds r0, #0x01\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "mov r9, r0\n"
-        "b _080738F0\n"
-        "_080738CE:\n"
-        "mov r1, r8\n"
-        "adds r0, r4, r1\n"
-        "ldr r1, [r0, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "ldr r2, [sp, #0x044]\n"
-        "bl sub_080733E4\n"
-        "add r10, r6\n"
-        "b _080738F0\n"
-        "_080738E0:\n"
-        "ldr r0, _080738E8 @ =0x083D2760\n"
-        "bl sub_08067B98\n"
-        "b _080738F6\n"
-        "_080738E8: .4byte 0x083D2760\n"
-        "_080738EC:\n"
-        "movs r4, #0x01\n"
-        "str r4, [sp, #0x014]\n"
-        "_080738F0:\n"
-        "ldr r0, [sp, #0x014]\n"
-        "cmp r0, #0x00\n"
-        "beq _08073834\n"
-        "_080738F6:\n"
-        "adds r0, r5, #0x0\n"
-        "bl sub_08073114\n"
-        "mov r0, r9\n"
-        "adds r0, #0x01\n"
-        "_08073900:\n"
-        "add sp, #0x018\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    u32 x;
+    u8 line;
+    bool32 done;
+    u8 *word;
+    s32 used;
+    s32 w;
+
+    x = 0;
+    line = 0;
+    done = FALSE;
+    if (lines == NULL || text == NULL || widths == 0 || *text == 0)
+        return -1;
+    if (count == 0)
+        return -1;
+    word = StringAlloc(0x40);
+    if (word == NULL)
+    {
+        DebugPrint((void *)0x083D2720);
+        return -1;
+    }
+    while (!done)
+    {
+        MemClear(word, 0x40);
+        used = StringNextWord(text, word, 0x40);
+        w = StringLength(word);
+        if (used != 0 && w != 0)
+        {
+            text += used;
+            w = TextMeasureWidth(word, (const u8 *)widths, glyph, space);
+            if (x + w + space >= maxWidth)
+            {
+                x = 0;
+                line++;
+            }
+            if (line < count)
+            {
+                if (x != 0)
+                {
+                    StringAppendChar(((u8 **)lines)[line], ' ', lineSize);
+                    x += space;
+                }
+                if (TextHasNewline(word) == 1)
+                {
+                    StringAppend(word, ((u8 **)lines)[line], lineSize);
+                    x = 0;
+                    line++;
+                }
+                else
+                {
+                    StringAppend(word, ((u8 **)lines)[line], lineSize);
+                    x += w;
+                }
+            }
+            else
+            {
+                DebugPrint((void *)0x083D2760);
+                break;
+            }
+        }
+        else
+        {
+            done = TRUE;
+        }
+    }
+    StringFree(word);
+    return line + 1;
 }
+
 

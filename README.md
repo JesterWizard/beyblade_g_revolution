@@ -6,20 +6,20 @@ Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemera
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **97.0%** of functions (614/633) and **92.6%** of original function bytes (83,558/90,272).
+Decompiled C is **97.5%** of functions (617/633) and **94.0%** of original function bytes (84,858/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `███████████████████████████████░` | **97.0%** | 614/633 |
-| Decompiled C (bytes) | `██████████████████████████████░░` | **92.6%** | 83,558/90,272 |
+| Decompiled C (functions) | `███████████████████████████████░` | **97.5%** | 617/633 |
+| Decompiled C (bytes) | `██████████████████████████████░░` | **94.0%** | 84,858/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 614 (97.0%) | 83,558 (92.6%) |
-| Readable Thumb | 19 (3.0%) | 6,714 (7.4%) |
+| Semantic C | 617 (97.5%) | 84,858 (94.0%) |
+| Readable Thumb | 16 (2.5%) | 5,414 (6.0%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **96.2%** functions / **94.4%** bytes in semantic C (154/160; 0 opcode left).

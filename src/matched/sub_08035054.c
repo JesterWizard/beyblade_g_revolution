@@ -1,221 +1,68 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035054
-__attribute__((naked))
-void sub_08035054(void *a, u32 b, u32 c, s32 d)
+/* match-compiler: old_agbcc */
+// Start one of the three resource animations (kind 0/1/2 -> state slots at
+// +0x1C/+0xF8/+0x1D4) for resource `index`: create the anim object, record its
+// palette slot in unk3A bits 1.., set the kind's bit in unk2C5 and notify
+// sub_08035624 with the resource type.
+//
+// The nested `do { } while (0)` around the src load is load-bearing. It gives
+// `src` loop-depth-weighted refs (11 vs `pos`'s 9), so global alloc gives src r7
+// and pos r8 as retail does. Without it the two registers swap and the code
+// grows by 8 bytes.
+void sub_08035054(void *arg, u32 kindArg, u32 indexArg, s32 value)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x00C\n"
-        "adds r4, r0, #0x0\n"
-        "mov r9, r3\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r3, r1, #0x18\n"
-        "adds r5, r3, #0x0\n"
-        "lsls r2, r2, #0x18\n"
-        "lsrs r2, r2, #0x18\n"
-        "movs r7, #0x00\n"
-        "movs r0, #0x00\n"
-        "mov r8, r0\n"
-        "mov r10, r0\n"
-        "cmp r2, #0x0F\n"
-        "bhi _0803508A\n"
-        "ldr r0, _08035098 @ =0x080785C8\n"
-        "lsls r1, r2, #0x02\n"
-        "adds r1, r1, r0\n"
-        "ldr r7, [r1, #0x00]\n"
-        "ldr r0, _0803509C @ =0x08078608\n"
-        "adds r0, r2, r0\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "mov r10, r0\n"
-        "_0803508A:\n"
-        "cmp r3, #0x01\n"
-        "beq _08035124\n"
-        "cmp r3, #0x01\n"
-        "bgt _080350A0\n"
-        "cmp r3, #0x00\n"
-        "beq _080350A6\n"
-        "b _080351EA\n"
-        "_08035098: .4byte 0x080785C8\n"
-        "_0803509C: .4byte 0x08078608\n"
-        "_080350A0:\n"
-        "cmp r3, #0x02\n"
-        "beq _08035180\n"
-        "b _080351EA\n"
-        "_080350A6:\n"
-        "ldr r1, _08035120 @ =0x000002C5\n"
-        "adds r5, r4, r1\n"
-        "movs r6, #0x01\n"
-        "adds r0, r6, #0x0\n"
-        "ldrb r3, [r5, #0x00]\n"
-        "ands r0, r3\n"
-        "cmp r0, #0x00\n"
-        "beq _080350B8\n"
-        "b _080351EA\n"
-        "_080350B8:\n"
-        "cmp r2, #0x0E\n"
-        "bne _080350BE\n"
-        "b _080351EA\n"
-        "_080350BE:\n"
-        "cmp r7, #0x00\n"
-        "bne _080350C4\n"
-        "b _080351EA\n"
-        "_080350C4:\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x1C\n"
-        "mov r1, r8\n"
-        "str r1, [sp, #0x000]\n"
-        "str r1, [sp, #0x004]\n"
-        "mov r2, r9\n"
-        "str r2, [sp, #0x008]\n"
-        "adds r1, r7, #0x0\n"
-        "movs r2, #0x00\n"
-        "movs r3, #0x00\n"
-        "bl sub_08067BB8\n"
-        "movs r3, #0xAC\n"
-        "lsls r3, r3, #0x02\n"
-        "adds r0, r4, r3\n"
-        "mov r1, r8\n"
-        "str r1, [r0, #0x00]\n"
-        "movs r2, #0xAD\n"
-        "lsls r2, r2, #0x02\n"
-        "adds r0, r4, r2\n"
-        "str r1, [r0, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08038438\n"
-        "lsls r0, r0, #0x10\n"
-        "adds r2, r4, #0x0\n"
-        "adds r2, #0x56\n"
-        "adds r1, r6, #0x0\n"
-        "ldrb r3, [r2, #0x00]\n"
-        "ands r1, r3\n"
-        "lsrs r0, r0, #0x0F\n"
-        "orrs r1, r0\n"
-        "strb r1, [r2, #0x00]\n"
-        "movs r0, #0x01\n"
-        "ldrb r1, [r5, #0x00]\n"
-        "orrs r0, r1\n"
-        "strb r0, [r5, #0x00]\n"
-        "mov r3, r10\n"
-        "lsls r2, r3, #0x18\n"
-        "asrs r2, r2, #0x18\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x00\n"
-        "bl sub_08035624\n"
-        "b _080351EA\n"
-        ".byte 0x00, 0x00\n"
-        "_08035120: .4byte 0x000002C5\n"
-        "_08035124:\n"
-        "ldr r0, _0803517C @ =0x000002C5\n"
-        "adds r6, r4, r0\n"
-        "movs r0, #0x02\n"
-        "ldrb r1, [r6, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "bne _080351EA\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0xF8\n"
-        "mov r2, r8\n"
-        "str r2, [sp, #0x000]\n"
-        "str r2, [sp, #0x004]\n"
-        "mov r3, r9\n"
-        "str r3, [sp, #0x008]\n"
-        "adds r1, r7, #0x0\n"
-        "movs r2, #0x00\n"
-        "movs r3, #0x00\n"
-        "bl sub_08067BB8\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08038438\n"
-        "lsls r0, r0, #0x10\n"
-        "movs r2, #0x99\n"
-        "lsls r2, r2, #0x01\n"
-        "adds r1, r4, r2\n"
-        "ldrb r3, [r1, #0x00]\n"
-        "ands r5, r3\n"
-        "lsrs r0, r0, #0x0F\n"
-        "orrs r5, r0\n"
-        "strb r5, [r1, #0x00]\n"
-        "movs r0, #0x02\n"
-        "ldrb r1, [r6, #0x00]\n"
-        "orrs r0, r1\n"
-        "strb r0, [r6, #0x00]\n"
-        "mov r3, r10\n"
-        "lsls r2, r3, #0x18\n"
-        "asrs r2, r2, #0x18\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x01\n"
-        "bl sub_08035624\n"
-        "b _080351EA\n"
-        ".byte 0x00, 0x00\n"
-        "_0803517C: .4byte 0x000002C5\n"
-        "_08035180:\n"
-        "ldr r0, _080351FC @ =0x000002C5\n"
-        "adds r5, r4, r0\n"
-        "movs r6, #0x04\n"
-        "adds r0, r6, #0x0\n"
-        "ldrb r1, [r5, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _080351A2\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x02\n"
-        "bl sub_08035258\n"
-        "adds r0, r6, #0x0\n"
-        "ldrb r2, [r5, #0x00]\n"
-        "ands r0, r2\n"
-        "cmp r0, #0x00\n"
-        "bne _080351EA\n"
-        "_080351A2:\n"
-        "movs r3, #0xEA\n"
-        "lsls r3, r3, #0x01\n"
-        "adds r0, r4, r3\n"
-        "mov r1, r8\n"
-        "str r1, [sp, #0x000]\n"
-        "str r1, [sp, #0x004]\n"
-        "mov r2, r9\n"
-        "str r2, [sp, #0x008]\n"
-        "adds r1, r7, #0x0\n"
-        "movs r2, #0x00\n"
-        "movs r3, #0x00\n"
-        "bl sub_08067BB8\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_08038438\n"
-        "lsls r0, r0, #0x10\n"
-        "ldr r3, _08035200 @ =0x0000020E\n"
-        "adds r2, r4, r3\n"
-        "movs r1, #0x01\n"
-        "ldrb r3, [r2, #0x00]\n"
-        "ands r1, r3\n"
-        "lsrs r0, r0, #0x0F\n"
-        "orrs r1, r0\n"
-        "strb r1, [r2, #0x00]\n"
-        "movs r0, #0x04\n"
-        "ldrb r1, [r5, #0x00]\n"
-        "orrs r0, r1\n"
-        "strb r0, [r5, #0x00]\n"
-        "mov r3, r10\n"
-        "lsls r2, r3, #0x18\n"
-        "asrs r2, r2, #0x18\n"
-        "adds r0, r4, #0x0\n"
-        "movs r1, #0x02\n"
-        "bl sub_08035624\n"
-        "_080351EA:\n"
-        "add sp, #0x00C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_080351FC: .4byte 0x000002C5\n"
-        "_08035200: .4byte 0x0000020E\n"
-    );
+    struct Unk35258 *state = arg;
+    u8 kind = kindArg;
+    u8 index = indexArg;
+    struct Unk67BB8Source *src = NULL;
+    s32 pos = 0;
+    u16 id;
+    s8 type = 0;
+
+    if (index <= 0x0F)
+    {
+        do { do { src = gData_080785C8[index]; } while (0); } while (0);
+        type = gData_08078608[index];
+    }
+    switch (kind)
+    {
+    case 0:
+        if ((state->unk2C5 & 1) || index == 0x0E || src == NULL)
+            break;
+        AnimObjCreate((struct Unk67BB8 *)&state->unk1C, src, 0, 0, pos, pos, value);
+        state->unk2B0 = pos;
+        state->unk2B4 = pos;
+        id = PaletteSlotAcquire(src);
+        state->unk1C.unk3A = (state->unk1C.unk3A & 1) | (id << 1);
+        state->unk2C5 |= 1;
+        sub_08035624((struct Unk346C0 *)state, 0, type);
+        break;
+    case 1:
+        if (state->unk2C5 & 2)
+            break;
+        AnimObjCreate((struct Unk67BB8 *)&state->unkF8, src, 0, 0, pos, pos, value);
+        id = PaletteSlotAcquire(src);
+        state->unkF8.unk3A = (state->unkF8.unk3A & 1) | (id << 1);
+        state->unk2C5 |= 2;
+        sub_08035624((struct Unk346C0 *)state, 1, type);
+        break;
+    case 2:
+        if (state->unk2C5 & 4)
+        {
+            sub_08035258(state, 2);
+            if (state->unk2C5 & 4)
+                break;
+        }
+        AnimObjCreate((struct Unk67BB8 *)&state->unk1D4, src, 0, 0, pos, pos, value);
+        id = PaletteSlotAcquire(src);
+        state->unk1D4.unk3A = (state->unk1D4.unk3A & 1) | (id << 1);
+        state->unk2C5 |= 4;
+        sub_08035624((struct Unk346C0 *)state, 2, type);
+        break;
+    }
 }
 

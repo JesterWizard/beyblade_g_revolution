@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-01T09:39:06Z",
+  "generated": "2026-10-01T10:04:06Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 16,
-    "semantic_done": 617,
-    "readable_asm": 16,
+    "pending": 13,
+    "semantic_done": 620,
+    "readable_asm": 13,
     "opcode": 0,
     "battle_pending": 3,
     "battle_semantic": 156,
@@ -41,8 +41,8 @@
     {
       "name": "sub_08035054",
       "addr": "0x08035054",
-      "kind": "asm",
-      "bytes": 432,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08035054.c",
       "notes": "src/decompiled/sub_08035054.md",
       "status": "Rewritten seed (old_agbcc, u16 id local, data symbols) is structurally exact; only register allocation differs: retail src=r7, pos=r8, ours pos=r7, src=r8, which costs 8B (mov via r8). Permuter best 301 (376/432 same-size) only by dropping the src=NULL init.",
@@ -140,8 +140,8 @@
     {
       "name": "sub_080737C0",
       "addr": "0x080737C0",
-      "kind": "asm",
-      "bytes": 336,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080737C0.c",
       "notes": "src/decompiled/sub_080737C0.md",
       "status": "logic mapped (word wrap into <=count lines); retail keeps the done flag in a stack slot and tests count from the stack",
@@ -206,8 +206,8 @@
     {
       "name": "sub_08060E48",
       "addr": "0x08060E48",
-      "kind": "asm",
-      "bytes": 532,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08060E48.c",
       "notes": "src/decompiled/sub_08060E48.md",
       "status": "text glyph blit 528/532; regalloc: retail spills 9 address pseudos",
