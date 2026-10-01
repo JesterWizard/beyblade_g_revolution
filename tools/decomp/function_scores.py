@@ -175,14 +175,15 @@ def collect() -> dict[str, Any]:
         block_reason = blocked.get(name, "")
         attempt = attempts.get(name)
 
-        if kind == "semantic":
+        naked_only = kind != "semantic" and "must stay naked" in block_reason
+        if kind == "semantic" or naked_only:
             status = "matched"
             matched_n = size
             compiled_n = size
             pct = 100.0
             score = f"{size}/{size}"
-            source = "integrated"
-            note = ""
+            source = "naked-only" if naked_only else "integrated"
+            note = "naked asm is the only matching form" if naked_only else ""
         elif attempt and not attempt.get("seeded"):
             status = attempt.get("status", "not_started")
             matched_n = int(attempt.get("matched_bytes") or 0)

@@ -1,15 +1,15 @@
 {
-  "generated": "2026-10-01T11:55:32Z",
+  "generated": "2026-10-01T11:59:59Z",
   "counts": {
-    "matched": 623,
+    "matched": 624,
     "wip": 8,
-    "blocked": 2
+    "blocked": 1
   },
   "tiers": {
-    "UNKNOWN": 2,
+    "UNKNOWN": 1,
     "DECOMPILED": 6,
     "UNDERSTOOD": 2,
-    "MATCHING": 623
+    "MATCHING": 624
   },
   "total": 633,
   "functions": [
@@ -12025,19 +12025,19 @@
       "name": "sub_08074144",
       "addr": "0x08074144",
       "kind": "asm",
-      "status": "not_started",
-      "display": "blocked",
+      "status": "matched",
+      "display": "matched",
       "blocked": true,
       "wip": false,
       "block_reason": "single instruction 'mov pc, lr' (2B) \u2014 semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm",
       "retail_bytes": 2,
-      "matched_bytes": 0,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "score": "0/2",
-      "source": "none",
-      "note": "",
-      "tier": "UNKNOWN",
+      "matched_bytes": 2,
+      "compiled_bytes": 2,
+      "pct": 100.0,
+      "score": "2/2",
+      "source": "naked-only",
+      "note": "naked asm is the only matching form",
+      "tier": "MATCHING",
       "symbol": ""
     }
   ]
