@@ -2,15 +2,15 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-10-01T17:35:58Z_
+_Updated: 2026-10-01T17:41:49Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 627 |
-| Still need semantic C | **6** |
-| Readable Thumb remaining | 6 |
+| Semantic C done | 628 |
+| Still need semantic C | **5** |
+| Readable Thumb remaining | 5 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 0 (160 already semantic) |
 | Blocked (documented) | 2 |
@@ -30,7 +30,7 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0804BD38` | 328 | 302/328 | `src/decompiled/sub_0804BD38.c` | same-size DIFF 302/328; permuter 300s best 870 (base 905); decl/init-order perms and first-read shape variants no change | first two s16 loads: retail base r3/zero r4 then base r0/zero r2; ours r0/r4 and r0/r4. Likely needs a different source shape for what keeps r1/r2 conflicts alive |
 | `sub_0804C8BC` | 372 | 185/372 | `src/decompiled/sub_0804C8BC.c` | same-size DIFF, giv decision differs (see notes) | find source form that keeps (y+56)<<8 unreduced while i*16 stays reduced |
 | `sub_0806E060` | 492 | 89/492 | `src/decompiled/sub_0806E060.c` | bezier keyframe sampler 468/492 | idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded |
-| `sub_080706B0` | 626 | 452/626 | `src/decompiled/sub_080706B0.c` | same-size DIFF after permuter, allocation only | init-load order of locals, spacing spill (sp24), glyph width kept in r8 |
+| `sub_080706B0` | 0 | 452/626 | `src/decompiled/sub_080706B0.c` | same-size DIFF after permuter, allocation only | init-load order of locals, spacing spill (sp24), glyph width kept in r8 |
 
 Per-function notes: `src/decompiled/<fn>.md`.
 

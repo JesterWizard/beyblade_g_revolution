@@ -1,352 +1,130 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x080706b0
-__attribute__((naked))
-void sub_080706B0(struct Unk70C98 *a)
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
+// Lays out a text sprite group: places each glyph at the group origin plus
+// its pen x (unk1E, bit 15 marks a break opportunity), wrapping to a new
+// line when a glyph would cross wrapWidth, applying the horizontal alignment
+// (flags & 3) and affine x scale per line, then shifts all glyphs up for
+// vertical alignment (flags & 0x30).
+// Advance of glyph sprite n: font width minus its per-glyph trim.
+#define GLYPH_WIDTH(n) (widths != NULL ? defWidth - widths[(n)->unk18] : defWidth)
+
+void sub_080706B0(struct Unk70C98 *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x02C\n"
-        "mov r12, r0\n"
-        "ldr r0, [r0, #0x20]\n"
-        "str r0, [sp, #0x000]\n"
-        "mov r1, r12\n"
-        "ldr r0, [r1, #0x24]\n"
-        "ldrb r0, [r0, #0x04]\n"
-        "mov r10, r0\n"
-        "ldr r2, [r1, #0x00]\n"
-        "str r2, [sp, #0x004]\n"
-        "ldr r3, [r1, #0x04]\n"
-        "str r3, [sp, #0x008]\n"
-        "ldrh r7, [r1, #0x0C]\n"
-        "str r7, [sp, #0x00C]\n"
-        "movs r0, #0x00\n"
-        "mov r9, r0\n"
-        "ldr r4, [r1, #0x1C]\n"
-        "ldr r5, [r1, #0x14]\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x010]\n"
-        "adds r6, r5, #0x0\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x01\n"
-        "str r2, [sp, #0x014]\n"
-        "mov r3, r12\n"
-        "ldr r0, [r3, #0x2C]\n"
-        "movs r7, #0x00\n"
-        "str r7, [sp, #0x018]\n"
-        "strb r7, [r3, #0x0F]\n"
-        "cmp r4, #0x00\n"
-        "bne _080706FA\n"
-        "b _08070912\n"
-        "_080706FA:\n"
-        "cmp r0, #0x00\n"
-        "beq _08070702\n"
-        "ldrh r0, [r0, #0x14]\n"
-        "str r0, [sp, #0x014]\n"
-        "_08070702:\n"
-        "mov r2, r12\n"
-        "ldrh r0, [r2, #0x08]\n"
-        "movs r1, #0x03\n"
-        "ands r1, r0\n"
-        "mov r3, sp\n"
-        "strh r0, [r3, #0x20]\n"
-        "cmp r1, #0x01\n"
-        "beq _08070718\n"
-        "cmp r1, #0x02\n"
-        "beq _08070724\n"
-        "b _08070734\n"
-        "_08070718:\n"
-        "ldr r7, [sp, #0x00C]\n"
-        "lsls r0, r7, #0x08\n"
-        "ldr r1, [sp, #0x004]\n"
-        "adds r1, r1, r0\n"
-        "str r1, [sp, #0x004]\n"
-        "b _08070734\n"
-        "_08070724:\n"
-        "movs r0, #0x02\n"
-        "negs r0, r0\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "ands r0, r2\n"
-        "lsls r0, r0, #0x07\n"
-        "ldr r3, [sp, #0x004]\n"
-        "adds r3, r3, r0\n"
-        "str r3, [sp, #0x004]\n"
-        "_08070734:\n"
-        "adds r0, r4, #0x0\n"
-        "subs r4, #0x01\n"
-        "mov r7, r12\n"
-        "ldr r7, [r7, #0x14]\n"
-        "str r7, [sp, #0x01C]\n"
-        "cmp r0, #0x00\n"
-        "bne _08070744\n"
-        "b _080708D6\n"
-        "_08070744:\n"
-        "ldrh r1, [r5, #0x1E]\n"
-        "ldr r2, _08070788 @ =0x00007FFF\n"
-        "ands r2, r1\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x08\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08070756\n"
-        "str r5, [sp, #0x010]\n"
-        "_08070756:\n"
-        "mov r0, r12\n"
-        "adds r0, #0x29\n"
-        "movs r1, #0x00\n"
-        "ldsb r1, [r0, r1]\n"
-        "str r1, [sp, #0x024]\n"
-        "mov r3, r9\n"
-        "subs r1, r2, r3\n"
-        "str r0, [sp, #0x028]\n"
-        "ldr r7, [sp, #0x000]\n"
-        "cmp r7, #0x00\n"
-        "beq _0807078C\n"
-        "ldrh r0, [r5, #0x18]\n"
-        "adds r0, r0, r7\n"
-        "mov r2, r10\n"
-        "ldrb r3, [r0, #0x00]\n"
-        "subs r2, r2, r3\n"
-        "mov r8, r2\n"
-        "ldr r0, [sp, #0x024]\n"
-        "add r0, r8\n"
-        "adds r0, r1, r0\n"
-        "ldr r7, [sp, #0x00C]\n"
-        "cmp r0, r7\n"
-        "bhi _080707A2\n"
-        "b _08070798\n"
-        ".byte 0x00, 0x00\n"
-        "_08070788: .4byte 0x00007FFF\n"
-        "_0807078C:\n"
-        "ldr r0, [sp, #0x024]\n"
-        "add r0, r10\n"
-        "adds r0, r1, r0\n"
-        "ldr r1, [sp, #0x00C]\n"
-        "cmp r0, r1\n"
-        "bhi _080707A2\n"
-        "_08070798:\n"
-        "subs r2, r4, #0x1\n"
-        "mov r8, r2\n"
-        "cmp r4, #0x00\n"
-        "beq _080707A2\n"
-        "b _080708CA\n"
-        "_080707A2:\n"
-        "cmp r4, #0x00\n"
-        "beq _080707B4\n"
-        "ldr r3, [sp, #0x010]\n"
-        "cmp r3, #0x00\n"
-        "beq _080707B0\n"
-        "ldr r3, [r3, #0x00]\n"
-        "b _080707B6\n"
-        "_080707B0:\n"
-        "ldr r3, [r5, #0x00]\n"
-        "b _080707B6\n"
-        "_080707B4:\n"
-        "adds r3, r5, #0x0\n"
-        "_080707B6:\n"
-        "movs r1, #0x00\n"
-        "movs r0, #0x03\n"
-        "mov r7, sp\n"
-        "ldrh r7, [r7, #0x20]\n"
-        "ands r0, r7\n"
-        "cmp r0, #0x01\n"
-        "beq _080707CE\n"
-        "cmp r0, #0x01\n"
-        "ble _0807084C\n"
-        "cmp r0, #0x02\n"
-        "beq _0807080A\n"
-        "b _0807084C\n"
-        "_080707CE:\n"
-        "ldr r0, _080707FC @ =0x00007FFF\n"
-        "ldrh r1, [r3, #0x1E]\n"
-        "ands r0, r1\n"
-        "mov r2, r9\n"
-        "subs r1, r0, r2\n"
-        "ldr r7, [sp, #0x028]\n"
-        "ldrb r7, [r7, #0x00]\n"
-        "lsls r7, r7, #0x18\n"
-        "asrs r7, r7, #0x18\n"
-        "str r7, [sp, #0x028]\n"
-        "ldr r0, [sp, #0x000]\n"
-        "cmp r0, #0x00\n"
-        "beq _08070800\n"
-        "ldrh r2, [r3, #0x18]\n"
-        "adds r2, r2, r0\n"
-        "mov r7, r10\n"
-        "ldrb r0, [r2, #0x00]\n"
-        "subs r7, r7, r0\n"
-        "mov r8, r7\n"
-        "ldr r0, [sp, #0x028]\n"
-        "add r0, r8\n"
-        "b _08070804\n"
-        ".byte 0x00, 0x00\n"
-        "_080707FC: .4byte 0x00007FFF\n"
-        "_08070800:\n"
-        "ldr r0, [sp, #0x028]\n"
-        "add r0, r10\n"
-        "_08070804:\n"
-        "adds r1, r1, r0\n"
-        "lsls r0, r1, #0x08\n"
-        "b _0807084A\n"
-        "_0807080A:\n"
-        "ldr r0, _08070838 @ =0x00007FFF\n"
-        "ldrh r1, [r3, #0x1E]\n"
-        "ands r0, r1\n"
-        "mov r2, r9\n"
-        "subs r1, r0, r2\n"
-        "ldr r7, [sp, #0x028]\n"
-        "ldrb r7, [r7, #0x00]\n"
-        "lsls r7, r7, #0x18\n"
-        "asrs r7, r7, #0x18\n"
-        "str r7, [sp, #0x028]\n"
-        "ldr r0, [sp, #0x000]\n"
-        "cmp r0, #0x00\n"
-        "beq _0807083C\n"
-        "ldrh r2, [r3, #0x18]\n"
-        "adds r2, r2, r0\n"
-        "mov r7, r10\n"
-        "ldrb r0, [r2, #0x00]\n"
-        "subs r7, r7, r0\n"
-        "mov r8, r7\n"
-        "ldr r0, [sp, #0x028]\n"
-        "add r0, r8\n"
-        "b _08070840\n"
-        ".byte 0x00, 0x00\n"
-        "_08070838: .4byte 0x00007FFF\n"
-        "_0807083C:\n"
-        "ldr r0, [sp, #0x028]\n"
-        "add r0, r10\n"
-        "_08070840:\n"
-        "adds r1, r1, r0\n"
-        "movs r0, #0x02\n"
-        "negs r0, r0\n"
-        "ands r1, r0\n"
-        "lsls r0, r1, #0x07\n"
-        "_0807084A:\n"
-        "negs r1, r0\n"
-        "_0807084C:\n"
-        "mov r2, r9\n"
-        "lsls r0, r2, #0x08\n"
-        "subs r1, r1, r0\n"
-        "ldr r7, [sp, #0x014]\n"
-        "adds r0, r1, #0x0\n"
-        "muls r0, r7\n"
-        "asrs r0, r0, #0x08\n"
-        "ldr r2, [sp, #0x004]\n"
-        "adds r1, r2, r0\n"
-        "ldr r3, [r3, #0x04]\n"
-        "subs r7, r4, #0x1\n"
-        "mov r8, r7\n"
-        "mov r0, r12\n"
-        "adds r0, #0x2A\n"
-        "str r0, [sp, #0x020]\n"
-        "cmp r6, r3\n"
-        "beq _0807088C\n"
-        "ldr r2, _0807089C @ =0x00007FFF\n"
-        "_08070870:\n"
-        "adds r0, r2, #0x0\n"
-        "ldrh r7, [r6, #0x1E]\n"
-        "ands r0, r7\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r7, [sp, #0x014]\n"
-        "muls r0, r7\n"
-        "asrs r0, r0, #0x08\n"
-        "adds r0, r1, r0\n"
-        "str r0, [r6, #0x08]\n"
-        "ldr r0, [sp, #0x008]\n"
-        "str r0, [r6, #0x0C]\n"
-        "ldr r6, [r6, #0x04]\n"
-        "cmp r6, r3\n"
-        "bne _08070870\n"
-        "_0807088C:\n"
-        "cmp r3, #0x00\n"
-        "beq _080708A0\n"
-        "ldr r1, _0807089C @ =0x00007FFF\n"
-        "ldrh r3, [r3, #0x1E]\n"
-        "ands r3, r1\n"
-        "mov r9, r3\n"
-        "b _080708A4\n"
-        ".byte 0x00, 0x00\n"
-        "_0807089C: .4byte 0x00007FFF\n"
-        "_080708A0:\n"
-        "movs r2, #0x00\n"
-        "mov r9, r2\n"
-        "_080708A4:\n"
-        "movs r3, #0x00\n"
-        "str r3, [sp, #0x010]\n"
-        "ldr r7, [sp, #0x020]\n"
-        "movs r0, #0x00\n"
-        "ldsb r0, [r7, r0]\n"
-        "lsls r0, r0, #0x08\n"
-        "ldr r1, [sp, #0x008]\n"
-        "adds r1, r1, r0\n"
-        "str r1, [sp, #0x008]\n"
-        "ldr r2, [sp, #0x018]\n"
-        "adds r2, r2, r0\n"
-        "str r2, [sp, #0x018]\n"
-        "mov r3, r12\n"
-        "ldrb r0, [r3, #0x0F]\n"
-        "adds r0, #0x01\n"
-        "strb r0, [r3, #0x0F]\n"
-        "ldrh r0, [r3, #0x08]\n"
-        "mov r7, sp\n"
-        "strh r0, [r7, #0x20]\n"
-        "_080708CA:\n"
-        "ldr r5, [r5, #0x04]\n"
-        "adds r0, r4, #0x0\n"
-        "mov r4, r8\n"
-        "cmp r0, #0x00\n"
-        "beq _080708D6\n"
-        "b _08070744\n"
-        "_080708D6:\n"
-        "mov r1, r12\n"
-        "ldr r4, [r1, #0x1C]\n"
-        "ldr r5, [sp, #0x01C]\n"
-        "movs r0, #0x30\n"
-        "mov r2, sp\n"
-        "ldrh r2, [r2, #0x20]\n"
-        "ands r0, r2\n"
-        "cmp r0, #0x10\n"
-        "beq _080708F2\n"
-        "cmp r0, #0x10\n"
-        "bgt _080708F8\n"
-        "cmp r0, #0x00\n"
-        "bne _080708F8\n"
-        "b _08070912\n"
-        "_080708F2:\n"
-        "ldr r3, [sp, #0x018]\n"
-        "asrs r3, r3, #0x01\n"
-        "str r3, [sp, #0x018]\n"
-        "_080708F8:\n"
-        "ldr r7, [sp, #0x018]\n"
-        "cmp r7, #0x00\n"
-        "beq _08070912\n"
-        "b _0807090A\n"
-        "_08070900:\n"
-        "ldr r0, [r5, #0x0C]\n"
-        "ldr r1, [sp, #0x018]\n"
-        "subs r0, r0, r1\n"
-        "str r0, [r5, #0x0C]\n"
-        "ldr r5, [r5, #0x04]\n"
-        "_0807090A:\n"
-        "adds r0, r4, #0x0\n"
-        "subs r4, #0x01\n"
-        "cmp r0, #0x00\n"
-        "bne _08070900\n"
-        "_08070912:\n"
-        "add sp, #0x02C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct TextGroup *g = (struct TextGroup *)arg;
+    u8 *widths = g->widthTable;
+    u8 defWidth = g->font->unk04;
+    s32 x = g->x;
+    s32 y = g->y;
+    u16 wrapWidth = g->wrapWidth;
+    s32 lineStart = 0;
+    s32 count = g->glyphs.count;
+    struct Sprite *node = (struct Sprite *)g->glyphs.head;
+    struct Sprite *breakNode = NULL;
+    struct Sprite *lineHead = node;
+    s32 scale = 0x100;
+    struct AffineObj *aff = g->affine;
+    s32 height = 0;
+    struct Sprite *last;
+    s32 off;
+    s32 span;
+
+    g->lineCount = 0;
+    if (count == 0)
+        return;
+    if (aff != NULL)
+        scale = aff->scaleX;
+    switch (g->flags & 3)
+    {
+    case 1:
+        x += wrapWidth << 8;
+        break;
+    case 2:
+        x += (wrapWidth & ~1) << 7;
+        break;
+    }
+    while (count-- != 0)
+    {
+        u16 pen = node->unk1E & 0x7FFF;
+        s32 spacing;
+
+        if (node->unk1E & 0x8000)
+            breakNode = node;
+        spacing = g->letterSpacing;
+        if ((u32)(pen - lineStart + (spacing + GLYPH_WIDTH(node))) > wrapWidth || count == 0)
+        {
+            if (count != 0)
+            {
+                if (breakNode != NULL)
+                    last = breakNode->prev;
+                else
+                    last = node->prev;
+            }
+            else
+            {
+                last = node;
+            }
+            off = 0;
+            switch (g->flags & 3)
+            {
+            case 1:
+                span = (last->unk1E & 0x7FFF) - lineStart;
+                span += g->letterSpacing + GLYPH_WIDTH(last);
+                off = -(span << 8);
+                break;
+            case 2:
+                span = (last->unk1E & 0x7FFF) - lineStart;
+                span += g->letterSpacing + GLYPH_WIDTH(last);
+                off = -((span & ~1) << 7);
+                break;
+            case 0:
+                break;
+            }
+            off -= lineStart << 8;
+            off = x + ((s32)(off * scale) >> 8);
+            last = last->next;
+            for (; lineHead != last; lineHead = lineHead->next)
+            {
+                lineHead->unk08 = off + ((((lineHead->unk1E & 0x7FFF) << 8) * scale) >> 8);
+                lineHead->unk0C = y;
+            }
+            if (last != NULL)
+                lineStart = last->unk1E & 0x7FFF;
+            else
+                lineStart = 0;
+            breakNode = NULL;
+            y += g->lineHeight << 8;
+            height += g->lineHeight << 8;
+            g->lineCount++;
+        }
+        node = node->next;
+    }
+    count = g->glyphs.count;
+    node = (struct Sprite *)g->glyphs.head;
+    switch (g->flags & 0x30)
+    {
+    case 0:
+        height = 0;
+        break;
+    case 0x10:
+        height >>= 1;
+        break;
+    case 0x20:
+        break;
+    }
+    if (height != 0)
+    {
+        while (count-- != 0)
+        {
+            node->unk0C -= height;
+            node = node->next;
+        }
+    }
 }
 

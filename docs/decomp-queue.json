@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-01T17:35:58Z",
+  "generated": "2026-10-01T17:41:49Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 6,
-    "semantic_done": 627,
-    "readable_asm": 6,
+    "pending": 5,
+    "semantic_done": 628,
+    "readable_asm": 5,
     "opcode": 0,
     "battle_pending": 0,
     "battle_semantic": 160,
@@ -63,8 +63,8 @@
     {
       "name": "sub_080706B0",
       "addr": "0x080706B0",
-      "kind": "asm",
-      "bytes": 626,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080706B0.c",
       "notes": "src/decompiled/sub_080706B0.md",
       "status": "same-size DIFF after permuter, allocation only",

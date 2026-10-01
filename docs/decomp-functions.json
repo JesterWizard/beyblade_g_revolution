@@ -1,14 +1,14 @@
 {
-  "generated": "2026-10-01T17:35:59Z",
+  "generated": "2026-10-01T17:41:48Z",
   "counts": {
-    "matched": 628,
-    "wip": 5
+    "matched": 629,
+    "wip": 4
   },
   "tiers": {
     "UNKNOWN": 0,
-    "DECOMPILED": 5,
+    "DECOMPILED": 4,
     "UNDERSTOOD": 0,
-    "MATCHING": 628
+    "MATCHING": 629
   },
   "total": 633,
   "functions": [
@@ -11130,20 +11130,20 @@
     {
       "name": "sub_080706B0",
       "addr": "0x080706B0",
-      "kind": "asm",
-      "status": "same_size",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 626,
-      "matched_bytes": 452,
+      "matched_bytes": 626,
       "compiled_bytes": 626,
-      "pct": 72.2,
-      "score": "452/626",
-      "source": "attempt",
-      "note": "same-size DIFF after permuter, allocation only",
-      "tier": "DECOMPILED",
+      "pct": 100.0,
+      "score": "626/626",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {

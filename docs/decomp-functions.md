@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-10-01T17:35:59Z_
+_Updated: 2026-10-01T17:41:48Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 628 |
+| matched | 629 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 5 |
+| WIP (parked C) | 4 |
 | not started | 0 |
 | blocked | 0 |
 | **total** | **633** |
@@ -36,7 +36,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
 | `sub_0804BD38` | WIP (parked C) | 92.1% | 302/328 | same-size; scratch regs only (ldrsh base r0 vs r3, tail temps r0/r1 vs r1/r2) |
-| `sub_080706B0` | WIP (parked C) | 72.2% | 452/626 | same-size DIFF after permuter, allocation only |
 | `sub_0804C8BC` | WIP (parked C) | 49.7% | 185/372 | same-size DIFF, giv decision differs (see notes) |
 | `sub_08035624` | WIP (parked C) | 39.5% | 45/114 | structure matches; only key/list/scratch register choice differs (retail key=… |
 | `sub_0806E060` | WIP (parked C) | 18.1% | 89/492 | m2c failed; initial seed attempt |
@@ -46,7 +45,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
 | `sub_0804BD38` | `0x0804BD38` | WIP (parked C) | 92.1% | 302/328 | asm |
-| `sub_080706B0` | `0x080706B0` | WIP (parked C) | 72.2% | 452/626 | asm |
 | `sub_0804C8BC` | `0x0804C8BC` | WIP (parked C) | 49.7% | 185/372 | asm |
 | `sub_08035624` | `0x08035624` | WIP (parked C) | 39.5% | 45/114 | asm |
 | `sub_0806E060` | `0x0806E060` | WIP (parked C) | 18.1% | 89/492 | asm |
@@ -665,6 +663,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806960C` | `0x0806960C` | matched | 100.0% | 600/600 | semantic |
 | `sub_08033188` | `0x08033188` | matched | 100.0% | 604/604 | semantic |
 | `sub_0806F910` | `0x0806F910` | matched | 100.0% | 624/624 | semantic |
+| `sub_080706B0` | `0x080706B0` | matched | 100.0% | 626/626 | semantic |
 | `sub_080436B0` | `0x080436B0` | matched | 100.0% | 658/658 | semantic |
 | `sub_08032DC4` | `0x08032DC4` | matched | 100.0% | 660/660 | semantic |
 | `sub_08044A8C` | `0x08044A8C` | matched | 100.0% | 672/672 | semantic |
