@@ -1,16 +1,16 @@
 {
-  "generated": "2026-10-01T00:10:43Z",
+  "generated": "2026-10-01T09:39:06Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 19,
-    "semantic_done": 614,
-    "readable_asm": 19,
+    "pending": 16,
+    "semantic_done": 617,
+    "readable_asm": 16,
     "opcode": 0,
-    "battle_pending": 5,
-    "battle_semantic": 154,
+    "battle_pending": 3,
+    "battle_semantic": 156,
     "blocked": 20,
     "wip": 23
   },
@@ -30,8 +30,8 @@
     {
       "name": "sub_08038D68",
       "addr": "0x08038D68",
-      "kind": "asm",
-      "bytes": 112,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08038D68.c",
       "notes": "src/decompiled/sub_08038D68.md",
       "status": "two attempts: direct semantic seed 15/112 (108B); pinned base/table registers 37/112 but expanded to 120B. Data flow and both Unk705DC output writes are correct; register pressure/order remains",
@@ -118,8 +118,8 @@
     {
       "name": "sub_0803E0CC",
       "addr": "0x0803E0CC",
-      "kind": "asm",
-      "bytes": 296,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_0803E0CC.c",
       "notes": "src/decompiled/sub_0803E0CC.md",
       "status": "Data symbol gData_03000198 plus `unk1C |= (s8)0xFF` (keeps the ldrb/orr/strb instead of folding to strb -1): 56 -> 170/296. Still 4 bytes short: retail hoists the unk1C offset into r10, ours keeps it in r3 and caller-saves it to the stack.",
@@ -162,8 +162,8 @@
     {
       "name": "sub_080447E8",
       "addr": "0x080447E8",
-      "kind": "asm",
-      "bytes": 372,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_080447E8.c",
       "notes": "src/decompiled/sub_080447E8.md",
       "status": "New semantic draft (sibling of sub_08044648, table gData_0807BE04, Unk7BE04 fields named). Logic exact, 4 bytes long; retail loads the table symbol before id*28 and keeps it in r8.",

@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-10-01T00:10:43Z_
+_Updated: 2026-10-01T09:39:06Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 614 |
+| matched | 617 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 17 |
+| WIP (parked C) | 14 |
 | not started | 0 |
 | blocked | 2 |
 | **total** | **633** |
@@ -36,9 +36,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
 | `sub_08044A8C` | WIP (parked C) | 91.8% | 617/672 | old_agbcc; unk185B = i = 0 places the zero; left: buf is a copy of the *hdrBl… |
-| `sub_08038D68` | WIP (parked C) | 76.8% | 86/112 | gData symbols + sel pointer; 2FC/300 address order left |
-| `sub_080447E8` | WIP (parked C) | 62.4% | 232/372 | initial m2c seed (m2c-fallback); does not compile |
-| `sub_0803E0CC` | WIP (parked C) | 57.4% | 170/296 | initial m2c seed (m2c-fallback); does not compile |
 | `sub_08067CE8` | WIP (parked C) | 47.1% | 258/548 | m2c failed; initial seed attempt |
 | `sub_08044648` | WIP (parked C) | 37.1% | 135/364 | initial m2c seed (m2c-fallback); does not compile |
 | `sub_080618EC` | WIP (parked C) | 25.2% | 108/428 | m2c failed; initial seed attempt |
@@ -58,9 +55,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
 | `sub_08044A8C` | `0x08044A8C` | WIP (parked C) | 91.8% | 617/672 | asm |
-| `sub_08038D68` | `0x08038D68` | WIP (parked C) | 76.8% | 86/112 | asm |
-| `sub_080447E8` | `0x080447E8` | WIP (parked C) | 62.4% | 232/372 | asm |
-| `sub_0803E0CC` | `0x0803E0CC` | WIP (parked C) | 57.4% | 170/296 | asm |
 | `sub_08067CE8` | `0x08067CE8` | WIP (parked C) | 47.1% | 258/548 | asm |
 | `sub_08044648` | `0x08044648` | WIP (parked C) | 37.1% | 135/364 | asm |
 | `sub_080618EC` | `0x080618EC` | WIP (parked C) | 25.2% | 108/428 | asm |
@@ -466,6 +460,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0802BC14` | `0x0802BC14` | matched | 100.0% | 112/112 | semantic |
 | `sub_08034A68` | `0x08034A68` | matched | 100.0% | 112/112 | semantic |
 | `sub_08036264` | `0x08036264` | matched | 100.0% | 112/112 | semantic |
+| `sub_08038D68` | `0x08038D68` | matched | 100.0% | 112/112 | semantic |
 | `sub_0803E934` | `0x0803E934` | matched | 100.0% | 112/112 | semantic |
 | `sub_080523A4` | `0x080523A4` | matched | 100.0% | 112/112 | semantic |
 | `sub_08059C98` | `0x08059C98` | matched | 100.0% | 112/112 | semantic |
@@ -621,6 +616,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806F05C` | `0x0806F05C` | matched | 100.0% | 280/280 | semantic |
 | `sub_0806211C` | `0x0806211C` | matched | 100.0% | 284/284 | semantic |
 | `sub_08068598` | `0x08068598` | matched | 100.0% | 284/284 | semantic |
+| `sub_0803E0CC` | `0x0803E0CC` | matched | 100.0% | 296/296 | semantic |
 | `sub_0803D284` | `0x0803D284` | matched | 100.0% | 298/298 | semantic |
 | `sub_0804AE94` | `0x0804AE94` | matched | 100.0% | 300/300 | semantic |
 | `sub_08066FB8` | `0x08066FB8` | matched | 100.0% | 300/300 | semantic |
@@ -648,6 +644,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08067648` | `0x08067648` | matched | 100.0% | 352/352 | semantic |
 | `sub_0803370C` | `0x0803370C` | matched | 100.0% | 362/362 | semantic |
 | `sub_0804D420` | `0x0804D420` | matched | 100.0% | 362/362 | semantic |
+| `sub_080447E8` | `0x080447E8` | matched | 100.0% | 372/372 | semantic |
 | `sub_08032908` | `0x08032908` | matched | 100.0% | 384/384 | semantic |
 | `sub_080348E8` | `0x080348E8` | matched | 100.0% | 384/384 | semantic |
 | `sub_08035AE0` | `0x08035AE0` | matched | 100.0% | 388/388 | semantic |
