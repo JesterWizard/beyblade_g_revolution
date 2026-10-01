@@ -1,64 +1,22 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08038d68
-__attribute__((naked))
 void sub_08038D68(struct Unk38D68 *a)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, lr}\n"
-        "adds r5, r0, #0x0\n"
-        "ldr r2, _08038DD0 @ =0x030003E0\n"
-        "movs r1, #0xBF\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r5, r1\n"
-        "movs r3, #0xC0\n"
-        "lsls r3, r3, #0x02\n"
-        "adds r4, r5, r3\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r1, [r4, #0x00]\n"
-        "adds r0, r0, r1\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r2\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r1, _08038DD4 @ =0x080B7258\n"
-        "movs r2, #0x08\n"
-        "movs r3, #0x02\n"
-        "bl sub_08073988\n"
-        "movs r1, #0xA3\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r3, r5, r1\n"
-        "ldr r2, [r3, #0x00]\n"
-        "lsrs r0, r0, #0x01\n"
-        "movs r1, #0x5C\n"
-        "subs r1, r1, r0\n"
-        "lsls r1, r1, #0x08\n"
-        "str r1, [r2, #0x08]\n"
-        "movs r1, #0xA4\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r2, r5, r1\n"
-        "ldr r1, [r2, #0x00]\n"
-        "adds r0, #0x8C\n"
-        "lsls r0, r0, #0x08\n"
-        "str r0, [r1, #0x08]\n"
-        "ldr r1, [r3, #0x00]\n"
-        "ldr r0, [r4, #0x00]\n"
-        "lsls r0, r0, #0x0B\n"
-        "movs r3, #0xF0\n"
-        "lsls r3, r3, #0x07\n"
-        "adds r0, r0, r3\n"
-        "str r0, [r1, #0x0C]\n"
-        "ldr r1, [r2, #0x00]\n"
-        "ldr r0, [r4, #0x00]\n"
-        "lsls r0, r0, #0x0B\n"
-        "adds r0, r0, r3\n"
-        "str r0, [r1, #0x0C]\n"
-        "pop {r4, r5}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08038DD0: .4byte 0x030003E0\n"
-        "_08038DD4: .4byte 0x080B7258\n"
-    );
+    void **table;
+    s32 *sel;
+    s32 *cur;
+    u32 width;
+
+    table = gData_030003E0;
+    cur = &a->unk2FC;
+    sel = &a->unk300;
+    width = TextMeasureWidth(table[*cur + *sel], gData_080B7258, 8, 2);
+    a->unk28C->unk08 = (0x5C - ((u32)width >> 1)) << 8;
+    a->unk290->unk08 = (((u32)width >> 1) + 0x8C) << 8;
+    a->unk28C->unk0C = (*sel * 8 + 0x78) << 8;
+    a->unk290->unk0C = (*sel * 8 + 0x78) << 8;
 }
 
