@@ -1,23 +1,19 @@
 #include "global.h"
 
 // @ 0x08047594
+
 void SparklesHide(void)
 {
     s32 i;
-    u32 base;
-    s32 off;
-    void *entry;
+    struct Unk474ACSlot *slot;
 
-    if (*(void **)gUnk_03000630 != 0)
+    if (gData_03000630 != 0)
     {
-        for (i = 0; i <= 0xF; i++)
+        for (i = 0; i < 16; i++)
         {
-            base = *(u32 *)gUnk_03000630;
-            off = i << 2;
-            entry = *(void **)(base + off);
-            *(u32 *)((u32)entry + 0x08) = 0xFFFFC000;
-            *(u32 *)((u32)entry + 0x0C) = 0xFFFFC000;
+            slot = gData_03000630->unk00[i];
+            slot->unk08 = -0x4000;
+            slot->unk0C = -0x4000;
         }
     }
 }
-

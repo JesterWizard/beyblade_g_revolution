@@ -1,32 +1,32 @@
 {
-  "generated": "2026-10-01T16:13:24Z",
+  "generated": "2026-10-01T16:52:09Z",
   "phase": "3b in progress \u2014 replace opcode stubs with semantic C / readable Thumb",
   "expected_functions": 633,
   "tiers": {
-    "generated": "2026-10-01T16:13:24Z",
+    "generated": "2026-10-01T16:52:09Z",
     "total": 633,
     "tiers": {
       "UNKNOWN": {
-        "functions": 1,
-        "pct": 0.2
+        "functions": 0,
+        "pct": 0.0
       },
       "DECOMPILED": {
-        "functions": 6,
-        "pct": 0.9
+        "functions": 7,
+        "pct": 1.1
       },
       "UNDERSTOOD": {
-        "functions": 2,
-        "pct": 0.3
+        "functions": 0,
+        "pct": 0.0
       },
       "MATCHING": {
-        "functions": 624,
-        "pct": 98.6
+        "functions": 626,
+        "pct": 98.9
       }
     },
     "flags": {
-      "has_c": 629,
+      "has_c": 632,
       "named": 314,
-      "matches": 624
+      "matches": 626
     },
     "pct_named": 49.6
   },
@@ -36,16 +36,16 @@
   "missing_size": 0,
   "kinds": {
     "semantic": {
-      "functions": 623,
-      "bytes": 87546,
-      "pct_functions": 98.4,
-      "pct_bytes": 97.0
+      "functions": 626,
+      "bytes": 87822,
+      "pct_functions": 98.9,
+      "pct_bytes": 97.3
     },
     "readable_asm": {
-      "functions": 10,
-      "bytes": 2726,
-      "pct_functions": 1.6,
-      "pct_bytes": 3.0
+      "functions": 7,
+      "bytes": 2450,
+      "pct_functions": 1.1,
+      "pct_bytes": 2.7
     },
     "opcode": {
       "functions": 0,
@@ -56,10 +56,10 @@
   },
   "decomp": {
     "headline": "semantic C vs original function code",
-    "functions": 623,
-    "bytes": 87546,
-    "pct_functions": 98.4,
-    "pct_bytes": 97.0
+    "functions": 626,
+    "bytes": 87822,
+    "pct_functions": 98.9,
+    "pct_bytes": 97.3
   },
   "non_blob": {
     "note": "semantic C + readable Thumb (no .byte retail paste)",
@@ -69,8 +69,8 @@
     "pct_bytes": 100.0
   },
   "readable_asm": {
-    "functions": 10,
-    "bytes": 2726
+    "functions": 7,
+    "bytes": 2450
   },
   "opcode": {
     "functions": 0,
@@ -78,46 +78,16 @@
   },
   "battle": {
     "functions": 160,
-    "semantic": 158,
-    "readable_asm": 2,
+    "semantic": 160,
+    "readable_asm": 0,
     "opcode": 0,
     "bytes": 37974,
-    "semantic_bytes": 37746,
-    "pct_functions": 98.8,
-    "pct_bytes": 99.4
+    "semantic_bytes": 37974,
+    "pct_functions": 100.0,
+    "pct_bytes": 100.0
   },
   "largest_opcode": [],
   "history": [
-    {
-      "generated": "2026-09-18T22:06:28Z",
-      "semantic": 195,
-      "readable_asm": 436,
-      "opcode": 2,
-      "semantic_bytes": 7258,
-      "total_bytes": 90272,
-      "pct_functions": 30.8,
-      "pct_bytes": 8.0
-    },
-    {
-      "generated": "2026-09-18T22:08:41Z",
-      "semantic": 197,
-      "readable_asm": 436,
-      "opcode": 0,
-      "semantic_bytes": 7376,
-      "total_bytes": 90272,
-      "pct_functions": 31.1,
-      "pct_bytes": 8.2
-    },
-    {
-      "generated": "2026-09-18T22:14:11Z",
-      "semantic": 199,
-      "readable_asm": 434,
-      "opcode": 0,
-      "semantic_bytes": 7494,
-      "total_bytes": 90272,
-      "pct_functions": 31.4,
-      "pct_bytes": 8.3
-    },
     {
       "generated": "2026-09-18T22:18:53Z",
       "semantic": 200,
@@ -2087,6 +2057,36 @@
       "total_bytes": 90272,
       "pct_functions": 98.4,
       "pct_bytes": 97.0
+    },
+    {
+      "generated": "2026-10-01T16:50:03Z",
+      "semantic": 624,
+      "readable_asm": 9,
+      "opcode": 0,
+      "semantic_bytes": 87594,
+      "total_bytes": 90272,
+      "pct_functions": 98.6,
+      "pct_bytes": 97.0
+    },
+    {
+      "generated": "2026-10-01T16:51:07Z",
+      "semantic": 625,
+      "readable_asm": 8,
+      "opcode": 0,
+      "semantic_bytes": 87714,
+      "total_bytes": 90272,
+      "pct_functions": 98.7,
+      "pct_bytes": 97.2
+    },
+    {
+      "generated": "2026-10-01T16:52:09Z",
+      "semantic": 626,
+      "readable_asm": 7,
+      "opcode": 0,
+      "semantic_bytes": 87822,
+      "total_bytes": 90272,
+      "pct_functions": 98.9,
+      "pct_bytes": 97.3
     }
   ]
 }

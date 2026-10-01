@@ -1,35 +1,32 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0807309c
 void *StringAlloc(u32 size)
 {
+    void *buf = 0;
     struct BtlObj **table;
-    u8 count;
-    u32 i;
-    struct BtlObj **slot;
     struct BtlObj *obj;
+    u32 i;
 
-    table = *(struct BtlObj ***)gBtlObjTable;
-    if (table == 0)
+    if (gData_03004150 == 0)
+        return 0;
+    table = gData_03004150;
+
+    for (i = 0; i < gData_03004154 && table[i] != 0; i++)
+        ;
+    if (i == gData_03004154)
         return 0;
 
-    count = *(u8 *)gBtlObjTableCount;
-    for (i = 0; i < count; i++)
-    {
-        if (table[i] == 0)
-            break;
-    }
-
-    if (i == *(u8 *)gBtlObjTableCount)
-        return 0;
-
-    slot = &table[i];
     obj = HeapAlloc(size);
-    *slot = obj;
+    table[i] = obj;
     if (obj == 0)
         return 0;
 
-    MemClear((u8 *)obj, size);
-    (*(u8 *)gBtlObjLiveCount)++;
-    return obj;
+    buf = obj->next;
+    MemClear(buf, size);
+    gData_03004158++;
+    return buf;
 }
+

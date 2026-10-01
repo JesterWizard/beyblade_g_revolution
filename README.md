@@ -6,12 +6,12 @@ Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemera
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **98.4%** of functions (623/633) and **97.0%** of original function bytes (87,546/90,272).
+Decompiled C is **98.9%** of functions (626/633) and **97.3%** of original function bytes (87,822/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `███████████████████████████████░` | **98.4%** | 623/633 |
-| Decompiled C (bytes) | `███████████████████████████████░` | **97.0%** | 87,546/90,272 |
+| Decompiled C (functions) | `████████████████████████████████` | **98.9%** | 626/633 |
+| Decompiled C (bytes) | `███████████████████████████████░` | **97.3%** | 87,822/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -19,11 +19,11 @@ Decompiled C is **98.4%** of functions (623/633) and **97.0%** of original funct
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 623 (98.4%) | 87,546 (97.0%) |
-| Readable Thumb | 10 (1.6%) | 2,726 (3.0%) |
+| Semantic C | 626 (98.9%) | 87,822 (97.3%) |
+| Readable Thumb | 7 (1.1%) | 2,450 (2.7%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
-Battle: **98.8%** functions / **99.4%** bytes in semantic C (158/160; 0 opcode left).
+Battle: **100.0%** functions / **100.0%** bytes in semantic C (160/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
 
@@ -37,9 +37,7 @@ Remaining unmatched (readable Thumb still in `src/matched/`):
 | `sub_0806EC20` | 155/516 | parked |
 | `sub_0804C8BC` | 74/372 | parked |
 | `sub_0806E060` | 89/492 | parked |
-| `sub_08047594` | 7/48 | same-size DIFF |
 | `sub_080706B0` | 61/626 | parked |
-| `sub_0807309C` | 9/120 | same-size DIFF |
 
 <!-- decomp-progress:end -->
 

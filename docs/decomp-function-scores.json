@@ -171,14 +171,15 @@
       "updated": "2026-09-19T13:00:16Z"
     },
     "sub_08047594": {
-      "matched_bytes": 21,
+      "matched_bytes": 48,
       "retail_bytes": 48,
       "compiled_bytes": 48,
-      "pct": 43.8,
-      "diff_bytes": 27,
-      "status": "same_size",
-      "score": "21/48",
-      "updated": "2026-09-19T12:59:49Z"
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "48/48",
+      "updated": "2026-10-01T16:49:57Z",
+      "note": "gData_03000630 data symbol"
     },
     "sub_08043944": {
       "matched_bytes": 22,
@@ -1313,6 +1314,28 @@
       "score": "86/112",
       "updated": "2026-09-27T09:01:38Z",
       "note": "gData symbols + sel pointer; 2FC/300 address order left"
+    },
+    "sub_0807309C": {
+      "matched_bytes": 120,
+      "retail_bytes": 120,
+      "compiled_bytes": 120,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "120/120",
+      "updated": "2026-10-01T16:51:06Z",
+      "note": "gData_ symbols; table re-read after null check"
+    },
+    "sub_08038314": {
+      "matched_bytes": 108,
+      "retail_bytes": 108,
+      "compiled_bytes": 108,
+      "pct": 100.0,
+      "diff_bytes": 0,
+      "status": "matched",
+      "score": "108/108",
+      "updated": "2026-10-01T16:52:08Z",
+      "note": "old_agbcc; gData_ symbols; fields 0x2FC/0x304 were swapped"
     }
   }
 }
