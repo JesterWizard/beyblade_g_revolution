@@ -185,12 +185,11 @@ Every stage is also directly runnable and has a `make` target:
 
 ## Verifying the C corpus itself
 
-`make compare` proves the **ROM** is reproduced. It does **not** prove the C is
-valid, because matched C is never linked — the Makefile's `C_SRCS` is empty and
-the ROM links generated `asm/matchings/*.s` at fixed VMAs. A file can therefore be
-counted as matched while not compiling at all.
+`make compare` proves the **ROM** is reproduced from `src/matched/*.c` (compiled
+by `tools/decomp/compile_matched.py`) plus gap incbins at fixed VMAs. A DIFF
+in matched C fails the peel compile, so `make compare` now catches it.
 
-`make audit` closes that gap: it compiles every `src/matched/*.c` standalone
+`make audit` still compiles every `src/matched/*.c` standalone
 through agbcc (honouring each file's `match-flags` / `match-compiler` comments)
 and reports the first diagnostic. It must report **0 failures**.
 
@@ -325,8 +324,8 @@ picker read the stale half.
 Compiling is necessary but not sufficient: a file can compile perfectly while
 *lying* about a function it defines or calls. `sub_080674B4` was declared `()` and
 defined `(const void *src, void *dest)` while all 38 call sites passed nothing —
-it was BIOS VBlankIntrWait. Every gate stayed green, because each file compiles in
-isolation and the C is never linked.
+it was BIOS VBlankIntrWait. Signature mismatches now fail the peel compile as
+well as `make signatures`.
 
 `make signatures` cross-checks the three sources of truth per function:
 `include/unknown-functions.h` prototypes, the definitions in `src/matched/*.c`, and

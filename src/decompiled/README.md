@@ -11,8 +11,8 @@ These files are real work, not failures. They are:
   RAM references
 - named — picked up by the symbol layer like any other function
 
-They are **not linked**. `C_SRCS` in the Makefile is empty and nothing globs
-`src/**`, so nothing here can affect `make compare`.
+They are **not linked**. The Makefile only compiles `src/matched/*.c`, so
+nothing here can affect `make compare`.
 
 Promote a seed once it byte-matches:
 

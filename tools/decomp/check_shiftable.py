@@ -44,7 +44,7 @@ def main() -> int:
         print("Shiftable migration may proceed.")
         return 0
 
-    print("Not shiftable yet — continue Phase 1–4 (see docs/decomp-roadmap.md).")
+    print("C is linked at fixed VMAs — drop per-function 0x08 addresses next.")
     return 2
 
 

@@ -16,8 +16,8 @@ reconstruction lives in `src/decompiled/` so the next stage can use it.
 | `src/decompiled/sub_XXXXXXXX.md` | Process log: tried, score, blocker, **next step**. |
 | `docs/decomp-queue.toml` `[[wip]]` | Index so `make queue` lists **Resume first**. |
 
-`src/decompiled/` is **not** linked into the ROM. `C_SRCS` in the Makefile is
-empty and nothing globs `src/**`, so nothing here can affect `make compare`.
+`src/decompiled/` is **not** linked into the ROM. The Makefile only globs
+`src/matched/*.c`, so nothing here can affect `make compare`.
 
 ## Lifecycle
 

@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Generate ROM peel asm + linker fragment from build/matched.json."""
+"""Generate ROM peel asm + linker fragment from build/matched.json.
+
+Matched functions are compiled from src/matched/*.c (see compile_matched.py)
+and placed at their retail VMAs. Sizes still come from asm/matchings/*.s so
+gap incbins stay stable without compiling C first.
+"""
 
 from __future__ import annotations
 
@@ -155,7 +160,7 @@ def main() -> int:
             addr = int(fn["addr"], 16)
             name = fn["name"]
             ld_lines.append(f"    .rom_{name} {hexaddr(addr)} : {{")
-            ld_lines.append(f"        asm/matchings/{name}.o(.text)")
+            ld_lines.append(f"        src/matched/{name}.o(.text)")
             ld_lines.append("    } > ROM")
             end = addr + fn["size"]
 

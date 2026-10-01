@@ -176,23 +176,25 @@ manual address surgery.
 
 ### Why we're not shiftable yet
 
-Current peel (`gen_rom_layout.py`) assigns each matched function a **fixed VMA**
-(`0x08033A94`, etc.). That is correct for matching but not shiftable.
+`make` now compiles `src/matched/*.c` into the peel (`compile_matched.py`), but
+`gen_rom_layout.py` still assigns each function a **fixed VMA** (`0x08033A94`,
+etc.). That keeps `make compare` green and is not shiftable.
 
 ### Migration gates (start Phase 5 when ANY is true)
 
-- [ ] ≥ **80%** functions matched (≥ 506 / 633), **or**
-- [ ] Largest unmatched incbin gap **< 4 KiB**, **or**
-- [ ] User requests hack/append feature that needs insertable ROM
+- [x] ≥ **80%** functions matched (633 / 633 semantic C)
+- [ ] Largest unmatched incbin gap **< 4 KiB**
+- [x] User requests hack/append feature that needs insertable ROM
 
 ### Migration steps
 
+0. **Link matched C** — compile `src/matched/*.c` at retail VMAs (`compile_matched.py`). **Done.**
 1. **Contiguous grouping** — merge adjacent matched regions into single `src/*.o` or asm objects.
 2. **Sequential linker script** — sigma_star_saga style:
    `rom.s` (head incbin) → `src/foo.o(.text)` → `rom_after_a.s` → …
 3. **Remove** per-function `0x08……` assignments from `rom_layout.ld`.
 4. **Audit** hardcoded ROM pointers in C/asm/data → replace with symbols / linker labels.
-5. **Add** `tools/decomp/check_shiftable.py`:
+5. **`tools/decomp/check_shiftable.py`**:
    - No `ORG`/` . = 0x08` in generated layout (except head/tail incbin bounds)
    - `make compare` OK
    - Optional: rebuild at `ROM_BASE + 0x1000` test (future)

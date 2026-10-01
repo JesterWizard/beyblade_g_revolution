@@ -21,6 +21,15 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-10-01 — Phase 5 step 0: link matched C
+
+The ROM peel is built from `src/matched/*.c` (`tools/decomp/compile_matched.py`:
+agbcc, per-file compiler/flags/fixups, BL patch, retail-sized `.text` blob) instead
+of assembling `asm/matchings/*.s`. `rom_layout.ld` still pins each function at its
+retail VMA. `make compare`: **OK**. `check_shiftable.py`: C linked, 980 fixed-VMA
+sections remain. Next: drop per-function `0x08……` assignments once pointer tables
+are symbols.
+
 ### 2026-10-01 — sub_0806A6F8 MATCH (436/436, old_agbcc)
 
 Battle input hub landed as semantic C in `src/matched/sub_0806A6F8.c`. `gData_03003F64`
@@ -1724,9 +1733,8 @@ First 4 functions + `src/stubs.c`.
 
 ## Next
 
-- **Phase 3b:** More battle semantic C (`sub_080428C4` family, freelist, table lookups via permuter); types on `gUnk_03000268` / `gUnk_03000630`
-- **Phase 4:** Batch `[renames]` in `beyblade_g_revolution.toml` (battle subsystem first)
-- **Phase 5:** Shiftable ROM migration (`check_shiftable.py` gates: 633/633 ✓, fixed-VMA sections ✗)
+- **Phase 4:** Batch names in `analysis/symbols.json` (322/633 named)
+- **Phase 5:** Drop per-function `0x08……` VMAs (`check_shiftable.py`: C linked, 980 fixed-VMA sections remain)
 
 ## Blockers
 

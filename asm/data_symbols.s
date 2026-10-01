@@ -8,10 +8,9 @@
 @ reference.  Functions that only reproduce retail with symbol addressing use
 @ the `gData_*` names declared in include/data_symbols.h.
 @
-@ Values here are the single source of truth for tools/decomp/match_function.py,
-@ which passes them to the assembler as --defsym so verification resolves the
-@ same way the original build did.  (Integrated bytes are written straight into
-@ asm/matchings/*.s, so nothing here is linked into the ROM.)
+@ Values here are the single source of truth for tools/decomp/match_function.py
+@ and compile_matched.py, which pass them to the assembler as --defsym so the
+@ .text blob matches retail pools. ram_map.s also includes this file.
 @ =============================================================================
 
 @ ROM data

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Repair matched C whose definition signature disagrees with its prototype.
 
-`src/matched/*.c` is never linked (the Makefile's C_SRCS is empty), so a file can
-be recorded as byte-matching, and stay that way, while not compiling from source
-at all. agbcc then reports "conflicting types".
+`src/matched/*.c` is linked into the ROM (`compile_matched.py`). A signature
+that disagrees with `include/unknown-functions.h` still fails agbcc with
+"conflicting types" and now also fails the peel compile.
 
 The defect is a definition whose return type and/or parameter list disagrees with
 the prototype in `include/unknown-functions.h`. The repair copies the prototype's

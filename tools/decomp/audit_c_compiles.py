@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Scan src/matched/*.c for files that do not compile standalone.
 
-Matched C is not linked into the ROM (the Makefile's C_SRCS is empty), so a
-file can be recorded as "matched" while never having been compiled from source.
-This finds such files: compile each one and report the first agbcc diagnostic.
+`make` already compiles matched C into the peel (`compile_matched.py`). This
+audit still compiles each file in isolation and reports the first agbcc
+diagnostic, which is faster than a full ROM link when hunting a signature bug.
 
 Usage: python3 tools/decomp/audit_c_compiles.py [--dirs matched,decompiled]
 """

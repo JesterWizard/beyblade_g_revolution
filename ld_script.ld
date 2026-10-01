@@ -30,7 +30,7 @@ SECTIONS {
         __iwram_end = .;
     } > IWRAM
 
-    /* Retail ROM image (incbin peels + matched asm at fixed VMAs). */
+    /* Retail ROM image: incbin peels + matched C .text at fixed VMAs. */
     INCLUDE rom_layout.ld
 
     /* Sections not placed by rom_layout.ld land after the retail image.

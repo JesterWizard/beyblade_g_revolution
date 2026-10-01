@@ -137,6 +137,7 @@ bash build_tools.sh
 | Signature repair | `tools/decomp/repair_naked_signatures.py` | `make repair-signatures` — align defs with prototypes |
 | Variant sweep | `tools/decomp/test_variants.py` | Test many `@@BODY@@` source variants against one function |
 | Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |
+| Compile matched C | `tools/decomp/compile_matched.py` | agbcc one function into the peel |
 | Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/decompiled/`) |
 | Local permuter | `tools/decomp/permuter/auto.py` | Import → score → search → integrate on score 0 |
 | decomp-permuter | `tools/decomp/permuter/` | agbcc literal-pool / instruction-order search |

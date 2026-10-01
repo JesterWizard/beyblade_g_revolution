@@ -37,7 +37,6 @@ COMPARE ?= 0
 
 ifeq (compare,$(MAKECMDGOALS))
   COMPARE := 1
-  MODERN := 1
 endif
 ifeq (modern,$(MAKECMDGOALS))
   MODERN := 1
@@ -92,7 +91,7 @@ C_BUILDDIR = $(OBJ_DIR)/$(C_SUBDIR)
 ASM_BUILDDIR = $(OBJ_DIR)/$(ASM_SUBDIR)
 DATA_ASM_BUILDDIR = $(OBJ_DIR)/$(DATA_ASM_SUBDIR)
 
-C_SRCS :=
+C_SRCS := $(wildcard $(C_SUBDIR)/matched/*.c)
 RAM_MAP_FRAGMENTS := \
 	$(ASM_SUBDIR)/ram_map_iwram.s \
 	$(ASM_SUBDIR)/ram_map_ewram.s \
@@ -100,13 +99,11 @@ RAM_MAP_FRAGMENTS := \
 	$(ASM_SUBDIR)/ram_map_iwram_pool.inc \
 	$(ASM_SUBDIR)/ram_map_ewram_pool.inc \
 	$(ASM_SUBDIR)/data_symbols.s
-ASM_MATCHINGS := $(wildcard $(ASM_SUBDIR)/matchings/*.s)
 ASM_ROM_GAPS := $(wildcard $(ASM_SUBDIR)/rom_gap_*.s)
 ASM_SRCS := \
 	$(ASM_SUBDIR)/rom.s \
 	$(ASM_SUBDIR)/rom_tail.s \
 	$(ASM_ROM_GAPS) \
-	$(ASM_MATCHINGS) \
 	$(ASM_SUBDIR)/ram_map.s
 DATA_ASM_SRCS :=
 
@@ -214,12 +211,14 @@ $(ASM_BUILDDIR)/ram_map.o: $(RAM_MAP_FRAGMENTS)
 $(ASM_BUILDDIR)/%.o: $(ASM_SUBDIR)/%.s
 	$(AS) $(ASFLAGS) -I . -o $@ $<
 
-$(ASM_BUILDDIR)/matchings/%.o: $(ASM_SUBDIR)/matchings/%.s
-	@mkdir -p $(ASM_BUILDDIR)/matchings
-	$(AS) $(ASFLAGS) -I . -o $@ $<
-
 $(DATA_ASM_BUILDDIR)/%.o: $(DATA_ASM_SUBDIR)/%.s
 	$(AS) $(ASFLAGS) -I . -o $@ $<
+
+# Matched C is always agbcc (per-file compiler / flags / fixups). Do not use
+# the generic cc1 recipe — it ignores match-compiler comments and pads .text.
+$(C_BUILDDIR)/matched/%.o: $(C_SUBDIR)/matched/%.c
+	@mkdir -p $(dir $@)
+	python3 tools/decomp/compile_matched.py $< $@
 
 $(C_BUILDDIR)/%.o: $(C_SUBDIR)/%.c
 ifeq ($(MODERN),0)

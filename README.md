@@ -154,10 +154,12 @@ appear in the index and on their subsystem page. The scoreboard
 | `python3 tools/decomp/park_wip.py FN file.c` | Park unmatched C in `src/decompiled/` |
 | `python3 tools/decomp/cluster_shapes.py` | Find Thumb clones for new patterns |
 | `python3 tools/decomp/permuter/auto.py FN` | Local permuter: import → score → search → integrate on score 0 |
+| `python3 tools/decomp/compile_matched.py FN.c FN.o` | Compile one matched C file for the peel |
 | `make compare` | Must stay `beyblade_g_revolution.gba: OK` |
 
-Matching C is `src/matched/` (one file per function). Unmatched drafts are
-`src/decompiled/` (not linked — `C_SRCS` is empty). Patterns:
+Matching C is `src/matched/` (one file per function) and is what `make`
+compiles into the ROM, still at retail addresses. Unmatched drafts are
+`src/decompiled/` (not linked). Patterns:
 [docs/decomp-patterns.md](docs/decomp-patterns.md). Queue: `make queue`.
 
 ## Layout
