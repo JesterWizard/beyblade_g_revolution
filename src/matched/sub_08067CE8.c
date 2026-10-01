@@ -1,292 +1,119 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08067ce8
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+#include "battle.h"
+
+/* Loop-depth weighting raises px's allocation priority above `a` (retail: px=r4, a=r5). */
+#define PX_WEIGHT(stmt) \
+    do { do { do { do { do { do { do { do { do { stmt } while (0); } while (0); } while (0); } while (0); } while (0); } while (0); } while (0); } while (0); } while (0)
+
+struct AnSprite
+{
+    u8 filler_00[8];
+    s32 unk08;
+    s32 unk0C;
+    u32 unk10;
+    u16 unk14;
+    u16 unk16;
+    u16 unk18;
+    u16 unk1A;
+    u16 unk1C;
+    u16 unk1E;
+    u16 unk20;
+    u8 filler_22[2];
+    s32 unk24;
+    u32 unk28;
+    u32 unk2C;
+    struct AnSprite *unk30;
+};
+
 void sub_08067CE8(struct Unk67BB8 *a, u32 b)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r9\n"
-        "mov r6, r8\n"
-        "push {r6, r7}\n"
-        "add sp, #-0x00C\n"
-        "adds r5, r0, #0x0\n"
-        "adds r0, #0xB0\n"
-        "ldr r2, [r0, #0x00]\n"
-        "cmp r2, #0x00\n"
-        "beq _08067D0C\n"
-        "adds r0, r5, #0x0\n"
-        "mov r1, sp\n"
-        "bl _08073C48\n"
-        "ldr r0, [sp, #0x000]\n"
-        "asrs r4, r0, #0x08\n"
-        "ldr r0, [sp, #0x004]\n"
-        "b _08067D12\n"
-        "_08067D0C:\n"
-        "ldr r0, [r5, #0x04]\n"
-        "asrs r4, r0, #0x08\n"
-        "ldr r0, [r5, #0x08]\n"
-        "_08067D12:\n"
-        "asrs r7, r0, #0x08\n"
-        "ldr r1, [r5, #0x3C]\n"
-        "cmp r1, #0x00\n"
-        "beq _08067D26\n"
-        "ldr r0, [r1, #0x40]\n"
-        "asrs r0, r0, #0x08\n"
-        "subs r4, r4, r0\n"
-        "ldr r0, [r1, #0x44]\n"
-        "asrs r0, r0, #0x08\n"
-        "subs r7, r7, r0\n"
-        "_08067D26:\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x31\n"
-        "movs r0, #0x01\n"
-        "ldrb r2, [r1, #0x00]\n"
-        "ands r0, r2\n"
-        "mov r9, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08067D4C\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0xA0\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0xA4\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "lsls r1, r1, #0x18\n"
-        "asrs r1, r1, #0x18\n"
-        "subs r0, r0, r1\n"
-        "b _08067D60\n"
-        "_08067D4C:\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0xA0\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0xA4\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "lsls r1, r1, #0x18\n"
-        "asrs r1, r1, #0x18\n"
-        "adds r0, r0, r1\n"
-        "_08067D60:\n"
-        "subs r4, r4, r0\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0xA2\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r0, r1]\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0xA5\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "lsls r1, r1, #0x18\n"
-        "asrs r1, r1, #0x18\n"
-        "adds r0, r0, r1\n"
-        "subs r7, r7, r0\n"
-        "ldr r0, [r5, #0x70]\n"
-        "cmp r0, #0x00\n"
-        "beq _08067DA6\n"
-        "ldrh r2, [r5, #0x12]\n"
-        "ldrb r1, [r5, #0x10]\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "adds r0, r4, r0\n"
-        "cmp r0, #0x00\n"
-        "blt _08067DA6\n"
-        "cmp r4, #0xEF\n"
-        "bgt _08067DA6\n"
-        "ldrh r2, [r5, #0x14]\n"
-        "ldrb r1, [r5, #0x11]\n"
-        "adds r0, r2, #0x0\n"
-        "muls r0, r1\n"
-        "asrs r0, r0, #0x08\n"
-        "adds r0, r7, r0\n"
-        "cmp r0, #0x00\n"
-        "blt _08067DA6\n"
-        "cmp r7, #0x9F\n"
-        "ble _08067DBC\n"
-        "_08067DA6:\n"
-        "adds r4, r5, #0x0\n"
-        "adds r4, #0xB8\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08067DB2\n"
-        "b _08067EF8\n"
-        "_08067DB2:\n"
-        "bl sub_0806FE84\n"
-        "movs r0, #0x00\n"
-        "str r0, [r4, #0x00]\n"
-        "b _08067EF8\n"
-        "_08067DBC:\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0xB8\n"
-        "ldr r2, [r0, #0x00]\n"
-        "mov r8, r2\n"
-        "adds r6, r0, #0x0\n"
-        "cmp r2, #0x00\n"
-        "bne _08067E0A\n"
-        "adds r0, #0x04\n"
-        "ldrh r0, [r0, #0x00]\n"
-        "bl sub_0806FDD0\n"
-        "str r0, [r6, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "bne _08067DDA\n"
-        "b _08067EF8\n"
-        "_08067DDA:\n"
-        "mov r1, r8\n"
-        "strh r1, [r0, #0x20]\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x98\n"
-        "movs r0, #0x02\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _08067DF6\n"
-        "ldr r1, [r6, #0x00]\n"
-        "movs r0, #0x01\n"
-        "ldrh r2, [r1, #0x20]\n"
-        "orrs r0, r2\n"
-        "strh r0, [r1, #0x20]\n"
-        "_08067DF6:\n"
-        "ldr r1, [r6, #0x00]\n"
-        "ldr r0, _08067EB0 @ =0x0000FFFF\n"
-        "strh r0, [r1, #0x1A]\n"
-        "ldr r0, [r6, #0x00]\n"
-        "mov r1, r8\n"
-        "str r1, [r0, #0x30]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "movs r0, #0x01\n"
-        "negs r0, r0\n"
-        "str r0, [r1, #0x24]\n"
-        "_08067E0A:\n"
-        "ldrb r0, [r5, #0x16]\n"
-        "strh r0, [r5, #0x16]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "ldr r0, [r5, #0x00]\n"
-        "str r0, [r1, #0x2C]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "mov r2, r9\n"
-        "ldrb r0, [r2, #0x00]\n"
-        "strh r0, [r1, #0x1C]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r4, #0x08\n"
-        "str r0, [r1, #0x08]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r7, #0x08\n"
-        "str r0, [r1, #0x0C]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "ldrh r0, [r5, #0x22]\n"
-        "strh r0, [r1, #0x18]\n"
-        "ldr r1, [r6, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x30\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "strh r0, [r1, #0x16]\n"
-        "ldr r2, [r6, #0x00]\n"
-        "ldr r0, [r5, #0x00]\n"
-        "ldr r1, [r0, #0x10]\n"
-        "adds r0, r0, r1\n"
-        "str r0, [r2, #0x28]\n"
-        "ldr r4, [r6, #0x00]\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x38\n"
-        "ldrb r3, [r0, #0x00]\n"
-        "movs r0, #0x03\n"
-        "mov r8, r0\n"
-        "mov r2, r8\n"
-        "ands r2, r3\n"
-        "lsls r2, r2, #0x0E\n"
-        "adds r7, r5, #0x0\n"
-        "adds r7, #0x3A\n"
-        "ldrb r1, [r7, #0x00]\n"
-        "mvns r0, r1\n"
-        "movs r1, #0x01\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x0D\n"
-        "orrs r2, r0\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x39\n"
-        "mov r0, r8\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x0A\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x05\n"
-        "orrs r0, r1\n"
-        "orrs r2, r0\n"
-        "movs r0, #0x0C\n"
-        "ands r0, r3\n"
-        "lsls r0, r0, #0x1C\n"
-        "orrs r2, r0\n"
-        "str r2, [r4, #0x10]\n"
-        "ldr r2, [r6, #0x00]\n"
-        "mov r9, r2\n"
-        "ldrb r7, [r7, #0x00]\n"
-        "lsrs r0, r7, #0x01\n"
-        "movs r1, #0x0F\n"
-        "ands r0, r1\n"
-        "lsls r4, r0, #0x0C\n"
-        "ldr r0, [r5, #0x3C]\n"
-        "cmp r0, #0x00\n"
-        "beq _08067EB4\n"
-        "bl sub_08069C14\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x3B\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "lsls r1, r1, #0x18\n"
-        "asrs r1, r1, #0x18\n"
-        "adds r0, r0, r1\n"
-        "mov r1, r8\n"
-        "ands r0, r1\n"
-        "b _08067EC2\n"
-        "_08067EB0: .4byte 0x0000FFFF\n"
-        "_08067EB4:\n"
-        "adds r0, r5, #0x0\n"
-        "adds r0, #0x3B\n"
-        "ldrb r0, [r0, #0x00]\n"
-        "lsls r0, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "mov r2, r8\n"
-        "ands r0, r2\n"
-        "_08067EC2:\n"
-        "lsls r0, r0, #0x0A\n"
-        "orrs r0, r4\n"
-        "mov r1, r9\n"
-        "strh r0, [r1, #0x14]\n"
-        "ldr r0, [r6, #0x00]\n"
-        "ldrh r1, [r5, #0x12]\n"
-        "ldrh r2, [r5, #0x14]\n"
-        "ldrb r3, [r5, #0x16]\n"
-        "bl sub_08070354\n"
-        "ldr r4, [r6, #0x00]\n"
-        "ldr r1, [r4, #0x30]\n"
-        "cmp r1, #0x00\n"
-        "beq _08067EF8\n"
-        "ldr r2, [r4, #0x10]\n"
-        "ldr r0, _08067F08 @ =0xC1FFFFFF\n"
-        "ands r2, r0\n"
-        "ldr r0, [r1, #0x08]\n"
-        "movs r1, #0xF8\n"
-        "lsls r1, r1, #0x02\n"
-        "ands r0, r1\n"
-        "lsls r0, r0, #0x14\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x01\n"
-        "orrs r0, r1\n"
-        "orrs r2, r0\n"
-        "str r2, [r4, #0x10]\n"
-        "_08067EF8:\n"
-        "add sp, #0x00C\n"
-        "pop {r3, r4}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        ".byte 0x00, 0x00\n"
-        "_08067F08: .4byte 0xC1FFFFFF\n"
-    );
+    s32 px;
+    s32 py;
+    struct Unk67BB8 *parent;
+#define SPR ((struct AnSprite *)a->unkB8)
+    struct AnSprite *spr;
+    u32 pin;
+    u32 m3;
+    s32 out[3];
+
+    if (a->unkB0 != 0)
+    {
+        ((void (*)(struct Unk67BB8 *, s32 *))a->unkB0)(a, out);
+        px = out[0] >> 8;
+        py = out[1] >> 8;
+    }
+    else
+    {
+        px = a->unk04 >> 8;
+        py = a->unk08 >> 8;
+    }
+    parent = (struct Unk67BB8 *)a->unk3C;
+    if (parent != NULL)
+    {
+        PX_WEIGHT(px -= (s32)parent->unk40 >> 8;);
+        py -= (s32)parent->unk44 >> 8;
+    }
+    if (a->unk31 & 1)
+        px -= (s16)a->unkA0 - (s8)a->unkA4;
+    else
+        px -= (s16)a->unkA0 + (s8)a->unkA4;
+    py -= (s16)a->unkA2 + (s8)a->unkA5;
+    if (a->unk70 == 0
+        || px + ((a->unk10 * a->unk12) >> 8) < 0 || px > 0xEF
+        || py + ((a->unk11 * a->unk14) >> 8) < 0 || py > 0x9F)
+    {
+        if (a->unkB8 != 0)
+        {
+            BtlObjPoolFree((void *)a->unkB8);
+            a->unkB8 = 0;
+        }
+        return;
+    }
+    {
+        if (a->unkB8 == 0)
+        {
+            a->unkB8 = (u32)BtlObjPoolAlloc(a->unkBC);
+            if (a->unkB8 == 0)
+                return;
+            SPR->unk20 = 0;
+            if (a->unk98 & 2)
+                SPR->unk20 |= 1;
+            SPR->unk1A = 0xFFFF;
+            SPR->unk30 = NULL;
+            SPR->unk24 = -1;
+        }
+        a->unk16 &= 0xFF;
+        SPR->unk2C = (u32)a->unk00;
+        SPR->unk1C = a->unk31;
+        SPR->unk08 = px << 8;
+        SPR->unk0C = py << 8;
+        SPR->unk18 = a->unk22;
+        SPR->unk16 = a->unk30;
+        SPR->unk28 = (u32)a->unk00 + ((struct Unk6BB38 *)a->unk00)->unk10;
+        spr = SPR;
+        spr->unk10 = ((a->unk38 & 3) << 14) | ((~a->unk3A & 1) << 13) | (pin = ((a->unk39 & (m3 = 3)) << 10) | 0x1000) | ((a->unk38 & 0xC) << 28);
+        {
+            struct AnSprite *s2 = SPR;
+            u32 pal = ((a->unk3A >> 1) & 0xF) << 12;
+            u32 rot;
+
+            if (a->unk3C != 0)
+                rot = ((u8)sub_08069C14((struct Unk69C14 *)a->unk3C) + (s8)a->unk3B) & m3;
+            else
+                rot = (s8)a->unk3B & m3;
+            s2->unk14 = (rot << 10) | pal;
+        }
+        SpriteApplyAffine((struct Unk70354 *)a->unkB8, a->unk12, a->unk14, a->unk16);
+        spr = SPR;
+        if (spr->unk30 != NULL)
+            spr->unk10 = (spr->unk10 & 0xC1FFFFFF) | (pin = ((spr->unk30->unk08 & 0x3E0) << 20) | 0x100);
+    }
 }
 

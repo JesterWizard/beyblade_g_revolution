@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-10-01T10:44:41Z_
+_Updated: 2026-10-01T11:55:32Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 621 |
+| matched | 623 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 10 |
+| WIP (parked C) | 8 |
 | not started | 0 |
 | blocked | 2 |
 | **total** | **633** |
@@ -35,9 +35,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
-| `sub_08067CE8` | WIP (parked C) | 47.1% | 258/548 | m2c failed; initial seed attempt |
-| `sub_08044648` | WIP (parked C) | 37.1% | 135/364 | initial m2c seed (m2c-fallback); does not compile |
-| `sub_080618EC` | WIP (parked C) | 25.2% | 108/428 | m2c failed; initial seed attempt |
+| `sub_080618EC` | WIP (parked C) | 87.6% | 375/428 | m2c failed; initial seed attempt |
 | `sub_0804C8BC` | WIP (parked C) | 19.9% | 74/372 | initial m2c seed (m2c-fallback); does not compile |
 | `sub_08038438` | WIP (parked C) | 18.8% | 45/240 | for-loop seed with slots=&gData_030003CC + _call_via_r3 fn-pointer call is sa… |
 | `sub_0806E060` | WIP (parked C) | 18.1% | 89/492 | m2c failed; initial seed attempt |
@@ -50,9 +48,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
-| `sub_08067CE8` | `0x08067CE8` | WIP (parked C) | 47.1% | 258/548 | asm |
-| `sub_08044648` | `0x08044648` | WIP (parked C) | 37.1% | 135/364 | asm |
-| `sub_080618EC` | `0x080618EC` | WIP (parked C) | 25.2% | 108/428 | asm |
+| `sub_080618EC` | `0x080618EC` | WIP (parked C) | 87.6% | 375/428 | asm |
 | `sub_0804C8BC` | `0x0804C8BC` | WIP (parked C) | 19.9% | 74/372 | asm |
 | `sub_08038438` | `0x08038438` | WIP (parked C) | 18.8% | 45/240 | asm |
 | `sub_0806E060` | `0x0806E060` | WIP (parked C) | 18.1% | 89/492 | asm |
@@ -637,6 +633,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08067648` | `0x08067648` | matched | 100.0% | 352/352 | semantic |
 | `sub_0803370C` | `0x0803370C` | matched | 100.0% | 362/362 | semantic |
 | `sub_0804D420` | `0x0804D420` | matched | 100.0% | 362/362 | semantic |
+| `sub_08044648` | `0x08044648` | matched | 100.0% | 364/364 | semantic |
 | `sub_080447E8` | `0x080447E8` | matched | 100.0% | 372/372 | semantic |
 | `sub_08032908` | `0x08032908` | matched | 100.0% | 384/384 | semantic |
 | `sub_080348E8` | `0x080348E8` | matched | 100.0% | 384/384 | semantic |
@@ -665,6 +662,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_08060E48` | `0x08060E48` | matched | 100.0% | 532/532 | semantic |
 | `sub_08056D68` | `0x08056D68` | matched | 100.0% | 540/540 | semantic |
 | `sub_08045EF0` | `0x08045EF0` | matched | 100.0% | 548/548 | semantic |
+| `sub_08067CE8` | `0x08067CE8` | matched | 100.0% | 548/548 | semantic |
 | `sub_0806B764` | `0x0806B764` | matched | 100.0% | 588/588 | semantic |
 | `sub_08054120` | `0x08054120` | matched | 100.0% | 594/594 | semantic |
 | `sub_0806960C` | `0x0806960C` | matched | 100.0% | 600/600 | semantic |

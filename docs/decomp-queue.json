@@ -1,18 +1,18 @@
 {
-  "generated": "2026-10-01T10:44:40Z",
+  "generated": "2026-10-01T11:55:31Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 12,
-    "semantic_done": 621,
-    "readable_asm": 12,
+    "pending": 10,
+    "semantic_done": 623,
+    "readable_asm": 10,
     "opcode": 0,
-    "battle_pending": 2,
-    "battle_semantic": 157,
+    "battle_pending": 1,
+    "battle_semantic": 158,
     "blocked": 20,
-    "wip": 22
+    "wip": 20
   },
   "pinned": [],
   "wip": [
@@ -138,17 +138,6 @@
       "score": "61/336"
     },
     {
-      "name": "sub_08044648",
-      "addr": "0x08044648",
-      "kind": "asm",
-      "bytes": 364,
-      "seed": "src/decompiled/sub_08044648.c",
-      "notes": "src/decompiled/sub_08044648.md",
-      "status": "New semantic draft from scratch (the old one was a junk stub); roster is gData_08075AB8 (struct BeybladeDef[]). Same size, logic exact. Left: retail loads the table base before computing id*28 (ours computes the offset first), which swaps r6/r7; a `s16 key` local for the two GetIndexedRecordWord calls duplicates the loop test.",
-      "next": "Same table-base-first problem as sub_080447E8. A local table pointer gets hoisted out of the loop by loop.c; look for a shape that keeps the symbol load inside the if and before the multiply.",
-      "score": "135/364"
-    },
-    {
       "name": "sub_080447E8",
       "addr": "0x080447E8",
       "kind": "missing",
@@ -188,9 +177,9 @@
       "bytes": 428,
       "seed": "src/decompiled/sub_080618EC.c",
       "notes": "src/decompiled/sub_080618EC.md",
-      "status": "New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF.",
-      "next": "Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail.",
-      "score": "108/428"
+      "status": "old_agbcc, no goto, no state/keys locals: same size 428, 375/428. Left: (1) retail loads t->state straight into r3 and gData_03003F60 keys straight into r2; ours loads into r0/r1 then copies (gcse PRE reaching-reg copies 'adds r3,r0,#0', 'adds r0,r1,#0'); (2) case 10 of the second switch: retail 'bne default; b end', ours 'beq end; b default'; (3) the 'if (t != NULL) {..} else return -1;' layout was needed for same size.",
+      "next": "t->state |= 0xFF only stays unfolded (movs r0,#255; orrs r0,r3) when state is an unnamed PRE temp, NOT a local (a user var with one zero-extend set lets combine fold ior with nonzero_bits=0xFF). Find what makes the PRE copy coalesce with its load (retail ldrb r3 direct). Untried: user var with a second unknown-bits set at no cost; gcse -dG dump.",
+      "score": "375/428"
     },
     {
       "name": "sub_08060E48",
@@ -235,17 +224,6 @@
       "status": "TextLayerInit same-size 509/588, old_agbcc",
       "next": "a reload gets r4 not r7; 0x80 test operand order",
       "score": "509/588"
-    },
-    {
-      "name": "sub_08067CE8",
-      "addr": "0x08067CE8",
-      "kind": "asm",
-      "bytes": 548,
-      "seed": "src/decompiled/sub_08067CE8.c",
-      "notes": "src/decompiled/sub_08067CE8.md",
-      "status": "AnimObjDraw same-size 548, structure matches; only regalloc (a=r5,px=r4,py=r7,slot=r6 in retail)",
-      "next": "raise px priority over a; m3 mask var, pin vars, out[3] all matter",
-      "score": "258/548"
     },
     {
       "name": "sub_080706B0",

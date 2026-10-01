@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-10-01T10:44:40Z_
+_Updated: 2026-10-01T11:55:31Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 621 |
-| Still need semantic C | **12** |
-| Readable Thumb remaining | 12 |
+| Semantic C done | 623 |
+| Still need semantic C | **10** |
+| Readable Thumb remaining | 10 |
 | Opcode embeds remaining | 0 |
-| Battle pending | 2 (157 already semantic) |
+| Battle pending | 1 (158 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 22 |
+| WIP (resume these first) | 20 |
 
 Ranking: **battle** · showing top **40**
 
@@ -37,16 +37,14 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_0803E0CC` | 0 | 170/296 | `src/decompiled/sub_0803E0CC.c` | Data symbol gData_03000198 plus `unk1C |= (s8)0xFF` (keeps the ldrb/orr/strb instead of folding to strb -1): 56 -> 170/296. Still 4 bytes short: retail hoists the unk1C offset into r10, ours keeps it in r3 and caller-saves it to the stack. | Get the loop-invariant 0x8EC offset into a callee-saved register (r10); old_agbcc is required. |
 | `sub_0804BD38` | 328 | 56 asm diff lines | `src/decompiled/sub_0804BD38.c` | logic mapped (5-row menu redraw); retail makes i*16 a giv in r9 and keeps a on the stack, ours hoists &gData_03000674 instead | find the loop shape that makes the row-y giv; try permuter |
 | `sub_080737C0` | 0 | 61/336 | `src/decompiled/sub_080737C0.c` | logic mapped (word wrap into <=count lines); retail keeps the done flag in a stack slot and tests count from the stack | while(!done) shape is closest (81 diff lines); find what spills done |
-| `sub_08044648` | 364 | 135/364 | `src/decompiled/sub_08044648.c` | New semantic draft from scratch (the old one was a junk stub); roster is gData_08075AB8 (struct BeybladeDef[]). Same size, logic exact. Left: retail loads the table base before computing id*28 (ours computes the offset first), which swaps r6/r7; a `s16 key` local for the two GetIndexedRecordWord calls duplicates the loop test. | Same table-base-first problem as sub_080447E8. A local table pointer gets hoisted out of the loop by loop.c; look for a shape that keeps the symbol load inside the if and before the multiply. |
 | `sub_080447E8` | 0 | 232/372 | `src/decompiled/sub_080447E8.c` | New semantic draft (sibling of sub_08044648, table gData_0807BE04, Unk7BE04 fields named). Logic exact, 4 bytes long; retail loads the table symbol before id*28 and keeps it in r8. | Solve the table-base-first order (see sub_08044648), then the loop-test duplication. |
 | `sub_0804C8BC` | 372 | 74/372 | `src/decompiled/sub_0804C8BC.c` | New semantic draft (the old one was a junk stub): five list rows from gData_080989F0 (struct Unk4C8BCRow). Logic exact, 4 bytes long. Retail has five loop givs (palette pointer, i*4, two row givs, i*16) and copies the i*16 giv into a stack local for the sprite y; every shape tried either drops the i*16 giv or adds a (y+0x38)<<8 giv. | Find the source form of the sprite y ((i*16 + 0x38) << 8) that reuses the i*16 giv through a copy. |
 | `sub_08070930` | 0 | 199/420 | `src/decompiled/sub_08070930.c` | New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top. | Find why retail has two pseudos for the affine pointer; that also un-merges the loop tests. |
-| `sub_080618EC` | 428 | 108/428 | `src/decompiled/sub_080618EC.c` | New semantic draft: typewriter text tick (struct Unk618EC). Logic mapped; size mismatch. Retail tests the u8 state with ldrb straight into r3 and later ORs 0xFF into that same register; our shapes either copy the load or fold state|0xFF to 0xFF. | Get the state load to keep its value for the later `|= 0xFF` without cse knowing it equals 1; then fix the switch/control-code tail. |
+| `sub_080618EC` | 428 | 375/428 | `src/decompiled/sub_080618EC.c` | old_agbcc, no goto, no state/keys locals: same size 428, 375/428. Left: (1) retail loads t->state straight into r3 and gData_03003F60 keys straight into r2; ours loads into r0/r1 then copies (gcse PRE reaching-reg copies 'adds r3,r0,#0', 'adds r0,r1,#0'); (2) case 10 of the second switch: retail 'bne default; b end', ours 'beq end; b default'; (3) the 'if (t != NULL) {..} else return -1;' layout was needed for same size. | t->state |= 0xFF only stays unfolded (movs r0,#255; orrs r0,r3) when state is an unnamed PRE temp, NOT a local (a user var with one zero-extend set lets combine fold ior with nonzero_bits=0xFF). Find what makes the PRE copy coalesce with its load (retail ldrb r3 direct). Untried: user var with a second unknown-bits set at no cost; gcse -dG dump. |
 | `sub_08060E48` | 0 | 92/532 | `src/decompiled/sub_08060E48.c` | text glyph blit 528/532; regalloc: retail spills 9 address pseudos | gw in r9, rows/yt next-iter in sp24/28; permuter |
 | `sub_0806EC20` | 516 | ?/516 | `src/decompiled/sub_0806EC20.c` | BG setup 500/516; param copy order matches | a in r5,b in r8 (ours r7/r10); i<<24 copy r6 |
 | `sub_0806E060` | 492 | 89/492 | `src/decompiled/sub_0806E060.c` | bezier keyframe sampler 468/492 | idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded |
 | `sub_0806B764` | 0 | 509/588 | `src/decompiled/sub_0806B764.c` | TextLayerInit same-size 509/588, old_agbcc | a reload gets r4 not r7; 0x80 test operand order |
-| `sub_08067CE8` | 548 | 258/548 | `src/decompiled/sub_08067CE8.c` | AnimObjDraw same-size 548, structure matches; only regalloc (a=r5,px=r4,py=r7,slot=r6 in retail) | raise px priority over a; m3 mask var, pin vars, out[3] all matter |
 | `sub_080706B0` | 626 | 61/626 | `src/decompiled/sub_080706B0.c` | logic complete, old_agbcc, 620/626 B | retail spills spacing (sp24) and keeps glyph width in r8 in the per-glyph check; case 1 tail is cross-jumped with the no-widths path; first=head load sits between count-- and the loop test |
 
 Per-function notes: `src/decompiled/<fn>.md`.
