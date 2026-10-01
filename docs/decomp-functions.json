@@ -1,15 +1,15 @@
 {
-  "generated": "2026-10-01T10:04:06Z",
+  "generated": "2026-10-01T10:44:41Z",
   "counts": {
-    "matched": 620,
-    "wip": 11,
+    "matched": 621,
+    "wip": 10,
     "blocked": 2
   },
   "tiers": {
     "UNKNOWN": 2,
     "DECOMPILED": 7,
-    "UNDERSTOOD": 4,
-    "MATCHING": 620
+    "UNDERSTOOD": 3,
+    "MATCHING": 621
   },
   "total": 633,
   "functions": [
@@ -4842,20 +4842,20 @@
     {
       "name": "sub_08044A8C",
       "addr": "0x08044A8C",
-      "kind": "asm",
-      "status": "same_size",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
-      "wip": true,
+      "wip": false,
       "block_reason": "",
       "retail_bytes": 672,
-      "matched_bytes": 617,
+      "matched_bytes": 672,
       "compiled_bytes": 672,
-      "pct": 91.8,
-      "score": "617/672",
-      "source": "attempt",
-      "note": "old_agbcc; unk185B = i = 0 places the zero; left: buf is a copy of the *hdrBlock temp in retail (r3->r7) and &gData stays in r4 across the retry loop (ours gives retry r4)",
-      "tier": "UNDERSTOOD",
+      "pct": 100.0,
+      "score": "672/672",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": "SaveDataVerify"
     },
     {

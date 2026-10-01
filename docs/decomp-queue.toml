@@ -149,14 +149,6 @@ next = "The -1 needs a pseudo with a second, different set (no REG_EQUIV) that s
 score = "1031/1352"
 
 [[wip]]
-name = "sub_08044A8C"
-seed = "src/decompiled/sub_08044A8C.c"
-notes = "src/decompiled/sub_08044A8C.md"
-status = "Same size. `hdr = unk1688; hdr += i;` fixed the base-before-index order at both header reads (602 -> 613). Left: buf/retry register swap at the top (retail buf=r7, retry=r5) and the unk1688 base register (retail r4) in the per-slot checks."
-next = "Retail copies *hdrBlock into r3 and only later into r7: find the statement shape that creates that copy. Permuter 480s from this seed: best 425."
-score = "613/672"
-
-[[wip]]
 name = "sub_08040680"
 seed = "src/decompiled/sub_08040680.c"
 notes = "src/decompiled/sub_08040680.md"

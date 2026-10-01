@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-10-01T10:04:06Z_
+_Updated: 2026-10-01T10:44:41Z_
 
 ## Legend
 
@@ -22,11 +22,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 620 |
+| matched | 621 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 11 |
+| WIP (parked C) | 10 |
 | not started | 0 |
 | blocked | 2 |
 | **total** | **633** |
@@ -35,7 +35,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
-| `sub_08044A8C` | WIP (parked C) | 91.8% | 617/672 | old_agbcc; unk185B = i = 0 places the zero; left: buf is a copy of the *hdrBl… |
 | `sub_08067CE8` | WIP (parked C) | 47.1% | 258/548 | m2c failed; initial seed attempt |
 | `sub_08044648` | WIP (parked C) | 37.1% | 135/364 | initial m2c seed (m2c-fallback); does not compile |
 | `sub_080618EC` | WIP (parked C) | 25.2% | 108/428 | m2c failed; initial seed attempt |
@@ -51,7 +50,6 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
-| `sub_08044A8C` | `0x08044A8C` | WIP (parked C) | 91.8% | 617/672 | asm |
 | `sub_08067CE8` | `0x08067CE8` | WIP (parked C) | 47.1% | 258/548 | asm |
 | `sub_08044648` | `0x08044648` | WIP (parked C) | 37.1% | 135/364 | asm |
 | `sub_080618EC` | `0x080618EC` | WIP (parked C) | 25.2% | 108/428 | asm |
@@ -674,6 +672,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_0806F910` | `0x0806F910` | matched | 100.0% | 624/624 | semantic |
 | `sub_080436B0` | `0x080436B0` | matched | 100.0% | 658/658 | semantic |
 | `sub_08032DC4` | `0x08032DC4` | matched | 100.0% | 660/660 | semantic |
+| `sub_08044A8C` | `0x08044A8C` | matched | 100.0% | 672/672 | semantic |
 | `sub_0806C388` | `0x0806C388` | matched | 100.0% | 710/710 | semantic |
 | `sub_0802FA94` | `0x0802FA94` | matched | 100.0% | 748/748 | semantic |
 | `sub_08046E7C` | `0x08046E7C` | matched | 100.0% | 872/872 | semantic |

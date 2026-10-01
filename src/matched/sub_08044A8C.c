@@ -1,8 +1,92 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08044a8c
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+
+#define SAVE_FAIL(slot)                            \
+    {                                              \
+        BtlClearUnk1688Entry(slot);                \
+        SaveSlotWriteDefault(slot);                \
+        gData_03000198->unk185B = 1;               \
+        gData_03000198->unk185C = 0;               \
+    }
+
 s8 SaveDataVerify(void)
 {
-    asm(".syntax unified\npush {r4, r5, r6, r7, lr}\nmov r7, r10\nmov r6, r9\nmov r5, r8\npush {r5, r6, r7}\nmovs r0, #0x03\nmov r9, r0\nldr r4, _08044B00 @ =0x03000198\nldr r0, [r4, #0x00]\nldr r1, _08044B04 @ =0x0000185B\nadds r0, r0, r1\nmovs r6, #0x00\nstrb r6, [r0, #0x00]\nldr r0, [r4, #0x00]\nldr r2, _08044B08 @ =0x0000185C\nadds r0, r0, r2\nmovs r1, #0x01\nstrb r1, [r0, #0x00]\nmovs r0, #0x18\nbl sub_0806A3A4\nadds r5, r0, #0x0\nmovs r0, #0xFB\nlsls r0, r0, #0x05\nbl sub_0806A3A4\nldr r1, [r4, #0x00]\nldr r3, _08044B0C @ =0x00001688\nadds r2, r1, r3\nldr r3, [r5, #0x00]\nstr r3, [r2, #0x00]\nldr r2, _08044B10 @ =0x0000168C\nadds r1, r1, r2\nldr r0, [r0, #0x00]\nstr r0, [r1, #0x00]\nadds r7, r3, #0x0\nmovs r0, #0x40\nbl sub_080674BC\nbl sub_080674B4\nbl sub_08071B4C\nldr r0, _08044B14 @ =0x04000208\nstrh r6, [r0, #0x00]\nmov r8, r6\n_08044AE8:\nmovs r5, #0x00\n_08044AEA:\nadds r0, r6, #0x0\nadds r1, r7, #0x0\nbl sub_08067584\ncmp r0, #0x00\nbeq _08044B18\nadds r0, r5, #0x1\nlsls r0, r0, #0x10\nlsrs r5, r0, #0x10\nb _08044B1A\n.byte 0x00, 0x00\n_08044B00: .4byte 0x03000198\n_08044B04: .4byte 0x0000185B\n_08044B08: .4byte 0x0000185C\n_08044B0C: .4byte 0x00001688\n_08044B10: .4byte 0x0000168C\n_08044B14: .4byte 0x04000208\n_08044B18:\nmovs r5, #0x00\n_08044B1A:\ncmp r5, #0x08\nbne _08044B64\nbl sub_08071BA0\nldr r1, _08044B58 @ =0x04000208\nmovs r0, #0x01\nstrh r0, [r1, #0x00]\nmovs r6, #0x00\n_08044B2A:\nadds r0, r6, #0x0\nbl sub_08044EE8\nadds r0, r6, #0x0\nbl sub_08044F64\nadds r0, r6, #0x1\nlsls r0, r0, #0x10\nlsrs r6, r0, #0x10\ncmp r6, #0x00\nbeq _08044B2A\nldr r0, [r4, #0x00]\nldr r3, _08044B5C @ =0x0000185B\nadds r0, r0, r3\nmovs r1, #0x01\nstrb r1, [r0, #0x00]\nldr r0, [r4, #0x00]\nldr r1, _08044B60 @ =0x0000185C\nadds r0, r0, r1\nmov r2, r8\nstrb r2, [r0, #0x00]\nmovs r0, #0x00\nb _08044CF6\n_08044B58: .4byte 0x04000208\n_08044B5C: .4byte 0x0000185B\n_08044B60: .4byte 0x0000185C\n_08044B64:\ncmp r5, #0x00\nbne _08044AEA\nadds r7, #0x08\nadds r0, r6, #0x1\nlsls r0, r0, #0x10\nlsrs r6, r0, #0x10\ncmp r6, r9\nbcc _08044AE8\nmovs r6, #0x00\n_08044B76:\nadds r0, r6, #0x0\nbl sub_08044FB0\nadds r0, r6, #0x1\nlsls r0, r0, #0x10\nlsrs r6, r0, #0x10\ncmp r6, #0x00\nbeq _08044B76\nmovs r6, #0x00\nldr r3, _08044D04 @ =0x03000198\nmov r8, r3\n_08044B8C:\nmov r0, r8\nldr r1, [r0, #0x00]\nldr r2, _08044D08 @ =0x0000168C\nadds r1, r1, r2\nlsls r0, r6, #0x06\nsubs r0, r0, r6\nlsls r0, r0, #0x02\nsubs r0, r0, r6\nlsls r0, r0, #0x05\nmov r9, r0\nldr r0, [r1, #0x00]\nadd r0, r9\nbl sub_08044D8C\nmov r3, r8\nldr r0, [r3, #0x00]\nldr r1, _08044D08 @ =0x0000168C\nadds r0, r0, r1\nldr r0, [r0, #0x00]\nadd r0, r9\nbl sub_08044D8C\nadds r1, r0, #0x0\ncmp r1, #0x00\nbne _08044BC8\nmov r2, r8\nldr r0, [r2, #0x00]\nldr r3, _08044D0C @ =0x0000185C\nadds r0, r0, r3\nstrb r1, [r0, #0x00]\n_08044BC8:\nmov r0, r8\nldr r1, [r0, #0x00]\nldr r2, _08044D10 @ =0x00001688\nmov r10, r2\nadds r0, r1, r2\nldr r4, [r0, #0x00]\nlsls r5, r6, #0x01\nadds r0, r5, r6\nlsls r7, r0, #0x03\nadds r4, r7, r4\nldr r3, _08044D08 @ =0x0000168C\nadds r1, r1, r3\nldr r0, [r1, #0x00]\nadd r0, r9\nbl sub_08044D8C\nldr r1, [r4, #0x04]\ncmp r1, r0\nbeq _08044C10\nadds r0, r6, #0x0\nbl sub_08044EE8\nadds r0, r6, #0x0\nbl sub_08044F64\nmov r1, r8\nldr r0, [r1, #0x00]\nldr r2, _08044D14 @ =0x0000185B\nadds r0, r0, r2\nmovs r3, #0x01\nstrb r3, [r0, #0x00]\nldr r0, [r1, #0x00]\nldr r1, _08044D0C @ =0x0000185C\nadds r0, r0, r1\nmovs r2, #0x00\nstrb r2, [r0, #0x00]\n_08044C10:\nmov r3, r8\nldr r0, [r3, #0x00]\nadd r0, r10\nldr r0, [r0, #0x00]\nadds r0, r7, r0\nldr r0, [r0, #0x00]\nldr r4, _08044D18 @ =0xFEEDFACE\ncmp r0, r4\nbeq _08044C54\nadds r0, r6, #0x0\nbl sub_08044EE8\nadds r0, r6, #0x0\nbl sub_08044F64\nmov r1, r8\nldr r0, [r1, #0x00]\nldr r2, _08044D14 @ =0x0000185B\nadds r0, r0, r2\nmovs r3, #0x01\nstrb r3, [r0, #0x00]\nldr r0, [r1, #0x00]\nldr r1, _08044D0C @ =0x0000185C\nadds r0, r0, r1\nmovs r2, #0x00\nstrb r2, [r0, #0x00]\nmov r3, r8\nldr r0, [r3, #0x00]\nadd r0, r10\nldr r0, [r0, #0x00]\nadds r0, r7, r0\nldr r0, [r0, #0x00]\ncmp r0, r4\nbne _08044C8C\n_08044C54:\nmov r1, r8\nldr r0, [r1, #0x00]\nldr r2, _08044D08 @ =0x0000168C\nadds r0, r0, r2\nldr r0, [r0, #0x00]\nadd r0, r9\nldr r1, [r0, #0x04]\nmovs r0, #0xFB\nlsls r0, r0, #0x05\ncmp r1, r0\nbeq _08044C8C\nadds r0, r6, #0x0\nbl sub_08044EE8\nadds r0, r6, #0x0\nbl sub_08044F64\nmov r3, r8\nldr r0, [r3, #0x00]\nldr r1, _08044D14 @ =0x0000185B\nadds r0, r0, r1\nmovs r2, #0x01\nstrb r2, [r0, #0x00]\nldr r0, [r3, #0x00]\nldr r3, _08044D0C @ =0x0000185C\nadds r0, r0, r3\nmovs r1, #0x00\nstrb r1, [r0, #0x00]\n_08044C8C:\nldr r4, _08044D04 @ =0x03000198\nldr r0, [r4, #0x00]\nldr r2, _08044D10 @ =0x00001688\nadds r0, r0, r2\nldr r1, [r0, #0x00]\nadds r0, r5, r6\nlsls r0, r0, #0x03\nadds r5, r0, r1\nldr r1, [r5, #0x10]\nldr r0, _08044D1C @ =0x00370053\ncmp r1, r0\nbne _08044CAC\nldr r1, [r5, #0x14]\nldr r0, _08044D20 @ =0x00F6009C\ncmp r1, r0\nbeq _08044CD2\n_08044CAC:\nldr r0, _08044D24 @ =0x083A2E04\nbl sub_08067B98\nadds r0, r6, #0x0\nbl sub_08044EE8\nadds r0, r6, #0x0\nbl sub_08044F64\nldr r0, [r4, #0x00]\nldr r3, _08044D14 @ =0x0000185B\nadds r0, r0, r3\nmovs r1, #0x01\nstrb r1, [r0, #0x00]\nldr r0, [r4, #0x00]\nldr r2, _08044D0C @ =0x0000185C\nadds r0, r0, r2\nmovs r3, #0x00\nstrb r3, [r0, #0x00]\n_08044CD2:\nadds r0, r6, #0x1\nlsls r0, r0, #0x10\nlsrs r6, r0, #0x10\ncmp r6, #0x00\nbne _08044CDE\nb _08044B8C\n_08044CDE:\nbl sub_08071BA0\nldr r1, _08044D28 @ =0x04000208\nmovs r0, #0x01\nstrh r0, [r1, #0x00]\nldr r0, _08044D04 @ =0x03000198\nldr r0, [r0, #0x00]\nldr r1, _08044D14 @ =0x0000185B\nadds r0, r0, r1\nldrb r0, [r0, #0x00]\nlsls r0, r0, #0x18\nasrs r0, r0, #0x18\n_08044CF6:\npop {r3, r4, r5}\nmov r8, r3\nmov r9, r4\nmov r10, r5\npop {r4, r5, r6, r7}\npop {r1}\nbx r1\n_08044D04: .4byte 0x03000198\n_08044D08: .4byte 0x0000168C\n_08044D0C: .4byte 0x0000185C\n_08044D10: .4byte 0x00001688\n_08044D14: .4byte 0x0000185B\n_08044D18: .4byte 0xFEEDFACE\n_08044D1C: .4byte 0x00370053\n_08044D20: .4byte 0x00F6009C\n_08044D24: .4byte 0x083A2E04\n_08044D28: .4byte 0x04000208");
+    u32 *buf;
+    u32 **hdrBlock;
+    struct Unk45D3CEntry **slotBlock;
+    u16 i;
+    u16 retry;
+    u32 n;
+    u8 invalid;
+
+    n = 3;
+    gData_03000198->unk185B = 0;
+    gData_03000198->unk185C = 1;
+    hdrBlock = HeapAlloc(0x18);
+    slotBlock = HeapAlloc(0x1F60);
+    gData_03000198->unk1688 = (struct Unk1688Entry *)*hdrBlock;
+    gData_03000198->unk168C = *slotBlock;
+    buf = *hdrBlock;
+    EepromSetType(0x40);
+    VBlankIntrWait();
+    SoundHwStop();
+    REG_IME = 0;
+    invalid = 0;
+    for (i = 0; i < n; i++)
+    {
+        retry = 0;
+        do
+        {
+            if (EepromReadBlock(i, buf) != 0)
+                retry++;
+            else
+                retry = 0;
+            if (retry == 8)
+            {
+                SoundHwStart();
+                REG_IME = 1;
+                for (i = 0; i < 1; i++)
+                {
+                    BtlClearUnk1688Entry(i);
+                    SaveSlotWriteDefault(i);
+                }
+                gData_03000198->unk185B = 1;
+                gData_03000198->unk185C = invalid;
+                return 0;
+            }
+        } while (retry != 0);
+        buf += 2;
+    }
+    for (i = 0; i < 1; i++)
+        LoadGameSave(i);
+    for (i = 0; i < 1; i++)
+    {
+        SaveDataChecksum((u32 *)&gData_03000198->unk168C[i]);
+        if (SaveDataChecksum((u32 *)&gData_03000198->unk168C[i]) == 0)
+            gData_03000198->unk185C = 0;
+        if (((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk04
+            != SaveDataChecksum((u32 *)&gData_03000198->unk168C[i]))
+            SAVE_FAIL(i);
+        if (((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk00 != 0xFEEDFACE)
+            SAVE_FAIL(i);
+        if (((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk00 == 0xFEEDFACE
+            && ((u32 *)&gData_03000198->unk168C[i])[1] != 0x1F60)
+            SAVE_FAIL(i);
+        if (((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk10 != 0x00370053
+            || ((struct Unk1688Words *)&gData_03000198->unk1688[i])->unk14 != 0x00F6009C)
+        {
+            DebugPrint((void *)0x083A2E04);
+            SAVE_FAIL(i);
+        }
+    }
+    SoundHwStart();
+    REG_IME = 1;
+    return gData_03000198->unk185B;
 }
+
