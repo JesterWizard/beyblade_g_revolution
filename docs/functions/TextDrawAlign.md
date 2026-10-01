@@ -62,6 +62,6 @@
 - `sub_08053218`
 - `sub_08053690`
 - `sub_08054120`
-- `sub_08056250`
+- [`ScrollListRedraw`](ScrollListRedraw.md)
 - `sub_08056BA4`
-- `sub_08066FB8`
+- [`MenuDrawThreeLineList`](MenuDrawThreeLineList.md)

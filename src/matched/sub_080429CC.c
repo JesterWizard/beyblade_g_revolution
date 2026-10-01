@@ -5,14 +5,14 @@
 // @ 0x080429cc
 void sub_080429CC(void)
 {
-    struct Unk0538 *ring;
+    struct CursorHistory *ring;
     struct MainWork *main;
     u32 x;
     u32 y;
 
     ring = gUnk_03000538;
     main = gMainWorkPtr;
-    ring->unk02 = main->unk1810;
+    ring->facing = main->unk1810;
     switch (main->unk1828)
     {
     case 0:

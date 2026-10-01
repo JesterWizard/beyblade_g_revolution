@@ -27,5 +27,5 @@
 
 - [`ResourceBind`](ResourceBind.md)
 - [`KeyframeFindHits`](KeyframeFindHits.md)
-- `sub_0806E060`
+- [`KeyframeBezierSample`](KeyframeBezierSample.md)
 - [`KeyframeTrackSample`](KeyframeTrackSample.md)

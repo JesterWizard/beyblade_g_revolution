@@ -37,7 +37,7 @@
 - [`MapCursorMoveStep`](MapCursorMoveStep.md)
 - `sub_080435D8`
 - [`SaveBufferCreate`](SaveBufferCreate.md)
-- `sub_08060428`
+- [`SfxPlayMapCursor`](SfxPlayMapCursor.md)
 - `sub_08062A14`
 - `sub_08066390`
 - `sub_0806639C`

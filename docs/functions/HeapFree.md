@@ -38,7 +38,7 @@
 ## Callers
 
 - [`BtlFreeUnk1694Obj`](BtlFreeUnk1694Obj.md)
-- `sub_0802D3F0`
+- [`StatusHudFree`](StatusHudFree.md)
 - [`BattleTeardown`](BattleTeardown.md)
 - `sub_08041394`
 - `sub_08041858`
@@ -57,7 +57,7 @@
 - `sub_08062960`
 - [`PaletteSnapshotRestore`](PaletteSnapshotRestore.md)
 - [`PaletteSnapshotRestoreBg`](PaletteSnapshotRestoreBg.md)
-- `sub_08065CD0`
+- [`SceneFadeDisplayLoop`](SceneFadeDisplayLoop.md)
 - [`SceneObjFreeResources`](SceneObjFreeResources.md)
 - [`BtlObjSystemInit`](BtlObjSystemInit.md)
 - `sub_08072CC0`

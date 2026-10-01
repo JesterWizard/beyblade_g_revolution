@@ -26,7 +26,7 @@
 
 - [`ExpBarFill`](ExpBarFill.md)
 - `sub_08031094`
-- `sub_080310F0`
+- [`BarSetFillFromPercent`](BarSetFillFromPercent.md)
 - `sub_08031204`
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - [`DetailPanelDraw`](DetailPanelDraw.md)

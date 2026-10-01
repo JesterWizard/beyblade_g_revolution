@@ -28,8 +28,8 @@
 
 ## Callers
 
-- `sub_0802D52C`
-- `sub_0802D6D4`
+- [`StatusHudMarkerShow`](StatusHudMarkerShow.md)
+- [`StatusHudCreate`](StatusHudCreate.md)
 - `sub_0802DCDC`
 - `sub_0802E048`
 - [`PaletteHighlightRestore`](PaletteHighlightRestore.md)
@@ -47,10 +47,10 @@
 - `sub_0804D420`
 - [`DetailPanelDraw`](DetailPanelDraw.md)
 - `sub_08054120`
-- `sub_08056250`
+- [`ScrollListRedraw`](ScrollListRedraw.md)
 - `sub_08056BA4`
-- `sub_080593A4`
-- `sub_08061EF8`
+- [`SegmentedBarRebuild`](SegmentedBarRebuild.md)
+- [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 - `sub_0806225C`
 - `sub_08066BC4`
 - [`TextGroupAppendString`](TextGroupAppendString.md)

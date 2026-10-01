@@ -12,15 +12,15 @@ void CollectionFreeSlot(u16 a, u8 b, s16 i)
 
     if (i > 0x7F)
         return;
-    if ((s8)gMainWorkPtr->unk1694[i].unk00 != (s16)a)
+    if ((s8)gMainWorkPtr->unk1694[i].kind != (s16)a)
         return;
-    kind = (s8)gMainWorkPtr->unk1694[i].unk03;
+    kind = (s8)gMainWorkPtr->unk1694[i].group;
     if (kind != (s8)b)
         return;
-    gMainWorkPtr->unk1694[i].unk00 |= 0xFF;
-    gMainWorkPtr->unk1694[i].unk03 |= 0xFF;
-    gMainWorkPtr->unk1694[i].unk02 = 0;
-    gMainWorkPtr->unk1694[i].unk01 = 0;
+    gMainWorkPtr->unk1694[i].kind |= 0xFF;
+    gMainWorkPtr->unk1694[i].group |= 0xFF;
+    gMainWorkPtr->unk1694[i].value = 0;
+    gMainWorkPtr->unk1694[i].slot = 0;
     if (kind == 1)
         RemoveBladeFromTysonsCollection(i);
 }

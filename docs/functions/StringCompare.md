@@ -25,6 +25,6 @@
 
 ## Callers
 
-- `sub_0802B95C`
+- [`FindEntryByString`](FindEntryByString.md)
 - [`BtlFindUnk16E0`](BtlFindUnk16E0.md)
 - [`BtlFindUnk16E4`](BtlFindUnk16E4.md)

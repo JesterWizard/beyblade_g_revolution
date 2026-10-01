@@ -8,7 +8,7 @@
 void sub_0802DCDC(void *arg)
 {
     struct MainWork *main;
-    struct Unk026C *p;
+    struct StatusHud *p;
     struct Unk42E78 *row;
     struct Unk310F0b *tens;
     struct Unk310F0b *ones;
@@ -46,7 +46,7 @@ void sub_0802DCDC(void *arg)
     row = (struct Unk42E78 *)BeybladeCollectionEntry((s16)main->unk183A);
     {
     struct MainWork *m2;
-    struct Unk026C *q;
+    struct StatusHud *q;
     q = gUnk_0300026C;
     x = q->unk28->unk08;
     y = q->unk28->unk0C;

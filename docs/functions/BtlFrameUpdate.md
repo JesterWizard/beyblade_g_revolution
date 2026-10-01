@@ -40,7 +40,7 @@
 - `sub_08033084`
 - [`BattleBannerScroll`](BattleBannerScroll.md)
 - `sub_080333E4`
-- `sub_08033530`
+- [`BtlSceneObjUpdate`](BtlSceneObjUpdate.md)
 - [`BattleScorePopupTick`](BattleScorePopupTick.md)
 - `sub_080338E4`
 - [`BtlKeyComboStep`](BtlKeyComboStep.md)
@@ -59,7 +59,7 @@
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`TimerAdvance`](TimerAdvance.md)
 - [`AffineBgUpdate`](AffineBgUpdate.md)
-- `sub_0806A6F8`
+- [`InputUpdate`](InputUpdate.md)
 - `sub_08073C40` _(not one of the 633 functions)_
 
 ## ROM data referenced

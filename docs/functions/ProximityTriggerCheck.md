@@ -29,7 +29,7 @@
 ## Callees
 
 - [`BeybladeGetProfile`](BeybladeGetProfile.md)
-- `sub_0802BC14`
+- [`CollectionIsFull`](CollectionIsFull.md)
 - `sub_0803FDD0`
 - `sub_08041F88`
 - `sub_080473E4`

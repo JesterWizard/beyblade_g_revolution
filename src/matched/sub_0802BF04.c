@@ -13,12 +13,12 @@ void sub_0802BF04(u16 a, u8 b)
         return;
     for (i = 0; i <= 0x7F; i++)
     {
-        if ((s8)gMainWorkPtr->unk1694[i].unk00 == (s16)a && (s8)gMainWorkPtr->unk1694[i].unk03 == (s8)b)
+        if ((s8)gMainWorkPtr->unk1694[i].kind == (s16)a && (s8)gMainWorkPtr->unk1694[i].group == (s8)b)
         {
-            gMainWorkPtr->unk1694[i].unk00 |= 0xFF;
-            gMainWorkPtr->unk1694[i].unk03 |= 0xFF;
-            gMainWorkPtr->unk1694[i].unk02 = 0;
-            gMainWorkPtr->unk1694[i].unk01 = 0;
+            gMainWorkPtr->unk1694[i].kind |= 0xFF;
+            gMainWorkPtr->unk1694[i].group |= 0xFF;
+            gMainWorkPtr->unk1694[i].value = 0;
+            gMainWorkPtr->unk1694[i].slot = 0;
             return;
         }
     }

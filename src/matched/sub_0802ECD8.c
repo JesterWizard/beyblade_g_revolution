@@ -18,7 +18,7 @@ void sub_0802ECD8(void)
     s32 name;
     s32 value;
     struct Unk8D0 *rec;
-    struct Unk2C314 info;
+    struct CollectionLookup info;
 
     TextGetAreaWidth();
     buf = StringAlloc(0x10);
@@ -60,7 +60,7 @@ void sub_0802ECD8(void)
                 s32 id = e->unk0C;
 
                 sub_0802C4A4(kind, e->unk0E, &info);
-                value = sub_0802E2F8(kind, id, (s8)info.unk02);
+                value = sub_0802E2F8(kind, id, (s8)info.value);
             }
             TextFormatInt(value, buf, 0x10);
             TextDrawAlign(buf, 0xD4, 1);

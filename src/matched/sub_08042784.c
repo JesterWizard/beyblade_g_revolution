@@ -7,17 +7,17 @@
 // while recording is enabled (MainWork.unk182C).
 void CursorHistoryPush(u32 a)
 {
-    struct Unk0538 *ring = gUnk_03000538;
-    s32 i = (s8)ring->unk01;
+    struct CursorHistory *ring = gUnk_03000538;
+    s32 i = (s8)ring->writeIndex;
     struct MainWork *work = gMainWorkPtr;
 
     if (work->unk182C != 0)
     {
-        ring->unk04[i] = a;
-        ring->unk44[i] = work->unk0370;
-        ring->unkC4[i] = work->unk0374;
+        ring->dir[i] = a;
+        ring->x[i] = work->unk0370;
+        ring->y[i] = work->unk0374;
         i++;
-        ring->unk01 = i & 0x1F;
+        ring->writeIndex = i & 0x1F;
     }
 }
 

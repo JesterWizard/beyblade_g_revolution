@@ -31,7 +31,7 @@
 ## Callees
 
 - `sub_08061E8C`
-- `sub_08061EF8`
+- [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 - [`DebugPrint`](DebugPrint.md)
 - [`StringAlloc`](StringAlloc.md)
 - [`StringFree`](StringFree.md)

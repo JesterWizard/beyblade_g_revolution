@@ -32,7 +32,7 @@
 - [`TextSetCursorAligned`](TextSetCursorAligned.md)
 - [`TextDrawAlign`](TextDrawAlign.md)
 - [`TextTypewriterTick`](TextTypewriterTick.md)
-- `sub_08061EF8`
+- [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 - `sub_08063D68`
 - [`SplitStringIntoStringArray`](SplitStringIntoStringArray.md)
 

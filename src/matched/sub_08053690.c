@@ -45,7 +45,7 @@ void sub_08053690(void *arg)
         {
             a->unk274[15] = BtlObjPoolAlloc(0);
             SpriteInitFromTemplate(a->unk274[15], (struct Unk6FF58Src *)0x0811FD5C, 0x800, 0x1000, 0, 0, 0, 0);
-            a->unk274[15]->unk18 = (s8)gData_03000198->unk1694[gData_030006E8[gData_030006EC + i].unk0E].unk02 >> 2;
+            a->unk274[15]->unk18 = (s8)gData_03000198->unk1694[gData_030006E8[gData_030006EC + i].unk0E].value >> 2;
             if (a->unk274[1] != NULL)
             {
                 BtlObjPoolFree(a->unk274[1]);

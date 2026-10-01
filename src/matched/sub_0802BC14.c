@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x0802bc14
-/* A free Unk1694 slot reads as the word 0xFF0000FF (unk00 = unk03 = 0xFF). */
+/* A free CollectionEntry slot reads as the word 0xFF0000FF (unk00 = unk03 = 0xFF). */
 s32 CollectionIsFull(s16 a)
 {
     s32 count;

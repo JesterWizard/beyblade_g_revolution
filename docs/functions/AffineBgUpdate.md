@@ -29,7 +29,7 @@
 ## Callees
 
 - [`BgAffineSetRefPoint`](BgAffineSetRefPoint.md)
-- `sub_08069A60`
+- [`BgAffineSetRotScale`](BgAffineSetRotScale.md)
 
 ## Callers
 

@@ -28,5 +28,5 @@
 
 ## Callers
 
-- `sub_08040530`
-- `sub_08061EF8`
+- [`MessageLinesFree`](MessageLinesFree.md)
+- [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)

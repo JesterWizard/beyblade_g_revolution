@@ -7,12 +7,13 @@
 |--|--|
 | ROM | `0x08047594` |
 | Size | 48 bytes (20 instructions) |
-| Tier | UNDERSTOOD |
-| Status | same_size |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08047594` |
 | Confidence | 0.5 |
 | Provenance | ai |
+| Note | data symbol gData_03000630 gives per-iteration pointer reload |
 
 ## Why this name
 

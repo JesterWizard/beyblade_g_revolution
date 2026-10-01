@@ -29,7 +29,7 @@
 
 ## Callers
 
-- `sub_08040618`
+- [`MessageQueuePopKeyedWord`](MessageQueuePopKeyedWord.md)
 
 ## ROM data referenced
 

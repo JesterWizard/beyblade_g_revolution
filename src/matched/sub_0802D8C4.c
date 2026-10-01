@@ -9,7 +9,7 @@ void sub_0802D8C4(u16 a)
     struct Sprite *r0;
 
     r1 = a;
-    r0 = gUnk_0300026C->unk08;
+    r0 = gUnk_0300026C->marker;
     if (r0 != 0)
         r0->unk18 = r1;
 }

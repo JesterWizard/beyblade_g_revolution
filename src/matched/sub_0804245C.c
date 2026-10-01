@@ -16,8 +16,8 @@ void sub_0804245C(void)
         return;
     }
 
-    index = (s8)gUnk_03000538->unk00;
-    value = gUnk_03000538->unk04[(s32)index];
+    index = (s8)gUnk_03000538->readIndex;
+    value = gUnk_03000538->dir[(s32)index];
     switch (value)
     {
     case 1:
@@ -33,14 +33,14 @@ void sub_0804245C(void)
         sub_080426A4();
         break;
     }
-    gUnk_03000538->unk00 = gUnk_03000538->unk00 + 1;
+    gUnk_03000538->readIndex = gUnk_03000538->readIndex + 1;
     {
         u8 *base;
         u8 *ring;
         u8 mask;
         u8 v;
 
-        base = &gUnk_03000538->unk00;
+        base = &gUnk_03000538->readIndex;
         ring = base;
         mask = 0x1F;
         v = *ring;

@@ -35,7 +35,7 @@
 ## Callers
 
 - [`SfxPlayVariant`](SfxPlayVariant.md)
-- `sub_08060428`
+- [`SfxPlayMapCursor`](SfxPlayMapCursor.md)
 - `sub_08060438`
 - `sub_08060448`
 - `sub_08060458`

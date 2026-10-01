@@ -114,7 +114,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
             case 2:
                 screen->unk2B0 = BtlObjPoolAlloc(0);
                 SpriteInitFromTemplate(screen->unk2B0, (void *)0x080F3C9C, 0x800, 0x2400, 1, 0, 0, 0);
-                screen->unk2B0->unk18 = ScaleRatio(100 - (s8)gMainWorkPtr->unk1694[MENU_ROW(i)->unk0E].unk02, 100, 0xB6);
+                screen->unk2B0->unk18 = ScaleRatio(100 - (s8)gMainWorkPtr->unk1694[MENU_ROW(i)->unk0E].value, 100, 0xB6);
                 PALETTE_LOAD((void *)0x08113B80, (void *)0x050003E0, 0x20);
                 TextEntrySetPaletteBank(screen->unk2B0, 0x0F);
                 screen->unk2A0 = BtlObjPoolAlloc(0);
@@ -126,7 +126,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
             case 3:
                 screen->unk2B0 = BtlObjPoolAlloc(0);
                 SpriteInitFromTemplate(screen->unk2B0, (void *)0x080F3C9C, 0x800, 0x2400, 1, 0, 0, 0);
-                screen->unk2B0->unk18 = ScaleRatio(100 - (s8)gMainWorkPtr->unk1694[MENU_ROW(i)->unk0E].unk02, 100, 0xB6);
+                screen->unk2B0->unk18 = ScaleRatio(100 - (s8)gMainWorkPtr->unk1694[MENU_ROW(i)->unk0E].value, 100, 0xB6);
                 PALETTE_LOAD((void *)0x08113B80, (void *)0x050003E0, 0x20);
                 TextEntrySetPaletteBank(screen->unk2B0, 0x0F);
                 screen->unk2A0 = BtlObjPoolAlloc(0);

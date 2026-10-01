@@ -30,5 +30,5 @@
 ## Callers
 
 - `sub_0803FFB0`
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - `sub_08063D68`

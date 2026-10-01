@@ -11,9 +11,9 @@ s32 BtlUnk1694FindAndMark(s8 a)
     {
         for (i = 0; i <= 0x7F; i++)
         {
-            if ((s8)gMainWorkPtr->unk1694[i].unk03 == val)
+            if ((s8)gMainWorkPtr->unk1694[i].group == val)
             {
-                gMainWorkPtr->unk1694[i].unk01 = 1;
+                gMainWorkPtr->unk1694[i].slot = 1;
                 return 1;
             }
         }

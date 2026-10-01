@@ -29,7 +29,7 @@
 
 ## Callees
 
-- `sub_080411EC`
+- [`MenuDispatchKeyHandlers`](MenuDispatchKeyHandlers.md)
 - `sub_08073C40` _(not one of the 633 functions)_
 - `sub_08073C44` _(not one of the 633 functions)_
 - `sub_08073C48` _(not one of the 633 functions)_

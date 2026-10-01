@@ -12,7 +12,7 @@
         SpriteInitFromTemplate(a->unk274[5], (struct Unk6FF58Src *)0x080F3C9C,            \
                                0x800, 0x2400, 1, 0, 0, 0);                                \
         a->unk274[5]->unk18 = ScaleRatio(100 - (s8)gData_03000198->unk1694[              \
-            gData_030006FC[gData_030006F4 + i].unk0E].unk02, 100, 0xB6);                  \
+            gData_030006FC[gData_030006F4 + i].unk0E].value, 100, 0xB6);                  \
         TextEntrySetPaletteBank(a->unk274[5], 14);                                        \
     }
 

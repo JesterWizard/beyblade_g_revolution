@@ -14,7 +14,7 @@ void sub_080428C4(void)
 
     if (v != 0)
         return;
-    gUnk_03000538->unk00 = v;
-    gUnk_03000538->unk01 = v;
+    gUnk_03000538->readIndex = v;
+    gUnk_03000538->writeIndex = v;
 }
 

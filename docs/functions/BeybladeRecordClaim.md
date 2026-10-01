@@ -32,7 +32,7 @@
 
 ## Callers
 
-- `sub_0802BAD4`
+- [`CollectionAddItem`](CollectionAddItem.md)
 
 ## ROM data referenced
 

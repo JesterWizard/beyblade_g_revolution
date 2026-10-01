@@ -8,7 +8,7 @@
 // fade and dispatch on the mode byte until mode 3 ends the loop.
 void MenuDispatchLoop(void)
 {
-    struct Unk40F4C state;
+    struct MenuState state;
     s32 done;
 
     done = 0;

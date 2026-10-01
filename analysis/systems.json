@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-01T16:13:37Z",
+  "generated": "2026-10-01T21:54:45Z",
   "systems": {
     "audio": {
       "functions": [
@@ -124,6 +124,7 @@
         "sub_0804B40C",
         "sub_0804B4B4",
         "sub_0804C27C",
+        "sub_0804C8BC",
         "sub_0804CE2C",
         "sub_0804E17C",
         "sub_0804E20C",
@@ -161,11 +162,12 @@
         "sub_0806FDD0",
         "sub_0806FF58",
         "sub_080705DC",
+        "sub_080706B0",
         "sub_08070930",
         "sub_08070AF8",
         "sub_08073988"
       ],
-      "count": 59
+      "count": 61
     },
     "menu": {
       "functions": [
@@ -722,6 +724,13 @@
         "note mentions 'draw'"
       ]
     },
+    "sub_0804C8BC": {
+      "system": "graphics",
+      "origin": "note",
+      "evidence": [
+        "note mentions 'sprite'"
+      ]
+    },
     "sub_0804CE2C": {
       "system": "graphics",
       "origin": "note",
@@ -922,7 +931,7 @@
       "system": "graphics",
       "origin": "derived",
       "evidence": [
-        "13/17 call neighbours in graphics"
+        "14/18 call neighbours in graphics"
       ]
     },
     "sub_08061610": {
@@ -1153,7 +1162,7 @@
       "system": "graphics",
       "origin": "derived",
       "evidence": [
-        "8/9 call neighbours in graphics"
+        "9/10 call neighbours in graphics"
       ]
     },
     "sub_0806FE84": {
@@ -1181,14 +1190,14 @@
       "system": "graphics",
       "origin": "derived",
       "evidence": [
-        "8/9 call neighbours in graphics"
+        "9/10 call neighbours in graphics"
       ]
     },
     "sub_080705DC": {
       "system": "graphics",
       "origin": "derived",
       "evidence": [
-        "7/9 call neighbours in graphics"
+        "8/10 call neighbours in graphics"
       ]
     },
     "sub_08070678": {
@@ -1196,6 +1205,13 @@
       "origin": "derived",
       "evidence": [
         "4/4 call neighbours in battle"
+      ]
+    },
+    "sub_080706B0": {
+      "system": "graphics",
+      "origin": "note",
+      "evidence": [
+        "note mentions 'sprite'"
       ]
     },
     "sub_08070930": {
@@ -1490,7 +1506,6 @@
     "sub_0804BD38",
     "sub_0804BE80",
     "sub_0804C324",
-    "sub_0804C8BC",
     "sub_0804CA30",
     "sub_0804CED4",
     "sub_0804D420",
@@ -1710,7 +1725,6 @@
     "sub_080705D4",
     "sub_08070604",
     "sub_0807069C",
-    "sub_080706B0",
     "sub_08070C98",
     "sub_08070D44",
     "sub_08070DF4",
@@ -1752,10 +1766,10 @@
   "counts": {
     "audio": 1,
     "battle": 91,
-    "graphics": 59,
+    "graphics": 61,
     "menu": 3,
     "save": 1,
-    "unassigned": 478
+    "unassigned": 476
   },
   "notes": {
     "universal_symbols_excluded": [

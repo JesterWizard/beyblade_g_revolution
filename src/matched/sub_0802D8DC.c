@@ -3,7 +3,7 @@
 // @ 0x0802d8dc
 void HudRefreshStats(void)
 {
-    struct Unk026C *p;
+    struct StatusHud *p;
     struct Unk310F0b *tens;
     struct Unk310F0b *ones;
     struct Unk42E78 *row;

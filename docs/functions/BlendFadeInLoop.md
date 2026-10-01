@@ -30,7 +30,7 @@
 ## Callees
 
 - [`VBlankIntrWait`](VBlankIntrWait.md)
-- `sub_0806A6F8`
+- [`InputUpdate`](InputUpdate.md)
 - `sub_08073C40` _(not one of the 633 functions)_
 
 ## ROM data referenced

@@ -9,11 +9,11 @@ void sub_0802D3F0(void)
     slot = *(void **)0x03000270;
     if (slot != 0)
     {
-        q = gUnk_0300026C->unk08;
+        q = gUnk_0300026C->marker;
         if (q != 0)
         {
             BtlObjPoolFree(q);
-            gUnk_0300026C->unk08 = 0;
+            gUnk_0300026C->marker = 0;
         }
         q = gUnk_0300026C->unk0C;
         if (q != 0)

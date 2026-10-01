@@ -39,7 +39,7 @@
 
 ## Callers
 
-- `sub_0802D6D4`
+- [`StatusHudCreate`](StatusHudCreate.md)
 - `sub_0802DCDC`
 - `sub_0802E048`
 - [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
@@ -55,10 +55,10 @@
 - `sub_08053690`
 - `sub_08054120`
 - `sub_08054494`
-- `sub_08056250`
+- [`ScrollListRedraw`](ScrollListRedraw.md)
 - `sub_08056BA4`
-- `sub_080593A4`
-- `sub_08061EF8`
+- [`SegmentedBarRebuild`](SegmentedBarRebuild.md)
+- [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 - `sub_0806211C`
 - `sub_08063D68`
 - `sub_08067CE8`

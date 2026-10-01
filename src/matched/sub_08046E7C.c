@@ -85,7 +85,7 @@ void FieldUpdateFrame(u32 active)
             {
                 sub_08060428();
                 sub_08066390(9);
-                sub_0804109C((struct Unk40F4C *)&gData_03000198->unk0530, sub_0806639C());
+                sub_0804109C((struct MenuState *)&gData_03000198->unk0530, sub_0806639C());
                 gData_03000198->unk181C = 4;
                 gData_03000198->unk1808 |= 0x100;
             }
@@ -118,7 +118,7 @@ void FieldUpdateFrame(u32 active)
     {
         gData_03000198->unk184D = 1;
         sub_08066390(7);
-        sub_0804109C((struct Unk40F4C *)&gData_03000198->unk0530, sub_0806639C());
+        sub_0804109C((struct MenuState *)&gData_03000198->unk0530, sub_0806639C());
         gData_03000198->unk181C = 3;
         sub_08060428();
     }

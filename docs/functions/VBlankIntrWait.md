@@ -33,7 +33,7 @@
 - `sub_0803B078`
 - [`MenuDispatchLoop`](MenuDispatchLoop.md)
 - [`HudBuildDigitSprites`](HudBuildDigitSprites.md)
-- `sub_08043C70`
+- [`MapLoad`](MapLoad.md)
 - [`SaveDataVerify`](SaveDataVerify.md)
 - [`FieldUpdateFrame`](FieldUpdateFrame.md)
 - `sub_08048D0C`
@@ -59,6 +59,6 @@
 - [`FadeFromWhite`](FadeFromWhite.md)
 - [`ScreenWhiteoutClearPalettes`](ScreenWhiteoutClearPalettes.md)
 - `sub_080632F8`
-- `sub_08065CD0`
+- [`SceneFadeDisplayLoop`](SceneFadeDisplayLoop.md)
 - `sub_08065E0C`
-- `sub_08066FB8`
+- [`MenuDrawThreeLineList`](MenuDrawThreeLineList.md)

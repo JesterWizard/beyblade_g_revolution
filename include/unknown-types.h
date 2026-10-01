@@ -787,23 +787,23 @@ struct BattleWork /* >= 0x208A */
 };
 
 /* 4-byte records pointed to by MainWork.unk1694. sub_0802C62C. */
-struct Unk1694 /* 0x04 */
+struct CollectionEntry /* 0x04 */
 {
-    /* 00 */ u8 unk00; /* 0xFF = free */
-    /* 01 */ u8 unk01;
-    /* 02 */ u8 unk02;
-    /* 03 */ u8 unk03; /* 0xFF = free */
+    /* 00 */ u8 kind; /* 0xFF = free */
+    /* 01 */ u8 slot;
+    /* 02 */ u8 value;
+    /* 03 */ u8 group; /* 0xFF = free */
 };
 
-/* Out-param for Unk1694 lookup. sub_0802C314 / 2C3DC / 2C4A4. */
-struct Unk2C314 /* 0x0c */
+/* Out-param for CollectionEntry lookup. sub_0802C314 / 2C3DC / 2C4A4. */
+struct CollectionLookup /* 0x0c */
 {
-    /* 00 */ u8 unk00;
-    /* 01 */ u8 unk01;
-    /* 02 */ u8 unk02;
-    /* 03 */ u8 unk03;
-    /* 04 */ s32 unk04;
-    /* 08 */ struct Unk1694 *unk08;
+    /* 00 */ u8 kind;
+    /* 01 */ u8 slot;
+    /* 02 */ u8 value;
+    /* 03 */ u8 group;
+    /* 04 */ s32 index;
+    /* 08 */ struct CollectionEntry *entry;
 };
 
 /* {u32, u32} ROM table. sub_0802B994. */
@@ -1094,7 +1094,7 @@ struct MainWork /* >= 0x18B4 */
     /* 1688 */ struct Unk1688Entry *unk1688;
     /* 168C */ struct Unk45D3CEntry *unk168C;
     /* 1690 */ struct Unk1690 *unk1690;
-    /* 1694 */ struct Unk1694 *unk1694;
+    /* 1694 */ struct CollectionEntry *unk1694;
     /* 1698 */ u8 filler_1698[0x18];
     /* 16B0 */ struct Unk16B0 unk16B0[2]; /* sub_08046230 */
     /* 16C8 */ void *unk16C8;
@@ -1218,14 +1218,14 @@ struct BtlObj /* >= 0x1a */
 };
 
 /* Ring buffer at *gUnk_03000538 (32 slots). sub_080428C4, sub_08042784. */
-struct Unk0538 /* >= 0x144 */
+struct CursorHistory /* >= 0x144 */
 {
-    /* 00 */ u8 unk00;
-    /* 01 */ u8 unk01;
-    /* 02 */ u16 unk02;
-    /* 04 */ u16 unk04[32];
-    /* 44 */ u32 unk44[32];
-    /* C4 */ u32 unkC4[32];
+    /* 00 */ u8 readIndex;
+    /* 01 */ u8 writeIndex;
+    /* 02 */ u16 facing;
+    /* 04 */ u16 dir[32];
+    /* 44 */ u32 x[32];
+    /* C4 */ u32 y[32];
 };
 
 struct Unk0630 /* >= 0x48 */
@@ -1441,11 +1441,11 @@ struct Unk026CInner /* >= 0x1a */
     /* 18 */ u16 unk18;
 };
 
-struct Unk026C /* >= 0x50 */
+struct StatusHud /* >= 0x50 */
 {
-    /* 00 */ u32 unk00;
+    /* 00 */ u32 markerShown;
     /* 04 */ u32 unk04;
-    /* 08 */ struct Sprite *unk08;
+    /* 08 */ struct Sprite *marker;
     /* 0c */ struct Sprite *unk0C;
     /* 10 */ struct Sprite *unk10;
     /* 14 */ struct Sprite *playerLevelTens;
@@ -1490,15 +1490,15 @@ struct Unk69C14 /* >= 0x5f */
 };
 
 /* Word at +0x800, count at +0x80C, pointer table at +0. sub_080400C0, sub_080405E8, sub_08040530. */
-struct Unk047C /* >= 0x834 */
+struct MessageQueue /* >= 0x834 */
 {
-    /* 000 */ void *unk00[0x200];
+    /* 000 */ void *entries[0x200];
     /* 800 */ u32 unk800;
     /* 804 */ u8 filler_804[4];
-    /* 808 */ u32 unk808;
-    /* 80c */ u32 unk80C;
-    /* 810 */ void *unk810[9];
-    /* 834 */ u8 *unk834; /* scratch text buffer, sub_08040680 */
+    /* 808 */ u32 readIndex;
+    /* 80c */ u32 writeIndex;
+    /* 810 */ void *lines[9];
+    /* 834 */ u8 *scratch; /* scratch text buffer, sub_08040680 */
 };
 
 struct Unk40680Text
@@ -2830,7 +2830,7 @@ struct Unk41394 /* >= 0x240 */
 };
 
 /* Local state assembled by sub_08040F4C. */
-struct Unk40F4C /* >= 0x328 */
+struct MenuState /* >= 0x328 */
 {
     /* 000 */ u8 filler_000[0x220];
     /* 220 */ void *unk220[8];
@@ -2841,12 +2841,12 @@ struct Unk40F4C /* >= 0x328 */
     /* 250 */ void *unk250;
     /* 254 */ void *unk254;
     /* 258 */ void *unk258;
-    /* 25c */ void *unk25C;
-    /* 260 */ void *unk260;
-    /* 264 */ void *unk264;
-    /* 268 */ void *unk268;
-    /* 26c */ void *unk26C;
-    /* 270 */ void *unk270;
+    /* 25c */ void *onLeft;
+    /* 260 */ void *onRight;
+    /* 264 */ void *onUp;
+    /* 268 */ void *onDown;
+    /* 26c */ void *onButtonA;
+    /* 270 */ void *onButtonB;
     /* 274 */ void *unk274;
     /* 278 */ u8 filler_278[0x5C];
     /* 2d4 */ u8 unk2D4;
@@ -2862,7 +2862,7 @@ struct Unk40F4C /* >= 0x328 */
     /* 324 */ u32 unk324;
 };
 
-/* Source descriptor copied into Unk40F4C by sub_0804109C. */
+/* Source descriptor copied into MenuState by sub_0804109C. */
 struct Unk4109CInput /* >= 0x4f */
 {
     /* 00 */ u32 unk00;

@@ -31,7 +31,7 @@
 ## Callers
 
 - `sub_0803E848`
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - [`ScreenBrightnessFade`](ScreenBrightnessFade.md)
 - `sub_08047A94`
 - `sub_08049F98`

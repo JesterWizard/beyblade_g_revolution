@@ -38,7 +38,7 @@
 
 ## Callers
 
-- `sub_08043C70`
+- [`MapLoad`](MapLoad.md)
 - [`SaveDataVerify`](SaveDataVerify.md)
 - [`SaveBufferCreate`](SaveBufferCreate.md)
 - [`SparklesCreate`](SparklesCreate.md)

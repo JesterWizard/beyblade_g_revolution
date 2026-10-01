@@ -30,7 +30,7 @@
 
 - `sub_08032604`
 - [`HudBuildDigitSprites`](HudBuildDigitSprites.md)
-- `sub_08065CD0`
+- [`SceneFadeDisplayLoop`](SceneFadeDisplayLoop.md)
 - `sub_0806EC20`
 
 ## ROM data referenced

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-01T16:13:37Z",
+  "generated": "2026-10-01T21:54:45Z",
   "total": 633,
   "functions": [
     {
@@ -96,7 +96,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "FindEntryByString",
       "note": "Phase 3b semantic C",
       "insn_count": 26,
       "offsets": [
@@ -190,7 +190,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CollectionAddItem",
       "note": "duplicated slot writes per branch",
       "insn_count": 146,
       "offsets": [
@@ -232,7 +232,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CollectionIsFull",
       "note": "slot-limit check + scan for a free Unk1694 slot",
       "insn_count": 44,
       "offsets": [
@@ -330,7 +330,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CollectionFindByGroupSlot",
       "note": "",
       "insn_count": 94,
       "offsets": [
@@ -366,7 +366,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CollectionFindByGroupKind",
       "note": "",
       "insn_count": 95,
       "offsets": [
@@ -436,7 +436,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CollectionFreeSlot",
       "note": "old_agbcc; Unk1694 fields u8",
       "insn_count": 59,
       "offsets": [
@@ -502,7 +502,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CollectionCountByKind",
       "note": "",
       "insn_count": 27,
       "offsets": [
@@ -606,7 +606,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "StatusHudFree",
       "note": "",
       "insn_count": 137,
       "offsets": [
@@ -654,7 +654,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "StatusHudMarkerShow",
       "note": "",
       "insn_count": 41,
       "offsets": [
@@ -695,7 +695,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "StatusHudMarkerHide",
       "note": "",
       "insn_count": 9,
       "offsets": [
@@ -727,7 +727,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "StatusHudCreate",
       "note": "tail Unk026C local keeps pointer across unk00/unk4C/unk04/unk48 stores",
       "insn_count": 181,
       "offsets": [
@@ -784,7 +784,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "StatusHudMarkerMove",
       "note": "",
       "insn_count": 18,
       "offsets": [
@@ -816,7 +816,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "StatusHudMarkerSetFrame",
       "note": "u16 into Unk026C->unk08->unk18 if non-NULL; -fprologue-bugfix",
       "insn_count": 9,
       "offsets": [
@@ -1744,7 +1744,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BarSetFillFromPercent",
       "note": "",
       "insn_count": 25,
       "offsets": [
@@ -2600,7 +2600,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlSceneObjUpdate",
       "note": "BattleWork unk2088 flag dispatch",
       "insn_count": 24,
       "offsets": [
@@ -3236,7 +3236,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BtlPaletteRestoreBg",
       "note": "thunk sub_08063104",
       "insn_count": 4,
       "offsets": [],
@@ -3965,11 +3965,11 @@
       "name": "sub_08035624",
       "addr": "0x08035624",
       "size": 114,
-      "kind": "asm",
-      "status": "not_started",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "double key store keeps key addr live (r4); s8 delta param",
       "insn_count": 55,
       "offsets": [
         "0x00",
@@ -4714,10 +4714,10 @@
       "addr": "0x08038314",
       "size": 108,
       "kind": "semantic",
-      "status": "same_size",
-      "tier": "UNKNOWN",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "battle/readable-thumb",
+      "note": "old_agbcc; counter at 0x304, b stored at 0x2FC",
       "insn_count": 45,
       "offsets": [
         "0x00"
@@ -5373,7 +5373,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BattlePartsApplyWear",
       "note": "old_agbcc; signed-prototype call to sub_0802C55C",
       "insn_count": 129,
       "offsets": [
@@ -6335,7 +6335,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MessageLinesFree",
       "note": "",
       "insn_count": 10,
       "offsets": [
@@ -6364,7 +6364,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MessageQueueReset",
       "note": "permuter/nonmatchings/sub_080405A8/output-0-1/source.c",
       "insn_count": 24,
       "offsets": [
@@ -6394,7 +6394,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MessageQueuePush",
       "note": "semantic C",
       "insn_count": 19,
       "offsets": [
@@ -6424,7 +6424,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MessageQueuePopKeyedWord",
       "note": "",
       "insn_count": 18,
       "offsets": [
@@ -6456,7 +6456,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MessageBoxLoadNext",
       "note": "text box buffer setup; _080408E4 takes the buffer as a 2nd arg",
       "insn_count": 122,
       "offsets": [
@@ -6660,7 +6660,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MenuDispatchKeyHandlers",
       "note": "",
       "insn_count": 162,
       "offsets": [
@@ -7208,7 +7208,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorHistoryReplayStep",
       "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 56,
       "offsets": [
@@ -7282,7 +7282,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorReplayStepRight",
       "note": "AND ring flag 2, store 0x40, copy ring slots",
       "insn_count": 48,
       "offsets": [
@@ -7320,7 +7320,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorReplayStepLeft",
       "note": "permuter/nonmatchings/sub_080425B8/output-0-1/source.c",
       "insn_count": 48,
       "offsets": [
@@ -7358,7 +7358,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorReplayStepDown",
       "note": "Clears the battle mode flag, configures the ring command, refreshes the current ring-derived work values, and optionally initializes the +0x448 descriptor.",
       "insn_count": 46,
       "offsets": [
@@ -7396,7 +7396,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorReplayStepUp",
       "note": "Clears the battle mode flag, configures the alternate ring command, refreshes ring-derived work values, and initializes the +0x448 descriptor when needed.",
       "insn_count": 47,
       "offsets": [
@@ -7506,7 +7506,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorFaceIdlePose",
       "note": "semantic draft from src/decompiled (old_agbcc)",
       "insn_count": 84,
       "offsets": [
@@ -7544,7 +7544,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorHistoryReset",
       "note": "clear 0x03000538 bytes",
       "insn_count": 16,
       "offsets": [
@@ -7579,7 +7579,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorHistoryFillLine",
       "note": "switch case order; hoisted step and ring slot",
       "insn_count": 70,
       "offsets": [
@@ -7616,7 +7616,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorHistoryGet",
       "note": "",
       "insn_count": 3,
       "offsets": [
@@ -7646,7 +7646,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorHistoryStartLine",
       "note": "cursor step by direction (0..3): store target, then move",
       "insn_count": 119,
       "offsets": [
@@ -8417,7 +8417,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MapLoad",
       "note": "map load; gData_03000560 struct symbol gives base+0x80 add",
       "insn_count": 131,
       "offsets": [
@@ -9513,7 +9513,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "EventByteVarOp",
       "note": "op-coded byte vars; data symbol gData_03000600, old_agbcc",
       "insn_count": 226,
       "offsets": [
@@ -9925,10 +9925,10 @@
       "addr": "0x08047594",
       "size": 48,
       "kind": "semantic",
-      "status": "same_size",
-      "tier": "UNDERSTOOD",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "SparklesHide",
-      "note": "",
+      "note": "data symbol gData_03000630 gives per-iteration pointer reload",
       "insn_count": 20,
       "offsets": [
         "0x00",
@@ -10540,11 +10540,11 @@
       "name": "sub_0804BD38",
       "addr": "0x0804BD38",
       "size": 328,
-      "kind": "asm",
-      "status": "same_size",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "readable-thumb",
+      "note": "local top/labels pointers; giv shape from loop-dump analysis",
       "insn_count": 137,
       "offsets": [
         "0x00"
@@ -10686,11 +10686,11 @@
       "name": "sub_0804C8BC",
       "addr": "0x0804C8BC",
       "size": 372,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "readable-thumb",
+      "note": "sibling of sub_0804BD38; (i << 4) sprite-y form keeps the i*16 giv",
       "insn_count": 158,
       "offsets": [
         "0x00"
@@ -10731,7 +10731,7 @@
         "0x080BB8C0",
         "0x080989E4"
       ],
-      "system": ""
+      "system": "graphics"
     },
     {
       "name": "sub_0804CA30",
@@ -12013,7 +12013,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "ScrollListRedraw",
       "note": "scrolling list redraw; gData list symbols",
       "insn_count": 126,
       "offsets": [
@@ -12307,7 +12307,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "CursorFaceIdlePoseFromFacing",
       "note": "old_agbcc; direct gMainWorkPtr",
       "insn_count": 79,
       "offsets": [
@@ -12341,7 +12341,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "SegmentedBarRebuild",
       "note": "rebuild segmented bar sprites between two positions",
       "insn_count": 114,
       "offsets": [
@@ -12757,7 +12757,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "StatusHudMarkerAttach",
       "note": "",
       "insn_count": 89,
       "offsets": [
@@ -12933,7 +12933,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "SfxSetMasterVolume",
       "note": "battle/u8 thunk of sub_080717F0",
       "insn_count": 6,
       "offsets": [],
@@ -13045,7 +13045,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "SfxPlayMapCursor",
       "note": "battle/thunk sub_080601C4(0xD, 0x38)",
       "insn_count": 6,
       "offsets": [],
@@ -14684,7 +14684,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "GlyphTextLayoutWrapped",
       "note": "glyph sprite text layout; old_agbcc",
       "insn_count": 154,
       "offsets": [
@@ -16076,7 +16076,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "SceneFadeDisplayLoop",
       "note": "scene display loop; s32 temp keeps sign-extended fade",
       "insn_count": 130,
       "offsets": [
@@ -16468,7 +16468,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "MenuDrawThreeLineList",
       "note": "3-line centered text menu; entries via gData_080BB110 symbol",
       "insn_count": 120,
       "offsets": [
@@ -18389,7 +18389,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "BgAffineSetRotScale",
       "note": "affine BG matrix; stores via slot index, old_agbcc",
       "insn_count": 129,
       "offsets": [
@@ -18506,7 +18506,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "FixedMulQ8",
       "note": "keep product live across the Q8 shift",
       "insn_count": 12,
       "offsets": [],
@@ -18771,7 +18771,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "InputUpdate",
       "note": "battle input hub: key queue playback/record + per-button hold slots (old_agbcc)",
       "insn_count": 183,
       "offsets": [
@@ -18971,7 +18971,7 @@
       "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
-      "symbol": "",
+      "symbol": "TileAddrFromIndex",
       "note": "semantic/m2c",
       "insn_count": 5,
       "offsets": [],
@@ -19503,11 +19503,11 @@
       "name": "sub_0806E060",
       "addr": "0x0806E060",
       "size": 492,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "DECOMPILED",
-      "symbol": "",
-      "note": "battle/readable-thumb",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
+      "symbol": "KeyframeBezierSample",
+      "note": "quadratic bezier keyframe sampler",
       "insn_count": 235,
       "offsets": [
         "0x00",
@@ -19640,11 +19640,11 @@
       "name": "sub_0806EC20",
       "addr": "0x0806EC20",
       "size": 516,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "readable-thumb",
+      "note": "MapOrigins member array; skipFollow bitfield; s32 bits with (u8) update; generic params + do/while keep a ahead of the i<<24 copy in global alloc",
       "insn_count": 240,
       "offsets": [
         "0x00",
@@ -20873,11 +20873,11 @@
       "name": "sub_080706B0",
       "addr": "0x080706B0",
       "size": 626,
-      "kind": "asm",
-      "status": "size_mismatch",
-      "tier": "DECOMPILED",
+      "kind": "semantic",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "",
-      "note": "readable-thumb",
+      "note": "text sprite group layout (old_agbcc)",
       "insn_count": 301,
       "offsets": [
         "0x00",
@@ -20905,7 +20905,7 @@
       "pool": [
         "0x00007FFF"
       ],
-      "system": ""
+      "system": "graphics"
     },
     {
       "name": "sub_08070930",
@@ -21826,10 +21826,10 @@
       "addr": "0x0807309C",
       "size": 120,
       "kind": "semantic",
-      "status": "same_size",
-      "tier": "UNDERSTOOD",
+      "status": "matched",
+      "tier": "MATCHING",
       "symbol": "StringAlloc",
-      "note": "battle/readable-thumb",
+      "note": "table re-read after null check; gData_ symbols",
       "insn_count": 51,
       "offsets": [
         "0x00"
@@ -22379,11 +22379,11 @@
       "name": "sub_08074144",
       "addr": "0x08074144",
       "size": 2,
-      "kind": "asm",
+      "kind": "semantic",
       "status": "matched",
       "tier": "MATCHING",
       "symbol": "",
-      "note": "toolchain-blocked: mov pc,lr \u2014 not semantic C",
+      "note": "empty leaf; match-fixup mov-pc-lr (agbcc only emits bx lr)",
       "insn_count": 1,
       "offsets": [],
       "callees": [],

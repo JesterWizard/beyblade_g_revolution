@@ -31,4 +31,4 @@
 
 ## Callers
 
-- `sub_0803D51C`
+- [`BattlePartsApplyWear`](BattlePartsApplyWear.md)

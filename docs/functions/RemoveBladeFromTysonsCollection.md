@@ -33,7 +33,7 @@
 
 ## Callers
 
-- `sub_0802C55C`
+- [`CollectionFreeSlot`](CollectionFreeSlot.md)
 
 ## ROM data referenced
 

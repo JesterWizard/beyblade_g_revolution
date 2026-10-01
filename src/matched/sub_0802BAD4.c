@@ -7,7 +7,7 @@
 // sub_0803DEC8; its definition takes (u16, u8, u8).
 #define BeybladeRecordClaimS8(a, b, c) ((void (*)(s8, s8, u8))BeybladeRecordClaim)(a, b, c)
 
-// Claims the first free Unk1694 slot (word 0xFF0000FF) for (kind, group, c, d),
+// Claims the first free CollectionEntry slot (word 0xFF0000FF) for (kind, group, c, d),
 // if the group still has room. Group 1 first registers the entry through
 // sub_0802C3DC/sub_0803DEC8 (logging and skipping the slot on failure). Retail
 // has a separate copy of the slot writes in each branch. Returns 1 once a free
@@ -31,21 +31,21 @@ s32 sub_0802BAD4(u8 kind, u8 group, u8 c, u8 d)
                 if (err == 0)
                 {
                     BeybladeRecordClaimS8(kind, d, i);
-                    gMainWorkPtr->unk1694[i].unk02 = err;
-                    gMainWorkPtr->unk1694[i].unk00 = kind;
-                    gMainWorkPtr->unk1694[i].unk03 = group;
-                    gMainWorkPtr->unk1694[i].unk01 = c;
-                    gMainWorkPtr->unk1694[i].unk02 = d;
+                    gMainWorkPtr->unk1694[i].value = err;
+                    gMainWorkPtr->unk1694[i].kind = kind;
+                    gMainWorkPtr->unk1694[i].group = group;
+                    gMainWorkPtr->unk1694[i].slot = c;
+                    gMainWorkPtr->unk1694[i].value = d;
                 }
                 else
                     DebugPrint((void *)0x0833BE1C, (s8)kind);
             }
             else
             {
-                gMainWorkPtr->unk1694[i].unk00 = kind;
-                gMainWorkPtr->unk1694[i].unk03 = group;
-                gMainWorkPtr->unk1694[i].unk01 = c;
-                gMainWorkPtr->unk1694[i].unk02 = d;
+                gMainWorkPtr->unk1694[i].kind = kind;
+                gMainWorkPtr->unk1694[i].group = group;
+                gMainWorkPtr->unk1694[i].slot = c;
+                gMainWorkPtr->unk1694[i].value = d;
             }
             return 1;
         }

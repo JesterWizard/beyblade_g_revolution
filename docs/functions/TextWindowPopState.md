@@ -39,7 +39,7 @@
 - `sub_0802FD80`
 - `sub_0803A1E4`
 - `sub_0803E934`
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - `sub_08048D0C`
 - `sub_0804A4E0`
 - `sub_0804AC3C`
@@ -52,7 +52,7 @@
 - `sub_08054108`
 - `sub_08056380`
 - `sub_08056AF0`
-- `sub_08066FB8`
+- [`MenuDrawThreeLineList`](MenuDrawThreeLineList.md)
 
 ## ROM data referenced
 

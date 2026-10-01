@@ -29,8 +29,8 @@
 
 ## Callees
 
-- `sub_0802B95C`
-- `sub_0802D52C`
+- [`FindEntryByString`](FindEntryByString.md)
+- [`StatusHudMarkerShow`](StatusHudMarkerShow.md)
 - [`BtlFindUnk16E4`](BtlFindUnk16E4.md)
 - `sub_08056F84`
 - [`ScriptRun`](ScriptRun.md)

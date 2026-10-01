@@ -39,7 +39,7 @@
 
 ## Callers
 
-- `sub_0802D3F0`
+- [`StatusHudFree`](StatusHudFree.md)
 - `sub_0802DCDC`
 - `sub_0802DEA0`
 - `sub_0802E048`
@@ -49,7 +49,7 @@
 - [`BtlClearState`](BtlClearState.md)
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803FFB0`
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - [`SparklesDestroy`](SparklesDestroy.md)
 - `sub_08048DB8`
 - `sub_0804BD38`
@@ -59,9 +59,9 @@
 - `sub_08053690`
 - `sub_08054120`
 - `sub_08054454`
-- `sub_08056250`
+- [`ScrollListRedraw`](ScrollListRedraw.md)
 - `sub_08056BA4`
-- `sub_080593A4`
+- [`SegmentedBarRebuild`](SegmentedBarRebuild.md)
 - `sub_0806209C`
 - `sub_08062238`
 - `sub_08063D68`

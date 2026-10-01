@@ -4,14 +4,14 @@
 void sub_0802D6D4(void)
 {
     struct Sprite *resource;
-    struct Unk026C *w;
+    struct StatusHud *w;
 
     resource = BtlObjPoolAlloc(2);
-    gUnk_0300026C->unk08 = resource;
+    gUnk_0300026C->marker = resource;
     SpriteInitFromTemplate(
         resource, (void *)0x080D63CC,
         0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
-    TextEntrySetPaletteBank(gUnk_0300026C->unk08, 2);
+    TextEntrySetPaletteBank(gUnk_0300026C->marker, 2);
 
     gUnk_0300026C->unk0C = BtlObjPoolAlloc(0);
     gUnk_0300026C->unk10 = BtlObjPoolAlloc(0);
@@ -53,7 +53,7 @@ void sub_0802D6D4(void)
     TextEntrySetPaletteBank(gUnk_0300026C->playerExpBar, 2);
 
     w = gUnk_0300026C;
-    w->unk00 = 0;
+    w->markerShown = 0;
     w->unk4C = 0xFFFF;
     w->unk04 = 0;
     w->unk48 = 0xFF;

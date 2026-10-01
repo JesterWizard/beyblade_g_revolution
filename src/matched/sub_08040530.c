@@ -3,6 +3,6 @@
 // @ 0x08040530
 void sub_08040530(void)
 {
-    StringArrayFree(gUnk_0300047C->unk810, 9);
+    StringArrayFree(gUnk_0300047C->lines, 9);
 }
 

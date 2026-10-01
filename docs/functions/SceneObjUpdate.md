@@ -34,7 +34,7 @@
 
 ## Callers
 
-- `sub_08033530`
+- [`BtlSceneObjUpdate`](BtlSceneObjUpdate.md)
 - [`BeybladeEffectsUpdate`](BeybladeEffectsUpdate.md)
 - [`SceneObjsUpdateAll`](SceneObjsUpdateAll.md)
 - `sub_08042718`

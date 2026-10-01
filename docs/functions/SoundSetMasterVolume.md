@@ -28,4 +28,4 @@
 
 ## Callers
 
-- `sub_080602C0`
+- [`SfxSetMasterVolume`](SfxSetMasterVolume.md)

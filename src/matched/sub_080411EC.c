@@ -8,11 +8,11 @@
 // or mode 1 (raw held keys), run the first handler slot (unk25C..unk270 =
 // right/left/up/down/A/B) whose key is down and which is set.
 // The _08073C44/_08073C48 calls in retail are libgcc _call_via_rN thunks.
-typedef void (*MenuHandler)(struct Unk40F4C *);
+typedef void (*MenuHandler)(struct MenuState *);
 
 void sub_080411EC(void *arg)
 {
-    struct Unk40F4C *a = arg;
+    struct MenuState *a = arg;
     u32 flags;
 
     if (a->unk2D4 != 1)
@@ -21,32 +21,32 @@ void sub_080411EC(void *arg)
     {
     case 0:
         flags = sub_08045C5C(0x10, 8);
-        if ((flags & 0x20) && a->unk25C != NULL)
-            ((MenuHandler)a->unk25C)(a);
-        else if ((flags & 0x10) && a->unk260 != NULL)
-            ((MenuHandler)a->unk260)(a);
-        else if ((flags & 0x40) && a->unk264 != NULL)
-            ((MenuHandler)a->unk264)(a);
-        else if ((flags & 0x80) && a->unk268 != NULL)
-            ((MenuHandler)a->unk268)(a);
-        else if ((gData_03004060 & 1) && a->unk26C != NULL)
-            ((MenuHandler)a->unk26C)(a);
-        else if ((gData_03004060 & 2) && a->unk270 != NULL)
-            ((MenuHandler)a->unk270)(a);
+        if ((flags & 0x20) && a->onLeft != NULL)
+            ((MenuHandler)a->onLeft)(a);
+        else if ((flags & 0x10) && a->onRight != NULL)
+            ((MenuHandler)a->onRight)(a);
+        else if ((flags & 0x40) && a->onUp != NULL)
+            ((MenuHandler)a->onUp)(a);
+        else if ((flags & 0x80) && a->onDown != NULL)
+            ((MenuHandler)a->onDown)(a);
+        else if ((gData_03004060 & 1) && a->onButtonA != NULL)
+            ((MenuHandler)a->onButtonA)(a);
+        else if ((gData_03004060 & 2) && a->onButtonB != NULL)
+            ((MenuHandler)a->onButtonB)(a);
         break;
     case 1:
-        if ((gData_03004060 & 0x20) && a->unk25C != NULL)
-            ((MenuHandler)a->unk25C)(a);
-        else if ((gData_03004060 & 0x10) && a->unk260 != NULL)
-            ((MenuHandler)a->unk260)(a);
-        else if ((gData_03004060 & 0x40) && a->unk264 != NULL)
-            ((MenuHandler)a->unk264)(a);
-        else if ((gData_03004060 & 0x80) && a->unk268 != NULL)
-            ((MenuHandler)a->unk268)(a);
-        else if ((gData_03004060 & 1) && a->unk26C != NULL)
-            ((MenuHandler)a->unk26C)(a);
-        else if ((gData_03004060 & 2) && a->unk270 != NULL)
-            ((MenuHandler)a->unk270)(a);
+        if ((gData_03004060 & 0x20) && a->onLeft != NULL)
+            ((MenuHandler)a->onLeft)(a);
+        else if ((gData_03004060 & 0x10) && a->onRight != NULL)
+            ((MenuHandler)a->onRight)(a);
+        else if ((gData_03004060 & 0x40) && a->onUp != NULL)
+            ((MenuHandler)a->onUp)(a);
+        else if ((gData_03004060 & 0x80) && a->onDown != NULL)
+            ((MenuHandler)a->onDown)(a);
+        else if ((gData_03004060 & 1) && a->onButtonA != NULL)
+            ((MenuHandler)a->onButtonA)(a);
+        else if ((gData_03004060 & 2) && a->onButtonB != NULL)
+            ((MenuHandler)a->onButtonB)(a);
         break;
     }
 

@@ -12,8 +12,8 @@ extern void sub_080428C4(void);
 // @ 0x080428f0
 void sub_080428F0(u32 a, u32 b, u32 c, u32 d)
 {
-    struct Unk0538 *ring;
-    struct Unk0538 **ringSlot;
+    struct CursorHistory *ring;
+    struct CursorHistory **ringSlot;
     s32 i;
     u32 step;
     u32 stepBack;
@@ -29,10 +29,10 @@ void sub_080428F0(u32 a, u32 b, u32 c, u32 d)
     do
     {
         ring = *ringSlot;
-        ring->unk04[i] = (u16)d;
-        ring->unk44[i] = a;
-        ring->unkC4[i] = b;
-        ring->unk01++;
+        ring->dir[i] = (u16)d;
+        ring->x[i] = a;
+        ring->y[i] = b;
+        ring->writeIndex++;
         switch (c)
         {
         case 0:

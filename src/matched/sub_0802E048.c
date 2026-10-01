@@ -11,9 +11,9 @@ void sub_0802E048(void)
   u32 r3;
   u32 r4;
   struct Sprite *r5;
-  struct Unk026C *obj;
+  struct StatusHud *obj;
   struct Sprite *rec;
-  r4 = (u32) (&(*((struct Unk026C **) 0x0300026C)));
+  r4 = (u32) (&(*((struct StatusHud **) 0x0300026C)));
   r0 = *((u32 *) r4);
   r0 = *((u32 *) (r0 + 0x0C));
   if (r0 == 0)
@@ -54,14 +54,14 @@ void sub_0802E048(void)
   r3 = 0xFFFFC000;
   SpriteInitFromTemplate(r5, (void *) r1, r3, r3, r2, 1, r2, r2);
   after_ff58:
-  r4 = (u32) (&(*((struct Unk026C **) 0x0300026C)));
+  r4 = (u32) (&(*((struct StatusHud **) 0x0300026C)));
 
   r0 = *((u32 *) r4);
   r0 = *((u32 *) (r0 + 0x0C));
   r1 = 2;
   TextEntrySetPaletteBank((struct Sprite *) r0, (s32) r1);
   r3 = *((u32 *) r4);
-  obj = (struct Unk026C *) r3;
+  obj = (struct StatusHud *) r3;
   r0 = (u32) obj->unk0C;
   r1 = 0;
   *((u32 *) (r0 + 8)) = r1;

@@ -37,14 +37,14 @@
 - `sub_0804109C`
 - [`SceneObjsUpdateAll`](SceneObjsUpdateAll.md)
 - `sub_08041E88` _(not one of the 633 functions)_
-- `sub_0804245C`
+- [`CursorHistoryReplayStep`](CursorHistoryReplayStep.md)
 - [`CursorHistoryPush`](CursorHistoryPush.md)
 - `sub_080462D4`
 - [`SparklesUpdate`](SparklesUpdate.md)
 - [`CursorStepsToTile`](CursorStepsToTile.md)
 - [`TasksRunAll`](TasksRunAll.md)
 - [`ScriptRun`](ScriptRun.md)
-- `sub_08060428`
+- [`SfxPlayMapCursor`](SfxPlayMapCursor.md)
 - `sub_08062758`
 - `sub_08062A14`
 - `sub_08066390`
@@ -53,7 +53,7 @@
 - [`TimerAdvance`](TimerAdvance.md)
 - `sub_08067CE8`
 - [`SceneObjUpdate`](SceneObjUpdate.md)
-- `sub_0806A6F8`
+- [`InputUpdate`](InputUpdate.md)
 - `sub_0806C7D4`
 - [`CameraUpdate`](CameraUpdate.md)
 - [`BtlObjListResort`](BtlObjListResort.md)

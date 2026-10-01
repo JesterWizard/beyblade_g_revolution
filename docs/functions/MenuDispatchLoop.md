@@ -26,7 +26,7 @@
 ## Callees
 
 - `sub_0804109C`
-- `sub_080411EC`
+- [`MenuDispatchKeyHandlers`](MenuDispatchKeyHandlers.md)
 - `sub_08041394`
 - [`WindowEffectCreate`](WindowEffectCreate.md)
 - [`WindowEffectDestroy`](WindowEffectDestroy.md)
@@ -36,7 +36,7 @@
 - [`BlendFadeTick`](BlendFadeTick.md)
 - `sub_0806639C`
 - [`VBlankIntrWait`](VBlankIntrWait.md)
-- `sub_0806A6F8`
+- [`InputUpdate`](InputUpdate.md)
 - `sub_08073C40` _(not one of the 633 functions)_
 - `sub_08073C44` _(not one of the 633 functions)_
 - `sub_08073C4C` _(not one of the 633 functions)_

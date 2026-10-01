@@ -34,7 +34,7 @@
 
 ## Callers
 
-- `sub_08034414`
+- [`BtlPaletteRestoreBg`](BtlPaletteRestoreBg.md)
 
 ## ROM data referenced
 

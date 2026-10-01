@@ -30,7 +30,7 @@
 
 ## Callers
 
-- `sub_08061EF8`
+- [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 
 ## ROM data referenced
 

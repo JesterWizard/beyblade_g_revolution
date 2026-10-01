@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // gUnk_0300026C read through a volatile pointer: retail re-reads it for every
 // entry, even across stores that cannot alias it.
-#define HUD_PTR (*(struct Unk026C *volatile *)0x0300026C)
+#define HUD_PTR (*(struct StatusHud *volatile *)0x0300026C)
 
 // Tears down the HUD: moves every HUD text entry off-screen (player entries to
 // -0x4000, bit-beast/blade entries to 0xF800), frees the second group, waits a

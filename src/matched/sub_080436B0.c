@@ -99,7 +99,7 @@ void MapCursorInput(void)
         if (gData_03004060 & 8)
         {
             sub_08066390(7);
-            sub_0804109C((struct Unk40F4C *)&gData_03000198->unk0530, sub_0806639C());
+            sub_0804109C((struct MenuState *)&gData_03000198->unk0530, sub_0806639C());
             gData_03000198->unk181C = 3;
             sub_08060428();
         }

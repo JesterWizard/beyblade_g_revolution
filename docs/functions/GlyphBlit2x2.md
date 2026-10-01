@@ -25,7 +25,7 @@
 
 ## Callees
 
-- `sub_0806B5B8`
+- [`TileAddrFromIndex`](TileAddrFromIndex.md)
 
 ## Callers
 

@@ -38,8 +38,8 @@
 
 ## Callers
 
-- `sub_08040680`
-- `sub_08061EF8`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
+- [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 
 ## ROM data referenced
 

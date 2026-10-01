@@ -34,7 +34,7 @@
 - [`ItemListDraw`](ItemListDraw.md)
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803E848`
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - `sub_08047A94`
 - `sub_08049F98`
 - `sub_0804A438`
@@ -48,5 +48,5 @@
 - `sub_08051578`
 - `sub_08053218`
 - `sub_08053690`
-- `sub_08056250`
-- `sub_08066FB8`
+- [`ScrollListRedraw`](ScrollListRedraw.md)
+- [`MenuDrawThreeLineList`](MenuDrawThreeLineList.md)

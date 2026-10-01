@@ -22,8 +22,8 @@
 
 ## Callers
 
-- `sub_0802BAD4`
-- `sub_0802BC14`
+- [`CollectionAddItem`](CollectionAddItem.md)
+- [`CollectionIsFull`](CollectionIsFull.md)
 - [`InitTournament`](InitTournament.md)
 - [`CleanBattleOverlays`](CleanBattleOverlays.md)
 - [`Unk346C0Init`](Unk346C0Init.md)

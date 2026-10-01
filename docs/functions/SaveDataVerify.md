@@ -43,7 +43,7 @@
 
 ## Callers
 
-- `sub_08065CD0`
+- [`SceneFadeDisplayLoop`](SceneFadeDisplayLoop.md)
 
 ## ROM data referenced
 

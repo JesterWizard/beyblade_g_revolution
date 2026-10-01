@@ -30,11 +30,11 @@
 
 - `sub_0802B90C`
 - `sub_0803EDC8`
-- `sub_080429C0`
+- [`CursorHistoryGet`](CursorHistoryGet.md)
 - [`BeybladeCollectionEntry`](BeybladeCollectionEntry.md)
 - `sub_08043974`
 - [`EventFlagOp`](EventFlagOp.md)
-- `sub_08045EF0`
+- [`EventByteVarOp`](EventByteVarOp.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 
 ## Callers

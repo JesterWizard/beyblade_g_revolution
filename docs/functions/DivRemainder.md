@@ -23,7 +23,7 @@
 ## Callers
 
 - [`HudWriteDigits`](HudWriteDigits.md)
-- `sub_080593A4`
+- [`SegmentedBarRebuild`](SegmentedBarRebuild.md)
 - [`DigitRowDraw`](DigitRowDraw.md)
 - [`TextGroupAppendNumber`](TextGroupAppendNumber.md)
 - [`TextFormatInt`](TextFormatInt.md)

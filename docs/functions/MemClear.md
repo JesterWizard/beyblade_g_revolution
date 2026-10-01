@@ -26,6 +26,6 @@
 
 ## Callers
 
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - [`StringAlloc`](StringAlloc.md)
 - [`SplitStringIntoStringArray`](SplitStringIntoStringArray.md)

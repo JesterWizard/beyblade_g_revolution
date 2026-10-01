@@ -29,12 +29,12 @@
 
 ## Callees
 
-- `sub_0802D598`
+- [`StatusHudMarkerHide`](StatusHudMarkerHide.md)
 - `sub_0802DEA0`
 - `sub_08041980`
 - `sub_08041DB4`
-- `sub_080428C4`
-- `sub_080429CC`
+- [`CursorHistoryReset`](CursorHistoryReset.md)
+- [`CursorHistoryStartLine`](CursorHistoryStartLine.md)
 - [`BtlClearUnk1834`](BtlClearUnk1834.md)
 - `sub_08043ADC`
 - `sub_080442FC`

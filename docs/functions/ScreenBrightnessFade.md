@@ -32,7 +32,7 @@
 - `sub_08042718`
 - [`FieldUpdateFrame`](FieldUpdateFrame.md)
 - `sub_08052FC8`
-- `sub_080602C0`
+- [`SfxSetMasterVolume`](SfxSetMasterVolume.md)
 - `sub_08060394`
 - [`TextWindowClearActiveTiles`](TextWindowClearActiveTiles.md)
 - [`TextWindowLayout`](TextWindowLayout.md)

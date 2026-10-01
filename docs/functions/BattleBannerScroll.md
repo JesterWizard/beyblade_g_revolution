@@ -37,7 +37,7 @@
 - `sub_08033158`
 - `sub_0803484C`
 - [`VBlankIntrWait`](VBlankIntrWait.md)
-- `sub_0806A6F8`
+- [`InputUpdate`](InputUpdate.md)
 - `sub_0806A954`
 - [`Unk70604Init`](Unk70604Init.md)
 - [`BtlReleaseEntry`](BtlReleaseEntry.md)

@@ -9,7 +9,7 @@ void sub_080427E8(void)
     main = gMainWorkPtr;
     if (main->unk182C == 0)
         return;
-    switch (gUnk_03000538->unk02)
+    switch (gUnk_03000538->facing)
     {
     case 0x40:
         if (main->unk0462 != 5)

@@ -1,6 +1,6 @@
 {
-  "count": 324,
-  "generated": "2026-10-01T17:53:23Z",
+  "count": 363,
+  "generated": "2026-10-01T21:53:30Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -59,6 +59,19 @@
       "symbol": "BtlFreeUnk1694Obj",
       "updated": "2026-09-22"
     },
+    "0x0802BAD4": {
+      "aliases": [
+        "sub_0802BAD4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "scans the 128 MainWork.unk1694 slots for the free marker 0xFF0000FF and fills kind/slot/durability/group; refuses when CollectionCountByKind>=limit; group 1 additionally claims a BeybladeRecord"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionAddItem",
+      "updated": "2026-10-01"
+    },
     "0x0802BC14": {
       "aliases": [
         "sub_0802BC14"
@@ -70,6 +83,32 @@
       "kind": "function",
       "source": "ai",
       "symbol": "CollectionIsFull",
+      "updated": "2026-10-01"
+    },
+    "0x0802C314": {
+      "aliases": [
+        "sub_0802C314"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "linear scan of the 128 collection slots matching unk03==group and unk01==slot; fills an out record (index + pointer)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionFindByGroupSlot",
+      "updated": "2026-10-01"
+    },
+    "0x0802C3DC": {
+      "aliases": [
+        "sub_0802C3DC"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "same scan as sub_0802C314 but matches unk00 (kind) instead of unk01 (slot)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionFindByGroupKind",
       "updated": "2026-10-01"
     },
     "0x0802C55C": {
@@ -126,17 +165,83 @@
       "symbol": "InitTournament",
       "updated": "2026-09-28"
     },
-    "0x0802D52C": {
+    "0x0802D3F0": {
       "aliases": [
-        "sub_0802D52C"
+        "sub_0802D3F0"
       ],
-      "confidence": 0.45,
+      "confidence": 0.7,
       "evidence": [
-        "b==0 moves gUnk_0300026C->unk08 off-screen (0xFFFFC000), else places it from MainWork.unk0424 and calls TextEntrySetPaletteBank(...,2); callers sub_08056D68/sub_08056F84"
+        "frees and NULLs every sprite slot of the gUnk_0300026C HUD (player level/strength digits, exp bar, bit-beast counterparts); inverse of sub_0802D6D4"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "TextEntryCursorSetVisible",
+      "symbol": "StatusHudFree",
+      "updated": "2026-10-01"
+    },
+    "0x0802D52C": {
+      "aliases": [
+        "sub_0802D52C",
+        "TextEntryCursorSetVisible"
+      ],
+      "confidence": 0.4,
+      "evidence": [
+        "b!=0: places the unk08 sprite at gMainWork->unk0424 position minus 0x800 and sets frame a; b==0 parks it off-screen; stores b as the shown flag"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StatusHudMarkerShow",
+      "updated": "2026-10-01"
+    },
+    "0x0802D598": {
+      "aliases": [
+        "sub_0802D598"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "clears the shown flag and parks the unk08 sprite at 0xFFFFC000 (off-screen)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StatusHudMarkerHide",
+      "updated": "2026-10-01"
+    },
+    "0x0802D6D4": {
+      "aliases": [
+        "sub_0802D6D4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "allocates the HUD sprite slots (BtlObjPoolAlloc) and inits each from a ROM template parked off-screen at 0xFFFFC000; slots named playerLevelTens/Ones, playerStrength*, playerExpBar"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StatusHudCreate",
+      "updated": "2026-10-01"
+    },
+    "0x0802D898": {
+      "aliases": [
+        "sub_0802D898"
+      ],
+      "confidence": 0.45,
+      "evidence": [
+        "if the unk08 sprite exists, sets its x/y to (a,b)-0x800 and marks it shown"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StatusHudMarkerMove",
+      "updated": "2026-10-01"
+    },
+    "0x0802D8C4": {
+      "aliases": [
+        "sub_0802D8C4"
+      ],
+      "confidence": 0.45,
+      "evidence": [
+        "writes a u16 into the unk08 sprite field +0x18 if the sprite exists"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StatusHudMarkerSetFrame",
       "updated": "2026-10-01"
     },
     "0x0802D8DC": {
@@ -757,6 +862,19 @@
       "symbol": "BattleTextGlyphRow",
       "updated": "2026-09-28"
     },
+    "0x0803D51C": {
+      "aliases": [
+        "sub_0803D51C"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "for groups 3 and 2 slot 1: subtracts kind+strength from the entry value; at <=0 frees the collection slot, flags gBattleWork unk130/131 (broken) and unk1F73"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattlePartsApplyWear",
+      "updated": "2026-10-01"
+    },
     "0x0803DCFC": {
       "aliases": [
         "sub_0803DCFC"
@@ -903,6 +1021,71 @@
       "symbol": "BtlCountLiveSlots",
       "updated": "2026-09-22"
     },
+    "0x08040530": {
+      "aliases": [
+        "sub_08040530"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "StringArrayFree on the 9 wrapped-line buffers (unk810) of the message box"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MessageLinesFree",
+      "updated": "2026-10-01"
+    },
+    "0x080405A8": {
+      "aliases": [
+        "sub_080405A8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "zeroes the read/write indices and fills the 0x200-entry queue at gUnk_0300047C with -1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MessageQueueReset",
+      "updated": "2026-10-01"
+    },
+    "0x080405E8": {
+      "aliases": [
+        "sub_080405E8"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "appends a pointer at index unk80C (max 0x1FE) and increments the write index"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MessageQueuePush",
+      "updated": "2026-10-01"
+    },
+    "0x08040618": {
+      "aliases": [
+        "sub_08040618"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "reads the entry at unk808, advances it, and returns GetPlayerKeyedWord(entry) when entry>=0 else 0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MessageQueuePopKeyedWord",
+      "updated": "2026-10-01"
+    },
+    "0x08040680": {
+      "aliases": [
+        "sub_08040680"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "frees the old sprite, clears 9 line buffers, pops the next message, decodes it into a 0x400 scratch string, word-wraps into 9 lines of width areaWidth-0x28 and restarts the typewriter"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MessageBoxLoadNext",
+      "updated": "2026-10-01"
+    },
     "0x08040EF4": {
       "aliases": [
         "sub_08040EF4"
@@ -928,6 +1111,19 @@
       "source": "ai",
       "symbol": "MenuDispatchLoop",
       "updated": "2026-09-25"
+    },
+    "0x080411EC": {
+      "aliases": [
+        "sub_080411EC"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "when menu state is active, calls the stored handler for left/right/up/down/A/B according to key bits 0x20/0x10/0x40/0x80/1/2"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MenuDispatchKeyHandlers",
+      "updated": "2026-10-01"
     },
     "0x080415FC": {
       "aliases": [
@@ -994,6 +1190,71 @@
       "symbol": "SceneObjDespawn",
       "updated": "2026-09-28"
     },
+    "0x0804245C": {
+      "aliases": [
+        "sub_0804245C"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "pops history[unk00] (direction bit 1/2/4/8) and dispatches to one of four step handlers, then advances the 32-slot read index; falls to sub_080424E8 when idle"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorHistoryReplayStep",
+      "updated": "2026-10-01"
+    },
+    "0x08042540": {
+      "aliases": [
+        "sub_08042540"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "direction bit 1: sets facing flag 0x40, selects anim 8, loads target x/y from history slot"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorReplayStepRight",
+      "updated": "2026-10-01"
+    },
+    "0x080425B8": {
+      "aliases": [
+        "sub_080425B8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "direction bit 2: sets facing flag 0x20, selects anim 8 (mirrored flag in unk0479), loads target from history slot"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorReplayStepLeft",
+      "updated": "2026-10-01"
+    },
+    "0x08042630": {
+      "aliases": [
+        "sub_08042630"
+      ],
+      "confidence": 0.45,
+      "evidence": [
+        "direction bit 4: facing flag 0x80, anim 0x0A; bit 4 is the +y case written by sub_080429CC"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorReplayStepDown",
+      "updated": "2026-10-01"
+    },
+    "0x080426A4": {
+      "aliases": [
+        "sub_080426A4"
+      ],
+      "confidence": 0.45,
+      "evidence": [
+        "direction bit 8: facing flag 0x100, anim 0x0B; bit 8 is the -y case written by sub_080429CC"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorReplayStepUp",
+      "updated": "2026-10-01"
+    },
     "0x08042784": {
       "aliases": [
         "sub_08042784"
@@ -1006,6 +1267,71 @@
       "source": "ai",
       "symbol": "CursorHistoryPush",
       "updated": "2026-09-28"
+    },
+    "0x080427E8": {
+      "aliases": [
+        "sub_080427E8"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "maps stored facing flag 0x40/0x20/0x80/0x100 to idle anims 5/5/6/7 and fixes the mirror bit"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorFaceIdlePose",
+      "updated": "2026-10-01"
+    },
+    "0x080428C4": {
+      "aliases": [
+        "sub_080428C4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "zeroes read and write indices of the 32-slot ring unless flag 0x2000 is set"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorHistoryReset",
+      "updated": "2026-10-01"
+    },
+    "0x080428F0": {
+      "aliases": [
+        "sub_080428F0"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "resets ring then writes 16 consecutive (dir, x, y) entries stepping x or y by 0x100 per slot in the given direction"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorHistoryFillLine",
+      "updated": "2026-10-01"
+    },
+    "0x080429C0": {
+      "aliases": [
+        "sub_080429C0"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns the pointer gUnk_03000538 (the history ring)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorHistoryGet",
+      "updated": "2026-10-01"
+    },
+    "0x080429CC": {
+      "aliases": [
+        "sub_080429CC"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "switches on facing (unk1828) and primes a 16-step line 0x1000 ahead via sub_080428F0 with direction bit 1/2/4/8"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorHistoryStartLine",
+      "updated": "2026-10-01"
     },
     "0x08042B00": {
       "aliases": [
@@ -1189,6 +1515,19 @@
       "source": "ai",
       "symbol": "BtlFindUnk16E4",
       "updated": "2026-09-25"
+    },
+    "0x08043C70": {
+      "aliases": [
+        "sub_08043C70"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "copies the map header into gData_03000560, then for each of 4 layers allocates a heap buffer and LZ77-decompresses the layer tilemap (waiting on VBlank), and places the actor at the spawn point"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MapLoad",
+      "updated": "2026-10-01"
     },
     "0x08043DB4": {
       "aliases": [
@@ -1414,6 +1753,19 @@
       "symbol": "EventFlagOp",
       "updated": "2026-09-28"
     },
+    "0x08045EF0": {
+      "aliases": [
+        "sub_08045EF0"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "op-coded operations on the 16 byte variables gData_03000600: set(11), clear all(5), inc(6), dec(7), and save/load them to unk168C slots (0x3E8/0x3E9) - sibling of EventFlagOp for bytes"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "EventByteVarOp",
+      "updated": "2026-10-01"
+    },
     "0x08046230": {
       "aliases": [
         "sub_08046230"
@@ -1609,6 +1961,19 @@
       "symbol": "BlendFadeInLoop",
       "updated": "2026-09-28"
     },
+    "0x08056250": {
+      "aliases": [
+        "sub_08056250"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "redraws up to 8 visible rows of a scrolling list from gData_03000664[offset+i], drawing the label and highlighting the selected row with a cursor sprite"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ScrollListRedraw",
+      "updated": "2026-10-01"
+    },
     "0x08056D68": {
       "aliases": [
         "sub_08056D68"
@@ -1621,6 +1986,32 @@
       "source": "ai",
       "symbol": "ScriptDispatchEvent",
       "updated": "2026-09-28"
+    },
+    "0x08057274": {
+      "aliases": [
+        "sub_08057274"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "same switch as CursorFaceIdlePose (facing 0x40/0x20/0x80/0x100 -> idle anim 5/5/6/7) but on the first entity block at unk036C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CursorFaceIdlePoseFromFacing",
+      "updated": "2026-10-01"
+    },
+    "0x080593A4": {
+      "aliases": [
+        "sub_080593A4"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "frees up to 8 bar sprites and rebuilds a horizontal bar of 32-pixel segment sprites between two object positions, last segment partial"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SegmentedBarRebuild",
+      "updated": "2026-10-01"
     },
     "0x08059AE0": {
       "aliases": [
@@ -1712,6 +2103,19 @@
       "source": "ai",
       "symbol": "ScriptRun",
       "updated": "2026-09-28"
+    },
+    "0x0805E044": {
+      "aliases": [
+        "sub_0805E044"
+      ],
+      "confidence": 0.4,
+      "evidence": [
+        "for a known sprite template resource, moves the HUD marker (StatusHudMarkerMove) to that object (unk0424/unk0500 sprite) and sets frame 1"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "StatusHudMarkerAttach",
+      "updated": "2026-10-01"
     },
     "0x0806013C": {
       "aliases": [
@@ -2303,6 +2707,19 @@
       "symbol": "TextTypewriterRestart",
       "updated": "2026-09-28"
     },
+    "0x08061EF8": {
+      "aliases": [
+        "sub_08061EF8"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "splits a string into up to 4 wrapped lines, measures each, aligns it and allocates one glyph sprite per non-space character at x<<8,y<<8"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GlyphTextLayoutWrapped",
+      "updated": "2026-10-01"
+    },
     "0x080620D4": {
       "aliases": [
         "sub_080620D4"
@@ -2565,6 +2982,32 @@
       "source": "ai",
       "symbol": "PaletteSnapshotRestoreBg",
       "updated": "2026-09-28"
+    },
+    "0x08065CD0": {
+      "aliases": [
+        "sub_08065CD0"
+      ],
+      "confidence": 0.45,
+      "evidence": [
+        "builds a scene (sub_08065E0C), sets DISPCNT/BLDCNT from mode and runs a per-frame loop decrementing REG_BLDY by a step until the timer expires"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneFadeDisplayLoop",
+      "updated": "2026-10-01"
+    },
+    "0x08066FB8": {
+      "aliases": [
+        "sub_08066FB8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "draws three centered text lines from gData_080BB110[scroll..+2] and highlights the selected pair of text rows via TextRowSetPaletteBank"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MenuDrawThreeLineList",
+      "updated": "2026-10-01"
     },
     "0x080674A0": {
       "aliases": [
@@ -3117,6 +3560,19 @@
       "symbol": "BgAffineSetMatrix",
       "updated": "2026-09-28"
     },
+    "0x08069A60": {
+      "aliases": [
+        "sub_08069A60"
+      ],
+      "confidence": 0.75,
+      "evidence": [
+        "for BG 2..4: stores angle and x/y scale, computes the 2x2 matrix from the sine table via sub_08069F00 and calls BgAffineSetMatrix"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgAffineSetRotScale",
+      "updated": "2026-10-01"
+    },
     "0x08069B78": {
       "aliases": [
         "sub_08069B78"
@@ -3142,6 +3598,19 @@
       "source": "ai",
       "symbol": "VramCopyStrided",
       "updated": "2026-09-25"
+    },
+    "0x08069F00": {
+      "aliases": [
+        "sub_08069F00"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "multiplies two table values and shifts right by 8 (Q8 fixed-point product) for the affine matrix"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "FixedMulQ8",
+      "updated": "2026-10-01"
     },
     "0x0806A314": {
       "aliases": [
@@ -3211,6 +3680,19 @@
       "symbol": "GetValidAllocatedBlock",
       "updated": "2026-09-28"
     },
+    "0x0806A6F8": {
+      "aliases": [
+        "sub_0806A6F8"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "plays back or records a u16 key queue (mode gData_03003F64 2/1) or polls REG_KEYINPUT, then refreshes held/new/previous/released key masks"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "InputUpdate",
+      "updated": "2026-10-01"
+    },
     "0x0806AC68": {
       "aliases": [
         "sub_0806AC68"
@@ -3236,6 +3718,19 @@
       "source": "ai",
       "symbol": "DigitRowDraw",
       "updated": "2026-09-28"
+    },
+    "0x0806B5B8": {
+      "aliases": [
+        "sub_0806B5B8"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "base + ((index & 0x3FF) << 5): address of a 32-byte 4bpp tile"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TileAddrFromIndex",
+      "updated": "2026-10-01"
     },
     "0x0806B5C8": {
       "aliases": [
@@ -3340,6 +3835,19 @@
       "source": "ai",
       "symbol": "KeyframeFindHits",
       "updated": "2026-09-28"
+    },
+    "0x0806E060": {
+      "aliases": [
+        "sub_0806E060"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "quadratic bezier sampler over keyframe chunks (ChunkListAt/PosRecordGet) returning interpolated position and heading"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "KeyframeBezierSample",
+      "updated": "2026-10-01"
     },
     "0x0806E31C": {
       "aliases": [

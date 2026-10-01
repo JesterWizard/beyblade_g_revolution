@@ -43,7 +43,7 @@
 - `sub_08037430`
 - [`LaunchShowPowerMeter`](LaunchShowPowerMeter.md)
 - [`LaunchShowBoostMeter`](LaunchShowBoostMeter.md)
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - `sub_08048DB8`
 - [`CollectionDetailsDraw`](CollectionDetailsDraw.md)
 - [`CollectionCaptionDraw`](CollectionCaptionDraw.md)

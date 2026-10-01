@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Build the four HUD digit/bar sprites from the descriptor at a->unk248 and
 // enable the matching BG layers.
-void HudBuildDigitSprites(struct Unk40F4C *a)
+void HudBuildDigitSprites(struct MenuState *a)
 {
     struct Unk4109CInput *desc;
     u16 dispFlags;

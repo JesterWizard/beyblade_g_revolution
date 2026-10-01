@@ -7,13 +7,13 @@
 |--|--|
 | ROM | `0x0807309C` |
 | Size | 120 bytes (51 instructions) |
-| Tier | UNDERSTOOD |
-| Status | same_size |
+| Tier | MATCHING |
+| Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0807309C` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/readable-thumb |
+| Note | table re-read after null check; gData_ symbols |
 
 ## Why this name
 
@@ -43,7 +43,7 @@
 - `sub_08037430`
 - [`LaunchShowPowerMeter`](LaunchShowPowerMeter.md)
 - [`LaunchShowBoostMeter`](LaunchShowBoostMeter.md)
-- `sub_08040680`
+- [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
 - `sub_08048DB8`
 - [`CollectionDetailsDraw`](CollectionDetailsDraw.md)
 - [`CollectionCaptionDraw`](CollectionCaptionDraw.md)

@@ -25,8 +25,8 @@
 ## Callers
 
 - [`MapCursorInput`](MapCursorInput.md)
-- `sub_08043C70`
+- [`MapLoad`](MapLoad.md)
 - [`BeybladeSpawnList`](BeybladeSpawnList.md)
 - [`SceneObjSpawnList`](SceneObjSpawnList.md)
-- `sub_0806E060`
+- [`KeyframeBezierSample`](KeyframeBezierSample.md)
 - [`KeyframeTrackSample`](KeyframeTrackSample.md)

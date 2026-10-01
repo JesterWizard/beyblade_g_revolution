@@ -18,9 +18,9 @@ void sub_0802C2B0(u8 a, u16 i)
     u32 shifted_value;
     u32 scaled_index;
     u32 shifted_key;
-    struct Unk1694 *final_base;
+    struct CollectionEntry *final_base;
     u32 zero;
-    struct Unk1694 *record_reg;
+    struct CollectionEntry *record_reg;
     struct MainWork *work;
     struct MainWork *final_work;
     u32 probe;
@@ -47,20 +47,20 @@ void sub_0802C2B0(u8 a, u16 i)
         zero = 0;
         do
         {
-            struct Unk1694 *base;
+            struct CollectionEntry *base;
 
-            base = *(struct Unk1694 **)((u8 *)(*loop_loc) + loop_offset);
+            base = *(struct CollectionEntry **)((u8 *)(*loop_loc) + loop_offset);
             scaled_index = index << 2;
-            record_reg = (struct Unk1694 *)(scaled_index + (u32)base);
-            if ((s8)record_reg->unk03 == value)
-                record_reg->unk01 = zero;
+            record_reg = (struct CollectionEntry *)(scaled_index + (u32)base);
+            if ((s8)record_reg->group == value)
+                record_reg->slot = zero;
             index++;
         } while (index <= 0x7F);
     }
     final_work = *loc;
     shifted_key = key << 16;
     final_base = final_work->unk1694;
-    record_reg = (struct Unk1694 *)(((s32)shifted_key >> 14) + (u32)final_base);
-    record_reg->unk01 = 1;
+    record_reg = (struct CollectionEntry *)(((s32)shifted_key >> 14) + (u32)final_base);
+    record_reg->slot = 1;
 }
 

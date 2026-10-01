@@ -22,6 +22,6 @@
 
 ## Callers
 
-- `sub_08043C70`
+- [`MapLoad`](MapLoad.md)
 - `sub_08062988`
 - `sub_08065E0C`

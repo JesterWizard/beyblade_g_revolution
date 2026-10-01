@@ -29,14 +29,14 @@
 
 ## Callers
 
-- `sub_08042540`
-- `sub_080425B8`
-- `sub_08042630`
-- `sub_080426A4`
-- `sub_080427E8`
+- [`CursorReplayStepRight`](CursorReplayStepRight.md)
+- [`CursorReplayStepLeft`](CursorReplayStepLeft.md)
+- [`CursorReplayStepDown`](CursorReplayStepDown.md)
+- [`CursorReplayStepUp`](CursorReplayStepUp.md)
+- [`CursorFaceIdlePose`](CursorFaceIdlePose.md)
 - [`MapCursorMoveStep`](MapCursorMoveStep.md)
 - `sub_08043638`
 - [`FieldEnter`](FieldEnter.md)
 - [`BeybladeSpawnList`](BeybladeSpawnList.md)
 - [`SceneObjPoolRebuild`](SceneObjPoolRebuild.md)
-- `sub_08057274`
+- [`CursorFaceIdlePoseFromFacing`](CursorFaceIdlePoseFromFacing.md)
