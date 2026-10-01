@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-01T11:57:07Z",
+  "generated": "2026-10-01T13:42:04Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
@@ -12,7 +12,7 @@
     "battle_pending": 1,
     "battle_semantic": 158,
     "blocked": 20,
-    "wip": 20
+    "wip": 21
   },
   "pinned": [],
   "wip": [
@@ -199,9 +199,9 @@
       "bytes": 516,
       "seed": "src/decompiled/sub_0806EC20.c",
       "notes": "src/decompiled/sub_0806EC20.md",
-      "status": "BG setup 500/516; param copy order matches",
-      "next": "a in r5,b in r8 (ours r7/r10); i<<24 copy r6",
-      "score": "?/516"
+      "status": "old_agbcc 155/516, 508 vs 516; a in r5, cfg in r8; bits in r9 not sp+0x14",
+      "next": "pin bits to sp+0x14 so py can take r9 and 0x35E/0x362 go to the pool",
+      "score": "155/516"
     },
     {
       "name": "sub_0806E060",
@@ -235,6 +235,17 @@
       "status": "logic complete, old_agbcc, 620/626 B",
       "next": "retail spills spacing (sp24) and keeps glyph width in r8 in the per-glyph check; case 1 tail is cross-jumped with the no-widths path; first=head load sits between count-- and the loop test",
       "score": "61/626"
+    },
+    {
+      "name": "sub_0806A6F8",
+      "addr": "0x0806A6F8",
+      "kind": "asm",
+      "bytes": 436,
+      "seed": "src/decompiled/sub_0806A6F8.c",
+      "notes": "src/decompiled/sub_0806A6F8.md",
+      "status": "size_mismatch 348 vs 436; prologue skips adds r4,r0; loop CSE'd",
+      "next": "un-hoist slot; pin one=1 and table base; tmp[] for gBtlState copy; grow to 436 then permuter",
+      "score": "45/436"
     }
   ],
   "recommended": [],
@@ -361,7 +372,7 @@
     {
       "name": "sub_0806A6F8",
       "addr": "0x0806A6F8",
-      "reason": "docs/battle.md: readable Thumb \u2014 large input hub (436B, 6 IWRAM refs)",
+      "reason": "436B input hub; seed 45/436 size_mismatch 348 vs 436 (loop CSE / gBtlState adds r4,r0) \u2014 src/decompiled/sub_0806A6F8.c",
       "kind": "asm",
       "bytes": 436
     },

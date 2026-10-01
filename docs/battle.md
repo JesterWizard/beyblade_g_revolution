@@ -92,7 +92,7 @@ How experience, level, strength, and the Attack / Defense / Endurance stats beco
 | `sub_08034894` | readable Thumb — agbcc prologue / pool ordering |
 | `sub_0806FEFC` / `sub_0806FF28` | readable Thumb — object freelist (CSE / extra prologue) |
 | `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | readable Thumb — C adds `push {lr}` |
-| `sub_0806A6F8` | readable Thumb — large input hub |
+| `sub_0806A6F8` | readable Thumb — seed 45/436 (348 vs 436), `src/decompiled/sub_0806A6F8.c` |
 
 13 / 160 battle functions are semantic C (progress.py); more thunks are semantic C but lack battle IWRAM pools. Remainder is readable Thumb (0 opcode `.byte`).
 

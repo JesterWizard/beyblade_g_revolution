@@ -1,116 +1,76 @@
 #include "global.h"
-#include "ram_map.h"
-#include "battle.h"
 
-struct EcLayer
-{
-    void *unk00;
-    s32 unk04;
-    s32 unk08;
-    u32 unk0C;
-    u8 filler_10[8];
-};
-
-struct EcCfg
-{
-    u8 filler_00[0x14];
-    struct EcLayer layer[4];
-    u8 unk74;
-    u8 filler_75[3];
-    void *unk78;
-    void *unk7C;
-    void *unk80;
-};
-
-struct EcPos
-{
-    s32 x;
-    s32 y;
-};
-
-struct EcState
-{
-    u8 bg[4][0x88];
-    u8 filler_220[0];
-    struct EcCfg *unk220;
-    s32 unk224;
-    u8 unk228[0x11C];
-    s32 unk344;
-    s32 unk348;
-    u8 filler_34C[8];
-    u8 unk354;
-    u8 unk355;
-    u8 unk356;
-    u8 filler_357;
-    u16 unk358;
-    u8 filler_35A[2];
-    s16 unk35C;
-    u16 unk35E;
-    u16 unk360;
-    u16 unk362;
-    s32 unk364;
-    s32 unk368;
-};
-
-void BgMapInit(struct Unk68988 *state, u8 index, void *arg2, u16 limit, u16 mode, s32 x, s32 y);
-
+// @ 0x0806ec20
+/* match-compiler: old_agbcc */
+// Bind a map header to a MapView: reset camera state, init each non-null BG
+// layer (parallax origin when the layer's 8.8 offset is non-zero), set
+// priorities, and load optional palettes / resources.
 void sub_0806EC20(void *arg, u32 cfgArg, u32 dispArg, void *posArg)
 {
-    struct EcState *a = arg;
-    struct EcCfg *cfg = (struct EcCfg *)cfgArg;
-    struct EcPos *pos = posArg;
+    struct MapView *a = arg;
+    struct MapFollowTable *cfg = (struct MapFollowTable *)cfgArg;
+    struct MapOrigin *pos = posArg;
     u16 dispcnt = dispArg;
     s8 i;
     u8 bits = 0;
-    struct EcState *first = a;
-    struct EcLayer *l0 = cfg->layer;
-    struct EcLayer *layers = cfg->layer;
+    u8 *flag_ptr;
+    s32 mask;
+    struct MapView *first;
+    struct MapFollowEntry *l0;
+    struct MapFollowEntry *layers;
 
-    a->unk220 = cfg;
-    a->unk224 = bits;
-    a->unk354 &= ~1;
-    a->unk344 = bits;
+    a->follow = cfg;
+    a->target = (void *)(u32)bits;
+    flag_ptr = &a->flags;
+    mask = -2;
+    *flag_ptr = mask & *flag_ptr;
+    a->targetHandler = (void *)(u32)bits;
     a->unk348 = bits;
     a->unk355 = 0xF;
     a->unk356 = 0xFF;
-    a->unk35C = bits;
+    a->minX = bits;
     a->unk35E = bits;
-    a->unk360 = 0xF0;
+    a->rightMargin = 0xF0;
     a->unk362 = 0xA0;
     a->unk364 = bits;
     a->unk368 = bits;
     *(vu16 *)0x04000050 = 0x3FFF;
     sub_08069894();
-    for (i = 0; i <= 3; i++)
+    first = a;
+    l0 = cfg->entries;
+    i = 0;
+    layers = l0;
+    for (; i <= 3; i++)
     {
         s32 px = pos[i].x;
         s32 py = pos[i].y;
-        void *map = layers[i].unk00;
+        void *map = layers[i].active;
 
         if (map != NULL)
         {
-            struct Unk68988 *bg = (struct Unk68988 *)a->bg[i];
+            struct Unk68988 *bg = (struct Unk68988 *)&a->layers[i];
 
             bits |= 1 << i;
             if (bg != (struct Unk68988 *)first)
             {
-                s32 dx = l0->unk04;
-                s32 dy = l0->unk08;
-                if (cfg->layer[i].unk04 != 0 || cfg->layer[i].unk08 != 0)
-                    BgMapInit(bg, i, map, 0x40, cfg->layer[i].unk0C | 1, (dx - cfg->layer[i].unk04) >> 8, (dy - cfg->layer[i].unk08) >> 8);
+                if (cfg->entries[i].unk04 != 0 || cfg->entries[i].unk08 != 0)
+                {
+                    BgMapInit(bg, i, map, 0x40, cfg->entries[i].unk0C | 1,
+                        (l0->unk04 - cfg->entries[i].unk04) >> 8,
+                        (l0->unk08 - cfg->entries[i].unk08) >> 8);
+                    continue;
+                }
             }
-            else
-            {
-                BgMapInit(bg, i, map, 0x40, cfg->layer[i].unk0C | 1, px, py);
-            }
+            BgMapInit((struct Unk68988 *)&a->layers[i], i, layers[i].active, 0x40,
+                cfg->entries[i].unk0C | 1, px, py);
         }
     }
-    sub_08069B78(cfg->unk74 & 3, (cfg->unk74 >> 2) & 3, (cfg->unk74 >> 4) & 3, cfg->unk74 >> 6);
+    BgSetPriorities(cfg->unk74_0, cfg->unk74_2, cfg->unk74_4, cfg->unk74_6);
     if (cfg->unk78 != NULL)
-        sub_080679A4(cfg->unk78);
+        BgPaletteLoad(cfg->unk78);
     if (cfg->unk7C != NULL)
-        sub_080679C0(cfg->unk7C);
+        ObjPaletteLoad(cfg->unk7C);
     if (cfg->unk80 != NULL)
-        sub_0806BC0C(a->unk228, cfg->unk80);
-    a->unk358 = (bits << 8) | dispcnt;
+        ResourceBind(a->unk228, cfg->unk80);
+    a->unk358 = ((s8)bits << 8) | dispcnt;
 }

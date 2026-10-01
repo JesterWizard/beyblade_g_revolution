@@ -483,6 +483,72 @@ def status_table(data: dict[str, Any]) -> str:
     return f"{STATUS_START}\n{body}\n{STATUS_END}\n"
 
 
+def _remaining_unmatched() -> list[tuple[str, str, str, int]]:
+    """Unmatched readable Thumb: parked drafts, then blocked leftovers."""
+    fn_json = ROOT / "docs" / "decomp-functions.json"
+    if fn_json.is_file():
+        try:
+            payload = json.loads(fn_json.read_text())
+        except json.JSONDecodeError:
+            payload = {}
+        rows: list[tuple[str, str, str, int]] = []
+        for fn in payload.get("functions") or []:
+            display = fn.get("display")
+            if display not in ("wip", "blocked"):
+                continue
+            status = "parked" if display == "wip" else "blocked"
+            rows.append(
+                (
+                    str(fn.get("name") or ""),
+                    str(fn.get("score") or ""),
+                    status,
+                    int(fn.get("retail_bytes") or 0),
+                    float(fn.get("pct") or 0.0),
+                )
+            )
+        if rows:
+            rows.sort(key=lambda row: (-row[4], -row[3]))
+            return [(name, score, status, size) for name, score, status, size, _pct in rows]
+    attempts: dict[str, Any] = {}
+    scores_path = ROOT / "docs" / "decomp-function-scores.json"
+    if scores_path.is_file():
+        try:
+            attempts = dict(json.loads(scores_path.read_text()).get("attempts") or {})
+        except json.JSONDecodeError:
+            attempts = {}
+    parked = {
+        path.stem: path
+        for path in (ROOT / "src" / "decompiled").glob("sub_*.c")
+    }
+    rows: list[tuple[str, str, str, int]] = []
+    for name in parked:
+        matched = MATCHED_SRC / f"{name}.c"
+        if matched.is_file() and file_kind(matched) == "semantic":
+            continue
+        att = attempts.get(name) or {}
+        try:
+            size = function_size(name)
+        except FileNotFoundError:
+            size = int(att.get("retail_bytes") or 0)
+        score = str(att.get("score") or f"0/{size}")
+        rows.append((name, score, "parked", size))
+    if MATCHED_SRC.is_dir():
+        for path in MATCHED_SRC.glob("sub_*.c"):
+            if path.stem in parked or file_kind(path) == "semantic":
+                continue
+            try:
+                size = function_size(path.stem, path)
+            except FileNotFoundError:
+                size = 0
+            if size <= 2:
+                continue
+            att = attempts.get(path.stem) or {}
+            score = str(att.get("score") or f"0/{size}")
+            rows.append((path.stem, score, "blocked", size))
+    rows.sort(key=lambda row: -row[3])
+    return rows
+
+
 def readme_section(data: dict[str, Any]) -> str:
     d = data["decomp"]
     nb = data["non_blob"]
@@ -518,6 +584,10 @@ def readme_section(data: dict[str, Any]) -> str:
             f"{data['linked_in_rom']}/{expected}",
         ),
     ]
+    tiers = data.get("tiers") or {}
+    named_n = int((tiers.get("flags") or {}).get("named") or 0)
+    named_pct = float(tiers.get("pct_named") or _pct(named_n, expected))
+    rows.append(("Named", named_pct, f"{named_n}/{expected}"))
     table = [
         "| Metric | | Percent | Count |",
         "| :--- | :--- | ---: | ---: |",
@@ -545,7 +615,7 @@ def readme_section(data: dict[str, Any]) -> str:
         )
     # README: tables only. Never mermaid or SVG — those reappear in GitHub
     # previews and get re-injected if this concatenates them again.
-    return (
+    body = (
         f"{STATUS_START}\n\n"
         f"Decompiled C is **{d['pct_functions']:.1f}%** of functions "
         f"({d['functions']}/{expected}) and **{d['pct_bytes']:.1f}%** of original "
@@ -559,8 +629,20 @@ def readme_section(data: dict[str, Any]) -> str:
         "`.incbin`'d from `baserom.gba` so `make compare` can stay green. "
         "Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. "
         "Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).\n"
-        + f"\n{STATUS_END}\n"
     )
+    leftover = _remaining_unmatched()
+    if leftover:
+        remain = [
+            "",
+            "Remaining unmatched (readable Thumb still in `src/matched/`):",
+            "",
+            "| Function | Score | Status |",
+            "|----------|------:|--------|",
+        ]
+        for name, score, status, _size in leftover:
+            remain.append(f"| `{name}` | {score} | {status} |")
+        body += "\n".join(remain) + "\n"
+    return body + f"\n{STATUS_END}\n"
 
 
 def _patch_marked(path: Path, block: str, *, heading: str, fallback_end: str | None) -> None:

@@ -2,7 +2,7 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-10-01T11:59:59Z_
+_Updated: 2026-10-01T13:42:05Z_
 
 ## Legend
 
@@ -26,37 +26,38 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 8 |
+| WIP (parked C) | 9 |
 | not started | 0 |
-| blocked | 1 |
+| blocked | 0 |
 | **total** | **633** |
 
 ## Close / attempted
 
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
+| `sub_0804BD38` | WIP (parked C) | 92.1% | 302/328 | same-size; scratch regs only (ldrsh base r0 vs r3, tail temps r0/r1 vs r1/r2) |
 | `sub_080618EC` | WIP (parked C) | 87.6% | 375/428 | m2c failed; initial seed attempt |
+| `sub_0806EC20` | WIP (parked C) | 30.0% | 155/516 | old_agbcc 155/516, 508 vs 516; a in r5, cfg in r8; bits in r9 not sp+0x14 |
 | `sub_0804C8BC` | WIP (parked C) | 19.9% | 74/372 | initial m2c seed (m2c-fallback); does not compile |
 | `sub_08038438` | WIP (parked C) | 18.8% | 45/240 | for-loop seed with slots=&gData_030003CC + _call_via_r3 fn-pointer call is sa… |
 | `sub_0806E060` | WIP (parked C) | 18.1% | 89/492 | m2c failed; initial seed attempt |
 | `sub_08035624` | WIP (parked C) | 17.5% | 20/114 | two attempts: 20/114 bytes, 112B candidate both times; logic and fields match… |
+| `sub_0806A6F8` | WIP (parked C) | 10.3% | 45/436 | size_mismatch 348 vs 436; prologue skips adds r4,r0; loop CSE'd |
 | `sub_080706B0` | WIP (parked C) | 9.7% | 61/626 | Semantic draft from asm (old_agbcc, 620/626 B): layout/word-wrap logic comple… |
-| `sub_0804BD38` | WIP (parked C) | 0.0% | 0/328 | initial m2c seed (m2c-fallback); does not compile |
-| `sub_0806EC20` | WIP (parked C) | 0.0% | 0/516 | initial m2c seed (m2c-fallback); does not compile |
 
 ## All 633 functions
 
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
+| `sub_0804BD38` | `0x0804BD38` | WIP (parked C) | 92.1% | 302/328 | asm |
 | `sub_080618EC` | `0x080618EC` | WIP (parked C) | 87.6% | 375/428 | asm |
+| `sub_0806EC20` | `0x0806EC20` | WIP (parked C) | 30.0% | 155/516 | asm |
 | `sub_0804C8BC` | `0x0804C8BC` | WIP (parked C) | 19.9% | 74/372 | asm |
 | `sub_08038438` | `0x08038438` | WIP (parked C) | 18.8% | 45/240 | asm |
 | `sub_0806E060` | `0x0806E060` | WIP (parked C) | 18.1% | 89/492 | asm |
 | `sub_08035624` | `0x08035624` | WIP (parked C) | 17.5% | 20/114 | asm |
+| `sub_0806A6F8` | `0x0806A6F8` | WIP (parked C) | 10.3% | 45/436 | asm |
 | `sub_080706B0` | `0x080706B0` | WIP (parked C) | 9.7% | 61/626 | asm |
-| `sub_0804BD38` | `0x0804BD38` | WIP (parked C) | 0.0% | 0/328 | asm |
-| `sub_0806EC20` | `0x0806EC20` | WIP (parked C) | 0.0% | 0/516 | asm |
-| `sub_0806A6F8` | `0x0806A6F8` | blocked | 0.0% | 0/436 | asm |
 | `sub_08067A9C` | `0x08067A9C` | matched | 100.0% | 2/2 | semantic |
 | `sub_0806EEC4` | `0x0806EEC4` | matched | 100.0% | 2/2 | semantic |
 | `sub_08074144` | `0x08074144` | matched | 100.0% | 2/2 | asm |

@@ -75,4 +75,25 @@ trap 'rm -f "$ASM"' EXIT
   "$INPUT" -o "$ASM" \
   -mthumb-interwork -Wimplicit -Wparentheses -O2 -g -fhex-asm \
   "${EXTRA_FLAGS[@]}"
-arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork "$ASM" -o "$OUTPUT"
+
+# Resolve gData_* pool slots the same way match_function.py does. Without
+# --defsym the assembler leaves relocations and a correct pool never scores 0.
+DEFSYMS=()
+if [ -f asm/data_symbols.s ]; then
+  while IFS= read -r line; do
+    line="${line%%@*}"
+    line="$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+    case "$line" in
+      SET_DATA\ *)
+        name="${line#SET_DATA }"
+        name="${name%%,*}"
+        name="$(echo "$name" | tr -d '[:space:]')"
+        val="${line#*,}"
+        val="$(echo "$val" | tr -d '[:space:]')"
+        [ -n "$name" ] && [ -n "$val" ] || continue
+        DEFSYMS+=(--defsym "${name}=${val}")
+        ;;
+    esac
+  done <asm/data_symbols.s
+fi
+arm-none-eabi-as -mcpu=arm7tdmi -mthumb-interwork "${DEFSYMS[@]}" "$ASM" -o "$OUTPUT"

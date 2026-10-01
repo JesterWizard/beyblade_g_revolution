@@ -873,14 +873,15 @@
       "note": "initial m2c seed (m2c-fallback); does not compile"
     },
     "sub_0804BD38": {
-      "matched_bytes": 0,
+      "matched_bytes": 302,
       "retail_bytes": 328,
-      "compiled_bytes": 0,
-      "pct": 0.0,
-      "status": "size_mismatch",
-      "score": "0/328",
-      "updated": "2026-09-24T10:57:54Z",
-      "note": "initial m2c seed (m2c-fallback); does not compile"
+      "compiled_bytes": 328,
+      "pct": 92.1,
+      "diff_bytes": 26,
+      "status": "same_size",
+      "score": "302/328",
+      "updated": "2026-10-01T13:28:13Z",
+      "note": "same-size; scratch regs only (ldrsh base r0 vs r3, tail temps r0/r1 vs r1/r2)"
     },
     "sub_08061EF8": {
       "matched_bytes": 0,
@@ -1054,14 +1055,15 @@
       "note": "initial seed via m2c-clean"
     },
     "sub_0806EC20": {
-      "matched_bytes": 0,
+      "matched_bytes": 155,
       "retail_bytes": 516,
-      "compiled_bytes": 0,
-      "pct": 0.0,
+      "compiled_bytes": 508,
+      "pct": 30.0,
+      "diff_bytes": 361,
       "status": "size_mismatch",
-      "score": "0/516",
-      "updated": "2026-09-24T10:58:22Z",
-      "note": "initial m2c seed (m2c-fallback); does not compile"
+      "score": "155/516",
+      "updated": "2026-10-01T13:31:11Z",
+      "note": "old_agbcc 155/516, 508 vs 516; a in r5, cfg in r8; bits in r9 not sp+0x14"
     },
     "sub_08053690": {
       "matched_bytes": 0,

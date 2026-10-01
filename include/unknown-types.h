@@ -2132,29 +2132,55 @@ struct Unk6C704 /* >= 0xa0 */
 struct MapFollowEntry /* 0x18 */
 {
     /* 00 */ void *active;
-    /* 04 */ u8 filler_04[0x10];
+    /* 04 */ s32 unk04; /* origin x, 8.8; sub_0806EC20 */
+    /* 08 */ s32 unk08; /* origin y, 8.8; sub_0806EC20 */
+    /* 0c */ u32 unk0C; /* BgMapInit mode; sub_0806EC20 */
+    /* 10 */ u8 filler_10[4];
     /* 14 */ s32 ratio; /* follow ratio in 1/32 steps (read as s16), sub_0806F05C */
 };
 
-struct MapFollowTable /* >= 0x74 */
+struct MapFollowTable /* >= 0x84 */
 {
     /* 00 */ u8 filler_00[0x14];
     /* 14 */ struct MapFollowEntry entries[4];
+    /* 74 */ u8 unk74_0 : 2;
+    /* 74 */ u8 unk74_2 : 2;
+    /* 74 */ u8 unk74_4 : 2;
+    /* 74 */ u8 unk74_6 : 2;
+    /* 75 */ u8 filler_75[3];
+    /* 78 */ void *unk78; /* BgPaletteLoad src */
+    /* 7c */ void *unk7C; /* ObjPaletteLoad src */
+    /* 80 */ void *unk80; /* ResourceBind src */
 };
 
-struct MapView /* >= 0x362 */
+/* Scroll origin passed to sub_0806EC20 (one pair per BG). */
+struct MapOrigin /* 0x08 */
+{
+    /* 00 */ s32 x;
+    /* 04 */ s32 y;
+};
+
+struct MapView /* >= 0x36C */
 {
     /* 000 */ struct MapLayer layers[4];
     /* 220 */ struct MapFollowTable *follow;
     /* 224 */ void *target;
-    /* 228 */ u8 filler_228[0x11C];
+    /* 228 */ u8 unk228[0x11C];
     /* 344 */ void *targetHandler;
-    /* 348 */ u8 filler_348[0x0C];
+    /* 348 */ s32 unk348;
+    /* 34c */ u8 filler_34C[8];
     /* 354 */ u8 flags;
-    /* 355 */ u8 filler_355[7];
+    /* 355 */ u8 unk355;
+    /* 356 */ u8 unk356;
+    /* 357 */ u8 filler_357;
+    /* 358 */ u16 unk358; /* (enabled-BG mask << 8) | DISPCNT; sub_0806EC20 */
+    /* 35a */ u8 filler_35A[2];
     /* 35c */ u16 minX; /* camera min x (pixels), sub_0806EEC8 */
-    /* 35e */ u8 filler_35E[2];
+    /* 35e */ u16 unk35E;
     /* 360 */ u16 rightMargin; /* camera right margin (pixels), sub_0806EEC8 */
+    /* 362 */ u16 unk362;
+    /* 364 */ s32 unk364;
+    /* 368 */ s32 unk368;
 };
 
 /* Entry of the scrolling list at *0x03000664 (sub_08056250). */

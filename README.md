@@ -15,6 +15,7 @@ Decompiled C is **97.9%** of functions (620/633) and **95.8%** of original funct
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
+| Named | `████████████████░░░░░░░░░░░░░░░░` | **49.6%** | 314/633 |
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
@@ -25,6 +26,20 @@ Decompiled C is **97.9%** of functions (620/633) and **95.8%** of original funct
 Battle: **97.5%** functions / **97.1%** bytes in semantic C (156/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
+
+Remaining unmatched (readable Thumb still in `src/matched/`):
+
+| Function | Score | Status |
+|----------|------:|--------|
+| `sub_0804BD38` | 302/328 | parked |
+| `sub_080618EC` | 375/428 | parked |
+| `sub_0806EC20` | 155/516 | parked |
+| `sub_0804C8BC` | 74/372 | parked |
+| `sub_08038438` | 45/240 | parked |
+| `sub_0806E060` | 89/492 | parked |
+| `sub_08035624` | 20/114 | parked |
+| `sub_0806A6F8` | 45/436 | parked |
+| `sub_080706B0` | 61/626 | parked |
 
 <!-- decomp-progress:end -->
 

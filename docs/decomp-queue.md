@@ -2,7 +2,7 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-10-01T11:57:07Z_
+_Updated: 2026-10-01T13:42:04Z_
 
 ## Summary
 
@@ -14,7 +14,7 @@ _Updated: 2026-10-01T11:57:07Z_
 | Opcode embeds remaining | 0 |
 | Battle pending | 1 (158 already semantic) |
 | Blocked (documented) | 20 |
-| WIP (resume these first) | 20 |
+| WIP (resume these first) | 21 |
 
 Ranking: **battle** · showing top **40**
 
@@ -42,10 +42,11 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | `sub_08070930` | 0 | 199/420 | `src/decompiled/sub_08070930.c` | New semantic draft: append glyphs to a text sprite group (Unk7069C, now with the unk14 Unk700CCHdr chain). old_agbcc. Early exits must fall off the end (no return, retail returns the zero in r0). 8 bytes short: retail keeps the two affine-size checks as separate code paths on two copies of the affine pointer (r1 and r8), and the glyph loop test is duplicated at the top. | Find why retail has two pseudos for the affine pointer; that also un-merges the loop tests. |
 | `sub_080618EC` | 428 | 375/428 | `src/decompiled/sub_080618EC.c` | old_agbcc, no goto/locals: one-line diff vs retail. Switch(align) cases 0,2,1 and second switch case order 10,7,8,default match; keys inline as 'gData_03003F60 & t->skipKeys' matches. Left: ours 'ldrb r0,[r4,#20]; adds r3,r0,#0' (gcse PRE copy that cprop never sees) vs retail 'ldrb r3,[r4,#20]' direct (+2 bytes, size 432 vs 428). | Alt shape with 'done = 0xFF' pseudo (set before the timer test, declared s8 done, s32 state, 't->state = state | done') gets ldrb r3 direct, keys r2 and 'movs r0,#255; orrs r0,r3' but adds 'lsls/asrs #24' for the s8 done; u32/u8 done give state r2/keys r3 and [state,done] operand order. Try shapes that keep the s8 pseudo effect without the extension. |
 | `sub_08060E48` | 0 | 92/532 | `src/decompiled/sub_08060E48.c` | text glyph blit 528/532; regalloc: retail spills 9 address pseudos | gw in r9, rows/yt next-iter in sp24/28; permuter |
-| `sub_0806EC20` | 516 | ?/516 | `src/decompiled/sub_0806EC20.c` | BG setup 500/516; param copy order matches | a in r5,b in r8 (ours r7/r10); i<<24 copy r6 |
+| `sub_0806EC20` | 516 | 155/516 | `src/decompiled/sub_0806EC20.c` | old_agbcc 155/516, 508 vs 516; a in r5, cfg in r8; bits in r9 not sp+0x14 | pin bits to sp+0x14 so py can take r9 and 0x35E/0x362 go to the pool |
 | `sub_0806E060` | 492 | 89/492 | `src/decompiled/sub_0806E060.c` | bezier keyframe sampler 468/492 | idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded |
 | `sub_0806B764` | 0 | 509/588 | `src/decompiled/sub_0806B764.c` | TextLayerInit same-size 509/588, old_agbcc | a reload gets r4 not r7; 0x80 test operand order |
 | `sub_080706B0` | 626 | 61/626 | `src/decompiled/sub_080706B0.c` | logic complete, old_agbcc, 620/626 B | retail spills spacing (sp24) and keeps glyph width in r8 in the per-glyph check; case 1 tail is cross-jumped with the no-widths path; first=head load sits between count-- and the loop test |
+| `sub_0806A6F8` | 436 | 45/436 | `src/decompiled/sub_0806A6F8.c` | size_mismatch 348 vs 436; prologue skips adds r4,r0; loop CSE'd | un-hoist slot; pin one=1 and table base; tmp[] for gBtlState copy; grow to 436 then permuter |
 
 Per-function notes: `src/decompiled/<fn>.md`.
 
@@ -76,7 +77,7 @@ Per-function notes: `src/decompiled/<fn>.md`.
 | `sub_08062728` | `0x08062728` | 0 | u32 zero-fill loop (a->unk04[i]=0 for i<a->unk08) — retail uses stm r0!,{r3} leaf loop (18B), agbcc compiles any equivalent C to a push/pop-framed indexed loop (32B); needs permuter or specific idiom to trigger stm codegen |
 | `sub_08062C80` | `0x08062C80` | 0 | calls _08073C4C(0, dst, size, src) at raw address 0x08073C4C twice (VRAM/PLTT clear via CpuFastSet-style primitive) — that callee has no C symbol/prototype anywhere in the codebase yet (only referenced via bl _08073C4C from naked asm in many other unconverted functions); needs the callee named/prototyped first |
 | `sub_08062CF4` | `0x08062CF4` | 0 | BGR555 color pack (inverse of sub_08062CC8/sub_08062D24): rgb[0..2] -> u16 @ PLTT 0x05000200+idx*2 — logic reconstructed correctly (same-size DIFF, ~1 instruction reordered) across many register-pinned variants; retail keeps r6 live (push {r4,r5,r6,lr}) but my C never needed r6 pressure, changing push set; needs permuter |
-| `sub_0806A6F8` | `0x0806A6F8` | 436 | docs/battle.md: readable Thumb — large input hub (436B, 6 IWRAM refs) |
+| `sub_0806A6F8` | `0x0806A6F8` | 436 | 436B input hub; seed 45/436 size_mismatch 348 vs 436 (loop CSE / gBtlState adds r4,r0) — src/decompiled/sub_0806A6F8.c |
 | `sub_08073114` | `0x08073114` | 0 | BtlObjTable scan+remove (loop over gBtlObjTable[0..gBtlObjTableCount) matching entry->key==obj, calls sub_0806A434/sub_08067B98) — logic reconstructed correctly (same-size DIFF on every variant tried) but agbcc compiles the do-while as pre-test loop + different table-pointer register placement than retail; needs permuter or deeper agbcc loop-codegen trick |
 | `sub_08074144` | `0x08074144` | 2 | single instruction 'mov pc, lr' (2B) — semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm |
 

@@ -21,6 +21,22 @@ _Agent-maintained log. Updated after each batch run._
 
 ## Batch log
 
+### 2026-10-01 — sub_0806A6F8 near-miss (45/436, 348 vs 436)
+
+Battle input hub (queue playback/record + `REG_KEYINPUT` + ten `Unk6A954` slots). First
+semantic C parked at `src/decompiled/sub_0806A6F8.c`. Prologue skips `adds r4,r0` on
+`gBtlState`; the loop CSE's the high-reg pin (r8/r9/r10/r12) and the per-branch `i*24`.
+Thumb stays in `src/matched/`. Next: un-hoist `slot`, pin `one=1` / table base, `tmp[]`
+for the state pointer, then permuter.
+
+### 2026-10-01 — sub_0806EC20 near-miss (old_agbcc 155/516, 508 vs 516)
+
+Map-view BG bind. Control flow now includes the zero-offset fallthrough onto the
+px/py `BgMapInit` path. `MapFollowTable.unk74_*` bitfields, `mask = -2`, and
+`((s8)bits << 8)` match retail. `a` in r5 / `cfg` in r8. Left: `bits` in r9
+instead of `sp+0x14` (slots off by 4; 0x35E/0x362 stay chained). Seed
+`src/decompiled/sub_0806EC20.c`. Thumb stays in `src/matched/`.
+
 ### 2026-09-28 — final sweep of the non-semantic list (+11): 2DCDC, 4D420, 6F05C, 6EEC8, 68BD4, 68A08, 70AF8, 48DB8, 56BA4, 53690, 54120
 
 - `sub_0802DCDC` — a block-scoped second set of locals (`m2`, `q`) for the second half.
@@ -1650,7 +1666,7 @@ agbcc cannot reproduce these as C (literal-pool / instruction scheduling). They 
 | `sub_0806FEFC` | Freelist pop; agbcc CSEs `gBtlObjListTail` as `head+0x10` |
 | `sub_0806FF28` / `sub_080428C4` / `sub_080475C4` / `sub_080475F4` | C adds `push {lr}` on a retail leaf |
 | `sub_0802C62C` | Same size; count/`want` register swap (`r3` vs `r4`) |
-| `sub_0806A6F8` | Large input hub; C not attempted |
+| `sub_0806A6F8` | Large input hub; seed 45/436 (348 vs 436) — `src/decompiled/sub_0806A6F8.c` |
 
 ### 2026-09-17 — Phase 3 battle subsystem bootstrap
 
