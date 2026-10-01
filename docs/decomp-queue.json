@@ -1,18 +1,18 @@
 {
-  "generated": "2026-10-01T16:11:42Z",
+  "generated": "2026-10-01T17:35:58Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 7,
-    "semantic_done": 626,
-    "readable_asm": 7,
+    "pending": 6,
+    "semantic_done": 627,
+    "readable_asm": 6,
     "opcode": 0,
     "battle_pending": 0,
     "battle_semantic": 160,
     "blocked": 2,
-    "wip": 6
+    "wip": 5
   },
   "pinned": [],
   "wip": [
@@ -25,7 +25,7 @@
       "notes": "src/decompiled/sub_08035624.md",
       "status": "structure matches; only key/list/scratch register choice differs (retail key=r4, list=r2, const scratch=r0; ours r0/r0/r2). 37 differing insns vs 59 for the old seed",
       "next": "find C that makes key addr r4 and list addr r2 (forcing them with a debug compiler makes output equal retail); try permuter on this draft with a time limit",
-      "score": "45/114 (size 112 vs 114; old 71/114 seed saved only in scratch)"
+      "score": "45/114"
     },
     {
       "name": "sub_0804BD38",
@@ -45,20 +45,9 @@
       "bytes": 372,
       "seed": "src/decompiled/sub_0804C8BC.c",
       "notes": "src/decompiled/sub_0804C8BC.md",
-      "status": "New semantic draft (the old one was a junk stub): five list rows from gData_080989F0 (struct Unk4C8BCRow). Logic exact, 4 bytes long. Retail has five loop givs (palette pointer, i*4, two row givs, i*16) and copies the i*16 giv into a stack local for the sprite y; every shape tried either drops the i*16 giv or adds a (y+0x38)<<8 giv.",
-      "next": "Find the source form of the sprite y ((i*16 + 0x38) << 8) that reuses the i*16 giv through a copy.",
-      "score": "74/372"
-    },
-    {
-      "name": "sub_0806EC20",
-      "addr": "0x0806EC20",
-      "kind": "asm",
-      "bytes": 516,
-      "seed": "src/decompiled/sub_0806EC20.c",
-      "notes": "src/decompiled/sub_0806EC20.md",
-      "status": "old_agbcc 155/516, 508 vs 516; a in r5, cfg in r8; bits in r9 not sp+0x14",
-      "next": "pin bits to sp+0x14 so py can take r9 and 0x35E/0x362 go to the pool",
-      "score": "155/516"
+      "status": "same-size DIFF, giv decision differs (see notes)",
+      "next": "find source form that keeps (y+56)<<8 unreduced while i*16 stays reduced",
+      "score": "185/372"
     },
     {
       "name": "sub_0806E060",
@@ -78,9 +67,9 @@
       "bytes": 626,
       "seed": "src/decompiled/sub_080706B0.c",
       "notes": "src/decompiled/sub_080706B0.md",
-      "status": "logic complete, old_agbcc, 620/626 B",
-      "next": "retail spills spacing (sp24) and keeps glyph width in r8 in the per-glyph check; case 1 tail is cross-jumped with the no-widths path; first=head load sits between count-- and the loop test",
-      "score": "61/626"
+      "status": "same-size DIFF after permuter, allocation only",
+      "next": "init-load order of locals, spacing spill (sp24), glyph width kept in r8",
+      "score": "452/626"
     }
   ],
   "recommended": [],

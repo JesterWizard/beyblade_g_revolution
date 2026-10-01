@@ -508,7 +508,7 @@ void sub_080415FC(void);
 void *sub_08071EE4(void *a, u32 b);
 struct MapLayer *sub_0806EEC4(struct MapView *state);
 void sub_0806F05C(struct MapView *state, struct Actor *obj);
-void sub_0806EC20(void *a, u32 b, u32 c, void *d);
+void sub_0806EC20(void *view, void *table, u32 mode, void *origins);
 void sub_0807069C(struct TextGroup *a);
 void sub_080703FC(struct Unk703FC *a, u16 b, u16 c);
 s32 sub_08040618(void);

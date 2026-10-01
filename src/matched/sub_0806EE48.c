@@ -1,18 +1,12 @@
 #include "global.h"
 
 // @ 0x0806ee48
-// Handler/callback dispatch plus a 4-slot motion scan.
-// Two shapes are load-bearing in the bit-clear path:
-//  - the clean path re-reads the byte as `m & *flag_ptr` rather than masking a
-//    cached copy: mask the cached value and agbcc writes the `and` result into
-//    r1, while retail writes r0. The `ldrb` is still shared (agbcc CSEs the two
-//    `*flag_ptr` reads) and the mask must be a `s32` local so agbcc emits
-//    `movs r0,#2; negs r0,r0` instead of folding a literal -2 to `& 0xFE`.
+// Handler/callback dispatch plus a 4-slot motion scan. skipFollow (set by
+// CameraCenterOnObject after a snap) suppresses one follow step.
 void CameraUpdate(struct MapView *state)
 {
     struct MapView *work;
     void *handler;
-    u8 *flag_ptr;
     void *callback;
     u8 i;
 
@@ -20,8 +14,7 @@ void CameraUpdate(struct MapView *state)
     handler = work->target;
     if (handler != 0)
     {
-        flag_ptr = &work->flags;
-        if ((*flag_ptr & 1) == 0)
+        if (!work->skipFollow)
         {
             callback = work->targetHandler;
             if (callback == 0)
@@ -30,10 +23,7 @@ void CameraUpdate(struct MapView *state)
                 _08073C48(handler, work, callback);
         }
         else
-        {
-            s32 m = -2;
-            *flag_ptr = m & *flag_ptr;
-        }
+            work->skipFollow = 0;
     }
     for (i = 0; i < 4; i++)
     {

@@ -28,9 +28,9 @@ void sub_080706B0(struct Unk70C98 *arg)
     s32 height = 0;
     struct Sprite *first;
     struct Sprite *last;
-    struct Sprite *stop;
     s32 off;
     s32 span;
+    s32 aligned;
 
     g->lineCount = 0;
     if (count == 0)
@@ -77,20 +77,21 @@ void sub_080706B0(struct Unk70C98 *arg)
                 break;
             case 2:
                 span = (last->unk1E & 0x7FFF) - lineStart;
-                off = -(((span + (g->letterSpacing + GLYPH_WIDTH(last))) & ~1) << 7);
+                aligned = (span + (g->letterSpacing + GLYPH_WIDTH(last))) & ~1;
+                off = -(aligned << 7);
                 break;
             case 0:
                 break;
             }
             off = x + ((s32)((off - (lineStart << 8)) * scale) >> 8);
-            stop = last->next;
-            for (; lineHead != stop; lineHead = lineHead->next)
+            last = last->next;
+            for (; lineHead != last; lineHead = lineHead->next)
             {
                 lineHead->unk08 = off + ((((lineHead->unk1E & 0x7FFF) << 8) * scale) >> 8);
                 lineHead->unk0C = y;
             }
-            if (stop != NULL)
-                lineStart = stop->unk1E & 0x7FFF;
+            if (last != NULL)
+                lineStart = last->unk1E & 0x7FFF;
             else
                 lineStart = 0;
             breakNode = NULL;

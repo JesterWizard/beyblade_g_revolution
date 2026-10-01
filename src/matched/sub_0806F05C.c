@@ -15,7 +15,7 @@ void CameraCenterOnObject(struct MapView *state, struct Actor *obj)
 
     cam = CameraGetActive(state);
     SceneObjGetPosition(obj, (u32 *)pos);
-    state->flags |= 1;
+    state->skipFollow = 1;
     cam->deltaX = pos[0] - (cam->offsetX + ((0x78 - (obj->width >> 1)) << 8));
     cam->deltaY = pos[1] - (cam->offsetY + (((y = (s16)obj->unkA2 + 0x50) - (obj->height >> 1)) << 8));
     if (cam->offsetX + cam->deltaX < 0)

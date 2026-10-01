@@ -2160,6 +2160,12 @@ struct MapOrigin /* 0x08 */
     /* 04 */ s32 y;
 };
 
+/* Scroll origins for all four BGs, passed to sub_0806EC20 (built by sub_0806EBF8). */
+struct MapOrigins /* 0x20 */
+{
+    /* 00 */ struct MapOrigin layer[4];
+};
+
 struct MapView /* >= 0x36C */
 {
     /* 000 */ struct MapLayer layers[4];
@@ -2169,7 +2175,8 @@ struct MapView /* >= 0x36C */
     /* 344 */ void *targetHandler;
     /* 348 */ s32 unk348;
     /* 34c */ u8 filler_34C[8];
-    /* 354 */ u8 flags;
+    /* 354 */ u8 skipFollow : 1; /* skip one follow step after a snap; sub_0806F05C sets, sub_0806EE48 clears */
+    /* 354 */ u8 flags_354_1 : 7;
     /* 355 */ u8 unk355;
     /* 356 */ u8 unk356;
     /* 357 */ u8 filler_357;

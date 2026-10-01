@@ -6,12 +6,12 @@ Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemera
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **98.9%** of functions (626/633) and **97.3%** of original function bytes (87,822/90,272).
+Decompiled C is **99.1%** of functions (627/633) and **97.9%** of original function bytes (88,338/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `████████████████████████████████` | **98.9%** | 626/633 |
-| Decompiled C (bytes) | `███████████████████████████████░` | **97.3%** | 87,822/90,272 |
+| Decompiled C (functions) | `████████████████████████████████` | **99.1%** | 627/633 |
+| Decompiled C (bytes) | `███████████████████████████████░` | **97.9%** | 88,338/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -19,8 +19,8 @@ Decompiled C is **98.9%** of functions (626/633) and **97.3%** of original funct
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 626 (98.9%) | 87,822 (97.3%) |
-| Readable Thumb | 7 (1.1%) | 2,450 (2.7%) |
+| Semantic C | 627 (99.1%) | 88,338 (97.9%) |
+| Readable Thumb | 6 (0.9%) | 1,934 (2.1%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **100.0%** functions / **100.0%** bytes in semantic C (160/160; 0 opcode left).
@@ -31,13 +31,12 @@ Remaining unmatched (readable Thumb still in `src/matched/`):
 
 | Function | Score | Status |
 |----------|------:|--------|
+| `sub_0806EC20` | 505/516 | parked |
 | `sub_0804BD38` | 302/328 | parked |
-| `sub_08038314` | 59/108 | blocked |
-| `sub_08035624` | 45/114 (size 112 vs 114; old 71/114 seed saved only in scratch) | parked |
-| `sub_0806EC20` | 155/516 | parked |
-| `sub_0804C8BC` | 74/372 | parked |
+| `sub_080706B0` | 452/626 | parked |
+| `sub_0804C8BC` | 185/372 | parked |
+| `sub_08035624` | 45/114 | parked |
 | `sub_0806E060` | 89/492 | parked |
-| `sub_080706B0` | 61/626 | parked |
 
 <!-- decomp-progress:end -->
 

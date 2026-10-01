@@ -1,264 +1,76 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806ec20
-__attribute__((naked))
-void sub_0806EC20(void *a, u32 b, u32 c, void *d)
+/* match-compiler: old_agbcc */
+// Bind a map header to a MapView: reset camera state, init each non-null BG
+// layer (offset from the base layer when its origin is non-zero), set BG
+// priorities, and load optional palettes / resources. The high byte of unk358
+// is the BG-enable mask, sign-extended from 8 bits.
+void sub_0806EC20(void *view, void *table, u32 mode, void *origins)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x028\n"
-        "adds r5, r0, #0x0\n"
-        "mov r8, r1\n"
-        "str r3, [sp, #0x010]\n"
-        "lsls r2, r2, #0x10\n"
-        "lsrs r2, r2, #0x10\n"
-        "str r2, [sp, #0x00C]\n"
-        "movs r0, #0x00\n"
-        "str r0, [sp, #0x014]\n"
-        "movs r1, #0x88\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r5, r1\n"
-        "mov r2, r8\n"
-        "str r2, [r0, #0x00]\n"
-        "movs r3, #0x89\n"
-        "lsls r3, r3, #0x02\n"
-        "adds r0, r5, r3\n"
-        "ldr r4, [sp, #0x014]\n"
-        "str r4, [r0, #0x00]\n"
-        "movs r7, #0xD5\n"
-        "lsls r7, r7, #0x02\n"
-        "adds r1, r5, r7\n"
-        "movs r0, #0x02\n"
-        "negs r0, r0\n"
-        "ldrb r2, [r1, #0x00]\n"
-        "ands r0, r2\n"
-        "strb r0, [r1, #0x00]\n"
-        "movs r3, #0xD1\n"
-        "lsls r3, r3, #0x02\n"
-        "adds r0, r5, r3\n"
-        "str r4, [r0, #0x00]\n"
-        "movs r4, #0xD2\n"
-        "lsls r4, r4, #0x02\n"
-        "adds r0, r5, r4\n"
-        "ldr r7, [sp, #0x014]\n"
-        "str r7, [r0, #0x00]\n"
-        "ldr r0, _0806ED64 @ =0x00000355\n"
-        "adds r1, r5, r0\n"
-        "movs r0, #0x0F\n"
-        "strb r0, [r1, #0x00]\n"
-        "ldr r2, _0806ED68 @ =0x00000356\n"
-        "adds r1, r5, r2\n"
-        "movs r0, #0xFF\n"
-        "strb r0, [r1, #0x00]\n"
-        "adds r3, #0x18\n"
-        "adds r0, r5, r3\n"
-        "strh r7, [r0, #0x00]\n"
-        "ldr r7, _0806ED6C @ =0x0000035E\n"
-        "adds r0, r5, r7\n"
-        "mov r1, sp\n"
-        "ldrh r1, [r1, #0x14]\n"
-        "strh r1, [r0, #0x00]\n"
-        "adds r2, #0x0A\n"
-        "adds r1, r5, r2\n"
-        "movs r0, #0xF0\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r3, #0x06\n"
-        "adds r1, r5, r3\n"
-        "movs r0, #0xA0\n"
-        "strh r0, [r1, #0x00]\n"
-        "adds r4, #0x1C\n"
-        "adds r0, r5, r4\n"
-        "ldr r7, [sp, #0x014]\n"
-        "str r7, [r0, #0x00]\n"
-        "movs r1, #0xDA\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r0, r5, r1\n"
-        "str r7, [r0, #0x00]\n"
-        "ldr r1, _0806ED70 @ =0x04000050\n"
-        "ldr r2, _0806ED74 @ =0x00003FFF\n"
-        "adds r0, r2, #0x0\n"
-        "strh r0, [r1, #0x00]\n"
-        "bl sub_08069894\n"
-        "str r5, [sp, #0x018]\n"
-        "mov r3, r8\n"
-        "adds r3, #0x14\n"
-        "str r3, [sp, #0x01C]\n"
-        "movs r2, #0x00\n"
-        "str r3, [sp, #0x020]\n"
-        "_0806ECCA:\n"
-        "lsls r2, r2, #0x18\n"
-        "asrs r3, r2, #0x18\n"
-        "lsls r1, r3, #0x03\n"
-        "ldr r4, [sp, #0x010]\n"
-        "adds r0, r4, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "mov r10, r0\n"
-        "adds r0, r4, #0x0\n"
-        "adds r0, #0x04\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "mov r9, r0\n"
-        "lsls r0, r3, #0x01\n"
-        "adds r0, r0, r3\n"
-        "lsls r4, r0, #0x03\n"
-        "ldr r7, [sp, #0x020]\n"
-        "adds r0, r7, r4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "mov r12, r0\n"
-        "adds r6, r2, #0x0\n"
-        "cmp r0, #0x00\n"
-        "beq _0806EDB0\n"
-        "movs r0, #0x01\n"
-        "lsls r0, r3\n"
-        "ldr r1, [sp, #0x014]\n"
-        "orrs r0, r1\n"
-        "lsls r0, r0, #0x18\n"
-        "lsrs r0, r0, #0x18\n"
-        "str r0, [sp, #0x014]\n"
-        "lsls r0, r3, #0x04\n"
-        "adds r0, r0, r3\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r0, r5, r0\n"
-        "str r0, [sp, #0x024]\n"
-        "ldr r2, [sp, #0x018]\n"
-        "cmp r0, r2\n"
-        "beq _0806ED78\n"
-        "mov r0, r8\n"
-        "adds r0, #0x18\n"
-        "adds r0, r0, r4\n"
-        "ldr r3, [r0, #0x00]\n"
-        "mov r2, r8\n"
-        "adds r2, #0x1C\n"
-        "cmp r3, #0x00\n"
-        "bne _0806ED2C\n"
-        "adds r0, r2, r4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806ED78\n"
-        "_0806ED2C:\n"
-        "lsrs r1, r6, #0x18\n"
-        "mov r0, r8\n"
-        "adds r0, #0x20\n"
-        "adds r0, r0, r4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r7, #0x01\n"
-        "orrs r0, r7\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r0, r0, #0x10\n"
-        "str r0, [sp, #0x000]\n"
-        "ldr r7, [sp, #0x01C]\n"
-        "ldr r0, [r7, #0x04]\n"
-        "subs r0, r0, r3\n"
-        "asrs r0, r0, #0x08\n"
-        "str r0, [sp, #0x004]\n"
-        "adds r2, r2, r4\n"
-        "ldr r0, [r7, #0x08]\n"
-        "ldr r2, [r2, #0x00]\n"
-        "subs r0, r0, r2\n"
-        "asrs r0, r0, #0x08\n"
-        "str r0, [sp, #0x008]\n"
-        "ldr r0, [sp, #0x024]\n"
-        "mov r2, r12\n"
-        "movs r3, #0x40\n"
-        "bl sub_080688C8\n"
-        "b _0806EDB0\n"
-        ".byte 0x00, 0x00\n"
-        "_0806ED64: .4byte 0x00000355\n"
-        "_0806ED68: .4byte 0x00000356\n"
-        "_0806ED6C: .4byte 0x0000035E\n"
-        "_0806ED70: .4byte 0x04000050\n"
-        "_0806ED74: .4byte 0x00003FFF\n"
-        "_0806ED78:\n"
-        "asrs r2, r6, #0x18\n"
-        "lsls r0, r2, #0x04\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r0, r5, r0\n"
-        "lsrs r1, r6, #0x18\n"
-        "lsls r4, r2, #0x01\n"
-        "adds r4, r4, r2\n"
-        "lsls r4, r4, #0x03\n"
-        "ldr r3, [sp, #0x020]\n"
-        "adds r2, r3, r4\n"
-        "ldr r2, [r2, #0x00]\n"
-        "mov r3, r8\n"
-        "adds r3, #0x20\n"
-        "adds r3, r3, r4\n"
-        "ldr r3, [r3, #0x00]\n"
-        "movs r4, #0x01\n"
-        "orrs r3, r4\n"
-        "lsls r3, r3, #0x10\n"
-        "lsrs r3, r3, #0x10\n"
-        "str r3, [sp, #0x000]\n"
-        "mov r7, r10\n"
-        "str r7, [sp, #0x004]\n"
-        "mov r3, r9\n"
-        "str r3, [sp, #0x008]\n"
-        "movs r3, #0x40\n"
-        "bl sub_080688C8\n"
-        "_0806EDB0:\n"
-        "movs r4, #0x80\n"
-        "lsls r4, r4, #0x11\n"
-        "adds r0, r6, r4\n"
-        "lsrs r2, r0, #0x18\n"
-        "asrs r0, r0, #0x18\n"
-        "cmp r0, #0x03\n"
-        "ble _0806ECCA\n"
-        "mov r0, r8\n"
-        "adds r0, #0x74\n"
-        "ldrb r3, [r0, #0x00]\n"
-        "lsls r0, r3, #0x1E\n"
-        "lsrs r0, r0, #0x1E\n"
-        "lsls r1, r3, #0x1C\n"
-        "lsrs r1, r1, #0x1E\n"
-        "lsls r2, r3, #0x1A\n"
-        "lsrs r2, r2, #0x1E\n"
-        "lsrs r3, r3, #0x06\n"
-        "bl sub_08069B78\n"
-        "mov r7, r8\n"
-        "ldr r0, [r7, #0x78]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806EDE2\n"
-        "bl sub_080679A4\n"
-        "_0806EDE2:\n"
-        "mov r1, r8\n"
-        "ldr r0, [r1, #0x7C]\n"
-        "cmp r0, #0x00\n"
-        "beq _0806EDEE\n"
-        "bl sub_080679C0\n"
-        "_0806EDEE:\n"
-        "mov r0, r8\n"
-        "adds r0, #0x80\n"
-        "ldr r1, [r0, #0x00]\n"
-        "cmp r1, #0x00\n"
-        "beq _0806EE02\n"
-        "movs r2, #0x8A\n"
-        "lsls r2, r2, #0x02\n"
-        "adds r0, r5, r2\n"
-        "bl sub_0806BC0C\n"
-        "_0806EE02:\n"
-        "ldr r3, [sp, #0x014]\n"
-        "lsls r0, r3, #0x18\n"
-        "asrs r0, r0, #0x10\n"
-        "ldr r4, [sp, #0x00C]\n"
-        "orrs r0, r4\n"
-        "movs r7, #0xD6\n"
-        "lsls r7, r7, #0x02\n"
-        "adds r1, r5, r7\n"
-        "strh r0, [r1, #0x00]\n"
-        "add sp, #0x028\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-    );
+    struct MapView *a = view;
+    struct MapFollowTable *cfg = table;
+    u16 dispcnt;
+    struct MapOrigins *pos = origins;
+    s8 i;
+    s32 bits;
+    s32 x;
+    s32 y;
+    struct MapLayer *baseLayer;
+    struct MapFollowEntry *baseEntry;
+
+    dispcnt = mode;
+    bits = 0;
+    a->follow = cfg;
+    a->target = 0;
+    a->skipFollow = 0;
+    a->targetHandler = 0;
+    a->unk348 = 0;
+    a->unk355 = 0xF;
+    a->unk356 = 0xFF;
+    a->minX = 0;
+    a->unk35E = 0;
+    a->rightMargin = 0xF0;
+    a->unk362 = 0xA0;
+    a->unk364 = 0;
+    a->unk368 = 0;
+    REG_BLDCNT = 0x3FFF;
+    sub_08069894();
+
+    baseLayer = a->layers;
+    baseEntry = cfg->entries;
+    i = 0;
+    do
+    {
+        x = pos->layer[i].x;
+        y = pos->layer[i].y;
+        if (cfg->entries[i].active != NULL)
+        {
+            bits = (u8)((1 << i) | bits);
+            if (&a->layers[i] != baseLayer
+                && (cfg->entries[i].unk04 != 0 || cfg->entries[i].unk08 != 0))
+            {
+                BgMapInit((struct Unk68988 *)&a->layers[i], i, cfg->entries[i].active, 0x40,
+                    cfg->entries[i].unk0C | 1,
+                    (baseEntry->unk04 - cfg->entries[i].unk04) >> 8,
+                    (baseEntry->unk08 - cfg->entries[i].unk08) >> 8);
+            }
+            else
+            {
+                BgMapInit((struct Unk68988 *)&a->layers[i], i, cfg->entries[i].active, 0x40,
+                    cfg->entries[i].unk0C | 1, x, y);
+            }
+        }
+    } while (++i <= 3);
+    BgSetPriorities(cfg->unk74_0, cfg->unk74_2, cfg->unk74_4, cfg->unk74_6);
+    if (cfg->unk78 != NULL)
+        BgPaletteLoad(cfg->unk78);
+    if (cfg->unk7C != NULL)
+        ObjPaletteLoad(cfg->unk7C);
+    if (cfg->unk80 != NULL)
+        ResourceBind(a->unk228, cfg->unk80);
+    a->unk358 = ((bits << 24) >> 16) | dispcnt;
 }
 
