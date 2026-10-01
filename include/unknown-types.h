@@ -2688,6 +2688,16 @@ struct Unk6E31CTrack /* >= 0x24 */
     /* 20 */ u32 unk20[1]; /* key ids for sub_0806DEF4 */
 };
 
+/* Per-key segment record that follows the key ids of a Unk6E31CTrack
+ * (track->unk20 + key count). sub_0806E060. */
+struct Unk6E060Seg /* 0x10 */
+{
+    /* 00 */ u8 filler_00[0x8];
+    /* 08 */ s16 unk08; /* heading angle (low byte indexes the sine table) */
+    /* 0A */ s16 unk0A;
+    /* 0C */ u8 filler_0C[0x4];
+};
+
 struct UnkDEC8Head /* >= 0x08 */
 {
     /* 00 */ u32 unk00;

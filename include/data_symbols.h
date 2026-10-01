@@ -299,9 +299,6 @@ extern struct Unk0560Handle *gData_030005F0[4];
 extern struct Unk56250Entry *gData_03000664;
 extern u32 gData_0300066C;
 extern s32 gData_03000674;
-/* Alternate views of the s16 at gData_03000674 (sub_0804BD38). */
-extern s16 gData_03000674_A;
-extern s16 gData_03000674_B;
 extern s32 gData_03000678;
 
 // Five-row menu tables (sub_0804BD38): label text, icon sprite, icon palette

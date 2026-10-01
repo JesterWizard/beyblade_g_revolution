@@ -1,18 +1,18 @@
 {
-  "generated": "2026-10-01T17:41:49Z",
+  "generated": "2026-10-01T20:54:33Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 5,
-    "semantic_done": 628,
-    "readable_asm": 5,
+    "pending": 2,
+    "semantic_done": 631,
+    "readable_asm": 2,
     "opcode": 0,
     "battle_pending": 0,
     "battle_semantic": 160,
     "blocked": 2,
-    "wip": 5
+    "wip": 2
   },
   "pinned": [],
   "wip": [
@@ -26,39 +26,6 @@
       "status": "structure matches; only key/list/scratch register choice differs (retail key=r4, list=r2, const scratch=r0; ours r0/r0/r2). 37 differing insns vs 59 for the old seed",
       "next": "find C that makes key addr r4 and list addr r2 (forcing them with a debug compiler makes output equal retail); try permuter on this draft with a time limit",
       "score": "45/114"
-    },
-    {
-      "name": "sub_0804BD38",
-      "addr": "0x0804BD38",
-      "kind": "asm",
-      "bytes": 328,
-      "seed": "src/decompiled/sub_0804BD38.c",
-      "notes": "src/decompiled/sub_0804BD38.md",
-      "status": "same-size DIFF 302/328; permuter 300s best 870 (base 905); decl/init-order perms and first-read shape variants no change",
-      "next": "first two s16 loads: retail base r3/zero r4 then base r0/zero r2; ours r0/r4 and r0/r4. Likely needs a different source shape for what keeps r1/r2 conflicts alive",
-      "score": "302/328"
-    },
-    {
-      "name": "sub_0804C8BC",
-      "addr": "0x0804C8BC",
-      "kind": "asm",
-      "bytes": 372,
-      "seed": "src/decompiled/sub_0804C8BC.c",
-      "notes": "src/decompiled/sub_0804C8BC.md",
-      "status": "same-size DIFF, giv decision differs (see notes)",
-      "next": "find source form that keeps (y+56)<<8 unreduced while i*16 stays reduced",
-      "score": "185/372"
-    },
-    {
-      "name": "sub_0806E060",
-      "addr": "0x0806E060",
-      "kind": "asm",
-      "bytes": 492,
-      "seed": "src/decompiled/sub_0806E060.c",
-      "notes": "src/decompiled/sub_0806E060.md",
-      "status": "bezier keyframe sampler 468/492",
-      "next": "idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded",
-      "score": "89/492"
     },
     {
       "name": "sub_080706B0",

@@ -6,21 +6,21 @@ Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemera
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **99.2%** of functions (628/633) and **98.6%** of original function bytes (88,964/90,272).
+Decompiled C is **99.7%** of functions (631/633) and **99.9%** of original function bytes (90,156/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `████████████████████████████████` | **99.2%** | 628/633 |
-| Decompiled C (bytes) | `████████████████████████████████` | **98.6%** | 88,964/90,272 |
+| Decompiled C (functions) | `████████████████████████████████` | **99.7%** | 631/633 |
+| Decompiled C (bytes) | `████████████████████████████████` | **99.9%** | 90,156/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
-| Named | `████████████████░░░░░░░░░░░░░░░░` | **49.6%** | 314/633 |
+| Named | `████████████████░░░░░░░░░░░░░░░░` | **50.9%** | 322/633 |
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 628 (99.2%) | 88,964 (98.6%) |
-| Readable Thumb | 5 (0.8%) | 1,308 (1.4%) |
+| Semantic C | 631 (99.7%) | 90,156 (99.9%) |
+| Readable Thumb | 2 (0.3%) | 116 (0.1%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **100.0%** functions / **100.0%** bytes in semantic C (160/160; 0 opcode left).
@@ -31,10 +31,7 @@ Remaining unmatched (readable Thumb still in `src/matched/`):
 
 | Function | Score | Status |
 |----------|------:|--------|
-| `sub_0804BD38` | 302/328 | parked |
-| `sub_0804C8BC` | 185/372 | parked |
 | `sub_08035624` | 45/114 | parked |
-| `sub_0806E060` | 89/492 | parked |
 
 <!-- decomp-progress:end -->
 

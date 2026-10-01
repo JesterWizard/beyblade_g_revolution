@@ -1,184 +1,46 @@
 #include "global.h"
+#include "ram_map.h"
+#include "data_symbols.h"
 
 // @ 0x0804c8bc
-__attribute__((naked))
-void sub_0804C8BC(void *a)
+// Redraw the five visible list rows from gData_080989F0: free each row icon,
+// then for valid rows (id >= 0) draw the label, highlight the cursor row and
+// rebuild the icon sprite plus its palette.
+void sub_0804C8BC(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x020\n"
-        "str r0, [sp, #0x010]\n"
-        "movs r5, #0x00\n"
-        "ldr r0, _0804C960 @ =0x05000360\n"
-        "str r0, [sp, #0x014]\n"
-        "movs r1, #0x00\n"
-        "str r1, [sp, #0x018]\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x0C\n"
-        "mov r10, r2\n"
-        "movs r3, #0xE0\n"
-        "lsls r3, r3, #0x0B\n"
-        "mov r9, r3\n"
-        "mov r8, r1\n"
-        "movs r7, #0x00\n"
-        "_0804C8E4:\n"
-        "ldr r4, [sp, #0x010]\n"
-        "movs r6, #0x9D\n"
-        "lsls r6, r6, #0x02\n"
-        "adds r0, r4, r6\n"
-        "ldr r1, [sp, #0x018]\n"
-        "adds r4, r0, r1\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0804C8FC\n"
-        "bl sub_0806FE84\n"
-        "str r7, [r4, #0x00]\n"
-        "_0804C8FC:\n"
-        "ldr r6, _0804C964 @ =0x080989F0\n"
-        "ldr r4, _0804C968 @ =0x03000688\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r4, r2]\n"
-        "adds r0, r0, r5\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r0, r0, r6\n"
-        "movs r3, #0x00\n"
-        "ldsh r0, [r0, r3]\n"
-        "cmp r0, #0x00\n"
-        "blt _0804C9F0\n"
-        "mov r1, r8\n"
-        "adds r1, #0x18\n"
-        "movs r0, #0x00\n"
-        "bl sub_080615EC\n"
-        "movs r1, #0x00\n"
-        "ldsh r0, [r4, r1]\n"
-        "adds r0, r0, r5\n"
-        "lsls r0, r0, #0x03\n"
-        "adds r1, r6, #0x4\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r1, #0x1C\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _0804C96C @ =0x03000684\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "mov r3, r8\n"
-        "str r3, [sp, #0x01C]\n"
-        "cmp r5, r0\n"
-        "bne _0804C970\n"
-        "mov r4, r9\n"
-        "lsrs r0, r4, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "mov r6, r10\n"
-        "lsrs r0, r6, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "b _0804C98C\n"
-        ".byte 0x00, 0x00\n"
-        "_0804C960: .4byte 0x05000360\n"
-        "_0804C964: .4byte 0x080989F0\n"
-        "_0804C968: .4byte 0x03000688\n"
-        "_0804C96C: .4byte 0x03000684\n"
-        "_0804C970:\n"
-        "mov r1, r9\n"
-        "lsrs r0, r1, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "mov r2, r10\n"
-        "lsrs r0, r2, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "_0804C98C:\n"
-        "movs r0, #0x00\n"
-        "bl sub_0806FDD0\n"
-        "ldr r3, [sp, #0x010]\n"
-        "movs r6, #0x9D\n"
-        "lsls r6, r6, #0x02\n"
-        "adds r4, r3, r6\n"
-        "ldr r1, [sp, #0x018]\n"
-        "adds r4, r4, r1\n"
-        "str r0, [r4, #0x00]\n"
-        "ldr r2, _0804CA20 @ =0x080989D8\n"
-        "ldr r3, _0804CA24 @ =0x03000688\n"
-        "movs r6, #0x00\n"
-        "ldsh r1, [r3, r6]\n"
-        "adds r1, r1, r5\n"
-        "lsls r1, r1, #0x02\n"
-        "adds r1, r1, r2\n"
-        "ldr r1, [r1, #0x00]\n"
-        "ldr r3, [sp, #0x01C]\n"
-        "adds r3, #0x38\n"
-        "lsls r3, r3, #0x08\n"
-        "str r7, [sp, #0x000]\n"
-        "str r7, [sp, #0x004]\n"
-        "str r7, [sp, #0x008]\n"
-        "str r7, [sp, #0x00C]\n"
-        "movs r2, #0xC4\n"
-        "lsls r2, r2, #0x08\n"
-        "bl sub_0806FF58\n"
-        "ldr r0, [r4, #0x00]\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x0B\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "bl sub_080705DC\n"
-        "ldr r2, _0804CA28 @ =0x080BB8C0\n"
-        "ldr r1, _0804CA2C @ =0x080989E4\n"
-        "ldr r3, _0804CA24 @ =0x03000688\n"
-        "movs r4, #0x00\n"
-        "ldsh r0, [r3, r4]\n"
-        "adds r0, r0, r5\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r3, [r2, #0x00]\n"
-        "ldr r1, [sp, #0x014]\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "_0804C9F0:\n"
-        "ldr r6, [sp, #0x014]\n"
-        "adds r6, #0x20\n"
-        "str r6, [sp, #0x014]\n"
-        "ldr r0, [sp, #0x018]\n"
-        "adds r0, #0x04\n"
-        "str r0, [sp, #0x018]\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x0A\n"
-        "add r10, r1\n"
-        "add r9, r1\n"
-        "movs r2, #0x10\n"
-        "add r8, r2\n"
-        "adds r5, #0x01\n"
-        "cmp r5, #0x04\n"
-        "bgt _0804CA10\n"
-        "b _0804C8E4\n"
-        "_0804CA10:\n"
-        "add sp, #0x020\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_0804CA20: .4byte 0x080989D8\n"
-        "_0804CA24: .4byte 0x03000688\n"
-        "_0804CA28: .4byte 0x080BB8C0\n"
-        "_0804CA2C: .4byte 0x080989E4\n"
-    );
+    struct Unk4BD38 *a = arg;
+    s32 i;
+    u16 *pal;
+
+    i = 0;
+    pal = (u16 *)0x05000360;
+    for (i = 0; i < 5; i++)
+    {
+        if (a->unk274[i])
+        {
+            BtlObjPoolFree(a->unk274[i]);
+            a->unk274[i] = NULL;
+        }
+        if (gData_080989F0[gData_03000688 + i].unk00 > -1)
+        {
+            TextSetCursor(0, i * 16 + 0x18);
+            TextDrawAlign(gData_080989F0[gData_03000688 + i].unk04, 0x1C, 2);
+            if (i == gData_03000684)
+            {
+                TextRowSetPaletteBank((u16)(2 * i + 7), 0x0E, 4, 0x17);
+                TextRowSetPaletteBank((u16)((i + 4) * 2), 0x0E, 4, 0x17);
+            }
+            else
+            {
+                TextRowSetPaletteBank((u16)(2 * i + 7), 0x0F, 4, 0x17);
+                TextRowSetPaletteBank((u16)((i + 4) * 2), 0x0F, 4, 0x17);
+            }
+            a->unk274[i] = BtlObjPoolAlloc(0);
+            SpriteInitFromTemplate(a->unk274[i], gData_080989D8[gData_03000688 + i], 0xC400, ((i << 4) + 0x38) << 8, 0, 0, 0, 0);
+            TextEntrySetPaletteBank(a->unk274[i], (u8)(i + 11));
+            ((void (*)(void *, void *, u32))gData_080BB8C0[0])(gData_080989E4[gData_03000688 + i], pal, 0x20);
+        }
+        pal += 0x10;
+    }
 }
 

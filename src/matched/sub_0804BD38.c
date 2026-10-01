@@ -1,161 +1,47 @@
 #include "global.h"
+#include "ram_map.h"
+#include "data_symbols.h"
 
 // @ 0x0804bd38
-__attribute__((naked))
-void sub_0804BD38(void *a)
+// Redraw the five visible rows of the scrolling menu: label text, highlight
+// the cursor row, and rebuild each row's icon sprite plus its palette.
+void sub_0804BD38(void *arg)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x018\n"
-        "str r0, [sp, #0x010]\n"
-        "movs r5, #0x00\n"
-        "ldr r0, _0804BDA8 @ =0x05000360\n"
-        "str r0, [sp, #0x014]\n"
-        "movs r1, #0xE0\n"
-        "lsls r1, r1, #0x06\n"
-        "mov r10, r1\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x0C\n"
-        "mov r8, r2\n"
-        "movs r7, #0xE0\n"
-        "lsls r7, r7, #0x0B\n"
-        "mov r9, r5\n"
-        "movs r6, #0x00\n"
-        "_0804BD60:\n"
-        "mov r1, r9\n"
-        "adds r1, #0x18\n"
-        "movs r0, #0x00\n"
-        "bl sub_080615EC\n"
-        "ldr r3, _0804BDAC @ =0x03000674\n"
-        "movs r4, #0x00\n"
-        "ldsh r0, [r3, r4]\n"
-        "adds r0, r0, r5\n"
-        "lsls r0, r0, #0x03\n"
-        "ldr r1, _0804BDB0 @ =0x08098004\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "movs r1, #0x1C\n"
-        "movs r2, #0x02\n"
-        "bl sub_0806171C\n"
-        "ldr r0, _0804BDB4 @ =0x03000678\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "cmp r5, r0\n"
-        "bne _0804BDB8\n"
-        "lsrs r0, r7, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "mov r3, r8\n"
-        "lsrs r0, r3, #0x10\n"
-        "movs r1, #0x0E\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "b _0804BDD2\n"
-        "_0804BDA8: .4byte 0x05000360\n"
-        "_0804BDAC: .4byte 0x03000674\n"
-        "_0804BDB0: .4byte 0x08098004\n"
-        "_0804BDB4: .4byte 0x03000678\n"
-        "_0804BDB8:\n"
-        "lsrs r0, r7, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "mov r4, r8\n"
-        "lsrs r0, r4, #0x10\n"
-        "movs r1, #0x0F\n"
-        "movs r2, #0x04\n"
-        "movs r3, #0x17\n"
-        "bl sub_08061D68\n"
-        "_0804BDD2:\n"
-        "lsls r1, r5, #0x02\n"
-        "ldr r2, [sp, #0x010]\n"
-        "movs r3, #0x9D\n"
-        "lsls r3, r3, #0x02\n"
-        "adds r0, r2, r3\n"
-        "adds r4, r0, r1\n"
-        "ldr r0, [r4, #0x00]\n"
-        "cmp r0, #0x00\n"
-        "beq _0804BDEA\n"
-        "bl sub_0806FE84\n"
-        "str r6, [r4, #0x00]\n"
-        "_0804BDEA:\n"
-        "movs r0, #0x00\n"
-        "bl sub_0806FDD0\n"
-        "str r0, [r4, #0x00]\n"
-        "ldr r1, _0804BE70 @ =0x080984F0\n"
-        "mov r12, r1\n"
-        "ldr r2, _0804BE74 @ =0x03000674\n"
-        "movs r3, #0x00\n"
-        "ldsh r1, [r2, r3]\n"
-        "adds r1, r1, r5\n"
-        "lsls r1, r1, #0x02\n"
-        "add r1, r12\n"
-        "ldr r1, [r1, #0x00]\n"
-        "str r6, [sp, #0x000]\n"
-        "str r6, [sp, #0x004]\n"
-        "str r6, [sp, #0x008]\n"
-        "str r6, [sp, #0x00C]\n"
-        "movs r2, #0xC4\n"
-        "lsls r2, r2, #0x08\n"
-        "mov r3, r10\n"
-        "bl sub_0806FF58\n"
-        "ldr r0, [r4, #0x00]\n"
-        "adds r1, r5, #0x0\n"
-        "adds r1, #0x0B\n"
-        "lsls r1, r1, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "bl sub_080705DC\n"
-        "ldr r2, _0804BE78 @ =0x080BB8C0\n"
-        "ldr r1, _0804BE7C @ =0x08098764\n"
-        "ldr r4, _0804BE74 @ =0x03000674\n"
-        "movs r3, #0x00\n"
-        "ldsh r0, [r4, r3]\n"
-        "adds r0, r0, r5\n"
-        "lsls r0, r0, #0x02\n"
-        "adds r0, r0, r1\n"
-        "ldr r0, [r0, #0x00]\n"
-        "ldr r3, [r2, #0x00]\n"
-        "ldr r1, [sp, #0x014]\n"
-        "movs r2, #0x20\n"
-        "bl _08073C4C\n"
-        "ldr r4, [sp, #0x014]\n"
-        "adds r4, #0x20\n"
-        "str r4, [sp, #0x014]\n"
-        "movs r0, #0x80\n"
-        "lsls r0, r0, #0x05\n"
-        "add r10, r0\n"
-        "movs r1, #0x80\n"
-        "lsls r1, r1, #0x0A\n"
-        "add r8, r1\n"
-        "adds r7, r7, r1\n"
-        "movs r2, #0x10\n"
-        "add r9, r2\n"
-        "adds r5, #0x01\n"
-        "cmp r5, #0x04\n"
-        "bgt _0804BE60\n"
-        "b _0804BD60\n"
-        "_0804BE60:\n"
-        "add sp, #0x018\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_0804BE70: .4byte 0x080984F0\n"
-        "_0804BE74: .4byte 0x03000674\n"
-        "_0804BE78: .4byte 0x080BB8C0\n"
-        "_0804BE7C: .4byte 0x08098764\n"
-    );
+    struct Unk4BD38 *a = arg;
+    s16 *top = (s16 *)&gData_03000674;
+    struct Unk4BD38Label *labels = gData_08098004;
+    s32 i;
+    u16 *pal;
+    s32 y;
+
+    i = 0;
+    pal = (u16 *)0x05000360;
+    for (i = 0; i < 5; i++)
+    {
+        labels = gData_08098004;
+        y = i * 16;
+        TextSetCursor(0, y + 0x18);
+        TextDrawAlign(labels[*top + i].unk00, 0x1C, 2);
+        if (i == (s16)gData_03000678)
+        {
+            TextRowSetPaletteBank((u16)(2 * i + 7), 0x0E, 4, 0x17);
+            TextRowSetPaletteBank((u16)((i + 4) * 2), 0x0E, 4, 0x17);
+        }
+        else
+        {
+            TextRowSetPaletteBank((u16)(2 * i + 7), 0x0F, 4, 0x17);
+            TextRowSetPaletteBank((u16)((i + 4) * 2), 0x0F, 4, 0x17);
+        }
+        if (a->unk274[i] != NULL)
+        {
+            BtlObjPoolFree(a->unk274[i]);
+            a->unk274[i] = NULL;
+        }
+        a->unk274[i] = BtlObjPoolAlloc(0);
+        SpriteInitFromTemplate(a->unk274[i], gData_080984F0[*top + i], 0xC400, (i * 16 + 0x38) << 8, 0, 0, 0, 0);
+        TextEntrySetPaletteBank(a->unk274[i], (u8)(i + 11));
+        ((void (*)(void *, void *, u32))gData_080BB8C0[0])(gData_08098764[*top + i], pal, 0x20);
+        pal += 0x10;
+    }
 }
 

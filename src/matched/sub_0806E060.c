@@ -1,260 +1,94 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x0806e060
-__attribute__((naked))
+// Curved variant of KeyframeTrackSample: samples keyframe track `b` of `a` at
+// time `d` (22.10 fixed point, clamped to the last key). Unless the segment's
+// heading equals either neighbour's s16 at +0x0A, x/y follow a quadratic Bezier
+// from p0 to p1 whose control point averages p0 pushed 0x180 along the previous
+// segment's heading and p1 pushed 0x180 back against the next one's; otherwise
+// x/y are linear. z is always linear. Stores the fraction and key index in
+// out[3], out[4] and returns out.
 u32 sub_0806E060(void *a, void *b, s32 *out, s32 d)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x00C\n"
-        "adds r7, r0, #0x0\n"
-        "mov r8, r2\n"
-        "adds r5, r3, #0x0\n"
-        "bl sub_0806DEC8\n"
-        "adds r6, r0, #0x0\n"
-        "adds r2, r6, #0x0\n"
-        "adds r2, #0x20\n"
-        "ldr r1, [r6, #0x00]\n"
-        "lsls r0, r1, #0x02\n"
-        "adds r0, #0x20\n"
-        "adds r0, r0, r6\n"
-        "mov r9, r0\n"
-        "cmp r5, #0x00\n"
-        "bge _0806E08C\n"
-        "movs r5, #0x00\n"
-        "_0806E08C:\n"
-        "asrs r0, r5, #0x0A\n"
-        "cmp r0, r1\n"
-        "blt _0806E09C\n"
-        "subs r0, r1, #0x1\n"
-        "lsls r0, r0, #0x0A\n"
-        "ldr r1, _0806E0E0 @ =0x000003FF\n"
-        "ands r5, r1\n"
-        "orrs r5, r0\n"
-        "_0806E09C:\n"
-        "asrs r0, r5, #0x0A\n"
-        "mov r10, r0\n"
-        "lsls r4, r0, #0x02\n"
-        "adds r4, r4, r2\n"
-        "ldr r1, [r4, #0x00]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_0806DEF4\n"
-        "str r0, [sp, #0x000]\n"
-        "ldr r1, [r4, #0x04]\n"
-        "adds r0, r7, #0x0\n"
-        "bl sub_0806DEF4\n"
-        "str r0, [sp, #0x004]\n"
-        "ldr r1, _0806E0E0 @ =0x000003FF\n"
-        "mov r12, r1\n"
-        "mov r2, r12\n"
-        "ands r2, r5\n"
-        "mov r12, r2\n"
-        "mov r3, r10\n"
-        "lsls r0, r3, #0x04\n"
-        "mov r4, r9\n"
-        "adds r1, r0, r4\n"
-        "ldrh r5, [r1, #0x0A]\n"
-        "ldr r0, [r6, #0x00]\n"
-        "subs r0, #0x02\n"
-        "cmp r10, r0\n"
-        "bge _0806E0E4\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0x10\n"
-        "ldrh r2, [r0, #0x08]\n"
-        "ldrh r4, [r0, #0x0A]\n"
-        "b _0806E0E8\n"
-        ".byte 0x00, 0x00\n"
-        "_0806E0E0: .4byte 0x000003FF\n"
-        "_0806E0E4:\n"
-        "ldrh r2, [r1, #0x08]\n"
-        "adds r4, r2, #0x0\n"
-        "_0806E0E8:\n"
-        "lsls r0, r2, #0x10\n"
-        "ldr r1, _0806E12C @ =0xFF800000\n"
-        "adds r0, r0, r1\n"
-        "lsrs r2, r0, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, #0x00\n"
-        "bge _0806E100\n"
-        "movs r2, #0x80\n"
-        "lsls r2, r2, #0x01\n"
-        "adds r0, r0, r2\n"
-        "lsls r0, r0, #0x10\n"
-        "lsrs r2, r0, #0x10\n"
-        "_0806E100:\n"
-        "mov r3, r10\n"
-        "lsls r0, r3, #0x04\n"
-        "mov r1, r9\n"
-        "adds r3, r0, r1\n"
-        "lsls r0, r5, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "movs r5, #0x08\n"
-        "ldsh r1, [r3, r5]\n"
-        "cmp r0, r1\n"
-        "beq _0806E1F0\n"
-        "lsls r0, r4, #0x10\n"
-        "asrs r0, r0, #0x10\n"
-        "cmp r0, r1\n"
-        "beq _0806E1F0\n"
-        "mov r0, r10\n"
-        "cmp r0, #0x00\n"
-        "ble _0806E130\n"
-        "adds r0, r3, #0x0\n"
-        "subs r0, #0x10\n"
-        "ldrh r0, [r0, #0x08]\n"
-        "b _0806E134\n"
-        ".byte 0x00, 0x00\n"
-        "_0806E12C: .4byte 0xFF800000\n"
-        "_0806E130:\n"
-        "mov r1, r9\n"
-        "ldrh r0, [r1, #0x08]\n"
-        "_0806E134:\n"
-        "ldr r3, _0806E1EC @ =0x083C9544\n"
-        "lsls r1, r0, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0x40\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r3\n"
-        "movs r4, #0x00\n"
-        "ldsh r0, [r0, r4]\n"
-        "movs r5, #0xC0\n"
-        "lsls r5, r5, #0x01\n"
-        "muls r0, r5\n"
-        "asrs r7, r0, #0x08\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r1, r1, r3\n"
-        "movs r4, #0x00\n"
-        "ldsh r0, [r1, r4]\n"
-        "muls r0, r5\n"
-        "asrs r6, r0, #0x08\n"
-        "ldr r5, [sp, #0x000]\n"
-        "ldr r4, [r5, #0x00]\n"
-        "adds r7, r7, r4\n"
-        "ldr r0, [r5, #0x04]\n"
-        "str r0, [sp, #0x008]\n"
-        "adds r6, r6, r0\n"
-        "lsls r1, r2, #0x18\n"
-        "lsrs r1, r1, #0x18\n"
-        "adds r0, r1, #0x0\n"
-        "adds r0, #0x40\n"
-        "lsls r0, r0, #0x01\n"
-        "adds r0, r0, r3\n"
-        "movs r2, #0x00\n"
-        "ldsh r0, [r0, r2]\n"
-        "movs r5, #0xC0\n"
-        "lsls r5, r5, #0x01\n"
-        "muls r0, r5\n"
-        "asrs r2, r0, #0x08\n"
-        "lsls r1, r1, #0x01\n"
-        "adds r1, r1, r3\n"
-        "movs r3, #0x00\n"
-        "ldsh r0, [r1, r3]\n"
-        "muls r0, r5\n"
-        "asrs r0, r0, #0x08\n"
-        "ldr r5, [sp, #0x004]\n"
-        "ldr r1, [r5, #0x00]\n"
-        "adds r2, r2, r1\n"
-        "ldr r3, [r5, #0x04]\n"
-        "mov r9, r3\n"
-        "add r0, r9\n"
-        "adds r2, r7, r2\n"
-        "asrs r7, r2, #0x01\n"
-        "adds r0, r6, r0\n"
-        "asrs r6, r0, #0x01\n"
-        "subs r0, r7, r4\n"
-        "mov r5, r12\n"
-        "muls r5, r0\n"
-        "adds r0, r5, #0x0\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r4, r4, r0\n"
-        "ldr r2, [sp, #0x008]\n"
-        "subs r0, r6, r2\n"
-        "mov r3, r12\n"
-        "muls r3, r0\n"
-        "adds r0, r3, #0x0\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r5, r2, r0\n"
-        "subs r1, r1, r7\n"
-        "mov r0, r12\n"
-        "muls r0, r1\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r0, r7, r0\n"
-        "mov r1, r9\n"
-        "subs r3, r1, r6\n"
-        "mov r1, r12\n"
-        "muls r1, r3\n"
-        "asrs r1, r1, #0x0A\n"
-        "adds r1, r6, r1\n"
-        "subs r0, r0, r4\n"
-        "mov r2, r12\n"
-        "muls r2, r0\n"
-        "adds r0, r2, #0x0\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r7, r4, r0\n"
-        "subs r1, r1, r5\n"
-        "mov r0, r12\n"
-        "muls r0, r1\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r6, r5, r0\n"
-        "mov r3, r8\n"
-        "str r7, [r3, #0x00]\n"
-        "str r6, [r3, #0x04]\n"
-        "b _0806E21A\n"
-        "_0806E1EC: .4byte 0x083C9544\n"
-        "_0806E1F0:\n"
-        "ldr r4, [sp, #0x004]\n"
-        "ldr r0, [r4, #0x00]\n"
-        "ldr r5, [sp, #0x000]\n"
-        "ldr r1, [r5, #0x00]\n"
-        "subs r0, r0, r1\n"
-        "mov r2, r12\n"
-        "muls r2, r0\n"
-        "adds r0, r2, #0x0\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r1, r1, r0\n"
-        "mov r3, r8\n"
-        "str r1, [r3, #0x00]\n"
-        "ldr r0, [r4, #0x04]\n"
-        "ldr r1, [r5, #0x04]\n"
-        "subs r0, r0, r1\n"
-        "mov r4, r12\n"
-        "muls r4, r0\n"
-        "adds r0, r4, #0x0\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r1, r1, r0\n"
-        "str r1, [r3, #0x04]\n"
-        "_0806E21A:\n"
-        "ldr r5, [sp, #0x004]\n"
-        "ldr r0, [r5, #0x08]\n"
-        "ldr r2, [sp, #0x000]\n"
-        "ldr r1, [r2, #0x08]\n"
-        "subs r0, r0, r1\n"
-        "mov r3, r12\n"
-        "muls r3, r0\n"
-        "adds r0, r3, #0x0\n"
-        "asrs r0, r0, #0x0A\n"
-        "adds r1, r1, r0\n"
-        "mov r4, r8\n"
-        "str r1, [r4, #0x08]\n"
-        "mov r5, r12\n"
-        "str r5, [r4, #0x0C]\n"
-        "mov r0, r10\n"
-        "str r0, [r4, #0x10]\n"
-        "mov r0, r8\n"
-        "add sp, #0x00C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r1}\n"
-        "bx r1\n"
-    );
+    struct Unk6E31CTrack *track = (struct Unk6E31CTrack *)ChunkListAt(a, (s32)b);
+    u32 *keys = track->unk20;
+    struct Unk6E060Seg *segs = (struct Unk6E060Seg *)(track->unk20 + track->unk00);
+    s32 radius = 0x180;
+    s32 idx;
+    s32 f;
+    s32 *p0;
+    s32 *p1;
+    s16 s0;
+    s16 s1;
+    s16 angle;
+    s16 prevAngle;
+    s32 x;
+    s32 y;
+    s32 x1;
+    s32 y1;
+    s32 ax;
+    s32 ay;
+    s32 bx;
+    s32 by;
+
+    if (d < 0)
+        d = 0;
+    if ((d >> 10) >= track->unk00)
+        d = ((track->unk00 - 1) << 10) | (d & 0x3FF);
+    idx = d >> 10;
+    p0 = (s32 *)PosRecordGet(a, keys[idx]);
+    p1 = (s32 *)PosRecordGet(a, keys[idx + 1]);
+    f = d & 0x3FF;
+    s0 = segs[idx].unk0A;
+    if (idx < track->unk00 - 2)
+    {
+        angle = segs[idx + 1].unk08;
+        s1 = segs[idx + 1].unk0A;
+    }
+    else
+    {
+        angle = segs[idx].unk08;
+        s1 = angle;
+    }
+    angle -= 0x80;
+    if (angle < 0)
+        angle += 0x100;
+    if (s0 != segs[idx].unk08 && s1 != segs[idx].unk08)
+    {
+        if (idx > 0)
+            prevAngle = segs[idx - 1].unk08;
+        else
+            prevAngle = segs[0].unk08;
+        x = (gData_083C9544[(u8)prevAngle + 0x40] * radius) >> 8;
+        y = (gData_083C9544[(u8)prevAngle] * radius) >> 8;
+        x += p0[0];
+        y += p0[1];
+        x1 = (gData_083C9544[(u8)angle + 0x40] * radius) >> 8;
+        y1 = (gData_083C9544[(u8)angle] * radius) >> 8;
+        x1 += p1[0];
+        y1 += p1[1];
+        // control point
+        x = (x + x1) >> 1;
+        y = (y + y1) >> 1;
+        ax = p0[0] + (((x - p0[0]) * f) >> 10);
+        ay = p0[1] + (((y - p0[1]) * f) >> 10);
+        bx = x + (((p1[0] - x) * f) >> 10);
+        by = y + (((p1[1] - y) * f) >> 10);
+        x = ax + (((bx - ax) * f) >> 10);
+        y = ay + (((by - ay) * f) >> 10);
+        out[0] = x;
+        out[1] = y;
+    }
+    else
+    {
+        out[0] = p0[0] + (((p1[0] - p0[0]) * f) >> 10);
+        out[1] = p0[1] + (((p1[1] - p0[1]) * f) >> 10);
+    }
+    out[2] = p0[2] + (((p1[2] - p0[2]) * f) >> 10);
+    out[3] = f;
+    out[4] = idx;
+    return (u32)out;
 }
 

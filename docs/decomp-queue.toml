@@ -28,30 +28,6 @@ next = "find C that makes key addr r4 and list addr r2 (forcing them with a debu
 score = "45/114"
 
 [[wip]]
-name = "sub_0804BD38"
-seed = "src/decompiled/sub_0804BD38.c"
-notes = "src/decompiled/sub_0804BD38.md"
-status = "same-size DIFF 302/328; permuter 300s best 870 (base 905); decl/init-order perms and first-read shape variants no change"
-next = "first two s16 loads: retail base r3/zero r4 then base r0/zero r2; ours r0/r4 and r0/r4. Likely needs a different source shape for what keeps r1/r2 conflicts alive"
-score = "302/328"
-
-[[wip]]
-name = "sub_0804C8BC"
-seed = "src/decompiled/sub_0804C8BC.c"
-notes = "src/decompiled/sub_0804C8BC.md"
-status = "same-size DIFF, giv decision differs (see notes)"
-next = "find source form that keeps (y+56)<<8 unreduced while i*16 stays reduced"
-score = "185/372"
-
-[[wip]]
-name = "sub_0806E060"
-seed = "src/decompiled/sub_0806E060.c"
-notes = "src/decompiled/sub_0806E060.md"
-status = "bezier keyframe sampler 468/492"
-next = "idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded"
-score = "89/492"
-
-[[wip]]
 name = "sub_080706B0"
 seed = "src/decompiled/sub_080706B0.c"
 notes = "src/decompiled/sub_080706B0.md"

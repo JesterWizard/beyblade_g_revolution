@@ -1,14 +1,14 @@
 {
-  "generated": "2026-10-01T17:41:48Z",
+  "generated": "2026-10-01T20:54:33Z",
   "counts": {
-    "matched": 629,
-    "wip": 4
+    "matched": 632,
+    "wip": 1
   },
   "tiers": {
     "UNKNOWN": 0,
-    "DECOMPILED": 4,
+    "DECOMPILED": 1,
     "UNDERSTOOD": 0,
-    "MATCHING": 629
+    "MATCHING": 632
   },
   "total": 633,
   "functions": [
@@ -86,7 +86,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "FindEntryByString"
     },
     {
       "name": "sub_0802B994",
@@ -162,7 +162,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CollectionIsFull"
     },
     {
       "name": "sub_0802BF04",
@@ -276,7 +276,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CollectionFreeSlot"
     },
     {
       "name": "sub_0802C5DC",
@@ -314,7 +314,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "CollectionCountByKind"
     },
     {
       "name": "sub_0802C6AC",
@@ -390,7 +390,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "TextEntryCursorSetVisible"
     },
     {
       "name": "sub_0802D598",
@@ -922,7 +922,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BarSetFillFromPercent"
     },
     {
       "name": "sub_08031124",
@@ -1378,7 +1378,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlSceneObjUpdate"
     },
     {
       "name": "sub_08033574",
@@ -1777,7 +1777,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "BtlPaletteRestoreBg"
     },
     {
       "name": "sub_08034420",
@@ -5582,20 +5582,20 @@
     {
       "name": "sub_0804BD38",
       "addr": "0x0804BD38",
-      "kind": "asm",
-      "status": "same_size",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
-      "wip": true,
+      "wip": false,
       "block_reason": "",
       "retail_bytes": 328,
-      "matched_bytes": 302,
+      "matched_bytes": 328,
       "compiled_bytes": 328,
-      "pct": 92.1,
-      "score": "302/328",
-      "source": "attempt",
-      "note": "same-size; scratch regs only (ldrsh base r0 vs r3, tail temps r0/r1 vs r1/r2)",
-      "tier": "DECOMPILED",
+      "pct": 100.0,
+      "score": "328/328",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {
@@ -5658,20 +5658,20 @@
     {
       "name": "sub_0804C8BC",
       "addr": "0x0804C8BC",
-      "kind": "asm",
-      "status": "same_size",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
-      "wip": true,
+      "wip": false,
       "block_reason": "",
       "retail_bytes": 372,
-      "matched_bytes": 185,
+      "matched_bytes": 372,
       "compiled_bytes": 372,
-      "pct": 49.7,
-      "score": "185/372",
-      "source": "attempt",
-      "note": "same-size DIFF, giv decision differs (see notes)",
-      "tier": "DECOMPILED",
+      "pct": 100.0,
+      "score": "372/372",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {
@@ -6774,7 +6774,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SfxSetMasterVolume"
     },
     {
       "name": "sub_08060394",
@@ -6850,7 +6850,7 @@
       "source": "integrated",
       "note": "",
       "tier": "MATCHING",
-      "symbol": ""
+      "symbol": "SfxPlayMapCursor"
     },
     {
       "name": "sub_08060438",
@@ -10427,20 +10427,20 @@
     {
       "name": "sub_0806E060",
       "addr": "0x0806E060",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
-      "wip": true,
+      "wip": false,
       "block_reason": "",
       "retail_bytes": 492,
-      "matched_bytes": 89,
-      "compiled_bytes": 0,
-      "pct": 18.1,
-      "score": "89/492",
-      "source": "attempt",
-      "note": "m2c failed; initial seed attempt",
-      "tier": "DECOMPILED",
+      "matched_bytes": 492,
+      "compiled_bytes": 492,
+      "pct": 100.0,
+      "score": "492/492",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {

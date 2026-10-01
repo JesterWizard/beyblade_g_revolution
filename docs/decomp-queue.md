@@ -2,19 +2,19 @@
 
 _Auto-generated. Edit pins/blockers in [`decomp-queue.toml`](decomp-queue.toml); refresh with `make queue` or `python3 tools/decomp/next_queue.py --write`._
 
-_Updated: 2026-10-01T17:41:49Z_
+_Updated: 2026-10-01T20:54:33Z_
 
 ## Summary
 
 | Metric | Count |
 |--------|------:|
-| Semantic C done | 628 |
-| Still need semantic C | **5** |
-| Readable Thumb remaining | 5 |
+| Semantic C done | 631 |
+| Still need semantic C | **2** |
+| Readable Thumb remaining | 2 |
 | Opcode embeds remaining | 0 |
 | Battle pending | 0 (160 already semantic) |
 | Blocked (documented) | 2 |
-| WIP (resume these first) | 5 |
+| WIP (resume these first) | 2 |
 
 Ranking: **battle** · showing top **40**
 
@@ -27,9 +27,6 @@ _Parked C — do not start these from disasm. Read `notes`, then `match_function
 | Function | Bytes | Score | Seed | Status | Next |
 |----------|------:|-------|------|--------|------|
 | `sub_08035624` | 114 | 45/114 | `src/decompiled/sub_08035624.c` | structure matches; only key/list/scratch register choice differs (retail key=r4, list=r2, const scratch=r0; ours r0/r0/r2). 37 differing insns vs 59 for the old seed | find C that makes key addr r4 and list addr r2 (forcing them with a debug compiler makes output equal retail); try permuter on this draft with a time limit |
-| `sub_0804BD38` | 328 | 302/328 | `src/decompiled/sub_0804BD38.c` | same-size DIFF 302/328; permuter 300s best 870 (base 905); decl/init-order perms and first-read shape variants no change | first two s16 loads: retail base r3/zero r4 then base r0/zero r2; ours r0/r4 and r0/r4. Likely needs a different source shape for what keeps r1/r2 conflicts alive |
-| `sub_0804C8BC` | 372 | 185/372 | `src/decompiled/sub_0804C8BC.c` | same-size DIFF, giv decision differs (see notes) | find source form that keeps (y+56)<<8 unreduced while i*16 stays reduced |
-| `sub_0806E060` | 492 | 89/492 | `src/decompiled/sub_0806E060.c` | bezier keyframe sampler 468/492 | idx in r10, f in r12, p0/p1 in sp0/sp4; 0x180 not folded |
 | `sub_080706B0` | 0 | 452/626 | `src/decompiled/sub_080706B0.c` | same-size DIFF after permuter, allocation only | init-load order of locals, spacing spill (sp24), glyph width kept in r8 |
 
 Per-function notes: `src/decompiled/<fn>.md`.
