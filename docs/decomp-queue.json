@@ -1,13 +1,13 @@
 {
-  "generated": "2026-09-30T23:02:56Z",
+  "generated": "2026-10-01T00:10:43Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 20,
-    "semantic_done": 613,
-    "readable_asm": 20,
+    "pending": 19,
+    "semantic_done": 614,
+    "readable_asm": 19,
     "opcode": 0,
     "battle_pending": 5,
     "battle_semantic": 154,
@@ -74,8 +74,8 @@
     {
       "name": "sub_08069270",
       "addr": "0x08069270",
-      "kind": "asm",
-      "bytes": 244,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08069270.c",
       "notes": "src/decompiled/sub_08069270.md",
       "status": "Logic mapped (horizontal wrap split into two blits; fn = 0x0806945D or gData_080BB8A4[0]; wrap-off path uses gData_080BB8A8[0]). Separate e1/e2/h1/h2 copies reproduce retail's stack spills; remaining diff is register choice: retail keeps d in r3 and end in r5, ours copies d to r6 (+2B). Permuter (2 rounds) reached 25 only via uninitialised-variable tricks.",

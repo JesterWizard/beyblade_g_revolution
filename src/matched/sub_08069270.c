@@ -1,136 +1,63 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08069270
-__attribute__((naked))
+/* match-compiler: old_agbcc */
+#include "global.h"
+#include "ram_map.h"
+typedef void (*BlitFunc)(struct Unk68988 *, s32, s32, s32, s32, s32, s32);
+typedef void (*BlitColFunc)(struct Unk68988 *, s32, s32, s32, s32);
 void BgMapBlitRect(struct Unk68988 *st, s32 x, s32 y, s32 d, s32 e, s32 w, s32 h)
 {
-    asm(
-        ".syntax unified\n"
-        "push {r4, r5, r6, r7, lr}\n"
-        "mov r7, r10\n"
-        "mov r6, r9\n"
-        "mov r5, r8\n"
-        "push {r5, r6, r7}\n"
-        "add sp, #-0x01C\n"
-        "adds r6, r0, #0x0\n"
-        "adds r4, r1, #0x0\n"
-        "str r2, [sp, #0x00C]\n"
-        "ldr r2, [sp, #0x040]\n"
-        "ldr r0, [sp, #0x044]\n"
-        "mov r10, r0\n"
-        "movs r1, #0x00\n"
-        "mov r8, r1\n"
-        "str r0, [sp, #0x010]\n"
-        "ldr r1, [sp, #0x03C]\n"
-        "mov r12, r1\n"
-        "adds r7, r3, #0x0\n"
-        "mov r0, r12\n"
-        "str r0, [sp, #0x018]\n"
-        "adds r1, r6, #0x0\n"
-        "adds r1, #0x64\n"
-        "movs r0, #0x01\n"
-        "ldrh r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _080692B0\n"
-        "ldr r1, _080692AC @ =0x0806945D\n"
-        "mov r9, r1\n"
-        "b _080692B6\n"
-        "_080692AC: .4byte 0x0806945D\n"
-        "_080692B0:\n"
-        "ldr r0, _08069338 @ =0x080BB8A4\n"
-        "ldr r0, [r0, #0x00]\n"
-        "mov r9, r0\n"
-        "_080692B6:\n"
-        "ldr r0, [sp, #0x040]\n"
-        "adds r5, r4, r0\n"
-        "ldr r1, [r6, #0x00]\n"
-        "cmp r5, r1\n"
-        "ble _080692D6\n"
-        "movs r2, #0x00\n"
-        "cmp r4, r1\n"
-        "bge _080692C8\n"
-        "subs r2, r1, r4\n"
-        "_080692C8:\n"
-        "ldr r0, [sp, #0x040]\n"
-        "subs r0, r0, r2\n"
-        "mov r8, r0\n"
-        "adds r0, r4, r2\n"
-        "subs r0, r0, r1\n"
-        "str r0, [sp, #0x014]\n"
-        "adds r7, r7, r2\n"
-        "_080692D6:\n"
-        "cmp r4, #0x00\n"
-        "bge _080692F0\n"
-        "adds r2, r5, #0x0\n"
-        "cmp r2, #0x00\n"
-        "bge _080692E2\n"
-        "movs r2, #0x00\n"
-        "_080692E2:\n"
-        "ldr r0, [sp, #0x040]\n"
-        "subs r0, r0, r2\n"
-        "mov r8, r0\n"
-        "adds r4, r4, r1\n"
-        "str r4, [sp, #0x014]\n"
-        "movs r4, #0x00\n"
-        "add r3, r8\n"
-        "_080692F0:\n"
-        "cmp r2, #0x00\n"
-        "ble _08069308\n"
-        "mov r1, r12\n"
-        "str r1, [sp, #0x000]\n"
-        "str r2, [sp, #0x004]\n"
-        "mov r0, r10\n"
-        "str r0, [sp, #0x008]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r1, r4, #0x0\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "bl _08073C64\n"
-        "_08069308:\n"
-        "mov r1, r8\n"
-        "cmp r1, #0x00\n"
-        "ble _08069350\n"
-        "adds r1, r6, #0x0\n"
-        "adds r1, #0x7C\n"
-        "movs r0, #0x08\n"
-        "ldrb r1, [r1, #0x00]\n"
-        "ands r0, r1\n"
-        "cmp r0, #0x00\n"
-        "beq _0806933C\n"
-        "ldr r0, [sp, #0x018]\n"
-        "str r0, [sp, #0x000]\n"
-        "mov r1, r8\n"
-        "str r1, [sp, #0x004]\n"
-        "ldr r0, [sp, #0x010]\n"
-        "str r0, [sp, #0x008]\n"
-        "adds r0, r6, #0x0\n"
-        "ldr r1, [sp, #0x014]\n"
-        "ldr r2, [sp, #0x00C]\n"
-        "adds r3, r7, #0x0\n"
-        "bl _08073C64\n"
-        "b _08069350\n"
-        ".byte 0x00, 0x00\n"
-        "_08069338: .4byte 0x080BB8A4\n"
-        "_0806933C:\n"
-        "ldr r0, _08069360 @ =0x080BB8A8\n"
-        "ldr r1, [sp, #0x010]\n"
-        "str r1, [sp, #0x000]\n"
-        "ldr r4, [r0, #0x00]\n"
-        "adds r0, r6, #0x0\n"
-        "adds r1, r7, #0x0\n"
-        "ldr r2, [sp, #0x018]\n"
-        "mov r3, r8\n"
-        "bl _08073C50\n"
-        "_08069350:\n"
-        "add sp, #0x01C\n"
-        "pop {r3, r4, r5}\n"
-        "mov r8, r3\n"
-        "mov r9, r4\n"
-        "mov r10, r5\n"
-        "pop {r4, r5, r6, r7}\n"
-        "pop {r0}\n"
-        "bx r0\n"
-        "_08069360: .4byte 0x080BB8A8\n"
-    );
-}
+    BlitFunc blit;
+    s32 h2;
+    s32 x2;
+    s32 e2;
+    s32 len1;
+    s32 len2;
+    s32 d2;
+    s32 end;
+    s32 e1;
+    s32 h1;
 
+    len1 = w;
+    h1 = h;
+    len2 = 0;
+    h2 = h;
+    e1 = e;
+    do { d2 = d; } while (0); /* extra ref weight keeps d in r3 */
+    e2 = e;
+    if (st->unk64 & 1)
+        blit = (BlitFunc)0x0806945D;
+    else
+        blit = (BlitFunc)gData_080BB8A4[0];
+    if (x + w > st->unk00)
+    {
+        len1 = 0;
+        if (x < st->unk00)
+            len1 = st->unk00 - x;
+        len2 = w - len1;
+        x2 = x + len1 - st->unk00;
+        d2 += len1;
+    }
+    if (x < 0)
+    {
+        len1 = x + w;
+        if (len1 < 0)
+            len1 = 0;
+        len2 = w - len1;
+        x2 = x + st->unk00;
+        x = 0;
+        d += len2;
+    }
+    if (len1 > 0)
+        blit(st, x, y, d, e1, len1, h1);
+    if (len2 > 0)
+    {
+        if (st->unk7C & 8)
+            blit(st, x2, y, d2, e2, len2, h2);
+        else
+            ((BlitColFunc)gData_080BB8A8[0])(st, d2, e2, len2, h2);
+    }
+}

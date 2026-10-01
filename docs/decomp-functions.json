@@ -1,15 +1,15 @@
 {
-  "generated": "2026-09-30T23:02:56Z",
+  "generated": "2026-10-01T00:10:43Z",
   "counts": {
-    "matched": 613,
-    "wip": 18,
+    "matched": 614,
+    "wip": 17,
     "blocked": 2
   },
   "tiers": {
     "UNKNOWN": 2,
     "DECOMPILED": 9,
-    "UNDERSTOOD": 9,
-    "MATCHING": 613
+    "UNDERSTOOD": 8,
+    "MATCHING": 614
   },
   "total": 633,
   "functions": [
@@ -9630,20 +9630,20 @@
     {
       "name": "sub_08069270",
       "addr": "0x08069270",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 244,
-      "matched_bytes": 24,
-      "compiled_bytes": 0,
-      "pct": 9.8,
-      "score": "24/244",
-      "source": "attempt",
-      "note": "m2c failed; initial seed attempt",
-      "tier": "UNDERSTOOD",
+      "matched_bytes": 244,
+      "compiled_bytes": 244,
+      "pct": 100.0,
+      "score": "244/244",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": "BgMapBlitRect"
     },
     {

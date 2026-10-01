@@ -21,7 +21,7 @@ void BgMapBlitRect(struct Unk68988 *st, s32 x, s32 y, s32 d, s32 e, s32 w, s32 h
     len2 = 0;
     h2 = h;
     e1 = e;
-    d2 = d;
+    do { d2 = d; } while (0); /* extra ref weight keeps d in r3 */
     e2 = e;
     if (st->unk64 & 1)
         blit = (BlitFunc)0x0806945D;
@@ -34,7 +34,7 @@ void BgMapBlitRect(struct Unk68988 *st, s32 x, s32 y, s32 d, s32 e, s32 w, s32 h
             len1 = st->unk00 - x;
         len2 = w - len1;
         x2 = x + len1 - st->unk00;
-        d2 = d + len1;
+        d2 += len1;
     }
     if (x < 0)
     {
