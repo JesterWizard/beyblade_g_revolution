@@ -78,7 +78,7 @@ void BtlFrameUpdate(
             sub_08030F00(
                 (struct Unk30F00 *)gBattleWork->unk0AE8.fields.unkB50,
                 (struct Unk30F00Src *)gBattleWork->unk478);
-            sub_08033530();
+            BtlSceneObjUpdate();
             BattleScorePopupTick();
             sub_08033084(
                 &gBattleWork->unk1F7C,

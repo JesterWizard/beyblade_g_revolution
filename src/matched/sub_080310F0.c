@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080310f0
-void sub_080310F0(struct Unk310F0a *a, struct Unk310F0b *b)
+void BarSetFillFromPercent(struct Unk310F0a *a, struct Unk310F0b *b)
 {
     s32 v;
 

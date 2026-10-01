@@ -4,13 +4,13 @@
 
 // @ 0x0802bc14
 /* A free Unk1694 slot reads as the word 0xFF0000FF (unk00 = unk03 = 0xFF). */
-s32 sub_0802BC14(s16 a)
+s32 CollectionIsFull(s16 a)
 {
     s32 count;
     s32 limit;
     s32 i;
 
-    count = sub_0802C62C((s8)a);
+    count = CollectionCountByKind((s8)a);
     limit = _0802BA7C((s8)a);
     DebugPrint((void *)0x0833BE30, (s16)a, count, limit);
     if (count < limit)

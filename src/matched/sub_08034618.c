@@ -16,7 +16,7 @@ void sub_08034618(struct Unk346C0 *a)
         scaled = (scaled << 3) + delta;
         scaled <<= 10;
         value += scaled >> 16;
-        if (sub_0802C62C(1) <= 1 && a->unk30C == 0)
+        if (CollectionCountByKind(1) <= 1 && a->unk30C == 0)
         {
             value >>= 1;
             if (value > 0x31)

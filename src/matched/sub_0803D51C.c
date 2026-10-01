@@ -7,7 +7,7 @@
 // Retail compiled this caller against a (s8, s8, s16) prototype of
 // sub_0802C55C, whose definition takes (u16, u8, s16): the arguments are
 // passed sign-extended. The cast reproduces that call (still a direct bl).
-#define FreeSlotSigned ((void (*)(s32, s32, s32))sub_0802C55C)
+#define FreeSlotSigned ((void (*)(s32, s32, s32))CollectionFreeSlot)
 
 // For the Unk1694 entries found by sub_0802C314(3, 1) and (2, 1): subtracts
 // (unk00 + MainWork.strength) from the entry's unk02 and frees the entry once

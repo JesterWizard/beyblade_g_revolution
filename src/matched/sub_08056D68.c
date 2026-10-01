@@ -27,7 +27,7 @@ void ScriptDispatchEvent(struct Unk56D68 *event)
         gMainWorkPtr->unk181D = 1;
         gMainWorkPtr->unk16C8 = args;
         sub_0802D52C(1, 1);
-        entry = sub_0802B95C(gMainWorkPtr->unk16C8);
+        entry = FindEntryByString(gMainWorkPtr->unk16C8);
         if (entry != NULL)
             gMainWorkPtr->unk1794 = *entry;
         else

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802b95c
-void *sub_0802B95C(void *a)
+void *FindEntryByString(void *a)
 {
     struct Unk2B95C *p;
     struct Unk2B95C *q;

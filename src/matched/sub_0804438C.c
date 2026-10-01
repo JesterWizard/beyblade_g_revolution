@@ -25,7 +25,7 @@ void ScreenBrightnessFade(s8 mode)
                 level = value - 0x10;
                 if (level < 0)
                     level = 0;
-                sub_080602C0(level);
+                SfxSetMasterVolume(level);
             }
             sub_08061D00((u16)i, 0x0F);
             sub_08052FC8();
@@ -33,7 +33,7 @@ void ScreenBrightnessFade(s8 mode)
             sub_08052FC8();
             i++;
         }
-        sub_080602C0(0);
+        SfxSetMasterVolume(0);
         ScreenWhiteoutClearPalettes();
         break;
     case 1:
@@ -51,7 +51,7 @@ void ScreenBrightnessFade(s8 mode)
                 level = value + 0x10;
                 if (level > 0xB8)
                     level = 0xB8;
-                sub_080602C0(level);
+                SfxSetMasterVolume(level);
             }
             sub_08061D00((u16)i, 0x0F);
             sub_08052FC8();
@@ -64,7 +64,7 @@ void ScreenBrightnessFade(s8 mode)
         }
         TextWindowClearActiveTiles();
         TextWindowLayout(1, 4, 0x1C, 0x10, 0x1BF);
-        sub_080602C0(0xB8);
+        SfxSetMasterVolume(0xB8);
         break;
     }
 }

@@ -25,7 +25,7 @@ void sub_08056F84(void)
     sub_0802D52C(2, 1);
     gMainWorkPtr->unk181D = 2;
     gMainWorkPtr->unk17FC = busy;
-    entry = sub_0802B95C(gMainWorkPtr->unk16C8);
+    entry = FindEntryByString(gMainWorkPtr->unk16C8);
     if (entry != 0)
     {
         gMainWorkPtr->unk17E4 = entry->unk00;

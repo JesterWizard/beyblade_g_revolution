@@ -9,7 +9,7 @@
 // (`a << 24 >> 24`, then `<< 24 >> 24` signed) ahead of the `movs r3,#0` that zeroes the
 // counter; with `s32 count = 0;` declared first the mov lands first and the function
 // floors at 59/64.
-s32 sub_0802C62C(s8 a)
+s32 CollectionCountByKind(s8 a)
 {
     s32 i;
     s32 count;

@@ -6,7 +6,7 @@
 /* match-compiler: old_agbcc */
 // Free slot `i` of the MainWork.unk1694 table if it holds (a, b); a freed
 // kind-1 slot also notifies sub_0803E0CC.
-void sub_0802C55C(u16 a, u8 b, s16 i)
+void CollectionFreeSlot(u16 a, u8 b, s16 i)
 {
     s8 kind;
 

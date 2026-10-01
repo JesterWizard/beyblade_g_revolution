@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08033530
-void sub_08033530(void)
+void BtlSceneObjUpdate(void)
 {
     if (gBattleWork->unk2088 == 1)
     {

@@ -12,7 +12,7 @@
 // Lays `str` out on a tile-map text layer starting at pixel (x, y): claims and
 // clears tile cells for the aligned string width, then blits each glyph into
 // them. align: 1 = right-aligned at x, 2 = centred on x. Returns the pen x.
-s32 sub_0806B764(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
+s32 TextLayerInit(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
 {
     u8 align = alignArg;
     struct TextWindow *win = a->win;

@@ -25,7 +25,7 @@ s32 ProximityTriggerCheck(struct Actor *a, struct Actor *obj, u32 rangeX, u32 ra
         if (obj->unkD8 == (void *)1)
         {
             profile = BeybladeGetProfile((s32)obj->unkD4);
-            if (sub_0802BC14(profile) == 0 || profile == -1)
+            if (CollectionIsFull(profile) == 0 || profile == -1)
             {
                 if (obj->unkC4 != NULL)
                     ScriptRun((u32)obj, obj->unkC4);

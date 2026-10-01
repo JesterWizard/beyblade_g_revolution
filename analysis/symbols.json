@@ -1,6 +1,6 @@
 {
-  "count": 314,
-  "generated": "2026-09-28T19:25:25Z",
+  "count": 324,
+  "generated": "2026-10-01T17:53:23Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -31,6 +31,19 @@
       "symbol": "BeybladeGetProfile",
       "updated": "2026-09-23"
     },
+    "0x0802B95C": {
+      "aliases": [
+        "sub_0802B95C"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "walks the table from sub_0802B994 until unk04==0, returning the entry whose unk04 string StringCompare-equals the argument; callers sub_08056D68/sub_08056F84"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "FindEntryByString",
+      "updated": "2026-10-01"
+    },
     "0x0802BA4C": {
       "aliases": [
         "sub_0802BA4C"
@@ -45,6 +58,32 @@
       "source": "ai",
       "symbol": "BtlFreeUnk1694Obj",
       "updated": "2026-09-22"
+    },
+    "0x0802BC14": {
+      "aliases": [
+        "sub_0802BC14"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "returns 0 only when CollectionCountByKind < limit and a free (0xFF0000FF) unk1694 slot exists; calls DebugPrint; caller sub_08062790"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionIsFull",
+      "updated": "2026-10-01"
+    },
+    "0x0802C55C": {
+      "aliases": [
+        "sub_0802C55C"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "resets MainWork.unk1694[i] to the free word 0xFF0000FF when it holds (a,b); kind 1 then calls RemoveBladeFromTysonsCollection(i)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionFreeSlot",
+      "updated": "2026-10-01"
     },
     "0x0802C5DC": {
       "aliases": [
@@ -61,6 +100,19 @@
       "symbol": "BtlUnk1694FindAndMark",
       "updated": "2026-09-22"
     },
+    "0x0802C62C": {
+      "aliases": [
+        "sub_0802C62C"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "counts the 128 MainWork.unk1694 slots whose kind byte (+3) equals a; unk1694 slots are freed via RemoveBladeFromTysonsCollection (caller sub_0802BC14)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "CollectionCountByKind",
+      "updated": "2026-10-01"
+    },
     "0x0802C6AC": {
       "aliases": [
         "sub_0802C6AC"
@@ -73,6 +125,19 @@
       "source": "ai",
       "symbol": "InitTournament",
       "updated": "2026-09-28"
+    },
+    "0x0802D52C": {
+      "aliases": [
+        "sub_0802D52C"
+      ],
+      "confidence": 0.45,
+      "evidence": [
+        "b==0 moves gUnk_0300026C->unk08 off-screen (0xFFFFC000), else places it from MainWork.unk0424 and calls TextEntrySetPaletteBank(...,2); callers sub_08056D68/sub_08056F84"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextEntryCursorSetVisible",
+      "updated": "2026-10-01"
     },
     "0x0802D8DC": {
       "aliases": [
@@ -204,6 +269,19 @@
       "source": "ai",
       "symbol": "CleanBattleOverlays",
       "updated": "2026-09-28"
+    },
+    "0x080310F0": {
+      "aliases": [
+        "sub_080310F0"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "ScaleRatio(a->unk04->unk28->unk24, 100, 182) stored to b->shown; sibling sub_08031094 does the same with range 36; ScaleRatio caller is ExpBarFill"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BarSetFillFromPercent",
+      "updated": "2026-10-01"
     },
     "0x08031124": {
       "aliases": [
@@ -364,6 +442,19 @@
       "symbol": "BattleBannerScroll",
       "updated": "2026-09-28"
     },
+    "0x08033530": {
+      "aliases": [
+        "sub_08033530"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "when gBattleWork->unk2088==1 and unk201C!=0, runs SceneObjUpdate on gBattleWork->unk1FAC; caller sub_08032DC4"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlSceneObjUpdate",
+      "updated": "2026-10-01"
+    },
     "0x0803370C": {
       "aliases": [
         "sub_0803370C"
@@ -403,6 +494,19 @@
       "source": "ai",
       "symbol": "BtlKeyComboStep",
       "updated": "2026-09-28"
+    },
+    "0x08034414": {
+      "aliases": [
+        "sub_08034414"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "thunk of PaletteSnapshotRestoreBg (ignores its arg); callers sub_0803403C/sub_0803413C are in the battle range (BattleStepBeyblades 0x0803019C)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlPaletteRestoreBg",
+      "updated": "2026-10-01"
     },
     "0x08034420": {
       "aliases": [
@@ -1661,6 +1765,19 @@
       "symbol": "SfxPlayVariant",
       "updated": "2026-09-28"
     },
+    "0x080602C0": {
+      "aliases": [
+        "sub_080602C0"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "u8 thunk of SoundSetMasterVolume (0x080717F0); caller sub_0804438C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SfxSetMasterVolume",
+      "updated": "2026-10-01"
+    },
     "0x080603A4": {
       "aliases": [
         "sub_080603A4"
@@ -1688,6 +1805,19 @@
       "source": "ai",
       "symbol": "BtlSetAllUnk1710",
       "updated": "2026-09-22"
+    },
+    "0x08060428": {
+      "aliases": [
+        "sub_08060428"
+      ],
+      "confidence": 0.45,
+      "evidence": [
+        "thunk SfxPlayInSlot(0xD, 0x38); caller MapCursorInput (0x080436B0) is the cursor-move handler"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SfxPlayMapCursor",
+      "updated": "2026-10-01"
     },
     "0x08060468": {
       "aliases": [

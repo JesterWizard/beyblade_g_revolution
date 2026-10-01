@@ -13,8 +13,12 @@
 
 #define GetIndexedRecordWord sub_0802B8BC
 #define BeybladeGetProfile sub_0802B930
+#define FindEntryByString sub_0802B95C
 #define BtlFreeUnk1694Obj sub_0802BA4C
+#define CollectionIsFull sub_0802BC14
+#define CollectionFreeSlot sub_0802C55C
 #define BtlUnk1694FindAndMark sub_0802C5DC
+#define CollectionCountByKind sub_0802C62C
 #define InitTournament sub_0802C6AC
 #define HudRefreshStats sub_0802D8DC
 #define HudWriteDigits sub_0802E18C
@@ -26,6 +30,7 @@
 #define BeybladeSpinStep sub_080302E0
 #define BeybladeSteerByDpad sub_08030638
 #define CleanBattleOverlays sub_08030D4C
+#define BarSetFillFromPercent sub_080310F0
 #define ScaleRatio sub_08031124
 #define PaletteHighlightReset sub_08031294
 #define PaletteHighlightBegin sub_080312B0
@@ -38,9 +43,11 @@
 #define BtlFrameUpdate sub_08032DC4
 #define BtlSetMode1F90 sub_080330F4
 #define BattleBannerScroll sub_08033188
+#define BtlSceneObjUpdate sub_08033530
 #define BattleScorePopupTick sub_0803370C
 #define BtlClearState sub_08033878
 #define BtlKeyComboStep sub_080338F0
+#define BtlPaletteRestoreBg sub_08034414
 #define Unk346C0Init sub_08034420
 #define BtlCaptureInput sub_08034894
 #define BeybladeUpdate sub_080348E8
@@ -137,6 +144,7 @@
 #define SfxPlayInSlot sub_080601C4
 #define SfxStopSlot sub_08060220
 #define SfxPlayVariant sub_08060254
+#define SfxSetMasterVolume sub_080602C0
 #define BgmSetVolume sub_080603A4
 #define BtlSetAllUnk1710 sub_080603E0
 #define WindowEffectCreate sub_08060468

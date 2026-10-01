@@ -19,7 +19,7 @@ s32 sub_0802BAD4(u8 kind, u8 group, u8 c, u8 d)
 
     if (gMainWorkPtr->unk1694 == NULL)
         return 0;
-    if (sub_0802C62C(group) >= _0802BA7C(group))
+    if (CollectionCountByKind(group) >= _0802BA7C(group))
         return 0;
     for (i = 0; i <= 0x7F; i++)
     {
