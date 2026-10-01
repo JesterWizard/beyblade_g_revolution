@@ -1,14 +1,12 @@
 {
-  "generated": "2026-10-01T20:54:33Z",
   "counts": {
-    "matched": 632,
-    "wip": 1
+    "matched": 633
   },
   "tiers": {
     "UNKNOWN": 0,
-    "DECOMPILED": 1,
+    "DECOMPILED": 0,
     "UNDERSTOOD": 0,
-    "MATCHING": 632
+    "MATCHING": 633
   },
   "total": 633,
   "functions": [
@@ -2238,20 +2236,20 @@
     {
       "name": "sub_08035624",
       "addr": "0x08035624",
-      "kind": "asm",
-      "status": "size_mismatch",
-      "display": "wip",
+      "kind": "semantic",
+      "status": "matched",
+      "display": "matched",
       "blocked": false,
       "wip": true,
       "block_reason": "",
       "retail_bytes": 114,
-      "matched_bytes": 45,
-      "compiled_bytes": 112,
-      "pct": 39.5,
-      "score": "45/114",
-      "source": "attempt",
-      "note": "structure matches; only key/list/scratch register choice differs (retail key=r4, list=r2, const scratch=r0; ours r0/r0/r2). 37 differing insns vs 59 for the old seed",
-      "tier": "DECOMPILED",
+      "matched_bytes": 114,
+      "compiled_bytes": 114,
+      "pct": 100.0,
+      "score": "114/114",
+      "source": "integrated",
+      "note": "",
+      "tier": "MATCHING",
       "symbol": ""
     },
     {
@@ -12023,7 +12021,7 @@
     {
       "name": "sub_08074144",
       "addr": "0x08074144",
-      "kind": "asm",
+      "kind": "semantic",
       "status": "matched",
       "display": "matched",
       "blocked": true,
@@ -12034,8 +12032,8 @@
       "compiled_bytes": 2,
       "pct": 100.0,
       "score": "2/2",
-      "source": "naked-only",
-      "note": "naked asm is the only matching form",
+      "source": "integrated",
+      "note": "",
       "tier": "MATCHING",
       "symbol": ""
     }

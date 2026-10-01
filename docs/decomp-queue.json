@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-01T20:54:33Z",
+  "generated": "2026-10-01T21:43:28Z",
   "settings": {
     "top": 40,
     "prefer": "battle"
   },
   "summary": {
-    "pending": 2,
-    "semantic_done": 631,
-    "readable_asm": 2,
+    "pending": 0,
+    "semantic_done": 633,
+    "readable_asm": 0,
     "opcode": 0,
     "battle_pending": 0,
     "battle_semantic": 160,
@@ -19,8 +19,8 @@
     {
       "name": "sub_08035624",
       "addr": "0x08035624",
-      "kind": "asm",
-      "bytes": 114,
+      "kind": "missing",
+      "bytes": 0,
       "seed": "src/decompiled/sub_08035624.c",
       "notes": "src/decompiled/sub_08035624.md",
       "status": "structure matches; only key/list/scratch register choice differs (retail key=r4, list=r2, const scratch=r0; ours r0/r0/r2). 37 differing insns vs 59 for the old seed",
@@ -52,8 +52,8 @@
       "name": "sub_08074144",
       "addr": "0x08074144",
       "reason": "single instruction 'mov pc, lr' (2B) \u2014 semantically identical to bx lr but a different opcode; agbcc never emits mov pc,lr for an empty C function (only bx lr), so this must stay naked asm",
-      "kind": "asm",
-      "bytes": 2
+      "kind": "missing",
+      "bytes": 0
     }
   ],
   "backlog": []

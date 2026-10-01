@@ -2,8 +2,6 @@
 
 _Auto-generated. Do not edit. Refresh with `python3 tools/decomp/function_scores.py --write` or `make progress`._
 
-_Updated: 2026-10-01T20:52:45Z_
-
 ## Legend
 
 | Status | Meaning | Counted as decompiled? |
@@ -22,11 +20,11 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Status | Count |
 |--------|------:|
-| matched | 632 |
+| matched | 633 |
 | byte-identical DIFF | 0 |
 | same-size DIFF | 0 |
 | size DIFF | 0 |
-| WIP (parked C) | 1 |
+| WIP (parked C) | 0 |
 | not started | 0 |
 | blocked | 0 |
 | **total** | **633** |
@@ -35,16 +33,15 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 
 | Function | Status | % | Bytes | Note |
 |----------|--------|--:|------:|------|
-| `sub_08035624` | WIP (parked C) | 39.5% | 45/114 | structure matches; only key/list/scratch register choice differs (retail key=… |
+| _none yet_ | | | | run `match_function.py --record` |
 
 ## All 633 functions
 
 | Function | Address | Status | % | Bytes | Kind |
 |----------|---------|--------|--:|------:|------|
-| `sub_08035624` | `0x08035624` | WIP (parked C) | 39.5% | 45/114 | asm |
 | `sub_08067A9C` | `0x08067A9C` | matched | 100.0% | 2/2 | semantic |
 | `sub_0806EEC4` | `0x0806EEC4` | matched | 100.0% | 2/2 | semantic |
-| `sub_08074144` | `0x08074144` | matched | 100.0% | 2/2 | asm |
+| `sub_08074144` | `0x08074144` | matched | 100.0% | 2/2 | semantic |
 | `sub_08033A94` | `0x08033A94` | matched | 100.0% | 4/4 | semantic |
 | `sub_08062098` | `0x08062098` | matched | 100.0% | 4/4 | semantic |
 | `sub_080674A0` | `0x080674A0` | matched | 100.0% | 4/4 | semantic |
@@ -440,6 +437,7 @@ Score is **matched bytes / retail bytes** (e.g. `68/70`). Completion % is that r
 | `sub_080604C8` | `0x080604C8` | matched | 100.0% | 112/112 | semantic |
 | `sub_08066224` | `0x08066224` | matched | 100.0% | 112/112 | semantic |
 | `sub_08073114` | `0x08073114` | matched | 100.0% | 112/112 | semantic |
+| `sub_08035624` | `0x08035624` | matched | 100.0% | 114/114 | semantic |
 | `sub_08041E14` | `0x08041E14` | matched | 100.0% | 114/114 | semantic |
 | `sub_08070468` | `0x08070468` | matched | 100.0% | 114/114 | semantic |
 | `sub_080392D0` | `0x080392D0` | matched | 100.0% | 116/116 | semantic |

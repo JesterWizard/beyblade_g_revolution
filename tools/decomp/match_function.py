@@ -68,6 +68,31 @@ COMPILERS: dict[str, Path] = {
 }
 DEFAULT_COMPILER = "agbcc"
 
+# Per-function assembly fixups, parsed from `/* match-fixup: mov-pc-lr */`.
+# agbcc hard-codes `bx lr` for every Thumb return, but a few retail leaves
+# (sub_08074144) return with the pre-interwork `mov pc, lr` (46F7 vs 4770).
+# The C stays plain; the fixup rewrites the return in the generated .s.
+MATCH_FIXUP_RE = re.compile(r"/\*\s*match-fixup:\s*(\S+?)\s*\*/")
+ALLOWED_MATCH_FIXUPS = frozenset({"mov-pc-lr"})
+_BX_LR_RE = re.compile(r"^(\s*)bx\s+lr\s*$", re.M)
+
+
+def apply_match_fixups(c_path: Path, asm_path: Path) -> None:
+    """Rewrite agbcc output per `/* match-fixup: ... */` before assembling."""
+    try:
+        text = c_path.read_text()
+    except OSError:
+        return
+    for match in MATCH_FIXUP_RE.finditer(text):
+        name = match.group(1)
+        if name not in ALLOWED_MATCH_FIXUPS:
+            raise ValueError(
+                f"unknown match-fixup `{name}` in {c_path}; "
+                f"allowed: {sorted(ALLOWED_MATCH_FIXUPS)}"
+            )
+        asm = asm_path.read_text()
+        asm_path.write_text(_BX_LR_RE.sub(r"\1mov\tpc, lr", asm))
+
 
 def match_compiler(c_path: Path) -> Path:
     """Return the agbcc binary this C file must be compiled with."""
@@ -232,6 +257,7 @@ def compile_c(
         )
     finally:
         i_path.unlink(missing_ok=True)
+    apply_match_fixups(c_path, asm_path)
     subprocess.run(
         [
             "arm-none-eabi-as",

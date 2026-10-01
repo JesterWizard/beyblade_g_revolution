@@ -22,7 +22,6 @@ import argparse
 import json
 import re
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -287,9 +286,7 @@ def collect() -> dict[str, Any]:
     for row in functions:
         tiers[row["tier"]] = tiers.get(row["tier"], 0) + 1
 
-    generated = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     return {
-        "generated": generated,
         "counts": counts,
         "tiers": tiers,
         "total": len(functions),
@@ -342,8 +339,6 @@ def render_md(data: dict[str, Any]) -> str:
         "",
         "_Auto-generated. Do not edit. Refresh with "
         "`python3 tools/decomp/function_scores.py --write` or `make progress`._",
-        "",
-        f"_Updated: {data['generated']}_",
         "",
         "## Legend",
         "",
@@ -449,7 +444,6 @@ def write_artifacts(data: dict[str, Any]) -> None:
 
     write_doc(OUT_MD, render_md(data))
     payload = {
-        "generated": data["generated"],
         "counts": data["counts"],
         "tiers": data["tiers"],
         "total": data["total"],

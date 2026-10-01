@@ -1,8 +1,47 @@
 #include "global.h"
+#include "ram_map.h"
+#include "battle.h"
 
 // @ 0x08035624
-__attribute__((naked))
-void sub_08035624(struct Unk346C0 *a, u8 type, s32 delta)
+/* match-compiler: old_agbcc */
+// Set the sort key of one of the three state slots (type 0/1/2 -> key at
+// +0xD8/+0x1B4/+0x290, list node at +0xD4/+0x1B0/+0x28C) to the base key at
+// a->unk00->unk00->unk22 plus `delta`, and re-sort the node if it exists.
+//
+// The key is stored a second time inside the `if`. It is load-bearing: the
+// second store keeps the key address live past the node load, so global alloc
+// gives it r4 (and the node address r2) as retail does. reload_cse then drops
+// the store as a no-op, so it leaves no code behind.
+void sub_08035624(struct Unk346C0 *a, u8 type, s8 delta)
 {
-    asm(".syntax unified\npush {r4, r5, lr}\nadds r3, r0, #0x0\nlsls r1, r1, #0x18\nlsrs r4, r1, #0x18\nadds r5, r4, #0x0\nldr r0, [r3, #0x00]\nldr r0, [r0, #0x00]\nlsls r2, r2, #0x18\nasrs r2, r2, #0x18\nldrh r0, [r0, #0x22]\nadds r1, r0, r2\ncmp r4, #0x01\nbeq _0803565A\ncmp r4, #0x01\nbgt _08035648\ncmp r4, #0x00\nbeq _0803564E\nb _08035690\n_08035648:\ncmp r5, #0x02\nbeq _08035676\nb _08035690\n_0803564E:\nadds r4, r3, #0x0\nadds r4, #0xD8\nstrh r1, [r4, #0x00]\nadds r2, r3, #0x0\nadds r2, #0xD4\nb _08035666\n_0803565A:\nmovs r0, #0xDA\nlsls r0, r0, #0x01\nadds r4, r3, r0\nstrh r1, [r4, #0x00]\nsubs r0, #0x04\nadds r2, r3, r0\n_08035666:\nldr r0, [r2, #0x00]\ncmp r0, #0x00\nbeq _08035690\nlsls r1, r1, #0x10\nlsrs r1, r1, #0x10\nbl sub_08070468\nb _08035690\n_08035676:\nmovs r0, #0xA4\nlsls r0, r0, #0x02\nadds r4, r3, r0\nstrh r1, [r4, #0x00]\nsubs r0, #0x04\nadds r2, r3, r0\nldr r0, [r2, #0x00]\ncmp r0, #0x00\nbeq _08035690\nlsls r1, r1, #0x10\nlsrs r1, r1, #0x10\nbl sub_08070468\n_08035690:\npop {r4, r5}\npop {r0}\nbx r0");
+    s32 value = a->unk00->unk00->unk22 + delta;
+
+    switch (type)
+    {
+    case 0:
+        a->unkD8 = value;
+        if (a->unkD4 != NULL)
+        {
+            a->unkD8 = value;
+            BtlObjListResort((struct Unk6FDB4 *)a->unkD4, value);
+        }
+        break;
+    case 1:
+        a->unk1B4 = value;
+        if (a->unk1B0 != NULL)
+        {
+            a->unk1B4 = value;
+            BtlObjListResort((struct Unk6FDB4 *)a->unk1B0, value);
+        }
+        break;
+    case 2:
+        a->unk290 = value;
+        if (a->unk28C != NULL)
+        {
+            a->unk290 = value;
+            BtlObjListResort((struct Unk6FDB4 *)a->unk28C, value);
+        }
+        break;
+    }
 }
+

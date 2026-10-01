@@ -112,7 +112,7 @@ void sub_08033F24(struct Unk33F30 *a);
 void sub_08034414(struct Unk33F30 *a);
 void sub_08035258(struct Unk35258 *a, u32 b);
 void sub_0803531C(struct Unk35258 *a);
-void sub_08035624(struct Unk346C0 *a, u8 type, s32 delta);
+void sub_08035624(struct Unk346C0 *a, u8 type, s8 delta);
 void sub_08035468(void *a, s32 b, s32 c, s32 d, s32 e, s32 f, s32 g);
 void sub_08070468(struct Unk6FDB4 *node, u16 key);
 void sub_08068020(struct Unk680CC *a, u16 key, u16 arg2);

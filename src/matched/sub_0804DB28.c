@@ -71,7 +71,7 @@ void SceneObjPoolRebuild(void)
         if (gData_03000698[i].unk00 != NULL)
         {
             SceneObjUpdate(&gData_03000698[i]);
-            sub_08067CE8(&gData_03000698[i], 0);
+            sub_08067CE8((struct Unk67BB8 *)&gData_03000698[i], 0);
         }
     }
 }

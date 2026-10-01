@@ -6,12 +6,12 @@ Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemera
 
 <!-- decomp-progress:start -->
 
-Decompiled C is **99.7%** of functions (631/633) and **99.9%** of original function bytes (90,156/90,272).
+Decompiled C is **100.0%** of functions (633/633) and **100.0%** of original function bytes (90,272/90,272).
 
 | Metric | | Percent | Count |
 | :--- | :--- | ---: | ---: |
-| Decompiled C (functions) | `████████████████████████████████` | **99.7%** | 631/633 |
-| Decompiled C (bytes) | `████████████████████████████████` | **99.9%** | 90,156/90,272 |
+| Decompiled C (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
+| Decompiled C (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Not opcode (functions) | `████████████████████████████████` | **100.0%** | 633/633 |
 | Not opcode (bytes) | `████████████████████████████████` | **100.0%** | 90,272/90,272 |
 | Linked in ROM | `████████████████████████████████` | **100.0%** | 633/633 |
@@ -19,19 +19,13 @@ Decompiled C is **99.7%** of functions (631/633) and **99.9%** of original funct
 
 | Kind | Functions | Bytes |
 | :--- | ---: | ---: |
-| Semantic C | 631 (99.7%) | 90,156 (99.9%) |
-| Readable Thumb | 2 (0.3%) | 116 (0.1%) |
+| Semantic C | 633 (100.0%) | 90,272 (100.0%) |
+| Readable Thumb | 0 (0.0%) | 0 (0.0%) |
 | Opcode embed | 0 (0.0%) | 0 (0.0%) |
 
 Battle: **100.0%** functions / **100.0%** bytes in semantic C (160/160; 0 opcode left).
 
 Opcode `.byte` embeds are the retail machine code and do not count as decompiled C. Readable Thumb is matching asm. Unmatched ROM ranges stay `.incbin`'d from `baserom.gba` so `make compare` can stay green. Refresh with `python3 tools/decomp/progress.py --write` or `make progress`. Per-function scores: [`docs/decomp-functions.md`](docs/decomp-functions.md).
-
-Remaining unmatched (readable Thumb still in `src/matched/`):
-
-| Function | Score | Status |
-|----------|------:|--------|
-| `sub_08035624` | 45/114 | parked |
 
 <!-- decomp-progress:end -->
 
