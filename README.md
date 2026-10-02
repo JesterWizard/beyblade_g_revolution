@@ -1,6 +1,6 @@
 # Beyblade G Revolution
 
-Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemerald](https://github.com/pret/pokeemerald). Mods live in `mods/<name>/` and build with `make MOD=<name>` without touching the decomp; see [docs/modding.md](docs/modding.md).
+Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemerald](https://github.com/pret/pokeemerald). Mods live in `mods/<name>/` without touching the decomp and are built in by default (`make NO_MODS=1` for the vanilla decomp, `make MOD=<name>` for another mod); see [docs/modding.md](docs/modding.md).
 
 ## Status
 
@@ -195,7 +195,8 @@ drafts are `src/decompiled/` (not linked). Patterns:
 | `make GROW=1 COMPARE=0 rom` | Allow `.text` to grow/shrink (mods; SHA1 will not match) |
 | `make graphics` / `make clean-gfx` | Re-extract / delete the PNGs in `graphics/` |
 | `make tools` | Build the pret helper tools |
-| `make tidy` / `make clean` | Delete build output (`clean` also cleans `tools/`) |
+| `make tidy` / `make clean` | Delete build output. Tools and the object cache are kept, so the next build is mostly cache hits. |
+| `make clean-cache` / `make clean-tools` | Also drop `.cache/objs/` (compiled functions, keyed by source + headers + toolchain) / the built tools in `tools/` |
 
 ## Layout
 

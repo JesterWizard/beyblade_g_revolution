@@ -8,16 +8,23 @@ FILE_NAME  := beyblade_g_revolution
 BUILD_DIR  := build
 OBJ_DIR    := $(BUILD_DIR)/bbgr
 
-# `make MOD=<name>` builds mods/<name>/ on top of the untouched decomp into
-# beyblade_g_revolution_<name>.gba. Plain `make` / `make compare` never see
-# mods/. See docs/modding.md.
-MOD ?=
+# Mods (mods/<name>/, see docs/modding.md) are built in by default: plain
+# `make` produces beyblade_g_revolution_<MOD>.gba with MOD=debug_menu.
+#   make NO_MODS=1      the vanilla decomp, beyblade_g_revolution.gba
+#   make MOD=<name>     a different mod (MOD= also means none)
+#   make compare        always vanilla, it checks rom.sha1
+DEFAULT_MOD := debug_menu
+ifeq ($(NO_MODS),1)
+  override MOD :=
+else ifeq ($(origin MOD),undefined)
+  MOD := $(if $(wildcard mods/$(DEFAULT_MOD)),$(DEFAULT_MOD))
+endif
+ifneq (,$(filter compare check-vanilla,$(MAKECMDGOALS)))
+  override MOD :=
+endif
 ifneq ($(MOD),)
   ifeq ($(wildcard mods/$(MOD)),)
     $(error mods/$(MOD) not found. See docs/modding.md)
-  endif
-  ifneq (,$(filter compare check-vanilla,$(MAKECMDGOALS)))
-    $(error MOD builds change the ROM, so they cannot be combined with `compare`)
   endif
   FILE_NAME := beyblade_g_revolution_$(MOD)
 endif
@@ -44,6 +51,11 @@ CPP     := $(CC) -E
 EXE :=
 ifeq ($(OS),Windows_NT)
   EXE := .exe
+endif
+
+# Compile functions in parallel unless -j was given.
+ifeq (,$(filter -j% --jobs%,$(MAKEFLAGS)))
+  MAKEFLAGS += --jobs=$(shell nproc 2>/dev/null || echo 4)
 endif
 
 MODERN  ?= 0
@@ -93,7 +105,7 @@ SHELL := bash -o pipefail
 .SECONDARY:
 .DELETE_ON_ERROR:
 
-.PHONY: all rom modern compare clean tidy tools check-baserom shift-test grow-test graphics clean-gfx
+.PHONY: all rom modern compare clean clean-tools clean-cache tidy tools check-baserom shift-test grow-test graphics clean-gfx
 .PHONY: check-vanilla
 .PHONY: split pack rename-files analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
 all: rom
@@ -263,11 +275,19 @@ check-baserom:
 tools:
 	@$(MAKE) -C tools
 
+# Build outputs only. The tools under tools/ (gbafix, scaninc, ...) and the
+# object cache survive; `make clean-tools` / `make clean-cache` remove those.
 clean: tidy
+
+clean-tools:
 	@$(MAKE) clean -C tools
 
+clean-cache:
+	rm -rf .cache/objs
+
 tidy:
-	rm -f $(ROM) $(ELF) $(MAP)
+	rm -f beyblade_g_revolution.gba beyblade_g_revolution.elf beyblade_g_revolution.map
+	rm -f beyblade_g_revolution_*.gba beyblade_g_revolution_*.elf beyblade_g_revolution_*.map
 	rm -rf $(BUILD_DIR)
 
 # Extracted PNGs are regenerated from the ROM; `make tidy` leaves them alone.
@@ -291,9 +311,13 @@ ifeq ($(GROW),1)
 COMPILE_MATCHED_FLAGS += --grow
 endif
 
-$(C_BUILDDIR)/matched/%.o: $(SPLIT_DIR)/%.c tools/decomp/compile_matched.py
+# Objects are cached by content (tools/decomp/objcache.py), so `make clean`
+# followed by `make` only recompiles functions whose source or toolchain changed.
+OBJ_ENV := $(shell python3 tools/decomp/objcache.py --env)
+
+$(C_BUILDDIR)/matched/%.o: $(SPLIT_DIR)/%.c tools/decomp/compile_matched.py tools/decomp/objcache.py
 	@mkdir -p $(dir $@)
-	python3 tools/decomp/compile_matched.py $(COMPILE_MATCHED_FLAGS) $< $@
+	python3 tools/decomp/objcache.py --env $(OBJ_ENV) $(COMPILE_MATCHED_FLAGS) $< $@
 
 # Mod code: plain agbcc, no retail comparison. Mods must not edit src/.
 MOD_CPPFLAGS = $(CPPFLAGS) -DMOD=1 -DMOD_NAME=\"$(MOD)\" -iquote $(MOD_DIR)/include

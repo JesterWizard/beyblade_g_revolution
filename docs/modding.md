@@ -5,11 +5,16 @@ itself (`src/`, `asm/`, `include/`) is never edited for a mod, so upstream
 changes merge cleanly and `make compare` keeps passing.
 
 ```
-make                    # vanilla build, byte-matches rom.sha1 (mods/ is ignored)
-make compare            # the match check
-make MOD=example        # build mods/example -> beyblade_g_revolution_example.gba
+make                    # builds in the default mod (debug_menu): beyblade_g_revolution_debug_menu.gba
+make NO_MODS=1          # the vanilla decomp: beyblade_g_revolution.gba
+make MOD=example        # a different mod -> beyblade_g_revolution_example.gba
+make compare            # always vanilla; checks rom.sha1
 make check-vanilla      # vanilla matches AND no mod object was linked
 ```
+
+The default mod is `DEFAULT_MOD` in the Makefile. If `mods/<DEFAULT_MOD>` does not
+exist (a fork without it), plain `make` is vanilla. `MOD=` with nothing after it also
+means no mod. Only one mod is built at a time.
 
 ## Layout
 

@@ -53,3 +53,4 @@ x.i
 # Extracted from baserom.gba by tools/gfx/extract.py (regenerated on first `make`)
 graphics/**/*.png
 graphics/.extracted
+.cache/

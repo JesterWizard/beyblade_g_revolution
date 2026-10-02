@@ -108,6 +108,7 @@ def build_grown() -> None:
     subprocess.run(
         [
             "make",
+            "MOD=",
             f"ELF={GROW_ELF.relative_to(ROOT)}",
             f"ROM={GROW_ROM.relative_to(ROOT)}",
             f"MAP={GROW_MAP.relative_to(ROOT)}",
@@ -128,7 +129,7 @@ def main() -> int:
         print("test_grow: missing baserom or matched manifest", file=sys.stderr)
         return 1
     if not RETAIL_GBA.is_file() or not RETAIL_ELF.is_file():
-        subprocess.run(["make", "rom"], cwd=ROOT, check=True)
+        subprocess.run(["make", "MOD=", "rom"], cwd=ROOT, check=True)
 
     fns = sorted_functions()
     if len(fns) < 2:

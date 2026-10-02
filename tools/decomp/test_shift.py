@@ -152,6 +152,7 @@ def build_shifted() -> None:
     subprocess.run(
         [
             "make",
+            "MOD=",
             f"ELF={SHIFT_ELF.relative_to(ROOT)}",
             f"ROM={SHIFT_ROM.relative_to(ROOT)}",
             f"MAP={SHIFT_MAP.relative_to(ROOT)}",
@@ -173,7 +174,7 @@ def main() -> int:
         return 1
 
     if not RETAIL_GBA.is_file():
-        subprocess.run(["make", "rom"], cwd=ROOT, check=True)
+        subprocess.run(["make", "MOD=", "rom"], cwd=ROOT, check=True)
 
     fns = sorted(
         json.loads(MANIFEST.read_text()).get("functions", []),
