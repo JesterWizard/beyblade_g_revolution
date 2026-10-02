@@ -23,8 +23,6 @@ enum DebugItem {
     DBG_MOVE_SPEED,
     DBG_BGM,
     DBG_CHARACTER,
-    DBG_SPRITE,
-    DBG_PALETTE,
     DBG_ITEM_COUNT
 };
 
@@ -86,11 +84,11 @@ struct CharacterLook {
     u32 portrait; /* blader portrait / name / data row index; TYSON_PORTRAIT = unnamed NPC */
     u32 npc; /* lowest scene NPC id using this sprite */
     const char *name; /* hand-given name, or 0 */
+    u32 faceTemplate; /* dialogue portrait of an NPC that is no blader (portrait == TYSON_PORTRAIT), or 0 */
+    u32 facePalette;
 };
 
 extern const struct CharacterLook gCharacterLooks[CHARACTER_COUNT];
-extern const u32 gSpriteTemplates[SPRITE_COUNT];
-extern const u32 gSpritePalettes[PALETTE_COUNT];
 
 void DebugStateInit(void);
 void DebugItemRange(u32 item, s32 *lo, s32 *hi);

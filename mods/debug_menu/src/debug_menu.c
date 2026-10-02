@@ -76,8 +76,6 @@ static const char *const sLabels[DBG_ITEM_COUNT] = {
     "Movement Speed",
     "BGM",
     "Character",
-    "Sprite",
-    "Palette",
 };
 
 void DebugStateInit(void)
@@ -133,16 +131,6 @@ static void ValueText(u32 item, u8 *out)
         break;
     case DBG_BGM:
         p = PutNumber(p, v);
-        break;
-    case DBG_SPRITE:
-    case DBG_PALETTE:
-        if (v == 0) {
-            *p++ = 'O';
-            *p++ = 'F';
-            *p++ = 'F';
-        } else {
-            p = PutNumber(p, v);
-        }
         break;
     default:
         if (v) {
@@ -339,8 +327,7 @@ static void Redraw(void)
 /* Entries that hold a setting rather than an on/off state. */
 static bool32 IsSetting(u32 item)
 {
-    return item == DBG_MOVE_SPEED || item == DBG_BGM || item == DBG_CHARACTER
-        || item == DBG_SPRITE || item == DBG_PALETTE;
+    return item == DBG_MOVE_SPEED || item == DBG_BGM || item == DBG_CHARACTER;
 }
 
 /* Lowest and highest value an entry can hold. */
@@ -357,12 +344,6 @@ void DebugItemRange(u32 item, s32 *lo, s32 *hi)
         break;
     case DBG_CHARACTER:
         *hi = CHARACTER_COUNT;
-        break;
-    case DBG_SPRITE:
-        *hi = SPRITE_COUNT;
-        break;
-    case DBG_PALETTE:
-        *hi = PALETTE_COUNT;
         break;
     default:
         *hi = 1;

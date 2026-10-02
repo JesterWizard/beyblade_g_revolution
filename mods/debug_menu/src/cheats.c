@@ -274,26 +274,16 @@ static void HoldLocations(void)
  * put the originals back (a map change rebuilds the HUD and clears the palette
  * slots). Value 0 puts the originals back once; the HUD refresh that runs just
  * before this redraws the player's own numbers. */
-/* The sprite and palette the player should have: the Sprite / Palette settings
- * win, then the Character's, then the player's own. */
-static u32 WantedSprite(void)
+/* The face template and palette of a character: its blader's portrait, or the
+ * dialogue portrait of an NPC that has none. */
+static void *FaceTemplate(u32 portrait, const struct CharacterLook *look)
 {
-    u32 sprite = gDebug.value[DBG_SPRITE];
-    u32 character = gDebug.value[DBG_CHARACTER];
-
-    if (sprite != 0)
-        return gSpriteTemplates[sprite - 1];
-    return character != 0 ? gCharacterLooks[character - 1].sprite : HERO_SPRITE;
+    return look != NULL && look->faceTemplate != 0 ? (void *)look->faceTemplate : (void *)BeybladeGetActorSprite(portrait);
 }
 
-static u32 WantedPalette(void)
+static void *FacePalette(u32 portrait, const struct CharacterLook *look)
 {
-    u32 palette = gDebug.value[DBG_PALETTE];
-    u32 character = gDebug.value[DBG_CHARACTER];
-
-    if (palette != 0)
-        return gSpritePalettes[palette - 1];
-    return character != 0 ? gCharacterLooks[character - 1].palette : HERO_PALETTE;
+    return look != NULL && look->faceTemplate != 0 ? (void *)look->facePalette : (void *)BeybladeGetActorPalette(portrait);
 }
 
 static void HoldCharacter(void)
@@ -302,10 +292,11 @@ static void HoldCharacter(void)
     struct AnimObj *hero = (struct AnimObj *)&gMainWorkPtr->unk036C;
     struct StatusHud *hud = gUnk_0300026C;
     u32 *slots = (u32 *)gUnk_030008D0;
-    u32 sprite = WantedSprite();
-    u32 palette = WantedPalette();
+    u32 sprite = value != 0 ? gCharacterLooks[value - 1].sprite : HERO_SPRITE;
+    u32 palette = value != 0 ? gCharacterLooks[value - 1].palette : HERO_PALETTE;
     u32 portrait = HERO_PORTRAIT;
-    bool32 any = value != 0 || gDebug.value[DBG_SPRITE] != 0 || gDebug.value[DBG_PALETTE] != 0;
+    bool32 any = value != 0;
+    const struct CharacterLook *look = value != 0 ? &gCharacterLooks[value - 1] : NULL;
     struct Sprite *face;
     struct Unk42E78 *row;
 
@@ -330,12 +321,12 @@ static void HoldCharacter(void)
     face = hud != NULL ? hud->unk0C : NULL;
     if (face == NULL)
         return;
-    if (face->unk2C != BeybladeGetActorSprite(portrait)) {
-        SpriteInitFromTemplate(face, BeybladeGetActorSprite(portrait), face->unk08, face->unk0C, 0, 1, 0, 0);
+    if (face->unk2C != FaceTemplate(portrait, look)) {
+        SpriteInitFromTemplate(face, FaceTemplate(portrait, look), face->unk08, face->unk0C, 0, 1, 0, 0);
         TextEntrySetPaletteBank(face, FACE_SLOT);
     }
-    if (slots != NULL && slots[FACE_SLOT] != (u32)BeybladeGetActorPalette(portrait))
-        ObjPalLoadSlot(FACE_SLOT, BeybladeGetActorPalette(portrait));
+    if (slots != NULL && slots[FACE_SLOT] != (u32)FacePalette(portrait, look))
+        ObjPalLoadSlot(FACE_SLOT, FacePalette(portrait, look));
 
     if (value != 0 && portrait != HERO_PORTRAIT) {
         row = BeybladeCollectionEntry(portrait);
@@ -436,7 +427,7 @@ void CheatsOnChange(u32 item)
 {
     if (item == DBG_BGM)
         _0805FED4((void *)(u32)gDebug.value[DBG_BGM]);
-    else if (item == DBG_CHARACTER || item == DBG_SPRITE || item == DBG_PALETTE)
+    else if (item == DBG_CHARACTER)
         HoldCharacter();
 }
 
@@ -455,8 +446,8 @@ void DebugMapFlag(u8 id, u32 op, u32 *out)
  * not be initialised yet. */
 void DebugObjPalLoad(u32 slot, void *src)
 {
-    if (gDebug.magic == DBG_MAGIC && (gDebug.value[DBG_CHARACTER] != 0 || gDebug.value[DBG_PALETTE] != 0))
-        src = (void *)WantedPalette();
+    if (gDebug.magic == DBG_MAGIC && gDebug.value[DBG_CHARACTER] != 0)
+        src = (void *)gCharacterLooks[gDebug.value[DBG_CHARACTER] - 1].palette;
     ObjPalLoadSlot(slot, src);
 }
 
@@ -471,11 +462,12 @@ u32 *DebugPortraitOp(u32 *script, u32 *enabled)
     u32 *next;
 
     if (gDebug.magic != DBG_MAGIC || (value = gDebug.value[DBG_CHARACTER]) == 0
-        || gCharacterLooks[value - 1].portrait == HERO_PORTRAIT || script[1] != HERO_DIALOGUE_TEMPLATE)
+        || (gCharacterLooks[value - 1].portrait == HERO_PORTRAIT && gCharacterLooks[value - 1].faceTemplate == 0)
+        || script[1] != HERO_DIALOGUE_TEMPLATE)
         return _0805A304(script, enabled);
     copy[0] = script[0];
-    copy[1] = (u32)BeybladeGetActorSprite(gCharacterLooks[value - 1].portrait);
-    copy[2] = (u32)BeybladeGetActorPalette(gCharacterLooks[value - 1].portrait);
+    copy[1] = (u32)FaceTemplate(gCharacterLooks[value - 1].portrait, &gCharacterLooks[value - 1]);
+    copy[2] = (u32)FacePalette(gCharacterLooks[value - 1].portrait, &gCharacterLooks[value - 1]);
     next = _0805A304(copy, enabled);
     return script + (next - copy);
 }
