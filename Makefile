@@ -18,7 +18,7 @@ OBJ_DIR    := $(BUILD_DIR)/bbgr
 #   make NO_MODS=1      the vanilla decomp
 #   make MOD=<name>     one mod, or several: make MOD="a b" (MOD= means none)
 #   make compare        always vanilla, it checks rom.sha1
-DEFAULT_MOD := debug_menu thought_bubbles fast_save bitbeast_bars show_math
+DEFAULT_MOD := debug_menu thought_bubbles fast_save bitbeast_bars show_math single_match
 ifeq ($(NO_MODS),1)
   override MOD :=
 else ifeq ($(origin MOD),undefined)
@@ -383,7 +383,7 @@ ifneq ($(wildcard $(FIX)),)
 	$(FIX) $@ -t"$(TITLE)" -c$(GAME_CODE) -m$(MAKER_CODE) -r$(REVISION) --silent
 endif
 
-$(ROM): $(ELF)
+$(ROM): $(ELF) $(MOD_HOOKS)
 	$(OBJCOPY) -O binary --gap-fill 0xFF $< $@
 ifneq ($(wildcard $(FIX)),)
 ifeq ($(PAD_CART),1)

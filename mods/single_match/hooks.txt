@@ -1,0 +1,8 @@
+# Single match. See docs/modding.md for the format.
+
+# Opcode 141 of the cutscene script interpreter (0x0802CBFC) answers "is this
+# tournament match decided?". Retail only answers yes once more than 2 bouts
+# are counted (MainWork+0x15C9) and the point totals (+0x15D0 / +0x15D2) differ.
+# The bout counter test is `cmp r0, #2; ble <not decided>`; replace the `ble`
+# with a nop so the totals alone decide. A tied bout still plays another one.
+patch 0x0802CC18 C0 46 expect 18 DD
