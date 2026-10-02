@@ -34,7 +34,7 @@ take back only what they added.
 | Inf. BeyBlade Health | Never lose the equipped beyblade after a loss (hook inside `sub_08037F98`, port of the earlier `keepBeybladeOnLoss`) | all branches of the hook |
 | Infinite Ripcord / Launcher | The equipped part keeps full health after a battle (wraps both callers of `BattlePartsApplyWear`) | yes, with strength 99 the retail code frees both parts |
 | Movement Speed | x1..x4 on the overworld step (`sub_08041E88`) | yes |
-| BGM | Left/Right plays track 0..16 (`sub_0805FED4`) | track and sound handle change, not heard |
+| BGM | Left/Right plays a track by name (`sub_0805FED4`); names and numbers are in the shared `include/bgm.h` | track and sound handle change, not heard |
 | Character | **n/a**, see below | |
 
 ## What else changes

@@ -2,6 +2,7 @@
 #define GUARD_DEBUG_MENU_H
 
 #include "global.h"
+#include "bgm.h"
 
 /* Menu rows, in display order. */
 enum DebugItem {
@@ -29,7 +30,6 @@ enum DebugItem {
 #define BLADER_ROWS 55 /* BeybladeCollectionEntry rows */
 #define BEYBLADE_IDS 83 /* beyblade templates, inventory group 1 */
 #define PART_GROUPS 9 /* inventory groups 0..8; 1 is beyblades */
-#define BGM_TRACKS 17
 #define MAX_MOVE_SPEED 4
 
 /* Everything the menu and the cheats remember. It lives at the top of EWRAM,
@@ -61,6 +61,9 @@ struct DebugState {
 };
 
 extern struct DebugState gDebug;
+
+/* Display name of a track, or "?" when out of range. */
+const char *BgmName(unsigned int track);
 
 void DebugStateInit(void);
 void CheatsTick(void);

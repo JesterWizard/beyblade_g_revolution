@@ -165,6 +165,7 @@ static void DrawFrameTop(void)
 static void DrawRow(u32 row, u32 item)
 {
     u8 value[8];
+    const char *text;
     u32 y = row << 4;
     u32 half = TextGetAreaWidth() >> 1;
     u32 left = half - FRAME_GLYPHS * 4 + 10;
@@ -179,8 +180,9 @@ static void DrawRow(u32 row, u32 item)
     TextSetCursor(0, y + 8);
     TextDrawAlign((void *)sLabels[item], left, 2);
     ValueText(item, value);
+    text = item == DBG_BGM ? BgmName(gDebug.value[DBG_BGM]) : (const char *)value;
     TextSetCursor(0, y + 8);
-    TextDrawAlign(value, right, 1);
+    TextDrawAlign((void *)text, right, 1);
 }
 
 static void DrawFrameBottom(void)

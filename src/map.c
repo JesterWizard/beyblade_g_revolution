@@ -2,6 +2,7 @@
 #include "ram_map.h"
 #include "battle.h"
 #include "data_symbols.h"
+#include "bgm.h"
 
 /* fn: sub_08043420 */
 // @ 0x08043420
@@ -313,7 +314,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
   {
     do
     {
-      r = RandRange(6);
+      r = RandRange(BGM_A_NEW_DAY + 1);
     }
     while (gData_03000198->bgmTrack == r);
     _0805FED4((void *) r);
