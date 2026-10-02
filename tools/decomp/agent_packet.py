@@ -24,8 +24,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import matched_file, name_for  # noqa: E402,F401
-MATCHED = ROOT / "src" / "matched"
+MATCHED = fnfiles.view()
 WIP = ROOT / "src" / "decompiled"
 HEADERS = ROOT / "include" / "unknown-functions.h"
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))

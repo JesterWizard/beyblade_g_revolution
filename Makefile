@@ -80,7 +80,7 @@ SHELL := bash -o pipefail
 .DELETE_ON_ERROR:
 
 .PHONY: all rom modern compare clean tidy tools check-baserom shift-test grow-test graphics clean-gfx
-.PHONY: rename-files analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
+.PHONY: split pack rename-files analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
 all: rom
 
 C_SUBDIR = src
@@ -91,7 +91,12 @@ C_BUILDDIR = $(OBJ_DIR)/$(C_SUBDIR)
 ASM_BUILDDIR = $(OBJ_DIR)/$(ASM_SUBDIR)
 DATA_ASM_BUILDDIR = $(OBJ_DIR)/$(DATA_ASM_SUBDIR)
 
-C_SRCS := $(wildcard $(C_SUBDIR)/matched/*.c)
+# Matched C is authored in grouped files (src/<group>.c) plus the src/matched/
+# inbox. groups.py splits both into one file per function under build/split/,
+# which is what gets compiled, so asm/rom_layout.ld keeps one object per function.
+SPLIT_DIR := build/split
+SPLIT_RAN := $(shell python3 tools/decomp/groups.py split)
+C_SRCS := $(patsubst $(SPLIT_DIR)/%.c,$(C_SUBDIR)/matched/%.c,$(wildcard $(SPLIT_DIR)/*.c))
 RAM_MAP_FRAGMENTS := \
 	$(ASM_SUBDIR)/ram_map_iwram.s \
 	$(ASM_SUBDIR)/ram_map_ewram.s \
@@ -159,6 +164,12 @@ symbols:
 
 tier:
 	python3 tools/decomp/tier.py
+
+split:
+	python3 tools/decomp/groups.py split
+
+pack:
+	python3 tools/decomp/groups.py pack --apply
 
 document:
 	python3 tools/decomp/document.py
@@ -250,7 +261,7 @@ ifeq ($(GROW),1)
 COMPILE_MATCHED_FLAGS += --grow
 endif
 
-$(C_BUILDDIR)/matched/%.o: $(C_SUBDIR)/matched/%.c tools/decomp/compile_matched.py
+$(C_BUILDDIR)/matched/%.o: $(SPLIT_DIR)/%.c tools/decomp/compile_matched.py
 	@mkdir -p $(dir $@)
 	python3 tools/decomp/compile_matched.py $(COMPILE_MATCHED_FLAGS) $< $@
 

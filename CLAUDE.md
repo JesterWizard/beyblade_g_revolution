@@ -87,7 +87,9 @@ bash build_tools.sh
 
 | Area | Rule |
 |------|------|
-| `src/*.c` | Add matched decomp; comment header with ROM address. Files are `<Symbol>.c` once named, `sub_XXXXXXXX.c` before — identity stays `sub_XXXXXXXX`; use `fnfiles.py` helpers, never assume stem == function |
+| `src/<group>.c` | Matched decomp grouped by subsystem (`text.c`, `palette.c`, `collection.c`, …). One `/* fn: sub_XXXXXXXX */` chunk per function, shared `#include` prelude. **Edit here.** `python3 tools/decomp/groups.py where NAME` gives `file:line` |
+| `src/matched/*.c` | The *inbox*: ungrouped functions (unnamed `sub_XXXXXXXX.c`, or named with no group rule). `make pack` folds named ones into their group. Identity stays `sub_XXXXXXXX`; use `fnfiles.py` helpers, never assume stem == function |
+| `build/split/*.c` | **Generated, read-only** one-file-per-function view of groups + inbox (what the compiler and read-only tools see). Never edit; changes are overwritten by `make split` |
 | `src/decompiled/` | Unmatched C + notes, the DECOMPILED tier (`park_wip.py`); not linked |
 | `analysis/*.json` | Generated analysis DB + `symbols.json` (names live here, not in source) |
 | `include/symbols.h` | Generated view of `symbols.json` — regenerate, never hand-edit |
@@ -138,6 +140,7 @@ bash build_tools.sh
 | Signature repair | `tools/decomp/repair_naked_signatures.py` | `make repair-signatures` — align defs with prototypes |
 | Variant sweep | `tools/decomp/test_variants.py` | Test many `@@BODY@@` source variants against one function |
 | Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |
+| Group files | `tools/decomp/groups.py` | `GROUPS` rules (prefix → file), `split` / `pack` / `where` / `report`; `integrate_c.py` lands into groups via `groups.land()` |
 | File names | `tools/decomp/fnfiles.py` | `sync --apply` renames `src/matched/sub_X.c` → `<Symbol>.c` (git mv) and fixes `asm/rom_layout.ld`; every tool resolves name ↔ file through it |
 | Compile matched C | `tools/decomp/compile_matched.py` | agbcc one function into the peel |
 | Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/decompiled/`) |

@@ -18,6 +18,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 import sys as _sys
 _sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import matched_file, name_for  # noqa: E402,F401
 AGBCC = ROOT / "tools" / "agbcc" / "bin" / "agbcc"
 CPPFLAGS = ["-Iinclude", "-Itools/agbcc/include", "-Itools/agbcc"]
@@ -90,7 +91,10 @@ def main() -> int:
 
     files = []
     for d in args.dirs.split(","):
-        files += sorted((ROOT / "src" / d.strip()).glob("*.c"))
+        d = d.strip()
+        # `matched` is audited through the per-function view of the group files.
+        base = fnfiles.view() if d == "matched" else ROOT / "src" / d
+        files += sorted(base.glob("*.c"))
     if not files:
         print("no C files found")
         return 1

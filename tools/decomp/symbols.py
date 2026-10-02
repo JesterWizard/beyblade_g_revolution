@@ -40,6 +40,8 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import groups
+
 ROOT = Path(__file__).resolve().parents[2]
 SYMBOLS_JSON = ROOT / "analysis" / "symbols.json"
 SYMBOLS_H = ROOT / "include" / "symbols.h"
@@ -484,7 +486,10 @@ def cmd_apply(args: argparse.Namespace) -> int:
     for base in _SOURCE_DIRS:
         if not base.is_dir():
             continue
-        for path in sorted(base.glob("*.c")):
+        files = sorted(base.glob("*.c"))
+        if base.name == "matched":
+            files += groups.group_files()  # shared src/<group>.c files
+        for path in files:
             text = path.read_text(errors="replace")
             new, hits = rewrite_identifiers(text, replacements)
             if not hits:

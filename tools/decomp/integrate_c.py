@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
+import groups  # noqa: E402
 from fnfiles import stem_for  # noqa: E402
 MANIFEST = ROOT / "build" / "matched.json"
 MATCH = ROOT / "asm" / "matchings"
@@ -112,8 +113,6 @@ def main() -> int:
         body = args.c_body
 
     SRC_MATCHED.mkdir(parents=True, exist_ok=True)
-    rel_src = f"src/matched/{stem_for(name)}.c"
-    dst = ROOT / rel_src
 
     with tempfile.TemporaryDirectory() as tmp:
         scratch = Path(tmp) / "scratch.c"
@@ -127,7 +126,8 @@ def main() -> int:
         if got != want:
             print(f"bytes mismatch after normalize for {name}", file=sys.stderr)
             return 2
-        dst.write_text(scratch.read_text())
+        landed = groups.land(name, scratch.read_text())
+        rel_src = str(landed.relative_to(ROOT))
 
     write_matching_bytes(name, want, MATCH / f"{name}.s")
 

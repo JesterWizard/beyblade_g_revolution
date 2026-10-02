@@ -24,8 +24,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[2]
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import matched_file, name_for  # noqa: E402,F401
-MATCHED_SRC = ROOT / "src" / "matched"
+MATCHED_SRC = fnfiles.view()
 MATCH_ASM = ROOT / "asm" / "matchings"
 NON_ASM = ROOT / "asm" / "nonmatchings"
 MANIFEST = ROOT / "build" / "matched.json"

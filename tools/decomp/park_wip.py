@@ -23,13 +23,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import matched_file, name_for  # noqa: E402,F401
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from queue_toml import QUEUE, upsert_block  # noqa: E402
 
 DECOMPILED_DIR = ROOT / "src" / "decompiled"
-MATCHED = ROOT / "src" / "matched"
+MATCHED = fnfiles.view()
 
 _NOTES_STUB = """# {name} — WIP
 

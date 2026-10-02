@@ -21,6 +21,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import stem_for   # noqa: E402
 
 BASEROM = ROOT / "baserom.gba"
@@ -101,7 +102,7 @@ def unmatched_sub_labels(functions: list[dict]) -> dict[int, list[str]]:
         size = int(fn.get("size") or 1)
         covered.append((start, start + max(size, 1)))
     names: set[str] = set()
-    matched_dir = ROOT / "src" / "matched"
+    matched_dir = fnfiles.view()
     if matched_dir.is_dir():
         for path in matched_dir.glob("*.c"):
             names.update(SUB_RE.findall(path.read_text()))

@@ -36,6 +36,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import groups
+
 ROOT = Path(__file__).resolve().parents[2]
 INCLUDE = ROOT / "include"
 SRC_DIRS = [ROOT / "src" / "matched", ROOT / "src" / "decompiled"]
@@ -53,7 +55,7 @@ def c_files() -> list[Path]:
     files: list[Path] = []
     for d in SRC_DIRS:
         files += sorted(p for p in d.rglob("*.c") if ".audit" not in p.name)
-    return files
+    return files + groups.group_files()  # shared src/<group>.c files
 
 
 def header_files() -> list[Path]:

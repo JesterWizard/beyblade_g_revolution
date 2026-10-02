@@ -35,8 +35,9 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[2]
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import matched_file, name_for  # noqa: E402
-MATCHED = ROOT / "src" / "matched"
+MATCHED = fnfiles.view()
 DECOMPILED = ROOT / "src" / "decompiled"
 SYMBOLS_JSON = ROOT / "analysis" / "symbols.json"
 MANIFEST = ROOT / "build" / "matched.json"

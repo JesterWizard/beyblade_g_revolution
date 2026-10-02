@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 import sys as _sys
 _sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import matched_file, name_for  # noqa: E402,F401
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
@@ -23,7 +24,7 @@ from opcode_stubs import file_kind  # noqa: E402
 INTEGRATE = ROOT / "tools" / "decomp" / "integrate_c.py"
 MATCH = ROOT / "tools" / "decomp" / "match_function.py"
 NON = ROOT / "asm" / "nonmatchings"
-MATCHED = ROOT / "src" / "matched"
+MATCHED = fnfiles.view()
 
 # Hand-verified seeds: function -> (body without includes, note)
 BATTLE_SEEDS: list[tuple[str, str, str]] = [

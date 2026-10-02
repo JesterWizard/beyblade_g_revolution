@@ -25,7 +25,8 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-MATCHED = ROOT / "src" / "matched"
+MATCHED = ROOT / "src" / "matched"  # inbox: ungrouped functions (see groups.py)
+VIEW = ROOT / "build" / "split"  # generated: one file per function, groups + inbox
 SYMBOLS_JSON = ROOT / "analysis" / "symbols.json"
 
 _SUB = re.compile(r"sub_[0-9A-Fa-f]{8}")
@@ -57,19 +58,34 @@ def reload() -> None:
     _fwd = _rev = None
 
 
+def view() -> Path:
+    """The per-function source view (`build/split`), regenerated from the group
+    files and the inbox. Read-only consumers use this; edit `src/<group>.c`."""
+    import groups
+
+    groups.split()
+    return VIEW
+
+
 def stem_for(name: str, directory: Path = MATCHED) -> str:
-    """File stem for a function: the symbol if its named file exists, else the
-    address name (new files keep `sub_XXXXXXXX.c` until `sync` renames them)."""
+    """File stem for a function: the symbol if its named file exists (inbox or
+    split view), else the address name (new files keep `sub_XXXXXXXX.c` until
+    `sync` renames them)."""
     if _fwd is None:
         _load()
     sym = _fwd.get(name)
-    if sym and (directory / f"{sym}.c").is_file():
+    if sym and ((directory / f"{sym}.c").is_file() or (VIEW / f"{sym}.c").is_file()):
         return sym
     return name
 
 
 def matched_file(name: str, directory: Path = MATCHED) -> Path:
-    return directory / f"{stem_for(name, directory)}.c"
+    """Path of a function's source. Grouped functions resolve to their (read-only)
+    split-view file; use `groups.py where` to find the line to edit."""
+    stem = stem_for(name, directory)
+    if directory == MATCHED and (VIEW / f"{stem}.c").is_file():
+        return VIEW / f"{stem}.c"
+    return directory / f"{stem}.c"
 
 
 def name_for(path: Path | str) -> str:
@@ -82,11 +98,12 @@ def name_for(path: Path | str) -> str:
     return _rev.get(stem, stem)
 
 
-def iter_matched(directory: Path = MATCHED) -> list[tuple[str, Path]]:
+def iter_matched(directory: Path | None = None) -> list[tuple[str, Path]]:
+    directory = directory or view()
     return [(name_for(p), p) for p in sorted(directory.glob("*.c"))]
 
 
-def matched_names(directory: Path = MATCHED) -> set[str]:
+def matched_names(directory: Path | None = None) -> set[str]:
     return {name for name, _ in iter_matched(directory)}
 
 

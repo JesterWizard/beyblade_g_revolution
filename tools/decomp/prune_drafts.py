@@ -32,13 +32,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import fnfiles  # noqa: E402
 from fnfiles import matched_file  # noqa: E402
 
 from opcode_stubs import file_kind  # noqa: E402
 from queue_toml import read_blocks, remove_blocks  # noqa: E402
 
 DECOMPILED = ROOT / "src" / "decompiled"
-MATCHED = ROOT / "src" / "matched"
+MATCHED = fnfiles.view()
 
 
 def _is_stub_note(path: Path, name: str) -> bool:

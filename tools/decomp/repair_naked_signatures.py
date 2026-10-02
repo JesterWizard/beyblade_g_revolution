@@ -141,6 +141,14 @@ def main() -> int:
     )
     args = ap.parse_args()
     dirs = [d.strip() for d in args.dirs.split(",") if d.strip()]
+    if args.apply and "matched" in dirs:
+        print(
+            "matched C now lives in grouped files (src/<group>.c, see groups.py); this "
+            "tool would edit the generated build/split view. Fix the signature in the "
+            "group file instead (`groups.py where NAME`).",
+            file=sys.stderr,
+        )
+        return 2
 
     table = protos()
     if not table:
