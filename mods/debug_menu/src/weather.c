@@ -95,17 +95,25 @@ static s32 Abs(s32 v)
 
 static u32 ParticleCount(u32 kind)
 {
+    u32 n = 0;
+
     switch (kind) {
     case WEATHER_RAIN:
-        return 28;
+        n = 28;
+        break;
     case WEATHER_SNOW:
-        return 24;
+        n = 24;
+        break;
     case WEATHER_WIND:
-        return 16;
+        n = 16;
+        break;
     case WEATHER_HEAT:
-        return 20;
+        n = 20;
+        break;
     }
-    return 0;
+    if (gWeather.limit != 0 && n > gWeather.limit)
+        n = gWeather.limit;
+    return n;
 }
 
 /* ---- wind -------------------------------------------------------------- */
@@ -296,7 +304,7 @@ static void Draw(u32 kind, u32 priority)
 }
 
 /* One frame of the weather, from either screen. */
-static void Frame(u32 priority)
+static void Frame(u32 priority, bool32 battle)
 {
     u32 kind = Kind();
 
@@ -309,6 +317,12 @@ static void Frame(u32 priority)
         gWeather.magic = WEATHER_MAGIC;
         gWeather.rng = 0x1234ABCD;
         gWeather.kind = WEATHER_OFF;
+    }
+    gWeather.limit = 0;
+    if (kind == WEATHER_OFF && battle && StadiumUses(STADIUM_VOLCANO)) {
+        /* No weather, but the volcano: a few embers, a storm of them when it erupts. */
+        kind = WEATHER_HEAT;
+        gWeather.limit = StadiumEruption() == ERUPT_CALM ? 5 : 20;
     }
     if (kind == WEATHER_OFF) {
         gWeather.drawn = FALSE;
@@ -325,13 +339,14 @@ static void Frame(u32 priority)
 /* Called from DebugFieldTick, once per overworld frame. */
 void WeatherFieldTick(void)
 {
-    Frame(PRIORITY_FIELD);
+    Frame(PRIORITY_FIELD, FALSE);
 }
 
 /* Called from the battle frame, once per frame, by the player's input handler. */
 void WeatherBattleTick(void)
 {
-    Frame(PRIORITY_BATTLE);
+    StadiumTick();
+    Frame(PRIORITY_BATTLE, TRUE);
 }
 
 /* A battle starts: the heat has not touched anyone yet. */
@@ -339,6 +354,7 @@ void WeatherBattleStart(void)
 {
     gWeather.heatTick[0] = 0;
     gWeather.heatTick[1] = 0;
+    StadiumStart();
 }
 
 /* ---- battle ------------------------------------------------------------ */
@@ -351,21 +367,24 @@ void WeatherMotion(struct BtlBody *body)
     s32 drag = body->drag;
     s32 ax = body->ax;
     s32 ay = body->ay;
+    s32 dragPercent = 100;
+    s32 addX = 0;
+    s32 addY = 0;
 
-    if (kind == WEATHER_RAIN && drag != 0) {
-        body->drag = drag * RAIN_DRAG / 100;
+    if (kind == WEATHER_RAIN)
+        dragPercent = RAIN_DRAG;
+    else if (kind == WEATHER_SNOW)
+        dragPercent = SNOW_DRAG;
+    else if (kind == WEATHER_WIND)
+        WindInArena(&addX, &addY);
+    StadiumMotion(body, &dragPercent, &addX, &addY);
+    if (drag != 0 && dragPercent != 100) {
+        body->drag = drag * dragPercent / 100;
         if (body->drag == 0)
             body->drag = 1;
-    } else if (kind == WEATHER_SNOW) {
-        body->drag = drag * SNOW_DRAG / 100;
-    } else if (kind == WEATHER_WIND) {
-        s32 wx;
-        s32 wy;
-
-        WindInArena(&wx, &wy);
-        body->ax = ax + wx;
-        body->ay = ay + wy;
     }
+    body->ax = ax + addX;
+    body->ay = ay + addY;
     _08035984(body);
     body->drag = drag;
     body->ax = ax;
@@ -376,8 +395,8 @@ void WeatherMotion(struct BtlBody *body)
 s32 WeatherSteer(s32 speed)
 {
     if (Kind() == WEATHER_RAIN)
-        return speed * RAIN_STEER / 100;
-    return speed;
+        speed = speed * RAIN_STEER / 100;
+    return StadiumSteer(speed);
 }
 
 /* Heat, once a frame per fighter (AbilityUpdate): a share of the spin goes. */
@@ -387,6 +406,7 @@ void WeatherDrain(struct BtlFighter *fighter)
     s32 rpm;
     s32 loss;
 
+    StadiumDrain(fighter);
     if (Kind() != WEATHER_HEAT || fighter->stats == NULL)
         return;
     if (++*tick < HEAT_PERIOD)

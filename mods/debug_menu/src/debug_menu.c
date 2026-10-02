@@ -84,6 +84,8 @@ static const char *const sLabels[DBG_ITEM_COUNT] = {
     "Rocket",
     "Weather",
     "Condition",
+    "Stadium",
+    "Arena",
 };
 
 void DebugStateInit(void)
@@ -117,7 +119,7 @@ static u8 *PutNumber(u8 *out, u32 n)
 /* A heading is a row of text that is not an entry. */
 bool32 DebugIsHeading(u32 item)
 {
-    return item == DBG_HEADING_ABILITIES || item == DBG_HEADING_WEATHER;
+    return item == DBG_HEADING_ABILITIES || item == DBG_HEADING_WEATHER || item == DBG_HEADING_STADIUM;
 }
 
 /* Entries that cannot be used yet show "n/a" and do nothing. All work now. */
@@ -203,6 +205,8 @@ static void DrawRow(u32 row, u32 item)
         text = CharacterName(gDebug.value[DBG_CHARACTER]);
     else if (item == DBG_WEATHER)
         text = WeatherName(gDebug.value[DBG_WEATHER]);
+    else if (item == DBG_STADIUM)
+        text = StadiumName(gDebug.value[DBG_STADIUM]);
     else
         text = (const char *)value;
     TextSetCursor(0, y + 8);
@@ -363,7 +367,7 @@ static void Redraw(void)
 /* Entries that hold a setting rather than an on/off state. */
 static bool32 IsSetting(u32 item)
 {
-    return item == DBG_MOVE_SPEED || item == DBG_BGM || item == DBG_CHARACTER || item == DBG_WEATHER;
+    return item == DBG_MOVE_SPEED || item == DBG_BGM || item == DBG_CHARACTER || item == DBG_WEATHER || item == DBG_STADIUM;
 }
 
 /* Lowest and highest value an entry can hold. */
@@ -383,6 +387,9 @@ void DebugItemRange(u32 item, s32 *lo, s32 *hi)
         break;
     case DBG_WEATHER:
         *hi = WEATHER_COUNT - 1;
+        break;
+    case DBG_STADIUM:
+        *hi = STADIUM_COUNT - 1;
         break;
     default:
         *hi = 1;

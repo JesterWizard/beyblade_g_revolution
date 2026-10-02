@@ -31,7 +31,23 @@ enum DebugItem {
     DBG_ROCKET,
     DBG_HEADING_WEATHER, /* a heading, not an entry */
     DBG_WEATHER,
+    DBG_HEADING_STADIUM, /* a heading, not an entry */
+    DBG_STADIUM,
     DBG_ITEM_COUNT
+};
+
+/* The values of the stadium entry: the arena's rules in battle (stadium.c). */
+enum {
+    STADIUM_STANDARD,
+    STADIUM_BOWL,
+    STADIUM_FUNNEL,
+    STADIUM_CORNERS,
+    STADIUM_ICE,
+    STADIUM_SAND,
+    STADIUM_MAGNETIC,
+    STADIUM_VOLCANO,
+    STADIUM_ULTIMATE,
+    STADIUM_COUNT
 };
 
 /* The values of the weather entry. Each one draws particles in the overworld
@@ -121,6 +137,10 @@ struct WeatherState {
     u32 rng;
     s16 wind; /* sideways push on the screen, positive towards the right */
     u8 heatTick[2]; /* frames since the player's and the opponent's last heat loss */
+    u8 sandTick[2]; /* the same for the stadium's sand and lava */
+    u8 padCool[2]; /* frames until a blade can be launched by a corner pad again */
+    u8 limit; /* most particles to show, 0 for all */
+    u16 stadiumClock; /* frames of the volcano's cycle */
     struct WeatherParticle particle[WEATHER_MAX_PARTICLES];
 };
 
@@ -130,6 +150,20 @@ extern const u16 gWeatherPalette[16];
 
 /* Display name of a weather value. */
 const char *WeatherName(u32 value);
+const char *StadiumName(u32 value);
+
+struct BtlBody;
+struct BtlFighter;
+void StadiumTick(void);
+void StadiumStart(void);
+bool32 StadiumUses(u32 stadium);
+u32 StadiumEruption(void);
+void StadiumMotion(struct BtlBody *body, s32 *dragPercent, s32 *ax, s32 *ay);
+void StadiumDrain(struct BtlFighter *fighter);
+s32 StadiumSteer(s32 speed);
+#define ERUPT_CALM 0
+#define ERUPT_WARN 1
+#define ERUPT_ACTIVE 2
 
 /* Display name of a track, or "?" when out of range. */
 const char *BgmName(unsigned int track);

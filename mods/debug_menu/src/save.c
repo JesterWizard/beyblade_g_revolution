@@ -66,7 +66,16 @@ struct SavedWeather {
 
 #define WEATHER_TAG 0xBE
 
-#define SAVE_USED (sizeof(struct SavedDebug) + sizeof(struct SavedAbilities) + sizeof(struct SavedWeather))
+/* And the stadium, the same way. */
+struct SavedStadium {
+    u8 tag;
+    u8 value;
+    u16 sum;
+};
+
+#define STADIUM_TAG 0x5D
+
+#define SAVE_USED (sizeof(struct SavedDebug) + sizeof(struct SavedAbilities) + sizeof(struct SavedWeather) + sizeof(struct SavedStadium))
 #define SAVE_BLOCKS ((SAVE_USED + 7) / 8)
 
 typedef char SavedDebugFits[SAVE_USED <= DBG_SAVE_BYTES ? 1 : -1];
@@ -103,6 +112,16 @@ static struct SavedWeather *Weather(const struct SavedDebug *s)
     return (struct SavedWeather *)((u8 *)s + sizeof(*s) + sizeof(struct SavedAbilities));
 }
 
+static struct SavedStadium *Stadium(const struct SavedDebug *s)
+{
+    return (struct SavedStadium *)((u8 *)s + sizeof(*s) + sizeof(struct SavedAbilities) + sizeof(struct SavedWeather));
+}
+
+static u16 StadiumSum(const struct SavedStadium *w)
+{
+    return SAVE_SEED + w->tag + w->value;
+}
+
 static u16 WeatherSum(const struct SavedWeather *w)
 {
     return SAVE_SEED + w->tag + w->value;
@@ -129,6 +148,9 @@ static void Pack(struct SavedDebug *s)
     Weather(s)->tag = WEATHER_TAG;
     Weather(s)->value = gDebug.value[DBG_WEATHER];
     Weather(s)->sum = WeatherSum(Weather(s));
+    Stadium(s)->tag = STADIUM_TAG;
+    Stadium(s)->value = gDebug.value[DBG_STADIUM];
+    Stadium(s)->sum = StadiumSum(Stadium(s));
     s->has = (gDebug.hasStrength ? HAS_STRENGTH : 0) | (gDebug.hasExp ? HAS_EXP : 0)
         | (gDebug.hasCredits ? HAS_CREDITS : 0) | (gDebug.charactersOn ? ON_CHARACTERS : 0)
         | (gDebug.bladesOn ? ON_BLADES : 0) | (gDebug.partsOn ? ON_PARTS : 0)
@@ -171,6 +193,9 @@ static void Unpack(const struct SavedDebug *s)
     if (Weather(s)->tag == WEATHER_TAG && Weather(s)->sum == WeatherSum(Weather(s))
         && Weather(s)->value < WEATHER_COUNT)
         gDebug.value[DBG_WEATHER] = Weather(s)->value;
+    if (Stadium(s)->tag == STADIUM_TAG && Stadium(s)->sum == StadiumSum(Stadium(s))
+        && Stadium(s)->value < STADIUM_COUNT)
+        gDebug.value[DBG_STADIUM] = Stadium(s)->value;
     gDebug.hasStrength = (s->has & HAS_STRENGTH) != 0;
     gDebug.hasExp = (s->has & HAS_EXP) != 0;
     gDebug.hasCredits = (s->has & HAS_CREDITS) != 0;
