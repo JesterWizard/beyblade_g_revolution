@@ -8,8 +8,8 @@ Two different “experience” counters exist, and only one of them is the launc
 
 | What the screen calls it | What it actually is | Does it change launch RPM? |
 |---|---|---|
-| Bit-beast experience | Signed halfword on the blade record, 0..16383 | Yes. It is the launch base. |
-| Character experience | `MainWork.expPoints`, also capped at 16383 | No, while the blade has a bit-beast record. |
+| Bit-beast experience | Signed halfword on the blade record, 0..16383 | Yes. Part of the launch base. |
+| Character experience | `MainWork.expPoints`, also capped at 16383 | Yes. Added to the blade's bit-beast experience for the player's launch base. |
 | Level | A bracket lookup on one of those two counters | No. It only shifts the computer’s timing table. |
 | Strength | Character strength, 0..99 | Yes. Added after experience is scaled by the launch. |
 
@@ -19,7 +19,7 @@ Stamina, Power, and Speed on the HUD are the launch timing meters. They are not 
 
 `sub_0803CECC` builds the player’s launch RPM from four inputs:
 
-- `base` — bit-beast experience
+- `base` — for the player, character experience + the blade's bit-beast experience
 - `power` — the first launch meter, stored as `100` minus the amount you missed the window (`sub_0803C500`)
 - `boost` — the second launch meter, stored as the value you actually hit (`sub_0803C5DC`)
 - `strength` — character strength, 0..99
@@ -64,7 +64,7 @@ Character experience and bit-beast experience are awarded together by `BtlApplyC
 - When the award is aimed at you, character experience gets the score and the bit beast gets a quarter.
 - When it is aimed at a blade, that blade’s bit-beast experience gets the score and character experience gets a quarter.
 
-Character experience is the launch base only on the fallback path where the blade has no bit-beast record. An equipped blade has one, so raising “your EXP” does not raise RPM. Raising the bit beast’s experience does.
+For the player the launch base is character experience plus the equipped blade's bit-beast experience (`MainWork.expPoints + blade.unk26`, `sub_08031728`), so raising either raises RPM. The bit-beast experience of the NPC blader rows (`sub_08042E78`) is only added for the opponents.
 
 Level is `ExpBracket` (`sub_08042BE8`) over a counter. Character level uses character experience. Bit-beast level uses bit-beast experience. The table is pairs of (level, lower bound):
 

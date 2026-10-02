@@ -1,0 +1,12 @@
+# Show Math hooks. See docs/modding.md for the format.
+
+# DetailPanelDraw (sub_0804FFCC, the workshop / blade detail panel) draws its text
+# and then commits the row palettes with sub_080507B8. The mod adds its numbers to
+# the text window just before that call.
+call 0x0805035C sub_080507B8 ShowMathPanel
+
+# The panel's key handlers commit the row palettes again when the selection moves
+# (these two bls are in the functions after DetailPanelDraw); there the mod narrows
+# the selected part's grey bar so it does not cover the numbers.
+call 0x0805075E sub_080507B8 ShowMathBar
+call 0x080507A8 sub_080507B8 ShowMathBar
