@@ -23,8 +23,21 @@ enum DebugItem {
     DBG_MOVE_SPEED,
     DBG_BGM,
     DBG_CHARACTER,
+    DBG_HEADING_ABILITIES, /* a heading, not an entry: the cursor skips it */
+    DBG_SIPHON,
+    DBG_GUNNER,
+    DBG_STEEL_WALL,
+    DBG_TURBINE,
+    DBG_ROCKET,
     DBG_ITEM_COUNT
 };
+
+/* Entries up to here are in the first part of the save record; the abilities
+ * have their own small part after it (save.c), so records written before the
+ * abilities existed still load. */
+#define DBG_SAVED_ITEMS (DBG_CHARACTER + 1)
+#define DBG_ABILITY_FIRST DBG_SIPHON
+#define DBG_ABILITY_COUNT (DBG_ROCKET - DBG_SIPHON + 1)
 
 #define DBG_MAGIC 0xDB6C0DE1
 
@@ -68,6 +81,8 @@ struct DebugState {
     u8 locationsOn;
     u8 nodeAdded[MAP_NODES]; /* map flag bits this cheat set, per node */
     u8 characterOn;
+    u16 turbine; /* frames spent travelling the stadium edge since the last hit */
+    u32 siphonRest; /* hundredths of a spin point Siphon has not paid out yet */
 };
 
 extern struct DebugState gDebug;
@@ -92,8 +107,10 @@ extern const struct CharacterLook gCharacterLooks[CHARACTER_COUNT];
 
 void DebugStateInit(void);
 void DebugItemRange(u32 item, s32 *lo, s32 *hi);
+bool32 DebugIsHeading(u32 item);
 void CheatsTick(void);
 void CheatsOnToggle(u32 item);
 void CheatsOnChange(u32 item);
+void AbilitiesBattleStart(void);
 
 #endif

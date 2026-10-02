@@ -76,6 +76,12 @@ static const char *const sLabels[DBG_ITEM_COUNT] = {
     "Movement Speed",
     "BGM",
     "Character",
+    "Abilities",
+    "Siphon",
+    "Gunner",
+    "Steel Wall",
+    "Turbine",
+    "Rocket",
 };
 
 void DebugStateInit(void)
@@ -104,6 +110,12 @@ static u8 *PutNumber(u8 *out, u32 n)
     while (len > 0)
         *out++ = tmp[--len];
     return out;
+}
+
+/* A heading is a row of text that is not an entry. */
+bool32 DebugIsHeading(u32 item)
+{
+    return item == DBG_HEADING_ABILITIES;
 }
 
 /* Entries that cannot be used yet show "n/a" and do nothing. All work now. */
@@ -177,6 +189,10 @@ static void DrawRow(u32 row, u32 item)
     TextDrawAlign(FRAME_MID, half, 0);
     TextSetActiveObject(TEXT_FONT, TEXT_WIDTHS);
     TextSetCursor(0, y + 8);
+    if (DebugIsHeading(item)) {
+        TextDrawAlign((void *)sLabels[item], half, 0);
+        return;
+    }
     TextDrawAlign((void *)sLabels[item], left, 2);
     ValueText(item, value);
     if (item == DBG_BGM)
@@ -279,17 +295,33 @@ static void MenuExit(u8 *state, struct MainWork *work)
 
 static void Scroll(void)
 {
-    if (gDebug.cursor < gDebug.top)
-        gDebug.top = gDebug.cursor;
+    u32 first = gDebug.cursor;
+
+    /* The row above the first entry of a section is its heading; keep it in view. */
+    if (first > 0 && DebugIsHeading(first - 1))
+        first--;
+    if (first < gDebug.top)
+        gDebug.top = first;
     else if (gDebug.cursor >= gDebug.top + VISIBLE_ROWS)
         gDebug.top = gDebug.cursor - VISIBLE_ROWS + 1;
+}
+
+/* One row up or down, wrapping, over the headings. */
+static void MoveCursor(s32 delta)
+{
+    do {
+        if (delta < 0)
+            gDebug.cursor = gDebug.cursor == 0 ? DBG_ITEM_COUNT - 1 : gDebug.cursor - 1;
+        else
+            gDebug.cursor = gDebug.cursor == DBG_ITEM_COUNT - 1 ? 0 : gDebug.cursor + 1;
+    } while (DebugIsHeading(gDebug.cursor));
 }
 
 static void OnUp(u8 *state)
 {
     u8 top = gDebug.top;
 
-    gDebug.cursor = gDebug.cursor == 0 ? DBG_ITEM_COUNT - 1 : gDebug.cursor - 1;
+    MoveCursor(-1);
     Scroll();
     if (top != gDebug.top)
         DrawAll();
@@ -302,7 +334,7 @@ static void OnDown(u8 *state)
 {
     u8 top = gDebug.top;
 
-    gDebug.cursor = gDebug.cursor == DBG_ITEM_COUNT - 1 ? 0 : gDebug.cursor + 1;
+    MoveCursor(1);
     Scroll();
     if (top != gDebug.top)
         DrawAll();

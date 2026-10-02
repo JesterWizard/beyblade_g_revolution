@@ -33,7 +33,7 @@ struct SavedDebug {
     s16 exp;
     u16 sum; /* SAVE_SEED + every byte after this field */
     u8 tag;
-    u8 value[DBG_ITEM_COUNT];
+    u8 value[DBG_SAVED_ITEMS];
     u8 has; /* HAS_* and ON_* */
     s8 strength;
     u8 ripcords; /* GROUP_RIPCORD / LAUNCHER / BITCHIP ids this cheat added, one bit per id */
@@ -44,9 +44,23 @@ struct SavedDebug {
     u8 rowFlags[(BLADER_ROWS + 7) / 8]; /* bit i: blader row i was already collected */
 };
 
-#define SAVE_BLOCKS ((sizeof(struct SavedDebug) + 7) / 8)
+/* The abilities were added after the record above had shipped. Their on/off
+ * bits sit right behind it, in the bytes its last block already carried, with a
+ * tag and sum of their own: a record from before them has other bytes there,
+ * fails the check and loads with the abilities off, everything else intact. */
+struct SavedAbilities {
+    u8 tag;
+    u8 on; /* bit i: DBG_ABILITY_FIRST + i is on */
+    u16 sum;
+};
 
-typedef char SavedDebugFits[sizeof(struct SavedDebug) <= DBG_SAVE_BYTES ? 1 : -1];
+#define ABILITY_TAG 0xAB
+
+#define SAVE_USED (sizeof(struct SavedDebug) + sizeof(struct SavedAbilities))
+#define SAVE_BLOCKS ((SAVE_USED + 7) / 8)
+
+typedef char SavedDebugFits[SAVE_USED <= DBG_SAVE_BYTES ? 1 : -1];
+typedef char AbilityBitsFit[DBG_ABILITY_COUNT <= 8 ? 1 : -1];
 
 extern u32 sub_080677A8(u32 address, void *data);
 extern u16 sub_08067634(u32 address, u32 data);
@@ -64,16 +78,34 @@ static u16 Sum(const struct SavedDebug *s)
     return sum;
 }
 
+static struct SavedAbilities *Abilities(const struct SavedDebug *s)
+{
+    return (struct SavedAbilities *)((u8 *)s + sizeof(*s));
+}
+
+static u16 AbilitySum(const struct SavedAbilities *a)
+{
+    return SAVE_SEED + a->tag + a->on;
+}
+
 static void Pack(struct SavedDebug *s)
 {
+    struct SavedAbilities *a = Abilities(s);
     u32 i;
     u8 *p = (u8 *)s;
 
     for (i = 0; i < sizeof(*s); i++)
         p[i] = 0;
     s->tag = SAVE_TAG;
-    for (i = 0; i < DBG_ITEM_COUNT; i++)
+    for (i = 0; i < DBG_SAVED_ITEMS; i++)
         s->value[i] = gDebug.value[i];
+    a->tag = ABILITY_TAG;
+    a->on = 0;
+    for (i = 0; i < DBG_ABILITY_COUNT; i++) {
+        if (gDebug.value[DBG_ABILITY_FIRST + i])
+            a->on |= 1 << i;
+    }
+    a->sum = AbilitySum(a);
     s->has = (gDebug.hasStrength ? HAS_STRENGTH : 0) | (gDebug.hasExp ? HAS_EXP : 0)
         | (gDebug.hasCredits ? HAS_CREDITS : 0) | (gDebug.charactersOn ? ON_CHARACTERS : 0)
         | (gDebug.bladesOn ? ON_BLADES : 0) | (gDebug.partsOn ? ON_PARTS : 0)
@@ -99,13 +131,19 @@ static void Unpack(const struct SavedDebug *s)
 {
     u32 i;
 
-    for (i = 0; i < DBG_ITEM_COUNT; i++) {
+    const struct SavedAbilities *a = Abilities(s);
+
+    for (i = 0; i < DBG_SAVED_ITEMS; i++) {
         s32 lo;
         s32 hi;
 
         DebugItemRange(i, &lo, &hi);
         if (s->value[i] >= lo && s->value[i] <= hi)
             gDebug.value[i] = s->value[i];
+    }
+    if (a->tag == ABILITY_TAG && a->sum == AbilitySum(a)) {
+        for (i = 0; i < DBG_ABILITY_COUNT; i++)
+            gDebug.value[DBG_ABILITY_FIRST + i] = (a->on >> i) & 1;
     }
     gDebug.hasStrength = (s->has & HAS_STRENGTH) != 0;
     gDebug.hasExp = (s->has & HAS_EXP) != 0;

@@ -419,6 +419,8 @@ void CheatsTick(void)
 
 void CheatsOnToggle(u32 item)
 {
+    if (item == DBG_TURBINE)
+        gDebug.turbine = 0;
     CheatsTick();
 }
 
@@ -520,6 +522,7 @@ void DebugLaunch(void)
     s32 rpm = MAX_LAUNCH_RPM;
 
     _0803CECC();
+    AbilitiesBattleStart();
     battle = (u8 *)gBattleWork;
     if (gDebug.value[DBG_MAX_RPM]) {
         *(s32 *)(battle + 0xBB4) = rpm;

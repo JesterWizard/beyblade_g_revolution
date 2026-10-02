@@ -14,9 +14,9 @@
 
 ## 🧩 Introduction
 
-A debug popup in the game's own menu style, opened from the overworld. It gives test shortcuts (max stats, every beyblade and part, every location, character swaps, BGM player) without editing a save.
+A debug popup in the game's own menu style, opened from the overworld. It gives test shortcuts (max stats, every beyblade and part, every location, character swaps, BGM player) without editing a save, and an **Abilities** section with five special battle abilities for the player.
 
-The menu's state is stored in the save, in the 8-byte EEPROM blocks after the save slot (blocks `0x3EF..0x3FB`, up to 100 bytes; the slot itself has no room). It is written right after the slot's data blocks and read when the slot loads, so toggled entries stay on after a reset. The record has its own tag and sum (retail's checksum does not cover it); a missing or damaged record loads as every entry off. Besides the values it keeps the originals the value entries restore and what the collection entries added, so switching an entry off after a reload still takes back exactly what it gave. Not saved: each blader's original bit beast EXP (110 bytes), so Max BitBeast EXP does not restore after a reload.
+The menu's state is stored in the save, in the 8-byte EEPROM blocks after the save slot (blocks `0x3EF..0x3FB`, up to 100 bytes; the slot itself has no room). It is written right after the slot's data blocks and read when the slot loads, so toggled entries stay on after a reset. The record has its own tag and sum (retail's checksum does not cover it); a missing or damaged record loads as every entry off. Besides the values it keeps the originals the value entries restore and what the collection entries added, so switching an entry off after a reload still takes back exactly what it gave. The abilities' on/off bits are a small second part (tag, bits, sum) in the last block of the record, so a record written before the abilities existed still loads, with them off. Not saved: each blader's original bit beast EXP (110 bytes), so Max BitBeast EXP does not restore after a reload.
 
 Besides the menu it changes two retail routines:
 
@@ -63,6 +63,12 @@ Press **Select** in the overworld.
 | Movement Speed | x1..x4 on the overworld step (`sub_08041E88`) | yes |
 | BGM | Left/Right plays a track by name (`sub_0805FED4`); names and numbers are in the shared `include/bgm.h` | track and sound handle change, not heard |
 | Character | Left/Right steps through every sprite and palette pair the NPC table uses (94; Tyson = OFF). Sets the overworld sprite with the palette the game itself uses for it. 53 get their blader's portrait, name, STR / EXP / LVL and dialogue portrait; 31 more get the dialogue portrait of a non-blader NPC (face only, Tyson's numbers stay); the last 10 (generic kids) have no portrait and show "NPC <id>" with Tyson's. Kept across map changes. | built, not run in game |
+| **Abilities** (heading) | The section for the five entries below. The cursor skips the heading. Every ability works on the player only (fighter index 0); the opponent plays by the retail rules. Each wraps one `bl` in the battle code (see Code Locations). | menu |
+| Siphon | 10% of the spin a clash takes from the opponent is added to the player's. A hit is only a few spin points, so the hundredths are carried over to the next hit (a 9 point hit pays 0, the next 1, ...). Capped at 32767. | yes, in a live duel: a 1000 point hit pays 100 |
+| Gunner | The bit beast gauge fills 50% faster: every time the blades touch the gauge gets `0x30` instead of `0x20`, up to its capacity. | yes, `0x30` per touch |
+| Steel Wall | Half of the spin that attacking and jumping/dodging cost is given back, taken over the whole input handler `sub_08034BE0` (attack release: endurance/2, endurance or 1.5 x endurance; dodge and jump: endurance/2). Odd costs round in the player's favour. Clash damage is not reduced. | yes, an attack that cost 5 costs 2 |
+| Turbine | Every frame the player is 140+ units from the arena centre (the wall is at about 199) and moving across the line from the centre faster than 1 unit a frame builds one point of charge, up to 300 (5 seconds of edge travel). At full charge the d-pad steers 100% stronger (the blade's top speed doubles) and an attack hits 50% harder; both scale with the charge. The charge is lost when the blades touch (a clash, or the bodies colliding) and when a battle starts. | yes, a bot that circles the edge reaches full charge and double speed; a charged attack hits 100 -> 150 and the charge resets |
+| Rocket | The recovery wait after an attack (the wait before the next one is allowed, 75, 90 or 120 frames) counts down twice as fast. The short clash scene before it is not changed. | yes, 143 -> 105 frames between two attacks |
 
 ---
 
@@ -82,6 +88,8 @@ Press **Select** in the overworld.
 | **Movement speed** | `DebugMoveStep` in [`cheats.c`](src/cheats.c) | `call 0x080470C2` |
 | **Infinite parts** | `DebugPartsApplyWear` in [`cheats.c`](src/cheats.c) | `call 0x0803B826` and `0x0803BA32` |
 | **Max RPM / full gauge** | `DebugLaunch` in [`cheats.c`](src/cheats.c) | `call 0x0803C230` |
+| **Abilities** | `AbilityHandler`, `TurbineSteer`, `TurbinePower`, `AbilityClash`, `AbilityContact`, `AbilityUpdate` in [`abilities.c`](src/abilities.c), types in [`battle_types.h`](include/battle_types.h) | `call 0x08031D82` / `0x08031D90` (input handler `sub_08034BE0`: Steel Wall, Turbine count), `0x08034C10` / `0x08034D08` (steering `sub_08030638`: Turbine speed), `0x08032B24` (clash `sub_0802FFAC`: Siphon, Turbine reset), `0x0802FFC0` / `0x0802FFC8` (action power `sub_080300D4`: Turbine attack), `0x08031F90` (contact `sub_08032A88`: Gunner), `0x0803021A` / `0x08030224` (fighter update `sub_080348E8`: Rocket) |
+| **Section heading** | `DebugIsHeading`, `MoveCursor` in [`debug_menu.c`](src/debug_menu.c) | a heading row is drawn centred and skipped by the cursor |
 | **Keep blade** | `KeepBladeOnLoss__Hook` in [`keep_blade.s`](src/keep_blade.s) | Mid-function hook at `0x080380E0` |
 | **BGM names** | `BgmName` in [`bgm.c`](src/bgm.c) | Track names for the BGM entry |
 | **HUD fix** | `ExpBracketFixed`, `ExpBarFillFixed` in [`cheats.c`](src/cheats.c) | Replace `sub_08042BE8` and `sub_0802E1B4` |
@@ -92,6 +100,7 @@ Press **Select** in the overworld.
 ## 📝 TODO
 
 - Run Max RPM, infinite parts and Max BitBeast EXP in a real battle
+- The abilities were checked in an emulator save state of a live duel, not played through; Turbine's numbers (`TURBINE_*` in `abilities.c`) are a first guess to tune by feel
 - Name more NPC looks (`MAIN` in `gen_looks.py`)
 
 ---

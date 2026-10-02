@@ -47,3 +47,24 @@ pointer 0x08099784 sub_0805A304 DebugPortraitOp
 # sub_08044F14, then the record; sub_08045128 loads the slot, then the record.
 call 0x08044E04 sub_08044F14 DebugSaveBlocks
 call 0x0804515C sub_08045590 DebugSaveRead
+
+# Abilities (abilities.c). All of them wrap a retail call and work on the human
+# player only.
+# The battle frame (sub_08031D30) runs each fighter's input handler: Steel Wall
+# halves the spin that attacking and dodging cost inside it, and Turbine counts
+# its charge here.
+call 0x08031D82 _08034BE0 AbilityHandler
+call 0x08031D90 _08034BE0 AbilityHandler
+# The handler steers the blade by the d-pad (Turbine's speed).
+call 0x08034C10 _08030638 TurbineSteer
+call 0x08034D08 _08030638 TurbineSteer
+# Clash resolution: Siphon takes its share of the damage, Turbine adds to the
+# power of an attack and is lost.
+call 0x08032B24 _0802FFAC AbilityClash
+call 0x0802FFC0 _080300D4 TurbinePower
+call 0x0802FFC8 _080300D4 TurbinePower
+# Blades in contact fill the bit beast gauge (Gunner).
+call 0x08031F90 _08032A88 AbilityContact
+# The per-fighter frame update counts the post-attack recovery down (Rocket).
+call 0x0803021A sub_080348E8 AbilityUpdate
+call 0x08030224 sub_080348E8 AbilityUpdate
