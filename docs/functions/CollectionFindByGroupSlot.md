@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0802C314` |
-| Size | 0 bytes (94 instructions) |
+| Size | 198 bytes (94 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

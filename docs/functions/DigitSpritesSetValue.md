@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803139C` |
-| Size | 0 bytes (164 instructions) |
+| Size | 350 bytes (164 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

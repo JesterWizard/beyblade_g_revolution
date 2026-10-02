@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08060C30` |
-| Size | 0 bytes (118 instructions) |
+| Size | 248 bytes (118 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803DCFC` |
-| Size | 0 bytes (16 instructions) |
+| Size | 48 bytes (16 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

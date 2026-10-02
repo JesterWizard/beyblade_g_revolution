@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08062F90` |
-| Size | 0 bytes (57 instructions) |
+| Size | 148 bytes (57 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

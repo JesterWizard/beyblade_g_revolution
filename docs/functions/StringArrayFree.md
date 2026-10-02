@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080735B0` |
-| Size | 0 bytes (20 instructions) |
+| Size | 42 bytes (20 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

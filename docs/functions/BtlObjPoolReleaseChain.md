@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080700CC` |
-| Size | 0 bytes (82 instructions) |
+| Size | 188 bytes (82 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

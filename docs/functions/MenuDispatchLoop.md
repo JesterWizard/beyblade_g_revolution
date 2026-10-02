@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08040F4C` |
-| Size | 0 bytes (133 instructions) |
+| Size | 336 bytes (133 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

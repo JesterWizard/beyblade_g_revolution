@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803DBD0` |
-| Size | 0 bytes (27 instructions) |
+| Size | 80 bytes (27 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

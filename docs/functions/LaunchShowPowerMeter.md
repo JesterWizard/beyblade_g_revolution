@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803C500` |
-| Size | 0 bytes (81 instructions) |
+| Size | 220 bytes (81 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

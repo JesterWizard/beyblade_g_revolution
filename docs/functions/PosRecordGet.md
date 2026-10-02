@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0806DEF4` |
-| Size | 0 bytes (10 instructions) |
+| Size | 20 bytes (10 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

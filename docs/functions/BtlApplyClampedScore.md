@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803715C` |
-| Size | 0 bytes (189 instructions) |
+| Size | 444 bytes (189 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

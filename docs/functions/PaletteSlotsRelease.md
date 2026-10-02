@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080385DC` |
-| Size | 0 bytes (35 instructions) |
+| Size | 80 bytes (35 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080726E0` |
-| Size | 0 bytes (23 instructions) |
+| Size | 52 bytes (23 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

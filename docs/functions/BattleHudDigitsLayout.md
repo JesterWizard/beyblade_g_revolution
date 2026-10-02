@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803114C` |
-| Size | 0 bytes (79 instructions) |
+| Size | 184 bytes (79 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

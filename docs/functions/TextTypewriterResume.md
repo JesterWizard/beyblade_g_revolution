@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08061BDC` |
-| Size | 0 bytes (6 instructions) |
+| Size | 12 bytes (6 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

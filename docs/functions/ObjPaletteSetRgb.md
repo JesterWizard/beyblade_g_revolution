@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08062CF4` |
-| Size | 0 bytes (22 instructions) |
+| Size | 48 bytes (22 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08043BDC` |
-| Size | 0 bytes (28 instructions) |
+| Size | 76 bytes (28 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08039BD4` |
-| Size | 0 bytes (632 instructions) |
+| Size | 1552 bytes (632 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08043DB4` |
-| Size | 0 bytes (507 instructions) |
+| Size | 1352 bytes (507 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08061BAC` |
-| Size | 0 bytes (19 instructions) |
+| Size | 48 bytes (19 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

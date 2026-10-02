@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0806FE84` |
-| Size | 0 bytes (50 instructions) |
+| Size | 120 bytes (50 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803019C` |
-| Size | 0 bytes (105 instructions) |
+| Size | 268 bytes (105 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

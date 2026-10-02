@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0804245C` |
-| Size | 0 bytes (56 instructions) |
+| Size | 140 bytes (56 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

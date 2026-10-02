@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0804AE94` |
-| Size | 0 bytes (109 instructions) |
+| Size | 300 bytes (109 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

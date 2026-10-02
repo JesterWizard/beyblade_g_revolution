@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0802C3DC` |
-| Size | 0 bytes (95 instructions) |
+| Size | 198 bytes (95 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

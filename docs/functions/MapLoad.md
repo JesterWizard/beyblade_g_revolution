@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08043C70` |
-| Size | 0 bytes (131 instructions) |
+| Size | 324 bytes (131 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

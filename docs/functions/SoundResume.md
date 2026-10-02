@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08071FAC` |
-| Size | 0 bytes (12 instructions) |
+| Size | 26 bytes (12 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

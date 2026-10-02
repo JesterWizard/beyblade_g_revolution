@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08030D4C` |
-| Size | 0 bytes (181 instructions) |
+| Size | 436 bytes (181 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

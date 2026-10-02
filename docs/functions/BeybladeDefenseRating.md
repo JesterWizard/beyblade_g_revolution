@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803E374` |
-| Size | 0 bytes (30 instructions) |
+| Size | 76 bytes (30 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

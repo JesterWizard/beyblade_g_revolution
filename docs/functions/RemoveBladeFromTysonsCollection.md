@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0803E0CC` |
-| Size | 0 bytes (123 instructions) |
+| Size | 296 bytes (123 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

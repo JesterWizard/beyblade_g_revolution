@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08032908` |
-| Size | 0 bytes (156 instructions) |
+| Size | 384 bytes (156 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

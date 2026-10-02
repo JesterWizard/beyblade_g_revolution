@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080618EC` |
-| Size | 0 bytes (200 instructions) |
+| Size | 428 bytes (200 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0802BAD4` |
-| Size | 0 bytes (146 instructions) |
+| Size | 320 bytes (146 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

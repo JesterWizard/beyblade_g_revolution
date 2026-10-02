@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08051BBC` |
-| Size | 0 bytes (44 instructions) |
+| Size | 124 bytes (44 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

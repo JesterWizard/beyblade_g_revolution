@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0806DF38` |
-| Size | 0 bytes (113 instructions) |
+| Size | 228 bytes (113 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

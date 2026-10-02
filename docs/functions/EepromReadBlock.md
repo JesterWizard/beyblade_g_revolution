@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08067584` |
-| Size | 0 bytes (79 instructions) |
+| Size | 176 bytes (79 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
