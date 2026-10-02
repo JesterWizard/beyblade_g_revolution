@@ -8,8 +8,8 @@ void BattleTeardown(void)
 {
     s32 i;
 
-    sub_08062044(&gBattleWork->unk1F38);
-    sub_08062044(&gBattleWork->unk1F10);
+    GlyphTextFree(&gBattleWork->boostMeterText);
+    GlyphTextFree(&gBattleWork->powerMeterText);
     if (gBattleWork->unk00 != 0)
     {
         HeapFree(gBattleWork->unk00);
@@ -59,9 +59,9 @@ void BattleTeardown(void)
     }
     for (i = 0; i <= 3; i++)
         BtlReleaseEntry(&gBattleWork->unk023C[i]);
-    sub_08062044(&gBattleWork->unk2FC);
-    sub_08062044(&gBattleWork->unk013C.fields.unk14C);
-    sub_08062044(&gBattleWork->unk013C.fields.unk174);
+    GlyphTextFree(&gBattleWork->unk2FC);
+    GlyphTextFree(&gBattleWork->unk013C.fields.unk14C);
+    GlyphTextFree(&gBattleWork->unk013C.fields.unk174);
     _08073C40((void *)gData_080BB888[0]);
 }
 

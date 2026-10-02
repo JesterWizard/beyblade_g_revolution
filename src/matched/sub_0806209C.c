@@ -2,26 +2,26 @@
 
 // @ 0x0806209c
 
-void sub_0806209C(struct Unk62044 *a)
+void GlyphTextReleaseSprites(struct GlyphText *a)
 {
     s32 i;
     void *p;
 
     if (a == 0)
         return;
-    if (a->unk0C != 0)
+    if (a->sprites != 0)
     {
         i = 0;
         do
         {
-            p = a->unk0C[i];
+            p = a->sprites[i];
             if (p == 0)
                 break;
             BtlObjPoolFree(p);
-            a->unk0C[i] = 0;
+            a->sprites[i] = 0;
             i++;
         } while (i <= 0x7F);
     }
-    a->unk24 = 0;
+    a->spritesInUse = 0;
 }
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080705A4` |
-| Size | 28 bytes (11 instructions) |
+| Size | 0 bytes (11 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080705A4` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | semantic/phase3b |
 
 ## Why this name
 

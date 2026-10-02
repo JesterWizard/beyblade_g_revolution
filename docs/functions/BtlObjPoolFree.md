@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806FE84` |
-| Size | 120 bytes (50 instructions) |
+| Size | 0 bytes (50 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806FE84` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | pass unk30 to BtlObjListMoveToHead |
 
 ## Why this name
 
@@ -46,7 +45,7 @@
 - [`CleanBattleOverlays`](CleanBattleOverlays.md)
 - [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
 - [`BattleTeardown`](BattleTeardown.md)
-- [`BtlClearState`](BtlClearState.md)
+- [`BattleScorePopupClear`](BattleScorePopupClear.md)
 - [`PartMenuRebuild`](PartMenuRebuild.md)
 - `sub_0803FFB0`
 - [`MessageBoxLoadNext`](MessageBoxLoadNext.md)
@@ -62,7 +61,7 @@
 - [`ScrollListRedraw`](ScrollListRedraw.md)
 - `sub_08056BA4`
 - [`SegmentedBarRebuild`](SegmentedBarRebuild.md)
-- `sub_0806209C`
+- [`GlyphTextReleaseSprites`](GlyphTextReleaseSprites.md)
 - `sub_08062238`
 - `sub_08063D68`
 - `sub_08067CE8`

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803019C` |
-| Size | 268 bytes (105 instructions) |
+| Size | 0 bytes (105 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0803019C` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | Battle subsystem initialization |
 
 ## Why this name
 
@@ -31,12 +30,12 @@
 
 - `sub_080302A8`
 - [`BeybladeSpinStep`](BeybladeSpinStep.md)
-- `sub_08030F38`
+- [`BattleHudSlideStep`](BattleHudSlideStep.md)
 - [`BeybladeUpdate`](BeybladeUpdate.md)
 - [`BeybladeEffectsUpdate`](BeybladeEffectsUpdate.md)
 - [`BeybladeEffectsPlace`](BeybladeEffectsPlace.md)
 - [`BeybladeCollisionResponse`](BeybladeCollisionResponse.md)
 - [`BtlProjectToScreen`](BtlProjectToScreen.md)
-- `sub_080361A8`
+- [`FixedEaseStep`](FixedEaseStep.md)
 - [`MotionMidpoint`](MotionMidpoint.md)
 - `sub_0803D4C4`

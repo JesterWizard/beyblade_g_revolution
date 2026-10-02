@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08041980
-void sub_08041980(void)
+void ActorPoolClear(void)
 {
     struct Actor **p;
     s32 n;

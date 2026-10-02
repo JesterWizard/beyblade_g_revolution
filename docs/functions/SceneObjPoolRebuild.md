@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0804DB28` |
-| Size | 900 bytes (382 instructions) |
+| Size | 0 bytes (382 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
@@ -32,7 +32,7 @@
 - `sub_08054558`
 - [`AnimObjCreate`](AnimObjCreate.md)
 - `sub_08067CE8`
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 - [`SceneObjUpdate`](SceneObjUpdate.md)
 - [`SceneObjFreeResources`](SceneObjFreeResources.md)
 - `sub_08073C4C` _(not one of the 633 functions)_

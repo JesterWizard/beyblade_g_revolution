@@ -3,16 +3,16 @@
 // @ 0x08033530
 void BtlSceneObjUpdate(void)
 {
-    if (gBattleWork->unk2088 == 1)
+    if (gBattleWork->effectActive == 1)
     {
-        if (gBattleWork->unk201C == 0)
+        if (gBattleWork->effectFramesLeft == 0)
         {
-            sub_08033574();
+            BtlEffectStop();
         }
         else
         {
-            sub_080686D8(&gBattleWork->unk1FAC);
-            SceneObjUpdate(&gBattleWork->unk1FAC);
+            sub_080686D8(&gBattleWork->effectObj);
+            SceneObjUpdate(&gBattleWork->effectObj);
         }
     }
 }

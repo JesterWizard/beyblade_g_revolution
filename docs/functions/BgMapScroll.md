@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806960C` |
-| Size | 600 bytes (295 instructions) |
+| Size | 0 bytes (295 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806960C` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | BG map scroll/streaming |
 
 ## Why this name
 

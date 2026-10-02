@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08062CF4` |
-| Size | 48 bytes (22 instructions) |
+| Size | 0 bytes (22 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062CF4` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 

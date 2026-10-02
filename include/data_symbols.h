@@ -122,7 +122,7 @@ extern u8 gData_083D2690[];
 extern u8 gData_03000108;
 extern u8 gData_030001A8;
 extern u8 gData_030001B0;
-extern struct Unk473F8 *gData_03000630;
+extern struct SparklePool *gData_03000630;
 extern u32 gData_03000638[];
 extern u32 *const gData_08094BB4[];
 extern void *gData_080971D8[];
@@ -132,8 +132,8 @@ extern u8 gData_080B72F3[];
 extern u8 gData_080B7258[];
 extern u8 gData_082BF600[];
 extern void *gData_08099710[];
-extern struct Unk40EF4 gData_0808B2E4[];
-extern struct Unk42BE8 gData_080908BC[];
+extern struct KeyedLangEntry gData_0808B2E4[];
+extern struct ExpBracketEntry gData_080908BC[];
 extern u8 gData_083A2CF4[];
 extern u8 gData_083A2D28[];
 extern struct Unk447CC *gData_08096794[];
@@ -164,8 +164,8 @@ extern u16 gData_03004060;
 
 // Record browser (IWRAM): cursor index, record table, current record
 extern s16 gData_03000654;
-extern struct Unk4AAF0 **gData_03000658;
-extern struct Unk4AAF0 *gData_03000660;
+extern struct BeybladeBuildDetail **gData_03000658;
+extern struct BeybladeBuildDetail *gData_03000660;
 
 // Part menu (sub_08039BD4): first visible row, cursor row, row table
 extern s32 gData_03000400;

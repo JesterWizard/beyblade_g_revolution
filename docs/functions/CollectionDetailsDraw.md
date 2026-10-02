@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0804AAF0` |
-| Size | 332 bytes (123 instructions) |
+| Size | 0 bytes (123 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0804AAF0` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | old_agbcc; gData_ table/index symbols |
 
 ## Why this name
 
@@ -31,7 +30,7 @@
 
 ## Callees
 
-- `sub_0803DBD0`
+- [`BeybladeNameGet`](BeybladeNameGet.md)
 - `sub_0803DD60`
 - `sub_0803EBB0`
 - `sub_0803EC34`

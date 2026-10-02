@@ -20,9 +20,9 @@ void sub_08037430(void)
         else
             TextFormatInt(gBattleWork->unk133, num, 0x40);
         StringExpandDelim(gData_08096ECC[gMainWorkPtr->language], text, num, 0x23, 0x40);
-        sub_08061E8C((struct Unk61E8C *)&gBattleWork->unk013C.fields.unk174, gData_080B72F3,
+        GlyphTextInit((struct Unk61E8C *)&gBattleWork->unk013C.fields.unk174, gData_080B72F3,
                      (struct Unk61E8CSrc *)gData_082BF600, 0xB0, 0x170);
-        sub_08061EF8(&gBattleWork->unk013C.fields.unk174, text, 0, 0x28, 0, 0xC8, 0);
+        GlyphTextLayoutWrapped(&gBattleWork->unk013C.fields.unk174, text, 0, 0x28, 0, 0xC8, 0);
     }
     StringFree(text);
     StringFree(num);

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061D68` |
-| Size | 88 bytes (40 instructions) |
+| Size | 0 bytes (40 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08061D68` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | TextRowSetPaletteBank: scaled index plus addr keeps add operands |
 
 ## Why this name
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803E1F4` |
-| Size | 98 bytes (43 instructions) |
+| Size | 0 bytes (43 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803E1F4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | search unk08D0[] by unk23==b, unk1C==a, unk087C flag |
 
 ## Why this name
 

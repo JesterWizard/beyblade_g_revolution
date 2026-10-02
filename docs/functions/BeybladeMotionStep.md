@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08035984` |
-| Size | 348 bytes (162 instructions) |
+| Size | 0 bytes (162 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08035984` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | gData_ tables; s32 trig temps |
 
 ## Why this name
 

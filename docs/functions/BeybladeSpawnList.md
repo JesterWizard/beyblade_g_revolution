@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08044648` |
-| Size | 364 bytes (159 instructions) |
+| Size | 0 bytes (159 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08044648` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | BeybladeSpawnList: spawn scene objects for roster id list |
 
 ## Why this name
 
@@ -34,7 +33,7 @@
 - [`TaskCreateWithOwner`](TaskCreateWithOwner.md)
 - `sub_080626B8`
 - `sub_08062A14`
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 - [`PosRecordGet`](PosRecordGet.md)
 - [`CameraGetActive`](CameraGetActive.md)
 

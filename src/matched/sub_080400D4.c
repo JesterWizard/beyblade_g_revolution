@@ -5,8 +5,8 @@ void sub_080400D4(void *a)
 {
     u32 v;
 
-    sub_08066390(2);
-    v = (u32)sub_0806639C();
+    MenuPageSet(2);
+    v = (u32)MenuPageDefGet();
     sub_08041774(a, (void *)v, 2);
 }
 

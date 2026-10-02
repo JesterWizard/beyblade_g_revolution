@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806FF28` |
-| Size | 48 bytes (20 instructions) |
+| Size | 0 bytes (20 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806FF28` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_0806FF28/output-0-1/source.c |
 
 ## Why this name
 

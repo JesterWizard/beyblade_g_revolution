@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080385DC` |
-| Size | 80 bytes (35 instructions) |
+| Size | 0 bytes (35 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080385DC` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | palette slot release; Unk3CC.unk22 is u16; old_agbcc |
 
 ## Why this name
 
@@ -29,4 +28,4 @@
 
 ## Callers
 
-- `sub_08038638`
+- [`PaletteSlotRefRelease`](PaletteSlotRefRelease.md)

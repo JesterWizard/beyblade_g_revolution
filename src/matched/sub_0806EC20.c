@@ -37,7 +37,7 @@ void sub_0806EC20(void *view, void *table, u32 mode, void *origins)
     a->unk364 = 0;
     a->unk368 = 0;
     REG_BLDCNT = 0x3FFF;
-    sub_08069894();
+    BgScrollReset();
 
     baseLayer = a->layers;
     baseEntry = cfg->entries;

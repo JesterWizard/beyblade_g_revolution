@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803DCFC` |
-| Size | 48 bytes (16 instructions) |
+| Size | 0 bytes (16 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803DCFC` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_0803DCFC/base.c |
 
 ## Why this name
 

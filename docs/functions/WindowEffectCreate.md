@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08060468` |
-| Size | 60 bytes (21 instructions) |
+| Size | 0 bytes (21 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08060468` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | Phase 3b semantic C |
 
 ## Why this name
 

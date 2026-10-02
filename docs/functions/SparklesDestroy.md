@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0804745C` |
-| Size | 80 bytes (34 instructions) |
+| Size | 0 bytes (34 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0804745C` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_0804745C/base.c |
 
 ## Why this name
 

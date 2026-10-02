@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08045EF0` |
-| Size | 548 bytes (226 instructions) |
+| Size | 0 bytes (226 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08045EF0` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | op-coded byte vars; data symbol gData_03000600, old_agbcc |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- `sub_08066434`
+- [`SaveSlotGet`](SaveSlotGet.md)
 
 ## Callers
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08071808` |
-| Size | 12 bytes (3 instructions) |
+| Size | 0 bytes (3 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08071808` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | IWRAM global load u16 |
 
 ## Why this name
 

@@ -7,10 +7,10 @@ void sub_0803D4C4(void)
 
     for (i = 0; i <= 0x2F; i++)
     {
-        if (gBattleWork->unk0BCC[i].unk08 != 0)
+        if (gBattleWork->unk0BCC[i].sprite != 0)
         {
-            sub_0806225C(&gBattleWork->unk0BCC[i]);
-            if (gBattleWork->unk0BCC[i].unk28 > 0xA000)
+            SceneObjMotionStep(&gBattleWork->unk0BCC[i]);
+            if (gBattleWork->unk0BCC[i].posY > 0xA000)
                 sub_08062238(&gBattleWork->unk0BCC[i]);
         }
     }

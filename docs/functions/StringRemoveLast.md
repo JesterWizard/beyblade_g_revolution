@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0807339C` |
-| Size | 30 bytes (14 instructions) |
+| Size | 0 bytes (14 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0807339C` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

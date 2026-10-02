@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08071E44` |
-| Size | 64 bytes (29 instructions) |
+| Size | 0 bytes (29 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08071E44` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | struct Unk71E84 slot init from table[idx]; expanded struct fields (unk00/04/08/0C/10/14/17/1C/20/24) and fixed prototype to 3 args |
 
 ## Why this name
 

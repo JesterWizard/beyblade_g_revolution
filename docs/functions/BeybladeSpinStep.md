@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080302E0` |
-| Size | 168 bytes (73 instructions) |
+| Size | 0 bytes (73 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080302E0` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | spin angle update; old_agbcc; permuter-found dest copy |
 
 ## Why this name
 

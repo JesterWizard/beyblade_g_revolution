@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08042784` |
-| Size | 100 bytes (44 instructions) |
+| Size | 0 bytes (44 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08042784` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | u32 param; (s8) ring index; work local |
 
 ## Why this name
 

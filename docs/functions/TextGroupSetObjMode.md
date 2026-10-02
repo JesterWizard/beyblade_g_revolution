@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080712CC` |
-| Size | 56 bytes (27 instructions) |
+| Size | 0 bytes (27 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080712CC` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | walk Unk705DC list; load-then-sub n |
 
 ## Why this name
 

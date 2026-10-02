@@ -8,7 +8,7 @@ typedef void (*CpuCopyFunc)(const void *, void *, u32);
 
 // Redraws the eight visible rows of the scrolling list: label text for each
 // filled row, and for the cursor row an icon sprite plus its palette.
-void sub_08056250(struct Unk56250 *a)
+void ScrollListRedraw(struct Unk56250 *a)
 {
     s32 i;
 

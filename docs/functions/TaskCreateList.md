@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080447B4` |
-| Size | 22 bytes (10 instructions) |
+| Size | 0 bytes (10 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080447B4` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | call sub_08059AE0 until NULL |
 
 ## Why this name
 

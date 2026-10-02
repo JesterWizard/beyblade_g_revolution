@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08067504` |
-| Size | 128 bytes (47 instructions) |
+| Size | 0 bytes (47 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08067504` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | -O1 library code |
 
 ## Why this name
 

@@ -3,9 +3,9 @@
 // @ 0x08062684
 /* match-flags: -fprologue-bugfix */
 
-void sub_08062684(struct Unk62634 *a)
+void sub_08062684(struct SceneObjSprite *a)
 {
-    struct Unk62634 *r2;
+    struct SceneObjSprite *r2;
     s32 r1;
     s32 r0;
 

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08066434
-u8 sub_08066434(void)
+u8 SaveSlotGet(void)
 {
     u32 tmp[2];
 

@@ -13,7 +13,7 @@
 // gData_030001B0 / gData_030001A8 -- see asm/data_symbols.s): as bare literals
 // agbcc folds the second address into `add r0, #0xA8` and hoists all three pool
 // loads up front, losing retail's interleaved load/store shape.
-void sub_08069894(void)
+void BgScrollReset(void)
 {
     u8 i;
     u16 zero;
@@ -34,7 +34,7 @@ void sub_08069894(void)
 
     n = 0x80;
     n <<= 1;
-    sub_08069A60(2, 0, n, n);
-    sub_08069A60(3, 0, n, n);
+    BgAffineSetRotScale(2, 0, n, n);
+    BgAffineSetRotScale(3, 0, n, n);
 }
 

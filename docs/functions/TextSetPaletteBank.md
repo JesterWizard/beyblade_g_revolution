@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061610` |
-| Size | 24 bytes (10 instructions) |
+| Size | 0 bytes (10 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08061610` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | semantic/phase3b |
 
 ## Why this name
 

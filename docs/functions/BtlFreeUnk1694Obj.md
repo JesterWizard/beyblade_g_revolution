@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802BA4C` |
-| Size | 48 bytes (17 instructions) |
+| Size | 0 bytes (17 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0802BA4C` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/free gUnk_03000268 + clear unk1694 |
 
 ## Why this name
 

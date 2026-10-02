@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08042B50` |
-| Size | 40 bytes (15 instructions) |
+| Size | 0 bytes (15 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08042B50` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | symbol-addressed table (gData_*); agbcc only reproduces retail without literal folding |
 
 ## Why this name
 

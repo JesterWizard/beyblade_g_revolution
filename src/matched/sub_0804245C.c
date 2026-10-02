@@ -3,7 +3,7 @@
 // @ 0x0804245c
 /* match-compiler: old_agbcc */
 
-void sub_0804245C(void)
+void CursorHistoryReplayStep(void)
 {
     s8 index;
     u16 value;
@@ -21,10 +21,10 @@ void sub_0804245C(void)
     switch (value)
     {
     case 1:
-        sub_08042540();
+        CursorReplayStepRight();
         break;
     case 2:
-        sub_080425B8();
+        CursorReplayStepLeft();
         break;
     case 4:
         sub_08042630();

@@ -17,7 +17,7 @@ void sub_08034A68(struct Unk346C0 *a, u32 b)
     a->unk311 = 0;
     a->unk30F = 0;
     a->unk2CC = 5;
-    sub_08035238((struct Unk35258 *)a);
+    BattleAnimStopAll((struct Unk35258 *)a);
     sub_080347E4(a);
     if (a->unk30C == 1)
     {

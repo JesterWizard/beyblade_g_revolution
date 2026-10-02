@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080603E0` |
-| Size | 72 bytes (28 instructions) |
+| Size | 0 bytes (28 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080603E0` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/call 71FC8 on unk1710 then set unk181A |
 
 ## Why this name
 

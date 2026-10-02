@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08068A08` |
-| Size | 460 bytes (214 instructions) |
+| Size | 0 bytes (214 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08068A08` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | sibling of sub_08068BD4 |
 
 ## Why this name
 

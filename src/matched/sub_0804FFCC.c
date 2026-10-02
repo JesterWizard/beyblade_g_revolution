@@ -8,7 +8,7 @@
 // unk26 counter, then rebuild the panel's six sprites from the row's record.
 void DetailPanelDraw(struct Unk4FFCC *panel)
 {
-    struct Unk3E328 *rec;
+    struct BeybladeBuild *rec;
     u8 *buf;
     void *text;
     void **strings;
@@ -81,7 +81,7 @@ void DetailPanelDraw(struct Unk4FFCC *panel)
     }
     if (rec != NULL)
     {
-        if (rec->unk21 == -1)
+        if (rec->beybladeId == -1)
             TextFormatInt(0, buf, 8);
         else
         {

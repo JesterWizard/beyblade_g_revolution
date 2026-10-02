@@ -6,10 +6,10 @@
 | | |
 |--|--|
 | ROM | `0x080474AC` |
-| Size | 232 bytes (99 instructions) |
+| Size | 0 bytes (99 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080474AC` |
 | Confidence | 0.5 |
 | Provenance | ai |

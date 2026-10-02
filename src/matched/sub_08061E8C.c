@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08061e8c
-void sub_08061E8C(struct Unk61E8C *obj, void *b, struct Unk61E8CSrc *src, u16 c, u16 d)
+void GlyphTextInit(struct Unk61E8C *obj, void *b, struct Unk61E8CSrc *src, u16 c, u16 d)
 {
     u32 *sym = gData_080BB8BC;
     u32 size;

@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0806A3A4` |
-| Size | 144 bytes (57 instructions) |
+| Size | 0 bytes (57 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
@@ -49,9 +49,9 @@
 - `sub_08060758`
 - [`VramSlotsInit`](VramSlotsInit.md)
 - [`VramSlotLoad`](VramSlotLoad.md)
-- `sub_08061E8C`
+- [`GlyphTextInit`](GlyphTextInit.md)
 - [`PaletteSnapshotSave`](PaletteSnapshotSave.md)
-- `sub_08065E0C`
+- [`Lz77ImageBlit`](Lz77ImageBlit.md)
 - [`ActorAddMotionModifier`](ActorAddMotionModifier.md)
 - `sub_080726A4`
 - [`StringAlloc`](StringAlloc.md)

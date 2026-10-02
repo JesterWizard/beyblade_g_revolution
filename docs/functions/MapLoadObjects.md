@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080444BC` |
-| Size | 396 bytes (145 instructions) |
+| Size | 0 bytes (145 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080444BC` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | map scene setup from Unk447CC descriptor |
 
 ## Why this name
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806A4D8` |
-| Size | 168 bytes (84 instructions) |
+| Size | 0 bytes (84 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806A4D8` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | first-fit region allocator; typed prototype |
 
 ## Why this name
 

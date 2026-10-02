@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802C5DC` |
-| Size | 78 bytes (35 instructions) |
+| Size | 0 bytes (35 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0802C5DC` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/unk1694 find-and-mark |
 
 ## Why this name
 

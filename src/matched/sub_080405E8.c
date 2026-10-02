@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080405e8
-void sub_080405E8(void *a)
+void MessageQueuePush(void *a)
 {
     struct MessageQueue *p;
     u32 n;

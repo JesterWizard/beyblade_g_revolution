@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080602C0` |
-| Size | 14 bytes (6 instructions) |
+| Size | 0 bytes (6 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080602C0` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | battle/u8 thunk of sub_080717F0 |
 
 ## Why this name
 

@@ -2,31 +2,31 @@
 
 // @ 0x08068020
 
-void BtlEntitySelectByKey(struct Unk680CC *a, u16 key, u16 arg2)
+void AnimObjSelectSeq(struct AnimObjSeqSelect *a, u16 key, u16 arg2)
 {
-    struct Unk68014 *inner;
-    struct Unk680CCRec *rec;
+    struct AnimData *inner;
+    struct AnimSeqEntry *rec;
     u32 i;
     u32 off;
     u32 acc;
 
     acc = 0;
-    inner = a->unk00;
-    rec = (struct Unk680CCRec *)((u8 *)inner + inner->unk18);
+    inner = a->data;
+    rec = (struct AnimSeqEntry *)((u8 *)inner + inner->seqTableOffset);
     i = 0;
-    while (i < a->unk28)
+    while (i < a->seqCount)
     {
-        if (rec->unk00 == key)
+        if (rec->key == key)
         {
-            a->unk1C = acc;
-            a->unk1E = 0;
-            a->unk1A = key;
-            a->unk2E = arg2;
-            sub_08068180((struct Unk68598 *)a, rec->unk08);
+            a->seqOffset = acc;
+            a->seqStep = 0;
+            a->seqKey = key;
+            a->seqNextKey = arg2;
+            AnimObjSetRecord((struct AnimObjPlayback *)a, rec->firstRecord);
             return;
         }
-        off = rec->unk02;
-        rec = (struct Unk680CCRec *)((u8 *)rec + off);
+        off = rec->size;
+        rec = (struct AnimSeqEntry *)((u8 *)rec + off);
         acc = (u16)(acc + off);
         i++;
     }

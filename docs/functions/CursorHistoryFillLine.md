@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080428F0` |
-| Size | 160 bytes (70 instructions) |
+| Size | 0 bytes (70 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080428F0` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | switch case order; hoisted step and ring slot |
 
 ## Why this name
 

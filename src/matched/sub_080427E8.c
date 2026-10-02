@@ -2,7 +2,7 @@
 
 // @ 0x080427e8
 /* match-compiler: old_agbcc */
-void sub_080427E8(void)
+void CursorFaceIdlePose(void)
 {
     struct MainWork *main;
 
@@ -13,22 +13,22 @@ void sub_080427E8(void)
     {
     case 0x40:
         if (main->unk0462 != 5)
-            BtlEntitySelectByKeyDefault((struct Unk680CC *)&main->unk0448, 5);
+            AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&main->unk0448, 5);
         gMainWorkPtr->unk0479 = 2 & gMainWorkPtr->unk0479;
         break;
     case 0x20:
         if (main->unk0462 != 5)
-            BtlEntitySelectByKeyDefault((struct Unk680CC *)&main->unk0448, 5);
+            AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&main->unk0448, 5);
         gMainWorkPtr->unk0479 = 1 | gMainWorkPtr->unk0479;
         break;
     case 0x80:
         if (main->unk0462 != 6)
-            BtlEntitySelectByKeyDefault((struct Unk680CC *)&main->unk0448, 6);
+            AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&main->unk0448, 6);
         gMainWorkPtr->unk0479 = 0;
         break;
     case 0x100:
         if (main->unk0462 != 7)
-            BtlEntitySelectByKeyDefault((struct Unk680CC *)&main->unk0448, 7);
+            AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&main->unk0448, 7);
         gMainWorkPtr->unk0479 = 0;
         break;
     }

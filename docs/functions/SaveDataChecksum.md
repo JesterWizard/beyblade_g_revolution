@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08044D8C` |
-| Size | 30 bytes (15 instructions) |
+| Size | 0 bytes (15 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08044D8C` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | sums a[1..0x7D7] as u32 (unsigned loop bound/counter for bcc) |
 
 ## Why this name
 

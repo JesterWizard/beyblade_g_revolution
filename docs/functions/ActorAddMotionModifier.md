@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080686F4` |
-| Size | 164 bytes (78 instructions) |
+| Size | 0 bytes (78 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080686F4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | playback entry insert (old_agbcc) |
 
 ## Why this name
 

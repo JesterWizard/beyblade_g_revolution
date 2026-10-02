@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08060220` |
-| Size | 52 bytes (21 instructions) |
+| Size | 0 bytes (21 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08060220` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/invalidate unk1710[idx] |
 
 ## Why this name
 

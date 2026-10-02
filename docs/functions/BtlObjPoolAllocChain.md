@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0807000C` |
-| Size | 192 bytes (77 instructions) |
+| Size | 0 bytes (77 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0807000C` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | gData_ symbol addressing for pool lists |
 
 ## Why this name
 

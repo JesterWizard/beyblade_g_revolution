@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08040F4C` |
-| Size | 336 bytes (133 instructions) |
+| Size | 0 bytes (133 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08040F4C` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | structured rewrite + old_agbcc |
 
 ## Why this name
 
@@ -27,14 +26,14 @@
 
 - `sub_0804109C`
 - [`MenuDispatchKeyHandlers`](MenuDispatchKeyHandlers.md)
-- `sub_08041394`
+- [`HeapFreeSlots8`](HeapFreeSlots8.md)
 - [`WindowEffectCreate`](WindowEffectCreate.md)
 - [`WindowEffectDestroy`](WindowEffectDestroy.md)
-- [`WindowEffectApply`](WindowEffectApply.md)
+- [`WindowRegsApply`](WindowRegsApply.md)
 - `sub_08060758`
 - `sub_08060798`
 - [`BlendFadeTick`](BlendFadeTick.md)
-- `sub_0806639C`
+- [`MenuPageDefGet`](MenuPageDefGet.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`InputUpdate`](InputUpdate.md)
 - `sub_08073C40` _(not one of the 633 functions)_

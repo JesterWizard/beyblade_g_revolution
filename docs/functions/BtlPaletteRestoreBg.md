@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08034414` |
-| Size | 10 bytes (4 instructions) |
+| Size | 0 bytes (4 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08034414` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | thunk sub_08063104 |
 
 ## Why this name
 

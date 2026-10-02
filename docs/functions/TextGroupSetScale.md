@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08070AF8` |
-| Size | 416 bytes (194 instructions) |
+| Size | 0 bytes (194 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08070AF8` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | Unk7069C sprite group; old_agbcc |
 
 ## Why this name
 

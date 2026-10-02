@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080425B8` |
-| Size | 120 bytes (48 instructions) |
+| Size | 0 bytes (48 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080425B8` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_080425B8/output-0-1/source.c |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 
 ## Callers
 

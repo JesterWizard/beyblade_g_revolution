@@ -4,52 +4,52 @@
 
 // @ 0x080604c8
 /* match-compiler: old_agbcc */
-void WindowEffectApply(void)
+void WindowRegsApply(void)
 {
-    struct Unk604C8 *p = *(struct Unk604C8 **)gUnk_03000750;
+    struct WindowRegs *p = *(struct WindowRegs **)gUnk_03000750;
     u32 w;
 
-    w = p->unk00;
+    w = p->win0Left;
     w <<= 8;
-    w |= p->unk02;
-    p->unk08 = w;
-    p->unk0A = (p->unk04 << 8) | p->unk06;
-    p->unk0C = (p->unk01 << 8) | p->unk03;
+    w |= p->win0Right;
+    p->win0H = w;
+    p->win1H = (p->win1Left << 8) | p->win1Right;
+    p->win0V = (p->win0Top << 8) | p->win0Bottom;
     if (1)
     {
         if (p)
         {
-            p->unk0E = (p->unk05 << 8) | p->unk07;
-            p->unk14 = (p->unk11 << 8) | p->unk10;
-            p->unk16 = (p->unk13 << 8) | p->unk12;
+            p->win1V = (p->win1Top << 8) | p->win1Bottom;
+            p->winIn = (p->win1In << 8) | p->win0In;
+            p->winOut = (p->objWinIn << 8) | p->outside;
             *(vu16 *)gData_04000040 = (u16)w;
             w = (u32)gData_04000042;
-            *(u16 *)w = p->unk0A;
+            *(u16 *)w = p->win1H;
             w += 2;
-            *(u16 *)w = p->unk0C;
+            *(u16 *)w = p->win0V;
             w += 2;
-            *(u16 *)w = p->unk0E;
+            *(u16 *)w = p->win1V;
             w += 2;
-            *(u16 *)w = p->unk14;
+            *(u16 *)w = p->winIn;
             w += 2;
         }
         else
         {
-            p->unk0E = (p->unk05 << 8) | p->unk07;
-            p->unk14 = (p->unk11 << 8) | p->unk10;
-            p->unk16 = (p->unk13 << 8) | p->unk12;
+            p->win1V = (p->win1Top << 8) | p->win1Bottom;
+            p->winIn = (p->win1In << 8) | p->win0In;
+            p->winOut = (p->objWinIn << 8) | p->outside;
             *(vu16 *)gData_04000040 = (u16)w;
             w = (u32)gData_04000042;
-            *(u16 *)w = p->unk0A;
+            *(u16 *)w = p->win1H;
             w += 2;
-            *(u16 *)w = p->unk0C;
+            *(u16 *)w = p->win0V;
             w += 2;
-            *(u16 *)w = p->unk0E;
+            *(u16 *)w = p->win1V;
             w += 2;
-            *(u16 *)w = p->unk14;
+            *(u16 *)w = p->winIn;
             w += 2;
         }
     }
-    *(u16 *)w = p->unk16;
+    *(u16 *)w = p->winOut;
 }
 

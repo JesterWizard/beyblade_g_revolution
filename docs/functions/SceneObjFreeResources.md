@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08068808` |
-| Size | 50 bytes (23 instructions) |
+| Size | 0 bytes (23 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
@@ -29,9 +29,9 @@
 
 ## Callers
 
-- `sub_08033574`
-- `sub_08035258`
-- `sub_08041980`
+- [`BtlEffectStop`](BtlEffectStop.md)
+- [`BattleAnimStop`](BattleAnimStop.md)
+- [`ActorPoolClear`](ActorPoolClear.md)
 - [`SceneObjDespawn`](SceneObjDespawn.md)
 - `sub_08042718`
 - `sub_08043ADC`

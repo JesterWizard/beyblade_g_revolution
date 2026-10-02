@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806A6F8` |
-| Size | 436 bytes (183 instructions) |
+| Size | 0 bytes (183 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806A6F8` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle input hub: key queue playback/record + per-button hold slots (old_agbcc) |
 
 ## Why this name
 

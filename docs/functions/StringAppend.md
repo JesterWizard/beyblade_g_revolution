@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080733E4` |
-| Size | 90 bytes (45 instructions) |
+| Size | 0 bytes (45 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080733E4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | strcat-like append |
 
 ## Why this name
 

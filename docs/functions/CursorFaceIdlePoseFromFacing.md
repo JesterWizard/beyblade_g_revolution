@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08057274` |
-| Size | 208 bytes (79 instructions) |
+| Size | 0 bytes (79 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08057274` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | old_agbcc; direct gMainWorkPtr |
 
 ## Why this name
 
@@ -29,7 +28,7 @@
 
 ## Callees
 
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 
 ## Callers
 

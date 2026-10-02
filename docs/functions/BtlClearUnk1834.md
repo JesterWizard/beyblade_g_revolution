@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080433F4` |
-| Size | 44 bytes (14 instructions) |
+| Size | 0 bytes (14 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080433F4` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/clear-unk1834-and-flag |
 
 ## Why this name
 

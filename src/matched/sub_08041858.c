@@ -10,7 +10,7 @@ void sub_08041858(void)
 {
     void *v;
 
-    sub_08041980();
+    ActorPoolClear();
     v = gData_03000508[0];
     if (v != 0)
     {

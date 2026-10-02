@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08034420` |
-| Size | 328 bytes (152 instructions) |
+| Size | 0 bytes (152 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08034420` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | Unk346C0 battler state init |
 
 ## Why this name
 

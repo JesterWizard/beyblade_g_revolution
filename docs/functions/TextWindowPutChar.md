@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08060E48` |
-| Size | 532 bytes (261 instructions) |
+| Size | 0 bytes (261 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08060E48` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | draw one glyph into a text window |
 
 ## Why this name
 
@@ -25,7 +24,7 @@
 
 ## Callees
 
-- `sub_0806BB38`
+- [`TextLayerTileAddr`](TextLayerTileAddr.md)
 
 ## Callers
 

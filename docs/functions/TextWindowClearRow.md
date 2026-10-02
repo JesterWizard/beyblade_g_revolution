@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061800` |
-| Size | 76 bytes (33 instructions) |
+| Size | 0 bytes (33 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08061800` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 

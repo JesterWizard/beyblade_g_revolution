@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803E0CC` |
-| Size | 296 bytes (123 instructions) |
+| Size | 0 bytes (123 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803E0CC` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | release collection slots matching a blade id (logs via DebugPrint with the id as %d) |
 
 ## Why this name
 

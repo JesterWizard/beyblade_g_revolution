@@ -10,9 +10,9 @@ u32 AnimDurationForKey(void *a, u32 b)
     void *obj;
     u16 key;
     u32 total;
-    struct Unk680CCRec *p;
+    struct AnimSeqEntry *p;
     u32 i;
-    struct Unk680CCRec *cursor;
+    struct AnimSeqEntry *cursor;
 
     obj = a;
     key = (u16)b;
@@ -21,15 +21,15 @@ u32 AnimDurationForKey(void *a, u32 b)
     if (p == 0)
         return 0;
     i = 0;
-    if (total >= p->unk04)
+    if (total >= p->stepCount)
         goto done;
     cursor = p;
     do
     {
-        total += AnimHalfwordSum(obj, cursor->unk08);
-        cursor = (struct Unk680CCRec *)((u16 *)cursor + 1);
+        total += AnimHalfwordSum(obj, cursor->firstRecord);
+        cursor = (struct AnimSeqEntry *)((u16 *)cursor + 1);
         i++;
-    } while (i < p->unk04);
+    } while (i < p->stepCount);
 done:
     return total;
 }

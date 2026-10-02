@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806013C` |
-| Size | 56 bytes (22 instructions) |
+| Size | 0 bytes (22 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0806013C` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | battle/invalidate unk177C/unk1780 |
 
 ## Why this name
 

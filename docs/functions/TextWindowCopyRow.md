@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061DC0` |
-| Size | 72 bytes (30 instructions) |
+| Size | 0 bytes (30 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08061DC0` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_08061DC0/output-0-1/source.c |
 
 ## Why this name
 

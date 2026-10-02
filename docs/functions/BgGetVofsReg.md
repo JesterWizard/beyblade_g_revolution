@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08069948` |
-| Size | 64 bytes (23 instructions) |
+| Size | 0 bytes (23 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08069948` |
 | Confidence | 0.95 |
 | Provenance | ai |
-| Note | returns the palette/scroll reg pointer for a 4-way selector |
 
 ## Why this name
 
@@ -25,4 +24,4 @@
 - [`BgMapInit`](BgMapInit.md)
 - `sub_08068988`
 - [`BgMapScroll`](BgMapScroll.md)
-- `sub_08069894`
+- [`BgScrollReset`](BgScrollReset.md)

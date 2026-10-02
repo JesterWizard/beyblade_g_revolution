@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08070468` |
-| Size | 114 bytes (51 instructions) |
+| Size | 0 bytes (51 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08070468` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | sorted list reposition; list head via gData_030040A4 symbol |
 
 ## Why this name
 

@@ -7,15 +7,15 @@ void sub_080338E4(void *dst, void *src);
 void sub_08032D5C(struct Unk346C0 *a, struct Unk346C0 *b);
 void BattleBannerScroll(void);
 void BattleScorePopupTick(void);
-void sub_08033084(void *a, u32 b);
+void BtlPaletteFadeStep(void *a, u32 b);
 void BeybladeEffectsPlace(void *a);
-void sub_08030F38(void);
+void BattleHudSlideStep(void);
 void sub_08033DD4(void);
 void BtlKeyComboStep(struct Unk33958 *a, u16 b);
-void sub_080333E4(s32 a, s32 b, s32 c, s32 d);
+void BtlEffectStart(s32 a, s32 b, s32 c, s32 d);
 void sub_08032DB8(struct Unk346C0 *a);
 u8 sub_08033A94(u8 *a);
-void sub_080361A8(void *a);
+void FixedEaseStep(void *a);
 
 /* match-compiler: old_agbcc */
 // Battle main loop: run `frame + 1` frames of input, physics, drawing and the
@@ -34,7 +34,7 @@ void BtlFrameUpdate(
     state_a = state_a_arg;
     state_b = state_b_arg;
     frame = frame_arg;
-    gBattleWork->unkAC4 = RandRange(0x100) << 8;
+    gBattleWork->randPhase = RandRange(0x100) << 8;
     sub_080338E4(&temp_a, (void *)0x0807811C);
     sub_080338E4(&temp_b, (void *)0x08078130);
     sub_080338E4(&temp_c, (void *)0x08078144);
@@ -45,7 +45,7 @@ void BtlFrameUpdate(
         {
             VBlankIntrWait();
             TimerAdvance();
-            sub_0806A6F8();
+            InputUpdate();
             if ((gData_03004060 & 8) != 0)
                 BattleBannerScroll();
             sub_080361CC(
@@ -74,25 +74,25 @@ void BtlFrameUpdate(
             BeybladeEffectsUpdate((struct Unk35258 *)state_b);
             BeybladeEffectsPlace(state_a);
             BeybladeEffectsPlace(state_b);
-            sub_08030F38();
+            BattleHudSlideStep();
             sub_08030F00(
                 (struct Unk30F00 *)gBattleWork->unk0AE8.fields.unkB50,
-                (struct Unk30F00Src *)gBattleWork->unk478);
+                (struct Unk30F00Src *)gBattleWork->battlerStates);
             BtlSceneObjUpdate();
             BattleScorePopupTick();
-            sub_08033084(
+            BtlPaletteFadeStep(
                 &gBattleWork->unk1F7C,
-                gBattleWork->unk1F98);
+                gBattleWork->fadeActive);
             BeybladeSpinStep(state_a);
             BeybladeSpinStep(state_b);
-            TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB84);
-            TextRowPulsePalette((struct Unk312EC *)gBattleWork->unkB94);
+            TextRowPulsePalette((struct Unk312EC *)gBattleWork->rowHighlightA);
+            TextRowPulsePalette((struct Unk312EC *)gBattleWork->rowHighlightB);
             _08073C40((void *)gData_080BB888[0]);
             MotionMidpoint(
                 (struct Unk36264 *)&gBattleWork->unkAA8,
                 &gBattleWork->unk328,
                 &gBattleWork->unk37C, 0x66);
-            sub_080361A8(&gBattleWork->unkAA8);
+            FixedEaseStep(&gBattleWork->unkAA8);
             BtlCaptureInput(state_a);
             if (state_a->unk30C == 1)
                 sub_08033DD4();
@@ -106,21 +106,21 @@ void BtlFrameUpdate(
                     sub_08033978(
                         (struct Unk33A5C *)&gBattleWork->unk2094, state_a, state_b, 0);
                     frame = 60;
-                    sub_080333E4(0x78, 0x50, 0, 3);
+                    BtlEffectStart(0x78, 0x50, 0, 3);
                 }
                 if ((u8)sub_08033958(&temp_b) != 0)
                 {
                     sub_08033978(
                         (struct Unk33A5C *)&gBattleWork->unk2094, state_a, state_b, 1);
                     frame = 60;
-                    sub_080333E4(0x78, 0x50, 0, 3);
+                    BtlEffectStart(0x78, 0x50, 0, 3);
                 }
                 if ((u8)sub_08033958(&temp_c) != 0)
                 {
                     sub_08033978(
                         (struct Unk33A5C *)&gBattleWork->unk2094, state_a, state_b, 2);
                     frame = 60;
-                    sub_080333E4(0x78, 0x50, 0, 3);
+                    BtlEffectStart(0x78, 0x50, 0, 3);
                 }
             }
             frame--;

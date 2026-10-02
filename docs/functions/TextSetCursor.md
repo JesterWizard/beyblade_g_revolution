@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080615EC` |
-| Size | 36 bytes (16 instructions) |
+| Size | 0 bytes (16 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080615EC` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | clamp x/y then store Unk0798 unk90/unk92; -fprologue-bugfix; u32 args |
 
 ## Why this name
 

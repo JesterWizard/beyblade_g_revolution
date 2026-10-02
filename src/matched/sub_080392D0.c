@@ -3,14 +3,14 @@
 // @ 0x080392d0
 void sub_080392D0(void)
 {
-    if ((gBattleWork->unk1F38.unk10 >> 8) > -0xF0)
-        Unk62044OffsetPoints(&gBattleWork->unk1F38, -8, 0);
+    if ((gBattleWork->boostMeterText.unk10 >> 8) > -0xF0)
+        Unk62044OffsetPoints(&gBattleWork->boostMeterText, -8, 0);
     else
-        sub_08062044(&gBattleWork->unk1F38);
+        GlyphTextFree(&gBattleWork->boostMeterText);
 
-    if ((gBattleWork->unk1F10.unk10 >> 8) <= 0xEF)
-        Unk62044OffsetPoints(&gBattleWork->unk1F10, 8, 0);
+    if ((gBattleWork->powerMeterText.unk10 >> 8) <= 0xEF)
+        Unk62044OffsetPoints(&gBattleWork->powerMeterText, 8, 0);
     else
-        sub_08062044(&gBattleWork->unk1F10);
+        GlyphTextFree(&gBattleWork->powerMeterText);
 }
 

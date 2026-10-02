@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08062F90` |
-| Size | 148 bytes (57 instructions) |
+| Size | 0 bytes (57 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062F90` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | flag assignment in the alloc check defeats cse-skip-blocks |
 
 ## Why this name
 

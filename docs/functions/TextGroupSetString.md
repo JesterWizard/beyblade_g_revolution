@@ -6,10 +6,10 @@
 | | |
 |--|--|
 | ROM | `0x08070AD4` |
-| Size | 34 bytes (15 instructions) |
+| Size | 0 bytes (15 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08070AD4` |
 | Confidence | 0.8 |
 | Provenance | ai |

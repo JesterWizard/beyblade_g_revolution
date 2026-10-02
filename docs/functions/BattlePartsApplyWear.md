@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803D51C` |
-| Size | 304 bytes (129 instructions) |
+| Size | 0 bytes (129 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0803D51C` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | old_agbcc; signed-prototype call to sub_0802C55C |
 
 ## Why this name
 

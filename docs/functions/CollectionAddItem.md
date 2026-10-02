@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802BAD4` |
-| Size | 320 bytes (146 instructions) |
+| Size | 0 bytes (146 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802BAD4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | duplicated slot writes per branch |
 
 ## Why this name
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08067F3C` |
-| Size | 92 bytes (44 instructions) |
+| Size | 0 bytes (44 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08067F3C` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | old_agbcc; guarded do-while |
 
 ## Why this name
 

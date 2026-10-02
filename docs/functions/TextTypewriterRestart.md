@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061E40` |
-| Size | 20 bytes (10 instructions) |
+| Size | 0 bytes (10 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08061E40` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | direct struct-field zero initialization |
 
 ## Why this name
 

@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x080429cc
-void sub_080429CC(void)
+void CursorHistoryStartLine(void)
 {
     struct CursorHistory *ring;
     struct MainWork *main;
@@ -18,22 +18,22 @@ void sub_080429CC(void)
     case 0:
         x = main->unk17B4 = main->unk0370 + 0x1000;
         y = main->unk17B8 = main->unk0374;
-        sub_080428F0(x, y, 0, 1);
+        CursorHistoryFillLine(x, y, 0, 1);
         break;
     case 1:
         x = main->unk17B4 = main->unk0370 - 0x1000;
         y = main->unk17B8 = main->unk0374;
-        sub_080428F0(x, y, 1, 2);
+        CursorHistoryFillLine(x, y, 1, 2);
         break;
     case 2:
         x = main->unk17B4 = main->unk0370;
         y = main->unk17B8 = main->unk0374 + 0x1000;
-        sub_080428F0(x, y, 2, 4);
+        CursorHistoryFillLine(x, y, 2, 4);
         break;
     case 3:
         x = main->unk17B4 = main->unk0370;
         y = main->unk17B8 = main->unk0374 - 0x1000;
-        sub_080428F0(x, y, 3, 8);
+        CursorHistoryFillLine(x, y, 3, 8);
         break;
     }
 }

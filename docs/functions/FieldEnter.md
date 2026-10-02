@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08043DB4` |
-| Size | 1352 bytes (507 instructions) |
+| Size | 0 bytes (507 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08043DB4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_08043DB4/base.c |
 
 ## Why this name
 
@@ -31,8 +30,8 @@
 
 - [`StatusHudMarkerHide`](StatusHudMarkerHide.md)
 - `sub_0802DEA0`
-- `sub_08041980`
-- `sub_08041DB4`
+- [`ActorPoolClear`](ActorPoolClear.md)
+- [`ActorFindByIdSide`](ActorFindByIdSide.md)
 - [`CursorHistoryReset`](CursorHistoryReset.md)
 - [`CursorHistoryStartLine`](CursorHistoryStartLine.md)
 - [`BtlClearUnk1834`](BtlClearUnk1834.md)
@@ -56,12 +55,12 @@
 - [`BufferClearWords`](BufferClearWords.md)
 - [`RandRange`](RandRange.md)
 - `sub_080632F8`
-- `sub_08066440`
-- `sub_0806644C`
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`ActiveFlagSet`](ActiveFlagSet.md)
+- [`ActiveFlagGet`](ActiveFlagGet.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 - [`SceneObjUpdate`](SceneObjUpdate.md)
 - [`SceneObjFreeResources`](SceneObjFreeResources.md)
-- `sub_08069894`
+- [`BgScrollReset`](BgScrollReset.md)
 - [`BgSetPriorities`](BgSetPriorities.md)
 - `sub_0806EE24`
 - [`CameraUpdate`](CameraUpdate.md)

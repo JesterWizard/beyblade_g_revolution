@@ -5,7 +5,7 @@
 // @ 0x0802c314
 /* match-compiler: old_agbcc */
 
-s32 sub_0802C314(s8 a, u8 b, struct CollectionLookup *out)
+s32 CollectionFindByGroupSlot(s8 a, u8 b, struct CollectionLookup *out)
 {
     s32 i;
 

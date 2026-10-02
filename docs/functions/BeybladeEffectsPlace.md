@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080353A0` |
-| Size | 200 bytes (92 instructions) |
+| Size | 0 bytes (92 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080353A0` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 

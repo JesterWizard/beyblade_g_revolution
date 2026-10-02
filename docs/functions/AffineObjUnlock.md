@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080705D4` |
-| Size | 6 bytes (3 instructions) |
+| Size | 0 bytes (3 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080705D4` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | clear flag byte |
 
 ## Why this name
 

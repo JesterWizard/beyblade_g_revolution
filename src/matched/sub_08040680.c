@@ -6,7 +6,7 @@
 #include "global.h"
 #include "ram_map.h"
 
-void sub_08040680(struct Unk40680 *a)
+void MessageBoxLoadNext(struct MessageBox *a)
 {
     s32 i;
     s32 value;
@@ -21,7 +21,7 @@ void sub_08040680(struct Unk40680 *a)
     }
     for (i = 0; i <= 8; i++)
         MemClear(gUnk_0300047C->lines[i], 0x60);
-    value = sub_08040618();
+    value = MessageQueuePopKeyedWord();
     {
         u8 *buf = StringAlloc(0x400);
         gUnk_0300047C->scratch = buf;
@@ -31,9 +31,9 @@ void sub_08040680(struct Unk40680 *a)
     d = TextGetWidthTable();
     y = TextGetAreaWidth() - 0x28;
     f = TextGetGlyphWidth();
-    a->unk2FC = SplitStringIntoStringArray(gUnk_0300047C->lines, gUnk_0300047C->scratch, 9, d, y, f, TextGetSpacing(), 0x60);
+    a->lineCount = SplitStringIntoStringArray(gUnk_0300047C->lines, gUnk_0300047C->scratch, 9, d, y, f, TextGetSpacing(), 0x60);
     StringFree(gUnk_0300047C->scratch);
-    a->unk300 = 0;
+    a->curLine = 0;
     TextTypewriterResume((struct Unk61BDC *)a->unk220->unk00);
     TextWindowPopState();
     TextTypewriterRestart((struct Unk61E40 *)a->unk220->unk00);

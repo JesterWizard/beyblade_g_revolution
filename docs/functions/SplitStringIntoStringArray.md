@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080737C0` |
-| Size | 336 bytes (152 instructions) |
+| Size | 0 bytes (152 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080737C0` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | word-wrap a string into up to count line buffers |
 
 ## Why this name
 

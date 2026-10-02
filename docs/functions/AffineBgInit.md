@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08068BD4` |
-| Size | 420 bytes (194 instructions) |
+| Size | 0 bytes (194 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08068BD4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | gData_03000108/1A8 are scalar u8 symbols |
 
 ## Why this name
 

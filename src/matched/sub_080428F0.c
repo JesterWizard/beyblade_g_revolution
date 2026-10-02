@@ -7,10 +7,10 @@
 #include "ram_map.h"
 #include "battle.h"
 
-extern void sub_080428C4(void);
+extern void CursorHistoryReset(void);
 
 // @ 0x080428f0
-void sub_080428F0(u32 a, u32 b, u32 c, u32 d)
+void CursorHistoryFillLine(u32 a, u32 b, u32 c, u32 d)
 {
     struct CursorHistory *ring;
     struct CursorHistory **ringSlot;
@@ -21,7 +21,7 @@ void sub_080428F0(u32 a, u32 b, u32 c, u32 d)
 
     if (gMainWorkPtr->unk1808 & 0x2000)
         return;
-    sub_080428C4();
+    CursorHistoryReset();
     i = 0;
     stepBack = 0xFFFFFF00;
     step = 0x100;

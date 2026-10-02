@@ -5,7 +5,7 @@
 // @ 0x0802c3dc
 /* match-compiler: old_agbcc */
 
-s32 sub_0802C3DC(s8 a, s8 b, struct CollectionLookup *out)
+s32 CollectionFindByGroupKind(s8 a, s8 b, struct CollectionLookup *out)
 {
     s32 i;
 

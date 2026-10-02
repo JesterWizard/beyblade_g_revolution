@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806B5C8` |
-| Size | 274 bytes (133 instructions) |
+| Size | 0 bytes (133 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806B5C8` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | hi shifted in place; pre-decrement row counters |
 
 ## Why this name
 

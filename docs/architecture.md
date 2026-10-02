@@ -22,7 +22,8 @@ into matching C. Mods are made by editing that source, not by hooking the ROM.
 | `analysis/` | Generated analysis DB: functions, xrefs, structs, systems, symbols. See `docs/decomp-pipeline.md`. |
 | `include/*.h` | Headers: types (`unknown-types.h`), prototypes, generated `symbols.h`, and `ram_map.h` (EWRAM/IWRAM symbol table). |
 | `asm/*.s` | Hand-written trampolines, `ram_map*.s` (address registry), and `rom.s` (raw ROM segment definitions). |
-| `data/`, `graphics/`, `sound/`, `constants/` | Extracted assets / asm constants (pret layout; mostly reserved). |
+| `graphics/` | PNGs extracted from `baserom.gba` by `tools/gfx/extract.py` (first `make`, or `make graphics`). Generated and git-ignored. |
+| `data/`, `sound/`, `constants/` | Extracted assets / asm constants (pret layout; mostly reserved). |
 | `docs/` | Decomp notes, RAM map, progress counter. |
 | `tools/decomp/` | Matching pipeline (was `scripts/decomp/`). |
 | `build_tools.sh` | pret-style bootstrap (`agbcc`, Luvdis, permuter). |

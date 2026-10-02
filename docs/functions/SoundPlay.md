@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08071EE4` |
-| Size | 96 bytes (38 instructions) |
+| Size | 0 bytes (38 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08071EE4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 

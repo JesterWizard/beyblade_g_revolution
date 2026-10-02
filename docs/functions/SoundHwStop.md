@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08071B4C` |
-| Size | 84 bytes (31 instructions) |
+| Size | 0 bytes (31 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08071B4C` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 

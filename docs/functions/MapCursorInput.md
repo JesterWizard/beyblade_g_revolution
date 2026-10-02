@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080436B0` |
-| Size | 658 bytes (269 instructions) |
+| Size | 0 bytes (269 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
@@ -39,8 +39,8 @@
 - [`SaveBufferCreate`](SaveBufferCreate.md)
 - [`SfxPlayMapCursor`](SfxPlayMapCursor.md)
 - `sub_08062A14`
-- `sub_08066390`
-- `sub_0806639C`
+- [`MenuPageSet`](MenuPageSet.md)
+- [`MenuPageDefGet`](MenuPageDefGet.md)
 - [`PosRecordGet`](PosRecordGet.md)
 
 ## Callers

@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x080361a8
-void sub_080361A8(struct Unk361A8 *a)
+void FixedEaseStep(struct Unk361A8 *a)
 {
   s32 cur;
   u32 new_var;

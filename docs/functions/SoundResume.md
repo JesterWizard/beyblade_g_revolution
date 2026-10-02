@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08071FAC` |
-| Size | 26 bytes (12 instructions) |
+| Size | 0 bytes (12 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08071FAC` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

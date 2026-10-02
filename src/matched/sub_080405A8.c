@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x080405a8
-void sub_080405A8(void)
+void MessageQueueReset(void)
 {
   struct MessageQueue **r3;
   s32 r2;

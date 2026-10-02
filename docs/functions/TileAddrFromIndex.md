@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806B5B8` |
-| Size | 16 bytes (5 instructions) |
+| Size | 0 bytes (5 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806B5B8` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | semantic/m2c |
 
 ## Why this name
 

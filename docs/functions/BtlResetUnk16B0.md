@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08046230` |
-| Size | 72 bytes (30 instructions) |
+| Size | 0 bytes (30 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08046230` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | index into 2-slot MainWork record |
 
 ## Why this name
 

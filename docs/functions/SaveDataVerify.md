@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08044A8C` |
-| Size | 672 bytes (274 instructions) |
+| Size | 0 bytes (274 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | save |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08044A8C` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | SaveDataVerify: EEPROM save read + checksum/magic validation |
 
 ## Why this name
 

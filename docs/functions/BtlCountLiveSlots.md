@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803E440` |
-| Size | 52 bytes (21 instructions) |
+| Size | 0 bytes (21 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0803E440` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/count positive unk1861 slots |
 
 ## Why this name
 

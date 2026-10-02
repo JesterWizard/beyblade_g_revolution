@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08040680` |
-| Size | 308 bytes (122 instructions) |
+| Size | 0 bytes (122 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08040680` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | text box buffer setup; _080408E4 takes the buffer as a 2nd arg |
 
 ## Why this name
 

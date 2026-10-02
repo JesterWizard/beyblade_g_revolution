@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08072F94` |
-| Size | 20 bytes (6 instructions) |
+| Size | 0 bytes (6 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08072F94` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | btl lookup byte (stack pool trick) |
 
 ## Why this name
 

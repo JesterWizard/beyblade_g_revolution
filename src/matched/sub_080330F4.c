@@ -1,13 +1,13 @@
 #include "global.h"
 
 // @ 0x080330f4
-void BtlSetMode1F90(s32 a)
+void BtlPaletteFadeStart(s32 a)
 {
-    gBattleWork->unk1F90 = a;
-    gBattleWork->unk1F98 = 1;
+    gBattleWork->fadeStep = a;
+    gBattleWork->fadeActive = 1;
     if (a >= 0)
-        gBattleWork->unk1F94 = 0;
+        gBattleWork->fadeLevel = 0;
     else
-        gBattleWork->unk1F94 = 0x800;
+        gBattleWork->fadeLevel = 0x800;
 }
 

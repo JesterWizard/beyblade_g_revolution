@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080677A8` |
-| Size | 86 bytes (37 instructions) |
+| Size | 0 bytes (37 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080677A8` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | u16 slot compare with u8 wrap counter |
 
 ## Why this name
 

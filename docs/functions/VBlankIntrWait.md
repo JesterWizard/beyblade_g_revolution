@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080674B4` |
-| Size | 6 bytes (3 instructions) |
+| Size | 0 bytes (3 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | _unassigned_ |
+| Subsystem | battle |
 | Link label | `sub_080674B4` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | BIOS swi 5 pass-through: args keep r0/r1 live, r2 = 0 via an asm operand |
 
 ## Why this name
 
@@ -60,5 +59,5 @@
 - [`ScreenWhiteoutClearPalettes`](ScreenWhiteoutClearPalettes.md)
 - `sub_080632F8`
 - [`SceneFadeDisplayLoop`](SceneFadeDisplayLoop.md)
-- `sub_08065E0C`
+- [`Lz77ImageBlit`](Lz77ImageBlit.md)
 - [`MenuDrawThreeLineList`](MenuDrawThreeLineList.md)

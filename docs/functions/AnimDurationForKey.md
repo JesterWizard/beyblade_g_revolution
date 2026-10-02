@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08067FC8` |
-| Size | 74 bytes (35 instructions) |
+| Size | 0 bytes (35 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08067FC8` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | sum sub_08067F3C over rec u16 list; total=0 before lookup so r8 is live; first empty-check is total>=count; cursor walks +2 from rec base via u16* |
 
 ## Why this name
 
@@ -30,6 +29,6 @@
 
 ## Callers
 
-- `sub_080333E4`
+- [`BtlEffectStart`](BtlEffectStart.md)
 - `sub_08033978`
 - [`BeybladeUpdate`](BeybladeUpdate.md)

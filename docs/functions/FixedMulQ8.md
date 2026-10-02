@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08069F00` |
-| Size | 24 bytes (12 instructions) |
+| Size | 0 bytes (12 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08069F00` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | keep product live across the Q8 shift |
 
 ## Why this name
 

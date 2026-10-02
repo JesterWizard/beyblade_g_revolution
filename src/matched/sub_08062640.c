@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08062640
-void sub_08062640(struct Unk62634 *a)
+void sub_08062640(struct SceneObjSprite *a)
 {
     s32 v;
 

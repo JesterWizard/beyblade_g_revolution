@@ -45,13 +45,13 @@ void sub_08054120(void *arg)
             switch ((s8)gData_03000198->unk1826)
             {
             case 3:
-                TextDrawAlign(sub_0803DDB0(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
+                TextDrawAlign(LauncherNameGet(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
                 break;
             case 2:
-                TextDrawAlign(sub_0803DDD8(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
+                TextDrawAlign(RipcordNameGet(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
                 break;
             case 7:
-                TextDrawAlign((void *)sub_0803DBD0(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
+                TextDrawAlign((void *)BeybladeNameGet(gData_030006FC[gData_030006F4 + i].unk0C), 0x42, 2);
                 break;
             }
         }

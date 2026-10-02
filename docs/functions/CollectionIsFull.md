@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802BC14` |
-| Size | 112 bytes (44 instructions) |
+| Size | 0 bytes (44 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802BC14` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | slot-limit check + scan for a free Unk1694 slot |
 
 ## Why this name
 

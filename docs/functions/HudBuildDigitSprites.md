@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080416C4` |
-| Size | 176 bytes (79 instructions) |
+| Size | 0 bytes (79 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
@@ -24,12 +24,12 @@
 
 ## Callees
 
-- `sub_08041394`
-- `sub_08065E0C`
+- [`HeapFreeSlots8`](HeapFreeSlots8.md)
+- [`Lz77ImageBlit`](Lz77ImageBlit.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`BgPaletteLoad`](BgPaletteLoad.md)
 - [`ObjPaletteLoad`](ObjPaletteLoad.md)
-- `sub_08069894`
+- [`BgScrollReset`](BgScrollReset.md)
 - [`BgSetPriorities`](BgSetPriorities.md)
 
 ## ROM data referenced

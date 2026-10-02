@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08062C38` |
-| Size | 72 bytes (26 instructions) |
+| Size | 0 bytes (26 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062C38` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_08062C38/base.c |
 
 ## Why this name
 

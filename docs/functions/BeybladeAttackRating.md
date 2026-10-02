@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803E328` |
-| Size | 76 bytes (30 instructions) |
+| Size | 0 bytes (30 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803E328` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | symbol-addressed tables (old_agbcc) |
 
 ## Why this name
 

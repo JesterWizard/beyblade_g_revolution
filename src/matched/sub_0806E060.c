@@ -10,7 +10,7 @@
 // segment's heading and p1 pushed 0x180 back against the next one's; otherwise
 // x/y are linear. z is always linear. Stores the fraction and key index in
 // out[3], out[4] and returns out.
-u32 sub_0806E060(void *a, void *b, s32 *out, s32 d)
+u32 KeyframeBezierSample(void *a, void *b, s32 *out, s32 d)
 {
     struct Unk6E31CTrack *track = (struct Unk6E31CTrack *)ChunkListAt(a, (s32)b);
     u32 *keys = track->unk20;

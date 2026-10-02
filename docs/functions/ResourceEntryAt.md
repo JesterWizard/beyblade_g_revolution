@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806BE20` |
-| Size | 36 bytes (18 instructions) |
+| Size | 0 bytes (18 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806BE20` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | size-prefixed entry walk |
 
 ## Why this name
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08044EE8` |
-| Size | 44 bytes (18 instructions) |
+| Size | 0 bytes (18 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08044EE8` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle/clear Unk1688Entry[idx] |
 
 ## Why this name
 

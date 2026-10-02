@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061C48` |
-| Size | 56 bytes (22 instructions) |
+| Size | 0 bytes (22 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08061C48` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | semantic C: decrement gData_03000794 slot counter, free + clear gData_03000770[i]; base local keeps the table literal load ahead of the index shift |
 
 ## Why this name
 

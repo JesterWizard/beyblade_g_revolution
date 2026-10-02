@@ -7,7 +7,7 @@
 #include "global.h"
 #include "data_symbols.h"
 
-s32 BeybladeGetType(struct Unk3E328 *a)
+s32 BeybladeGetType(struct BeybladeBuild *a)
 {
     const u8 *t1;
     u32 i1;
@@ -21,23 +21,23 @@ s32 BeybladeGetType(struct Unk3E328 *a)
         return 0;
 
     t1 = gData_0807BDB8;
-    i1 = a->unk1E * 4;
+    i1 = a->weightDisk * 4;
     red = ((struct Unk3E374Row *)(t1 + i1))->unk00;
-    v2 = gData_0807BB80[(s8)a->unk20 * 4];
-    red += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->unk20 * 4))->unk00;
+    v2 = gData_0807BB80[(s8)a->bladeBase * 4];
+    red += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->bladeBase * 4))->unk00;
 
     green = ((struct Unk3E374Row *)(t1 + i1))->unk01;
-    v2 = gData_0807BB80[(s8)a->unk20 * 4];
-    green += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->unk20 * 4))->unk01;
+    v2 = gData_0807BB80[(s8)a->bladeBase * 4];
+    green += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->bladeBase * 4))->unk01;
 
     blue = ((struct Unk3E374Row *)(t1 + i1))->unk02;
-    v2 = gData_0807BB80[(s8)a->unk20 * 4];
-    blue += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->unk20 * 4))->unk02;
+    v2 = gData_0807BB80[(s8)a->bladeBase * 4];
+    blue += ((struct Unk3E374Row *)(gData_0807BB80 + (s8)a->bladeBase * 4))->unk02;
 
-    v2 = gData_0807B6F0[a->unk1D * 4];
-    red += ((struct Unk3E374Row *)(gData_0807B6F0 + a->unk1D * 4))->unk00;
-    green += ((struct Unk3E374Row *)(gData_0807B6F0 + a->unk1D * 4))->unk01;
-    blue += ((struct Unk3E374Row *)(gData_0807B6F0 + a->unk1D * 4))->unk02;
+    v2 = gData_0807B6F0[a->attackRing * 4];
+    red += ((struct Unk3E374Row *)(gData_0807B6F0 + a->attackRing * 4))->unk00;
+    green += ((struct Unk3E374Row *)(gData_0807B6F0 + a->attackRing * 4))->unk01;
+    blue += ((struct Unk3E374Row *)(gData_0807B6F0 + a->attackRing * 4))->unk02;
 
     if (red > 8)
         return 0;

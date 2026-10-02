@@ -16,14 +16,14 @@ void HudBuildDigitSprites(struct MenuState *a)
 
     desc = a->unk248;
     dispFlags = 0;
-    sub_08041394((struct Unk41394 *)a);
-    sub_08069894();
+    HeapFreeSlots8((struct Unk41394 *)a);
+    BgScrollReset();
     for (i = 0, walk = (u8 *)a; i <= 3; i++)
     {
         src = desc->unk30[i];
         if (src != NULL)
         {
-            a->unk220[i] = sub_08065E0C(walk, i, src, 0, 0);
+            a->unk220[i] = Lz77ImageBlit(walk, i, src, 0, 0);
             dispFlags |= gData_080908B4[i];
         }
         walk += 0x88;

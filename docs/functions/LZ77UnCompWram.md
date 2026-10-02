@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080674AC` |
-| Size | 4 bytes (2 instructions) |
+| Size | 0 bytes (2 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080674AC` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | BIOS swi 17 |
 
 ## Why this name
 
@@ -24,4 +23,4 @@
 
 - [`MapLoad`](MapLoad.md)
 - `sub_08062988`
-- `sub_08065E0C`
+- [`Lz77ImageBlit`](Lz77ImageBlit.md)

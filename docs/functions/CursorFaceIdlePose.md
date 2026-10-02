@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080427E8` |
-| Size | 220 bytes (84 instructions) |
+| Size | 0 bytes (84 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080427E8` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 
 ## Callers
 

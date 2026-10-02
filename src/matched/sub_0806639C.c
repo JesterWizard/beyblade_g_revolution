@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0806639c
-void *sub_0806639C(void)
+void *MenuPageDefGet(void)
 {
     u32 tmp[2];
     void **base;

@@ -8,7 +8,7 @@
 // `tbl` must be a local (re-using the symbol twice folds the pool load); the
 // dereference stays inline as `*row` so old_agbcc hoists `ldr r1,=tbl` above
 // `subs r0,#1` like retail.
-void *sub_0803DDD8(s32 a)
+void *RipcordNameGet(s32 a)
 {
     u8 *tbl = gData_0807AEFC;
     u32 *row = (u32 *)(tbl + (a - 1) * 4);

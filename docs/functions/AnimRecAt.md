@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08068014` |
-| Size | 10 bytes (5 instructions) |
+| Size | 0 bytes (5 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08068014` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 
@@ -26,4 +25,4 @@
 ## Callers
 
 - [`AnimHalfwordSum`](AnimHalfwordSum.md)
-- `sub_0806833C`
+- [`AnimObjSetRecordAt`](AnimObjSetRecordAt.md)

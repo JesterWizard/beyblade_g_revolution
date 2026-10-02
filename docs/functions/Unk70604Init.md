@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08070604` |
-| Size | 92 bytes (46 instructions) |
+| Size | 0 bytes (46 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08070604` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | initialize projectile state and derive trailing byte |
 
 ## Why this name
 

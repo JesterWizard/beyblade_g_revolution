@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08065CD0` |
-| Size | 316 bytes (130 instructions) |
+| Size | 0 bytes (130 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08065CD0` |
 | Confidence | 0.45 |
 | Provenance | ai |
-| Note | scene display loop; s32 temp keeps sign-extended fade |
 
 ## Why this name
 
@@ -31,10 +30,10 @@
 
 - [`SaveDataVerify`](SaveDataVerify.md)
 - [`FadeToWhite`](FadeToWhite.md)
-- `sub_08065E0C`
+- [`Lz77ImageBlit`](Lz77ImageBlit.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`BgPaletteLoad`](BgPaletteLoad.md)
-- `sub_08069894`
+- [`BgScrollReset`](BgScrollReset.md)
 - [`HeapFree`](HeapFree.md)
 - [`InputUpdate`](InputUpdate.md)
 - `sub_08073C40` _(not one of the 633 functions)_

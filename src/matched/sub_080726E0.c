@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x080726e0
-void sub_080726E0(struct Unk726E0 *a, void *dst, s32 idx)
+void PaletteAnimFrameCopy(struct Unk726E0 *a, void *dst, s32 idx)
 {
     void *src;
     void **cpuSet;

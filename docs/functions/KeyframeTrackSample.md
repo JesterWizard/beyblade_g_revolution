@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806E31C` |
-| Size | 148 bytes (69 instructions) |
+| Size | 0 bytes (69 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806E31C` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | keyframe lerp |
 
 ## Why this name
 

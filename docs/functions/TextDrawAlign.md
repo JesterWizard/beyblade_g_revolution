@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806171C` |
-| Size | 104 bytes (47 instructions) |
+| Size | 0 bytes (47 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0806171C` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | Text draw wrapper: measures a bounded string, selects alignment mode, updates the shared text state, and renders the command stream. |
 
 ## Why this name
 

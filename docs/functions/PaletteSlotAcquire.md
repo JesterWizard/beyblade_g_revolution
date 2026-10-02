@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08038438` |
-| Size | 240 bytes (108 instructions) |
+| Size | 0 bytes (108 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08038438` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | palette slot acquire (old_agbcc, load-bearing do-while weights) |
 
 ## Why this name
 
@@ -34,7 +33,7 @@
 ## Callers
 
 - [`DigitSpritesSetValue`](DigitSpritesSetValue.md)
-- `sub_080333E4`
+- [`BtlEffectStart`](BtlEffectStart.md)
 - `sub_08035054`
 
 ## ROM data referenced

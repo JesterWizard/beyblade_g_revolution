@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806E060` |
-| Size | 492 bytes (235 instructions) |
+| Size | 0 bytes (235 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806E060` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | quadratic bezier keyframe sampler |
 
 ## Why this name
 

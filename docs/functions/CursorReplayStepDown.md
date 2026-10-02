@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08042630` |
-| Size | 116 bytes (46 instructions) |
+| Size | 0 bytes (46 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08042630` |
 | Confidence | 0.45 |
 | Provenance | ai |
-| Note | Clears the battle mode flag, configures the ring command, refreshes the current ring-derived work values, and optionally initializes the +0x448 descriptor. |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 
 ## Callers
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802E1EC` |
-| Size | 36 bytes (12 instructions) |
+| Size | 0 bytes (12 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0802E1EC` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/main-work unk0874 thunk |
 
 ## Why this name
 

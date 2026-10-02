@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08067A9C` |
-| Size | 2 bytes (1 instructions) |
+| Size | 0 bytes (1 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08067A9C` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | empty stub |
 
 ## Why this name
 

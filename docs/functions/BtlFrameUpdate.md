@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08032DC4` |
-| Size | 660 bytes (251 instructions) |
+| Size | 0 bytes (251 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08032DC4` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | old_agbcc; frame=60 re-arm; BattleWork unk328/unk37C/unk478 members |
 
 ## Why this name
 
@@ -33,13 +32,13 @@
 - `sub_080302A8`
 - [`BeybladeSpinStep`](BeybladeSpinStep.md)
 - `sub_08030F00`
-- `sub_08030F38`
+- [`BattleHudSlideStep`](BattleHudSlideStep.md)
 - [`TextRowPulsePalette`](TextRowPulsePalette.md)
 - `sub_08032D5C`
 - `sub_08032DB8`
-- `sub_08033084`
+- [`BtlPaletteFadeStep`](BtlPaletteFadeStep.md)
 - [`BattleBannerScroll`](BattleBannerScroll.md)
-- `sub_080333E4`
+- [`BtlEffectStart`](BtlEffectStart.md)
 - [`BtlSceneObjUpdate`](BtlSceneObjUpdate.md)
 - [`BattleScorePopupTick`](BattleScorePopupTick.md)
 - `sub_080338E4`
@@ -52,7 +51,7 @@
 - [`BeybladeEffectsUpdate`](BeybladeEffectsUpdate.md)
 - [`BeybladeEffectsPlace`](BeybladeEffectsPlace.md)
 - [`BtlProjectToScreen`](BtlProjectToScreen.md)
-- `sub_080361A8`
+- [`FixedEaseStep`](FixedEaseStep.md)
 - `sub_080361CC`
 - [`MotionMidpoint`](MotionMidpoint.md)
 - [`RandRange`](RandRange.md)

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080312D8` |
-| Size | 20 bytes (8 instructions) |
+| Size | 0 bytes (8 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080312D8` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

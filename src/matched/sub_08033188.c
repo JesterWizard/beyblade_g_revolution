@@ -36,10 +36,10 @@ void BattleBannerScroll(void)
     Unk70604Init(&text.hdr, (struct Unk70604Src *)0x082BF600, 0x080B72F3, -0xF0, 0x50, 0xF0, 2);
     TextGroupSetString((struct TextGroup *)&text, gData_080780EC[gMainWorkPtr->language], 0);
     sub_0807179C((struct Unk7179C *)&text);
-    PaletteHighlightRestore((struct Unk312EC *)gBattleWork->unkB84);
-    PaletteHighlightRestore((struct Unk312EC *)gBattleWork->unkB94);
-    sub_0803484C((struct Unk3484C *)gBattleWork->unk478);
-    sub_0803484C((struct Unk3484C *)&gBattleWork->unk478[0x318]);
+    PaletteHighlightRestore((struct Unk312EC *)gBattleWork->rowHighlightA);
+    PaletteHighlightRestore((struct Unk312EC *)gBattleWork->rowHighlightB);
+    sub_0803484C((struct Unk3484C *)gBattleWork->battlerStates);
+    sub_0803484C((struct Unk3484C *)&gBattleWork->battlerStates[0x318]);
     for (; i <= 1; i++)
     {
         slot = sub_0806A954(gData_08078100[i]);
@@ -51,11 +51,11 @@ void BattleBannerScroll(void)
         saved[i].unk12 = slot->unk12;
         saved[i].unk14 = slot->unk14;
     }
-    sub_0806A6F8();
+    InputUpdate();
     while (!done || text.hdr.unk00 != target)
     {
         VBlankIntrWait();
-        sub_0806A6F8();
+        InputUpdate();
         delta = target - text.hdr.unk00;
         if (delta != 0)
         {

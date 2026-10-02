@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061BDC` |
-| Size | 12 bytes (6 instructions) |
+| Size | 0 bytes (6 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08061BDC` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | null-check strb 1 at unk14; -fprologue-bugfix |
 
 ## Why this name
 

@@ -17,10 +17,10 @@ void GlyphBlit2x2(u16 *tiles, s32 base, u32 *src, s32 x, u32 y)
     col = x >> 3;
     if (y > 0x98 || (u32)(x + 7) > 0xF6)
         return;
-    tl = (u32 *)sub_0806B5B8(base, tiles[0]);
-    tr = (u32 *)sub_0806B5B8(base, tiles[1]);
-    bl = (u32 *)sub_0806B5B8(base, tiles[0x20]);
-    br = (u32 *)sub_0806B5B8(base, tiles[0x21]);
+    tl = (u32 *)TileAddrFromIndex(base, tiles[0]);
+    tr = (u32 *)TileAddrFromIndex(base, tiles[1]);
+    bl = (u32 *)TileAddrFromIndex(base, tiles[0x20]);
+    br = (u32 *)TileAddrFromIndex(base, tiles[0x21]);
     x &= 7;
     y &= 7;
     tl += y;

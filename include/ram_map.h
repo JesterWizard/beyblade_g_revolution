@@ -86,12 +86,12 @@
 #define gUnk_03000558Loc ((u32 *)0x03000558)
 #define gUnk_03000610 (*(struct Unk0610 *)0x03000610)
 #define gUnk_03000600 (*(struct Unk0600 *)0x03000600)
-#define gUnk_03000630 (*(struct Unk473F8 **)0x03000630)
+#define gUnk_03000630 (*(struct SparklePool **)0x03000630)
 #undef gUnk_03000638
 #define gUnk_03000638 (*(void **)0x03000638)
 #define gUnk_03000654 (*(s16 *)0x03000654)
-#define gUnk_03000658 (*(struct Unk4AAF0 ***)0x03000658)
-#define gUnk_03000660 (*(struct Unk4AAF0 **)0x03000660)
+#define gUnk_03000658 (*(struct BeybladeBuildDetail ***)0x03000658)
+#define gUnk_03000660 (*(struct BeybladeBuildDetail **)0x03000660)
 #undef gUnk_0300070C
 #define gUnk_0300070C (*(struct Unk070C **)0x0300070C)
 #define gUnk_030006B8 (*(u16 *)0x030006B8)

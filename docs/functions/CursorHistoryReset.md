@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080428C4` |
-| Size | 44 bytes (16 instructions) |
+| Size | 0 bytes (16 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080428C4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | clear 0x03000538 bytes |
 
 ## Why this name
 

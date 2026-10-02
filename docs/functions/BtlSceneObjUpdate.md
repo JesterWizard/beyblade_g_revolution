@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08033530` |
-| Size | 68 bytes (24 instructions) |
+| Size | 0 bytes (24 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08033530` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | BattleWork unk2088 flag dispatch |
 
 ## Why this name
 
@@ -29,7 +28,7 @@
 
 ## Callees
 
-- `sub_08033574`
+- [`BtlEffectStop`](BtlEffectStop.md)
 - [`SceneObjUpdate`](SceneObjUpdate.md)
 - `sub_080686D8`
 

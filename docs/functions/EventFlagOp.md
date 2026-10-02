@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08045D3C` |
-| Size | 436 bytes (171 instructions) |
+| Size | 0 bytes (171 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
@@ -29,7 +29,7 @@
 
 ## Callees
 
-- `sub_08066434`
+- [`SaveSlotGet`](SaveSlotGet.md)
 
 ## Callers
 

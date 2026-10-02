@@ -5,23 +5,23 @@
 // @ 0x0806b3e8
 #include "global.h"
 
-void sub_0806B3E8(struct Unk6B3E8 *a)
+void AnimTextRowFill(struct AnimTextRow *a)
 {
     u32 left;
     const u8 *text;
-    struct Unk6B3E8Item *item;
+    struct AnimTextItem *item;
     u8 ch;
     s32 prev;
 
-    left = a->unk04;
-    text = a->unk10;
-    item = a->unk00;
+    left = a->count;
+    text = a->text;
+    item = a->items;
     goto check;
 body:
     if (ch != 0x20)
     {
-        sub_0806833C((struct Unk68598 *)item, 0, gData_080BB748[ch]);
-        item->unk70 = -1;
+        AnimObjSetRecordAt((struct AnimObjPlayback *)item, 0, gData_080BB748[ch]);
+        item->visible = -1;
         item++;
         left--;
     }
@@ -39,7 +39,7 @@ zero:
         goto done;
     do
     {
-        item->unk70 = 0;
+        item->visible = 0;
         item++;
         prev = left;
         left--;

@@ -8,11 +8,11 @@ void BeybladeEffectsUpdate(struct Unk35258 *a)
     u32 r5;
 
     if (a->unk1C.unk70 == 0)
-        sub_08035258(a, 0);
+        BattleAnimStop(a, 0);
     if (a->unk1D4.unk70 == 0)
-        sub_08035258(a, 2);
+        BattleAnimStop(a, 2);
     if (a->unkF8.unk70 == 0)
-        sub_08035258(a, 1);
+        BattleAnimStop(a, 1);
 
     r5 = (u32)&a->unk2C5;
     r0 = 1;

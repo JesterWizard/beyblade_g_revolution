@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080604A4` |
-| Size | 36 bytes (13 instructions) |
+| Size | 0 bytes (13 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080604A4` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

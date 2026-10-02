@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08070678` |
-| Size | 36 bytes (15 instructions) |
+| Size | 0 bytes (15 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08070678` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

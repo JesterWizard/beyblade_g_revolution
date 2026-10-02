@@ -10,7 +10,7 @@ typedef void (*CpuCopyFunc)(const void *, void *, u32);
 // Loads map `map`: copies its header to gData_03000560, decompresses each
 // compressed layer into a heap buffer, then places `obj` either at the saved
 // position (`restore`) or at spawn point `spawn`, and sets the camera.
-void sub_08043C70(struct Actor *obj, const struct Unk0560 *map, u32 modeArg, u32 spawnArg, u32 restore)
+void MapLoad(struct Actor *obj, const struct Unk0560 *map, u32 modeArg, u32 spawnArg, u32 restore)
 {
     u16 mode = modeArg;
     u16 spawn = spawnArg;

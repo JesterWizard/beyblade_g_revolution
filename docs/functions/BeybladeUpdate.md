@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080348E8` |
-| Size | 384 bytes (172 instructions) |
+| Size | 0 bytes (172 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080348E8` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | old_agbcc; draft as-is |
 
 ## Why this name
 

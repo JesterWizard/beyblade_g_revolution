@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08073114` |
-| Size | 112 bytes (42 instructions) |
+| Size | 0 bytes (42 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08073114` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | gData_ symbol addressing for BtlObj table |
 
 ## Why this name
 

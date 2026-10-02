@@ -42,14 +42,14 @@ void EventFlagOp(u8 id, u32 op, u32 *out)
         *out = gData_03000610.words[group] & (1 << bit);
         break;
     case 0x3EA:
-        entry = &gMainWorkPtr->unk168C[sub_08066434()];
+        entry = &gMainWorkPtr->unk168C[SaveSlotGet()];
         live = gData_03000610.words;
         saved = entry->words;
         for (i = 7; i >= 0; i--)
             *saved++ = *live++;
         break;
     case 0x3EB:
-        entry = &gMainWorkPtr->unk168C[sub_08066434()];
+        entry = &gMainWorkPtr->unk168C[SaveSlotGet()];
         saved = entry->words;
         live = gData_03000610.words;
         for (i = 7; i >= 0; i--)

@@ -15,17 +15,17 @@ void sub_0803559C(void *obj, u32 b, u32 value)
     case 0:
         if (base->unk1C.unk1A == value)
             break;
-        BtlEntitySelectByKey((struct Unk680CC *)&base->unk1C, value, value);
+        AnimObjSelectSeq((struct AnimObjSeqSelect *)&base->unk1C, value, value);
         break;
     case 1:
         if (base->unkF8.unk1A == value)
             break;
-        BtlEntitySelectByKey((struct Unk680CC *)&base->unkF8, value, value);
+        AnimObjSelectSeq((struct AnimObjSeqSelect *)&base->unkF8, value, value);
         break;
     case 2:
         if (base->unk1D4.unk1A == value)
             break;
-        BtlEntitySelectByKey((struct Unk680CC *)&base->unk1D4, value, value);
+        AnimObjSelectSeq((struct AnimObjSeqSelect *)&base->unk1D4, value, value);
         break;
     }
 }

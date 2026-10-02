@@ -6,10 +6,10 @@
 | | |
 |--|--|
 | ROM | `0x0806FF58` |
-| Size | 180 bytes (88 instructions) |
+| Size | 0 bytes (88 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0806FF58` |
 | Confidence | 0.8 |
 | Provenance | ai |

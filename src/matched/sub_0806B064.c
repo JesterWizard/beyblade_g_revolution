@@ -14,9 +14,9 @@
 // into the return and gives it one more reference than the struct pointer, which
 // is what makes agbcc give r3 to `total` and r4 to the pointer (retail) instead
 // of the reverse.
-s32 sub_0806B064(struct Unk6B3E8 *a)
+s32 AnimTextRowMeasure(struct AnimTextRow *a)
 {
-    struct Unk6B3E8Item *item;
+    struct AnimTextItem *item;
     s32 total;
     u16 spaces;
     u16 i;
@@ -24,23 +24,23 @@ s32 sub_0806B064(struct Unk6B3E8 *a)
     spaces = 0;
     total = 0;
     i = 0;
-    for (; i < a->unk04; i++)
+    for (; i < a->count; i++)
     {
-        item = &a->unk00[i];
-        if (a->unk10 != 0 && a->unk10[i + spaces] == 0x20)
+        item = &a->items[i];
+        if (a->text != 0 && a->text[i + spaces] == 0x20)
         {
             total += 5;
             spaces++;
         }
-        if (item->unk70 != 0)
+        if (item->visible != 0)
         {
-            if (a->unk28 != 0)
-                total += item->unk10 - *((const u8 *)a->unk28 + item->unk22);
+            if (a->kernTable != 0)
+                total += item->width - *((const u8 *)a->kernTable + item->frame);
             else
-                total += item->unk10;
+                total += item->width;
         }
     }
-    total = (a->unk24 * total) >> 8;
+    total = (a->scale * total) >> 8;
     return total;
 }
 

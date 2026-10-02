@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08046E7C` |
-| Size | 872 bytes (331 instructions) |
+| Size | 0 bytes (331 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
@@ -47,8 +47,8 @@
 - [`SfxPlayMapCursor`](SfxPlayMapCursor.md)
 - `sub_08062758`
 - `sub_08062A14`
-- `sub_08066390`
-- `sub_0806639C`
+- [`MenuPageSet`](MenuPageSet.md)
+- [`MenuPageDefGet`](MenuPageDefGet.md)
 - [`VBlankIntrWait`](VBlankIntrWait.md)
 - [`TimerAdvance`](TimerAdvance.md)
 - `sub_08067CE8`

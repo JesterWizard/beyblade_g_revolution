@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803C500` |
-| Size | 220 bytes (81 instructions) |
+| Size | 0 bytes (81 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0803C500` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | 3C5DC sibling; gData debug string; store 0x64-a |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- `sub_08061E8C`
+- [`GlyphTextInit`](GlyphTextInit.md)
 - [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 - [`DebugPrint`](DebugPrint.md)
 - [`StringAlloc`](StringAlloc.md)

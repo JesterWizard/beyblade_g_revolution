@@ -32,11 +32,11 @@ struct AnSprite
     struct AnSprite *unk30;
 };
 
-void sub_08067CE8(struct Unk67BB8 *a, u32 b)
+void sub_08067CE8(struct AnimObj *a, u32 b)
 {
     s32 px;
     s32 py;
-    struct Unk67BB8 *parent;
+    struct AnimObj *parent;
 #define SPR ((struct AnSprite *)a->unkB8)
     struct AnSprite *spr;
     u32 pin;
@@ -45,27 +45,27 @@ void sub_08067CE8(struct Unk67BB8 *a, u32 b)
 
     if (a->unkB0 != 0)
     {
-        ((void (*)(struct Unk67BB8 *, s32 *))a->unkB0)(a, out);
+        ((void (*)(struct AnimObj *, s32 *))a->unkB0)(a, out);
         px = out[0] >> 8;
         py = out[1] >> 8;
     }
     else
     {
-        px = a->unk04 >> 8;
-        py = a->unk08 >> 8;
+        px = a->x >> 8;
+        py = a->y >> 8;
     }
-    parent = (struct Unk67BB8 *)a->unk3C;
+    parent = (struct AnimObj *)a->unk3C;
     if (parent != NULL)
     {
-        PX_WEIGHT(px -= (s32)parent->unk40 >> 8;);
-        py -= (s32)parent->unk44 >> 8;
+        PX_WEIGHT(px -= (s32)parent->velX >> 8;);
+        py -= (s32)parent->velY >> 8;
     }
-    if (a->unk31 & 1)
+    if (a->flip & 1)
         px -= (s16)a->unkA0 - (s8)a->unkA4;
     else
         px -= (s16)a->unkA0 + (s8)a->unkA4;
     py -= (s16)a->unkA2 + (s8)a->unkA5;
-    if (a->unk70 == 0
+    if (a->countdown == 0
         || px + ((a->unk10 * a->unk12) >> 8) < 0 || px > 0xEF
         || py + ((a->unk11 * a->unk14) >> 8) < 0 || py > 0x9F)
     {
@@ -83,20 +83,20 @@ void sub_08067CE8(struct Unk67BB8 *a, u32 b)
             if (a->unkB8 == 0)
                 return;
             SPR->unk20 = 0;
-            if (a->unk98 & 2)
+            if (a->flags & 2)
                 SPR->unk20 |= 1;
             SPR->unk1A = 0xFFFF;
             SPR->unk30 = NULL;
             SPR->unk24 = -1;
         }
         a->unk16 &= 0xFF;
-        SPR->unk2C = (u32)a->unk00;
-        SPR->unk1C = a->unk31;
+        SPR->unk2C = (u32)a->data;
+        SPR->unk1C = a->flip;
         SPR->unk08 = px << 8;
         SPR->unk0C = py << 8;
-        SPR->unk18 = a->unk22;
+        SPR->unk18 = a->frame;
         SPR->unk16 = a->unk30;
-        SPR->unk28 = (u32)a->unk00 + ((struct Unk6BB38 *)a->unk00)->unk10;
+        SPR->unk28 = (u32)a->data + ((struct Unk6BB38 *)a->data)->unk10;
         spr = SPR;
         spr->unk10 = ((a->unk38 & 3) << 14) | ((~a->unk3A & 1) << 13) | (pin = ((a->unk39 & (m3 = 3)) << 10) | 0x1000) | ((a->unk38 & 0xC) << 28);
         {

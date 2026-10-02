@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080617B4` |
-| Size | 16 bytes (5 instructions) |
+| Size | 0 bytes (5 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080617B4` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

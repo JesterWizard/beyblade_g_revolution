@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08040618
-s32 sub_08040618(void)
+s32 MessageQueuePopKeyedWord(void)
 {
     struct MessageQueue *p;
     u32 n;

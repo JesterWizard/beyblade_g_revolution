@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08069B78` |
-| Size | 154 bytes (73 instructions) |
+| Size | 0 bytes (73 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08069B78` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | old_agbcc; BgCnt.priority bitfield |
 
 ## Why this name
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080593A4` |
-| Size | 256 bytes (114 instructions) |
+| Size | 0 bytes (114 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080593A4` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | rebuild segmented bar sprites between two positions |
 
 ## Why this name
 

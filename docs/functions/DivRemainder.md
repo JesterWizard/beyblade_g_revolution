@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080674A4` |
-| Size | 6 bytes (3 instructions) |
+| Size | 0 bytes (3 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080674A4` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | swi 6 remainder |
 
 ## Why this name
 

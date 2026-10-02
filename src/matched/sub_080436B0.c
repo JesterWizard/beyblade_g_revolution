@@ -98,8 +98,8 @@ void MapCursorInput(void)
         }
         if (gData_03004060 & 8)
         {
-            sub_08066390(7);
-            sub_0804109C((struct MenuState *)&gData_03000198->unk0530, sub_0806639C());
+            MenuPageSet(7);
+            sub_0804109C((struct MenuState *)&gData_03000198->unk0530, MenuPageDefGet());
             gData_03000198->unk181C = 3;
             sub_08060428();
         }

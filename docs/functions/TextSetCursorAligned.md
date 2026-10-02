@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080610A8` |
-| Size | 98 bytes (47 instructions) |
+| Size | 0 bytes (47 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080610A8` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | switch case order 0, 2, 1 |
 
 ## Why this name
 

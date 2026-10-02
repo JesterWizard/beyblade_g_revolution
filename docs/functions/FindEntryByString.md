@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802B95C` |
-| Size | 56 bytes (26 instructions) |
+| Size | 0 bytes (26 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802B95C` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | Phase 3b semantic C |
 
 ## Why this name
 

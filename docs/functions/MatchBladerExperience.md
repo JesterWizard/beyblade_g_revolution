@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08042F4C` |
-| Size | 80 bytes (34 instructions) |
+| Size | 0 bytes (34 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08042F4C` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | row scale/store plus DebugPrint, s16 load as s32 |
 
 ## Why this name
 

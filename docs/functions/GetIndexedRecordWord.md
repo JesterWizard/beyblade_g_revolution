@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802B8BC` |
-| Size | 20 bytes (7 instructions) |
+| Size | 0 bytes (7 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802B8BC` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | semantic/table-lookup |
 
 ## Why this name
 

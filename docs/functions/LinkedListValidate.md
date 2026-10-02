@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806F8C4` |
-| Size | 76 bytes (28 instructions) |
+| Size | 0 bytes (28 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806F8C4` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | Phase 3b semantic C |
 
 ## Why this name
 

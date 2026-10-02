@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806A434` |
-| Size | 164 bytes (58 instructions) |
+| Size | 0 bytes (58 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806A434` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | reload key from the node; drop the cached key local |
 
 ## Why this name
 
@@ -40,7 +39,7 @@
 - [`BtlFreeUnk1694Obj`](BtlFreeUnk1694Obj.md)
 - [`StatusHudFree`](StatusHudFree.md)
 - [`BattleTeardown`](BattleTeardown.md)
-- `sub_08041394`
+- [`HeapFreeSlots8`](HeapFreeSlots8.md)
 - `sub_08041858`
 - `sub_08043ADC`
 - `sub_08043C28`
@@ -53,7 +52,7 @@
 - [`TextWindowClose`](TextWindowClose.md)
 - [`VramSlotsRelease`](VramSlotsRelease.md)
 - [`VramSlotReleaseLast`](VramSlotReleaseLast.md)
-- `sub_08062044`
+- [`GlyphTextFree`](GlyphTextFree.md)
 - `sub_08062960`
 - [`PaletteSnapshotRestore`](PaletteSnapshotRestore.md)
 - [`PaletteSnapshotRestoreBg`](PaletteSnapshotRestoreBg.md)

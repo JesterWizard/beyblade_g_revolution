@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08035468` |
-| Size | 308 bytes (145 instructions) |
+| Size | 0 bytes (145 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08035468` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | projection; separate depth local |
 
 ## Why this name
 

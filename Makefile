@@ -79,7 +79,7 @@ SHELL := bash -o pipefail
 .SECONDARY:
 .DELETE_ON_ERROR:
 
-.PHONY: all rom modern compare clean tidy tools check-baserom shift-test grow-test
+.PHONY: all rom modern compare clean tidy tools check-baserom shift-test grow-test graphics clean-gfx
 .PHONY: analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
 all: rom
 
@@ -190,7 +190,21 @@ signatures:
 fix-stub-arities:
 	python3 tools/decomp/fix_stub_arities.py --apply
 
-rom: check-baserom $(ROM)
+# Graphics are extracted from baserom.gba on the first build (and again whenever
+# the ROM, the manifest or the extractor changes). The stamp is not a dependency
+# of $(ROM): a graphics problem never changes the ROM bytes or `make compare`.
+GFX_STAMP := graphics/.extracted
+GFX_SRCS  := $(wildcard tools/gfx/*.py) tools/gfx/assets.json
+
+$(GFX_STAMP): baserom.gba $(GFX_SRCS)
+	python3 tools/gfx/extract.py
+	@touch $@
+
+graphics: check-baserom
+	python3 tools/gfx/extract.py -v
+	@touch $(GFX_STAMP)
+
+rom: check-baserom $(GFX_STAMP) $(ROM)
 ifeq ($(COMPARE),1)
 	@$(SHA1) rom.sha1
 endif
@@ -211,6 +225,11 @@ clean: tidy
 tidy:
 	rm -f $(ROM) $(ELF) $(MAP)
 	rm -rf $(BUILD_DIR)
+
+# Extracted PNGs are regenerated from the ROM; `make tidy` leaves them alone.
+clean-gfx:
+	find graphics -name '*.png' -delete
+	rm -f $(GFX_STAMP)
 
 $(ASM_BUILDDIR)/ram_map.o: $(RAM_MAP_FRAGMENTS)
 

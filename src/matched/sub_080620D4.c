@@ -7,7 +7,7 @@
 // Offsets every entry of the pointer array a->unk0C by (dx, dy) in 8.8 fixed
 // point and snapshots the first entry's position into a->unk10/unk14.
 // Declared non-void (retail epilogue is pop {r1}) but never returns a value.
-s32 Unk62044OffsetPoints(struct Unk62044 *a, s32 dx, s32 dy)
+s32 Unk62044OffsetPoints(struct GlyphText *a, s32 dx, s32 dy)
 {
     struct Unk620D4Entry **p;
     struct Unk620D4Entry *e;
@@ -15,9 +15,9 @@ s32 Unk62044OffsetPoints(struct Unk62044 *a, s32 dx, s32 dy)
 
     if (a == NULL)
         return;
-    if (a->unk0C == NULL)
+    if (a->sprites == NULL)
         return;
-    for (i = 0, p = a->unk0C; i <= 0x7F; i++)
+    for (i = 0, p = a->sprites; i <= 0x7F; i++)
     {
         e = p[i];
         if (e == NULL)

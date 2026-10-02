@@ -25,7 +25,7 @@ void sub_08048DB8(void *arg)
         TextSetCursor(0, 0x38);
         TextDrawAlign((void *)GetBeybladeNameWithIndex(entry->unk05), 0x4A, 2);
         TextSetCursor(0, 0x48);
-        TextDrawAlign((void *)sub_0803DBD0(icon->unk21), 0x4A, 2);
+        TextDrawAlign((void *)BeybladeNameGet(icon->unk21), 0x4A, 2);
         if (a->unk274[4] != NULL)
         {
             BtlObjPoolFree(a->unk274[4]);

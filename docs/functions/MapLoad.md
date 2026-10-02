@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08043C70` |
-| Size | 324 bytes (131 instructions) |
+| Size | 0 bytes (131 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08043C70` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | map load; gData_03000560 struct symbol gives base+0x80 add |
 
 ## Why this name
 

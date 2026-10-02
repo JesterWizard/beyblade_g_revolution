@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806105C` |
-| Size | 44 bytes (21 instructions) |
+| Size | 0 bytes (21 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806105C` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 

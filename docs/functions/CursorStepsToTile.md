@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08047624` |
-| Size | 174 bytes (85 instructions) |
+| Size | 0 bytes (85 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08047624` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | old_agbcc; missing default return (BUGFIX) |
 
 ## Why this name
 

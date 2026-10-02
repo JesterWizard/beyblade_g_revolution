@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08069DBC` |
-| Size | 96 bytes (48 instructions) |
+| Size | 0 bytes (48 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08069DBC` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | VRAM tile row copy; keep unk00 live across dest setup so source_step is lsls r1,r7,#1 |
 
 ## Why this name
 

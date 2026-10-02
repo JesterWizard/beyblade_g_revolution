@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08056250` |
-| Size | 302 bytes (126 instructions) |
+| Size | 0 bytes (126 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08056250` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | scrolling list redraw; gData list symbols |
 
 ## Why this name
 

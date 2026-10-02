@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802d6d4
-void sub_0802D6D4(void)
+void StatusHudCreate(void)
 {
     struct Sprite *resource;
     struct StatusHud *w;

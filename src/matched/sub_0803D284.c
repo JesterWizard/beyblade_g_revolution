@@ -16,8 +16,8 @@ void BattleTextGlyphRow(const u8 *str, s32 b, const u8 *widths, s32 y)
 
     for (i = 0; i <= 0x2F; i++)
     {
-        gBattleWork->unk0BCC[i].unk24 = -0x4000;
-        gBattleWork->unk0BCC[i].unk28 = -0x4000;
+        gBattleWork->unk0BCC[i].posX = -0x4000;
+        gBattleWork->unk0BCC[i].posY = -0x4000;
         sub_08062238(&gBattleWork->unk0BCC[i]);
     }
     x = 0x76 - (TextMeasureWidth(str, widths, 0x10, 4) >> 1);
@@ -28,8 +28,8 @@ void BattleTextGlyphRow(const u8 *str, s32 b, const u8 *widths, s32 y)
             sub_0806211C(&gBattleWork->unk0BCC[n], NULL, (struct Unk6FF58Src *)b, x, y, 0, 0x28, 0, gData_080BB748[str[i]]);
             x += 0x10 - widths[gData_080BB748[str[i]]];
             sub_08062634(&gBattleWork->unk0BCC[n], -1, n * 2, 0x0803D27D);
-            TextEntrySetPaletteBank(gBattleWork->unk0BCC[n].unk08, 0);
-            BtlObjListResort((struct Unk6FDB4 *)gBattleWork->unk0BCC[n].unk08, 40000 - n);
+            TextEntrySetPaletteBank(gBattleWork->unk0BCC[n].sprite, 0);
+            BtlObjListResort((struct Unk6FDB4 *)gBattleWork->unk0BCC[n].sprite, 40000 - n);
             n++;
         }
         else

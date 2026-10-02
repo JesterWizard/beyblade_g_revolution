@@ -1,6 +1,6 @@
 {
-  "count": 363,
-  "generated": "2026-10-01T21:53:30Z",
+  "count": 396,
+  "generated": "2026-10-02T07:01:55Z",
   "symbols": {
     "0x0802B8BC": {
       "aliases": [
@@ -375,6 +375,19 @@
       "symbol": "CleanBattleOverlays",
       "updated": "2026-09-28"
     },
+    "0x08030F38": {
+      "aliases": [
+        "sub_08030F38"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "while the AF0 sprite y <= 0x7FF adds 0x100 to the y of the HUD sprites and hudY and rewrites the B00/B20 banks to hudY (slide-in); then eases the B48/B4C pair toward hudLeadTargetY"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleHudSlideStep",
+      "updated": "2026-10-02"
+    },
     "0x080310F0": {
       "aliases": [
         "sub_080310F0"
@@ -400,6 +413,19 @@
       "source": "ai",
       "symbol": "ScaleRatio",
       "updated": "2026-09-25"
+    },
+    "0x0803114C": {
+      "aliases": [
+        "sub_0803114C"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "DigitSpritesSetValue fills up to 8 digit sprites then places them at x stepping -0x900 and y = hudY, right-aligned when mode==0"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleHudDigitsLayout",
+      "updated": "2026-10-02"
     },
     "0x08031294": {
       "aliases": [
@@ -519,20 +545,32 @@
       "symbol": "BtlFrameUpdate",
       "updated": "2026-09-25"
     },
-    "0x080330F4": {
+    "0x08033084": {
       "aliases": [
-        "sub_080330F4"
+        "sub_08033084"
       ],
-      "confidence": 0.6,
+      "confidence": 0.65,
       "evidence": [
-        "stores the argument at gBattleWork+0x1F90 and sets the byte at +0x1F98 to 1",
-        "sets +0x1F94 to 0 when the argument is non-negative, else 0x800",
-        "name is provisional: the field roles at 0x1F90 are not yet known"
+        "level (8.8 fixed, 0..0x800) += step each call, clamped, deactivates at the ends, then PaletteAnimFrameCopy into 0x05000000 with level>>8"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlSetMode1F90",
-      "updated": "2026-09-22"
+      "symbol": "BtlPaletteFadeStep",
+      "updated": "2026-10-02"
+    },
+    "0x080330F4": {
+      "aliases": [
+        "sub_080330F4",
+        "BtlSetMode1F90"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "sets the fade step (callers pass +-0x80), activates it and starts the level at 0 (fade in) or 0x800 (fade out)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlPaletteFadeStart",
+      "updated": "2026-10-02"
     },
     "0x08033188": {
       "aliases": [
@@ -547,6 +585,19 @@
       "symbol": "BattleBannerScroll",
       "updated": "2026-09-28"
     },
+    "0x080333E4": {
+      "aliases": [
+        "sub_080333E4"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "acquires a palette slot, creates an AnimObj in BattleWork+0x1FAC from gData_08078108[mode] (mode<=4), and sets the remaining duration; re-calling with the same mode extends it"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlEffectStart",
+      "updated": "2026-10-02"
+    },
     "0x08033530": {
       "aliases": [
         "sub_08033530"
@@ -559,6 +610,19 @@
       "source": "ai",
       "symbol": "BtlSceneObjUpdate",
       "updated": "2026-10-01"
+    },
+    "0x08033574": {
+      "aliases": [
+        "sub_08033574"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "frees the effect AnimObj resources, releases its palette slot ref and clears active/mode"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BtlEffectStop",
+      "updated": "2026-10-02"
     },
     "0x0803370C": {
       "aliases": [
@@ -575,17 +639,17 @@
     },
     "0x08033878": {
       "aliases": [
-        "sub_08033878"
+        "sub_08033878",
+        "BtlClearState"
       ],
       "confidence": 0.7,
       "evidence": [
-        "zeroes gBattleWork (0x03000290) words at +0xB64, +0xB68 and +0xB74, and the byte at +0xB6C",
-        "then loops over an array starting at gBattleWork+0xB54"
+        "zeroes the popup value/target/active/targetY/timer fields and BtlObjPoolFrees the four digit sprites; called by BattleScorePopupTick when the timer expires"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlClearState",
-      "updated": "2026-09-22"
+      "symbol": "BattleScorePopupClear",
+      "updated": "2026-10-02"
     },
     "0x080338F0": {
       "aliases": [
@@ -653,6 +717,32 @@
       "source": "ai",
       "symbol": "BeybladeUpdate",
       "updated": "2026-09-28"
+    },
+    "0x08035238": {
+      "aliases": [
+        "sub_08035238"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "calls BattleAnimStop for block types 0,1,2"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleAnimStopAll",
+      "updated": "2026-10-02"
+    },
+    "0x08035258": {
+      "aliases": [
+        "sub_08035258"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "switch on block type 0..2: if its active bit in unk2C5 is set, releases the palette ref (sub_08038638), frees the SceneObj resources and clears the bit"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BattleAnimStop",
+      "updated": "2026-10-02"
     },
     "0x0803531C": {
       "aliases": [
@@ -758,6 +848,19 @@
       "symbol": "MotionSetVelocityToward",
       "updated": "2026-09-28"
     },
+    "0x080361A8": {
+      "aliases": [
+        "sub_080361A8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "target=unk1C.h; moves unk14 toward it by (target-cur)*12>>8 each call and stores the step in unk18 (exponential ease, 16.8 fixed point)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "FixedEaseStep",
+      "updated": "2026-10-02"
+    },
     "0x08036264": {
       "aliases": [
         "sub_08036264"
@@ -809,6 +912,19 @@
       "source": "ai",
       "symbol": "PaletteSlotsRelease",
       "updated": "2026-09-28"
+    },
+    "0x08038638": {
+      "aliases": [
+        "sub_08038638"
+      ],
+      "confidence": 0.8,
+      "evidence": [
+        "decrements the s16 refcount gUnk_030003CC->unk22[a] when positive and calls PaletteSlotsRelease(a,a) when it reaches 0; callers are the SceneObj-resource teardown paths (sub_08035258, sub_08033574)"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteSlotRefRelease",
+      "updated": "2026-10-02"
     },
     "0x08039BD4": {
       "aliases": [
@@ -875,6 +991,19 @@
       "symbol": "BattlePartsApplyWear",
       "updated": "2026-10-01"
     },
+    "0x0803DBD0": {
+      "aliases": [
+        "sub_0803DBD0"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "row id*40 + MainWork.language*4 indexes gData_080796DC, whose rows decode to \"None\",\"Ultimate Dragoon\",\"Saizo\"... (localised Beyblade names); negative id falls back to gData_08097458; callers are the collection detail screen and sub_08048DB8/sub_08054120"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BeybladeNameGet",
+      "updated": "2026-10-02"
+    },
     "0x0803DCFC": {
       "aliases": [
         "sub_0803DCFC"
@@ -900,6 +1029,32 @@
       "source": "ai",
       "symbol": "GetBeybladeNameWithIndex",
       "updated": "2026-09-28"
+    },
+    "0x0803DDB0": {
+      "aliases": [
+        "sub_0803DDB0"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "tbl[id-1] is a per-language pointer row; entries decode to \"Competition launcher\"/\"Lanzador de competici\u00f3n\"/\"Turnier-Starter\"; caller PartMenuRebuild"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "LauncherNameGet",
+      "updated": "2026-10-02"
+    },
+    "0x0803DDD8": {
+      "aliases": [
+        "sub_0803DDD8"
+      ],
+      "confidence": 0.85,
+      "evidence": [
+        "twin of LauncherNameGet over gData_0807AEFC; entries decode to \"Competition ripcord\"/\"Cordel de arrastre competici\u00f3n\"/\"Turnier-Rei\u00dfleine\""
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "RipcordNameGet",
+      "updated": "2026-10-02"
     },
     "0x0803DEC8": {
       "aliases": [
@@ -1125,6 +1280,19 @@
       "symbol": "MenuDispatchKeyHandlers",
       "updated": "2026-10-01"
     },
+    "0x08041394": {
+      "aliases": [
+        "sub_08041394"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "HeapFree + null on each of the 8 pointers at +0x220"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "HeapFreeSlots8",
+      "updated": "2026-10-02"
+    },
     "0x080415FC": {
       "aliases": [
         "sub_080415FC"
@@ -1164,6 +1332,19 @@
       "symbol": "SceneObjsUpdateAll",
       "updated": "2026-09-28"
     },
+    "0x08041980": {
+      "aliases": [
+        "sub_08041980"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "walks the 32 Actor pointers at gUnk_03000480, SceneObjFreeResources on each non-null, nulls them and zeroes the live count at gUnk_03000504"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ActorPoolClear",
+      "updated": "2026-10-02"
+    },
     "0x080419B0": {
       "aliases": [
         "sub_080419B0"
@@ -1189,6 +1370,19 @@
       "source": "ai",
       "symbol": "SceneObjDespawn",
       "updated": "2026-09-28"
+    },
+    "0x08041DB4": {
+      "aliases": [
+        "sub_08041DB4"
+      ],
+      "confidence": 0.7,
+      "evidence": [
+        "scans the first gUnk_03000504 entries of the Actor pool for unkD4==a && unkD8==b; per BeybladeGetProfile notes D4 holds the Beyblade id and D8 the side"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ActorFindByIdSide",
+      "updated": "2026-10-02"
     },
     "0x0804245C": {
       "aliases": [
@@ -2251,16 +2445,17 @@
     },
     "0x080604C8": {
       "aliases": [
-        "sub_080604C8"
+        "sub_080604C8",
+        "WindowEffectApply"
       ],
-      "confidence": 0.5,
+      "confidence": 0.85,
       "evidence": [
-        "packs the block's byte edges into WIN0H/WIN1H/WIN0V/WIN1V/WININ/WINOUT values and writes them from 0x04000040"
+        "packs the shadow bytes into 16-bit values and writes them to 0x04000040-0x0400004A = WIN0H, WIN1H, WIN0V, WIN1V, WININ, WINOUT"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "WindowEffectApply",
-      "updated": "2026-09-28"
+      "symbol": "WindowRegsApply",
+      "updated": "2026-10-02"
     },
     "0x080607BC": {
       "aliases": [
@@ -2707,6 +2902,20 @@
       "symbol": "TextTypewriterRestart",
       "updated": "2026-09-28"
     },
+    "0x08061E8C": {
+      "aliases": [
+        "sub_08061E8C",
+        "ObjBufferInit"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "fills the GlyphText header from a font source (glyph size/line height at +0x20/+0x22) and HeapAllocs the 0x200-byte sprite pointer array"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GlyphTextInit",
+      "updated": "2026-10-02"
+    },
     "0x08061EF8": {
       "aliases": [
         "sub_08061EF8"
@@ -2720,6 +2929,34 @@
       "symbol": "GlyphTextLayoutWrapped",
       "updated": "2026-10-01"
     },
+    "0x08062044": {
+      "aliases": [
+        "sub_08062044",
+        "ObjBufferFree"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "operates on the GlyphText struct (width table, glyph sprite, 0x80-entry sprite array, GlyphTextLayoutWrapped): releases sprites, HeapFrees heapBlock"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GlyphTextFree",
+      "updated": "2026-10-02"
+    },
+    "0x0806209C": {
+      "aliases": [
+        "sub_0806209C",
+        "ObjBufferReleaseEntries"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "BtlObjPoolFree each of the up-to-0x80 sprites in GlyphText.sprites, then zeroes spritesInUse"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "GlyphTextReleaseSprites",
+      "updated": "2026-10-02"
+    },
     "0x080620D4": {
       "aliases": [
         "sub_080620D4"
@@ -2732,6 +2969,19 @@
       "source": "ai",
       "symbol": "Unk62044OffsetPoints",
       "updated": "2026-09-25"
+    },
+    "0x0806225C": {
+      "aliases": [
+        "sub_0806225C"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "integrates pos(+24/+28) += vel(+30/+34), vel += accel(+38/+3C), decays vel toward 0 by +40 drag, then writes the position (minus camera/parent) into the sprite at +8"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SceneObjMotionStep",
+      "updated": "2026-10-02"
     },
     "0x08062728": {
       "aliases": [
@@ -2995,6 +3245,84 @@
       "source": "ai",
       "symbol": "SceneFadeDisplayLoop",
       "updated": "2026-10-01"
+    },
+    "0x08065E0C": {
+      "aliases": [
+        "sub_08065E0C"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "HeapAllocs the size in the LZ77 header (word>>8), LZ77UnCompWram into it, waits VBlankIntrWait, then blits via sub_08068988; returns the buffer"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "Lz77ImageBlit",
+      "updated": "2026-10-02"
+    },
+    "0x08066390": {
+      "aliases": [
+        "sub_08066390"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "stores a page id (7 = A-button menu, 9 = other button) into gUnk_03000964 immediately before sub_0804109C opens the menu from MenuPageDef"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MenuPageSet",
+      "updated": "2026-10-02"
+    },
+    "0x0806639C": {
+      "aliases": [
+        "sub_0806639C"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "returns table entry at 0x080BA1A8 indexed by the signed page id in gUnk_03000964; result is passed as the definition to sub_0804109C (menu init) in MapCursorInput/FieldUpdateFrame"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "MenuPageDefGet",
+      "updated": "2026-10-02"
+    },
+    "0x08066434": {
+      "aliases": [
+        "sub_08066434"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "reads byte +0x34 of gUnk_03000970; used as index into MainWork.unk168C save slots by EventFlagOp save/load (0x3EA/0x3EB) and by the post-load restore sub_0804737C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "SaveSlotGet",
+      "updated": "2026-10-02"
+    },
+    "0x08066440": {
+      "aliases": [
+        "sub_08066440"
+      ],
+      "confidence": 0.3,
+      "evidence": [
+        "writes byte +0x35 of gUnk_03000970; FieldEnter passes -1; counterpart of sub_0806644C"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ActiveFlagSet",
+      "updated": "2026-10-02"
+    },
+    "0x0806644C": {
+      "aliases": [
+        "sub_0806644C"
+      ],
+      "confidence": 0.3,
+      "evidence": [
+        "reads signed byte +0x35 of gUnk_03000970; FieldEnter tests it as ok"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "ActiveFlagGet",
+      "updated": "2026-10-02"
     },
     "0x08066FB8": {
       "aliases": [
@@ -3286,31 +3614,71 @@
     "0x08068020": {
       "aliases": [
         "sub_08068020",
+        "BtlEntitySelectByKey",
         "Unk68020SelectByKey"
       ],
-      "confidence": 0.55,
+      "confidence": 0.7,
       "evidence": [
-        "ctx is the battle entity built from a roster record; walks the variable-stride entry table at ctx->[0]->0x18 (count at ctx->0x28, next entry at entry+u16@+2) for entry->u16 == key",
-        "on hit records the accumulated byte offset at ctx+0x1C, 0 at +0x1E, the key at +0x1A and arg2 at +0x2E, then calls sub_08068180 for the entry's +0x08 field"
+        "walks the sequence table at AnimData+seqTableOffset (variable-size entries) for seqKey; sets seqOffset/seqStep/seqKey/seqNextKey and starts the entry first record via sub_08068180"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlEntitySelectByKey",
-      "updated": "2026-09-23"
+      "symbol": "AnimObjSelectSeq",
+      "updated": "2026-10-02"
     },
     "0x080680CC": {
       "aliases": [
         "sub_080680CC",
+        "BtlEntitySelectByKeyDefault",
         "Unk680CCSelectByKeyDefault"
       ],
-      "confidence": 0.55,
+      "confidence": 0.7,
       "evidence": [
-        "byte-identical in shape to BtlEntitySelectByKey except +0x2E is set to the constant 0xFFFF instead of a third argument, i.e. the clear/default variant of the same keyed selection"
+        "AnimObjSelectSeq with seqNextKey fixed to 0xFFFF (no follow-up sequence)"
       ],
       "kind": "function",
       "source": "ai",
-      "symbol": "BtlEntitySelectByKeyDefault",
-      "updated": "2026-09-23"
+      "symbol": "AnimObjSelectSeqDefault",
+      "updated": "2026-10-02"
+    },
+    "0x08068118": {
+      "aliases": [
+        "sub_08068118"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "steps seqStep through the current sequence entry loading its next record; at the end either selects seqNextKey (and runs onFinish) or stops"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimObjSeqAdvance",
+      "updated": "2026-10-02"
+    },
+    "0x08068180": {
+      "aliases": [
+        "sub_08068180"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "loads record b of AnimData into the object: maxLoops/playFlags/frameDelay, recLength, frame=start, loopCount=0, flip bits, resets lastAdvanceTick to the frame clock"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimObjSetRecord",
+      "updated": "2026-10-02"
+    },
+    "0x0806833C": {
+      "aliases": [
+        "sub_0806833C"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "AnimObjSetRecord variant that starts at frame offset c within the record, ignored when c >= recLength"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimObjSetRecordAt",
+      "updated": "2026-10-02"
     },
     "0x08068418": {
       "aliases": [
@@ -3493,6 +3861,19 @@
       "source": "ai",
       "symbol": "BgMapScroll",
       "updated": "2026-09-28"
+    },
+    "0x08069894": {
+      "aliases": [
+        "sub_08069894"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "zeroes the HOFS/VOFS registers of BG0-3 via BgGetHofsReg/BgGetVofsReg, resets three BG state words and kicks two 0x100 transfers"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "BgScrollReset",
+      "updated": "2026-10-02"
     },
     "0x08069908": {
       "aliases": [
@@ -3706,6 +4087,19 @@
       "symbol": "StringCountNonSpace",
       "updated": "2026-09-28"
     },
+    "0x0806B064": {
+      "aliases": [
+        "sub_0806B064"
+      ],
+      "confidence": 0.6,
+      "evidence": [
+        "sums visible items glyph widths (minus kerning table deltas) plus 5 per space, scaled by +0x24 and normalised by 8"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimTextRowMeasure",
+      "updated": "2026-10-02"
+    },
     "0x0806B2F0": {
       "aliases": [
         "sub_0806B2F0"
@@ -3718,6 +4112,19 @@
       "source": "ai",
       "symbol": "DigitRowDraw",
       "updated": "2026-09-28"
+    },
+    "0x0806B3E8": {
+      "aliases": [
+        "sub_0806B3E8"
+      ],
+      "confidence": 0.55,
+      "evidence": [
+        "walks a text string: each non-space char selects an animation frame (gData_080BB748[ch]) on the next 0xDC-stride AnimObj item and marks it visible; the unused tail items are hidden"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "AnimTextRowFill",
+      "updated": "2026-10-02"
     },
     "0x0806B5B8": {
       "aliases": [
@@ -3757,6 +4164,19 @@
       "source": "ai",
       "symbol": "TextLayerInit",
       "updated": "2026-09-28"
+    },
+    "0x0806BB38": {
+      "aliases": [
+        "sub_0806BB38"
+      ],
+      "confidence": 0.5,
+      "evidence": [
+        "returns base + (idx << shift) + dataOffset (header +6/+0x10); callers TextWindowPutChar and TextLayerInit use it to locate a tile/glyph cell"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "TextLayerTileAddr",
+      "updated": "2026-10-02"
     },
     "0x0806BC0C": {
       "aliases": [
@@ -4525,6 +4945,19 @@
       "source": "ai",
       "symbol": "SoundPlayIndexed",
       "updated": "2026-09-28"
+    },
+    "0x080726E0": {
+      "aliases": [
+        "sub_080726E0"
+      ],
+      "confidence": 0.65,
+      "evidence": [
+        "copies row idx (width halfwords) of a palette-animation table into palette RAM at dst+start*2 when idx < frame count"
+      ],
+      "kind": "function",
+      "source": "ai",
+      "symbol": "PaletteAnimFrameCopy",
+      "updated": "2026-10-02"
     },
     "0x08072A38": {
       "aliases": [

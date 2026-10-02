@@ -5,20 +5,20 @@
 // @ 0x0804745c
 void SparklesDestroy(void)
 {
-  struct Unk473F8 **slot;
+  struct SparklePool **slot;
   s32 i;
-  struct Unk474ACSlot *p;
-  if ((*((struct Unk473F8 **) 0x03000630)) != 0)
+  struct SparkleSlot *p;
+  if ((*((struct SparklePool **) 0x03000630)) != 0)
   {
     i = 0;
-    slot = &(*((struct Unk473F8 **) 0x03000630));
+    slot = &(*((struct SparklePool **) 0x03000630));
     do
     {
-      p = (*slot)->unk00[i];
+      p = (*slot)->slots[i];
       if (p != 0)
       {
         BtlObjPoolFree(p);
-        (*slot)->unk00[i] = 0;
+        (*slot)->slots[i] = 0;
       }
       i++;
     }
@@ -29,5 +29,5 @@ void SparklesDestroy(void)
     HeapFree(*((void **) 0x03000638));
     *((void **) 0x03000638) = 0;
   }
-  *((struct Unk473F8 **) 0x03000630) = 0;
+  *((struct SparklePool **) 0x03000630) = 0;
 }

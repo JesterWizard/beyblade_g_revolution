@@ -12,7 +12,7 @@
 // sub_0802C3DC/sub_0803DEC8 (logging and skipping the slot on failure). Retail
 // has a separate copy of the slot writes in each branch. Returns 1 once a free
 // slot was found, else 0.
-s32 sub_0802BAD4(u8 kind, u8 group, u8 c, u8 d)
+s32 CollectionAddItem(u8 kind, u8 group, u8 c, u8 d)
 {
     s32 i;
     s32 err;
@@ -27,7 +27,7 @@ s32 sub_0802BAD4(u8 kind, u8 group, u8 c, u8 d)
         {
             if ((s8)group == 1)
             {
-                err = sub_0802C3DC(1, kind, NULL);
+                err = CollectionFindByGroupKind(1, kind, NULL);
                 if (err == 0)
                 {
                     BeybladeRecordClaimS8(kind, d, i);

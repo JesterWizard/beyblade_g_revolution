@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806EEC4` |
-| Size | 2 bytes (1 instructions) |
+| Size | 0 bytes (1 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806EEC4` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | empty stub |
 
 ## Why this name
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806B764` |
-| Size | 588 bytes (278 instructions) |
+| Size | 0 bytes (278 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806B764` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | tile-map text layout (TextLayerInit) |
 
 ## Why this name
 
@@ -29,7 +28,7 @@
 - [`BgGetCntReg`](BgGetCntReg.md)
 - [`GlyphBlit2x2`](GlyphBlit2x2.md)
 - `sub_0806B724`
-- `sub_0806BB38`
+- [`TextLayerTileAddr`](TextLayerTileAddr.md)
 - `sub_08073C4C` _(not one of the 633 functions)_
 
 ## ROM data referenced

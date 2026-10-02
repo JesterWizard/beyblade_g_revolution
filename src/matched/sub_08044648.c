@@ -47,7 +47,7 @@ void BeybladeSpawnList(void *arg)
                     obj->y -= obj->height << 8;
                     obj->x -= (obj->width >> 1) << 8;
                     if ((s16)def->flags != -1)
-                        BtlEntitySelectByKeyDefault((struct Unk680CC *)obj, def->flags);
+                        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)obj, def->flags);
                     if (gData_08075AB8[id].script != 0)
                     {
                         obj->unkC4 = (void *)gData_08075AB8[id].script;

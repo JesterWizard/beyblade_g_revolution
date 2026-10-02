@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802C6AC` |
-| Size | 96 bytes (35 instructions) |
+| Size | 0 bytes (35 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802C6AC` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | calls sub_08067B98(0x0833BE48,0x0833BE50) then zeroes gMainWorkPtr->unk15C8-15CC (via a live r1 pointer) then unk15D0/15D2 via a cached base pointer (r0), matching retail's register reuse across the field-write chain |
 
 ## Why this name
 

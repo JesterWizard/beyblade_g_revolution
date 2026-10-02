@@ -2,9 +2,9 @@
 
 // @ 0x08068014
 
-void *AnimRecAt(struct Unk68014 **slot, u32 i)
+void *AnimRecAt(struct AnimData **slot, u32 i)
 {
-    struct Unk68014Rec *p;
+    struct AnimRecord *p;
 
     p = (*slot)->unk20;
     return &p[i];

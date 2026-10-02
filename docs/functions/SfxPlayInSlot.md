@@ -6,10 +6,10 @@
 | | |
 |--|--|
 | ROM | `0x080601C4` |
-| Size | 92 bytes (36 instructions) |
+| Size | 0 bytes (36 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080601C4` |
 | Confidence | 0.6 |
 | Provenance | ai |

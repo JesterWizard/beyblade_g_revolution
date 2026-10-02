@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08041db4
-void *sub_08041DB4(u32 a, u32 b)
+void *ActorFindByIdSide(u32 a, u32 b)
 {
     s16 i;
     s16 count;

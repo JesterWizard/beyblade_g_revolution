@@ -10,7 +10,7 @@
 // The _08073C44/_08073C48 calls in retail are libgcc _call_via_rN thunks.
 typedef void (*MenuHandler)(struct MenuState *);
 
-void sub_080411EC(void *arg)
+void MenuDispatchKeyHandlers(void *arg)
 {
     struct MenuState *a = arg;
     u32 flags;

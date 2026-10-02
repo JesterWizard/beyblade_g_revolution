@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802D8C4` |
-| Size | 24 bytes (9 instructions) |
+| Size | 0 bytes (9 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802D8C4` |
 | Confidence | 0.45 |
 | Provenance | ai |
-| Note | u16 into Unk026C->unk08->unk18 if non-NULL; -fprologue-bugfix |
 
 ## Why this name
 

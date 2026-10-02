@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08073440` |
-| Size | 74 bytes (37 instructions) |
+| Size | 0 bytes (37 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08073440` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | byte-array compare, -2/-1/0/1 (strcmp-like) |
 
 ## Why this name
 

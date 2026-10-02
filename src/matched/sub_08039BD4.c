@@ -83,13 +83,13 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
 
                     screen->unk298 = BtlObjPoolAlloc(0);
                     SpriteInitFromTemplate(screen->unk298, (void *)0x081146E4, 0x1800, 0x8400, kind, 0, 0,
-                        (u16)BeybladeAttackRating((struct Unk3E328 *)part));
+                        (u16)BeybladeAttackRating((struct BeybladeBuild *)part));
                     screen->unk29C = BtlObjPoolAlloc(0);
                     SpriteInitFromTemplate(screen->unk29C, (void *)0x081146E4, 0x1800, 0x8D00, kind, 0, 0,
-                        (u16)BeybladeDefenseRating((struct Unk3E328 *)part));
+                        (u16)BeybladeDefenseRating((struct BeybladeBuild *)part));
                     screen->unk2A0 = BtlObjPoolAlloc(0);
                     SpriteInitFromTemplate(screen->unk2A0, (void *)0x081146E4, 0x1800, 0x9600, kind, 0, 0,
-                        (u16)BeybladeEnduranceRating((struct Unk3E328 *)part));
+                        (u16)BeybladeEnduranceRating((struct BeybladeBuild *)part));
                     TextEntrySetPaletteBank(screen->unk298, 0x0E);
                     TextEntrySetPaletteBank(screen->unk29C, 0x0E);
                     TextEntrySetPaletteBank(screen->unk2A0, 0x0E);
@@ -121,7 +121,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
                 SpriteInitFromTemplate(screen->unk2A0, (void *)MENU_ROW(i)->unk08, 0x2000, 0x4800, 1, 0, 0, 0);
                 TextEntrySetPaletteBank(screen->unk2A0, 0x0E);
                 TextSetCursor(0, i * 8 + 0x10);
-                TextDrawAlign(sub_0803DDD8(MENU_ROW(i)->unk0C), 0x42, 2);
+                TextDrawAlign(RipcordNameGet(MENU_ROW(i)->unk0C), 0x42, 2);
                 break;
             case 3:
                 screen->unk2B0 = BtlObjPoolAlloc(0);
@@ -133,7 +133,7 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
                 SpriteInitFromTemplate(screen->unk2A0, (void *)MENU_ROW(i)->unk08, 0x2000, 0x4800, 1, 0, 0, 0);
                 TextEntrySetPaletteBank(screen->unk2A0, 0x0E);
                 TextSetCursor(0, i * 8 + 0x10);
-                TextDrawAlign(sub_0803DDB0(MENU_ROW(i)->unk0C), 0x42, 2);
+                TextDrawAlign(LauncherNameGet(MENU_ROW(i)->unk0C), 0x42, 2);
                 break;
             }
             TextRowSetPaletteBank((u16)(i + 6), 0x0E, 9, 0x1A);
@@ -148,11 +148,11 @@ void PartMenuRebuild(struct Unk39BD4 *screen)
                 break;
             case 2:
                 TextSetCursor(0, i * 8 + 0x10);
-                TextDrawAlign(sub_0803DDD8(MENU_ROW(i)->unk0C), 0x42, 2);
+                TextDrawAlign(RipcordNameGet(MENU_ROW(i)->unk0C), 0x42, 2);
                 break;
             case 3:
                 TextSetCursor(0, i * 8 + 0x10);
-                TextDrawAlign(sub_0803DDB0(MENU_ROW(i)->unk0C), 0x42, 2);
+                TextDrawAlign(LauncherNameGet(MENU_ROW(i)->unk0C), 0x42, 2);
                 break;
             }
             TextRowSetPaletteBank((u16)(i + 6), 0x0F, 9, 0x1A);

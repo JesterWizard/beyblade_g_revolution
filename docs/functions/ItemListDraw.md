@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0802FA94` |
-| Size | 748 bytes (304 instructions) |
+| Size | 0 bytes (304 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803C5DC` |
-| Size | 220 bytes (82 instructions) |
+| Size | 0 bytes (82 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0803C5DC` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | gData table base pins pool before unk1818 index |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- `sub_08061E8C`
+- [`GlyphTextInit`](GlyphTextInit.md)
 - [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
 - [`StringAlloc`](StringAlloc.md)
 - [`StringFree`](StringFree.md)

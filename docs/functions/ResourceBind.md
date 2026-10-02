@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806BC0C` |
-| Size | 116 bytes (53 instructions) |
+| Size | 0 bytes (53 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806BC0C` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | s16 count/index loop |
 
 ## Why this name
 

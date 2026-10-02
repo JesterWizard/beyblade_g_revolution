@@ -20,16 +20,16 @@ void LaunchShowPowerMeter(s32 a)
     buf_a = StringAlloc(0x20);
     buf_b = StringAlloc(0x20);
     btl_loc = gBattleWorkPtrLoc;
-    sub_08061E8C((struct Unk61E8C *)&(*btl_loc)->unk1F10, (void *)gData_080B72F3, (struct Unk61E8CSrc *)gData_082BF600, 0xF0, 0x78);
+    GlyphTextInit((struct Unk61E8C *)&(*btl_loc)->powerMeterText, (void *)gData_080B72F3, (struct Unk61E8CSrc *)gData_082BF600, 0xF0, 0x78);
     remain = 0x64 - a;
     TextFormatInt(remain, buf_b, 0x20);
     table = gData_080971EC;
     StringExpandDelim(table[gMainWorkPtr->language], buf_a, buf_b, 0x40, 0x20);
-    sub_08061EF8(&(*btl_loc)->unk1F10, buf_a, 0, 0x3E, 0, 0xFFFF, 0);
+    GlyphTextLayoutWrapped(&(*btl_loc)->powerMeterText, buf_a, 0, 0x3E, 0, 0xFFFF, 0);
     StringFree(buf_a);
     StringFree(buf_b);
     DebugPrint((void *)gData_0833C79C, remain);
     btl = *btl_loc;
-    btl->unk1F74 = 0x64 - a;
+    btl->powerRemaining = 0x64 - a;
 }
 

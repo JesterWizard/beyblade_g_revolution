@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08042B00` |
-| Size | 40 bytes (13 instructions) |
+| Size | 0 bytes (13 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08042B00` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | wram unk1818 byte selects word table |
 
 ## Why this name
 

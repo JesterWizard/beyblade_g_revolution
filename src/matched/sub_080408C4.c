@@ -5,7 +5,7 @@ s32 sub_080408C4(void)
 {
     s8 buf[12];
 
-    sub_0802C314(1, 1, (struct CollectionLookup *)buf);
+    CollectionFindByGroupSlot(1, 1, (struct CollectionLookup *)buf);
     return GetBeybladeNameWithIndex(buf[0]);
 }
 

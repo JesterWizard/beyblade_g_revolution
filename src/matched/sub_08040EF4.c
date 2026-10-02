@@ -8,10 +8,10 @@ s32 GetPlayerKeyedWord(void *key)
 {
     s32 i;
 
-    for (i = 0; gData_0808B2E4[i].unk00 != -1; i++)
+    for (i = 0; gData_0808B2E4[i].key != -1; i++)
     {
-        if (gData_0808B2E4[i].unk00 == (u32)key)
-            return ((u32 *)gData_0808B2E4[i].unk04)[gMainWorkPtr->language];
+        if (gData_0808B2E4[i].key == (u32)key)
+            return ((u32 *)gData_0808B2E4[i].texts)[gMainWorkPtr->language];
     }
     return 0;
 }

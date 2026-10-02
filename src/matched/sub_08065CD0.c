@@ -17,8 +17,8 @@ void sub_08065CD0(struct Unk65CD0 *s, u16 fade, void *check)
 
     done = FALSE;
     timer = s->unk08;
-    sub_08069894();
-    handle = sub_08065E0C(scene, 0, s->unk00, 0, 1);
+    BgScrollReset();
+    handle = Lz77ImageBlit(scene, 0, s->unk00, 0, 1);
     BgPaletteLoad(s->unk04);
     VBlankIntrWait();
     REG_DISPCNT = 0x1140;
@@ -47,7 +47,7 @@ void sub_08065CD0(struct Unk65CD0 *s, u16 fade, void *check)
         REG_BLDY = fade;
         VBlankIntrWait();
         ((void (*)(void))gData_080BB888[0])();
-        sub_0806A6F8();
+        InputUpdate();
         if (check != NULL)
         {
             SaveDataVerify();

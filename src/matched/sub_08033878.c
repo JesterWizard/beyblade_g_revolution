@@ -1,23 +1,23 @@
 #include "global.h"
 
 // @ 0x08033878
-void BtlClearState(void)
+void BattleScorePopupClear(void)
 {
     s32 zero;
 
     zero = 0;
-    gBattleWork->unk0B64 = zero;
-    gBattleWork->unk0B68 = zero;
-    gBattleWork->unk0B6C = zero;
-    gBattleWork->unk0B70 = zero;
-    gBattleWork->unk0B78 = zero;
+    gBattleWork->popupShown = zero;
+    gBattleWork->popupTarget = zero;
+    gBattleWork->popupActive = zero;
+    gBattleWork->popupTargetY = zero;
+    gBattleWork->popupTimer = zero;
 
     for (zero = 0; zero <= 3; zero++)
     {
-        if (gBattleWork->unk0B54[zero] != 0)
+        if (gBattleWork->popupDigits[zero] != 0)
         {
-            BtlObjPoolFree(gBattleWork->unk0B54[zero]);
-            gBattleWork->unk0B54[zero] = 0;
+            BtlObjPoolFree(gBattleWork->popupDigits[zero]);
+            gBattleWork->popupDigits[zero] = 0;
         }
     }
 }

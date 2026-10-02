@@ -36,7 +36,7 @@ void SceneObjsUpdateAll(void)
                     color = (s8)ScenePaletteAcquire(gData_080779A8, gData_03000480[i]->unkD4);
                 gData_03000480[i]->unk3A = (color << 1) | 1;
             }
-            sub_08067CE8((struct Unk67BB8 *)gData_03000480[i++], 0);
+            sub_08067CE8((struct AnimObj *)gData_03000480[i++], 0);
         }
     }
 }

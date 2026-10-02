@@ -13,7 +13,7 @@ void sub_08042718(void)
         w->unk044C = -0x4000;
         w->unk0450 = -0x4000;
         SceneObjUpdate(&w->unk0448);
-        sub_08067CE8((struct Unk67BB8 *)&gMainWorkPtr->unk0448, 0);
+        sub_08067CE8((struct AnimObj *)&gMainWorkPtr->unk0448, 0);
         SceneObjFreeResources((struct Actor *)&gMainWorkPtr->unk0448);
     }
 }

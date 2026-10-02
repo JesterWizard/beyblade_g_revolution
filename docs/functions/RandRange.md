@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080628B4` |
-| Size | 48 bytes (17 instructions) |
+| Size | 0 bytes (17 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080628B4` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | battle/LCG step unk1800 |
 
 ## Why this name
 

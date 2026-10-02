@@ -5,7 +5,7 @@
 
 void SparklesSaveTimers(void)
 {
-    struct Unk473F8 *src;
+    struct SparklePool *src;
 
     src = gUnk_03000630;
     if (src != 0)

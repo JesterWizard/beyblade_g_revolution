@@ -10,7 +10,7 @@ struct Actor *SceneObjSpawn(u32 a, u32 b, u32 c, u32 d)
 {
     if (gData_03000534 == NULL || gData_03000504 > 0x1F)
         return NULL;
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000534[gData_03000504], (struct Unk67BB8Source *)b, a, c, d, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000534[gData_03000504], (struct Unk67BB8Source *)b, a, c, d, 0, -1);
     gData_03000534[gData_03000504].unkBC = ~d;
     gData_03000480[gData_03000504] = &gData_03000534[gData_03000504];
     gData_03000480[gData_03000504 + 1] = NULL;

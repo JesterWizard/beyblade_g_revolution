@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0806F910` |
-| Size | 624 bytes (246 instructions) |
+| Size | 0 bytes (246 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |

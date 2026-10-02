@@ -16,15 +16,15 @@ void MenuDispatchLoop(void)
         u32 *src = gData_080BB8BC;
         _08073C4C(0, &state, sizeof(state), (void *)*src);
     }
-    sub_0804109C(&state, sub_0806639C());
+    sub_0804109C(&state, MenuPageDefGet());
     WindowEffectCreate();
     sub_08060758();
     do
     {
-        WindowEffectApply();
+        WindowRegsApply();
         BlendFadeTick();
         VBlankIntrWait();
-        sub_0806A6F8();
+        InputUpdate();
         if (!(state.unk324 & 1))
             _08073C40((void *)gData_080BB888[0]);
         if (state.unk2D7 == 1)
@@ -60,7 +60,7 @@ void MenuDispatchLoop(void)
         case 1:
             if (state.unk250)
                 _08073C44(&state, state.unk250);
-            sub_080411EC(&state);
+            MenuDispatchKeyHandlers(&state);
             break;
         case 2:
             if (state.unk254)
@@ -73,7 +73,7 @@ void MenuDispatchLoop(void)
         if (state.unk258)
             _08073C44(&state, state.unk258);
     } while (!done);
-    sub_08041394((struct Unk41394 *)&state);
+    HeapFreeSlots8((struct Unk41394 *)&state);
     WindowEffectDestroy();
     sub_08060798();
 }

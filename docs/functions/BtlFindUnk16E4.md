@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08043BDC` |
-| Size | 76 bytes (28 instructions) |
+| Size | 0 bytes (28 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08043BDC` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | battle/walk unk16E4 vs unk16C8 |
 
 ## Why this name
 

@@ -87,7 +87,7 @@ s32 TextLayerInit(struct TextLayer *a, s32 x, s32 y, u8 *str, u32 alignArg)
             u32 *glyph;
 
             c = gData_080BB748[c];
-            glyph = sub_0806BB38(a->font, c);
+            glyph = TextLayerTileAddr(a->font, c);
             adv = glyphAdv;
             if (a->widths != NULL)
                 adv -= a->widths[c];

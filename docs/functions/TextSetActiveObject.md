@@ -6,10 +6,10 @@
 | | |
 |--|--|
 | ROM | `0x080617C4` |
-| Size | 60 bytes (27 instructions) |
+| Size | 0 bytes (27 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080617C4` |
 | Confidence | 0.7 |
 | Provenance | ai |

@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08041394
-void sub_08041394(struct Unk41394 *a)
+void HeapFreeSlots8(struct Unk41394 *a)
 {
     s32 i;
     void *q;

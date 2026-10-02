@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080607BC` |
-| Size | 128 bytes (55 instructions) |
+| Size | 0 bytes (55 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080607BC` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | switch on submode; fade local |
 
 ## Why this name
 

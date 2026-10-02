@@ -2,21 +2,21 @@
 
 // @ 0x08033574
 /* match-compiler: old_agbcc */
-void sub_08033574(void)
+void BtlEffectStop(void)
 {
     struct BattleWork *w;
     u8 shifted;
     u8 *fieldPtr;
 
     w = gBattleWork;
-    if (w->unk2088 == 1)
+    if (w->effectActive == 1)
     {
         fieldPtr = &w->unk1FE6;
         shifted = *fieldPtr >> 1;
         SceneObjFreeResources((struct Actor *)(fieldPtr - 0x3A));
-        sub_08038638(shifted);
+        PaletteSlotRefRelease(shifted);
     }
-    gBattleWork->unk2089 = 0xFF;
-    gBattleWork->unk2088 = 0;
+    gBattleWork->effectMode = 0xFF;
+    gBattleWork->effectActive = 0;
 }
 

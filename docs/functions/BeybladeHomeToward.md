@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08035C64` |
-| Size | 182 bytes (86 instructions) |
+| Size | 0 bytes (86 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08035C64` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | physics repulsion; goto layout + scale copy |
 
 ## Why this name
 

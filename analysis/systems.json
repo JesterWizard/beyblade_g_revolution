@@ -1,17 +1,8 @@
 {
-  "generated": "2026-10-01T21:54:45Z",
+  "generated": "2026-10-02T07:02:04Z",
   "systems": {
-    "audio": {
-      "functions": [
-        "sub_08071BA0"
-      ],
-      "count": 1
-    },
     "battle": {
       "functions": [
-        "sub_0802BA4C",
-        "sub_0802C5DC",
-        "sub_0802E1EC",
         "sub_0803019C",
         "sub_080302E0",
         "sub_08030638",
@@ -32,7 +23,6 @@
         "sub_08033574",
         "sub_0803370C",
         "sub_08033878",
-        "sub_08034420",
         "sub_08034894",
         "sub_080353A0",
         "sub_08035468",
@@ -48,45 +38,18 @@
         "sub_0803D284",
         "sub_0803D4C4",
         "sub_0803D51C",
-        "sub_0803E440",
-        "sub_08040680",
         "sub_080411EC",
-        "sub_08041858",
-        "sub_0804245C",
-        "sub_08042630",
-        "sub_080426A4",
-        "sub_080433F4",
         "sub_080436B0",
-        "sub_08043BDC",
-        "sub_0804438C",
-        "sub_08044EE8",
         "sub_08045C5C",
         "sub_08046E7C",
-        "sub_080474AC",
-        "sub_08048DB8",
-        "sub_08051444",
-        "sub_08052FC8",
-        "sub_0806013C",
-        "sub_080601C4",
-        "sub_08060220",
-        "sub_080602C0",
-        "sub_08060394",
-        "sub_080603E0",
-        "sub_08060428",
-        "sub_08060438",
-        "sub_08060448",
-        "sub_08060458",
         "sub_080618EC",
         "sub_08061E8C",
+        "sub_08061EF8",
         "sub_08062044",
         "sub_08062238",
-        "sub_080628B4",
-        "sub_080628E4",
         "sub_08065CD0",
-        "sub_08066224",
-        "sub_08067890",
+        "sub_080674B4",
         "sub_08067B98",
-        "sub_08068418",
         "sub_0806A434",
         "sub_0806A6F8",
         "sub_0806F910",
@@ -94,125 +57,16 @@
         "sub_0806FEFC",
         "sub_0806FF28",
         "sub_08070678",
-        "sub_08070AD4",
         "sub_08072F94",
         "sub_0807309C",
         "sub_08073114",
         "sub_080735DC",
         "sub_08073AEC"
       ],
-      "count": 91
-    },
-    "graphics": {
-      "functions": [
-        "sub_0802F520",
-        "sub_08031300",
-        "sub_0803139C",
-        "sub_08038438",
-        "sub_08038580",
-        "sub_080385DC",
-        "sub_08038D68",
-        "sub_0803B078",
-        "sub_0803E934",
-        "sub_0803FFB0",
-        "sub_08047A94",
-        "sub_08048168",
-        "sub_08049F98",
-        "sub_0804A438",
-        "sub_0804A4E0",
-        "sub_0804AC3C",
-        "sub_0804B40C",
-        "sub_0804B4B4",
-        "sub_0804C27C",
-        "sub_0804C8BC",
-        "sub_0804CE2C",
-        "sub_0804E17C",
-        "sub_0804E20C",
-        "sub_0804E4F4",
-        "sub_0804EBF0",
-        "sub_0804ED90",
-        "sub_080507B8",
-        "sub_08051578",
-        "sub_080523A4",
-        "sub_08052F0C",
-        "sub_08053218",
-        "sub_08054CF4",
-        "sub_080553B8",
-        "sub_08056250",
-        "sub_080593A4",
-        "sub_08060E48",
-        "sub_080615EC",
-        "sub_08061610",
-        "sub_0806171C",
-        "sub_08061784",
-        "sub_080617C4",
-        "sub_08061AB8",
-        "sub_08061BE8",
-        "sub_08061D00",
-        "sub_08061D68",
-        "sub_08061EF8",
-        "sub_0806211C",
-        "sub_080632F8",
-        "sub_08063D68",
-        "sub_08067CE8",
-        "sub_08069908",
-        "sub_08069948",
-        "sub_08069DBC",
-        "sub_0806B2F0",
-        "sub_0806FDD0",
-        "sub_0806FF58",
-        "sub_080705DC",
-        "sub_080706B0",
-        "sub_08070930",
-        "sub_08070AF8",
-        "sub_08073988"
-      ],
-      "count": 61
-    },
-    "menu": {
-      "functions": [
-        "sub_08039BD4",
-        "sub_080442FC",
-        "sub_08066FB8"
-      ],
-      "count": 3
-    },
-    "save": {
-      "functions": [
-        "sub_08044A8C"
-      ],
-      "count": 1
+      "count": 59
     }
   },
   "membership": {
-    "sub_0802BA4C": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_0802C5DC": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_0802E1EC": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_0802F520": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
     "sub_0803019C": {
       "system": "battle",
       "origin": "direct",
@@ -260,20 +114,6 @@
       "origin": "direct",
       "evidence": [
         "references gBattleWork"
-      ]
-    },
-    "sub_08031300": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_0803139C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
       ]
     },
     "sub_080314FC": {
@@ -367,13 +207,6 @@
         "references gBattleWork"
       ]
     },
-    "sub_08034420": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
     "sub_08034894": {
       "system": "battle",
       "origin": "direct",
@@ -423,39 +256,11 @@
         "references gBattleWork"
       ]
     },
-    "sub_08038438": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_08038580": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_080385DC": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
     "sub_08038D10": {
       "system": "battle",
       "origin": "direct",
       "evidence": [
         "references gBattleWork"
-      ]
-    },
-    "sub_08038D68": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
       ]
     },
     "sub_08038F30": {
@@ -470,20 +275,6 @@
       "origin": "direct",
       "evidence": [
         "references gBattleWork"
-      ]
-    },
-    "sub_08039BD4": {
-      "system": "menu",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'menu'"
-      ]
-    },
-    "sub_0803B078": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
       ]
     },
     "sub_0803C500": {
@@ -521,34 +312,6 @@
         "references gBattleWork"
       ]
     },
-    "sub_0803E440": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_0803E934": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_0803FFB0": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_08040680": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "3/3 call neighbours in battle"
-      ]
-    },
     "sub_080411EC": {
       "system": "battle",
       "origin": "direct",
@@ -556,81 +319,11 @@
         "references gBtlKeysHeld"
       ]
     },
-    "sub_08041858": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_0804245C": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "3/3 call neighbours in battle"
-      ]
-    },
-    "sub_08042630": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080426A4": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080433F4": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
     "sub_080436B0": {
       "system": "battle",
       "origin": "direct",
       "evidence": [
         "references gBtlInputMask"
-      ]
-    },
-    "sub_08043BDC": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080442FC": {
-      "system": "menu",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'menu'"
-      ]
-    },
-    "sub_0804438C": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "4/5 call neighbours in battle"
-      ]
-    },
-    "sub_08044A8C": {
-      "system": "save",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'save'"
-      ]
-    },
-    "sub_08044EE8": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
       ]
     },
     "sub_08045C5C": {
@@ -647,354 +340,11 @@
         "references gBtlInputMask"
       ]
     },
-    "sub_080474AC": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "3/3 call neighbours in battle"
-      ]
-    },
-    "sub_08047A94": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_08048168": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_08048DB8": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "3/4 call neighbours in battle"
-      ]
-    },
-    "sub_08049F98": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804A438": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804A4E0": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804AC3C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_0804B40C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804B4B4": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804C27C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804C8BC": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
-      ]
-    },
-    "sub_0804CE2C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804E17C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804E20C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'render'"
-      ]
-    },
-    "sub_0804E4F4": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_0804EBF0": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'render'"
-      ]
-    },
-    "sub_0804ED90": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_080507B8": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_08051444": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08051578": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_080523A4": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'render'"
-      ]
-    },
-    "sub_08052F0C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'render'"
-      ]
-    },
-    "sub_08052FC8": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08053218": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_08054CF4": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'render'"
-      ]
-    },
-    "sub_080553B8": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'render'"
-      ]
-    },
-    "sub_08056250": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_080593A4": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
-      ]
-    },
-    "sub_0806013C": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080601C4": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "4/4 call neighbours in battle"
-      ]
-    },
-    "sub_08060220": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080602C0": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08060394": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080603E0": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08060428": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08060438": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08060448": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08060458": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08060E48": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
-    "sub_080615EC": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "14/18 call neighbours in graphics"
-      ]
-    },
-    "sub_08061610": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "6/7 call neighbours in graphics"
-      ]
-    },
-    "sub_0806171C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'render'"
-      ]
-    },
-    "sub_08061784": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "12/15 call neighbours in graphics"
-      ]
-    },
-    "sub_080617C4": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "11/12 call neighbours in graphics"
-      ]
-    },
     "sub_080618EC": {
       "system": "battle",
       "origin": "direct",
       "evidence": [
         "references gBtlInputMask"
-      ]
-    },
-    "sub_08061AB8": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'vram'"
-      ]
-    },
-    "sub_08061BE8": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "4/5 call neighbours in graphics"
-      ]
-    },
-    "sub_08061D00": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'vram'"
-      ]
-    },
-    "sub_08061D68": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
       ]
     },
     "sub_08061E8C": {
@@ -1005,10 +355,10 @@
       ]
     },
     "sub_08061EF8": {
-      "system": "graphics",
-      "origin": "note",
+      "system": "battle",
+      "origin": "derived",
       "evidence": [
-        "note mentions 'sprite'"
+        "4/4 call neighbours in battle"
       ]
     },
     "sub_08062044": {
@@ -1018,46 +368,11 @@
         "3/3 call neighbours in battle"
       ]
     },
-    "sub_0806211C": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
-      ]
-    },
     "sub_08062238": {
       "system": "battle",
       "origin": "derived",
       "evidence": [
-        "4/4 call neighbours in battle"
-      ]
-    },
-    "sub_080628B4": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080628E4": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_080632F8": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_08063D68": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
+        "3/3 call neighbours in battle"
       ]
     },
     "sub_08065CD0": {
@@ -1067,74 +382,25 @@
         "references gBtlKeysHeld"
       ]
     },
-    "sub_08066224": {
-      "system": "battle",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'battle'"
-      ]
-    },
-    "sub_08066FB8": {
-      "system": "menu",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'menu'"
-      ]
-    },
-    "sub_08067890": {
+    "sub_080674B4": {
       "system": "battle",
       "origin": "derived",
       "evidence": [
-        "3/3 call neighbours in battle"
+        "4/4 call neighbours in battle"
       ]
     },
     "sub_08067B98": {
       "system": "battle",
       "origin": "derived",
       "evidence": [
-        "5/7 call neighbours in battle"
-      ]
-    },
-    "sub_08067CE8": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
-      ]
-    },
-    "sub_08068418": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "3/3 call neighbours in battle"
-      ]
-    },
-    "sub_08069908": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_08069948": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'palette'"
-      ]
-    },
-    "sub_08069DBC": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'vram'"
+        "4/4 call neighbours in battle"
       ]
     },
     "sub_0806A434": {
       "system": "battle",
       "origin": "derived",
       "evidence": [
-        "6/6 call neighbours in battle"
+        "4/4 call neighbours in battle"
       ]
     },
     "sub_0806A6F8": {
@@ -1144,13 +410,6 @@
         "references gBtlInputMask"
       ]
     },
-    "sub_0806B2F0": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'draw'"
-      ]
-    },
     "sub_0806F910": {
       "system": "battle",
       "origin": "direct",
@@ -1158,18 +417,11 @@
         "references gBtlObjListHead"
       ]
     },
-    "sub_0806FDD0": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "9/10 call neighbours in graphics"
-      ]
-    },
     "sub_0806FE84": {
       "system": "battle",
-      "origin": "note",
+      "origin": "derived",
       "evidence": [
-        "note mentions 'btl'"
+        "4/4 call neighbours in battle"
       ]
     },
     "sub_0806FEFC": {
@@ -1186,60 +438,11 @@
         "references gBtlObjListHead"
       ]
     },
-    "sub_0806FF58": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "9/10 call neighbours in graphics"
-      ]
-    },
-    "sub_080705DC": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "8/10 call neighbours in graphics"
-      ]
-    },
     "sub_08070678": {
       "system": "battle",
       "origin": "derived",
       "evidence": [
         "4/4 call neighbours in battle"
-      ]
-    },
-    "sub_080706B0": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
-      ]
-    },
-    "sub_08070930": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
-      ]
-    },
-    "sub_08070AD4": {
-      "system": "battle",
-      "origin": "derived",
-      "evidence": [
-        "3/4 call neighbours in battle"
-      ]
-    },
-    "sub_08070AF8": {
-      "system": "graphics",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sprite'"
-      ]
-    },
-    "sub_08071BA0": {
-      "system": "audio",
-      "origin": "note",
-      "evidence": [
-        "note mentions 'sound'"
       ]
     },
     "sub_08072F94": {
@@ -1270,13 +473,6 @@
         "3/3 call neighbours in battle"
       ]
     },
-    "sub_08073988": {
-      "system": "graphics",
-      "origin": "derived",
-      "evidence": [
-        "5/7 call neighbours in graphics"
-      ]
-    },
     "sub_08073AEC": {
       "system": "battle",
       "origin": "derived",
@@ -1291,6 +487,7 @@
     "sub_0802B930",
     "sub_0802B95C",
     "sub_0802B994",
+    "sub_0802BA4C",
     "sub_0802BAD4",
     "sub_0802BC14",
     "sub_0802BF04",
@@ -1299,6 +496,7 @@
     "sub_0802C3DC",
     "sub_0802C4A4",
     "sub_0802C55C",
+    "sub_0802C5DC",
     "sub_0802C62C",
     "sub_0802C6AC",
     "sub_0802D2C0",
@@ -1314,10 +512,12 @@
     "sub_0802E048",
     "sub_0802E18C",
     "sub_0802E1B4",
+    "sub_0802E1EC",
     "sub_0802E210",
     "sub_0802E2F8",
     "sub_0802ECD8",
     "sub_0802EECC",
+    "sub_0802F520",
     "sub_0802FA94",
     "sub_0802FD80",
     "sub_080302A8",
@@ -1330,7 +530,9 @@
     "sub_080312B0",
     "sub_080312D8",
     "sub_080312EC",
+    "sub_08031300",
     "sub_08031368",
+    "sub_0803139C",
     "sub_080320CC",
     "sub_08032D5C",
     "sub_08032DB8",
@@ -1353,6 +555,7 @@
     "sub_0803413C",
     "sub_08034360",
     "sub_08034414",
+    "sub_08034420",
     "sub_08034568",
     "sub_08034618",
     "sub_080346A8",
@@ -1391,8 +594,14 @@
     "sub_08036264",
     "sub_0803715C",
     "sub_08037318",
+    "sub_08038438",
+    "sub_08038580",
+    "sub_080385DC",
     "sub_08038638",
+    "sub_08038D68",
+    "sub_08039BD4",
     "sub_0803A1E4",
+    "sub_0803B078",
     "sub_0803C6B8",
     "sub_0803DBD0",
     "sub_0803DCFC",
@@ -1408,13 +617,16 @@
     "sub_0803E328",
     "sub_0803E374",
     "sub_0803E3C0",
+    "sub_0803E440",
     "sub_0803E848",
+    "sub_0803E934",
     "sub_0803EBB0",
     "sub_0803EC34",
     "sub_0803ECB8",
     "sub_0803EDC8",
     "sub_0803EDF0",
     "sub_0803FDD0",
+    "sub_0803FFB0",
     "sub_08040088",
     "sub_080400C0",
     "sub_080400D4",
@@ -1422,6 +634,7 @@
     "sub_080405A8",
     "sub_080405E8",
     "sub_08040618",
+    "sub_08040680",
     "sub_080408C4",
     "sub_08040EF4",
     "sub_08040F4C",
@@ -1431,6 +644,7 @@
     "sub_080415FC",
     "sub_080416C4",
     "sub_08041774",
+    "sub_08041858",
     "sub_0804188C",
     "sub_08041980",
     "sub_080419B0",
@@ -1440,9 +654,12 @@
     "sub_08041E14",
     "sub_08041F88",
     "sub_08042390",
+    "sub_0804245C",
     "sub_080424E8",
     "sub_08042540",
     "sub_080425B8",
+    "sub_08042630",
+    "sub_080426A4",
     "sub_08042718",
     "sub_08042784",
     "sub_080427E8",
@@ -1459,6 +676,7 @@
     "sub_08042C3C",
     "sub_08042E78",
     "sub_08042F4C",
+    "sub_080433F4",
     "sub_08043420",
     "sub_080435D8",
     "sub_08043638",
@@ -1467,9 +685,12 @@
     "sub_08043ADC",
     "sub_08043B58",
     "sub_08043B90",
+    "sub_08043BDC",
     "sub_08043C28",
     "sub_08043C70",
     "sub_08043DB4",
+    "sub_080442FC",
+    "sub_0804438C",
     "sub_080444BC",
     "sub_08044648",
     "sub_080447B4",
@@ -1478,7 +699,9 @@
     "sub_0804495C",
     "sub_080449C4",
     "sub_08044A20",
+    "sub_08044A8C",
     "sub_08044D8C",
+    "sub_08044EE8",
     "sub_08044F64",
     "sub_08044FB0",
     "sub_08045128",
@@ -1495,28 +718,53 @@
     "sub_080473E4",
     "sub_080473F8",
     "sub_0804745C",
+    "sub_080474AC",
     "sub_08047594",
     "sub_080475C4",
     "sub_080475F4",
     "sub_08047624",
+    "sub_08047A94",
+    "sub_08048168",
     "sub_08048D0C",
+    "sub_08048DB8",
+    "sub_08049F98",
     "sub_0804A028",
+    "sub_0804A438",
+    "sub_0804A4E0",
     "sub_0804AAF0",
+    "sub_0804AC3C",
     "sub_0804AE94",
+    "sub_0804B40C",
+    "sub_0804B4B4",
     "sub_0804BD38",
     "sub_0804BE80",
+    "sub_0804C27C",
     "sub_0804C324",
+    "sub_0804C8BC",
     "sub_0804CA30",
+    "sub_0804CE2C",
     "sub_0804CED4",
     "sub_0804D420",
     "sub_0804D58C",
     "sub_0804DB28",
+    "sub_0804E17C",
+    "sub_0804E20C",
+    "sub_0804E4F4",
+    "sub_0804EBF0",
+    "sub_0804ED90",
     "sub_0804FFCC",
+    "sub_080507B8",
     "sub_08050864",
+    "sub_08051444",
     "sub_08051504",
+    "sub_08051578",
     "sub_08051BBC",
+    "sub_080523A4",
     "sub_0805264C",
     "sub_08052934",
+    "sub_08052F0C",
+    "sub_08052FC8",
+    "sub_08053218",
     "sub_08053690",
     "sub_080538A0",
     "sub_08054108",
@@ -1524,6 +772,9 @@
     "sub_08054454",
     "sub_08054494",
     "sub_08054558",
+    "sub_08054CF4",
+    "sub_080553B8",
+    "sub_08056250",
     "sub_08056380",
     "sub_08056AF0",
     "sub_08056BA4",
@@ -1531,6 +782,7 @@
     "sub_08056F84",
     "sub_08057234",
     "sub_08057274",
+    "sub_080593A4",
     "sub_08059AE0",
     "sub_08059B74",
     "sub_08059BD8",
@@ -1542,8 +794,18 @@
     "sub_0805D99C",
     "sub_0805DA70",
     "sub_0805E044",
+    "sub_0806013C",
+    "sub_080601C4",
+    "sub_08060220",
     "sub_08060254",
+    "sub_080602C0",
+    "sub_08060394",
     "sub_080603A4",
+    "sub_080603E0",
+    "sub_08060428",
+    "sub_08060438",
+    "sub_08060448",
+    "sub_08060458",
     "sub_08060468",
     "sub_080604A4",
     "sub_080604C8",
@@ -1554,6 +816,7 @@
     "sub_08060C30",
     "sub_08060D28",
     "sub_08060D58",
+    "sub_08060E48",
     "sub_0806105C",
     "sub_080610A8",
     "sub_0806114C",
@@ -1562,22 +825,32 @@
     "sub_0806121C",
     "sub_08061308",
     "sub_08061564",
+    "sub_080615EC",
+    "sub_08061610",
     "sub_08061628",
+    "sub_0806171C",
+    "sub_08061784",
     "sub_080617B4",
+    "sub_080617C4",
     "sub_08061800",
     "sub_0806184C",
     "sub_080618A8",
     "sub_08061A98",
     "sub_08061AA8",
+    "sub_08061AB8",
     "sub_08061BAC",
     "sub_08061BDC",
+    "sub_08061BE8",
     "sub_08061C48",
+    "sub_08061D00",
+    "sub_08061D68",
     "sub_08061DC0",
     "sub_08061E40",
     "sub_08062068",
     "sub_08062098",
     "sub_0806209C",
     "sub_080620D4",
+    "sub_0806211C",
     "sub_0806225C",
     "sub_08062358",
     "sub_08062634",
@@ -1587,6 +860,8 @@
     "sub_08062728",
     "sub_08062758",
     "sub_08062790",
+    "sub_080628B4",
+    "sub_080628E4",
     "sub_08062960",
     "sub_08062988",
     "sub_08062A14",
@@ -1608,8 +883,11 @@
     "sub_0806306C",
     "sub_08063104",
     "sub_0806314C",
+    "sub_080632F8",
+    "sub_08063D68",
     "sub_08065560",
     "sub_08065E0C",
+    "sub_08066224",
     "sub_08066390",
     "sub_0806639C",
     "sub_08066434",
@@ -1619,21 +897,23 @@
     "sub_08066B10",
     "sub_08066BC4",
     "sub_08066BF0",
+    "sub_08066FB8",
     "sub_080674A0",
     "sub_080674A4",
     "sub_080674AC",
     "sub_080674B0",
-    "sub_080674B4",
     "sub_080674BC",
     "sub_08067504",
     "sub_08067584",
     "sub_08067634",
     "sub_08067648",
     "sub_080677A8",
+    "sub_08067890",
     "sub_080679A4",
     "sub_080679C0",
     "sub_08067A9C",
     "sub_08067BB8",
+    "sub_08067CE8",
     "sub_08067F3C",
     "sub_08067F98",
     "sub_08067FC8",
@@ -1643,6 +923,7 @@
     "sub_08068118",
     "sub_08068180",
     "sub_0806833C",
+    "sub_08068418",
     "sub_08068558",
     "sub_08068574",
     "sub_08068584",
@@ -1663,12 +944,15 @@
     "sub_08069270",
     "sub_0806960C",
     "sub_08069894",
+    "sub_08069908",
+    "sub_08069948",
     "sub_08069988",
     "sub_080699C8",
     "sub_08069A18",
     "sub_08069A60",
     "sub_08069B78",
     "sub_08069C14",
+    "sub_08069DBC",
     "sub_08069F00",
     "sub_0806A314",
     "sub_0806A3A4",
@@ -1677,6 +961,7 @@
     "sub_0806A954",
     "sub_0806AC68",
     "sub_0806B064",
+    "sub_0806B2F0",
     "sub_0806B3E8",
     "sub_0806B5B8",
     "sub_0806B5C8",
@@ -1713,6 +998,8 @@
     "sub_0806F8C4",
     "sub_0806FBF8",
     "sub_0806FDB4",
+    "sub_0806FDD0",
+    "sub_0806FF58",
     "sub_0807000C",
     "sub_080700CC",
     "sub_08070188",
@@ -1723,8 +1010,13 @@
     "sub_080705A4",
     "sub_080705CC",
     "sub_080705D4",
+    "sub_080705DC",
     "sub_08070604",
     "sub_0807069C",
+    "sub_080706B0",
+    "sub_08070930",
+    "sub_08070AD4",
+    "sub_08070AF8",
     "sub_08070C98",
     "sub_08070D44",
     "sub_08070DF4",
@@ -1733,6 +1025,7 @@
     "sub_080717F0",
     "sub_08071808",
     "sub_08071B4C",
+    "sub_08071BA0",
     "sub_08071E04",
     "sub_08071E44",
     "sub_08071E84",
@@ -1759,17 +1052,14 @@
     "sub_080735B0",
     "sub_080737C0",
     "sub_08073910",
+    "sub_08073988",
     "sub_080739E8",
     "sub_08073A28",
     "sub_08074144"
   ],
   "counts": {
-    "audio": 1,
-    "battle": 91,
-    "graphics": 61,
-    "menu": 3,
-    "save": 1,
-    "unassigned": 476
+    "battle": 59,
+    "unassigned": 574
   },
   "notes": {
     "universal_symbols_excluded": [

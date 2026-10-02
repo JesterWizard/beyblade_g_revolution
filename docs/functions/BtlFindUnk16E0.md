@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08043B90` |
-| Size | 76 bytes (30 instructions) |
+| Size | 0 bytes (30 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08043B90` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | old_agbcc; missing return at list end (BUGFIX guard) |
 
 ## Why this name
 

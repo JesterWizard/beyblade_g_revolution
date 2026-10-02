@@ -3,7 +3,7 @@
 #include "battle.h"
 
 // @ 0x08066fb8
-void sub_08066FB8(void)
+void MenuDrawThreeLineList(void)
 {
     VBlankIntrWait();
     TextWindowPopState();

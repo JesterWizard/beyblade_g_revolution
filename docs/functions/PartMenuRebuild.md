@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08039BD4` |
-| Size | 1552 bytes (632 instructions) |
+| Size | 0 bytes (632 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | menu |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08039BD4` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | row y strength-reduced from i; menu globals as symbols |
 
 ## Why this name
 
@@ -33,8 +32,8 @@
 ## Callees
 
 - [`ScaleRatio`](ScaleRatio.md)
-- `sub_0803DDB0`
-- `sub_0803DDD8`
+- [`LauncherNameGet`](LauncherNameGet.md)
+- [`RipcordNameGet`](RipcordNameGet.md)
 - `sub_0803DE00` _(not one of the 633 functions)_
 - [`CollectionFindEntry`](CollectionFindEntry.md)
 - [`BeybladeAttackRating`](BeybladeAttackRating.md)

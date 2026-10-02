@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061BE8` |
-| Size | 96 bytes (39 instructions) |
+| Size | 0 bytes (39 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08061BE8` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | symbol-addressed table (gData_*); agbcc only reproduces retail without literal folding |
 
 ## Why this name
 

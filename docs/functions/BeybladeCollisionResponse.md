@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08035AE0` |
-| Size | 388 bytes (188 instructions) |
+| Size | 0 bytes (188 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08035AE0` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | (s32) mass casts; do/while(0) setup scope (permuter) |
 
 ## Why this name
 

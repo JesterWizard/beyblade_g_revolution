@@ -15,12 +15,12 @@ void sub_080632F8(void)
         &work,
         sizeof(work),
         *palettePtr);
-    sub_08066390(0x0F);
-    sub_0804109C((struct MenuState *)&work, sub_0806639C());
+    MenuPageSet(0x0F);
+    sub_0804109C((struct MenuState *)&work, MenuPageDefGet());
     do
     {
         VBlankIntrWait();
-        sub_0806A6F8();
+        InputUpdate();
         if ((work.unk324 & 1) == 0)
             _08073C40(*(void **)0x080BB888);
         switch (work.unk2D4)
@@ -32,7 +32,7 @@ void sub_080632F8(void)
         case 1:
             if (work.unk250 != 0)
                 _08073C44(&work, work.unk250);
-            sub_080411EC(&work);
+            MenuDispatchKeyHandlers(&work);
             break;
         case 2:
             if (work.unk254 != 0)

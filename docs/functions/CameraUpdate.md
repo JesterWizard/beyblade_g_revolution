@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806EE48` |
-| Size | 124 bytes (59 instructions) |
+| Size | 0 bytes (59 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806EE48` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_0806EE48/output-0-1/source.c |
 
 ## Why this name
 

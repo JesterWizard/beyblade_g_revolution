@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080415FC` |
-| Size | 200 bytes (77 instructions) |
+| Size | 0 bytes (77 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080415FC` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | phase callbacks via typed fn-ptr fields |
 
 ## Why this name
 

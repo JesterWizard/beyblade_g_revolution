@@ -22,7 +22,7 @@ void MainCallbacksRun(void)
     case 1:
         if (work->unk0780 != 0)
             work->unk0780(&work->unk0530, work);
-        sub_080411EC(&gMainWorkPtr->unk0530);
+        MenuDispatchKeyHandlers(&gMainWorkPtr->unk0530);
         break;
     case 2:
         if (work->unk0784 != 0)

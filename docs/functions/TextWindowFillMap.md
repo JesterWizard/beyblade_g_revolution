@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08060D58` |
-| Size | 240 bytes (117 instructions) |
+| Size | 0 bytes (117 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08060D58` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | old_agbcc; fill src local for pool order |
 
 ## Why this name
 

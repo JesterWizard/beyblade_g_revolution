@@ -8,7 +8,7 @@
 
 // @ 0x080428c4
 // If bit 0x2000 of unk1808 is clear, zero the two bytes of the 0x03000538 object.
-void sub_080428C4(void)
+void CursorHistoryReset(void)
 {
     u32 v = gMainWorkPtr->unk1808 & 0x2000;
 

@@ -26,14 +26,14 @@ void FieldUpdateFrame(u32 active)
     CameraUpdate((struct MapView *)gData_03000198);
     SceneObjUpdate(&gData_03000198->unk036C);
     SceneObjsUpdateAll();
-    sub_08067CE8((struct Unk67BB8 *)&gData_03000198->unk036C, 0);
+    sub_08067CE8((struct AnimObj *)&gData_03000198->unk036C, 0);
     if (gData_03000198->unk182C != 0)
     {
         SceneObjUpdate(&gData_03000198->unk0448);
-        sub_08067CE8((struct Unk67BB8 *)&gData_03000198->unk0448, 0);
+        sub_08067CE8((struct AnimObj *)&gData_03000198->unk0448, 0);
     }
     ((void (*)(void))gData_080BB888[0])();
-    sub_0806A6F8();
+    InputUpdate();
     SparklesUpdate();
     TimerAdvance();
     sub_080462D4();
@@ -84,8 +84,8 @@ void FieldUpdateFrame(u32 active)
             else if (gData_03004060 & 0x100)
             {
                 sub_08060428();
-                sub_08066390(9);
-                sub_0804109C((struct MenuState *)&gData_03000198->unk0530, sub_0806639C());
+                MenuPageSet(9);
+                sub_0804109C((struct MenuState *)&gData_03000198->unk0530, MenuPageDefGet());
                 gData_03000198->unk181C = 4;
                 gData_03000198->unk1808 |= 0x100;
             }
@@ -102,7 +102,7 @@ void FieldUpdateFrame(u32 active)
     mesh = sub_08062A14();
     sub_0806C7D4((struct CollisionBody *)&gData_03000198->unk036C, (struct Unk6C388Mesh *)mesh, NULL, 0);
     sub_08062758(&gData_03000198->unk0524, (struct Actor *)&gData_03000198->unk036C);
-    sub_0804245C();
+    CursorHistoryReplayStep();
     TasksRunAll();
     HudRefreshStats();
     gData_03000198->unk1788++;
@@ -117,8 +117,8 @@ void FieldUpdateFrame(u32 active)
     if ((gData_03004060 & 8) && gData_03000198->unk180C == 0 && gData_03000198->unk185A == 1)
     {
         gData_03000198->unk184D = 1;
-        sub_08066390(7);
-        sub_0804109C((struct MenuState *)&gData_03000198->unk0530, sub_0806639C());
+        MenuPageSet(7);
+        sub_0804109C((struct MenuState *)&gData_03000198->unk0530, MenuPageDefGet());
         gData_03000198->unk181C = 3;
         sub_08060428();
     }

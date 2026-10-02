@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08071F84` |
-| Size | 20 bytes (9 instructions) |
+| Size | 0 bytes (9 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08071F84` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | clear Unk71F84.unk16 via 71F44 |
 
 ## Why this name
 

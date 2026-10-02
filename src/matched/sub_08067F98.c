@@ -2,7 +2,7 @@
 
 // @ 0x08067f98
 /* match-compiler: old_agbcc */
-struct Unk680CCRec *sub_08067F98(struct Unk680CC *a, u32 key)
+struct AnimSeqEntry *sub_08067F98(struct AnimObjSeqSelect *a, u32 key)
 {
     u32 r1;
     u8 *r2;
@@ -13,11 +13,11 @@ struct Unk680CCRec *sub_08067F98(struct Unk680CC *a, u32 key)
     r1 = key;
     r1 <<= 16;
     r3 = r1 >> 16;
-    r2 = (u8 *)a->unk00;
-    r1 = ((struct Unk68014 *)r2)->unk18;
+    r2 = (u8 *)a->data;
+    r1 = ((struct AnimData *)r2)->seqTableOffset;
     r2 += r1;
     r1 = 0;
-    r0 = a->unk28;
+    r0 = a->seqCount;
     if (r1 >= r0)
         goto notfound;
 loop:
@@ -35,7 +35,7 @@ next:
 notfound:
     r0 = 0;
 done:
-    return (struct Unk680CCRec *)r0;
+    return (struct AnimSeqEntry *)r0;
 }
 
 

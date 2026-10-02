@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080475F4` |
-| Size | 48 bytes (15 instructions) |
+| Size | 0 bytes (15 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080475F4` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | copy MainWork unk1798/179C to Unk473F8 unk40/44; -fprologue-bugfix |
 
 ## Why this name
 

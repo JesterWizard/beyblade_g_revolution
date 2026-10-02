@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802B930` |
-| Size | 42 bytes (19 instructions) |
+| Size | 0 bytes (19 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802B930` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | 62-entry table lookup by s16 key |
 
 ## Why this name
 

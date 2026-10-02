@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08070D44` |
-| Size | 176 bytes (85 instructions) |
+| Size | 0 bytes (85 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08070D44` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | signed decimal formatter (old_agbcc) |
 
 ## Why this name
 

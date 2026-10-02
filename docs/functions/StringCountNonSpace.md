@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806AC68` |
-| Size | 22 bytes (11 instructions) |
+| Size | 0 bytes (11 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806AC68` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | count non-space chars; -fprologue-bugfix |
 
 ## Why this name
 

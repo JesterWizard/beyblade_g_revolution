@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806FDD0` |
-| Size | 128 bytes (48 instructions) |
+| Size | 0 bytes (48 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0806FDD0` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | success path falls through; reload link pointers |
 
 ## Why this name
 

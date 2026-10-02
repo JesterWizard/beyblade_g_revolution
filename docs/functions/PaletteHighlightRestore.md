@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080312EC` |
-| Size | 20 bytes (9 instructions) |
+| Size | 0 bytes (9 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080312EC` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | semantic/phase3b |
 
 ## Why this name
 

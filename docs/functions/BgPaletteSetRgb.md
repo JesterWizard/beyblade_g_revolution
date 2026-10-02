@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08062D50` |
-| Size | 46 bytes (23 instructions) |
+| Size | 0 bytes (23 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062D50` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 

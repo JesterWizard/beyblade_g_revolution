@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08059C98` |
-| Size | 112 bytes (53 instructions) |
+| Size | 0 bytes (53 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08059C98` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | Phase 3b semantic C |
 
 ## Why this name
 

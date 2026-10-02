@@ -6,8 +6,8 @@
 #include "global.h"
 #include "data_symbols.h"
 
-struct Unk473F8;
-struct Unk474ACSlot;
+struct SparklePool;
+struct SparkleSlot;
 
 // @ 0x080473f8
 // Allocate the 0x48-byte pool, publish it through 0x03000638, take the slot
@@ -20,20 +20,20 @@ struct Unk474ACSlot;
 void SparklesCreate(void)
 {
     void *tmp;
-    struct Unk473F8 *pool;
-    struct Unk474ACSlot *slot;
+    struct SparklePool *pool;
+    struct SparkleSlot *slot;
     s32 i;
 
     tmp = HeapAlloc(0x48);
     *(u32 *)gData_03000638 = (u32)tmp;
-    gData_03000630 = *(struct Unk473F8 **)tmp;
+    gData_03000630 = *(struct SparklePool **)tmp;
     pool = gData_03000630;
     pool->unk44 = 0x1C20;
 
     for (i = 0; i <= 0xF; i++)
     {
         slot = BtlObjPoolAlloc(2);
-        gData_03000630->unk00[i] = slot;
+        gData_03000630->slots[i] = slot;
         SpriteInitFromTemplate((struct Sprite *)slot, (void *)0x081193C0, 0xFFFFC000, 0xFFFFC000, 0, 1, 0, 0);
     }
 }

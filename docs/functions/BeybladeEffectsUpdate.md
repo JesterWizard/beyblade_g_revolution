@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803531C` |
-| Size | 132 bytes (57 instructions) |
+| Size | 0 bytes (57 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803531C` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 
@@ -25,7 +24,7 @@
 
 ## Callees
 
-- `sub_08035258`
+- [`BattleAnimStop`](BattleAnimStop.md)
 - [`SceneObjUpdate`](SceneObjUpdate.md)
 
 ## Callers

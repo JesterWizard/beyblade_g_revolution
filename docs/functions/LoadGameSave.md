@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08044FB0` |
-| Size | 156 bytes (62 instructions) |
+| Size | 0 bytes (62 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

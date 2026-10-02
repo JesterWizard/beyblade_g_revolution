@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080705DC` |
-| Size | 28 bytes (11 instructions) |
+| Size | 0 bytes (11 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080705DC` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | semantic/phase3b |
 
 ## Why this name
 
@@ -51,6 +50,6 @@
 - `sub_08056BA4`
 - [`SegmentedBarRebuild`](SegmentedBarRebuild.md)
 - [`GlyphTextLayoutWrapped`](GlyphTextLayoutWrapped.md)
-- `sub_0806225C`
+- [`SceneObjMotionStep`](SceneObjMotionStep.md)
 - `sub_08066BC4`
 - [`TextGroupAppendString`](TextGroupAppendString.md)

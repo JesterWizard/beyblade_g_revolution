@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080405E8` |
-| Size | 48 bytes (19 instructions) |
+| Size | 0 bytes (19 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080405E8` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

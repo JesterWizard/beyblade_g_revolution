@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080735DC` |
-| Size | 132 bytes (57 instructions) |
+| Size | 0 bytes (57 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080735DC` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | signed decimal text |
 
 ## Why this name
 

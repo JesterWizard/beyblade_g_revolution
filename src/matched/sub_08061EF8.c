@@ -8,7 +8,7 @@
 // Lays `text` out as glyph sprites: wraps it into up to four lines, aligns
 // each line with sub_08062068 (`align`) and places one sprite per glyph,
 // advancing by 0x10 minus the glyph's entry in the width table.
-void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 paletteArg, u32 tileArg, u32 align)
+void GlyphTextLayoutWrapped(struct GlyphText *a, const u8 *text, u32 unused, s32 y, u32 paletteArg, u32 tileArg, u32 align)
 {
     u8 *lines[4];
     u8 palette = paletteArg;
@@ -19,18 +19,18 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
     s32 x;
     u32 c;
 
-    sub_0806209C(a);
+    GlyphTextReleaseSprites(a);
     if (StringArrayAlloc((void **)lines, 4, 0x60) < 4)
     {
         StringArrayFree((void **)lines, 4);
         return;
     }
-    count = SplitStringIntoStringArray((void **)lines, (u8 *)text, 4, (u32)a->unk04, a->unk1C, a->unk20, a->unk20 >> 2, 0x60);
+    count = SplitStringIntoStringArray((void **)lines, (u8 *)text, 4, (u32)a->widthTable, a->unk1C, a->glyphSize, a->glyphSize >> 2, 0x60);
     for (i = 0; i < count; i++)
     {
         p = lines[i];
-        a->unk18 = TextMeasureWidth(p, a->unk04, a->unk20, a->unk20 >> 2);
-        x = sub_08062068((struct Unk62068 *)a, a->unk18, align);
+        a->lastLineWidth = TextMeasureWidth(p, a->widthTable, a->glyphSize, a->glyphSize >> 2);
+        x = sub_08062068((struct Unk62068 *)a, a->lastLineWidth, align);
         if (i == 0)
         {
             a->unk10 = x << 8;
@@ -40,20 +40,20 @@ void sub_08061EF8(struct Unk62044 *a, const u8 *text, u32 unused, s32 y, u32 pal
         {
             if (c == ' ')
             {
-                x += a->unk20 >> 2;
+                x += a->glyphSize >> 2;
             }
             else
             {
-                a->unk0C[a->unk24] = BtlObjPoolAlloc(tile);
-                if (a->unk0C[a->unk24] == NULL)
+                a->sprites[a->spritesInUse] = BtlObjPoolAlloc(tile);
+                if (a->sprites[a->spritesInUse] == NULL)
                     return;
-                SpriteInitFromTemplate((struct Sprite *)a->unk0C[a->unk24], a->unk08, x << 8, y << 8, 0, 0, 0, gData_080BB748[c]);
-                x = 0x10 - a->unk04[gData_080BB748[c]] + x;
-                TextEntrySetPaletteBank((struct Sprite *)a->unk0C[a->unk24], palette);
-                a->unk24++;
+                SpriteInitFromTemplate((struct Sprite *)a->sprites[a->spritesInUse], a->glyphSprite, x << 8, y << 8, 0, 0, 0, gData_080BB748[c]);
+                x = 0x10 - a->widthTable[gData_080BB748[c]] + x;
+                TextEntrySetPaletteBank((struct Sprite *)a->sprites[a->spritesInUse], palette);
+                a->spritesInUse++;
             }
         }
-        y += a->unk22;
+        y += a->lineHeight;
     }
     StringArrayFree((void **)lines, 4);
 }

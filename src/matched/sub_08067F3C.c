@@ -9,8 +9,8 @@
 s32 AnimHalfwordSum(void *a, u32 v)
 {
     struct Unk67F3C *obj = a;
-    struct Unk68014 *inner;
-    struct Unk68014Rec *rec;
+    struct AnimData *inner;
+    struct AnimRecord *rec;
     u16 *base;
     u16 *p;
     u32 n;
@@ -21,10 +21,10 @@ s32 AnimHalfwordSum(void *a, u32 v)
     inner = obj->unk00;
     rec = AnimRecAt(&obj->unk00, v);
     base = AnimHalfwordBase(inner);
-    n = rec->unk02;
-    sum = rec->unk04 * n;
-    start = rec->unk00;
-    if ((s32)v >= (s32)inner->unk08)
+    n = rec->length;
+    sum = rec->delay * n;
+    start = rec->start;
+    if ((s32)v >= (s32)inner->recordCount)
         return 0;
     if (base != 0 && !(obj->unk98 & 4) && n != 0)
     {

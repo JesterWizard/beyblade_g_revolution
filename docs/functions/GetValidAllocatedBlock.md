@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806A580` |
-| Size | 48 bytes (21 instructions) |
+| Size | 0 bytes (21 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806A580` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | Phase 3b semantic C |
 
 ## Why this name
 

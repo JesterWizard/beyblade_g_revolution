@@ -6,10 +6,10 @@
 | | |
 |--|--|
 | ROM | `0x08068418` |
-| Size | 272 bytes (130 instructions) |
+| Size | 0 bytes (130 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08068418` |
 | Confidence | 0.75 |
 | Provenance | ai |

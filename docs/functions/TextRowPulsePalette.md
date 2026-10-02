@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08031300` |
-| Size | 78 bytes (37 instructions) |
+| Size | 0 bytes (37 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08031300` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | palette pulse: toggle bank every 8 ticks (t & 5) |
 
 ## Why this name
 

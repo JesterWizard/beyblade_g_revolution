@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x08068598` |
-| Size | 284 bytes (135 instructions) |
+| Size | 0 bytes (135 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
@@ -28,7 +28,7 @@
 
 ## Callees
 
-- `sub_08068118`
+- [`AnimObjSeqAdvance`](AnimObjSeqAdvance.md)
 
 ## Callers
 

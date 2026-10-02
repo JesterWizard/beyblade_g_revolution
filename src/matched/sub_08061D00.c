@@ -29,7 +29,7 @@ void sub_08061D00(u32 a, u32 b)
     packed |= 0x80 << 3;
 
     slot = &gData_03000798;
-    src = sub_0806BB38((struct Unk6BB38 *)(*slot)->unk88, lo);
+    src = TextLayerTileAddr((struct Unk6BB38 *)(*slot)->unk88, lo);
 
     obj = *slot;
     bankA = obj->screenBlock;

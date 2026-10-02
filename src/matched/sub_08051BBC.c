@@ -23,6 +23,6 @@ void BlendFadeInLoop(void)
         REG_BLDALPHA = (cur->unk17F2 << 8) | cur->unk17F0;
         VBlankIntrWait();
         ((void (*)(void))gData_080BB888[0])();
-        sub_0806A6F8();
+        InputUpdate();
     } while ((*loc)->unk17F0 != 0);
 }

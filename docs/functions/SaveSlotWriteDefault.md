@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08044F64` |
-| Size | 74 bytes (32 instructions) |
+| Size | 0 bytes (32 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08044F64` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | scan three consecutive table entries |
 
 ## Why this name
 

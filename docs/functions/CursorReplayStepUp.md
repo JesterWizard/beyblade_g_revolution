@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080426A4` |
-| Size | 116 bytes (47 instructions) |
+| Size | 0 bytes (47 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_080426A4` |
 | Confidence | 0.45 |
 | Provenance | ai |
-| Note | Clears the battle mode flag, configures the alternate ring command, refreshes ring-derived work values, and initializes the +0x448 descriptor when needed. |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 
 ## Callers
 

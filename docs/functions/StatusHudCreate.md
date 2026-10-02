@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802D6D4` |
-| Size | 452 bytes (181 instructions) |
+| Size | 0 bytes (181 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802D6D4` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | tail Unk026C local keeps pointer across unk00/unk4C/unk04/unk48 stores |
 
 ## Why this name
 

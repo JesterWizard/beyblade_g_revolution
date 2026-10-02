@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08034894` |
-| Size | 84 bytes (32 instructions) |
+| Size | 0 bytes (32 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08034894` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | shadow scroll copy/clear |
 
 ## Why this name
 

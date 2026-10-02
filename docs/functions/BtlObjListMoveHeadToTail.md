@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806FEFC` |
-| Size | 44 bytes (18 instructions) |
+| Size | 0 bytes (18 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_0806FEFC` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | battle-object list pop-head/push-tail |
 
 ## Why this name
 

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08073218` |
-| Size | 66 bytes (33 instructions) |
+| Size | 0 bytes (33 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08073218` |
 | Confidence | 0.85 |
 | Provenance | ai |
-| Note | bounded string copy with tail-zero pad on overflow, returns copied length |
 
 ## Why this name
 

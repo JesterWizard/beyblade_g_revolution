@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08073568` |
-| Size | 70 bytes (31 instructions) |
+| Size | 0 bytes (31 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08073568` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | batch-allocate count buffers via sub_0807309C, log on OOM |
 
 ## Why this name
 

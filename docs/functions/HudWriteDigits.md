@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0802E18C` |
-| Size | 38 bytes (17 instructions) |
+| Size | 0 bytes (17 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

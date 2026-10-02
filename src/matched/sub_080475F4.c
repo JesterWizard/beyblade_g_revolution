@@ -5,7 +5,7 @@
 
 void SparklesRestoreTimers(void)
 {
-    struct Unk473F8 *dst;
+    struct SparklePool *dst;
 
     dst = gUnk_03000630;
     if (dst != 0)

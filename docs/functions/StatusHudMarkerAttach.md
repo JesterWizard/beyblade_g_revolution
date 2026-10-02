@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0805E044` |
-| Size | 228 bytes (89 instructions) |
+| Size | 0 bytes (89 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
@@ -30,7 +30,7 @@
 
 - [`StatusHudMarkerMove`](StatusHudMarkerMove.md)
 - [`StatusHudMarkerSetFrame`](StatusHudMarkerSetFrame.md)
-- `sub_08041DB4`
+- [`ActorFindByIdSide`](ActorFindByIdSide.md)
 
 ## ROM data referenced
 

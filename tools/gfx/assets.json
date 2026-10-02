@@ -1,0 +1,19 @@
+{
+  "assets": [
+    {"name": "licensed_by_nintendo", "category": "splash", "type": "bg", "rom": "0x237A34", "palette": "after"},
+    {"name": "copyright",            "category": "splash", "type": "bg", "rom": "0x238228", "palette": "after"},
+    {"name": "nelvana",              "category": "splash", "type": "bg", "rom": "0x23BF5C", "palette": "after"},
+    {"name": "d_rights",             "category": "splash", "type": "bg", "rom": "0x23DC38", "palette": "after"},
+    {"name": "atari",                "category": "splash", "type": "bg", "rom": "0x23EF44", "palette": "after"},
+    {"name": "fullfat",              "category": "splash", "type": "bg", "rom": "0x23F82C", "palette": "after"},
+
+    {"name": "title_background",     "category": "title",  "type": "bg", "rom": "0x2B430C", "palette": "after"},
+    {"name": "title_logo",           "category": "title",  "type": "bg", "rom": "0x2B5870", "palette": "after"},
+    {"name": "wave_background",      "category": "title",  "type": "bg", "rom": "0x2D8558", "palette": "after"},
+
+    {"name": "room_20f788",          "category": "rooms",  "type": "bg", "rom": "0x20F788", "palette": "after"},
+    {"name": "room_21153c",          "category": "rooms",  "type": "bg", "rom": "0x21153C", "palette": "after"},
+    {"name": "room_212b9c",          "category": "rooms",  "type": "bg", "rom": "0x212B9C", "palette": "after"},
+    {"name": "room_216210",          "category": "rooms",  "type": "bg", "rom": "0x216210", "palette": "after"}
+  ]
+}

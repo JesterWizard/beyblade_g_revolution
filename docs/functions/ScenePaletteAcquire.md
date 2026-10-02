@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08062AF8` |
-| Size | 162 bytes (69 instructions) |
+| Size | 0 bytes (69 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062AF8` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | old_agbcc; init order i/loc/one/dst |
 
 ## Why this name
 

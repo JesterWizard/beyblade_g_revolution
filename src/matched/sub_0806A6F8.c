@@ -10,7 +10,7 @@
  * Battle input hub: play back / record a u16 key queue (gData_03003F64 == 2 / 1)
  * or poll REG_KEYINPUT, then refresh the ten Unk6A954 hold slots and the
  * new / previous / released key masks. */
-void sub_0806A6F8(void)
+void InputUpdate(void)
 {
     u16 queueCount;
     u16 keys;

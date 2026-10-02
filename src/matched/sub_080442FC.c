@@ -51,7 +51,7 @@ void sub_080442FC(struct Unk442FC *a, struct Unk442FCInput *b, u32 c, u32 d)
     arg2 <<= 5;
     index <<= 16;
     byte = (*indexp) >> 16;
-    sub_08043C70((struct Actor *)obj, (void *)scaled, arg2, byte, arg4);
+    MapLoad((struct Actor *)obj, (void *)scaled, arg2, byte, arg4);
     if (flag != 0)
         sub_0806C78C((void *)sub_08062A14(), obj, (s32)(*indexp) >> 16);
 }

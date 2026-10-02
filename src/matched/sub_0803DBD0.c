@@ -5,7 +5,7 @@
 // @ 0x0803dbd0
 /* match-flags: -fprologue-bugfix */
 
-u32 sub_0803DBD0(u32 a)
+u32 BeybladeNameGet(u32 a)
 {
     u8 *table;
     u32 offset;

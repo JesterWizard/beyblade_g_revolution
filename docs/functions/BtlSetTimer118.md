@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080314FC` |
-| Size | 20 bytes (8 instructions) |
+| Size | 0 bytes (8 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_080314FC` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | battle/work-init-field-118 |
 
 ## Why this name
 

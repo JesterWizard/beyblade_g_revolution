@@ -177,7 +177,8 @@ pret/pokeemerald-style matching tree:
 | `include/` | Headers (`gba/`, `ram_map.h`, types) |
 | `data/` | Extracted data (`data/event_scripts/` reserved) |
 | `docs/` | Decomp notes, RAM map, progress tables |
-| `graphics/`, `sound/`, `constants/` | Extracted assets / asm constants (reserved) |
+| `graphics/` | PNGs extracted from `baserom.gba` on the first `make` (git-ignored; `make graphics` to redo). Manifest: `tools/gfx/assets.json` |
+| `sound/`, `constants/` | Extracted assets / asm constants (reserved) |
 | `tools/` | pret tools + `tools/decomp/` matching pipeline |
 | `libagbsyscall/` | BIOS syscall helpers |
 | `ld_script.ld`, `sym_*.txt`, `rom.sha1` | Linker map, RAM symbols, compare checksum |

@@ -25,17 +25,17 @@ void SparklesUpdate(void)
             gData_03000630->unk44 = 0xE1 << 5;
             for (i = 0; i <= 0x0F; i++)
             {
-                gData_03000630->unk00[i]->unk08 = -0x4000;
-                gData_03000630->unk00[i]->unk0C = -0x4000;
+                gData_03000630->slots[i]->x = -0x4000;
+                gData_03000630->slots[i]->y = -0x4000;
             }
         }
         else
         {
             for (i = 0; i <= 0x0F; i++)
             {
-                gData_03000630->unk00[i]->unk08 = RandRange(0xE8) << 8;
-                gData_03000630->unk00[i]->unk0C = RandRange(0x98) << 8;
-                gData_03000630->unk00[i]->unk18 = RandRange(4);
+                gData_03000630->slots[i]->x = RandRange(0xE8) << 8;
+                gData_03000630->slots[i]->y = RandRange(0x98) << 8;
+                gData_03000630->slots[i]->unk18 = RandRange(4);
             }
         }
     }

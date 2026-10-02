@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806E7BC` |
-| Size | 152 bytes (76 instructions) |
+| Size | 0 bytes (76 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806E7BC` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | segment orientation; result holds second cross so dest is r0 |
 
 ## Why this name
 

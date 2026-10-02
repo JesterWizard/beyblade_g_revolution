@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08070930` |
-| Size | 420 bytes (196 instructions) |
+| Size | 0 bytes (196 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08070930` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | append string glyphs to text sprite group |
 
 ## Why this name
 

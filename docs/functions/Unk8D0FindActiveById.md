@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803E258` |
-| Size | 82 bytes (35 instructions) |
+| Size | 0 bytes (35 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803E258` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | 0x53-slot record search by key+flag |
 
 ## Why this name
 

@@ -166,62 +166,62 @@ struct Unk6FBF8Span /* 0x08 */
 };
 
 /* State initialized by sub_08067BB8. */
-struct Unk67BB8 /* >= 0xc4 */
+struct AnimObj /* >= 0xc4 */
 {
-    /* 00 */ void *unk00;
-    /* 04 */ s32 unk04;
-    /* 08 */ s32 unk08;
-    /* 0c */ s32 unk0C;
+    /* 00 */ void *data;
+    /* 04 */ s32 x;
+    /* 08 */ s32 y;
+    /* 0c */ s32 z;
     /* 10 */ u8 unk10;
     /* 11 */ u8 unk11;
     /* 12 */ u16 unk12;
     /* 14 */ u16 unk14;
     /* 16 */ u16 unk16;
     /* 18 */ u16 unk18;
-    /* 1a */ u16 unk1A;
-    /* 1c */ u16 unk1C;
-    /* 1e */ u16 unk1E;
-    /* 20 */ u16 unk20;
-    /* 22 */ u16 unk22;
+    /* 1a */ u16 seqKey;
+    /* 1c */ u16 seqOffset;
+    /* 1e */ u16 seqStep;
+    /* 20 */ u16 recIndex;
+    /* 22 */ u16 frame;
     /* 24 */ u8 filler_24[4];
     /* 28 */ u16 unk28;
     /* 2a */ u16 unk2A;
     /* 2c */ u16 unk2C;
-    /* 2e */ u16 unk2E;
+    /* 2e */ u16 seqNextKey;
     /* 30 */ u8 unk30;
-    /* 31 */ u8 unk31;
+    /* 31 */ u8 flip;
     /* 32 */ u8 filler_32[6];
     /* 38 */ u8 unk38;
     /* 39 */ u8 unk39;
     /* 3a */ u8 unk3A;
     /* 3b */ u8 unk3B;
     /* 3c */ u32 unk3C;
-    /* 40 */ u32 unk40;
-    /* 44 */ u32 unk44;
-    /* 48 */ u32 unk48;
-    /* 4c */ u32 unk4C;
-    /* 50 */ u32 unk50;
-    /* 54 */ u32 unk54;
-    /* 58 */ u32 unk58;
+    /* 40 */ u32 velX;
+    /* 44 */ u32 velY;
+    /* 48 */ u32 velZ;
+    /* 4c */ u32 accelX;
+    /* 50 */ u32 accelY;
+    /* 54 */ u32 accelZ;
+    /* 58 */ u32 lastAdvanceTick;
     /* 5c */ u8 filler_5C[4];
-    /* 60 */ u16 unk60;
+    /* 60 */ u16 prevFrame;
     /* 62 */ u8 filler_62[2];
     /* 64 */ u32 unk64;
-    /* 68 */ u32 unk68;
-    /* 6c */ u32 unk6C;
-    /* 70 */ u32 unk70;
+    /* 68 */ u32 damping;
+    /* 6c */ u32 animHold;
+    /* 70 */ u32 countdown;
     /* 74 */ s32 unk74;
     /* 78 */ u32 unk78;
     /* 7c */ u32 unk7C;
-    /* 80 */ u32 unk80;
-    /* 84 */ s32 unk84;
+    /* 80 */ u32 path;
+    /* 84 */ s32 pathStep;
     /* 88 */ u32 unk88;
     /* 8c */ u8 unk8C;
     /* 8d */ u8 unk8D;
     /* 8e */ u8 filler_8E[2];
     /* 90 */ u32 unk90;
     /* 94 */ u32 unk94;
-    /* 98 */ u8 unk98;
+    /* 98 */ u8 flags;
     /* 99 */ u8 filler_99[7];
     /* a0 */ u16 unkA0;
     /* a2 */ u16 unkA2;
@@ -237,7 +237,7 @@ struct Unk67BB8 /* >= 0xc4 */
     /* b8 */ u32 unkB8;
     /* bc */ u16 unkBC;
     /* be */ u8 filler_BE[2];
-    /* c0 */ u32 unkC0;
+    /* c0 */ u32 onFinish;
 };
 
 /* Source record copied into the sub_08067BB8 state. */
@@ -330,7 +330,7 @@ struct Unk62068 /* >= 0x20 */
     /* 1e */ s16 unk1E;
 };
 
-/* Entry referenced by Unk62044.unk0C[i]. sub_080620D4. */
+/* Entry referenced by GlyphText.unk0C[i]. sub_080620D4. */
 struct Unk620D4Entry /* >= 0x10 */
 {
     /* 00 */ u8 filler_00[8];
@@ -338,20 +338,20 @@ struct Unk620D4Entry /* >= 0x10 */
     /* 0c */ s32 unk0C;
 };
 
-struct Unk62044 /* 0x28 (padded from >= 0x26) */
+struct GlyphText /* 0x28 (padded from >= 0x26) */
 {
-    /* 00 */ void *unk00;
-    /* 04 */ const u8 *unk04; /* glyph width table */
-    /* 08 */ struct Unk6FF58Src *unk08; /* glyph sprite */
-    /* 0c */ struct Unk620D4Entry **unk0C;
+    /* 00 */ void *heapBlock;
+    /* 04 */ const u8 *widthTable; /* glyph width table */
+    /* 08 */ struct Unk6FF58Src *glyphSprite; /* glyph sprite */
+    /* 0c */ struct Unk620D4Entry **sprites;
     /* 10 */ s32 unk10;
     /* 14 */ s32 unk14;
-    /* 18 */ s32 unk18; /* last line width */
+    /* 18 */ s32 lastLineWidth; /* last line width */
     /* 1c */ u16 unk1C;
     /* 1e */ s16 unk1E;
-    /* 20 */ u16 unk20; /* glyph size */
-    /* 22 */ u16 unk22; /* line height */
-    /* 24 */ u16 unk24; /* sprites in use */
+    /* 20 */ u16 glyphSize; /* glyph size */
+    /* 22 */ u16 lineHeight; /* line height */
+    /* 24 */ u16 spritesInUse; /* sprites in use */
 };
 
 /* *gUnk_030008D0. 16-slot pointer pool + used-bitmask. sub_08062A74, sub_08062AF8, sub_08062B9C. */
@@ -457,8 +457,8 @@ struct Unk002A0 /* >= 0xb0 */
 struct Unk013CFields /* 0x60 */
 {
     /* 00 */ s32 values[4];
-    /* 10 */ struct Unk62044 unk14C;
-    /* 38 */ struct Unk62044 unk174;
+    /* 10 */ struct GlyphText unk14C;
+    /* 38 */ struct GlyphText unk174;
 };
 
 union Unk013C /* 0x60 */
@@ -482,67 +482,45 @@ struct Unk62358Anim /* 0x04 */
     /* 02 */ s16 unk02;
 };
 
-struct Unk62634 /* >= 0x64 */
+struct SceneObjSprite /* >= 0x64 */
 {
-    /* 00 */ struct Unk62358Anim *unk00; /* frame list, ends at unk02 == -1 */
-    /* 04 */ struct Unk6225CSource *unk04;
-    /* 08 */ struct Sprite *unk08;
+    /* 00 */ struct Unk62358Anim *frames; /* frame list, ends at unk02 == -1 */
+    /* 04 */ struct MotionAnchor *anchor;
+    /* 08 */ struct Sprite *sprite;
     /* 0c */ s32 unk0C;
     /* 10 */ s32 unk10;
     /* 14 */ struct Unk6FF58Src *unk14;
     /* 18 */ u32 unk18;
     /* 1c */ s32 unk1C;
     /* 20 */ s32 unk20;
-    /* 24 */ s32 unk24;
-    /* 28 */ s32 unk28;
+    /* 24 */ s32 posX;
+    /* 28 */ s32 posY;
     /* 2c */ u8 filler_2C[4];
-    /* 30 */ s32 unk30;
-    /* 34 */ s32 unk34;
-    /* 38 */ s32 unk38;
-    /* 3c */ s32 unk3C;
-    /* 40 */ s32 unk40;
-    /* 44 */ u32 unk44; /* object tile/pool id, sub_0806211C */
-    /* 48 */ s32 unk48; /* half width, 8.8 */
-    /* 4c */ s32 unk4C; /* half height, 8.8 */
-    /* 50 */ s16 unk50; /* frame index */
-    /* 52 */ u16 unk52; /* 1 loop, 2 play once */
-    /* 54 */ u16 unk54; /* current frame */
-    /* 56 */ s16 unk56; /* frames left */
-    /* 58 */ u16 unk58; /* width */
-    /* 5a */ u16 unk5A; /* height */
+    /* 30 */ s32 velX;
+    /* 34 */ s32 velY;
+    /* 38 */ s32 accelX;
+    /* 3c */ s32 accelY;
+    /* 40 */ s32 drag;
+    /* 44 */ u32 tileId; /* object tile/pool id, sub_0806211C */
+    /* 48 */ s32 halfWidth; /* half width, 8.8 */
+    /* 4c */ s32 halfHeight; /* half height, 8.8 */
+    /* 50 */ s16 frameIndex; /* frame index */
+    /* 52 */ u16 playMode; /* 1 loop, 2 play once */
+    /* 54 */ u16 curFrame; /* current frame */
+    /* 56 */ s16 framesLeft; /* frames left */
+    /* 58 */ u16 width; /* width */
+    /* 5a */ u16 height; /* height */
     /* 5c */ u16 unk5C;
     /* 5e */ u16 unk5E;
-    /* 60 */ u8 unk60;
+    /* 60 */ u8 paletteBank;
     /* 61 */ u8 filler_61[3];
 };
 
-struct Unk6225CSource /* >= 0x14 */
+struct MotionAnchor /* >= 0x14 */
 {
     /* 00 */ u8 filler_00[0x0C];
-    /* 0C */ s32 unk0C;
-    /* 10 */ s32 unk10;
-};
-
-/* Moving object updated by sub_0806225C. */
-struct Unk6225C /* >= 0x61 */
-{
-    /* 00 */ void *unk00;
-    /* 04 */ struct Unk6225CSource *unk04;
-    /* 08 */ struct Sprite *unk08;
-    /* 0C */ u8 filler_0C[0x0C];
-    /* 18 */ u32 unk18;
-    /* 1C */ s32 unk1C;
-    /* 20 */ s32 unk20;
-    /* 24 */ s32 unk24;
-    /* 28 */ s32 unk28;
-    /* 2C */ u8 filler_2C[4];
-    /* 30 */ s32 unk30;
-    /* 34 */ s32 unk34;
-    /* 38 */ s32 unk38;
-    /* 3C */ s32 unk3C;
-    /* 40 */ s32 unk40;
-    /* 44 */ u8 filler_44[0x1C];
-    /* 60 */ u8 unk60;
+    /* 0C */ s32 originX;
+    /* 10 */ s32 originY;
 };
 
 struct Unk62988 /* >= 0x05 */
@@ -670,23 +648,23 @@ struct Unk2E2F8 /* 0x0c */
 };
 
 /* Position record: x at +0x08, y at +0x0C. sub_080593A4. */
-struct Unk593A4Pos /* >= 0x10 */
+struct BarAnchor /* >= 0x10 */
 {
     /* 00 */ u8 filler_00[8];
-    /* 08 */ s32 unk08;
-    /* 0c */ s32 unk0C;
+    /* 08 */ s32 x;
+    /* 0c */ s32 y;
 };
 
 /* Owner of an 8-segment sprite bar at +0x4C. sub_080593A4. */
-struct Unk593A4 /* >= 0xa8 */
+struct SegmentedBar /* >= 0xa8 */
 {
-    /* 00 */ struct Unk593A4Pos *unk00;
+    /* 00 */ struct BarAnchor *endAnchor;
     /* 04 */ u8 filler_04[0x2C];
-    /* 30 */ struct Unk593A4Pos *unk30;
+    /* 30 */ struct BarAnchor *startAnchor;
     /* 34 */ u8 filler_34[0x18];
-    /* 4c */ struct Sprite *unk4C[8];
+    /* 4c */ struct Sprite *segments[8];
     /* 6c */ u8 filler_6C[0x38];
-    /* a4 */ s32 unkA4;
+    /* a4 */ s32 startOffset;
 };
 
 struct BattleWork /* >= 0x208A */
@@ -711,76 +689,76 @@ struct BattleWork /* >= 0x208A */
     /* 0128 */ s32 unk128; /* sub_08037508 */
     /* 012c */ u8 unk12C; /* sub_08037508 */
     /* 012d */ u8 filler_012D[2];
-    /* 012f */ s8 unk12F; /* sub_08038F30 */
-    /* 0130 */ u8 unk130;
-    /* 0131 */ u8 unk131;
+    /* 012f */ s8 activeRecordIdx; /* sub_08038F30 */
+    /* 0130 */ u8 wornOutA;
+    /* 0131 */ u8 wornOutB;
     /* 0132 */ u8 unk132;
     /* 0133 */ u8 unk133; /* sub_08037430 */
     /* 0134 */ u8 filler_0134[8];
     /* 013C */ union Unk013C unk013C;
-    /* 019C */ struct Unk62044 unk19C[4]; /* sub_08038314 */
+    /* 019C */ struct GlyphText unk19C[4]; /* sub_08038314 */
     /* 023C */ struct TextGroup unk023C[4]; /* sub_08038D10 */
-    /* 02FC */ struct Unk62044 unk2FC;
+    /* 02FC */ struct GlyphText unk2FC;
     /* 0324 */ struct Unk38F30Entry *unk324; /* sub_08038F30 */
     /* 0328 */ struct Unk360BC unk328; /* battler A motion; sub_08032DC4 */
     /* 0348 */ u8 filler_0348[0x34];
     /* 037C */ struct Unk360BC unk37C; /* battler B motion; sub_08032DC4 */
     /* 039C */ u8 filler_039C[0xDC];
-    /* 0478 */ u8 unk478[0x630]; /* sub_08030F00 source */
+    /* 0478 */ u8 battlerStates[0x630]; /* sub_08030F00 source */
     /* 0aa8 */ struct Unk30638AA8 unkAA8;
     /* 0ac0 */ u8 filler_0AC0[4];
-    /* 0ac4 */ u32 unkAC4;
+    /* 0ac4 */ u32 randPhase;
     /* 0ac8 */ void *unk0AC8[4];
     /* 0AD8 */ void *unk0AD8[4];
     /* 0AE8 */ union Unk30D4CResource unk0AE8;
-    /* 0B54 */ void *unk0B54[4]; /* sub_08033878 */
-    /* 0B64 */ s32 unk0B64;
-    /* 0B68 */ s32 unk0B68;
-    /* 0B6C */ u8 unk0B6C;
+    /* 0B54 */ void *popupDigits[4]; /* sub_08033878 */
+    /* 0B64 */ s32 popupShown;
+    /* 0B68 */ s32 popupTarget;
+    /* 0B6C */ u8 popupActive;
     /* 0B6D */ u8 filler_0B6D[3];
-    /* 0B70 */ s32 unk0B70;
-    /* 0B74 */ s32 unk0B74;
-    /* 0B78 */ s32 unk0B78;
-    /* 0B7C */ s32 unk0B7C;
-    /* 0B80 */ u8 unk0B80;
+    /* 0B70 */ s32 popupTargetY;
+    /* 0B74 */ s32 popupY;
+    /* 0B78 */ s32 popupTimer;
+    /* 0B7C */ s32 popupX;
+    /* 0B80 */ u8 popupSide;
     /* 0B81 */ u8 filler_0B81[3];
-    /* 0B84 */ u8 unkB84[0x10];
-    /* 0B94 */ u8 unkB94[0x10];
+    /* 0B84 */ u8 rowHighlightA[0x10];
+    /* 0B94 */ u8 rowHighlightB[0x10];
     /* 0BA4 */ struct Sprite *unkBA4;
     /* 0BA8 */ struct Sprite *unkBA8;
-    /* 0BAC */ s32 unkBAC;
-    /* 0BB0 */ s32 unkBB0;
+    /* 0BAC */ s32 hudLeadTargetY;
+    /* 0BB0 */ s32 hudY;
     /* 0BB4 */ s32 unkBB4;
     /* 0BB8 */ s32 unkBB8;
     /* 0BBC */ u8 filler_0BBC[0x10];
-    /* 0BCC */ struct Unk62634 unk0BCC[48]; /* sub_0803D4C4 */
+    /* 0BCC */ struct SceneObjSprite unk0BCC[48]; /* sub_0803D4C4 */
     /* 1E8C */ u8 filler_1E8C[0x80];
     /* 1F0C */ void *unk1F0C;
-    /* 1F10 */ struct Unk62044 unk1F10;
-    /* 1F38 */ struct Unk62044 unk1F38;
+    /* 1F10 */ struct GlyphText powerMeterText;
+    /* 1F38 */ struct GlyphText boostMeterText;
     /* 1F60 */ u8 filler_1F60[0x12];
-    /* 1F72 */ s8 unk1F72; /* sub_0803C5DC */
+    /* 1F72 */ s8 boostShown; /* sub_0803C5DC */
     /* 1F73 */ u8 unk1F73; /* sub_0803D51C */
-    /* 1F74 */ s16 unk1F74; /* sub_0803C500 */
-    /* 1F76 */ s16 unk1F76; /* sub_0803C5DC */
+    /* 1F74 */ s16 powerRemaining; /* sub_0803C500 */
+    /* 1F76 */ s16 boostValue; /* sub_0803C5DC */
     /* 1F78 */ u8 filler_1F78[4];
     /* 1F7C */ u8 unk1F7C;
     /* 1F7D */ u8 filler_1F7D[0x13];
-    /* 1F90 */ s32 unk1F90; /* sub_080330F4 */
-    /* 1F94 */ s32 unk1F94; /* sub_080330F4 */
-    /* 1F98 */ u8 unk1F98; /* sub_080330F4 */
+    /* 1F90 */ s32 fadeStep; /* sub_080330F4 */
+    /* 1F94 */ s32 fadeLevel; /* sub_080330F4 */
+    /* 1F98 */ u8 fadeActive; /* sub_080330F4 */
     /* 1F99 */ u8 filler_1F99[3];
     /* 1F9C */ s32 unk1F9C; /* sub_08037508 */
     /* 1FA0 */ s32 unk1FA0; /* sub_08037508 */
     /* 1FA4 */ u8 filler_1FA4[8];
-    /* 1FAC */ u8 unk1FAC;
+    /* 1FAC */ u8 effectObj;
     /* 1FAD */ u8 filler_1FAD[0x39];
     /* 1FE6 */ u8 unk1FE6;
     /* 1FE7 */ u8 filler_1FE7[0x35];
-    /* 201C */ u32 unk201C;
+    /* 201C */ u32 effectFramesLeft;
     /* 2020 */ u8 filler_2020[0x68];
-    /* 2088 */ u8 unk2088;
-    /* 2089 */ u8 unk2089;
+    /* 2088 */ u8 effectActive;
+    /* 2089 */ u8 effectMode;
     /* 208a */ u8 filler_208A[2];
     /* 208c */ s32 unk208C[2]; /* per-side countdown, sub_08031C98 */
     /* 2094 */ void *unk2094;
@@ -869,10 +847,10 @@ struct Unk40088Target /* >= 0x1a */
 };
 
 /* Two-word ROM lookup entries used by sub_08040EF4. */
-struct Unk40EF4 /* 0x08 */
+struct KeyedLangEntry /* 0x08 */
 {
-    /* 00 */ u32 unk00;
-    /* 04 */ void *unk04;
+    /* 00 */ u32 key;
+    /* 04 */ void *texts;
 };
 
 /* Object anchor at MainWork +0x448. */
@@ -882,10 +860,10 @@ struct Unk42718 /* >= 0x04 */
 };
 
 /* Two-word descending range entries at 0x080908BC. */
-struct Unk42BE8 /* 0x08 */
+struct ExpBracketEntry /* 0x08 */
 {
-    /* 00 */ s32 unk00;
-    /* 04 */ s32 unk04;
+    /* 00 */ s32 level;
+    /* 04 */ s32 minPoints;
 };
 
 struct Unk442FC /* >= 0x88 */
@@ -948,15 +926,15 @@ struct Unk45A84 /* >= 0x0c */
 };
 
 /* Current menu entry selected by sub_0804AAF0. */
-struct Unk4AAF0 /* >= 0x28 */
+struct BeybladeBuildDetail /* >= 0x28 */
 {
     /* 00 */ u8 filler_00[0x1C];
     /* 1C */ s8 unk1C;
-    /* 1D */ s8 unk1D;
-    /* 1E */ s8 unk1E;
-    /* 1F */ u8 unk1F;
-    /* 20 */ u8 unk20;
-    /* 21 */ s8 unk21;
+    /* 1D */ s8 attackRing;
+    /* 1E */ s8 weightDisk;
+    /* 1F */ u8 coreFlags;
+    /* 20 */ u8 bladeBase;
+    /* 21 */ s8 beybladeId;
     /* 22 */ u8 filler_22[4];
     /* 26 */ s16 unk26;
 };
@@ -970,12 +948,12 @@ struct Unk995AC /* 0x10 */
 };
 
 /* Event descriptor dispatched by sub_08056D68. */
-struct Unk56D68 /* >= 0x10 */
+struct ScriptEvent /* >= 0x10 */
 {
     /* 00 */ u8 filler_00[4];
-    /* 04 */ u16 unk04;
+    /* 04 */ u16 key;
     /* 06 */ u8 filler_06[2];
-    /* 08 */ u32 unk08;
+    /* 08 */ u32 args;
     /* 0C */ u32 unk0C;
 };
 
@@ -1425,7 +1403,7 @@ struct Unk33F30 /* >= 0x68 */
     /* 31 */ u8 unk31;
     /* 32 */ u8 unk32;
     /* 33 */ u8 unk33;
-    /* 34 */ struct Unk62044 unk34;
+    /* 34 */ struct GlyphText unk34;
     /* 5c */ u32 unk5C;
     /* 60 */ u32 unk60;
     /* 64 */ u32 unk64;
@@ -1507,15 +1485,15 @@ struct Unk40680Text
 };
 
 /* Menu/dialog work passed to sub_08040680. */
-struct Unk40680 /* >= 0x304 */
+struct MessageBox /* >= 0x304 */
 {
     /* 000 */ u8 filler_000[0x220];
     /* 220 */ struct Unk40680Text *unk220;
     /* 224 */ u8 filler_224[0x50];
     /* 274 */ struct Sprite *unk274;
     /* 278 */ u8 filler_278[0x84];
-    /* 2fc */ s32 unk2FC;
-    /* 300 */ u32 unk300;
+    /* 2fc */ s32 lineCount;
+    /* 300 */ u32 curLine;
 };
 
 /* Stride-4 u16 table. sub_0802B8BC. */
@@ -1567,62 +1545,62 @@ struct Unk61E8C /* >= 0x24 */
     /* 22 */ u16 unk22;
 };
 
-struct Unk68014Rec /* 0x08 */
+struct AnimRecord /* 0x08 */
 {
-    /* 00 */ u16 unk00;
-    /* 02 */ u16 unk02;
-    /* 04 */ u16 unk04;
-    /* 06 */ u8 unk06;
-    /* 07 */ u8 unk07;
+    /* 00 */ u16 start;
+    /* 02 */ u16 length;
+    /* 04 */ u16 delay;
+    /* 06 */ u8 maxLoops;
+    /* 07 */ u8 playFlags;
 };
 
-struct Unk68014 /* >= 0x28 */
+struct AnimData /* >= 0x28 */
 {
     /* 00 */ u32 unk00; /* sub_08068180 */
     /* 04 */ u8 filler_04[3];
     /* 07 */ u8 unk07; /* sub_08068180 */
-    /* 08 */ u32 unk08;
+    /* 08 */ u32 recordCount;
     /* 0c */ u8 filler_0C[0xC];
-    /* 18 */ u32 unk18;
+    /* 18 */ u32 seqTableOffset;
     /* 1c */ u8 filler_1C[4];
-    /* 20 */ struct Unk68014Rec unk20[1];
+    /* 20 */ struct AnimRecord unk20[1];
 };
 
 /* Walk key table at inner+unk18. sub_080680CC. */
-struct Unk680CCRec /* >= 0x0a */
+struct AnimSeqEntry /* >= 0x0a */
 {
-    /* 00 */ u16 unk00;
-    /* 02 */ u16 unk02;
-    /* 04 */ u16 unk04; /* element count. sub_08067FC8 */
+    /* 00 */ u16 key;
+    /* 02 */ u16 size;
+    /* 04 */ u16 stepCount; /* element count. sub_08067FC8 */
     /* 06 */ u16 unk06;
-    /* 08 */ u16 unk08; /* first of unk04 halfwords. sub_08067FC8 */
+    /* 08 */ u16 firstRecord; /* first of unk04 halfwords. sub_08067FC8 */
 };
 
-struct Unk680CC /* >= 0x30 */
+struct AnimObjSeqSelect /* >= 0x30 */
 {
-    /* 00 */ struct Unk68014 *unk00;
+    /* 00 */ struct AnimData *data;
     /* 04 */ u8 filler_04[0x16];
-    /* 1a */ u16 unk1A;
-    /* 1c */ u16 unk1C;
-    /* 1e */ u16 unk1E;
+    /* 1a */ u16 seqKey;
+    /* 1c */ u16 seqOffset;
+    /* 1e */ u16 seqStep;
     /* 20 */ u8 filler_20[8];
-    /* 28 */ u16 unk28;
+    /* 28 */ u16 seqCount;
     /* 2a */ u8 filler_2A[4];
-    /* 2e */ u16 unk2E;
+    /* 2e */ u16 seqNextKey;
 };
 
 /* Animation update state and its indexed callback table. sub_08068118. */
-struct Unk68118 /* >= 0xc4 */
+struct AnimObjSeqStep /* >= 0xc4 */
 {
-    /* 00 */ struct Unk68014 *unk00;
+    /* 00 */ struct AnimData *data;
     /* 04 */ u8 filler_04[0x16];
-    /* 1a */ s16 unk1A;
-    /* 1c */ u16 unk1C;
-    /* 1e */ u16 unk1E;
+    /* 1a */ s16 seqKey;
+    /* 1c */ u16 seqOffset;
+    /* 1e */ u16 seqStep;
     /* 20 */ u8 filler_20[0x0E];
-    /* 2e */ u16 unk2E;
+    /* 2e */ u16 seqNextKey;
     /* 30 */ u8 filler_30[0x90];
-    /* c0 */ void *unkC0;
+    /* c0 */ void *onFinish;
 };
 
 struct Unk68118Table /* >= 0x0a */
@@ -1648,48 +1626,48 @@ struct Unk68598Lookup /* >= 0x04 */
 };
 
 /* Playback state updated by sub_08068598. */
-struct Unk68598 /* >= 0xc4 */
+struct AnimObjPlayback /* >= 0xc4 */
 {
-    /* 00 */ struct Unk68014 *unk00;
-    /* 04 */ s32 unk04; /* position x, 8.8 */
-    /* 08 */ s32 unk08; /* position y */
-    /* 0c */ s32 unk0C; /* position z */
+    /* 00 */ struct AnimData *data;
+    /* 04 */ s32 x; /* position x, 8.8 */
+    /* 08 */ s32 y; /* position y */
+    /* 0c */ s32 z; /* position z */
     /* 10 */ u8 filler_10[0x10];
-    /* 20 */ u16 unk20;
-    /* 22 */ s16 unk22;
-    /* 24 */ u8 unk24;
+    /* 20 */ u16 recIndex;
+    /* 22 */ s16 frame;
+    /* 24 */ u8 loopCount;
     /* 25 */ u8 filler_25;
-    /* 26 */ u16 unk26;
+    /* 26 */ u16 recLength;
     /* 28 */ u8 filler_28[9];
-    /* 31 */ u8 unk31;
-    /* 32 */ u8 unk32;
-    /* 33 */ u8 unk33;
-    /* 34 */ u16 unk34;
-    /* 36 */ s16 unk36;
+    /* 31 */ u8 flip;
+    /* 32 */ u8 maxLoops;
+    /* 33 */ u8 playFlags;
+    /* 34 */ u16 frameDelay;
+    /* 36 */ s16 delayBonus;
     /* 38 */ u8 filler_38[8];
-    /* 40 */ s32 unk40; /* velocity x. sub_08068418 */
-    /* 44 */ s32 unk44;
-    /* 48 */ s32 unk48;
-    /* 4c */ s32 unk4C; /* acceleration x */
-    /* 50 */ s32 unk50;
-    /* 54 */ s32 unk54;
-    /* 58 */ u32 unk58;
+    /* 40 */ s32 velX; /* velocity x. sub_08068418 */
+    /* 44 */ s32 velY;
+    /* 48 */ s32 velZ;
+    /* 4c */ s32 accelX; /* acceleration x */
+    /* 50 */ s32 accelY;
+    /* 54 */ s32 accelZ;
+    /* 58 */ u32 lastAdvanceTick;
     /* 5c */ u8 filler_5C[4];
-    /* 60 */ u16 unk60;
+    /* 60 */ u16 prevFrame;
     /* 62 */ u8 filler_62[6];
-    /* 68 */ s32 unk68; /* velocity damping, x/256 per frame */
-    /* 6c */ s32 unk6C;
-    /* 70 */ s32 unk70; /* countdown in frame-clock ticks */
+    /* 68 */ s32 damping; /* velocity damping, x/256 per frame */
+    /* 6c */ s32 animHold;
+    /* 70 */ s32 countdown; /* countdown in frame-clock ticks */
     /* 74 */ u8 filler_74[0x0C];
-    /* 80 */ void *unk80;
-    /* 84 */ s32 unk84;
+    /* 80 */ void *path;
+    /* 84 */ s32 pathStep;
     /* 88 */ u8 filler_88[0x10];
-    /* 98 */ u8 unk98;
+    /* 98 */ u8 flags;
     /* 99 */ u8 filler_99[0x0B];
     /* a4 */ u8 unkA4;
     /* a5 */ u8 unkA5;
     /* a6 */ u8 filler_A6[0x1A];
-    /* c0 */ void *unkC0;
+    /* c0 */ void *onFinish;
 };
 
 struct Unk68798Entry /* 0x10 */
@@ -2386,27 +2364,27 @@ struct Unk346C0Inner /* >= 0x54 */
 };
 
 /* Position, velocity, and angle state. sub_08035984. */
-struct Unk35984 /* >= 0x54 */
+struct BeybladeBody /* >= 0x54 */
 {
     /* 00 */ u8 filler_00[0x0C];
-    /* 0c */ s32 unk0C;
-    /* 10 */ s32 unk10;
-    /* 14 */ s32 unk14;
-    /* 18 */ s32 unk18;
-    /* 1c */ s32 unk1C;
-    /* 20 */ s32 unk20;
-    /* 24 */ s32 unk24;
-    /* 28 */ s32 unk28;
-    /* 2c */ s32 unk2C;
-    /* 30 */ s32 unk30;
+    /* 0c */ s32 posX;
+    /* 10 */ s32 posY;
+    /* 14 */ s32 posZ;
+    /* 18 */ s32 velX;
+    /* 1c */ s32 velY;
+    /* 20 */ s32 velZ;
+    /* 24 */ s32 accelX;
+    /* 28 */ s32 accelY;
+    /* 2c */ s32 accelZ;
+    /* 30 */ s32 drag;
     /* 34 */ u8 filler_34[8];
-    /* 3c */ s32 unk3C;
-    /* 40 */ s32 unk40;
-    /* 44 */ s32 unk44;
-    /* 48 */ s32 unk48;
-    /* 4c */ s32 unk4C;
+    /* 3c */ s32 wobbleX;
+    /* 40 */ s32 wobbleY;
+    /* 44 */ s32 wobblePhase;
+    /* 48 */ s32 wobbleSpeed;
+    /* 4c */ s32 wobbleAmp;
     /* 50 */ u8 filler_50[2];
-    /* 52 */ s16 unk52;
+    /* 52 */ s16 heading;
 };
 
 struct Unk346C0 /* >= 0x2f8 */
@@ -2507,19 +2485,19 @@ struct Unk47594 /* >= 0x10 */
     /* 0c */ u32 unk0C;
 };
 
-struct Unk474ACSlot /* >= 0x1a */
+struct SparkleSlot /* >= 0x1a */
 {
     /* 00 */ u8 filler_00[8];
-    /* 08 */ s32 unk08;
-    /* 0c */ s32 unk0C;
+    /* 08 */ s32 x;
+    /* 0c */ s32 y;
     /* 10 */ u8 filler_10[8];
     /* 18 */ u16 unk18;
 };
 
 /* *gUnk_03000630. 16-slot pool + counters. sub_080473F8, sub_0804745C, sub_080474AC. */
-struct Unk473F8 /* >= 0x48 */
+struct SparklePool /* >= 0x48 */
 {
-    /* 00 */ struct Unk474ACSlot *unk00[16];
+    /* 00 */ struct SparkleSlot *slots[16];
     /* 40 */ s32 unk40;
     /* 44 */ s32 unk44;
 };
@@ -2654,28 +2632,28 @@ struct Unk6BDA8 /* >= 0x118 */
 };
 
 /* Item, 0xDC stride. sub_0806B3E8, sub_0806B064. */
-struct Unk6B3E8Item /* >= 0xdc, stride 0xdc */
+struct AnimTextItem /* >= 0xdc, stride 0xdc */
 {
     /* 00 */ u8 filler_00[0x10];
-    /* 10 */ u8 unk10;
+    /* 10 */ u8 width;
     /* 11 */ u8 filler_11[0x11];
-    /* 22 */ s16 unk22;
+    /* 22 */ s16 frame;
     /* 24 */ u8 filler_24[0x4C];
-    /* 70 */ s32 unk70;
+    /* 70 */ s32 visible;
     /* 74 */ u8 filler_74[0x68];
 };
 
 /* String cursor + item array. sub_0806B3E8, sub_0806B064. */
-struct Unk6B3E8 /* >= 0x2c */
+struct AnimTextRow /* >= 0x2c */
 {
-    /* 00 */ struct Unk6B3E8Item *unk00;
-    /* 04 */ u8 unk04;
+    /* 00 */ struct AnimTextItem *items;
+    /* 04 */ u8 count;
     /* 05 */ u8 filler_05[0xB];
-    /* 10 */ const u8 *unk10;
+    /* 10 */ const u8 *text;
     /* 14 */ u8 filler_14[0x10];
-    /* 24 */ s16 unk24;
+    /* 24 */ s16 scale;
     /* 26 */ u8 filler_26[0x2];
-    /* 28 */ const u8 *unk28;
+    /* 28 */ const u8 *kernTable;
 };
 
 /* Indexed byte-chain walk. sub_0806DEC8. */
@@ -2906,12 +2884,12 @@ struct Unk09B0 /* >= 0x06 */
     /* 08 */ u8 unk08;
 };
 
-/* sub_08067F98 reuses struct Unk680CC / Unk68014 / Unk680CCRec (see sub_080680CC). */
+/* sub_08067F98 reuses struct AnimObjSeqSelect / AnimData / AnimSeqEntry (see sub_080680CC). */
 
 /* Header + flag at +0x98. sub_08067F3C. */
 struct Unk67F3C /* >= 0x99 */
 {
-    /* 00 */ struct Unk68014 *unk00;
+    /* 00 */ struct AnimData *unk00;
     /* 04 */ u8 filler_04[0x94];
     /* 98 */ u8 unk98;
 };
@@ -3194,14 +3172,14 @@ struct Unk59C98Owner /* >= 0xcc */
 };
 
 /* Signed bytes + u8 into ROM tables. sub_0803E328 / 3E374 / 3E3C0. */
-struct Unk3E328 /* 0x28 */
+struct BeybladeBuild /* 0x28 */
 {
     /* 00 */ u8 filler_00[0x1D];
-    /* 1d */ s8 unk1D;
-    /* 1e */ s8 unk1E;
+    /* 1d */ s8 attackRing;
+    /* 1e */ s8 weightDisk;
     /* 1f */ u8 filler_1F;
-    /* 20 */ u8 unk20;
-    /* 21 */ s8 unk21; /* -1 = none. sub_0804FFCC */
+    /* 20 */ u8 bladeBase;
+    /* 21 */ s8 beybladeId; /* -1 = none. sub_0804FFCC */
     /* 22 */ u8 filler_22[2];
     /* 24 */ s8 unk24;
     /* 25 */ u8 filler_25;
@@ -3218,7 +3196,7 @@ struct Unk3E374Row /* 0x04 */
     /* 03 */ u8 unk03;
 };
 
-/* Same signed table indices as Unk3E328, with byte-offset table reads. */
+/* Same signed table indices as BeybladeBuild, with byte-offset table reads. */
 struct Unk3E374 /* >= 0x21 */
 {
     /* 00 */ u8 filler_00[0x1D];
@@ -3342,28 +3320,28 @@ struct Unk726A4 /* >= 0x14 */
 };
 
 /* sub_0803593C */
-struct Unk3593C /* >= 0x50 */
+struct BeybladeBodyInit /* >= 0x50 */
 {
     /* 00 */ s32 unk00;
     /* 04 */ s32 unk04;
     /* 08 */ s32 unk08;
-    /* 0c */ s32 unk0C;
-    /* 10 */ s32 unk10;
-    /* 14 */ s32 unk14;
-    /* 18 */ s32 unk18;
-    /* 1c */ s32 unk1C;
-    /* 20 */ s32 unk20;
-    /* 24 */ s32 unk24;
-    /* 28 */ s32 unk28;
-    /* 2c */ s32 unk2C;
-    /* 30 */ s32 unk30;
+    /* 0c */ s32 posX;
+    /* 10 */ s32 posY;
+    /* 14 */ s32 posZ;
+    /* 18 */ s32 velX;
+    /* 1c */ s32 velY;
+    /* 20 */ s32 velZ;
+    /* 24 */ s32 accelX;
+    /* 28 */ s32 accelY;
+    /* 2c */ s32 accelZ;
+    /* 30 */ s32 drag;
     /* 34 */ s32 unk34;
     /* 38 */ s32 unk38;
-    /* 3c */ s32 unk3C;
-    /* 40 */ s32 unk40;
-    /* 44 */ s32 unk44;
-    /* 48 */ s32 unk48;
-    /* 4c */ s32 unk4C;
+    /* 3c */ s32 wobbleX;
+    /* 40 */ s32 wobbleY;
+    /* 44 */ s32 wobblePhase;
+    /* 48 */ s32 wobbleSpeed;
+    /* 4c */ s32 wobbleAmp;
 };
 
 /* Pointed to by Unk41348.unk248. sub_08041348. */
@@ -3438,26 +3416,26 @@ struct Unk70604 /* >= 0x2d */
 };
 
 /* *gUnk_03000750. sub_080604C8. */
-struct Unk604C8 /* >= 0x18 */
+struct WindowRegs /* >= 0x18 */
 {
-    /* 00 */ u8 unk00;
-    /* 01 */ u8 unk01;
-    /* 02 */ u8 unk02;
-    /* 03 */ u8 unk03;
-    /* 04 */ u8 unk04;
-    /* 05 */ u8 unk05;
-    /* 06 */ u8 unk06;
-    /* 07 */ u8 unk07;
-    /* 08 */ u16 unk08;
-    /* 0a */ u16 unk0A;
-    /* 0c */ u16 unk0C;
-    /* 0e */ u16 unk0E;
-    /* 10 */ u8 unk10;
-    /* 11 */ u8 unk11;
-    /* 12 */ u8 unk12;
-    /* 13 */ u8 unk13;
-    /* 14 */ u16 unk14;
-    /* 16 */ u16 unk16;
+    /* 00 */ u8 win0Left;
+    /* 01 */ u8 win0Top;
+    /* 02 */ u8 win0Right;
+    /* 03 */ u8 win0Bottom;
+    /* 04 */ u8 win1Left;
+    /* 05 */ u8 win1Top;
+    /* 06 */ u8 win1Right;
+    /* 07 */ u8 win1Bottom;
+    /* 08 */ u16 win0H;
+    /* 0a */ u16 win1H;
+    /* 0c */ u16 win0V;
+    /* 0e */ u16 win1V;
+    /* 10 */ u8 win0In;
+    /* 11 */ u8 win1In;
+    /* 12 */ u8 outside;
+    /* 13 */ u8 objWinIn;
+    /* 14 */ u16 winIn;
+    /* 16 */ u16 winOut;
 };
 
 /* Countdown word at +0x2FC, flag word at +0x304. sub_08038314. */
@@ -3513,11 +3491,11 @@ struct Unk0558 /* >= 0x14 */
 };
 
 /* Fixed-point (x.8) coordinate pair. sub_08042390. */
-struct Unk42390 /* >= 0x0c */
+struct MapPoint /* >= 0x0c */
 {
     /* 00 */ u8 filler_00[4];
-    /* 04 */ s32 unk04;
-    /* 08 */ s32 unk08;
+    /* 04 */ s32 y;
+    /* 08 */ s32 x;
 };
 
 /* The beyblade roster: 62 records of 0x1C bytes at ROM 0x08075AB8, addressed by

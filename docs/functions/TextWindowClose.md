@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080611F0` |
-| Size | 44 bytes (15 instructions) |
+| Size | 0 bytes (15 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080611F0` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | semantic C |
 
 ## Why this name
 

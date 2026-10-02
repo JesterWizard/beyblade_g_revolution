@@ -22,10 +22,10 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
   }
   MapRunEntryScript();
   BufferClearWords(&gData_03000198->unk0524);
-  sub_08041980();
+  ActorPoolClear();
   TasksDestroyAll();
   VramSlotsRelease();
-  sub_0802D598();
+  StatusHudMarkerHide();
   sub_0802DEA0();
   sub_08043ADC();
   EventFlagOp(0x18, 4, &tmp);
@@ -47,7 +47,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
     TextWindowClose();
     sub_080632F8();
     VramSlotsInit();
-    sub_08069894();
+    BgScrollReset();
   }
   if (gData_03000198->unk17A8 != (-0x4000))
   {
@@ -68,7 +68,7 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
   sub_080473E4();
   if ((gData_03000198->unk1843 == 1) && (gData_03000198->unk18B4 != none))
   {
-    obj = sub_08041DB4(gData_03000198->unk18B4, 0);
+    obj = ActorFindByIdSide(gData_03000198->unk18B4, 0);
     if (obj != ((void *) 0))
     {
       SceneObjUpdate(obj);
@@ -97,54 +97,54 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
   EventFlagOp(0x18, 4, &tmp);
   if (tmp != 0)
   {
-    sub_080428C4();
+    CursorHistoryReset();
     switch (gData_03000198->unk1828)
     {
       case 0:
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk036C), 5);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk036C), 5);
         gData_03000198->unk039D &= 2;
         gData_03000198->unk1810 = 0x40;
         if (gData_03000198->unk182C != 0)
       {
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk0448), 5);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk0448), 5);
         gData_03000198->unk0479 &= 2;
-        sub_080429CC();
+        CursorHistoryStartLine();
       }
         break;
 
       case 1:
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk036C), 5);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk036C), 5);
         gData_03000198->unk039D |= 1;
         gData_03000198->unk1810 = 0x20;
         if (gData_03000198->unk182C != 0)
       {
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk0448), 5);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk0448), 5);
         gData_03000198->unk0479 |= 1;
-        sub_080429CC();
+        CursorHistoryStartLine();
       }
         break;
 
       case 2:
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk036C), 6);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk036C), 6);
         gData_03000198->unk039D = 0;
         gData_03000198->unk1810 = 0x80;
         if (gData_03000198->unk182C != 0)
       {
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk0448), 6);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk0448), 6);
         gData_03000198->unk0479 = 0;
-        sub_080429CC();
+        CursorHistoryStartLine();
       }
         break;
 
       case 3:
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk036C), 7);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk036C), 7);
         gData_03000198->unk039D = 0;
         gData_03000198->unk1810 = 0x100;
         if (gData_03000198->unk182C != 0)
       {
-        BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk0448), 7);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk0448), 7);
         gData_03000198->unk0479 = 0;
-        sub_080429CC();
+        CursorHistoryStartLine();
       }
         break;
 
@@ -161,25 +161,25 @@ void FieldEnter(s32 a, void *b, s32 c, s32 d, s32 e)
   switch (gData_03000198->unk185F)
   {
     case 10:
-      BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk036C), 6);
+      AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk036C), 6);
       gData_03000198->unk039D = 0;
       gData_03000198->unk1810 = 0x80;
       break;
 
     case 11:
-      BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk036C), 7);
+      AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk036C), 7);
       gData_03000198->unk039D = 0;
       gData_03000198->unk1810 = 0x100;
       break;
 
     case 8:
-      BtlEntitySelectByKeyDefault((struct Unk680CC *) (&(*gData_03000198).unk036C), 5);
+      AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&(*gData_03000198).unk036C), 5);
       gData_03000198->unk039D &= 2;
       gData_03000198->unk1810 = 0x40;
       break;
 
     case 9:
-      BtlEntitySelectByKeyDefault((struct Unk680CC *) (&gData_03000198->unk036C), 5);
+      AnimObjSelectSeqDefault((struct AnimObjSeqSelect *) (&gData_03000198->unk036C), 5);
       gData_03000198->unk039D |= 1;
       gData_03000198->unk1810 = 0x20;
       break;

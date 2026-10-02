@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080674B0` |
-| Size | 4 bytes (2 instructions) |
+| Size | 0 bytes (2 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080674B0` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | BIOS swi 8 |
 
 ## Why this name
 

@@ -2,7 +2,7 @@
 
 // @ 0x0802d598
 
-void sub_0802D598(void)
+void StatusHudMarkerHide(void)
 {
     struct Sprite *q;
 

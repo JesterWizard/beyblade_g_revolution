@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08030D4C` |
-| Size | 436 bytes (181 instructions) |
+| Size | 0 bytes (181 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08030D4C` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | Releases transient BattleWork resources and clears the two 8-entry pointer pools. |
 
 ## Why this name
 

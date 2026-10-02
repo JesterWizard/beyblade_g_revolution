@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x0804FFCC` |
-| Size | 1504 bytes (577 instructions) |
+| Size | 0 bytes (577 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08066FB8` |
-| Size | 300 bytes (120 instructions) |
+| Size | 0 bytes (120 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | menu |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08066FB8` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | 3-line centered text menu; entries via gData_080BB110 symbol |
 
 ## Why this name
 

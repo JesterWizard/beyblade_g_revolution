@@ -2,10 +2,10 @@
 
 // @ 0x0803019c
 
-void sub_08030F38(void);
+void BattleHudSlideStep(void);
 void sub_0803D4C4(void);
 void BeybladeEffectsPlace(void *a);
-void sub_080361A8(void *a);
+void FixedEaseStep(void *a);
 
 struct Unk3019CWork
 {
@@ -30,7 +30,7 @@ struct Unk3019CWork
 
 void BattleStepBeyblades(void)
 {
-    sub_08030F38();
+    BattleHudSlideStep();
     sub_0803D4C4();
     BeybladeSpinStep(
         (struct Unk346C0 *)((struct Unk3019CWork *)gBattleWork)->unk478);
@@ -73,7 +73,7 @@ void BattleStepBeyblades(void)
         (struct Unk36264 *)((struct Unk3019CWork *)gBattleWork)->unkAA8,
         (struct Unk360BC *)((struct Unk3019CWork *)gBattleWork)->unk328,
         (struct Unk360BC *)((struct Unk3019CWork *)gBattleWork)->unk37C, 0x66);
-    sub_080361A8(
+    FixedEaseStep(
         ((struct Unk3019CWork *)gBattleWork)->unkAA8);
 }
 

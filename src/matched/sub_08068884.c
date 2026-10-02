@@ -4,10 +4,10 @@
 
 // @ 0x08068884
 /* match-compiler: old_agbcc */
-void *AnimHalfwordBase(struct Unk68014 *a)
+void *AnimHalfwordBase(struct AnimData *a)
 {
-    u8 *p = (u8 *)a + (a->unk08 * 8 + 0x20);
-    u8 *q = (u8 *)a + a->unk18;
+    u8 *p = (u8 *)a + (a->recordCount * 8 + 0x20);
+    u8 *q = (u8 *)a + a->seqTableOffset;
 
     if (p == q)
         return 0;

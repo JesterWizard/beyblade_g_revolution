@@ -6,7 +6,7 @@
 | | |
 |--|--|
 | ROM | `0x080419B0` |
-| Size | 172 bytes (77 instructions) |
+| Size | 0 bytes (77 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |

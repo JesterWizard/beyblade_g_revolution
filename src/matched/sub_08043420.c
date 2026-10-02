@@ -22,7 +22,7 @@ void MapCursorMoveStep(void)
             gMainWorkPtr->unk039D = 0;
             gMainWorkPtr->unk1810 = 0x80;
             if (gMainWorkPtr->unk0386 != 10)
-                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 10);
+                AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gMainWorkPtr->unk036C, 10);
         }
         else
             sub_08043638();
@@ -35,7 +35,7 @@ void MapCursorMoveStep(void)
             gMainWorkPtr->unk039D = 0;
             gMainWorkPtr->unk1810 = 0x100;
             if (gMainWorkPtr->unk0386 != 11)
-                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 11);
+                AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gMainWorkPtr->unk036C, 11);
         }
         else
             sub_08043638();
@@ -48,7 +48,7 @@ void MapCursorMoveStep(void)
             gMainWorkPtr->unk039D |= 1;
             gMainWorkPtr->unk1810 = 0x20;
             if (gMainWorkPtr->unk0386 != 8)
-                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 8);
+                AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gMainWorkPtr->unk036C, 8);
         }
         else
             sub_08043638();
@@ -61,7 +61,7 @@ void MapCursorMoveStep(void)
             gMainWorkPtr->unk039D &= 2;
             gMainWorkPtr->unk1810 = 0x40;
             if (gMainWorkPtr->unk0386 != 8)
-                BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 8);
+                AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gMainWorkPtr->unk036C, 8);
         }
         else
             sub_08043638();

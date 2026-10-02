@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08062A74` |
-| Size | 76 bytes (31 instructions) |
+| Size | 0 bytes (31 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062A74` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | OBJ PAL slot mark + CpuSet 0x20; old_agbcc (agbcc picks lsls r3 for the nested-assign form) |
 
 ## Why this name
 

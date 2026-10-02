@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08067648` |
-| Size | 352 bytes (163 instructions) |
+| Size | 0 bytes (163 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08067648` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | EEPROM write, -O1; &buffer[w+0x43] then ptr-- |
 
 ## Why this name
 

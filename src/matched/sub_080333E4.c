@@ -7,26 +7,26 @@
 
 void sub_08068584(void *a, s32 b, s32 c);
 
-void sub_080333E4(void *arg, s32 x, s32 y, u8 mode)
+void BtlEffectStart(void *arg, s32 x, s32 y, u8 mode)
 {
     u16 id;
 
     if (mode > 4)
         return;
-    if (gBattleWork->unk2088 == 1 && (s8)gBattleWork->unk2089 != mode)
-        sub_08033574();
-    if (gBattleWork->unk2088 == 0)
+    if (gBattleWork->effectActive == 1 && (s8)gBattleWork->effectMode != mode)
+        BtlEffectStop();
+    if (gBattleWork->effectActive == 0)
     {
         id = PaletteSlotAcquire(gData_08078108[mode]);
-        AnimObjCreate((struct Unk67BB8 *)&gBattleWork->unk1FAC, gData_08078108[mode], 0, (s32)arg, x, y, -1);
-        sub_08068584(&gBattleWork->unk1FAC, 0x20, 0x20);
-        gBattleWork->unk201C = AnimDurationForKey(&gBattleWork->unk1FAC, 0);
+        AnimObjCreate((struct AnimObj *)&gBattleWork->effectObj, gData_08078108[mode], 0, (s32)arg, x, y, -1);
+        sub_08068584(&gBattleWork->effectObj, 0x20, 0x20);
+        gBattleWork->effectFramesLeft = AnimDurationForKey(&gBattleWork->effectObj, 0);
         gBattleWork->unk1FE6 = (gBattleWork->unk1FE6 & 1) | (id << 1);
-        gBattleWork->unk2088 = 1;
+        gBattleWork->effectActive = 1;
     }
-    else if ((s8)gBattleWork->unk2089 == mode)
+    else if ((s8)gBattleWork->effectMode == mode)
     {
-        gBattleWork->unk201C += AnimDurationForKey(&gBattleWork->unk1FAC, 0);
+        gBattleWork->effectFramesLeft += AnimDurationForKey(&gBattleWork->effectObj, 0);
     }
 }
 

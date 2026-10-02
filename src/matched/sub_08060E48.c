@@ -30,7 +30,7 @@ void TextWindowPutChar(struct TextWindow *w, u32 chArg)
     gw = w->glyphWidth;
     rows = w->lineHeight;
     ch = gData_080BB748[ch];
-    glyph = sub_0806BB38(w->unk88, ch);
+    glyph = TextLayerTileAddr(w->unk88, ch);
     if ((u32)((s16)w->penX + (gw - ((u8 *)w->widthTable)[ch])) >= w->width)
         return;
     if ((s16)w->penY >= w->height)

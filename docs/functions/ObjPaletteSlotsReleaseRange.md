@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08062B9C` |
-| Size | 76 bytes (36 instructions) |
+| Size | 0 bytes (36 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08062B9C` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | ready MATCH from parked WIP |
 
 ## Why this name
 

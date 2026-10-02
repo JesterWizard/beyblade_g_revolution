@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08060428` |
-| Size | 14 bytes (6 instructions) |
+| Size | 0 bytes (6 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | battle |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08060428` |
 | Confidence | 0.45 |
 | Provenance | ai |
-| Note | battle/thunk sub_080601C4(0xD, 0x38) |
 
 ## Why this name
 

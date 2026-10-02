@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x08042390
-s32 sub_08042390(struct Unk42390 *arg0)
+s32 sub_08042390(struct MapPoint *arg0)
 {
     s32 y;
     s32 x;
@@ -9,8 +9,8 @@ s32 sub_08042390(struct Unk42390 *arg0)
     s32 px;
     s32 d;
 
-    y = arg0->unk04 >> 8;
-    x = arg0->unk08 >> 8;
+    y = arg0->y >> 8;
+    x = arg0->x >> 8;
     py = (s32)gMainWorkPtr->unk0370 >> 8;
     px = (s32)gMainWorkPtr->unk0374 >> 8;
 

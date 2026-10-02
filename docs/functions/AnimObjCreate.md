@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08067BB8` |
-| Size | 304 bytes (144 instructions) |
+| Size | 0 bytes (144 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08067BB8` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | old_agbcc; Unk67BB8Src template |
 
 ## Why this name
 
@@ -29,13 +28,13 @@
 
 ## Callees
 
-- `sub_08068180`
+- [`AnimObjSetRecord`](AnimObjSetRecord.md)
 - `sub_08068558`
 - `sub_08068574`
 
 ## Callers
 
-- `sub_080333E4`
+- [`BtlEffectStart`](BtlEffectStart.md)
 - `sub_08035054`
 - [`SceneObjSpawn`](SceneObjSpawn.md)
 - [`SceneObjPoolRebuild`](SceneObjPoolRebuild.md)

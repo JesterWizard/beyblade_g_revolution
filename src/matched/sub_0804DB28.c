@@ -15,14 +15,14 @@ void SceneObjPoolRebuild(void)
     for (i = 0; i < 9; i++)
         SceneObjFreeResources(&gData_03000698[i]);
 
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[0], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x34, 0, -1);
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[1], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x34, 0, -1);
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[2], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x34, 0, -1);
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[3], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x34, 0, -1);
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[4], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x6C, 0, -1);
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[5], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x6C, 0, -1);
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[6], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x6C, 0, -1);
-    AnimObjCreate((struct Unk67BB8 *)&gData_03000698[7], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x6C, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[0], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x34, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[1], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x34, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[2], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x34, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[3], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x34, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[4], gData_0807BE04[gData_03000694].unk10, 0, 0x32, 0x6C, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[5], gData_0807BE04[gData_03000694].unk10, 0, 0x5A, 0x6C, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[6], gData_0807BE04[gData_03000694].unk10, 0, 0x82, 0x6C, 0, -1);
+    AnimObjCreate((struct AnimObj *)&gData_03000698[7], gData_0807BE04[gData_03000694].unk10, 0, 0xAA, 0x6C, 0, -1);
 
     gData_03000698[0].unk3A = 0x1F;
     gData_03000698[1].unk3A = 0x1F;
@@ -35,28 +35,28 @@ void SceneObjPoolRebuild(void)
 
     _08073C4C(gData_080775CC[gData_03000694], (void *)0x050003E0, 0x20, (void *)gData_080BB8C0[0]);
 
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[0], 5);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[0], 5);
     gData_03000698[0].unk31 &= 2;
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[1], 5);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[1], 5);
     gData_03000698[1].unk31 |= 1;
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[2], 6);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[2], 6);
     gData_03000698[2].unk31 = 0;
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[3], 7);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[3], 7);
     gData_03000698[3].unk31 = 0;
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[4], 8);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[4], 8);
     gData_03000698[4].unk31 &= 2;
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[5], 8);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[5], 8);
     gData_03000698[5].unk31 |= 1;
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[6], 10);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[6], 10);
     gData_03000698[6].unk31 = 0;
-    BtlEntitySelectByKeyDefault((struct Unk680CC *)&gData_03000698[7], 11);
+    AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gData_03000698[7], 11);
     gData_03000698[7].unk31 = 0;
 
     sub_08054558(gData_08098A20[gData_03000694]);
 
     if (gData_08098DF8[gData_03000694] != NULL && gData_080991D0[gData_03000694] != NULL)
     {
-        AnimObjCreate((struct Unk67BB8 *)&gData_03000698[8], gData_080991D0[gData_03000694], 0, 0x8C, 3, 0, -1);
+        AnimObjCreate((struct AnimObj *)&gData_03000698[8], gData_080991D0[gData_03000694], 0, 0x8C, 3, 0, -1);
         _08073C4C(gData_08098DF8[gData_03000694], (void *)0x050003C0, 0x20, (void *)gData_080BB8C0[0]);
         gData_03000698[8].unk3A = 0x1D;
     }
@@ -71,7 +71,7 @@ void SceneObjPoolRebuild(void)
         if (gData_03000698[i].unk00 != NULL)
         {
             SceneObjUpdate(&gData_03000698[i]);
-            sub_08067CE8((struct Unk67BB8 *)&gData_03000698[i], 0);
+            sub_08067CE8((struct AnimObj *)&gData_03000698[i], 0);
         }
     }
 }

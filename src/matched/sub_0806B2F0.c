@@ -32,13 +32,13 @@ u16 DigitRowDraw(struct Unk6B2F0 *row, s32 value, u16 pos, u16 count, u8 padZero
             if (!padZero)
                 break;
             obj->unk70 = (void *)-1;
-            sub_0806833C((struct Unk68598 *)obj, 0, 0x34);
+            AnimObjSetRecordAt((struct AnimObjPlayback *)obj, 0, 0x34);
             drawn++;
         }
         else
         {
             obj->unk70 = (void *)-1;
-            sub_0806833C((struct Unk68598 *)obj, 0, digit + 0x34);
+            AnimObjSetRecordAt((struct AnimObjPlayback *)obj, 0, digit + 0x34);
             drawn++;
         }
         if (n > 0)

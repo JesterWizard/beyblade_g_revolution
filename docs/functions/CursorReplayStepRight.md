@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08042540` |
-| Size | 120 bytes (48 instructions) |
+| Size | 0 bytes (48 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08042540` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | AND ring flag 2, store 0x40, copy ring slots |
 
 ## Why this name
 
@@ -30,7 +29,7 @@
 
 ## Callees
 
-- [`BtlEntitySelectByKeyDefault`](BtlEntitySelectByKeyDefault.md)
+- [`AnimObjSelectSeqDefault`](AnimObjSelectSeqDefault.md)
 
 ## Callers
 

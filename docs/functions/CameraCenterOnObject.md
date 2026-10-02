@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806F05C` |
-| Size | 280 bytes (134 instructions) |
+| Size | 0 bytes (134 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806F05C` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | Unk6EE48Entry.unk14 is s32 read as s16 |
 
 ## Why this name
 

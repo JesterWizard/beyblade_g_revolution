@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080674BC` |
-| Size | 72 bytes (23 instructions) |
+| Size | 0 bytes (23 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080674BC` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | vtable ptr dispatch by arg |
 
 ## Why this name
 

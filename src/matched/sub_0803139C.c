@@ -57,7 +57,7 @@ s32 DigitSpritesSetValue(struct Sprite **array, s32 value, s32 count, void *tabl
     {
         if (array[index] != NULL)
         {
-            sub_08038638((array[index]->unk14 & 0xF000) >> 12);
+            PaletteSlotRefRelease((array[index]->unk14 & 0xF000) >> 12);
             BtlObjPoolFree(array[index]);
             array[index] = NULL;
         }

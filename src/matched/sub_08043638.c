@@ -14,6 +14,6 @@ void sub_08043638(void)
     if (gUnk_03000554->unk01 == 1)
         MapCursorMoveStep();
     else
-        BtlEntitySelectByKeyDefault((struct Unk680CC *)&gMainWorkPtr->unk036C, 7);
+        AnimObjSelectSeqDefault((struct AnimObjSeqSelect *)&gMainWorkPtr->unk036C, 7);
 }
 

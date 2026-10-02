@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080700CC` |
-| Size | 188 bytes (82 instructions) |
+| Size | 0 bytes (82 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080700CC` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | gData_ pool symbols; separate loop counter |
 
 ## Why this name
 

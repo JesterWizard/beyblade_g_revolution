@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08061EF8` |
-| Size | 332 bytes (154 instructions) |
+| Size | 0 bytes (154 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | battle |
 | Link label | `sub_08061EF8` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | glyph sprite text layout; old_agbcc |
 
 ## Why this name
 
@@ -26,7 +25,7 @@
 ## Callees
 
 - `sub_08062068`
-- `sub_0806209C`
+- [`GlyphTextReleaseSprites`](GlyphTextReleaseSprites.md)
 - [`BtlObjPoolAlloc`](BtlObjPoolAlloc.md)
 - [`SpriteInitFromTemplate`](SpriteInitFromTemplate.md)
 - [`TextEntrySetPaletteBank`](TextEntrySetPaletteBank.md)

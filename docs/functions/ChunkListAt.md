@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806DEC8` |
-| Size | 44 bytes (22 instructions) |
+| Size | 0 bytes (22 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0806DEC8` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | indexed chain walk |
 
 ## Why this name
 

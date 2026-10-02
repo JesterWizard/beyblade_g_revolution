@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080429CC` |
-| Size | 308 bytes (119 instructions) |
+| Size | 0 bytes (119 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080429CC` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | cursor step by direction (0..3): store target, then move |
 
 ## Why this name
 

@@ -3,113 +3,78 @@
 
 # battle subsystem
 
-91 functions — 61 named.
+59 functions — 46 named.
 
 | Tier | Functions |
 |------|----------:|
-| MATCHING | 91 |
+| MATCHING | 59 |
 
 ## Functions
 
 | Function | Address | Tier | Size | Callers | Callees | RAM |
 |----------|---------|------|-----:|--------:|--------:|-----|
-| [`DebugPrint`](../functions/DebugPrint.md) | `0x08067B98` | MATCHING | 6 | 30 | 0 |  |
-| [`BtlObjPoolFree`](../functions/BtlObjPoolFree.md) | `0x0806FE84` | MATCHING | 120 | 28 | 3 | gUnk_030040A4, gUnk_030040AC |
-| [`HeapFree`](../functions/HeapFree.md) | `0x0806A434` | MATCHING | 164 | 25 | 1 | gUnk_03000B30, gUnk_03000B3C |
-| [`StringAlloc`](../functions/StringAlloc.md) | `0x0807309C` | MATCHING | 120 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
-| [`StringFree`](../functions/StringFree.md) | `0x08073114` | MATCHING | 112 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
-| [`TextFormatInt`](../functions/TextFormatInt.md) | `0x080735DC` | MATCHING | 132 | 10 | 4 |  |
-| [`RandRange`](../functions/RandRange.md) | `0x080628B4` | MATCHING | 48 | 9 | 1 | gMainWorkPtr |
-| [`SceneObjUpdate`](../functions/SceneObjUpdate.md) | `0x08068418` | MATCHING | 272 | 9 | 3 | gUnk_03000180 |
-| [`InputUpdate`](../functions/InputUpdate.md) | `0x0806A6F8` | MATCHING | 436 | 8 | 0 | gBtlInputMask, gBtlKeyQueueCount |
-| [`TextGroupSetString`](../functions/TextGroupSetString.md) | `0x08070AD4` | MATCHING | 34 | 7 | 2 |  |
-| [`SfxPlayInSlot`](../functions/SfxPlayInSlot.md) | `0x080601C4` | MATCHING | 92 | 5 | 3 | gMainWorkPtr |
-| [`BtlReleaseEntry`](../functions/BtlReleaseEntry.md) | `0x08070678` | MATCHING | 36 | 5 | 3 |  |
-| [`SparklesUpdate`](../functions/SparklesUpdate.md) | `0x080474AC` | MATCHING | 232 | 4 | 1 | gMainWorkPtr, gUnk_03000630 |
-| `sub_08061E8C` | `0x08061E8C` | MATCHING | 108 | 4 | 2 |  |
-| `sub_08062044` | `0x08062044` | MATCHING | 36 | 4 | 2 |  |
-| [`BtlObjListMoveToHead`](../functions/BtlObjListMoveToHead.md) | `0x0806FF28` | MATCHING | 48 | 4 | 0 | gBtlObjListHead, gBtlObjListTail |
-| [`StringExpandDelim`](../functions/StringExpandDelim.md) | `0x08073AEC` | MATCHING | 162 | 4 | 0 |  |
-| `sub_08033574` | `0x08033574` | MATCHING | 80 | 3 | 2 | gBattleWork |
-| [`MenuDispatchKeyHandlers`](../functions/MenuDispatchKeyHandlers.md) | `0x080411EC` | MATCHING | 346 | 3 | 3 | gBtlKeysHeld |
-| `sub_08062238` | `0x08062238` | MATCHING | 34 | 3 | 2 |  |
-| [`TimerAdvance`](../functions/TimerAdvance.md) | `0x08067890` | MATCHING | 20 | 3 | 0 | gUnk_03000180 |
-| [`BeybladeSpinStep`](../functions/BeybladeSpinStep.md) | `0x080302E0` | MATCHING | 168 | 2 | 3 | gBattleWork |
-| `sub_08030F38` | `0x08030F38` | MATCHING | 348 | 2 | 0 | gBattleWork |
-| [`BtlSetMode1F90`](../functions/BtlSetMode1F90.md) | `0x080330F4` | MATCHING | 72 | 2 | 0 | gBattleWork |
-| [`BtlClearState`](../functions/BtlClearState.md) | `0x08033878` | MATCHING | 108 | 2 | 1 | gBattleWork |
-| [`BtlCaptureInput`](../functions/BtlCaptureInput.md) | `0x08034894` | MATCHING | 84 | 2 | 0 | gBtlInputMask, gBtlKeysHeld |
-| [`BeybladeEffectsPlace`](../functions/BeybladeEffectsPlace.md) | `0x080353A0` | MATCHING | 200 | 2 | 2 |  |
-| [`BtlClearUnk1834`](../functions/BtlClearUnk1834.md) | `0x080433F4` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
-| [`BtlClearUnk1688Entry`](../functions/BtlClearUnk1688Entry.md) | `0x08044EE8` | MATCHING | 44 | 2 | 0 | gMainWorkPtr |
-| [`FieldUpdateFrame`](../functions/FieldUpdateFrame.md) | `0x08046E7C` | MATCHING | 872 | 2 | 26 | gBtlInputMask, gBtlKeysHeld |
-| [`SfxPlayMapCursor`](../functions/SfxPlayMapCursor.md) | `0x08060428` | MATCHING | 14 | 2 | 1 |  |
-| [`BtlUnk1694FindAndMark`](../functions/BtlUnk1694FindAndMark.md) | `0x0802C5DC` | MATCHING | 78 | 1 | 0 | gMainWorkPtr |
-| [`ExpLevel`](../functions/ExpLevel.md) | `0x0802E1EC` | MATCHING | 36 | 1 | 1 | gMainWorkPtr |
-| [`CleanBattleOverlays`](../functions/CleanBattleOverlays.md) | `0x08030D4C` | MATCHING | 436 | 1 | 2 | gBattleWork |
-| `sub_0803114C` | `0x0803114C` | MATCHING | 184 | 1 | 1 | gBattleWork |
-| `sub_08031204` | `0x08031204` | MATCHING | 144 | 1 | 3 | gBattleWork, gUnk_030002A0 |
-| [`BtlSetTimer118`](../functions/BtlSetTimer118.md) | `0x080314FC` | MATCHING | 20 | 1 | 0 | gBattleWork |
-| `sub_08032604` | `0x08032604` | MATCHING | 196 | 1 | 5 | gBattleWork |
-| [`BattleTeardown`](../functions/BattleTeardown.md) | `0x08032908` | MATCHING | 384 | 1 | 7 | gBattleWork, gMainWorkPtr |
-| `sub_08033084` | `0x08033084` | MATCHING | 100 | 1 | 1 | gBattleWork |
-| [`BattleBannerScroll`](../functions/BattleBannerScroll.md) | `0x08033188` | MATCHING | 604 | 1 | 12 | gBattleWork, gBtlInputMask |
-| `sub_080333E4` | `0x080333E4` | MATCHING | 272 | 1 | 5 | gBattleWork |
-| [`BtlSceneObjUpdate`](../functions/BtlSceneObjUpdate.md) | `0x08033530` | MATCHING | 68 | 1 | 3 | gBattleWork |
-| [`BattleScorePopupTick`](../functions/BattleScorePopupTick.md) | `0x0803370C` | MATCHING | 362 | 1 | 3 | gBattleWork |
-| [`BtlPlaceSpriteAtWorld`](../functions/BtlPlaceSpriteAtWorld.md) | `0x08035468` | MATCHING | 308 | 1 | 1 | gBattleWork |
-| `sub_08037430` | `0x08037430` | MATCHING | 216 | 1 | 6 | gBattleWork, gMainWorkPtr |
-| `sub_0803D4C4` | `0x0803D4C4` | MATCHING | 88 | 1 | 2 | gBattleWork |
-| [`BtlCountLiveSlots`](../functions/BtlCountLiveSlots.md) | `0x0803E440` | MATCHING | 52 | 1 | 0 | gMainWorkPtr |
-| [`CursorHistoryReplayStep`](../functions/CursorHistoryReplayStep.md) | `0x0804245C` | MATCHING | 140 | 1 | 5 | gMainWorkPtr, gUnk_03000538 |
-| [`CursorReplayStepDown`](../functions/CursorReplayStepDown.md) | `0x08042630` | MATCHING | 116 | 1 | 1 | gMainWorkPtr, gUnk_03000538 |
-| [`CursorReplayStepUp`](../functions/CursorReplayStepUp.md) | `0x080426A4` | MATCHING | 116 | 1 | 1 | gMainWorkPtr, gUnk_03000538 |
-| [`MapCursorInput`](../functions/MapCursorInput.md) | `0x080436B0` | MATCHING | 658 | 1 | 10 | gBtlInputMask, gBtlKeysHeld |
-| [`BtlFindUnk16E4`](../functions/BtlFindUnk16E4.md) | `0x08043BDC` | MATCHING | 76 | 1 | 1 | gMainWorkPtr |
-| [`ScreenBrightnessFade`](../functions/ScreenBrightnessFade.md) | `0x0804438C` | MATCHING | 304 | 1 | 10 | gMainWorkPtr |
-| `sub_08045C5C` | `0x08045C5C` | MATCHING | 136 | 1 | 0 | gBtlInputMask, gMainWorkPtr |
-| `sub_08048DB8` | `0x08048DB8` | MATCHING | 440 | 1 | 17 | gUnk_03000648, gUnk_0300064C |
-| `sub_08052FC8` | `0x08052FC8` | MATCHING | 72 | 1 | 9 | gMainWorkPtr |
-| [`SfxSetMasterVolume`](../functions/SfxSetMasterVolume.md) | `0x080602C0` | MATCHING | 14 | 1 | 1 |  |
-| `sub_08060394` | `0x08060394` | MATCHING | 14 | 1 | 1 |  |
-| [`BtlSetAllUnk1710`](../functions/BtlSetAllUnk1710.md) | `0x080603E0` | MATCHING | 72 | 1 | 1 | gMainWorkPtr |
-| `sub_080628E4` | `0x080628E4` | MATCHING | 20 | 1 | 0 | gMainWorkPtr |
-| [`BtlObjListMoveHeadToTail`](../functions/BtlObjListMoveHeadToTail.md) | `0x0806FEFC` | MATCHING | 44 | 1 | 0 | gBtlObjListHead, gBtlObjListTail |
-| [`GetBtlLookupByte`](../functions/GetBtlLookupByte.md) | `0x08072F94` | MATCHING | 20 | 1 | 0 | gBtlLookupBase, gBtlLookupPtr |
-| [`BtlFreeUnk1694Obj`](../functions/BtlFreeUnk1694Obj.md) | `0x0802BA4C` | MATCHING | 48 | 0 | 1 | gMainWorkPtr, gUnk_03000268 |
-| [`BattleStepBeyblades`](../functions/BattleStepBeyblades.md) | `0x0803019C` | MATCHING | 268 | 0 | 11 | gBattleWork |
-| [`BeybladeSteerByDpad`](../functions/BeybladeSteerByDpad.md) | `0x08030638` | MATCHING | 268 | 0 | 0 | gBattleWork |
-| `sub_08031C98` | `0x08031C98` | MATCHING | 150 | 0 | 2 | gBattleWork, gUnk_030002A0 |
-| [`BtlFrameUpdate`](../functions/BtlFrameUpdate.md) | `0x08032DC4` | MATCHING | 660 | 0 | 31 | gBattleWork, gBtlKeysHeld |
-| [`Unk346C0Init`](../functions/Unk346C0Init.md) | `0x08034420` | MATCHING | 328 | 0 | 1 |  |
-| `sub_08036A68` | `0x08036A68` | MATCHING | 240 | 0 | 9 | gBattleWork, gMainWorkPtr |
-| `sub_08037508` | `0x08037508` | MATCHING | 452 | 0 | 17 | gBattleWork, gMainWorkPtr |
-| `sub_08038314` | `0x08038314` | MATCHING | 108 | 0 | 1 | gBattleWork, gBtlKeysHeld |
-| `sub_08038D10` | `0x08038D10` | MATCHING | 86 | 0 | 2 | gBattleWork, gUnk_030003E0 |
-| `sub_08038F30` | `0x08038F30` | MATCHING | 316 | 0 | 2 | gBattleWork, gMainWorkPtr |
-| `sub_080392D0` | `0x080392D0` | MATCHING | 116 | 0 | 2 | gBattleWork |
-| [`LaunchShowPowerMeter`](../functions/LaunchShowPowerMeter.md) | `0x0803C500` | MATCHING | 220 | 0 | 7 | gBattleWork, gMainWorkPtr |
-| [`LaunchShowBoostMeter`](../functions/LaunchShowBoostMeter.md) | `0x0803C5DC` | MATCHING | 220 | 0 | 6 | gBattleWork, gMainWorkPtr |
-| [`BattleTextGlyphRow`](../functions/BattleTextGlyphRow.md) | `0x0803D284` | MATCHING | 298 | 0 | 6 | gBattleWork |
-| [`BattlePartsApplyWear`](../functions/BattlePartsApplyWear.md) | `0x0803D51C` | MATCHING | 304 | 0 | 3 | gBattleWork, gMainWorkPtr |
-| [`MessageBoxLoadNext`](../functions/MessageBoxLoadNext.md) | `0x08040680` | MATCHING | 308 | 0 | 15 | gMainWorkPtr, gUnk_03000474 |
-| `sub_08041858` | `0x08041858` | MATCHING | 52 | 0 | 2 | gUnk_03000504, gUnk_03000508 |
-| `sub_08051444` | `0x08051444` | MATCHING | 192 | 0 | 7 | gMainWorkPtr |
-| [`BgmStop`](../functions/BgmStop.md) | `0x0806013C` | MATCHING | 56 | 0 | 1 | gMainWorkPtr |
-| [`SfxStopSlot`](../functions/SfxStopSlot.md) | `0x08060220` | MATCHING | 52 | 0 | 1 | gMainWorkPtr |
-| `sub_08060438` | `0x08060438` | MATCHING | 14 | 0 | 1 |  |
-| `sub_08060448` | `0x08060448` | MATCHING | 14 | 0 | 1 |  |
-| `sub_08060458` | `0x08060458` | MATCHING | 14 | 0 | 1 |  |
-| [`TextTypewriterTick`](../functions/TextTypewriterTick.md) | `0x080618EC` | MATCHING | 428 | 0 | 5 | gBtlInputMask, gUnk_03000798 |
-| [`SceneFadeDisplayLoop`](../functions/SceneFadeDisplayLoop.md) | `0x08065CD0` | MATCHING | 316 | 0 | 9 | gBtlKeysHeld |
-| `sub_08066224` | `0x08066224` | MATCHING | 112 | 0 | 2 |  |
-| [`BtlObjSystemInit`](../functions/BtlObjSystemInit.md) | `0x0806F910` | MATCHING | 624 | 0 | 5 | gBtlObjListHead, gBtlObjListTail |
+| [`VBlankIntrWait`](../functions/VBlankIntrWait.md) | `0x080674B4` | MATCHING | 0 | 38 | 0 |  |
+| [`DebugPrint`](../functions/DebugPrint.md) | `0x08067B98` | MATCHING | 0 | 30 | 0 |  |
+| [`BtlObjPoolFree`](../functions/BtlObjPoolFree.md) | `0x0806FE84` | MATCHING | 0 | 28 | 3 | gUnk_030040A4, gUnk_030040AC |
+| [`HeapFree`](../functions/HeapFree.md) | `0x0806A434` | MATCHING | 0 | 25 | 1 | gUnk_03000B30, gUnk_03000B3C |
+| [`StringAlloc`](../functions/StringAlloc.md) | `0x0807309C` | MATCHING | 0 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
+| [`StringFree`](../functions/StringFree.md) | `0x08073114` | MATCHING | 0 | 15 | 2 | gBtlObjLiveCount, gBtlObjTable |
+| [`TextFormatInt`](../functions/TextFormatInt.md) | `0x080735DC` | MATCHING | 0 | 10 | 4 |  |
+| [`InputUpdate`](../functions/InputUpdate.md) | `0x0806A6F8` | MATCHING | 0 | 8 | 0 | gBtlInputMask, gBtlKeyQueueCount |
+| [`BtlReleaseEntry`](../functions/BtlReleaseEntry.md) | `0x08070678` | MATCHING | 0 | 5 | 3 |  |
+| [`GlyphTextInit`](../functions/GlyphTextInit.md) | `0x08061E8C` | MATCHING | 0 | 4 | 2 |  |
+| [`GlyphTextLayoutWrapped`](../functions/GlyphTextLayoutWrapped.md) | `0x08061EF8` | MATCHING | 0 | 4 | 9 |  |
+| [`GlyphTextFree`](../functions/GlyphTextFree.md) | `0x08062044` | MATCHING | 0 | 4 | 2 |  |
+| [`BtlObjListMoveToHead`](../functions/BtlObjListMoveToHead.md) | `0x0806FF28` | MATCHING | 0 | 4 | 0 | gBtlObjListHead, gBtlObjListTail |
+| [`StringExpandDelim`](../functions/StringExpandDelim.md) | `0x08073AEC` | MATCHING | 0 | 4 | 0 |  |
+| [`BtlEffectStop`](../functions/BtlEffectStop.md) | `0x08033574` | MATCHING | 0 | 3 | 2 | gBattleWork |
+| [`MenuDispatchKeyHandlers`](../functions/MenuDispatchKeyHandlers.md) | `0x080411EC` | MATCHING | 0 | 3 | 3 | gBtlKeysHeld |
+| `sub_08062238` | `0x08062238` | MATCHING | 0 | 3 | 2 |  |
+| [`BeybladeSpinStep`](../functions/BeybladeSpinStep.md) | `0x080302E0` | MATCHING | 0 | 2 | 3 | gBattleWork |
+| [`BattleHudSlideStep`](../functions/BattleHudSlideStep.md) | `0x08030F38` | MATCHING | 0 | 2 | 0 | gBattleWork |
+| [`BtlPaletteFadeStart`](../functions/BtlPaletteFadeStart.md) | `0x080330F4` | MATCHING | 0 | 2 | 0 | gBattleWork |
+| [`BattleScorePopupClear`](../functions/BattleScorePopupClear.md) | `0x08033878` | MATCHING | 0 | 2 | 1 | gBattleWork |
+| [`BtlCaptureInput`](../functions/BtlCaptureInput.md) | `0x08034894` | MATCHING | 0 | 2 | 0 | gBtlInputMask, gBtlKeysHeld |
+| [`BeybladeEffectsPlace`](../functions/BeybladeEffectsPlace.md) | `0x080353A0` | MATCHING | 0 | 2 | 2 |  |
+| [`FieldUpdateFrame`](../functions/FieldUpdateFrame.md) | `0x08046E7C` | MATCHING | 0 | 2 | 26 | gBtlInputMask, gBtlKeysHeld |
+| [`CleanBattleOverlays`](../functions/CleanBattleOverlays.md) | `0x08030D4C` | MATCHING | 0 | 1 | 2 | gBattleWork |
+| [`BattleHudDigitsLayout`](../functions/BattleHudDigitsLayout.md) | `0x0803114C` | MATCHING | 0 | 1 | 1 | gBattleWork |
+| `sub_08031204` | `0x08031204` | MATCHING | 0 | 1 | 3 | gBattleWork, gUnk_030002A0 |
+| [`BtlSetTimer118`](../functions/BtlSetTimer118.md) | `0x080314FC` | MATCHING | 0 | 1 | 0 | gBattleWork |
+| `sub_08032604` | `0x08032604` | MATCHING | 0 | 1 | 5 | gBattleWork |
+| [`BattleTeardown`](../functions/BattleTeardown.md) | `0x08032908` | MATCHING | 0 | 1 | 7 | gBattleWork, gMainWorkPtr |
+| [`BtlPaletteFadeStep`](../functions/BtlPaletteFadeStep.md) | `0x08033084` | MATCHING | 0 | 1 | 1 | gBattleWork |
+| [`BattleBannerScroll`](../functions/BattleBannerScroll.md) | `0x08033188` | MATCHING | 0 | 1 | 12 | gBattleWork, gBtlInputMask |
+| [`BtlEffectStart`](../functions/BtlEffectStart.md) | `0x080333E4` | MATCHING | 0 | 1 | 5 | gBattleWork |
+| [`BtlSceneObjUpdate`](../functions/BtlSceneObjUpdate.md) | `0x08033530` | MATCHING | 0 | 1 | 3 | gBattleWork |
+| [`BattleScorePopupTick`](../functions/BattleScorePopupTick.md) | `0x0803370C` | MATCHING | 0 | 1 | 3 | gBattleWork |
+| [`BtlPlaceSpriteAtWorld`](../functions/BtlPlaceSpriteAtWorld.md) | `0x08035468` | MATCHING | 0 | 1 | 1 | gBattleWork |
+| `sub_08037430` | `0x08037430` | MATCHING | 0 | 1 | 6 | gBattleWork, gMainWorkPtr |
+| `sub_0803D4C4` | `0x0803D4C4` | MATCHING | 0 | 1 | 2 | gBattleWork |
+| [`MapCursorInput`](../functions/MapCursorInput.md) | `0x080436B0` | MATCHING | 0 | 1 | 10 | gBtlInputMask, gBtlKeysHeld |
+| `sub_08045C5C` | `0x08045C5C` | MATCHING | 0 | 1 | 0 | gBtlInputMask, gMainWorkPtr |
+| [`BtlObjListMoveHeadToTail`](../functions/BtlObjListMoveHeadToTail.md) | `0x0806FEFC` | MATCHING | 0 | 1 | 0 | gBtlObjListHead, gBtlObjListTail |
+| [`GetBtlLookupByte`](../functions/GetBtlLookupByte.md) | `0x08072F94` | MATCHING | 0 | 1 | 0 | gBtlLookupBase, gBtlLookupPtr |
+| [`BattleStepBeyblades`](../functions/BattleStepBeyblades.md) | `0x0803019C` | MATCHING | 0 | 0 | 11 | gBattleWork |
+| [`BeybladeSteerByDpad`](../functions/BeybladeSteerByDpad.md) | `0x08030638` | MATCHING | 0 | 0 | 0 | gBattleWork |
+| `sub_08031C98` | `0x08031C98` | MATCHING | 0 | 0 | 2 | gBattleWork, gUnk_030002A0 |
+| [`BtlFrameUpdate`](../functions/BtlFrameUpdate.md) | `0x08032DC4` | MATCHING | 0 | 0 | 31 | gBattleWork, gBtlKeysHeld |
+| `sub_08036A68` | `0x08036A68` | MATCHING | 0 | 0 | 9 | gBattleWork, gMainWorkPtr |
+| `sub_08037508` | `0x08037508` | MATCHING | 0 | 0 | 17 | gBattleWork, gMainWorkPtr |
+| `sub_08038314` | `0x08038314` | MATCHING | 0 | 0 | 1 | gBattleWork, gBtlKeysHeld |
+| `sub_08038D10` | `0x08038D10` | MATCHING | 0 | 0 | 2 | gBattleWork, gUnk_030003E0 |
+| `sub_08038F30` | `0x08038F30` | MATCHING | 0 | 0 | 2 | gBattleWork, gMainWorkPtr |
+| `sub_080392D0` | `0x080392D0` | MATCHING | 0 | 0 | 2 | gBattleWork |
+| [`LaunchShowPowerMeter`](../functions/LaunchShowPowerMeter.md) | `0x0803C500` | MATCHING | 0 | 0 | 7 | gBattleWork, gMainWorkPtr |
+| [`LaunchShowBoostMeter`](../functions/LaunchShowBoostMeter.md) | `0x0803C5DC` | MATCHING | 0 | 0 | 6 | gBattleWork, gMainWorkPtr |
+| [`BattleTextGlyphRow`](../functions/BattleTextGlyphRow.md) | `0x0803D284` | MATCHING | 0 | 0 | 6 | gBattleWork |
+| [`BattlePartsApplyWear`](../functions/BattlePartsApplyWear.md) | `0x0803D51C` | MATCHING | 0 | 0 | 3 | gBattleWork, gMainWorkPtr |
+| [`TextTypewriterTick`](../functions/TextTypewriterTick.md) | `0x080618EC` | MATCHING | 0 | 0 | 5 | gBtlInputMask, gUnk_03000798 |
+| [`SceneFadeDisplayLoop`](../functions/SceneFadeDisplayLoop.md) | `0x08065CD0` | MATCHING | 0 | 0 | 9 | gBtlKeysHeld |
+| [`BtlObjSystemInit`](../functions/BtlObjSystemInit.md) | `0x0806F910` | MATCHING | 0 | 0 | 5 | gBtlObjListHead, gBtlObjListTail |
 
 ## Why these functions are grouped here
 
-- `sub_0802BA4C` — note mentions 'battle'
-- `sub_0802C5DC` — note mentions 'battle'
-- `sub_0802E1EC` — note mentions 'battle'
 - `sub_0803019C` — references gBattleWork
 - `sub_080302E0` — references gBattleWork
 - `sub_08030638` — references gBattleWork
@@ -130,6 +95,9 @@
 - `sub_08033574` — references gBattleWork
 - `sub_0803370C` — references gBattleWork
 - `sub_08033878` — references gBattleWork
-- `sub_08034420` — note mentions 'battle'
 - `sub_08034894` — references gBtlInputMask
-- … and 66 more with recorded evidence
+- `sub_080353A0` — 3/3 call neighbours in battle
+- `sub_08035468` — references gBattleWork
+- `sub_08036A68` — references gBattleWork
+- `sub_08037430` — references gBattleWork
+- … and 34 more with recorded evidence

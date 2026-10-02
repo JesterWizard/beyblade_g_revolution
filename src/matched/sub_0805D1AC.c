@@ -9,7 +9,7 @@ void sub_0805D1AC(void)
     if (p != 0 && p->unk80 != 0)
     {
         SceneObjUpdate(&p->unk84);
-        sub_08067CE8((struct Unk67BB8 *)&(*(struct Unk0748 **)gUnk_03000748)->unk84, 0);
+        sub_08067CE8((struct AnimObj *)&(*(struct Unk0748 **)gUnk_03000748)->unk84, 0);
     }
 }
 

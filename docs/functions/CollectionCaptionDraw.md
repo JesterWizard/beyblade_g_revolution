@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0804AE94` |
-| Size | 300 bytes (109 instructions) |
+| Size | 0 bytes (109 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0804AE94` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | record caption string; gData symbols |
 
 ## Why this name
 

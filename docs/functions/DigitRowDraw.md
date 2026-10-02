@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0806B2F0` |
-| Size | 248 bytes (117 instructions) |
+| Size | 0 bytes (117 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0806B2F0` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | s16 drawn/i; abs copied into separate n |
 
 ## Why this name
 
@@ -27,4 +26,4 @@
 
 - [`Div`](Div.md)
 - [`DivRemainder`](DivRemainder.md)
-- `sub_0806833C`
+- [`AnimObjSetRecordAt`](AnimObjSetRecordAt.md)

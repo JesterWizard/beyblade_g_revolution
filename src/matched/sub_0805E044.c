@@ -42,7 +42,7 @@ void sub_0805E044(void *resource)
     {
         if (gData_080991D0[i] == resource)
         {
-            lookup = sub_08041DB4(i, 0);
+            lookup = ActorFindByIdSide(i, 0);
             if (lookup != NULL && lookup->unkB8 != NULL)
             {
                 sub_0802D898(lookup->unkB8->unk08, lookup->unkB8->unk0C);

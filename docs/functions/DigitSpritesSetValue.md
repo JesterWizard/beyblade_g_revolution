@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803139C` |
-| Size | 350 bytes (164 instructions) |
+| Size | 0 bytes (164 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | graphics |
+| Subsystem | _unassigned_ |
 | Link label | `sub_0803139C` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | digit sprite allocator: decimal digits, optional point glyph, free the tail |
 
 ## Why this name
 
@@ -26,7 +25,7 @@
 ## Callees
 
 - [`PaletteSlotAcquire`](PaletteSlotAcquire.md)
-- `sub_08038638`
+- [`PaletteSlotRefRelease`](PaletteSlotRefRelease.md)
 - [`Div`](Div.md)
 - [`BtlObjPoolAlloc`](BtlObjPoolAlloc.md)
 - [`BtlObjPoolFree`](BtlObjPoolFree.md)
@@ -35,5 +34,5 @@
 
 ## Callers
 
-- `sub_0803114C`
+- [`BattleHudDigitsLayout`](BattleHudDigitsLayout.md)
 - [`BattleScorePopupTick`](BattleScorePopupTick.md)

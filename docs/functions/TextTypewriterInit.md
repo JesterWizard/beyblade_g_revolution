@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080618A8` |
-| Size | 66 bytes (33 instructions) |
+| Size | 0 bytes (33 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080618A8` |
 | Confidence | 0.65 |
 | Provenance | ai |
-| Note | Unk618A8 init (6 halfwords + flags) |
 
 ## Why this name
 

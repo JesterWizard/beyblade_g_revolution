@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0802C55C` |
-| Size | 128 bytes (59 instructions) |
+| Size | 0 bytes (59 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0802C55C` |
 | Confidence | 0.6 |
 | Provenance | ai |
-| Note | old_agbcc; Unk1694 fields u8 |
 
 ## Why this name
 

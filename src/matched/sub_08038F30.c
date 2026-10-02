@@ -25,7 +25,7 @@ void sub_08038F30(s32 dir)
         for (; i <= 3; i++)
             (*work)->unk07A4[i]->unk0C -= 0x400;
         (*battle)->unk324->unk0C -= 0x400;
-        if (table[(*battle)->unk12F].unk1C == 0)
+        if (table[(*battle)->activeRecordIdx].unk1C == 0)
         {
             for (i = 0; i <= 3; i++)
                 TextGroupMoveBy((struct Unk70C98 *)&(*battle)->unk023C[i], 0, -4);
@@ -41,7 +41,7 @@ void sub_08038F30(s32 dir)
         for (; i <= 3; i++)
             (*work)->unk07A4[i]->unk0C += 0x400;
         (*battle)->unk324->unk0C += 0x400;
-        if (table[(*battle)->unk12F].unk1C == 0)
+        if (table[(*battle)->activeRecordIdx].unk1C == 0)
         {
             for (i = 0; i <= 3; i++)
                 TextGroupMoveBy((struct Unk70C98 *)&(*battle)->unk023C[i], 0, 4);

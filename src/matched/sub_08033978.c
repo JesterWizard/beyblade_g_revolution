@@ -10,7 +10,7 @@ void sub_08033978(struct Unk33A5C *a, struct Unk346C0 *b, struct Unk346C0 *c, u8
     a->unk08 = c;
     sub_08034FF8((struct Unk34FF8 *)b, gData_08078158[d], (u32)c);
     sub_08034FF8((struct Unk34FF8 *)c, 0x08078E58, (u32)b);
-    BtlSetMode1F90(0x80);
+    BtlPaletteFadeStart(0x80);
     sub_08035204(b, 0, 0xC, -1);
     b->unk08C = AnimDurationForKey(&b->unk1C, 0);
     b->unk2B0 = 0;

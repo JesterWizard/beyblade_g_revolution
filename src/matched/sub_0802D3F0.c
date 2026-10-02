@@ -1,7 +1,7 @@
 #include "global.h"
 
 // @ 0x0802d3f0
-void sub_0802D3F0(void)
+void StatusHudFree(void)
 {
     struct Sprite *q;
     void *slot;

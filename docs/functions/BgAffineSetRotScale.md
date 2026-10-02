@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08069A60` |
-| Size | 280 bytes (129 instructions) |
+| Size | 0 bytes (129 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08069A60` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | affine BG matrix; stores via slot index, old_agbcc |
 
 ## Why this name
 
@@ -35,7 +34,7 @@
 ## Callers
 
 - [`AffineBgUpdate`](AffineBgUpdate.md)
-- `sub_08069894`
+- [`BgScrollReset`](BgScrollReset.md)
 
 ## ROM data referenced
 

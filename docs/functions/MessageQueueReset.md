@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x080405A8` |
-| Size | 64 bytes (24 instructions) |
+| Size | 0 bytes (24 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_080405A8` |
 | Confidence | 0.55 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_080405A8/output-0-1/source.c |
 
 ## Why this name
 

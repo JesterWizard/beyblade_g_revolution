@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08073A28` |
-| Size | 66 bytes (32 instructions) |
+| Size | 0 bytes (32 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08073A28` |
 | Confidence | 0.8 |
 | Provenance | ai |
-| Note | insert byte into string, shifting tail |
 
 ## Why this name
 

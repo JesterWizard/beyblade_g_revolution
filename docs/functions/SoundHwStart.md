@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08071BA0` |
-| Size | 148 bytes (50 instructions) |
+| Size | 0 bytes (50 instructions) |
 | Tier | MATCHING |
 | Status | matched |
-| Subsystem | audio |
+| Subsystem | _unassigned_ |
 | Link label | `sub_08071BA0` |
 | Confidence | 0.75 |
 | Provenance | ai |
-| Note | sound FIFO A DMA1 + timer init |
 
 ## Why this name
 

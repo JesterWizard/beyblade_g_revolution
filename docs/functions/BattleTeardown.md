@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08032908` |
-| Size | 384 bytes (156 instructions) |
+| Size | 0 bytes (156 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | battle |
 | Link label | `sub_08032908` |
 | Confidence | 0.7 |
 | Provenance | ai |
-| Note | index loop for unk023C entries |
 
 ## Why this name
 
@@ -31,7 +30,7 @@
 ## Callees
 
 - [`CleanBattleOverlays`](CleanBattleOverlays.md)
-- `sub_08062044`
+- [`GlyphTextFree`](GlyphTextFree.md)
 - `sub_08062238`
 - [`HeapFree`](HeapFree.md)
 - [`BtlObjPoolFree`](BtlObjPoolFree.md)

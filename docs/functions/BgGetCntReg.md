@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x08069988` |
-| Size | 64 bytes (23 instructions) |
+| Size | 0 bytes (23 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_08069988` |
 | Confidence | 0.9 |
 | Provenance | ai |
-| Note | permuter/nonmatchings/sub_08069988/output-0-1/source.c |
 
 ## Why this name
 

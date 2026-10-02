@@ -6,14 +6,13 @@
 | | |
 |--|--|
 | ROM | `0x0803DD88` |
-| Size | 40 bytes (14 instructions) |
+| Size | 0 bytes (14 instructions) |
 | Tier | MATCHING |
 | Status | matched |
 | Subsystem | _unassigned_ |
 | Link label | `sub_0803DD88` |
 | Confidence | 0.5 |
 | Provenance | ai |
-| Note | semantic draft from src/decompiled (old_agbcc) |
 
 ## Why this name
 
