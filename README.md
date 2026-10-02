@@ -1,6 +1,6 @@
 # Beyblade G Revolution
 
-Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemerald](https://github.com/pret/pokeemerald). Mods are made by editing the decompiled source directly.
+Decompilation of *Beyblade G Revolution* (GBA), structured after [pret/pokeemerald](https://github.com/pret/pokeemerald). Mods live in `mods/<name>/` and build with `make MOD=<name>` without touching the decomp; see [docs/modding.md](docs/modding.md).
 
 ## Status
 

@@ -40,6 +40,8 @@ PROVIDE(__rom_shift_bytes = 0);
 
     .append_text :
     {
+        /* `make MOD=<name>` objects (empty in a vanilla build). */
+        mod/*.o(.text .text.*)
         *(.append_text);
     } > ROM = 0xFF
 

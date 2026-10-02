@@ -1,0 +1,27 @@
+# Debug menu hooks. See docs/modding.md for the format.
+
+# End of FieldUpdateFrame: HudRefreshStats() -> DebugFieldTick(), which calls it first.
+call 0x080470FC sub_0802D8DC DebugFieldTick
+
+# Overworld walking speed: FieldUpdateFrame's bl sub_08041E88 (dir, step).
+call 0x080470C2 sub_08041E88 DebugMoveStep
+
+# Part wear after a battle (infinite ripcord / launcher): both callers.
+call 0x0803B826 sub_0803D51C DebugPartsApplyWear
+call 0x0803BA32 sub_0803D51C DebugPartsApplyWear
+
+# Launch RPM formula (max RPM).
+call 0x0803C230 _0803CECC DebugLaunch
+
+# Do not lose the equipped beyblade after a loss (infinite beyblade health).
+0x080380E0 KeepBladeOnLoss__Hook
+
+# Experience brackets: level 16 and a full bar at 4000+ experience.
+sub_08042BE8 ExpBracketFixed
+sub_0802E1B4 ExpBarFillFixed
+
+# The menu state needs a page of EWRAM that the retail heap does not hand out.
+# HeapAlloc (0x0806A3DE) and its stats print (0x0806A622) size the heap as
+# 0xFE << 10 bytes from 0x02000800, i.e. up to the end of EWRAM; make it 0xFC.
+patch 0x0806A3DE FC 22 expect FE 22
+patch 0x0806A622 FC 22 expect FE 22

@@ -1,0 +1,3 @@
+# <target> <replacement>
+# Targets are sub_XXXXXXXX identities or 0x08xxxxxx addresses.
+sub_0802BC14 CollectionIsFull__Replacement   # CollectionIsFull

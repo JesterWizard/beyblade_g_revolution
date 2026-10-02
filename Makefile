@@ -8,6 +8,20 @@ FILE_NAME  := beyblade_g_revolution
 BUILD_DIR  := build
 OBJ_DIR    := $(BUILD_DIR)/bbgr
 
+# `make MOD=<name>` builds mods/<name>/ on top of the untouched decomp into
+# beyblade_g_revolution_<name>.gba. Plain `make` / `make compare` never see
+# mods/. See docs/modding.md.
+MOD ?=
+ifneq ($(MOD),)
+  ifeq ($(wildcard mods/$(MOD)),)
+    $(error mods/$(MOD) not found. See docs/modding.md)
+  endif
+  ifneq (,$(filter compare check-vanilla,$(MAKECMDGOALS)))
+    $(error MOD builds change the ROM, so they cannot be combined with `compare`)
+  endif
+  FILE_NAME := beyblade_g_revolution_$(MOD)
+endif
+
 ROM  := $(FILE_NAME).gba
 ELF  := $(FILE_NAME).elf
 MAP  := $(FILE_NAME).map
@@ -80,6 +94,7 @@ SHELL := bash -o pipefail
 .DELETE_ON_ERROR:
 
 .PHONY: all rom modern compare clean tidy tools check-baserom shift-test grow-test graphics clean-gfx
+.PHONY: check-vanilla
 .PHONY: split pack rename-files analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
 all: rom
 
@@ -116,7 +131,22 @@ C_OBJS := $(patsubst $(C_SUBDIR)/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
 ASM_OBJS := $(patsubst $(ASM_SUBDIR)/%.s,$(ASM_BUILDDIR)/%.o,$(ASM_SRCS))
 DATA_ASM_OBJS := $(patsubst $(DATA_ASM_SUBDIR)/%.s,$(DATA_ASM_BUILDDIR)/%.o,$(DATA_ASM_SRCS))
 
-OBJS := $(C_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS)
+# Mod objects (MOD=<name> only). Linked into .append_text past the retail image.
+MOD_DIR      :=
+MOD_HOOKS    :=
+MOD_OBJS     :=
+ifneq ($(MOD),)
+MOD_DIR      := mods/$(MOD)
+MOD_HOOKS    := $(wildcard $(MOD_DIR)/hooks.txt)
+MOD_BUILDDIR := $(OBJ_DIR)/mod/$(MOD)
+MOD_C_SRCS   := $(wildcard $(MOD_DIR)/src/*.c)
+MOD_S_SRCS   := $(wildcard $(MOD_DIR)/src/*.s)
+MOD_OBJS     := $(patsubst $(MOD_DIR)/src/%.c,$(MOD_BUILDDIR)/%.o,$(MOD_C_SRCS)) \
+                $(patsubst $(MOD_DIR)/src/%.s,$(MOD_BUILDDIR)/%.o,$(MOD_S_SRCS))
+-include $(MOD_DIR)/mod.mk
+endif
+
+OBJS := $(C_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS) $(MOD_OBJS)
 OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJS))
 
 
@@ -265,6 +295,22 @@ $(C_BUILDDIR)/matched/%.o: $(SPLIT_DIR)/%.c tools/decomp/compile_matched.py
 	@mkdir -p $(dir $@)
 	python3 tools/decomp/compile_matched.py $(COMPILE_MATCHED_FLAGS) $< $@
 
+# Mod code: plain agbcc, no retail comparison. Mods must not edit src/.
+MOD_CPPFLAGS = $(CPPFLAGS) -DMOD=1 -DMOD_NAME=\"$(MOD)\" -iquote $(MOD_DIR)/include
+
+$(MOD_BUILDDIR)/%.o: $(MOD_DIR)/src/%.c
+	@mkdir -p $(dir $@)
+ifeq ($(MODERN),0)
+	@test -x $(CC1) || { echo "error: agbcc missing. See INSTALL.md"; exit 1; }
+endif
+	@$(CPP) $(MOD_CPPFLAGS) $< | $(CC1) $(CFLAGS) -o $(MOD_BUILDDIR)/$*.s
+	@echo -e ".text\n\t.align\t2, 0\n" >> $(MOD_BUILDDIR)/$*.s
+	$(AS) $(ASFLAGS) -o $@ $(MOD_BUILDDIR)/$*.s
+
+$(MOD_BUILDDIR)/%.o: $(MOD_DIR)/src/%.s
+	@mkdir -p $(dir $@)
+	$(AS) $(ASFLAGS) -mthumb -I $(MOD_DIR)/include -o $@ $<
+
 $(C_BUILDDIR)/%.o: $(C_SUBDIR)/%.c
 ifeq ($(MODERN),0)
 	@test -x $(CC1) || { echo "error: agbcc missing. See INSTALL.md"; exit 1; }
@@ -281,6 +327,9 @@ ifneq ($(SHIFT_BYTES),0)
 PAD_CART := 0
 endif
 ifeq ($(GROW),1)
+PAD_CART := 0
+endif
+ifneq ($(MOD),)
 PAD_CART := 0
 endif
 LDFLAGS = -Map ../../$(MAP) -L ../../asm
@@ -306,8 +355,17 @@ endif
 	@end=$$(arm-none-eabi-nm $(ELF) | awk '/__append_end$$/{print $$1}'); \
 	 size=$$((0x$$end - 0x08000000)); \
 	 truncate -s $$size $@
+ifneq ($(MOD_HOOKS),)
+	python3 tools/mod/apply_hooks.py $(ELF) $@ $(MOD_HOOKS)
+endif
 ifneq ($(wildcard $(FIX)),)
 ifeq ($(PAD_CART),1)
 	$(FIX) $@ -p --silent
 endif
 endif
+
+# Prove a vanilla build is unaffected by mods/: byte-identical ROM, no mod objects linked.
+check-vanilla:
+	@$(MAKE) MOD= compare
+	@! grep -qE '0x[0-9a-f]+ +0x[0-9a-f]+ +mod/' $(FILE_NAME).map || { echo "error: mod objects leaked into the vanilla link"; exit 1; }
+	@echo "vanilla build OK (matches rom.sha1, no mod objects)"
