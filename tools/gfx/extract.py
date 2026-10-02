@@ -9,6 +9,8 @@ Driven by tools/gfx/assets.json. Runs automatically on the first `make` (see the
     python3 tools/gfx/extract.py --check      # decode only, write nothing
     python3 tools/gfx/extract.py --discover-portraits         # list dialogue portraits
     python3 tools/gfx/extract.py --discover-portraits --write # ...and update the manifest
+    python3 tools/gfx/extract.py --discover-overworld --write # same for NPC / item field sprites
+    python3 tools/gfx/extract.py --discover-beyblades --write # same for the battle Beyblade sprites
 
 Output is regenerable from the ROM and git-ignored.
 """
@@ -23,6 +25,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gba import GfxError  # noqa: E402
 from bg import load_bg, palette_after, write_bg_png  # noqa: E402
 from sprite import load_sprite, write_sprite_png  # noqa: E402
+import beyblades  # noqa: E402
+import overworld  # noqa: E402
 import portraits  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -56,11 +60,12 @@ def extract_bg(rom, asset, out_dir, write):
 
 def extract_sprite(rom, asset, out_dir, write):
     tpl = load_sprite(rom, parse_addr(asset["rom"]))
-    frame = asset.get("frame", 0)
+    # one frame if the asset names it (or the sprite has only one), else a sheet
+    frame = asset.get("frame", 0 if tpl.frames == 1 else None)
     path = os.path.join(out_dir, asset["category"], asset["name"] + ".png")
     if not write:
-        tpl.render(frame)  # decode fully so --check catches bad frames
-        return path, tpl.width, tpl.height
+        w, h, _ = tpl.render_sheet() if frame is None else tpl.render(frame)  # catch bad frames
+        return path, w, h
     os.makedirs(os.path.dirname(path), exist_ok=True)
     w, h = write_sprite_png(rom, tpl, frame, parse_addr(asset["palette"]), path)
     return path, w, h
@@ -112,34 +117,68 @@ def discover(args):
     return 0
 
 
-def portrait_line(template, palette):
-    return ('    {"name": "portrait_%06x", "category": "portraits", "type": "sprite", '
-            '"rom": "0x%X", "palette": "0x%X"}' % (template, template, palette))
+def asset_line(asset):
+    return ('    {"name": "%(name)s", "category": "%(category)s", "type": "%(type)s", '
+            '"rom": "%(rom)s", "palette": "%(palette)s"}' % asset)
+
+
+def update_manifest(assets, category):
+    """Replace every manifest entry of `category` with `assets`."""
+    lines = [l for l in open(MANIFEST).read().split("\n")
+             if '"category": "%s"' % category not in l]
+    end = max(i for i, l in enumerate(lines) if l.strip() == "]")
+    while lines[end - 1].strip() == "":
+        del lines[end - 1]
+        end -= 1
+    # the last asset line before the closing bracket must end with a comma
+    prev = max(i for i in range(end) if lines[i].lstrip().startswith("{"))
+    lines[prev] = lines[prev].rstrip(",") + ","
+    lines[end:end] = ["", ",\n".join(asset_line(a) for a in assets)]
+    open(MANIFEST, "w").write("\n".join(lines))
+    print("wrote %d %s entries to %s" % (len(assets), category, os.path.relpath(MANIFEST, REPO)))
 
 
 def discover_portraits(args):
     rom = open(ROM_PATH, "rb").read()
     found, skipped = portraits.discover(rom)
+    assets = [{"name": "portrait_%06x" % t, "category": "portraits", "type": "sprite",
+               "rom": "0x%X" % t, "palette": "0x%X" % p} for t, p in found]
     print("%-10s %s" % ("rom", "palette"))
-    for template, palette in found:
-        print("0x%06X   0x%06X" % (template, palette))
-    for template in skipped:
-        print("0x%06X   (no palette found, skipped)" % template)
+    for t, p in found:
+        print("0x%06X   0x%06X" % (t, p))
+    for t in skipped:
+        print("0x%06X   (no palette found, skipped)" % t)
     print("%d portraits" % len(found))
-    if not args.write:
-        return 0
-    lines = [l for l in open(MANIFEST).read().split("\n") if '"category": "portraits"' not in l]
-    end = max(i for i, l in enumerate(lines) if l.strip() == "]")
-    while lines[end - 1].strip() == "":
-        del lines[end - 1]
-        end -= 1
-    body = [portrait_line(t, p) for t, p in found]
-    # last asset line before the closing bracket must end with a comma
-    prev = max(i for i in range(end) if lines[i].lstrip().startswith("{"))
-    lines[prev] = lines[prev].rstrip(",") + ","
-    lines[end:end] = ["", ",\n".join(body)]
-    open(MANIFEST, "w").write("\n".join(lines))
-    print("wrote %d portrait entries to %s" % (len(found), os.path.relpath(MANIFEST, REPO)))
+    if args.write:
+        update_manifest(assets, "portraits")
+    return 0
+
+
+def discover_overworld(args):
+    rom = open(ROM_PATH, "rb").read()
+    assets, skipped = overworld.discover(rom)
+    print("%-14s %-10s %s" % ("name", "rom", "palette"))
+    for a in assets:
+        print("%-14s %-10s %s" % (a["name"], a["rom"], a["palette"]))
+    for label, why in skipped:
+        print("%-14s skipped (%s)" % (label, why))
+    print("%d overworld sprites" % len(assets))
+    if args.write:
+        update_manifest(assets, "overworld")
+    return 0
+
+
+def discover_beyblades(args):
+    rom = open(ROM_PATH, "rb").read()
+    assets, skipped = beyblades.discover(rom)
+    print("%-44s %-10s %s" % ("name", "rom", "palette"))
+    for a in assets:
+        print("%-44s %-10s %s" % (a["name"], a["rom"], a["palette"]))
+    for i, why in skipped:
+        print("blade %d skipped (%s)" % (i, why))
+    print("%d beyblade sprites" % len(assets))
+    if args.write:
+        update_manifest(assets, "beyblades")
     return 0
 
 
@@ -147,8 +186,12 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--discover-portraits", action="store_true",
                     help="find the dialogue portraits and their palettes")
+    ap.add_argument("--discover-overworld", action="store_true",
+                    help="find the NPC and Beyblade field sprites and their palettes")
+    ap.add_argument("--discover-beyblades", action="store_true",
+                    help="find the battle Beyblade sprites (blade table at 0x0807A1F4)")
     ap.add_argument("--write", action="store_true",
-                    help="with --discover-portraits, update tools/gfx/assets.json")
+                    help="with a --discover-* option, update tools/gfx/assets.json")
     ap.add_argument("--discover", action="store_true",
                     help="list BG containers in the ROM that are not in the manifest")
     ap.add_argument("--all", action="store_true",
@@ -158,6 +201,10 @@ def main():
     args = ap.parse_args()
     if args.discover_portraits:
         return discover_portraits(args)
+    if args.discover_overworld:
+        return discover_overworld(args)
+    if args.discover_beyblades:
+        return discover_beyblades(args)
     return discover(args) if args.discover else run(args)
 
 

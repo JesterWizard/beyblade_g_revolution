@@ -106,6 +106,50 @@ class SpriteTemplate(object):
                            % (frame, len(out), self.tiles * self.tile_bytes))
         return bytes(out)
 
+    def animations(self):
+        """[(first frame, length)] for each animation record (AnimData at +0x20)."""
+        count = struct.unpack_from("<I", self.rom, self.off + 8)[0]
+        out = []
+        for i in range(count):
+            o = self.off + 0x20 + 8 * i
+            if o + 8 > len(self.rom):
+                break
+            start, length = struct.unpack_from("<HH", self.rom, o)
+            if length and start + length <= self.frames:
+                out.append((start, length))
+        return out
+
+    def render_sheet(self):
+        """All frames in one image: one row per animation, frames left to right.
+
+        Frames no animation uses go in a final row. Falls back to a single row
+        of every frame when the record table is unusable.
+        """
+        rows = self.animations()
+        used = set()
+        for start, length in rows:
+            used.update(range(start, start + length))
+        extra = [f for f in range(self.frames) if f not in used]
+        if not rows:
+            rows = [(0, self.frames)]
+        elif extra:
+            rows = rows + [(f, 1) for f in extra]
+        cols = max(length for _, length in rows)
+        fw, fh = self.width, self.height
+        w, h = cols * fw, len(rows) * fh
+        pix = bytearray(w * h)
+        cache = {}
+        for r, (start, length) in enumerate(rows):
+            for c in range(length):
+                f = start + c
+                if f not in cache:
+                    cache[f] = self.render(f)[2]
+                src = cache[f]
+                for y in range(fh):
+                    d = (r * fh + y) * w + c * fw
+                    pix[d:d + fw] = src[y * fw:(y + 1) * fw]
+        return w, h, pix
+
     def render(self, frame=0):
         """(width, height, palette-index bytes) for `frame`."""
         data = self.frame_tiles(frame)
@@ -211,8 +255,9 @@ def load_sprite(rom, off):
 
 
 def write_sprite_png(rom, tpl, frame, pal_off, path):
-    """Render `frame` with the palette bank at `pal_off` (16 or 256 colours)."""
-    w, h, pix = tpl.render(frame)
+    """Render `frame` (None: every frame as an animation sheet) with the palette
+    at `pal_off` (16 or 256 colours)."""
+    w, h, pix = tpl.render_sheet() if frame is None else tpl.render(frame)
     count = 16 if tpl.is_4bpp else 256
     if not palette_looks_valid(rom, pal_off, count):
         raise GfxError("no valid palette at 0x%X" % pal_off)

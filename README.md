@@ -177,7 +177,7 @@ pret/pokeemerald-style matching tree:
 | `include/` | Headers (`gba/`, `ram_map.h`, types) |
 | `data/` | Extracted data (`data/event_scripts/` reserved) |
 | `docs/` | Decomp notes, RAM map, progress tables |
-| `graphics/` | PNGs extracted from `baserom.gba` on the first `make` (git-ignored; `make graphics` to redo). Manifest: `tools/gfx/assets.json` (BG images and sprites; `extract.py --discover-portraits --write` refreshes the dialogue portraits) |
+| `graphics/` | PNGs extracted from `baserom.gba` on the first `make` (git-ignored; `make graphics` to redo). Manifest: `tools/gfx/assets.json` (BG images and sprites; `extract.py --discover-portraits --write` / `--discover-overworld --write` / `--discover-beyblades --write` refresh the dialogue portraits, the NPC/item field sprites and the battle Beyblade sprites) |
 | `sound/`, `constants/` | Extracted assets / asm constants (reserved) |
 | `tools/` | pret tools + `tools/decomp/` matching pipeline |
 | `libagbsyscall/` | BIOS syscall helpers |
