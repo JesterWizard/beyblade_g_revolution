@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
+from fnfiles import stem_for  # noqa: E402
 from gen_rom_layout import (  # noqa: E402
     BASEROM,
     LAYOUT_LD,
@@ -88,7 +89,7 @@ def assemble_pad() -> None:
 
 
 def write_grow_scripts(first_name: str) -> None:
-    needle = f"src/matched/{first_name}.o(.text)"
+    needle = f"src/matched/{stem_for(first_name)}.o(.text)"
     layout = LAYOUT_LD.read_text()
     if needle not in layout:
         raise SystemExit(f"test_grow: {needle} missing from rom_layout.ld")

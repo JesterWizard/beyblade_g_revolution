@@ -80,7 +80,7 @@ SHELL := bash -o pipefail
 .DELETE_ON_ERROR:
 
 .PHONY: all rom modern compare clean tidy tools check-baserom shift-test grow-test graphics clean-gfx
-.PHONY: analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
+.PHONY: rename-files analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
 all: rom
 
 C_SUBDIR = src
@@ -147,6 +147,9 @@ cluster:
 
 script-first:
 	python3 tools/decomp/script_first.py
+
+rename-files:
+	python3 tools/decomp/fnfiles.py sync --apply
 
 analyze:
 	python3 tools/decomp/analyze.py

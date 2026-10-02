@@ -45,6 +45,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 MATCHED = ROOT / "src" / "matched"
 HEADERS = [ROOT / "include" / "unknown-functions.h", ROOT / "include" / "ram_map.h"]
 
@@ -101,7 +104,7 @@ def asm_body(name: str) -> str:
     detection, call-target extraction) see one consistent shape and a real
     line/word boundary between instructions regardless of source style.
     """
-    text = (MATCHED / f"{name}.c").read_text()
+    text = (matched_file(name)).read_text()
     call = re.search(r"asm\(\s*(.*?)\s*\);", text, re.S)
     if not call:
         return text
@@ -120,7 +123,7 @@ def real_insn_count(body: str) -> int:
 def classify() -> dict[str, list[str]]:
     names = list_readable_asm()
     declared = declared_symbols()
-    all_matched_stems = {p.stem for p in MATCHED.glob("sub_*.c")}
+    all_matched_stems = {name_for(p) for p in MATCHED.glob("*.c")}
 
     buckets: dict[str, list[str]] = {
         "naked_only": [],
@@ -153,7 +156,7 @@ def classify() -> dict[str, list[str]]:
             for c in calls
             if c not in declared
             and c not in all_matched_stems
-            and not (MATCHED / f"{c}.c").exists()
+            and not (matched_file(c)).exists()
         }
         if missing:
             buckets["unblock_first"].append(n)

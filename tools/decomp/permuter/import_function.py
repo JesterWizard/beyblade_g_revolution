@@ -22,6 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
+from fnfiles import matched_file  # noqa: E402
 from m2c_asm import m2c_decompile  # noqa: E402
 from m2c_cleanup import cleanup_text  # noqa: E402
 from opcode_stubs import is_opcode_stub  # noqa: E402
@@ -89,7 +90,7 @@ def match_flags(function: str, seed_text: str) -> list[str]:
     that compile.sh picks up from the workdir.
     """
     texts = [seed_text]
-    for path in (WIP / f"{function}.c", MATCHED / f"{function}.c"):
+    for path in (WIP / f"{function}.c", matched_file(function)):
         if path.is_file():
             texts.append(path.read_text())
     for text in texts:
@@ -109,7 +110,7 @@ def match_compiler(function: str, seed_text: str) -> str:
     so compile.sh cannot read the comment itself.
     """
     texts = [seed_text]
-    for path in (WIP / f"{function}.c", MATCHED / f"{function}.c"):
+    for path in (WIP / f"{function}.c", matched_file(function)):
         if path.is_file():
             texts.append(path.read_text())
     for text in texts:
@@ -599,7 +600,7 @@ def seed_c(function: str) -> str:
         return wip.read_text()
     if function in KNOWN_SEEDS:
         return KNOWN_SEEDS[function]
-    existing = MATCHED / f"{function}.c"
+    existing = matched_file(function)
     if existing.is_file() and not is_opcode_stub(existing):
         return existing.read_text()
 

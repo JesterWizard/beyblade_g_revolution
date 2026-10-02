@@ -31,6 +31,9 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 MATCHED = ROOT / "src" / "matched"
 HEADER = ROOT / "include" / "unknown-functions.h"
 
@@ -162,20 +165,20 @@ def main() -> int:
     changes: list[tuple[pathlib.Path, str, str, str]] = []
     untouched: list[str] = []
     for path in candidates:
-        if path.stem not in failing:
+        if name_for(path) not in failing:
             # Compiles cleanly: a signature that only differs in parameter
             # *names* is not a defect worth rewriting verified source for.
-            probe, why = repair(path.read_text(errors="replace"), path.stem, table, alias)
+            probe, why = repair(path.read_text(errors="replace"), name_for(path), table, alias)
             if why:
-                untouched.append(path.stem)
+                untouched.append(name_for(path))
             continue
         original = path.read_text(errors="replace")
-        fixed, why = repair(original, path.stem, table, alias)
+        fixed, why = repair(original, name_for(path), table, alias)
         if fixed == original:
             continue
         changes.append((path, original, fixed, why))
         if not args.apply:
-            print(f"    {path.stem}  {why}")
+            print(f"    {name_for(path)}  {why}")
 
     print("=== signature repair ===")
     print(f"  dirs               : {', '.join(dirs)}")
@@ -185,7 +188,7 @@ def main() -> int:
     if untouched:
         print(f"  skipped (cosmetic): {len(untouched)} file(s) differ only in parameter names")
 
-    unresolved = sorted(set(failing) - {p.stem for p, *_ in changes})
+    unresolved = sorted(set(failing) - {name_for(p) for p, *_ in changes})
     if unresolved:
         print()
         print("  NOT auto-repairable — fix by hand:")
@@ -203,25 +206,25 @@ def main() -> int:
             # Matched source is verified code: a signature fix must not perturb
             # the bytes, so re-check and roll back if it does.
             r = subprocess.run(
-                ["python3", "tools/decomp/match_function.py", path.stem, rel],
+                ["python3", "tools/decomp/match_function.py", name_for(path), rel],
                 capture_output=True, text=True, cwd=ROOT, timeout=600,
             )
             if r.stdout.startswith("MATCH"):
-                print(f"    OK     {path.stem}")
+                print(f"    OK     {name_for(path)}")
                 continue
             path.write_text(original)
-            reverted.append(path.stem)
-            print(f"    REVERT {path.stem} — match regressed")
+            reverted.append(name_for(path))
+            print(f"    REVERT {name_for(path)} — match regressed")
             continue
 
         # Drafts are not expected to match; compiling is the bar.
         _name, err = compile_one(path)
         if err:
             path.write_text(original)
-            reverted.append(path.stem)
-            print(f"    REVERT {path.stem} — still does not compile")
+            reverted.append(name_for(path))
+            print(f"    REVERT {name_for(path)} — still does not compile")
         else:
-            print(f"    OK     {path.stem}")
+            print(f"    OK     {name_for(path)}")
 
     print(f"\n  kept    : {len(changes) - len(reverted)}")
     print(f"  reverted: {len(reverted)}")

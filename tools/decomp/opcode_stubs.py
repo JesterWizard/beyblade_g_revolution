@@ -6,6 +6,9 @@ from __future__ import annotations
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 MATCHED = ROOT / "src" / "matched"
 
 
@@ -33,25 +36,25 @@ def file_kind(path: Path) -> str:
 
 def list_opcode_stubs() -> list[str]:
     out: list[str] = []
-    for path in sorted(MATCHED.glob("sub_*.c")):
+    for path in sorted(MATCHED.glob("*.c")):
         if is_opcode_stub(path):
-            out.append(path.stem)
+            out.append(name_for(path))
     return out
 
 
 def list_semantic() -> list[str]:
     out: list[str] = []
-    for path in sorted(MATCHED.glob("sub_*.c")):
+    for path in sorted(MATCHED.glob("*.c")):
         if is_semantic_c(path):
-            out.append(path.stem)
+            out.append(name_for(path))
     return out
 
 
 def list_readable_asm() -> list[str]:
     out: list[str] = []
-    for path in sorted(MATCHED.glob("sub_*.c")):
+    for path in sorted(MATCHED.glob("*.c")):
         if is_readable_asm(path):
-            out.append(path.stem)
+            out.append(name_for(path))
     return out
 
 

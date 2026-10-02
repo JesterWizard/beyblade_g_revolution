@@ -26,6 +26,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
+from fnfiles import name_for  # noqa: E402
 from match_function import (  # noqa: E402
     BannedAsmError,
     check_semantic_asm,
@@ -178,9 +179,9 @@ def emit_text_with_relocs(raw: Path, dest: Path, size: int) -> None:
 
 
 def compile_matched(c_path: Path, obj_path: Path, grow: bool = False) -> None:
-    name = c_path.stem
+    name = name_for(c_path)
     if not name.startswith("sub_"):
-        raise SystemExit(f"compile_matched: expected sub_*.c, got {c_path}")
+        raise SystemExit(f"compile_matched: {c_path} is neither sub_*.c nor a recorded symbol file")
 
     check_semantic_asm(c_path)
     size = reference_size(name)

@@ -20,6 +20,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 MATCHED = ROOT / "src" / "matched"
 NON = ROOT / "asm" / "nonmatchings"
 MATCH_ASM = ROOT / "asm" / "matchings"
@@ -168,11 +171,11 @@ def collect() -> dict[str, Any]:
             wip_cfg.append(row)
 
     pending: list[dict[str, Any]] = []
-    for path in sorted(MATCHED.glob("sub_*.c")):
+    for path in sorted(MATCHED.glob("*.c")):
         kind = file_kind(path)
         if kind == "semantic":
             continue
-        name = path.stem
+        name = name_for(path)
         try:
             size = function_size(name, path)
         except FileNotFoundError:
@@ -247,10 +250,10 @@ def collect() -> dict[str, Any]:
 
     battle_pending = [r for r in pending if r["battle_refs"] > 0 and not r["blocked"]]
     battle_semantic = 0
-    for path in MATCHED.glob("sub_*.c"):
+    for path in MATCHED.glob("*.c"):
         if file_kind(path) != "semantic":
             continue
-        n, _ = _battle_refs(path.stem)
+        n, _ = _battle_refs(name_for(path))
         if n:
             battle_semantic += 1
 
@@ -291,7 +294,7 @@ def collect() -> dict[str, Any]:
         "settings": {"top": top_n, "prefer": prefer},
         "summary": {
             "pending": len(pending),
-            "semantic_done": len(list(MATCHED.glob("sub_*.c"))) - len(pending),
+            "semantic_done": len(list(MATCHED.glob("*.c"))) - len(pending),
             "readable_asm": sum(1 for r in pending if r["kind"] == "asm"),
             "opcode": sum(1 for r in pending if r["kind"] == "opcode"),
             "battle_pending": len(battle_pending),

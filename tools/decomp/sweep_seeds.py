@@ -28,6 +28,7 @@ import sys
 
 ROOT = pathlib.Path("/home/username/Github/beyblade_g_revolution")
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
+from fnfiles import matched_file  # noqa: E402
 
 import match_function as mf  # noqa: E402
 from opcode_stubs import file_kind  # noqa: E402
@@ -93,7 +94,7 @@ def branch_offset_only(got: bytes, want: bytes) -> bool:
 
 def worker(c_path: pathlib.Path, want_all: bool) -> tuple[str, str] | None:
     fn = c_path.stem
-    linked = ROOT / "src" / "matched" / (fn + ".c")
+    linked = matched_file(fn)
     if not linked.exists():
         return None
     if not want_all and file_kind(linked) == "semantic":

@@ -19,7 +19,7 @@ Names reach the compiler as macros, never as renamed symbols:
 
     #define GetItem sub_08012340
 
-so `src/matched/sub_08012340.c` reads as `u16 GetItem(s32 a)` while the
+so `src/matched/GetItem.c` (formerly `sub_08012340.c`; see fnfiles.py) reads as `u16 GetItem(s32 a)` while the
 preprocessor still emits the `sub_08012340` symbol. The ROM, the linker script,
 and `make compare` are untouched by construction.
 

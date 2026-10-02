@@ -33,6 +33,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402
 MATCHED = ROOT / "src" / "matched"
 DECOMPILED = ROOT / "src" / "decompiled"
 SYMBOLS_JSON = ROOT / "analysis" / "symbols.json"
@@ -172,7 +175,7 @@ def _function_names() -> list[str]:
             pass
     for base in (MATCHED, DECOMPILED):
         if base.is_dir():
-            names |= {p.stem for p in base.glob("sub_*.c")}
+            names |= {name_for(p) for p in base.glob("*.c")}
     return sorted(names)
 
 
@@ -183,7 +186,7 @@ def _matched_has_c(path: Path, verified: set[str] | None) -> bool:
     kind = file_kind(path)
     if kind != "semantic":
         return False
-    if verified is not None and path.stem not in verified:
+    if verified is not None and name_for(path) not in verified:
         return False
     return True
 
@@ -196,7 +199,7 @@ def collect() -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
 
     for name in _function_names():
-        matched_path = MATCHED / f"{name}.c"
+        matched_path = matched_file(name)
         has_c = False
         if matched_path.is_file():
             has_c = _matched_has_c(matched_path, verified)

@@ -32,6 +32,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file  # noqa: E402
 
 from opcode_stubs import file_kind  # noqa: E402
 from queue_toml import read_blocks, remove_blocks  # noqa: E402
@@ -50,7 +51,7 @@ def _is_stub_note(path: Path, name: str) -> bool:
 def _superseded() -> list[str]:
     out: list[str] = []
     for draft in sorted(DECOMPILED.glob("sub_*.c")):
-        matched = MATCHED / draft.name
+        matched = matched_file(draft.stem)
         if matched.is_file() and file_kind(matched) == "semantic":
             out.append(draft.stem)
     return out

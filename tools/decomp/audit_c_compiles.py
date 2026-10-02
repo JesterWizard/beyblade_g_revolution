@@ -16,6 +16,9 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 AGBCC = ROOT / "tools" / "agbcc" / "bin" / "agbcc"
 CPPFLAGS = ["-Iinclude", "-Itools/agbcc/include", "-Itools/agbcc"]
 CFLAGS = [
@@ -53,7 +56,7 @@ def compile_one(path: pathlib.Path) -> tuple[str, str]:
             timeout=120,
         )
         if pp.returncode != 0:
-            return path.stem, f"preprocess: {pp.stderr.strip().splitlines()[-1][:150]}"
+            return name_for(path), f"preprocess: {pp.stderr.strip().splitlines()[-1][:150]}"
         cc = subprocess.run(
             [str(binary), str(i_path), "-o", str(s_path), *CFLAGS, *extra],
             capture_output=True,
@@ -64,12 +67,12 @@ def compile_one(path: pathlib.Path) -> tuple[str, str]:
             first = next(
                 (ln for ln in cc.stderr.splitlines() if ln.strip()), "(no stderr)"
             )
-            return path.stem, first[:160]
-        return path.stem, ""
+            return name_for(path), first[:160]
+        return name_for(path), ""
     except subprocess.TimeoutExpired:
-        return path.stem, "timeout"
+        return name_for(path), "timeout"
     except Exception as exc:  # noqa: BLE001
-        return path.stem, f"{type(exc).__name__}: {exc}"[:160]
+        return name_for(path), f"{type(exc).__name__}: {exc}"[:160]
     finally:
         i_path.unlink(missing_ok=True)
         s_path.unlink(missing_ok=True)

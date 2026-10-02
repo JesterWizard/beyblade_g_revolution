@@ -22,6 +22,9 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 MATCHED = ROOT / "src" / "matched"
 WIP = ROOT / "src" / "decompiled"
 HEADERS = ROOT / "include" / "unknown-functions.h"
@@ -104,7 +107,7 @@ def _pick_next(*, battle: bool, resume_wip: bool, force_exhausted: bool = False)
     skip = set(buckets.get("naked_only") or [])
     data = collect()
     blocked = _blocked_names(data)
-    wip_names = {p.stem for p in WIP.glob("sub_*.c")}
+    wip_names = {name_for(p) for p in WIP.glob("sub_*.c")}
     if not force_exhausted:
         skip |= _exhausted_names()
 
@@ -302,7 +305,7 @@ def build_packet(name: str, permute_seconds: int = _AUTO_PERMUTE_SECONDS) -> str
     buckets, missing_by_symbol, cse_risk = classify()
     bucket = _bucket_of(name, buckets)
     try:
-        size = function_size(name, MATCHED / f"{name}.c")
+        size = function_size(name, matched_file(name))
     except FileNotFoundError:
         size = 0
     data = collect()

@@ -20,6 +20,9 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import stem_for   # noqa: E402
+
 BASEROM = ROOT / "baserom.gba"
 MANIFEST = ROOT / "build" / "matched.json"
 MATCH_DIR = ROOT / "asm" / "matchings"
@@ -551,7 +554,7 @@ def main() -> int:
         for i, fn in enumerate(functions):
             addr = int(fn["addr"], 16)
             name = fn["name"]
-            ld_lines.append(f"        src/matched/{name}.o(.text)")
+            ld_lines.append(f"        src/matched/{stem_for(name)}.o(.text)")
             end = addr + fn["size"]
 
             if i + 1 < len(functions):

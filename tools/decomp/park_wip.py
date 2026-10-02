@@ -21,6 +21,9 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from queue_toml import QUEUE, upsert_block  # noqa: E402
@@ -138,7 +141,7 @@ def main() -> int:
         exhausted=args.exhausted,
     )
 
-    matched = MATCHED / f"{name}.c"
+    matched = matched_file(name)
     print(f"parked {name} ({'new' if inserted else 'updated'} queue block)")
     print(f"  seed  {seed_rel}")
     print(f"  notes {notes_rel}")

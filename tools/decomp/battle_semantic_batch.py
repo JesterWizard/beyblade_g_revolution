@@ -9,6 +9,9 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 sys.path.insert(0, str(ROOT / "tools" / "decomp"))
 
 from battle_scan import score  # noqa: E402
@@ -190,13 +193,13 @@ def integrate(function: str, body: str, note: str) -> bool:
 
 def battle_readable() -> list[str]:
     out: list[str] = []
-    for path in sorted(MATCHED.glob("sub_*.c")):
-        n, _, _ = score(NON / f"{path.stem}.s")
+    for path in sorted(MATCHED.glob("*.c")):
+        n, _, _ = score(NON / f"{name_for(path)}.s")
         if not n:
             continue
         if file_kind(path) != "asm":
             continue
-        out.append(path.stem)
+        out.append(name_for(path))
     return out
 
 

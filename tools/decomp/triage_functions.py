@@ -17,6 +17,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 ASM_DIR = ROOT / "asm" / "nonmatchings"
 MANIFEST = ROOT / "build" / "matched.json"
 
@@ -28,7 +31,7 @@ LABEL_RE = re.compile(r"^([A-Za-z0-9_]+):\s*$")
 
 def score_file(path: Path) -> tuple[int, str]:
     if not path.name.startswith("sub_"):
-        return (10**9, path.stem)
+        return (10**9, name_for(path))
     lines = path.read_text().splitlines()
     insns = sum(
         1
@@ -40,9 +43,9 @@ def score_file(path: Path) -> tuple[int, str]:
         and ":" not in ln
     )
     if insns == 0:
-        return (10**9, path.stem)
+        return (10**9, name_for(path))
     bl_count = sum(1 for ln in lines if " bl " in f" {ln} " or ln.strip().startswith("bl "))
-    name = path.stem
+    name = name_for(path)
     # Lower score = easier
     return (insns + bl_count * 3, name)
 
@@ -59,7 +62,7 @@ def main() -> int:
 
     # Candidate pool = still readable-Thumb or opcode-stub (not yet semantic C).
     pending = set(list_readable_asm()) | set(list_opcode_stubs())
-    files = [p for p in ASM_DIR.glob("*.s") if p.stem in pending]
+    files = [p for p in ASM_DIR.glob("*.s") if name_for(p) in pending]
     if not files:
         print(f"error: no functions left to convert in {ASM_DIR}", file=sys.stderr)
         return 1

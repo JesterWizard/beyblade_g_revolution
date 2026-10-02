@@ -87,7 +87,7 @@ bash build_tools.sh
 
 | Area | Rule |
 |------|------|
-| `src/*.c` | Add matched decomp; comment header with ROM address |
+| `src/*.c` | Add matched decomp; comment header with ROM address. Files are `<Symbol>.c` once named, `sub_XXXXXXXX.c` before — identity stays `sub_XXXXXXXX`; use `fnfiles.py` helpers, never assume stem == function |
 | `src/decompiled/` | Unmatched C + notes, the DECOMPILED tier (`park_wip.py`); not linked |
 | `analysis/*.json` | Generated analysis DB + `symbols.json` (names live here, not in source) |
 | `include/symbols.h` | Generated view of `symbols.json` — regenerate, never hand-edit |
@@ -107,6 +107,7 @@ bash build_tools.sh
 - Accept a match without objdiff 0-diff (Mizuchi enforces; still re-run `make compare`)
 - Use C99 in matching paths or “fix” UB without `UBFIX`/`BUGFIX` guards
 - Hardcode IWRAM/EWRAM addresses — use `asm/ram_map*.s`
+- Rename `src/matched/*.c` by hand — run `python3 tools/decomp/fnfiles.py sync --apply` after `symbols.py set` (also rewrites `asm/rom_layout.ld`)
 - Hand-edit `include/symbols.h`, `[renames]`, or `analysis/*.json` — all are generated views; edit `analysis/symbols.json` via `symbols.py`
 - Rename identifiers with a plain text replace — it will corrupt `asm("...")` string literals, where the preprocessor cannot expand a macro. Use `symbols.py apply`
 - Use offset-casts (`*(u16 *)((u8 *)p + off)`), `register`, `asm volatile`, GCC asm labels, or empty `asm("")` barriers in semantic C — struct members in `unknown-types.h`. Inline `asm()` is only for BIOS `swi` and naked Thumb wrappers.
@@ -137,6 +138,7 @@ bash build_tools.sh
 | Signature repair | `tools/decomp/repair_naked_signatures.py` | `make repair-signatures` — align defs with prototypes |
 | Variant sweep | `tools/decomp/test_variants.py` | Test many `@@BODY@@` source variants against one function |
 | Integrate C | `tools/decomp/integrate_c.py` | Land MATCH into `src/matched/` |
+| File names | `tools/decomp/fnfiles.py` | `sync --apply` renames `src/matched/sub_X.c` → `<Symbol>.c` (git mv) and fixes `asm/rom_layout.ld`; every tool resolves name ↔ file through it |
 | Compile matched C | `tools/decomp/compile_matched.py` | agbcc one function into the peel |
 | Park WIP | `tools/decomp/park_wip.py` | Save unmatched C + notes (`src/decompiled/`) |
 | Local permuter | `tools/decomp/permuter/auto.py` | Import → score → search → integrate on score 0 |

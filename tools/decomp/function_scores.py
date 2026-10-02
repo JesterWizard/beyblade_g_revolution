@@ -26,6 +26,9 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 MATCHED_SRC = ROOT / "src" / "matched"
 SCORES_JSON = ROOT / "docs" / "decomp-function-scores.json"
 OUT_MD = ROOT / "docs" / "decomp-functions.md"
@@ -167,8 +170,8 @@ def collect() -> dict[str, Any]:
             verified_rows = json.loads(vpath.read_text()).get("functions") or {}
         except json.JSONDecodeError:
             verified_rows = {}
-    for path in sorted(MATCHED_SRC.glob("sub_*.c")):
-        name = path.stem
+    for path in sorted(MATCHED_SRC.glob("*.c")):
+        name = name_for(path)
         kind = file_kind(path)
         entry = symbol_for(name, symbols)
         named = is_named(entry)

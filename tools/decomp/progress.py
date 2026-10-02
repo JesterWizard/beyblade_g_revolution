@@ -22,6 +22,9 @@ from xml.sax.saxutils import escape
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import matched_file, name_for  # noqa: E402,F401
 MATCHED_SRC = ROOT / "src" / "matched"
 MATCH_ASM = ROOT / "asm" / "matchings"
 NON_ASM = ROOT / "asm" / "nonmatchings"
@@ -117,7 +120,7 @@ def _battle_names() -> set[str]:
     for path in NON_ASM.glob("sub_*.s"):
         n, _, _ = score(path)
         if n:
-            names.add(path.stem)
+            names.add(name_for(path))
     return names
 
 
@@ -144,7 +147,7 @@ def verified_semantic() -> set[str] | None:
 
 
 def collect(top: int = 15) -> dict[str, Any]:
-    files = sorted(MATCHED_SRC.glob("sub_*.c")) if MATCHED_SRC.is_dir() else []
+    files = sorted(MATCHED_SRC.glob("*.c")) if MATCHED_SRC.is_dir() else []
     verified = verified_semantic()
     rows: list[dict[str, Any]] = []
     by_kind = {
@@ -155,12 +158,12 @@ def collect(top: int = 15) -> dict[str, Any]:
     missing_size = 0
     for path in files:
         kind = file_kind(path)
-        if kind == "semantic" and verified is not None and path.stem not in verified:
+        if kind == "semantic" and verified is not None and name_for(path) not in verified:
             kind = "asm"
-        if kind == "semantic" and verified is not None and path.stem not in verified:
+        if kind == "semantic" and verified is not None and name_for(path) not in verified:
             kind = "asm"
         try:
-            size = function_size(path.stem, path)
+            size = function_size(name_for(path), path)
         except FileNotFoundError:
             size = 0
             missing_size += 1
@@ -168,8 +171,8 @@ def collect(top: int = 15) -> dict[str, Any]:
         by_kind[kind]["bytes"] += size
         rows.append(
             {
-                "name": path.stem,
-                "addr": f"0x{int(path.stem.replace('sub_', ''), 16):08X}",
+                "name": name_for(path),
+                "addr": f"0x{int(name_for(path).replace('sub_', ''), 16):08X}",
                 "kind": kind,
                 "bytes": size,
             }
@@ -523,12 +526,12 @@ def _remaining_unmatched() -> list[tuple[str, str, str, int]]:
         except json.JSONDecodeError:
             attempts = {}
     parked = {
-        path.stem: path
+        name_for(path): path
         for path in (ROOT / "src" / "decompiled").glob("sub_*.c")
     }
     rows: list[tuple[str, str, str, int]] = []
     for name in parked:
-        matched = MATCHED_SRC / f"{name}.c"
+        matched = matched_file(name)
         if matched.is_file() and file_kind(matched) == "semantic":
             continue
         att = attempts.get(name) or {}
@@ -539,18 +542,18 @@ def _remaining_unmatched() -> list[tuple[str, str, str, int]]:
         score = str(att.get("score") or f"0/{size}")
         rows.append((name, score, "parked", size))
     if MATCHED_SRC.is_dir():
-        for path in MATCHED_SRC.glob("sub_*.c"):
-            if path.stem in parked or file_kind(path) == "semantic":
+        for path in MATCHED_SRC.glob("*.c"):
+            if name_for(path) in parked or file_kind(path) == "semantic":
                 continue
             try:
-                size = function_size(path.stem, path)
+                size = function_size(name_for(path), path)
             except FileNotFoundError:
                 size = 0
             if size <= 2:
                 continue
-            att = attempts.get(path.stem) or {}
+            att = attempts.get(name_for(path)) or {}
             score = str(att.get("score") or f"0/{size}")
-            rows.append((path.stem, score, "blocked", size))
+            rows.append((name_for(path), score, "blocked", size))
     rows.sort(key=lambda row: -row[3])
     return rows
 
@@ -655,7 +658,7 @@ def _patch_marked(path: Path, block: str, *, heading: str, fallback_end: str | N
     from doc_write import write_doc
 
     if not path.is_file():
-        path.write_text(f"# {path.stem}\n\n{heading}\n\n{block}")
+        path.write_text(f"# {name_for(path)}\n\n{heading}\n\n{block}")
         return
     text = path.read_text()
     if STATUS_START in text and STATUS_END in text:

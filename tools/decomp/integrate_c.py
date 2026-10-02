@@ -11,6 +11,9 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fnfiles import stem_for  # noqa: E402
 MANIFEST = ROOT / "build" / "matched.json"
 MATCH = ROOT / "asm" / "matchings"
 SRC_MATCHED = ROOT / "src" / "matched"
@@ -109,7 +112,7 @@ def main() -> int:
         body = args.c_body
 
     SRC_MATCHED.mkdir(parents=True, exist_ok=True)
-    rel_src = f"src/matched/{name}.c"
+    rel_src = f"src/matched/{stem_for(name)}.c"
     dst = ROOT / rel_src
 
     with tempfile.TemporaryDirectory() as tmp:
