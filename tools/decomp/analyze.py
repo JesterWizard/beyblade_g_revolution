@@ -316,6 +316,182 @@ def build_structs(functions: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+_GAP_HEADER = re.compile(r"0x([0-9A-Fa-f]+)\.\.0x([0-9A-Fa-f]+)")
+_THUMB_MEM = re.compile(r"\[(?:r\d+|sp|pc),\s*#(0x[0-9A-Fa-f]+|\d+)\]")
+_MAX_FUNC = 0x2000
+
+
+def _gap_ranges() -> list[tuple[int, int]]:
+    """Inclusive (start, end) ROM addresses of every `.incbin` gap file."""
+    ranges: list[tuple[int, int]] = []
+    for path in sorted((ROOT / "asm").glob("rom_gap_*.s")):
+        with path.open() as fh:
+            m = _GAP_HEADER.search(fh.readline())
+        if m:
+            ranges.append((int(m.group(1), 16), int(m.group(2), 16)))
+    return ranges
+
+
+def _scan_gap_function(md: Any, rom: bytes, start: int, limit: int) -> int | None:
+    """End (exclusive) of the code run at `start`, or None if it is not code.
+
+    Decodes Thumb forward until a terminator (`bx rN`, `pop {..pc}`, or an
+    unconditional branch that leaves the run). Any undecodable halfword, or no
+    terminator inside the cap, means this was data that merely looked like a
+    prologue.
+    """
+    off = start - 0x08000000
+    end = min(limit, start + _MAX_FUNC)
+    pos = start
+    while pos < end:
+        word = rom[pos - 0x08000000 : pos - 0x08000000 + 4]
+        insns = list(md.disasm(word, pos, count=1))
+        if not insns:
+            return None
+        ins = insns[0]
+        pos += ins.size
+        if ins.mnemonic == "bx" or (ins.mnemonic == "pop" and "pc" in ins.op_str):
+            return pos
+        if ins.mnemonic == "b":
+            target = int(ins.op_str.lstrip("#"), 16)
+            if not (start <= target < pos):
+                return pos
+    return None
+
+
+def collect_gap() -> list[dict[str, Any]]:
+    """Functions that live in `asm/rom_gap_*.s` (still `.incbin`, undecompiled).
+
+    The per-function table above only knows the functions Luvdis split into
+    `asm/nonmatchings`. Everything else is a raw baserom blob, so boundaries
+    are recovered from the bytes: Thumb `push {..lr}` prologues that decode
+    cleanly to a return, plus every `bl` target landing inside a gap.
+    """
+    try:
+        import capstone  # noqa: WPS433
+    except ImportError:
+        print("capstone missing: gap functions skipped (pip install capstone)", file=sys.stderr)
+        return []
+
+    rom = (ROOT / "baserom.gba").read_bytes()
+    md = capstone.Cs(capstone.CS_ARCH_ARM, capstone.CS_MODE_THUMB)
+    md.detail = False
+    ranges = _gap_ranges()
+
+    def gap_of(addr: int) -> tuple[int, int] | None:
+        for lo, hi in ranges:
+            if lo <= addr <= hi:
+                return lo, hi
+        return None
+
+    # Pass 1: candidate starts, per gap, then validate by decoding.
+    starts: dict[int, int] = {}  # start -> end of the decoded code run
+    for lo, hi in ranges:
+        limit = hi + 1
+        pos = lo + (lo & 1)
+        while pos + 2 <= limit:
+            half = int.from_bytes(rom[pos - 0x08000000 : pos - 0x08000000 + 2], "little")
+            if (half & 0xFF00) == 0xB500:  # push {.., lr}
+                code_end = _scan_gap_function(md, rom, pos, limit)
+                if code_end is not None:
+                    starts[pos] = code_end
+                    pos = code_end
+                    continue
+            pos += 2
+
+    # Pass 2: `bl` targets inside a gap that pass 1 did not see (no push).
+    changed = True
+    while changed:
+        changed = False
+        for start in sorted(starts):
+            for ins in md.disasm(rom[start - 0x08000000 : starts[start] - 0x08000000], start):
+                if ins.mnemonic != "bl":
+                    continue
+                target = int(ins.op_str.lstrip("#"), 16)
+                rng = gap_of(target)
+                if rng and target not in starts and not any(
+                    s <= target < e for s, e in starts.items()
+                ):
+                    end = _scan_gap_function(md, rom, target, rng[1] + 1)
+                    if end is not None:
+                        starts[target] = end
+                        changed = True
+
+    # Size runs to the next function (or gap end), so trailing literal pools
+    # count towards the function, as they do for the split functions.
+    ordered = sorted(starts)
+    sym_json = _load_json(ANALYSIS / "symbols.json") or {}
+    symbols = sym_json.get("symbols") or {}
+    names_map = ram_name_map()
+
+    rows: list[dict[str, Any]] = []
+    for idx, start in enumerate(ordered):
+        lo, hi = gap_of(start) or (start, start)
+        nxt = ordered[idx + 1] if idx + 1 < len(ordered) else hi + 1
+        end = min(nxt, hi + 1)
+        code_end = starts[start]
+        callees: list[str] = []
+        offsets: set[int] = set()
+        pool: list[int] = []
+        insn_count = 0
+        for ins in md.disasm(rom[start - 0x08000000 : code_end - 0x08000000], start):
+            insn_count += 1
+            if ins.mnemonic == "bl":
+                name = f"sub_{int(ins.op_str.lstrip('#'), 16):08X}"
+                if name not in callees:
+                    callees.append(name)
+            elif ins.mnemonic == "ldr" and "[pc," in ins.op_str:
+                m = _THUMB_MEM.search(ins.op_str)
+                if m:
+                    imm = int(m.group(1), 0)
+                    lit = ((ins.address + 4) & ~3) + imm
+                    if lit + 4 <= len(rom) + 0x08000000:
+                        value = int.from_bytes(
+                            rom[lit - 0x08000000 : lit - 0x08000000 + 4], "little"
+                        )
+                        if value not in pool:
+                            pool.append(value)
+            else:
+                m = _THUMB_MEM.search(ins.op_str)
+                if m and "sp" not in ins.op_str and "pc" not in ins.op_str:
+                    offsets.add(int(m.group(1), 0))
+
+        ram_refs = [v for v in pool if _classify_literal(v) in ("ewram", "iwram", "sram")]
+        data_refs = [v for v in pool if _classify_literal(v) == "rom"]
+        sym = symbols.get(f"0x{start:08X}") or {}
+        rows.append(
+            {
+                "name": f"sub_{start:08X}",
+                "addr": f"0x{start:08X}",
+                "size": end - start,
+                "kind": "gap",
+                "status": "not_started",
+                "tier": "UNKNOWN",
+                "symbol": str(sym.get("symbol") or ""),
+                "note": "",
+                "insn_count": insn_count,
+                "offsets": [f"0x{o:02X}" for o in sorted(offsets)],
+                "callees": sorted(callees),
+                "callers": [],
+                "ram_refs": [f"0x{v:08X}" for v in sorted(set(ram_refs))],
+                "ram_names": sorted({names_map.get(v, "") for v in ram_refs} - {""}),
+                "data_refs": [f"0x{v:08X}" for v in sorted(set(data_refs))],
+                "pool": [f"0x{v:08X}" for v in pool],
+                "system": "",
+            }
+        )
+
+    by_name = {r["name"]: r for r in rows}
+    for row in rows:
+        for callee in row["callees"]:
+            target = by_name.get(callee)
+            if target is not None and row["name"] not in target["callers"]:
+                target["callers"].append(row["name"])
+    for row in rows:
+        row["callers"].sort()
+    return rows
+
+
 def _write(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=False) + "\n")
@@ -333,6 +509,7 @@ def run() -> dict[str, Any]:
     import systems as systems_mod  # noqa: WPS433
 
     functions = collect()
+    gap_functions = collect_gap()
     xrefs = build_xrefs(functions)
     structs = build_structs(functions)
 
@@ -350,6 +527,8 @@ def run() -> dict[str, Any]:
             "generated": generated,
             "total": len(functions),
             "functions": functions,
+            "gap_total": len(gap_functions),
+            "gap_functions": gap_functions,
         },
     )
     _write(OUT_XREFS, {"generated": generated, **xrefs})
@@ -359,6 +538,7 @@ def run() -> dict[str, Any]:
     return {
         "generated": generated,
         "functions": len(functions),
+        "gap_functions": len(gap_functions),
         "structs": structs["count"],
         "systems": system_data["counts"],
         "xrefs": xrefs["counts"],
@@ -408,6 +588,7 @@ def main() -> int:
 
     print("=== Analysis database ===")
     print(f"  functions   {summary['functions']}")
+    print(f"  gap funcs   {summary['gap_functions']} (still .incbin)")
     print(f"  structs     {summary['structs']}")
     print(f"  call edges  {summary['xrefs']['edges']}")
     print(f"  data addrs  {summary['xrefs']['data_addresses']}")

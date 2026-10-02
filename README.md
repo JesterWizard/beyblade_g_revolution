@@ -160,11 +160,42 @@ appear in the index and on their subsystem page. The scoreboard
 | `make grow-test` | Insert 4 bytes after the first matched `.text`; later peels must slide |
 | `make GROW=1 COMPARE=0 rom` | Allow matched C `.text` to grow or shrink (mods; SHA1 will not match) |
 
-Matching C is `src/matched/` (one file per function) and is what `make`
-compiles into the ROM. The linker packs those objects in order after the ROM
-head (retail addresses only while sizes match). Unmatched drafts are
-`src/decompiled/` (not linked). Patterns:
+Matching C is authored in grouped files (`src/text.c`, `src/palette.c`, …; see
+`tools/decomp/groups.py`) plus the `src/matched/` inbox of ungrouped functions.
+`make` splits both into one file per function under `build/split/` (generated,
+never edit) and compiles those into the ROM. The linker packs the objects in
+order after the ROM head (retail addresses only while sizes match). Unmatched
+drafts are `src/decompiled/` (not linked). Patterns:
 [docs/decomp-patterns.md](docs/decomp-patterns.md). Queue: `make queue`.
+
+### Make targets
+
+| Target | Purpose |
+|--------|---------|
+| `make` / `make rom` | Build `beyblade_g_revolution.gba` (extracts graphics on first run) |
+| `make compare` | Build and check SHA1 against retail. Must print `beyblade_g_revolution.gba: OK` |
+| `make split` | Regenerate `build/split/` from `src/<group>.c` + `src/matched/` (runs automatically on every `make`) |
+| `make pack` | Fold named `src/matched/` inbox functions into their group file |
+| `make rename-files` | Rename inbox `sub_XXXXXXXX.c` files to their symbol names and fix `asm/rom_layout.ld` |
+| `make analyze` | Rebuild `analysis/*.json` |
+| `make symbols` | Regenerate `include/symbols.h` and `[renames]` from `analysis/symbols.json` |
+| `make tier` | Lifecycle tier table (UNKNOWN / DECOMPILED / UNDERSTOOD / MATCHING) |
+| `make document` | Regenerate `docs/systems/` and `docs/functions/` |
+| `make status` | Pipeline status summary |
+| `make progress` | Refresh `docs/decomp-progress.*` counters and chart |
+| `make queue` / `make scores` | Refresh the next-function queue / per-function scores |
+| `make script-first` | Deterministic convert batch |
+| `make packet` | Compact context packet for the next leftover function |
+| `make cluster` / `make patterns` | Find Thumb clone families / list known C patterns |
+| `make audit` | Check every matched function compiles standalone (`audit-drafts` for `src/decompiled/`) |
+| `make signatures` | Audit prototypes vs definitions vs call sites |
+| `make sync-verified` / `make check-verified` | Repair / gate `build/semantic_verified.json` |
+| `make prune-drafts` | Drop drafts superseded by a semantic match (`--apply`; also removes your uncommitted drafts) |
+| `make shift-test` / `make grow-test` | Check that relocations slide when the ROM layout shifts or a function grows |
+| `make GROW=1 COMPARE=0 rom` | Allow `.text` to grow/shrink (mods; SHA1 will not match) |
+| `make graphics` / `make clean-gfx` | Re-extract / delete the PNGs in `graphics/` |
+| `make tools` | Build the pret helper tools |
+| `make tidy` / `make clean` | Delete build output (`clean` also cleans `tools/`) |
 
 ## Layout
 
@@ -173,7 +204,7 @@ pret/pokeemerald-style matching tree:
 | Path | Role |
 |------|------|
 | `asm/` | Matching ARM/Thumb + baserom peels |
-| `src/` | Matching C (`src/matched/` until Phase 5 packs by module) |
+| `src/` | Matching C grouped by subsystem (`src/<group>.c`) + `src/matched/` inbox |
 | `include/` | Headers (`gba/`, `ram_map.h`, types) |
 | `data/` | Extracted data (`data/event_scripts/` reserved) |
 | `docs/` | Decomp notes, RAM map, progress tables |
