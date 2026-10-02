@@ -1,0 +1,13 @@
+# Thought bubbles. See docs/modding.md for the format.
+
+# FieldUpdateFrame's bl CursorHistoryReplayStep (sub_0804245C), just before the
+# task run and the HUD refresh -> BubbleFieldTick(), which calls it first. (Not
+# the HudRefreshStats call at 0x080470FC: debug_menu has that one.)
+call 0x080470F4 sub_0804245C BubbleFieldTick
+
+# The bubble's state needs a page of EWRAM that the retail heap does not hand out.
+# HeapAlloc (0x0806A3DE) and its stats print (0x0806A622) size the heap as
+# 0xFE << 10 bytes from 0x02000800, i.e. up to the end of EWRAM; make it 0xFC.
+# debug_menu makes the same patch; apply_hooks applies it once.
+patch 0x0806A3DE FC 22 expect FE 22
+patch 0x0806A622 FC 22 expect FE 22

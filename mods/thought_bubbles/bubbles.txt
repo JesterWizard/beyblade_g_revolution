@@ -1,0 +1,15 @@
+# Thought bubbles. assets/<name>.png is a 128x64 picture.
+#
+#   image <ID> <name>   register a picture; the first must be DEFAULT
+#   flag <number> <ID>    show <ID> once event flag <number> (0..255) is set
+#
+# The bubble follows the latest flag listed here that was set. When several
+# are set at once (loading a save), the one lowest in this file wins, so list
+# the flags in story order.
+#
+# The art is the ygodm8 set. Its flag (0x2B) comes from that game's
+# Millennium Necklace event; point it at the Beyblade event you want.
+image DEFAULT event_01
+image MILLENNIUM_NECKLACE event_02
+
+flag 0x2B MILLENNIUM_NECKLACE

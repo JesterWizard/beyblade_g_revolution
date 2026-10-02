@@ -6,27 +6,28 @@ REVISION   := 0
 
 FILE_NAME  := beyblade_g_revolution
 BUILD_DIR  := build
+null  :=
+space := $(null) $(null)
 OBJ_DIR    := $(BUILD_DIR)/bbgr
 
 # Mods (mods/<name>/, see docs/modding.md) are built in by default: plain
-# `make` produces beyblade_g_revolution_<MOD>.gba with MOD=debug_menu.
+# `make` produces beyblade_g_revolution_<mods joined with +>.gba, with every mod
+# in DEFAULT_MOD built together.
 #   make NO_MODS=1      the vanilla decomp, beyblade_g_revolution.gba
-#   make MOD=<name>     a different mod (MOD= also means none)
+#   make MOD=<name>     one mod, or several: make MOD="a b" (MOD= means none)
 #   make compare        always vanilla, it checks rom.sha1
-DEFAULT_MOD := debug_menu
+DEFAULT_MOD := debug_menu thought_bubbles
 ifeq ($(NO_MODS),1)
   override MOD :=
 else ifeq ($(origin MOD),undefined)
-  MOD := $(if $(wildcard mods/$(DEFAULT_MOD)),$(DEFAULT_MOD))
+  MOD := $(foreach m,$(DEFAULT_MOD),$(if $(wildcard mods/$(m)),$(m)))
 endif
 ifneq (,$(filter compare check-vanilla,$(MAKECMDGOALS)))
   override MOD :=
 endif
 ifneq ($(MOD),)
-  ifeq ($(wildcard mods/$(MOD)),)
-    $(error mods/$(MOD) not found. See docs/modding.md)
-  endif
-  FILE_NAME := beyblade_g_revolution_$(MOD)
+  $(foreach m,$(MOD),$(if $(wildcard mods/$(m)),,$(error mods/$(m) not found. See docs/modding.md)))
+  FILE_NAME := beyblade_g_revolution_$(subst $(space),+,$(strip $(MOD)))
 endif
 
 ROM  := $(FILE_NAME).gba
@@ -143,20 +144,21 @@ C_OBJS := $(patsubst $(C_SUBDIR)/%.c,$(C_BUILDDIR)/%.o,$(C_SRCS))
 ASM_OBJS := $(patsubst $(ASM_SUBDIR)/%.s,$(ASM_BUILDDIR)/%.o,$(ASM_SRCS))
 DATA_ASM_OBJS := $(patsubst $(DATA_ASM_SUBDIR)/%.s,$(DATA_ASM_BUILDDIR)/%.o,$(DATA_ASM_SRCS))
 
-# Mod objects (MOD=<name> only). Linked into .append_text past the retail image.
-MOD_DIR      :=
+# Mod objects (MOD=<name>... only). Linked into .append_text past the retail image.
+# Each mod's own mod.mk sees MOD_DIR / MOD_BUILDDIR and must copy them into
+# variables of its own for use in rules (a recipe expands after the last mod
+# has been read).
 MOD_HOOKS    :=
 MOD_OBJS     :=
-ifneq ($(MOD),)
-MOD_DIR      := mods/$(MOD)
-MOD_HOOKS    := $(wildcard $(MOD_DIR)/hooks.txt)
-MOD_BUILDDIR := $(OBJ_DIR)/mod/$(MOD)
-MOD_C_SRCS   := $(wildcard $(MOD_DIR)/src/*.c)
-MOD_S_SRCS   := $(wildcard $(MOD_DIR)/src/*.s)
-MOD_OBJS     := $(patsubst $(MOD_DIR)/src/%.c,$(MOD_BUILDDIR)/%.o,$(MOD_C_SRCS)) \
-                $(patsubst $(MOD_DIR)/src/%.s,$(MOD_BUILDDIR)/%.o,$(MOD_S_SRCS))
--include $(MOD_DIR)/mod.mk
-endif
+define MOD_SETUP
+MOD_DIR      := mods/$(1)
+MOD_BUILDDIR := $(OBJ_DIR)/mod/$(1)
+MOD_HOOKS    += $$(wildcard $$(MOD_DIR)/hooks.txt)
+MOD_OBJS     += $$(patsubst $$(MOD_DIR)/src/%.c,$$(MOD_BUILDDIR)/%.o,$$(wildcard $$(MOD_DIR)/src/*.c)) \
+                $$(patsubst $$(MOD_DIR)/src/%.s,$$(MOD_BUILDDIR)/%.o,$$(wildcard $$(MOD_DIR)/src/*.s))
+-include $$(MOD_DIR)/mod.mk
+endef
+$(foreach m,$(MOD),$(eval $(call MOD_SETUP,$(m))))
 
 OBJS := $(C_OBJS) $(ASM_OBJS) $(DATA_ASM_OBJS) $(MOD_OBJS)
 OBJS_REL := $(patsubst $(OBJ_DIR)/%,%,$(OBJS))
@@ -320,20 +322,21 @@ $(C_BUILDDIR)/matched/%.o: $(SPLIT_DIR)/%.c tools/decomp/compile_matched.py tool
 	python3 tools/decomp/objcache.py --env $(OBJ_ENV) $(COMPILE_MATCHED_FLAGS) $< $@
 
 # Mod code: plain agbcc, no retail comparison. Mods must not edit src/.
-MOD_CPPFLAGS = $(CPPFLAGS) -DMOD=1 -DMOD_NAME=\"$(MOD)\" -iquote $(MOD_DIR)/include
-
-$(MOD_BUILDDIR)/%.o: $(MOD_DIR)/src/%.c
-	@mkdir -p $(dir $@)
+define MOD_RULES
+$(OBJ_DIR)/mod/$(1)/%.o: mods/$(1)/src/%.c
+	@mkdir -p $$(dir $$@)
 ifeq ($(MODERN),0)
 	@test -x $(CC1) || { echo "error: agbcc missing. See INSTALL.md"; exit 1; }
 endif
-	@$(CPP) $(MOD_CPPFLAGS) $< | $(CC1) $(CFLAGS) -o $(MOD_BUILDDIR)/$*.s
-	@echo -e ".text\n\t.align\t2, 0\n" >> $(MOD_BUILDDIR)/$*.s
-	$(AS) $(ASFLAGS) -o $@ $(MOD_BUILDDIR)/$*.s
+	@$(CPP) $(CPPFLAGS) -DMOD=1 -DMOD_NAME=\"$(1)\" -iquote mods/$(1)/include $$< | $(CC1) $(CFLAGS) -o $(OBJ_DIR)/mod/$(1)/$$*.s
+	@echo -e ".text\n\t.align\t2, 0\n" >> $(OBJ_DIR)/mod/$(1)/$$*.s
+	$(AS) $(ASFLAGS) -o $$@ $(OBJ_DIR)/mod/$(1)/$$*.s
 
-$(MOD_BUILDDIR)/%.o: $(MOD_DIR)/src/%.s
-	@mkdir -p $(dir $@)
-	$(AS) $(ASFLAGS) -mthumb -I $(MOD_DIR)/include -o $@ $<
+$(OBJ_DIR)/mod/$(1)/%.o: mods/$(1)/src/%.s
+	@mkdir -p $$(dir $$@)
+	$(AS) $(ASFLAGS) -mthumb -I mods/$(1)/include -o $$@ $$<
+endef
+$(foreach m,$(MOD),$(eval $(call MOD_RULES,$(m))))
 
 $(C_BUILDDIR)/%.o: $(C_SUBDIR)/%.c
 ifeq ($(MODERN),0)

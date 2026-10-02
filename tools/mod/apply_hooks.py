@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-"""Apply a mod's hooks.txt to a linked ROM (called by `make MOD=<name>`).
+"""Apply a mod's hooks.txt to a linked ROM (called by `make`).
 
-usage: apply_hooks.py <elf> <rom> <hooks.txt>
+usage: apply_hooks.py <elf> <rom> <hooks.txt>...
+
+Several mods pass their files together; an identical `patch` in two of them
+(same address, same bytes) is applied once, anything else that overlaps is an error.
 
 hooks.txt, one directive per line (`#` starts a comment):
 
@@ -97,8 +100,14 @@ class Rom:
     def __init__(self, data: bytearray) -> None:
         self.data = data
         self.owner: dict[int, str] = {}
+        self.patches: dict[int, bytes] = {}
 
-    def write(self, addr: int, blob: bytes, who: str) -> None:
+    def write(self, addr: int, blob: bytes, who: str, shared: bool = False) -> None:
+        # A `patch` that two mods both need (same bytes, same place) is applied once.
+        if shared and self.patches.get(addr) == blob:
+            return
+        if shared:
+            self.patches[addr] = blob
         off = addr - ROM_BASE
         if off < 0 or off + len(blob) > len(self.data):
             sys.exit(f"{who}: 0x{addr:08X}+{len(blob)} is outside the ROM")
@@ -110,19 +119,21 @@ class Rom:
 
 
 def main() -> int:
-    if len(sys.argv) != 4:
+    if len(sys.argv) < 4:
         print(__doc__)
         return 2
-    elf, rom_path, hooks = (Path(a) for a in sys.argv[1:])
+    elf, rom_path, *hook_files = (Path(a) for a in sys.argv[1:])
     syms = load_symbols(elf)
     rom = Rom(bytearray(rom_path.read_bytes()))
     count = 0
 
-    for n, raw in enumerate(hooks.read_text().splitlines(), 1):
+    hooks = hook_files[0] if len(hook_files) == 1 else ", ".join(str(h) for h in hook_files)
+    lines = [(h, n, raw) for h in hook_files for n, raw in enumerate(h.read_text().splitlines(), 1)]
+    for h, n, raw in lines:
         line = raw.split("#", 1)[0].strip()
         if not line:
             continue
-        where = f"{hooks}:{n}"
+        where = f"{h}:{n}"
         words = line.split()
 
         if words[0] == "patch":
@@ -138,11 +149,13 @@ def main() -> int:
                     blob, want = bytes(int(b, 16) for b in words[2:]), None
             except ValueError:
                 sys.exit(f"{where}: bad hex byte list")
+            if rom.patches.get(addr) == blob:
+                continue  # another mod already made this exact patch
             if want is not None:
                 have = bytes(rom.data[addr - ROM_BASE : addr - ROM_BASE + len(want)])
                 if have != want or len(blob) != len(want):
                     sys.exit(f"{where}: 0x{addr:08X} holds {have.hex()}, expected {want.hex()}")
-            rom.write(addr, blob, line)
+            rom.write(addr, blob, line, shared=True)
         elif words[0] == "call":
             if len(words) != 4:
                 sys.exit(f"{where}: call <addr> <orig> <repl>")

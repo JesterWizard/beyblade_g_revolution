@@ -5,16 +5,25 @@ itself (`src/`, `asm/`, `include/`) is never edited for a mod, so upstream
 changes merge cleanly and `make compare` keeps passing.
 
 ```
-make                    # builds in the default mod (debug_menu): beyblade_g_revolution_debug_menu.gba
+make                    # builds every default mod together: beyblade_g_revolution_debug_menu+thought_bubbles.gba
 make NO_MODS=1          # the vanilla decomp: beyblade_g_revolution.gba
 make MOD=example        # a different mod -> beyblade_g_revolution_example.gba
+make MOD="a b"          # several mods in one ROM
 make compare            # always vanilla; checks rom.sha1
 make check-vanilla      # vanilla matches AND no mod object was linked
 ```
 
-The default mod is `DEFAULT_MOD` in the Makefile. If `mods/<DEFAULT_MOD>` does not
-exist (a fork without it), plain `make` is vanilla. `MOD=` with nothing after it also
-means no mod. Only one mod is built at a time.
+The default mods are `DEFAULT_MOD` in the Makefile (a list); one that does not exist
+in a fork is skipped, and if none exist plain `make` is vanilla. `MOD=` with nothing
+after it also means no mod.
+
+Mods built together must not touch the same bytes: every `call`, `pointer`, hook and
+`patch` has to be at a different place. The one exception is an identical `patch`
+(same address, same bytes), which is applied once, so two mods can both shrink the
+heap for their state page. Give each mod its own variable names in `mod.mk` (a
+recipe runs after every `mod.mk` has been read) and, in the shared EWRAM page
+`0x0203F000`, its own part of it (`debug_menu` the first 2 KB, `thought_bubbles` the
+rest).
 
 ## Layout
 

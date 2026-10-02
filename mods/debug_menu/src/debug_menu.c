@@ -3,14 +3,14 @@
 /* The overworld's own popup-menu machinery (the Start menu is "page 7") runs
  * a page definition: init / loop / exit functions plus one handler per key,
  * driven by MainCallbacksRun and MenuDispatchKeyHandlers. This file supplies a
- * page of that shape and opens it with L. Drawing mirrors the Start menu: a
+ * page of that shape and opens it with Select. Drawing mirrors the Start menu: a
  * frame font for the border pieces, the text font for labels, and palette
  * banks 0x0F / 0x0E for normal / highlighted rows. */
 
 #define KEY_A 0x001
 #define KEY_B 0x002
 #define KEY_START 0x008
-#define KEY_L 0x200
+#define KEY_SELECT 0x004
 
 #define FRAME_FONT ((struct Unk617C4 *)0x080D79CC)
 #define FRAME_WIDTHS 0x080B7429
@@ -268,7 +268,7 @@ static void MenuLoop(u8 *state, struct MainWork *work)
         work->unk17F0++;
     }
     SetFade(work);
-    if (gData_03004060 & (KEY_START | KEY_L))
+    if (gData_03004060 & (KEY_START | KEY_SELECT))
         BeginClose(state);
 }
 
@@ -437,6 +437,6 @@ void DebugFieldTick(void)
     DebugStateInit();
     CheatsTick();
     work = gMainWorkPtr;
-    if ((gData_03004060 & KEY_L) && work->unk180C == 0 && work->unk185A == 1)
+    if ((gData_03004060 & KEY_SELECT) && work->unk180C == 0 && work->unk185A == 1)
         OpenMenu();
 }

@@ -1,13 +1,13 @@
 # debug_menu
 
-Press **L** in the overworld to open a debug popup in the game's own menu style.
+Press **Select** in the overworld to open a debug popup in the game's own menu style.
 
 | Key | Action |
 | --- | --- |
 | Up / Down | move (scrolls, six rows visible) |
 | A | toggle the entry, or step a setting forward |
 | Left / Right | change a setting (movement speed, BGM) |
-| B / L / Start | close |
+| B / Select / Start | close |
 
 ```
 make MOD=debug_menu      # -> beyblade_g_revolution_debug_menu.gba
