@@ -34,6 +34,9 @@ enum DebugItem {
 #define BEYBLADE_IDS 83 /* beyblade templates, inventory group 1 */
 #define PART_GROUPS 9 /* inventory groups 0..8; 1 is beyblades */
 #define MAX_MOVE_SPEED 4
+#define GROUP_RIPCORD 2 /* inventory groups of the parts the menu gives */
+#define GROUP_LAUNCHER 3
+#define GROUP_BITCHIP 7
 #define MAP_NODES 16 /* world map spots, one flag byte each */
 #include "character_count.h" /* generated: every person sprite in the game */
 #define TYSON_PORTRAIT 56 /* the player's own entry in the portrait tables */
@@ -90,6 +93,7 @@ extern const u32 gSpriteTemplates[SPRITE_COUNT];
 extern const u32 gSpritePalettes[PALETTE_COUNT];
 
 void DebugStateInit(void);
+void DebugItemRange(u32 item, s32 *lo, s32 *hi);
 void CheatsTick(void);
 void CheatsOnToggle(u32 item);
 void CheatsOnChange(u32 item);

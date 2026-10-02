@@ -18,8 +18,6 @@
 /* Inventory entries are {kind (item id), slot, value (wear), group (category)}.
  * Group 1 is beyblades, groups 2 and 3 are ripcords and launchers. */
 #define GROUP_BEYBLADE 1
-#define GROUP_RIPCORD 2
-#define GROUP_LAUNCHER 3
 #define NEW_BEYBLADE_VALUE 0xFF /* "take the template", as the shop does */
 #define NEW_PART_VALUE 100
 #define PART_VALUE_SAFE 0x7F /* survives one wear step of kind + strength */
@@ -105,7 +103,6 @@ const char *CharacterName(u32 value)
  * starting chip, is group 7 id 0). Blade bases, attack rings and weight disks
  * (groups 4 to 6) are open-ended stat tables that the game hands out piece by
  * piece, so there is no complete set to give. */
-#define GROUP_BITCHIP 7
 
 struct PartRange {
     u8 group;

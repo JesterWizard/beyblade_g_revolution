@@ -343,37 +343,44 @@ static bool32 IsSetting(u32 item)
         || item == DBG_SPRITE || item == DBG_PALETTE;
 }
 
+/* Lowest and highest value an entry can hold. */
+void DebugItemRange(u32 item, s32 *lo, s32 *hi)
+{
+    *lo = 0;
+    switch (item) {
+    case DBG_MOVE_SPEED:
+        *lo = 1;
+        *hi = MAX_MOVE_SPEED;
+        break;
+    case DBG_BGM:
+        *hi = BGM_TRACKS - 1;
+        break;
+    case DBG_CHARACTER:
+        *hi = CHARACTER_COUNT;
+        break;
+    case DBG_SPRITE:
+        *hi = SPRITE_COUNT;
+        break;
+    case DBG_PALETTE:
+        *hi = PALETTE_COUNT;
+        break;
+    default:
+        *hi = 1;
+        break;
+    }
+}
+
 static void Step(s32 delta)
 {
     u32 item = gDebug.cursor;
     s32 v = gDebug.value[item];
-    s32 lo = 0;
+    s32 lo;
     s32 hi;
 
     if (!IsAvailable(item))
         return;
 
-    switch (item) {
-    case DBG_MOVE_SPEED:
-        lo = 1;
-        hi = MAX_MOVE_SPEED;
-        break;
-    case DBG_BGM:
-        hi = BGM_TRACKS - 1;
-        break;
-    case DBG_CHARACTER:
-        hi = CHARACTER_COUNT;
-        break;
-    case DBG_SPRITE:
-        hi = SPRITE_COUNT;
-        break;
-    case DBG_PALETTE:
-        hi = PALETTE_COUNT;
-        break;
-    default:
-        hi = 1;
-        break;
-    }
+    DebugItemRange(item, &lo, &hi);
     v += delta;
     if (v > hi)
         v = lo;

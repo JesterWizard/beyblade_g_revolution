@@ -14,3 +14,7 @@
 @ Script opcode 29 (dialogue portrait), wrapped through the opcode table.
 	.weak _0805A304
 	.thumb_set _0805A304, 0x0805A304
+
+@ The save commit's data-block writer (sub_08044DAC calls it).
+	.weak sub_08044F14
+	.thumb_set sub_08044F14, 0x08044F14

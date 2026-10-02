@@ -16,7 +16,7 @@
 
 A debug popup in the game's own menu style, opened from the overworld. It gives test shortcuts (max stats, every beyblade and part, every location, character and sprite swaps, BGM player) without editing a save.
 
-State is kept in RAM only and resets with the console. Entries that hold a value restore the original when switched off; entries that give things take back only what they added.
+The menu's state is stored in the save, in the 8-byte EEPROM blocks after the save slot (blocks `0x3EF..0x3FB`, up to 100 bytes; the slot itself has no room). It is written right after the slot's data blocks and read when the slot loads, so toggled entries stay on after a reset. The record has its own tag and sum (retail's checksum does not cover it); a missing or damaged record loads as every entry off. Besides the values it keeps the originals the value entries restore and what the collection entries added, so switching an entry off after a reload still takes back exactly what it gave. Not saved: each blader's original bit beast EXP (110 bytes), so Max BitBeast EXP does not restore after a reload.
 
 Besides the menu it changes two retail routines:
 

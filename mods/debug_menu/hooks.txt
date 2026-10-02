@@ -41,3 +41,9 @@ call 0x080444F8 sub_08062A74 DebugObjPalLoad
 # palette in the script; the wrapper swaps in the chosen person for the
 # player's portrait. Entry 29 of the opcode table at 0x08099710.
 pointer 0x08099784 sub_0805A304 DebugPortraitOp
+
+# Save: the entries' state is kept in EEPROM blocks 0x3EF.. (after the slot).
+# sub_08044DAC (save commit) writes the slot's data blocks through
+# sub_08044F14, then the record; sub_08045128 loads the slot, then the record.
+call 0x08044E04 sub_08044F14 DebugSaveBlocks
+call 0x0804515C sub_08045590 DebugSaveRead
