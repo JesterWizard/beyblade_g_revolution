@@ -11,12 +11,14 @@ space := $(null) $(null)
 OBJ_DIR    := $(BUILD_DIR)/bbgr
 
 # Mods (mods/<name>/, see docs/modding.md) are built in by default: plain
-# `make` produces beyblade_g_revolution_<mods joined with +>.gba, with every mod
-# in DEFAULT_MOD built together.
-#   make NO_MODS=1      the vanilla decomp, beyblade_g_revolution.gba
+# `make` builds every mod in DEFAULT_MOD together into beyblade_g_revolution.gba.
+# There is only ever this one ROM name; a vanilla build overwrites it, so run
+# plain `make` again after NO_MODS=1; `make compare` / `check-vanilla` rebuild the
+# mod ROM themselves once the vanilla check is done.
+#   make NO_MODS=1      the vanilla decomp
 #   make MOD=<name>     one mod, or several: make MOD="a b" (MOD= means none)
 #   make compare        always vanilla, it checks rom.sha1
-DEFAULT_MOD := debug_menu thought_bubbles
+DEFAULT_MOD := debug_menu thought_bubbles fast_save bitbeast_bars
 ifeq ($(NO_MODS),1)
   override MOD :=
 else ifeq ($(origin MOD),undefined)
@@ -27,7 +29,6 @@ ifneq (,$(filter compare check-vanilla,$(MAKECMDGOALS)))
 endif
 ifneq ($(MOD),)
   $(foreach m,$(MOD),$(if $(wildcard mods/$(m)),,$(error mods/$(m) not found. See docs/modding.md)))
-  FILE_NAME := beyblade_g_revolution_$(subst $(space),+,$(strip $(MOD)))
 endif
 
 ROM  := $(FILE_NAME).gba
@@ -107,7 +108,7 @@ SHELL := bash -o pipefail
 .DELETE_ON_ERROR:
 
 .PHONY: all rom modern compare clean clean-tools clean-cache tidy tools check-baserom shift-test grow-test graphics clean-gfx
-.PHONY: check-vanilla
+.PHONY: check-vanilla rebuild-mods
 .PHONY: split pack rename-files analyze symbols tier document status audit repair-signatures audit-drafts repair-drafts prune-drafts signatures fix-stub-arities sync-verified check-verified
 all: rom
 
@@ -168,7 +169,18 @@ SUBDIRS := $(sort $(dir $(OBJS)))
 $(shell mkdir -p $(SUBDIRS))
 
 modern: all
-compare: all
+# compare builds and checks the vanilla ROM, which overwrites beyblade_g_revolution.gba;
+# afterwards the default mod ROM is rebuilt in its place (REBUILD_MODS=0 skips that).
+REBUILD_MODS ?= 1
+compare:
+	@rm -f $(ROM) $(ELF) $(MAP)
+	@$(MAKE) MOD= COMPARE=1 all; status=$$?; \
+	 if [ "$(REBUILD_MODS)" = 1 ]; then $(MAKE) rebuild-mods || exit 1; fi; \
+	 exit $$status
+
+rebuild-mods:
+	@rm -f $(ROM) $(ELF) $(MAP)
+	@$(MAKE) all
 
 shift-test:
 	python3 tools/decomp/test_shift.py
@@ -393,6 +405,7 @@ endif
 
 # Prove a vanilla build is unaffected by mods/: byte-identical ROM, no mod objects linked.
 check-vanilla:
-	@$(MAKE) MOD= compare
+	@$(MAKE) MOD= REBUILD_MODS=0 compare
 	@! grep -qE '0x[0-9a-f]+ +0x[0-9a-f]+ +mod/' $(FILE_NAME).map || { echo "error: mod objects leaked into the vanilla link"; exit 1; }
 	@echo "vanilla build OK (matches rom.sha1, no mod objects)"
+	@$(MAKE) rebuild-mods

@@ -69,6 +69,7 @@ static const char *const sLabels[DBG_ITEM_COUNT] = {
     "All Characters",
     "All Locations",
     "Max BitBeast EXP",
+    "Start Full Gauge",
     "Inf. BeyBlade Health",
     "Infinite Ripcord",
     "Infinite Launcher",

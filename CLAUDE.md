@@ -83,6 +83,17 @@ If agbcc is missing:
 bash build_tools.sh
 ```
 
+## Build output rule
+
+There is **one** ROM: `beyblade_g_revolution.gba`. Never create or leave extra
+ROMs (`beyblade_g_revolution_<mod>.gba`, `.elf`, `.map` variants); any change,
+mods included, must compile into that file. Plain `make` builds the
+`DEFAULT_MOD` set into it; new mods go into `DEFAULT_MOD`. `make compare` /
+`check-vanilla` build vanilla to check it, then rebuild the mod ROM themselves; after
+`NO_MODS=1` run plain `make`.
+**Always run `make` after making changes and tell the user explicitly that you ran
+it** (and whether it succeeded).
+
 ## What you may edit
 
 | Area | Rule |

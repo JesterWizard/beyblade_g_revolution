@@ -14,6 +14,22 @@ pointer (`gUnk_0300047CLoc`, `gMainWorkPtrLoc`). Layouts live in
 `include/unknown-types.h`. Pool `#define`s stay as raw addresses so
 `match_function.py` (unlinked `.text`) still sees the literal.
 
+## Coverage ("what's left")
+
+[ram-coverage.md](ram-coverage.md) classifies every IWRAM/EWRAM byte as engine-reserved
+(kind-tagged `SET_ARRAY`s in `asm/ram_map_iwram.s` / `ram_map_ewram.s`: heaps, stacks, BIOS), mapped (named / pool symbol), written
+during a dynamic survey but unmapped, or free:
+
+```bash
+python3 tools/ram_survey.py      # drives baserom in the headless emulator, additive
+python3 tools/ram_coverage.py    # rewrites docs/ram-coverage.md
+```
+
+Both heaps are found by reading `HeapAlloc` / `FastAllocate`: the general heap is nearly all
+of EWRAM, the fast heap is IWRAM `0x03000B40`–`0x03003F40`. The survey saw user-stack writes
+down to `0x03007A54`, so the `Occupancy` table below (stack from `0x03007B00`) and the
+`gNoCashPrintBuf` pool at `0x03007A00` overlap the stack.
+
 ## Regeneration
 
 ```bash
@@ -46,7 +62,7 @@ _Last scan: 2026-09-20 (`baserom.gba` Thumb LDR literal pools)._
 | vanilla high-water – `FreeRamSpaceTop` (`0x03007A00`) | **UNKNOWN** | No pool refs; may be runtime BSS — verify in mGBA before reuse |
 | `FreeRamSpaceTop` – `FreeRamSpaceBottom` | **FREE** | Custom `_kernel_malloc` bump (hack pool) |
 | `0x03007B00` – `0x03008000` | **USED** | User + IRQ stacks (leave alone) |
-| `0x02000000` – `FreeEwramSpaceTop` (`0x02030000`) | **USED** | Retail EWRAM; almost no pool refs in this ROM |
+| `0x02000000` – `FreeEwramSpaceTop` (`0x02020800`) | **USED** | Heap (`HeapAlloc`, shrunk by the mods); no fixed-address refs |
 | `FreeEwramSpaceTop` – `FreeEwramSpaceBottom` | **FREE** | Custom `_kernel_malloc_ewram` bump |
 | `0x0E000000` – `FreeFlashSpaceBottom` | **FREE*** | Opt-in SRAM-bus scratch (`ram_map_sram.s`) |
 

@@ -2,6 +2,7 @@
 #include <mgba/core/config.h>
 #include <mgba/core/serialize.h>
 #include <mgba/gba/core.h>
+#include <mgba/internal/arm/arm.h>
 #include <mgba-util/vfs.h>
 #include <stdlib.h>
 #include <string.h>
@@ -96,4 +97,43 @@ unsigned emu_until(unsigned fn, unsigned a0, unsigned a1, unsigned a2, unsigned 
     for (i = 0; i < 16; i++) { snprintf(name, 8, "r%d", i); core->writeRegister(core, name, &saved[i]); }
     core->writeRegister(core, "cpsr", &cpsr);
     return hit;
+}
+
+/* Run n frames instruction by instruction and count how often the pc is at each
+ * of targets[] (even addresses, Thumb or ARM). counts[k] gets the hits. */
+static unsigned hist[512][5]; static int nhist;
+int emu_hist_regs(unsigned i, unsigned *r1, unsigned *r2, unsigned *r3) { if (i >= (unsigned)nhist) return 0; *r1 = hist[i][2]; *r2 = hist[i][3]; *r3 = hist[i][4]; return 1; }
+int emu_hist(unsigned i, unsigned *tgt, unsigned *r0) { if (i >= (unsigned)nhist) return 0; *tgt = hist[i][0]; *r0 = hist[i][1]; return 1; }
+void emu_trace(unsigned keys, int nframes, unsigned *targets, int nt, unsigned *counts, unsigned *r0at) {
+    struct ARMCore *cpu = (struct ARMCore *) core->cpu;
+    nhist = 0;
+    core->setKeys(core, keys);
+    for (int k = 0; k < nt; k++) { counts[k] = 0; r0at[k] = 0; }
+    uint32_t start = core->frameCounter(core);
+    while (core->frameCounter(core) - start < (uint32_t) nframes) {
+        core->step(core);
+        unsigned pc = cpu->gprs[ARM_PC] - (cpu->executionMode == MODE_THUMB ? 4 : 8);
+        for (int k = 0; k < nt; k++) if (pc == targets[k]) { counts[k]++; r0at[k] = cpu->gprs[0]; if (nhist < 512) { hist[nhist][0] = targets[k]; hist[nhist][1] = cpu->gprs[0]; hist[nhist][2] = cpu->gprs[1]; hist[nhist][3] = cpu->gprs[2]; hist[nhist][4] = cpu->gprs[4]; nhist++; } }
+    }
+}
+
+/* Run up to nframes frames instruction by instruction until the word at addr changes.
+ * Returns the pc of the instruction that changed it (0 if it did not); old/new in out[0..1], lr, r0-r3 in out[2..6]. */
+unsigned emu_watch(unsigned keys, int nframes, unsigned addr, unsigned *out) {
+    struct ARMCore *cpu = (struct ARMCore *) core->cpu;
+    core->setKeys(core, keys);
+    unsigned old = core->busRead32(core, addr);
+    uint32_t start = core->frameCounter(core);
+    unsigned last_pc = 0;
+    while (core->frameCounter(core) - start < (uint32_t) nframes) {
+        last_pc = cpu->gprs[ARM_PC] - (cpu->executionMode == MODE_THUMB ? 4 : 8);
+        core->step(core);
+        unsigned now = core->busRead32(core, addr);
+        if (now != old) {
+            out[0] = old; out[1] = now; out[2] = cpu->gprs[ARM_LR];
+            for (int i = 0; i < 4; i++) out[3 + i] = cpu->gprs[i];
+            return last_pc;
+        }
+    }
+    return 0;
 }

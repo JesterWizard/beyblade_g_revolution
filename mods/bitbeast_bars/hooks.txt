@@ -1,0 +1,11 @@
+# BitBeast Bars hooks. See docs/modding.md for the format.
+
+# The battle's per-fighter handler (sub_08034BE0) summons the bit beast when L+R
+# are held: it divides the gauge reading (0..36) by 12 for the number of bars
+# and uses that number for the summon. This bl is that division; the mod asks
+# the player how many of the bars to spend (bars.c, BitBeastBars).
+call 0x08034D84 _080740B0 BitBeastBarsThunk
+
+# The same code then zeroes the gauge and starts the summon sequence. When fewer
+# bars than were available were chosen, put the unspent part of the gauge back.
+call 0x08034DC0 _08034090 BitBeastSummonStart

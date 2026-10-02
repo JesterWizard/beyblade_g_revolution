@@ -29,5 +29,21 @@ class Emu:
         arr=(ctypes.c_uint*len(targets))(*targets)
         L.emu_until.restype=ctypes.c_uint
         return L.emu_until(ctypes.c_uint(fn),ctypes.c_uint(a0),ctypes.c_uint(a1),ctypes.c_uint(a2),ctypes.c_uint(a3),arr,len(targets),steps)
+    def trace(s, keys, n, targets):
+        """Run n frames stepping each instruction; returns how often the pc was at each target (r0 at the last hit in .last_r0)."""
+        arr=(ctypes.c_uint*len(targets))(*targets); out=(ctypes.c_uint*len(targets))(); r0=(ctypes.c_uint*len(targets))()
+        L.emu_trace(keymask(keys) if isinstance(keys,str) else keys, n, arr, len(targets), out, r0)
+        s.last_r0 = list(r0)
+        s.hist = []
+        t=ctypes.c_uint(); v=ctypes.c_uint(); i=0
+        while L.emu_hist(i, ctypes.byref(t), ctypes.byref(v)): s.hist.append((t.value, v.value)); i+=1
+        s.regs = []; a=ctypes.c_uint(); c=ctypes.c_uint(); d=ctypes.c_uint(); i=0
+        while L.emu_hist_regs(i, ctypes.byref(a), ctypes.byref(c), ctypes.byref(d)): s.regs.append((a.value, c.value, d.value)); i+=1  # r1, r2, r4 at each hit
+        return list(out)
+    def watch(s, keys, n, addr):
+        """Step until the word at addr changes: returns (pc, old, new, lr, r0..r3) or None."""
+        out=(ctypes.c_uint*7)()
+        pc=L.emu_watch(keymask(keys) if isinstance(keys,str) else keys, n, addr, out)
+        return (pc,)+tuple(out) if pc else None
     def save(s,p): return L.emu_savestate(p.encode())
     def load(s,p): return L.emu_loadstate(p.encode())

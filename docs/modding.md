@@ -5,12 +5,12 @@ itself (`src/`, `asm/`, `include/`) is never edited for a mod, so upstream
 changes merge cleanly and `make compare` keeps passing.
 
 ```
-make                    # builds every default mod together: beyblade_g_revolution_debug_menu+thought_bubbles.gba
+make                    # builds every default mod together into beyblade_g_revolution.gba
 make NO_MODS=1          # the vanilla decomp: beyblade_g_revolution.gba
-make MOD=example        # a different mod -> beyblade_g_revolution_example.gba
+make MOD=example        # only that mod, still beyblade_g_revolution.gba
 make MOD="a b"          # several mods in one ROM
-make compare            # always vanilla; checks rom.sha1
-make check-vanilla      # vanilla matches AND no mod object was linked
+make compare            # always vanilla; checks rom.sha1 (rebuilds the mod ROM afterwards)
+make check-vanilla      # vanilla matches AND no mod object was linked (rebuilds the mod ROM afterwards)
 ```
 
 The default mods are `DEFAULT_MOD` in the Makefile (a list); one that does not exist
@@ -92,10 +92,13 @@ label wins once the decomp adds one:
 ## Mod RAM
 
 Mutable data must live in RAM and must not collide with the game. The retail
-heap spans all of EWRAM and the `FreeEwramSpaceTop` pool in `asm/ram_map_ewram.s`
-is not reserved. `mods/debug_menu` shows a safe way: shrink the heap by 4 KB with
-a `patch` (`HeapAlloc` sizes it as `0xFE << 10` bytes at `0x0806A3DE`) and put the
-state at `0x0203F000` (`src/ram.s`). Initialise it behind a magic number, since
+heap spans all of EWRAM (`0x02000800`–`0x02040000`, sized `0xFE << 10` at
+`0x0806A3DE` and `0x0806A622`). The mods shrink it to `0x80 << 10` (128 KB, a
+play-through peaks near 67 KB; check with `tools/ram_survey.py`), so
+`0x02020800`–`0x02040000` is free: that is `FreeEwramSpaceTop`..`Bottom` in
+`asm/ram_map_ewram.s`. `mods/debug_menu` puts its state at `0x0203F000`
+(`src/ram.s`); `mods/bitbeast_bars` keeps a picture, tile and OAM backup at
+`0x02038000` (`gBitBeastBarsBuf` in the RAM map). If you need more, lower the byte in the `patch` (both sites). Initialise it behind a magic number, since
 EWRAM is not cleared at boot.
 
 ## Constraints

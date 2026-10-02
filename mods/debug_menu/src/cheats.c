@@ -522,22 +522,26 @@ s32 DebugPartsApplyWear(void)
 
 /* Replaces the bl to _0803CECC (the launch RPM formula). Retail leaves the
  * player's launch RPM in the battle record and copies it to the live spin and
- * its cap; do the same with the maximum. */
+ * its cap; do the same with the maximum. The bit beast gauge also starts here:
+ * BattleWork+0xBBC is player 0's gauge and +0xBC4 its capacity (0x2400 = 36
+ * units of 256, three bars of 12); the fight adds 0x20 to it each tick. */
 void DebugLaunch(void)
 {
     u8 *battle;
     s32 rpm = MAX_LAUNCH_RPM;
 
     _0803CECC();
-    if (!gDebug.value[DBG_MAX_RPM])
-        return;
     battle = (u8 *)gBattleWork;
-    *(s32 *)(battle + 0xBB4) = rpm;
-    *(s32 *)(battle + 0xBBC) = rpm;
-    *(s32 *)(battle + 0xBC4) = rpm;
-    *(s32 *)(battle + 0x13C) = rpm;
-    *(s32 *)(battle + 0x144) = rpm;
-    *(s32 *)(0x030002A0 + 12) = rpm;
+    if (gDebug.value[DBG_MAX_RPM]) {
+        *(s32 *)(battle + 0xBB4) = rpm;
+        *(s32 *)(battle + 0xBBC) = rpm;
+        *(s32 *)(battle + 0xBC4) = rpm;
+        *(s32 *)(battle + 0x13C) = rpm;
+        *(s32 *)(battle + 0x144) = rpm;
+        *(s32 *)(0x030002A0 + 12) = rpm;
+    }
+    if (gDebug.value[DBG_FULL_GAUGE])
+        *(s32 *)(battle + 0xBBC) = *(s32 *)(battle + 0xBC4);
 }
 
 /* Replaces ExpBracket (sub_08042BE8). Identical, except that experience past

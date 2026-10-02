@@ -244,7 +244,7 @@ def render_doc_section(
         f"| vanilla high-water – `FreeRamSpaceTop` (`0x03007A00`) | **UNKNOWN** | No pool refs; may be runtime BSS — verify in mGBA before reuse |",
         "| `FreeRamSpaceTop` – `FreeRamSpaceBottom` | **FREE** | Custom `_kernel_malloc` bump (hack pool) |",
         "| `0x03007B00` – `0x03008000` | **USED** | User + IRQ stacks (leave alone) |",
-        "| `0x02000000` – `FreeEwramSpaceTop` (`0x02030000`) | **USED** | Retail EWRAM; almost no pool refs in this ROM |",
+        "| `0x02000000` – `FreeEwramSpaceTop` (`0x02020800`) | **USED** | Heap (`HeapAlloc`, shrunk by the mods); no fixed-address refs |",
         "| `FreeEwramSpaceTop` – `FreeEwramSpaceBottom` | **FREE** | Custom `_kernel_malloc_ewram` bump |",
         "| `0x0E000000` – `FreeFlashSpaceBottom` | **FREE*** | Opt-in SRAM-bus scratch (`ram_map_sram.s`) |",
         "",

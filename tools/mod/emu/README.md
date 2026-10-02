@@ -12,7 +12,7 @@ tools/mod/emu/build.sh                 # builds mGBA 0.10.2 + helper into build/
 import sys; sys.path.insert(0, "tools/mod/emu")
 from emu import Emu
 
-e = Emu("beyblade_g_revolution_debug_menu.gba", "work.sav")   # .sav is optional
+e = Emu("beyblade_g_revolution.gba", "work.sav")   # .sav is optional
 e.frames(300)                      # run frames
 e.press("L", hold=3, wait=40)      # buttons: A B SELECT START UP DOWN LEFT RIGHT L R, "A+B" combines
 e.r32(0x03000198)                  # peek (also r8, r16; w8, w16, w32 poke)
@@ -20,6 +20,8 @@ e.shot("out.png", scale=2)
 e.save("x.state"); e.load("x.state")
 e.call(0x08042BE8, 4000)           # call a Thumb function, returns r0
 e.until(addr, r0, r1, r2, r3, [t1, t2])   # run until the pc reaches one of the targets
+e.trace("L+R", 30, [a1, a2])      # run frames instruction by instruction; returns how often the pc was at each
+                                   # address (e.hist: (address, r0) per hit, e.regs: (r1, r2, r4) per hit)
 ```
 
 Notes:

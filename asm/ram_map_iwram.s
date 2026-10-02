@@ -44,6 +44,20 @@ SET_DATA gBtlObjLiveCount, 0x03004158
 SET_DATA gBtlLookupBase, 0x03004130
 SET_DATA gBtlLookupPtr, 0x03004148
 
+@ -- Engine-reserved space ------------------------------------------------------
+@ Format: SET_ARRAY name, start, size   @ kind: evidence
+@ kind = heap | stack | bios. Read by tools/ram_coverage.py (docs/ram-coverage.md).
+@ Fast heap: FastAllocate (sub_0806A314) passes 0x03000B40 and size 0xD0 << 6,
+@ which ends exactly at the 0x03003F40 allocator state.
+SET_ARRAY gIwramHeap, 0x03000B40, 0x3400                     @ heap: sub_0806A314
+@ crt0 (ROM 0x08000130..) loads SP_sys = 0x03007F20 and SP_irq = 0x03007FA0.
+@ The user-stack floor is the deepest write seen by tools/ram_survey.py, not a
+@ proven limit, and it overlaps the FreeRamSpaceTop pool below.
+SET_ARRAY gUserStack, 0x03007A00, 0x520                      @ stack: crt0, survey floor 0x03007A54
+SET_ARRAY gIrqStack, 0x03007F20, 0x80                        @ stack: crt0 SP_irq 0x03007FA0
+SET_ARRAY gSvcStack, 0x03007FA0, 0x40                        @ bios: default SP_svc 0x03007FE0
+SET_ARRAY gBiosIrqArea, 0x03007FE0, 0x20                     @ bios: IRQ flags 0x03007FF8, vector 0x03007FFC
+
 .include "ram_map_iwram_pool.inc"
 
 @ -- Custom free-space allocations ---------------------------------------------

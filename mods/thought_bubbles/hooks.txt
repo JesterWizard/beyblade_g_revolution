@@ -5,9 +5,11 @@
 # the HudRefreshStats call at 0x080470FC: debug_menu has that one.)
 call 0x080470F4 sub_0804245C BubbleFieldTick
 
-# The bubble's state needs a page of EWRAM that the retail heap does not hand out.
+# The bubble state needs EWRAM that the retail heap does not hand out.
 # HeapAlloc (0x0806A3DE) and its stats print (0x0806A622) size the heap as
-# 0xFE << 10 bytes from 0x02000800, i.e. up to the end of EWRAM; make it 0xFC.
+# 0xFE << 10 bytes from 0x02000800, i.e. up to the end of EWRAM. A play-through
+# peaks at ~67 KB (tools/ram_survey.py), so make it 0x80 << 10 = 128 KB; that
+# leaves 0x02020800..0x02040000 for mods (see asm/ram_map_ewram.s).
+patch 0x0806A3DE 80 22 expect FE 22
+patch 0x0806A622 80 22 expect FE 22
 # debug_menu makes the same patch; apply_hooks applies it once.
-patch 0x0806A3DE FC 22 expect FE 22
-patch 0x0806A622 FC 22 expect FE 22

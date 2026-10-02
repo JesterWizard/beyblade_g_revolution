@@ -1,21 +1,47 @@
-# debug_menu
+# Debug Menu
 
-Press **Select** in the overworld to open a debug popup in the game's own menu style.
+---
+
+## 📑 Index
+- [Introduction](#-introduction)
+- [How To Use](#️-how-to-use)
+- [Entries](#entries)
+- [Code Locations](#️-code-locations)
+- [TODO](#-todo)
+- [Limitations & Bugs](#-limitations--bugs)
+
+---
+
+## 🧩 Introduction
+
+A debug popup in the game's own menu style, opened from the overworld. It gives test shortcuts (max stats, every beyblade and part, every location, character and sprite swaps, BGM player) without editing a save.
+
+State is kept in RAM only and resets with the console. Entries that hold a value restore the original when switched off; entries that give things take back only what they added.
+
+Besides the menu it changes two retail routines:
+
+- `ExpBracket` (`sub_08042BE8`) and `ExpBarFill` (`sub_0802E1B4`) are replaced by versions that give level 16 and a full bar from 4000 experience. Retail returned -1 there and broke the HUD. Identical for 0..3999 (checked against the retail ROM for every value).
+- `HeapAlloc` is patched to size the heap as `0x80 << 10` (128 KB) instead of `0xFE << 10`, freeing `0x02020800`–`0x02040000` of EWRAM; `gDebug` sits in it at `0x0203F000`.
+
+---
+
+## 🛠️ How To Use
+
+```
+make                    # default mods, with thought_bubbles
+make MOD=debug_menu     # only this mod
+```
+
+Press **Select** in the overworld.
 
 | Key | Action |
 | --- | --- |
 | Up / Down | move (scrolls, six rows visible) |
 | A | toggle the entry, or step a setting forward |
-| Left / Right | change a setting (movement speed, BGM) |
+| Left / Right | change a setting (movement speed, BGM, character, sprite, palette) |
 | B / Select / Start | close |
 
-```
-make MOD=debug_menu      # -> beyblade_g_revolution_debug_menu.gba
-```
-
-State is kept in RAM only (it resets when the console is reset). Entries that
-hold a value restore the original when switched off; entries that give things
-take back only what they added.
+---
 
 ## Entries
 
@@ -31,6 +57,7 @@ take back only what they added.
 | All Characters | Marks all 55 blader rows as collected, so "Meet bladers" lists them (`row[7] & 1`) | yes |
 | All Locations | Opens every path and spot on the world map: each node's saved flag byte (`gUnk_03000554`+8, 16 bytes) gets its start state plus a bit for every path the node table (`0x08094B68`) links, and the map art's path flags (event flags 35, 36, 48, 52, 53, 57, 58, tested by `sub_08043980`) read as set without being set, so no cutscene plays. Only the bits it added are cleared when switched off. | node bytes and the art test checked in the emulator, walking a path that was closed (node 2 up to node 15). Not seen on a real map screen. |
 | Max BitBeast EXP | `bitBeastExp` = 0x3FFF on every collected blader row | value and restore, not seen in a battle |
+| Start Full Gauge | The player's bit beast gauge starts a battle full (three bars): `BattleWork+0xBBC` = its capacity `+0xBC4` right after the launch formula (`sub_0803CECC`). It then fills and empties as normal. Pairs with `mods/bitbeast_bars`. | yes, gauge 36 at the start of a battle, the summon uses it |
 | Inf. BeyBlade Health | Never lose the equipped beyblade after a loss (hook inside `sub_08037F98`, port of the earlier `keepBeybladeOnLoss`) | all branches of the hook |
 | Infinite Ripcord / Launcher | The equipped part keeps full health after a battle (wraps both callers of `BattlePartsApplyWear`) | yes, with strength 99 the retail code frees both parts |
 | Movement Speed | x1..x4 on the overworld step (`sub_08041E88`) | yes |
@@ -39,27 +66,43 @@ take back only what they added.
 | Sprite | Left/Right picks any of the 70 person walking sprites in the ROM (OFF = follow Character). | all 70 rendered |
 | Palette | Left/Right picks any of the 120 OBJ palettes the game uses for them (OFF = follow Character). Together with Sprite this reaches every look, including characters no NPC row pairs (the ROM does not say which palette a cutscene gives them). | menu, sprite change |
 
-## What else changes
+---
 
-- `ExpBracket` (`sub_08042BE8`) and `ExpBarFill` (`sub_0802E1B4`) are replaced
-  by versions that give level 16 and a full bar from 4000 experience.
-  Retail returned -1 there and broke the HUD. Identical for 0..3999 (checked
-  against the retail ROM for every value).
-- `HeapAlloc` is patched to size the heap as `0xFC << 10` instead of
-  `0xFE << 10`, freeing the top 4 KB of EWRAM (`0x0203F000`) for `gDebug`.
+## 🗂️ Code Locations
 
-## Limits
+| Feature | Location | Description |
+|--------|----------|-------------|
+| **Menu loop** | `DebugFieldTick`, `OpenMenu`, `MenuLoop` in [`debug_menu.c`](src/debug_menu.c) | Opens on Select and runs the popup; hooked at `call 0x080470FC` |
+| **Menu drawing** | `DrawAll`, `DrawRow`, `ValueText` in [`debug_menu.c`](src/debug_menu.c) | Frame, rows, highlight and value text |
+| **Input** | `OnUp`, `OnDown`, `OnA`, `OnLeft`, `OnRight`, `OnB` in [`debug_menu.c`](src/debug_menu.c) | One handler per key; `Step` changes a setting |
+| **Cheat tick** | `CheatsTick`, `CheatsOnToggle`, `CheatsOnChange` in [`cheats.c`](src/cheats.c) | Holds the values written each frame and gives/takes items |
+| **Max stats / money** | `HoldStrength`, `HoldExp`, `HoldCredits`, `HoldBitBeastExp` in [`cheats.c`](src/cheats.c) | Value entries |
+| **Collections** | `GiveBeyblades`, `GiveParts`, `HoldCharacters` in [`cheats.c`](src/cheats.c) | All BeyBlades / Parts / Characters |
+| **World map** | `HoldLocations`, `DebugMapFlag` in [`cheats.c`](src/cheats.c) | Opens paths; `DebugMapFlag` at `call 0x080439B6` |
+| **Character / sprite / palette** | `HoldCharacter`, `DebugObjPalLoad`, `DebugPortraitOp` in [`cheats.c`](src/cheats.c) | Sprite swap; `pointer 0x08099784` wraps script opcode 29 for the dialogue portrait |
+| **Look table** | [`character_looks.c`](src/character_looks.c), generated by [`gen_looks.py`](tools/gen_looks.py) | Every (template, palette) pair of the scene NPC table |
+| **Movement speed** | `DebugMoveStep` in [`cheats.c`](src/cheats.c) | `call 0x080470C2` |
+| **Infinite parts** | `DebugPartsApplyWear` in [`cheats.c`](src/cheats.c) | `call 0x0803B826` and `0x0803BA32` |
+| **Max RPM / full gauge** | `DebugLaunch` in [`cheats.c`](src/cheats.c) | `call 0x0803C230` |
+| **Keep blade** | `KeepBladeOnLoss__Hook` in [`keep_blade.s`](src/keep_blade.s) | Mid-function hook at `0x080380E0` |
+| **BGM names** | `BgmName` in [`bgm.c`](src/bgm.c) | Track names for the BGM entry |
+| **HUD fix** | `ExpBracketFixed`, `ExpBarFillFixed` in [`cheats.c`](src/cheats.c) | Replace `sub_08042BE8` and `sub_0802E1B4` |
+| **State / heap** | `DebugStateInit` in [`debug_menu.c`](src/debug_menu.c), [`ram.s`](src/ram.s), `patch 0x0806A3DE` / `0x0806A622` | `gDebug` at `0x0203F000` and the heap shrink |
 
-- **Character.** The list is every distinct (template, palette) person sprite
-  of the scene NPC table (`0x0807BE04`, palette `gData_080775CC[id]` at
-  `0x080775CC`), generated by `tools/gen_looks.py` into `src/character_looks.c`.
-  The ROM does not say who an NPC is, so only Ray, Max, Daichi, Kenny and Kai are
-  named (picked by eye, `MAIN` in the generator; add more there). Kai and Kenny
-  have no human portrait, so their HUD / dialogue portrait is their bit beast's.
-  The portrait uses OBJ palette slot 13, not slot 2, because the HUD digits and
-  bars use slot 2's palette. Dialogue goes through script opcode 29 (wrapped via
-  `pointer` in `hooks.txt`); the variant shown while event flag 77 is set is
-  left alone.
-- **All Locations.** It opens paths and map art. The low nibble of a flag byte
-  (what A can enter) keeps its start value, so the six junction nodes (1, 2,
-  3, 7, 10, 15) stay pass-through, as in the retail game.
+---
+
+## 📝 TODO
+
+- Run Max RPM, infinite parts and Max BitBeast EXP in a real battle
+- Name more NPC looks (`MAIN` in `gen_looks.py`)
+
+---
+
+## 🐛 Limitations & Bugs
+
+Please report issues in the repository's **Issues** tab.
+
+- **Character.** The list is every distinct (template, palette) person sprite of the scene NPC table (`0x0807BE04`, palette `gData_080775CC[id]` at `0x080775CC`). The ROM does not say who an NPC is, so only a few are named (picked by eye, `MAIN` in the generator). Kai and Kenny have no human portrait, so their HUD / dialogue portrait is their bit beast's. The portrait uses OBJ palette slot 13, not slot 2, because the HUD digits and bars use slot 2's palette. The dialogue variant shown while event flag 77 is set is left alone.
+- **All Locations.** It opens paths and map art. The low nibble of a flag byte (what A can enter) keeps its start value, so the six junction nodes (1, 2, 3, 7, 10, 15) stay pass-through, as in the retail game.
+
+---

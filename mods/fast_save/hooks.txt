@@ -1,0 +1,11 @@
+# Fast save. See docs/modding.md for the format.
+
+# The three loops that write a save slot to EEPROM each call EepromWriteBlock
+# (sub_08067634) once per 8-byte block and then verify it. A block write costs
+# several milliseconds of programming time and a slot is 1004 + 3 blocks, so
+# only write the blocks that actually differ from what the chip holds.
+
+# sub_08044D2C: slot header blocks (slot * 3 .. slot * 3 + 2)
+call 0x08044D54 sub_08067634 FastSaveWriteBlock
+# sub_08044F14: slot data blocks (slot * 0x3EC + 3 ..)
+call 0x08044F30 sub_08067634 FastSaveWriteBlock
