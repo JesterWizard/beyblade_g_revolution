@@ -29,7 +29,20 @@ enum DebugItem {
     DBG_STEEL_WALL,
     DBG_TURBINE,
     DBG_ROCKET,
+    DBG_HEADING_WEATHER, /* a heading, not an entry */
+    DBG_WEATHER,
     DBG_ITEM_COUNT
+};
+
+/* The values of the weather entry. Each one draws particles in the overworld
+ * and in battle (weather.c) and changes how a battle plays. */
+enum {
+    WEATHER_OFF,
+    WEATHER_RAIN,
+    WEATHER_SNOW,
+    WEATHER_WIND,
+    WEATHER_HEAT,
+    WEATHER_COUNT
 };
 
 /* Entries up to here are in the first part of the save record; the abilities
@@ -87,6 +100,37 @@ struct DebugState {
 
 extern struct DebugState gDebug;
 
+#define WEATHER_TILES 9
+#define WEATHER_MAX_PARTICLES 28
+
+/* One falling raindrop, flake, streak or ember: a position on the screen in
+ * 1/16 pixel, and two bytes that make each one move a little differently. */
+struct WeatherParticle {
+    s16 x;
+    s16 y;
+    u8 seed;
+    u8 phase;
+};
+
+/* The weather's own state, in the second part of the debug page. */
+struct WeatherState {
+    u32 magic;
+    u8 kind; /* the weather the particles were made for */
+    u8 drawn; /* OAM entries are live */
+    u16 clock; /* frames of the wind's cycle */
+    u32 rng;
+    s16 wind; /* sideways push on the screen, positive towards the right */
+    u8 heatTick[2]; /* frames since the player's and the opponent's last heat loss */
+    struct WeatherParticle particle[WEATHER_MAX_PARTICLES];
+};
+
+extern struct WeatherState gWeather;
+extern const u32 gWeatherTiles[WEATHER_TILES][8];
+extern const u16 gWeatherPalette[16];
+
+/* Display name of a weather value. */
+const char *WeatherName(u32 value);
+
 /* Display name of a track, or "?" when out of range. */
 const char *BgmName(unsigned int track);
 
@@ -112,5 +156,11 @@ void CheatsTick(void);
 void CheatsOnToggle(u32 item);
 void CheatsOnChange(u32 item);
 void AbilitiesBattleStart(void);
+void WeatherFieldTick(void);
+void WeatherBattleTick(void);
+void WeatherBattleStart(void);
+s32 WeatherSteer(s32 speed);
+struct BtlFighter;
+void WeatherDrain(struct BtlFighter *fighter);
 
 #endif

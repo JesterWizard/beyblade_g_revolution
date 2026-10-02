@@ -68,3 +68,9 @@ call 0x08031F90 _08032A88 AbilityContact
 # The per-fighter frame update counts the post-attack recovery down (Rocket).
 call 0x0803021A sub_080348E8 AbilityUpdate
 call 0x08030224 sub_080348E8 AbilityUpdate
+
+# Weather (weather.c). Rain, snow and wind change how the bodies move: the motion
+# step of sub_080348E8 (BeybladeUpdate) runs for both blades. The d-pad push of
+# rain goes through TurbineSteer, heat and the particles through the ability
+# wraps above.
+call 0x08034926 sub_08035984 WeatherMotion

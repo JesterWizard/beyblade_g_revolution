@@ -34,3 +34,7 @@
 	.thumb_set _08030638, 0x08030638
 	.weak _080348E8
 	.thumb_set _080348E8, 0x080348E8
+
+@ The motion step of a battle body (BeybladeMotionStep), wrapped by the weather.
+	.weak _08035984
+	.thumb_set _08035984, 0x08035984

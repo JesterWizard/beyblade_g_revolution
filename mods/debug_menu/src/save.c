@@ -56,7 +56,17 @@ struct SavedAbilities {
 
 #define ABILITY_TAG 0xAB
 
-#define SAVE_USED (sizeof(struct SavedDebug) + sizeof(struct SavedAbilities))
+/* The weather came later still: its value sits behind the abilities' bits, with
+ * a tag and sum of its own, so a record without it loads with the weather off. */
+struct SavedWeather {
+    u8 tag;
+    u8 value;
+    u16 sum;
+};
+
+#define WEATHER_TAG 0xBE
+
+#define SAVE_USED (sizeof(struct SavedDebug) + sizeof(struct SavedAbilities) + sizeof(struct SavedWeather))
 #define SAVE_BLOCKS ((SAVE_USED + 7) / 8)
 
 typedef char SavedDebugFits[SAVE_USED <= DBG_SAVE_BYTES ? 1 : -1];
@@ -88,6 +98,16 @@ static u16 AbilitySum(const struct SavedAbilities *a)
     return SAVE_SEED + a->tag + a->on;
 }
 
+static struct SavedWeather *Weather(const struct SavedDebug *s)
+{
+    return (struct SavedWeather *)((u8 *)s + sizeof(*s) + sizeof(struct SavedAbilities));
+}
+
+static u16 WeatherSum(const struct SavedWeather *w)
+{
+    return SAVE_SEED + w->tag + w->value;
+}
+
 static void Pack(struct SavedDebug *s)
 {
     struct SavedAbilities *a = Abilities(s);
@@ -106,6 +126,9 @@ static void Pack(struct SavedDebug *s)
             a->on |= 1 << i;
     }
     a->sum = AbilitySum(a);
+    Weather(s)->tag = WEATHER_TAG;
+    Weather(s)->value = gDebug.value[DBG_WEATHER];
+    Weather(s)->sum = WeatherSum(Weather(s));
     s->has = (gDebug.hasStrength ? HAS_STRENGTH : 0) | (gDebug.hasExp ? HAS_EXP : 0)
         | (gDebug.hasCredits ? HAS_CREDITS : 0) | (gDebug.charactersOn ? ON_CHARACTERS : 0)
         | (gDebug.bladesOn ? ON_BLADES : 0) | (gDebug.partsOn ? ON_PARTS : 0)
@@ -145,6 +168,9 @@ static void Unpack(const struct SavedDebug *s)
         for (i = 0; i < DBG_ABILITY_COUNT; i++)
             gDebug.value[DBG_ABILITY_FIRST + i] = (a->on >> i) & 1;
     }
+    if (Weather(s)->tag == WEATHER_TAG && Weather(s)->sum == WeatherSum(Weather(s))
+        && Weather(s)->value < WEATHER_COUNT)
+        gDebug.value[DBG_WEATHER] = Weather(s)->value;
     gDebug.hasStrength = (s->has & HAS_STRENGTH) != 0;
     gDebug.hasExp = (s->has & HAS_EXP) != 0;
     gDebug.hasCredits = (s->has & HAS_CREDITS) != 0;

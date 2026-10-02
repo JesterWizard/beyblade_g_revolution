@@ -96,7 +96,7 @@ void TurbineSteer(struct BtlFighter *fighter, s32 speed)
 {
     if (Active(DBG_TURBINE) && IsPlayer(fighter))
         speed = speed * (100 * TURBINE_FULL + gDebug.turbine * TURBINE_SPEED) / (100 * TURBINE_FULL);
-    _08030638(fighter, speed);
+    _08030638(fighter, WeatherSteer(speed));
 }
 
 /* Replaces both bls to sub_080300D4 (the power of a fighter's action) in the
@@ -123,6 +123,7 @@ void AbilityHandler(struct BtlFighter *fighter, struct BtlFighter *other)
         _08034BE0(fighter, other);
         return;
     }
+    WeatherBattleTick();
     TurbineTick(fighter);
     before = fighter->stats->rpm;
     _08034BE0(fighter, other);
@@ -182,6 +183,7 @@ void AbilityUpdate(struct BtlFighter *fighter, struct BtlFighter *other)
     s32 before = fighter->timer;
 
     _080348E8(fighter, other);
+    WeatherDrain(fighter);
     if (Active(DBG_ROCKET) && IsPlayer(fighter) && before > 0 && fighter->timer == before - 1)
         fighter->timer = before - 2;
 }

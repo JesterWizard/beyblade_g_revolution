@@ -2,3 +2,5 @@
 @ end at 0x02020800 (hooks.txt patches HeapAlloc), so nothing else touches it.
 	.global gDebug
 	.set gDebug, 0x0203F000
+	.global gWeather
+	.set gWeather, 0x0203F600

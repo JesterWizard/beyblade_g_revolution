@@ -523,6 +523,7 @@ void DebugLaunch(void)
 
     _0803CECC();
     AbilitiesBattleStart();
+    WeatherBattleStart();
     battle = (u8 *)gBattleWork;
     if (gDebug.value[DBG_MAX_RPM]) {
         *(s32 *)(battle + 0xBB4) = rpm;

@@ -82,6 +82,8 @@ static const char *const sLabels[DBG_ITEM_COUNT] = {
     "Steel Wall",
     "Turbine",
     "Rocket",
+    "Weather",
+    "Condition",
 };
 
 void DebugStateInit(void)
@@ -115,7 +117,7 @@ static u8 *PutNumber(u8 *out, u32 n)
 /* A heading is a row of text that is not an entry. */
 bool32 DebugIsHeading(u32 item)
 {
-    return item == DBG_HEADING_ABILITIES;
+    return item == DBG_HEADING_ABILITIES || item == DBG_HEADING_WEATHER;
 }
 
 /* Entries that cannot be used yet show "n/a" and do nothing. All work now. */
@@ -199,6 +201,8 @@ static void DrawRow(u32 row, u32 item)
         text = BgmName(gDebug.value[DBG_BGM]);
     else if (item == DBG_CHARACTER)
         text = CharacterName(gDebug.value[DBG_CHARACTER]);
+    else if (item == DBG_WEATHER)
+        text = WeatherName(gDebug.value[DBG_WEATHER]);
     else
         text = (const char *)value;
     TextSetCursor(0, y + 8);
@@ -359,7 +363,7 @@ static void Redraw(void)
 /* Entries that hold a setting rather than an on/off state. */
 static bool32 IsSetting(u32 item)
 {
-    return item == DBG_MOVE_SPEED || item == DBG_BGM || item == DBG_CHARACTER;
+    return item == DBG_MOVE_SPEED || item == DBG_BGM || item == DBG_CHARACTER || item == DBG_WEATHER;
 }
 
 /* Lowest and highest value an entry can hold. */
@@ -376,6 +380,9 @@ void DebugItemRange(u32 item, s32 *lo, s32 *hi)
         break;
     case DBG_CHARACTER:
         *hi = CHARACTER_COUNT;
+        break;
+    case DBG_WEATHER:
+        *hi = WEATHER_COUNT - 1;
         break;
     default:
         *hi = 1;
@@ -457,6 +464,7 @@ void DebugFieldTick(void)
     HudRefreshStats();
     DebugStateInit();
     CheatsTick();
+    WeatherFieldTick();
     work = gMainWorkPtr;
     if ((gData_03004060 & KEY_SELECT) && work->unk180C == 0 && work->unk185A == 1)
         OpenMenu();

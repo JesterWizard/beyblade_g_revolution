@@ -14,9 +14,9 @@
 
 ## 🧩 Introduction
 
-A debug popup in the game's own menu style, opened from the overworld. It gives test shortcuts (max stats, every beyblade and part, every location, character swaps, BGM player) without editing a save, and an **Abilities** section with five special battle abilities for the player.
+A debug popup in the game's own menu style, opened from the overworld. It gives test shortcuts (max stats, every beyblade and part, every location, character swaps, BGM player) without editing a save, an **Abilities** section with five special battle abilities for the player, and a **Weather** entry (rain, snow, wind, heat) that is drawn in the overworld and in battle and changes how a battle plays.
 
-The menu's state is stored in the save, in the 8-byte EEPROM blocks after the save slot (blocks `0x3EF..0x3FB`, up to 100 bytes; the slot itself has no room). It is written right after the slot's data blocks and read when the slot loads, so toggled entries stay on after a reset. The record has its own tag and sum (retail's checksum does not cover it); a missing or damaged record loads as every entry off. Besides the values it keeps the originals the value entries restore and what the collection entries added, so switching an entry off after a reload still takes back exactly what it gave. The abilities' on/off bits are a small second part (tag, bits, sum) in the last block of the record, so a record written before the abilities existed still loads, with them off. Not saved: each blader's original bit beast EXP (110 bytes), so Max BitBeast EXP does not restore after a reload.
+The menu's state is stored in the save, in the 8-byte EEPROM blocks after the save slot (blocks `0x3EF..0x3FB`, up to 100 bytes; the slot itself has no room). It is written right after the slot's data blocks and read when the slot loads, so toggled entries stay on after a reset. The record has its own tag and sum (retail's checksum does not cover it); a missing or damaged record loads as every entry off. Besides the values it keeps the originals the value entries restore and what the collection entries added, so switching an entry off after a reload still takes back exactly what it gave. The abilities' on/off bits are a small second part (tag, bits, sum) in the last block of the record, and the weather a third (tag, value, sum) behind it, so a record written before either existed still loads, with them off. Not saved: each blader's original bit beast EXP (110 bytes), so Max BitBeast EXP does not restore after a reload.
 
 Besides the menu it changes two retail routines:
 
@@ -38,7 +38,7 @@ Press **Select** in the overworld.
 | --- | --- |
 | Up / Down | move (scrolls, six rows visible) |
 | A | toggle the entry, or step a setting forward |
-| Left / Right | change a setting (movement speed, BGM, character) |
+| Left / Right | change a setting (movement speed, BGM, character, weather) |
 | B / Select / Start | close |
 
 ---
@@ -69,6 +69,8 @@ Press **Select** in the overworld.
 | Steel Wall | Half of the spin that attacking and jumping/dodging cost is given back, taken over the whole input handler `sub_08034BE0` (attack release: endurance/2, endurance or 1.5 x endurance; dodge and jump: endurance/2). Odd costs round in the player's favour. Clash damage is not reduced. | yes, an attack that cost 5 costs 2 |
 | Turbine | Every frame the player is 140+ units from the arena centre (the wall is at about 199) and moving across the line from the centre faster than 1 unit a frame builds one point of charge, up to 300 (5 seconds of edge travel). At full charge the d-pad steers 100% stronger (the blade's top speed doubles) and an attack hits 50% harder; both scale with the charge. The charge is lost when the blades touch (a clash, or the bodies colliding) and when a battle starts. | yes, a bot that circles the edge reaches full charge and double speed; a charged attack hits 100 -> 150 and the charge resets |
 | Rocket | The recovery wait after an attack (the wait before the next one is allowed, 75, 90 or 120 frames) counts down twice as fast. The short clash scene before it is not changed. | yes, 143 -> 105 frames between two attacks |
+| **Weather** (heading) | The section for the entry below. | menu |
+| Condition | Off / Rain / Snow / Wind / Heat (Left/Right). Every one draws OBJ particles on the overworld (towns and the world map; not while the menu is open) and in battle, and also changes a battle. It affects both blades, not just the player's. **Rain** = reduced grip: the arena's drag is cut to 60% (blades slide further after the d-pad is released) and the d-pad's push to 60%, so the top speed stays about the same and turns get wide. **Snow** = increased friction: drag x1.75, so everything slows down sooner and the top speed falls to about 60%. **Wind**: a sideways push of up to 10 (full steering is 32) on both blades, in screen terms (rotated into the arena with the same camera turn the d-pad uses), swinging from one side to the other over about 17 seconds with gusts on top; the streaks on screen run the way it blows and thin out when it is calm. **Heat**: each blade loses 1% of its spin (at least 1) every 40 frames, about 1.5% a second, on top of the retail drain. | particles in town and in a live duel (screenshots), drag and top speed against Off in the duel, heat's spin loss; wind's direction is derived from the d-pad's transform, not watched |
 
 ---
 
@@ -89,6 +91,8 @@ Press **Select** in the overworld.
 | **Infinite parts** | `DebugPartsApplyWear` in [`cheats.c`](src/cheats.c) | `call 0x0803B826` and `0x0803BA32` |
 | **Max RPM / full gauge** | `DebugLaunch` in [`cheats.c`](src/cheats.c) | `call 0x0803C230` |
 | **Abilities** | `AbilityHandler`, `TurbineSteer`, `TurbinePower`, `AbilityClash`, `AbilityContact`, `AbilityUpdate` in [`abilities.c`](src/abilities.c), types in [`battle_types.h`](include/battle_types.h) | `call 0x08031D82` / `0x08031D90` (input handler `sub_08034BE0`: Steel Wall, Turbine count), `0x08034C10` / `0x08034D08` (steering `sub_08030638`: Turbine speed), `0x08032B24` (clash `sub_0802FFAC`: Siphon, Turbine reset), `0x0802FFC0` / `0x0802FFC8` (action power `sub_080300D4`: Turbine attack), `0x08031F90` (contact `sub_08032A88`: Gunner), `0x0803021A` / `0x08030224` (fighter update `sub_080348E8`: Rocket) |
+| **Weather** | `Frame`, `Draw`, `StepParticles` in [`weather.c`](src/weather.c); art in [`weather_gfx.c`](src/weather_gfx.c), generated by [`gen_weather_gfx.py`](tools/gen_weather_gfx.py) | Called from `DebugFieldTick` (overworld) and `AbilityHandler` (battle, once per frame). OBJ tiles `0x370..0x378`, palette slot 14, OAM 98..125 |
+| **Weather in battle** | `WeatherMotion`, `WeatherSteer`, `WeatherDrain` in [`weather.c`](src/weather.c) | `call 0x08034926` (motion step `sub_08035984` inside `sub_080348E8`: rain, snow, wind); rain's steering goes through `TurbineSteer`, heat through `AbilityUpdate` |
 | **Section heading** | `DebugIsHeading`, `MoveCursor` in [`debug_menu.c`](src/debug_menu.c) | a heading row is drawn centred and skipped by the cursor |
 | **Keep blade** | `KeepBladeOnLoss__Hook` in [`keep_blade.s`](src/keep_blade.s) | Mid-function hook at `0x080380E0` |
 | **BGM names** | `BgmName` in [`bgm.c`](src/bgm.c) | Track names for the BGM entry |
@@ -108,6 +112,8 @@ Press **Select** in the overworld.
 ## 🐛 Limitations & Bugs
 
 Please report issues in the repository's **Issues** tab.
+
+- **Weather.** The particles are plain OBJ sprites written into OAM during the frame, the way `thought_bubbles` does it (the engine hides the entries it does not use at the start of each frame, so nothing is left behind when the weather is switched off). That works in mGBA; it has not been tried on hardware. They also appear indoors, and the overworld ones pause while the menu is open. The tiles `0x370..0x378` are free in the town and duel screens that were checked; a battle effect that loads a lot of OBJ art could overlap them (they are reloaded if overwritten). Heat can drain a blade to 0 spin; the duel did not end at once when that happened in the emulator (the HUD counts down first), and no duel was followed through to its end that way.
 
 - **Character.** The list is every distinct (template, palette) person sprite of the scene NPC table (`0x0807BE04`, palette `gData_080775CC[id]` at `0x080775CC`). The ROM does not link an NPC sprite to a blader portrait, so the pairing (`MAIN` in the generator, blader portrait -> NPC id) was matched by eye, sprite sheet against the 55 blader portraits and the 49 extra dialogue portraits (`EXTRA` in the generator); the shirtless-kid portraits (14 to 18) and 27, 47 to 50 are the least certain. The portrait uses OBJ palette slot 13, not slot 2, because the HUD digits and bars use slot 2's palette. The dialogue variant shown while event flag 77 is set is left alone.
 - **All Locations.** It opens paths and map art. The low nibble of a flag byte (what A can enter) keeps its start value, so the six junction nodes (1, 2, 3, 7, 10, 15) stay pass-through, as in the retail game.

@@ -18,6 +18,10 @@ struct BtlBody {
     s32 vx;
     s32 vy;
     s32 vz;
+    s32 ax; /* added to the velocity every frame */
+    s32 ay;
+    s32 az;
+    s32 drag; /* share of the velocity lost every frame, in 1/256 */
 };
 
 /* A fighter's numbers. */
@@ -46,11 +50,13 @@ struct BtlFighter {
 #define BTL_ARENA_CENTER 0x10000
 
 /* Offsets into BattleWork (gBattleWork). */
+#define BTL_CAMERA_ANGLE 0xABC /* s32: the camera's turn (BattleWork+0xAA8 is the camera, +0x14 its angle) */
 #define BTL_COLLISION 0x789 /* byte: the two bodies collided this frame */
 #define BTL_GAUGE 0xBBC /* s32 per fighter: bit beast gauge */
 #define BTL_GAUGE_CAP 0xBC4 /* s32 per fighter: its capacity */
 
 typedef char BtlBodyOffsets[(u32) & ((struct BtlBody *)0)->vy == 0x1C ? 1 : -1];
+typedef char BtlBodyDrag[(u32) & ((struct BtlBody *)0)->drag == 0x30 ? 1 : -1];
 typedef char BtlStatsOffsets[(u32) & ((struct BtlStats *)0)->endurance == 0x18 ? 1 : -1];
 typedef char BtlFighterTimer[(u32) & ((struct BtlFighter *)0)->timer == 0x2F8 ? 1 : -1];
 typedef char BtlFighterAction[(u32) & ((struct BtlFighter *)0)->action == 0x2CC ? 1 : -1];
