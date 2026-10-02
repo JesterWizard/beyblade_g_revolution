@@ -38,6 +38,8 @@ Mod C is compiled with `-DMOD=1 -DMOD_NAME=\"<name>\"` and sees the normal
 sub_0802BC14 CollectionIsFull__Replacement
 # call <addr> <orig> <repl>   retarget one bl, keep the retail function around it
 call 0x080470FC sub_0802D8DC DebugFieldTick
+# pointer <addr> <orig> <repl>   retarget a function pointer stored in ROM data
+pointer 0x08099784 sub_0805A304 DebugPortraitOp
 # patch <addr> <hex bytes> [expect <hex bytes>]
 patch 0x0806A3DE FC 22 expect FE 22
 ```
@@ -58,6 +60,9 @@ patch 0x0806A3DE FC 22 expect FE 22
   an error); it is rewritten to call `<repl>`, which calls `<orig>` itself when
   the retail behaviour is still wanted. The replacement must be within +/-4 MB
   of `<addr>`, which holds for the first ~270 KB of mod code.
+- **`pointer`** rewrites a Thumb function pointer held in ROM data (a script
+  opcode or jump table entry). The word must currently be `<orig>|1`. Use it to
+  wrap a handler that is only ever called through a table.
 - **`patch`** overwrites raw bytes. With `expect` the original bytes are
   verified first.
 - Overlapping hooks or patches are rejected, as are replacements that point at

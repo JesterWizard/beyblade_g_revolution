@@ -7,6 +7,9 @@ hooks.txt, one directive per line (`#` starts a comment):
 
     <target> <replacement>      redirect a retail Thumb function to mod code
     call <addr> <orig> <repl>   retarget one Thumb `bl` inside a retail function
+    pointer <addr> <orig> <repl>
+                                retarget one Thumb function pointer stored in ROM data
+                                (a jump or script-opcode table entry)
     patch <addr> <hex bytes> [expect <hex bytes>]
                                 overwrite raw ROM bytes (tables, constants); with
                                 `expect` the original bytes are verified first
@@ -156,6 +159,16 @@ def main() -> int:
             except ValueError:
                 sys.exit(f"{where}: '{words[3]}' is more than 4 MB from 0x{addr:08X}")
             rom.write(addr, blob, line)
+        elif words[0] == "pointer":
+            if len(words) != 4:
+                sys.exit(f"{where}: pointer <addr> <orig> <repl>")
+            addr = int(words[1], 16)
+            orig, _ = resolve(words[2], syms, thumb=False, where=where)
+            repl, _ = resolve(words[3], syms, thumb=True, where=where)
+            have = struct.unpack_from("<I", rom.data, addr - ROM_BASE)[0]
+            if have != (orig | 1):
+                sys.exit(f"{where}: 0x{addr:08X} holds 0x{have:08X}, not a pointer to {words[2]} (0x{orig | 1:08X})")
+            rom.write(addr, struct.pack("<I", repl | 1), line)
         elif len(words) == 2:
             target, size = resolve(words[0], syms, thumb=False, where=where)
             repl, _ = resolve(words[1], syms, thumb=True, where=where)
@@ -167,7 +180,7 @@ def main() -> int:
                 print(f"warning: {where}: {words[0]} is {size} bytes, stub needs {len(blob)}")
             rom.write(target, blob, line)
         else:
-            sys.exit(f"{where}: expected '<target> <replacement>', 'call ...' or 'patch ...'")
+            sys.exit(f"{where}: expected '<target> <replacement>', 'call ...', 'pointer ...' or 'patch ...'")
         count += 1
 
     rom_path.write_bytes(rom.data)

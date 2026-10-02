@@ -75,6 +75,8 @@ static const char *const sLabels[DBG_ITEM_COUNT] = {
     "Movement Speed",
     "BGM",
     "Character",
+    "Sprite",
+    "Palette",
 };
 
 void DebugStateInit(void)
@@ -105,11 +107,10 @@ static u8 *PutNumber(u8 *out, u32 n)
     return out;
 }
 
-/* Entries still waiting for the game data they need (see README). They show
- * "n/a" and do nothing. */
+/* Entries that cannot be used yet show "n/a" and do nothing. All work now. */
 static bool32 IsAvailable(u32 item)
 {
-    return item != DBG_ALL_LOCATIONS && item != DBG_CHARACTER;
+    return TRUE;
 }
 
 static void ValueText(u32 item, u8 *out)
@@ -130,8 +131,17 @@ static void ValueText(u32 item, u8 *out)
         p = PutNumber(p, v);
         break;
     case DBG_BGM:
-    case DBG_CHARACTER:
         p = PutNumber(p, v);
+        break;
+    case DBG_SPRITE:
+    case DBG_PALETTE:
+        if (v == 0) {
+            *p++ = 'O';
+            *p++ = 'F';
+            *p++ = 'F';
+        } else {
+            p = PutNumber(p, v);
+        }
         break;
     default:
         if (v) {
@@ -180,7 +190,12 @@ static void DrawRow(u32 row, u32 item)
     TextSetCursor(0, y + 8);
     TextDrawAlign((void *)sLabels[item], left, 2);
     ValueText(item, value);
-    text = item == DBG_BGM ? BgmName(gDebug.value[DBG_BGM]) : (const char *)value;
+    if (item == DBG_BGM)
+        text = BgmName(gDebug.value[DBG_BGM]);
+    else if (item == DBG_CHARACTER)
+        text = CharacterName(gDebug.value[DBG_CHARACTER]);
+    else
+        text = (const char *)value;
     TextSetCursor(0, y + 8);
     TextDrawAlign((void *)text, right, 1);
 }
@@ -307,15 +322,24 @@ static void OnDown(u8 *state)
     sub_08060448();
 }
 
+/* Only the changed row is drawn again. DrawAll clears every tile first and
+ * waits for VBlank part way through, which shows as a flash; a row repaints
+ * its own frame fill under the text, so it needs neither. */
 static void Redraw(void)
 {
-    DrawAll();
+    u32 row = gDebug.cursor - gDebug.top;
+
+    TextWindowClearRow(row * 2 + 1);
+    TextWindowClearRow(row * 2 + 2);
+    DrawRow(row, gDebug.cursor);
+    Highlight();
 }
 
 /* Entries that hold a setting rather than an on/off state. */
 static bool32 IsSetting(u32 item)
 {
-    return item == DBG_MOVE_SPEED || item == DBG_BGM;
+    return item == DBG_MOVE_SPEED || item == DBG_BGM || item == DBG_CHARACTER
+        || item == DBG_SPRITE || item == DBG_PALETTE;
 }
 
 static void Step(s32 delta)
@@ -335,6 +359,15 @@ static void Step(s32 delta)
         break;
     case DBG_BGM:
         hi = BGM_TRACKS - 1;
+        break;
+    case DBG_CHARACTER:
+        hi = CHARACTER_COUNT;
+        break;
+    case DBG_SPRITE:
+        hi = SPRITE_COUNT;
+        break;
+    case DBG_PALETTE:
+        hi = PALETTE_COUNT;
         break;
     default:
         hi = 1;

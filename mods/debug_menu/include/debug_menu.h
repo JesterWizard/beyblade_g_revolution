@@ -22,6 +22,8 @@ enum DebugItem {
     DBG_MOVE_SPEED,
     DBG_BGM,
     DBG_CHARACTER,
+    DBG_SPRITE,
+    DBG_PALETTE,
     DBG_ITEM_COUNT
 };
 
@@ -31,6 +33,9 @@ enum DebugItem {
 #define BEYBLADE_IDS 83 /* beyblade templates, inventory group 1 */
 #define PART_GROUPS 9 /* inventory groups 0..8; 1 is beyblades */
 #define MAX_MOVE_SPEED 4
+#define MAP_NODES 16 /* world map spots, one flag byte each */
+#include "character_count.h" /* generated: every person sprite in the game */
+#define TYSON_PORTRAIT 56 /* the player's own entry in the portrait tables */
 
 /* Everything the menu and the cheats remember. It lives at the top of EWRAM,
  * a page the retail heap no longer owns (see hooks.txt), at gDebug. */
@@ -58,12 +63,30 @@ struct DebugState {
     u16 parts[PART_GROUPS]; /* per group: bit k = id k added */
     u8 bladesOn;
     u8 partsOn;
+    u8 locationsOn;
+    u8 nodeAdded[MAP_NODES]; /* map flag bits this cheat set, per node */
+    u8 characterOn;
 };
 
 extern struct DebugState gDebug;
 
 /* Display name of a track, or "?" when out of range. */
 const char *BgmName(unsigned int track);
+
+/* Name of character `value` (0 = the player). */
+const char *CharacterName(u32 value);
+
+struct CharacterLook {
+    u32 sprite; /* overworld walking sprite template */
+    u32 palette; /* its OBJ palette (4-byte aligned, loaded into slot 0) */
+    u32 portrait; /* blader portrait / name / data row index; TYSON_PORTRAIT = unnamed NPC */
+    u32 npc; /* lowest scene NPC id using this sprite */
+    const char *name; /* hand-given name, or 0 */
+};
+
+extern const struct CharacterLook gCharacterLooks[CHARACTER_COUNT];
+extern const u32 gSpriteTemplates[SPRITE_COUNT];
+extern const u32 gSpritePalettes[PALETTE_COUNT];
 
 void DebugStateInit(void);
 void CheatsTick(void);

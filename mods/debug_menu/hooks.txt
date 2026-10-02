@@ -25,3 +25,17 @@ sub_0802E1B4 ExpBarFillFixed
 # 0xFE << 10 bytes from 0x02000800, i.e. up to the end of EWRAM; make it 0xFC.
 patch 0x0806A3DE FC 22 expect FE 22
 patch 0x0806A622 FC 22 expect FE 22
+
+# All Locations: sub_08043980 recolours the map art unless the path's event
+# flag is set; this bl tests those flags.
+call 0x080439B6 sub_08045D3C DebugMapFlag
+
+# Character: MapLoadObjects loads the player palette (slot 0, two branches) on
+# every map.
+call 0x080444E0 sub_08062A74 DebugObjPalLoad
+call 0x080444F8 sub_08062A74 DebugObjPalLoad
+
+# Character: script opcode 29 draws a dialogue portrait from a template and
+# palette in the script; the wrapper swaps in the chosen person for the
+# player's portrait. Entry 29 of the opcode table at 0x08099710.
+pointer 0x08099784 sub_0805A304 DebugPortraitOp
