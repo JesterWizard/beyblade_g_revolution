@@ -18,7 +18,7 @@ OBJ_DIR    := $(BUILD_DIR)/bbgr
 #   make NO_MODS=1      the vanilla decomp
 #   make MOD=<name>     one mod, or several: make MOD="a b" (MOD= means none)
 #   make compare        always vanilla, it checks rom.sha1
-DEFAULT_MOD := debug_menu thought_bubbles fast_save bitbeast_bars show_math single_match custom_music custom_voices
+DEFAULT_MOD := debug_menu thought_bubbles fast_save bitbeast_bars show_math single_match custom_music custom_voices skip_intro
 ifeq ($(NO_MODS),1)
   override MOD :=
 else ifeq ($(origin MOD),undefined)

@@ -1,0 +1,7 @@
+# Skip intro. See docs/modding.md for the format.
+
+# Boot sequence (sub_080663C8): after clearing state it calls 0x08065C7C, which
+# shows the six splash screens in order (Nintendo licence, copyright, Nelvana,
+# D Rights, Atari, Fullfat; table at 0x080B9000) through 0x08065CD0, then goes
+# on to the title screen. Replace that `bl` with two nops.
+patch 0x080663E0 C0 46 C0 46 expect FF F7 4C FC
