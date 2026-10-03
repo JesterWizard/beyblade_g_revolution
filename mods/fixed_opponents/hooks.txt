@@ -1,0 +1,13 @@
+# Fixed opponents. See docs/modding.md for the format.
+
+# Two script opcodes set a blader row to the player's experience and strength
+# (or a rival's) before a battle: sub_08042F4C(exp, strength, row, bonus).
+call 0x0802CBF0 sub_08042F4C FixedOpponentRow
+call 0x0805B2BA sub_08042F4C FixedOpponentRow
+
+# the function at 0x08042F08 (called with 10) adds experience to every blader row at a story step.
+call 0x080323A8 0x08042F08 FixedOpponentNoGrowth
+
+# BtlApplyClampedScore (sub_0803715C) also feeds the opponent's row and blade.
+call 0x08037B1A sub_0803715C FixedOpponentScore
+call 0x08037B4C sub_0803715C FixedOpponentScore
