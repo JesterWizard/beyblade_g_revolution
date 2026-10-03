@@ -29,7 +29,7 @@ make MOD=single_match     # only this mod
 make                      # all default mods, this one included
 ```
 
-It is part of `DEFAULT_MOD`. Remove `single_match` from that list in the Makefile to get the retail best of three back.
+It is enabled by `MOD_SINGLE_MATCH` in [`mods/mods.h`](../mods.h); set it to 0 to get the retail best of three back.
 
 ---
 

@@ -32,7 +32,7 @@ make MOD=fast_save                               # only this mod
 make                                             # all default mods, this one included
 ```
 
-Nothing to configure: save as usual. It is part of `DEFAULT_MOD`, so plain `make` includes it.
+Nothing to configure: save as usual. It is enabled by `MOD_FAST_SAVE` in `mods/mods.h`, so plain `make` includes it.
 
 ---
 

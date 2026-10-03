@@ -13,7 +13,7 @@ make compare            # always vanilla; checks rom.sha1 (rebuilds the mod ROM 
 make check-vanilla      # vanilla matches AND no mod object was linked (rebuilds the mod ROM afterwards)
 ```
 
-The default mods are `DEFAULT_MOD` in the Makefile (a list); one that does not exist
+The default mods are the `#define MOD_<NAME> 1` gates in [`mods/mods.h`](../mods/mods.h) (`<NAME>` is the directory name in upper case); set a gate to 0 to leave a mod out, and add a line there for a new mod. One that does not exist
 in a fork is skipped, and if none exist plain `make` is vanilla. `MOD=` with nothing
 after it also means no mod.
 

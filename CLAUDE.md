@@ -88,7 +88,7 @@ bash build_tools.sh
 There is **one** ROM: `beyblade_g_revolution.gba`. Never create or leave extra
 ROMs (`beyblade_g_revolution_<mod>.gba`, `.elf`, `.map` variants); any change,
 mods included, must compile into that file. Plain `make` builds the
-`DEFAULT_MOD` set into it; new mods go into `DEFAULT_MOD`. `make compare` /
+enabled-mod set (`mods/mods.h`) into it; new mods get a `#define MOD_<NAME> 1` line in `mods/mods.h`. `make compare` /
 `check-vanilla` build vanilla to check it, then rebuild the mod ROM themselves; after
 `NO_MODS=1` run plain `make`.
 **Always run `make` after making changes and tell the user explicitly that you ran

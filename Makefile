@@ -11,14 +11,16 @@ space := $(null) $(null)
 OBJ_DIR    := $(BUILD_DIR)/bbgr
 
 # Mods (mods/<name>/, see docs/modding.md) are built in by default: plain
-# `make` builds every mod in DEFAULT_MOD together into beyblade_g_revolution.gba.
+# `make` builds every mod enabled in mods/mods.h together into beyblade_g_revolution.gba.
 # There is only ever this one ROM name; a vanilla build overwrites it, so run
 # plain `make` again after NO_MODS=1; `make compare` / `check-vanilla` rebuild the
 # mod ROM themselves once the vanilla check is done.
 #   make NO_MODS=1      the vanilla decomp
 #   make MOD=<name>     one mod, or several: make MOD="a b" (MOD= means none)
 #   make compare        always vanilla, it checks rom.sha1
-DEFAULT_MOD := debug_menu thought_bubbles fast_save bitbeast_bars show_math single_match custom_music custom_voices skip_intro
+# The default set is read from the MOD_* gates in mods/mods.h (set one to 0 to drop it).
+MODS_H := mods/mods.h
+DEFAULT_MOD := $(shell sed -n 's/^[[:space:]]*\#[[:space:]]*define[[:space:]]\{1,\}MOD_\([A-Z0-9_]\{1,\}\)[[:space:]]\{1,\}1\([^0-9A-Za-z_].*\)\{0,1\}$$/\1/p' $(MODS_H) | tr 'A-Z' 'a-z')
 ifeq ($(NO_MODS),1)
   override MOD :=
 else ifeq ($(origin MOD),undefined)
@@ -377,13 +379,13 @@ LDFLAGS += --defsym=__rom_shift_bytes=$(SHIFT_BYTES)
 endif
 EXTRA_OBJS ?=
 
-$(ELF): $(LD_SCRIPT) asm/rom_layout.ld $(OBJS)
+$(ELF): $(LD_SCRIPT) asm/rom_layout.ld $(OBJS) $(MODS_H)
 	cd $(OBJ_DIR) && $(LD) $(LDFLAGS) -T ../../$(LD_SCRIPT) -o ../../$@ $(OBJS_REL) $(EXTRA_OBJS) $(LIB)
 ifneq ($(wildcard $(FIX)),)
 	$(FIX) $@ -t"$(TITLE)" -c$(GAME_CODE) -m$(MAKER_CODE) -r$(REVISION) --silent
 endif
 
-$(ROM): $(ELF) $(MOD_HOOKS)
+$(ROM): $(ELF) $(MOD_HOOKS) $(MODS_H)
 	$(OBJCOPY) -O binary --gap-fill 0xFF $< $@
 ifneq ($(wildcard $(FIX)),)
 ifeq ($(PAD_CART),1)

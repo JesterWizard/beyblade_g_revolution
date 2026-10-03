@@ -11,7 +11,7 @@ make MOD=skip_intro     # only this mod
 make                    # all default mods, this one included
 ```
 
-It is part of `DEFAULT_MOD`; remove `skip_intro` from that list in the Makefile to get the splash screens back.
+It is enabled by `MOD_SKIP_INTRO` in [`mods/mods.h`](../mods.h); set it to 0 to get the splash screens back.
 
 ## 🗂️ Code Locations
 
