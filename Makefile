@@ -33,6 +33,12 @@ ifneq ($(MOD),)
   $(foreach m,$(MOD),$(if $(wildcard mods/$(m)),,$(error mods/$(m) not found. See docs/modding.md)))
 endif
 
+# The ROM and ELF depend on which mods are built in, not just on the mod objects:
+# a hook-only mod adds no object, and switching mods off removes some. The stamp
+# only changes (and so only forces a relink) when the set does.
+MOD_STAMP := $(BUILD_DIR)/mods.stamp
+$(shell mkdir -p $(BUILD_DIR); printf '%s\n' '$(MOD)' | cmp -s - $(MOD_STAMP) 2>/dev/null || printf '%s\n' '$(MOD)' > $(MOD_STAMP))
+
 ROM  := $(FILE_NAME).gba
 ELF  := $(FILE_NAME).elf
 MAP  := $(FILE_NAME).map
@@ -379,13 +385,13 @@ LDFLAGS += --defsym=__rom_shift_bytes=$(SHIFT_BYTES)
 endif
 EXTRA_OBJS ?=
 
-$(ELF): $(LD_SCRIPT) asm/rom_layout.ld $(OBJS) $(MODS_H)
+$(ELF): $(LD_SCRIPT) asm/rom_layout.ld $(OBJS) $(MOD_STAMP)
 	cd $(OBJ_DIR) && $(LD) $(LDFLAGS) -T ../../$(LD_SCRIPT) -o ../../$@ $(OBJS_REL) $(EXTRA_OBJS) $(LIB)
 ifneq ($(wildcard $(FIX)),)
 	$(FIX) $@ -t"$(TITLE)" -c$(GAME_CODE) -m$(MAKER_CODE) -r$(REVISION) --silent
 endif
 
-$(ROM): $(ELF) $(MOD_HOOKS) $(MODS_H)
+$(ROM): $(ELF) $(MOD_HOOKS) $(MOD_STAMP)
 	$(OBJCOPY) -O binary --gap-fill 0xFF $< $@
 ifneq ($(wildcard $(FIX)),)
 ifeq ($(PAD_CART),1)
