@@ -8,10 +8,14 @@
 #   loop=         seconds into the track where the repeat starts (the start plays
 #                 once as an intro); loop=none plays the track once; default: the
 #                 whole track repeats
+#   xfade=        seconds the end is crossfaded into the start of the repeat (default 0.01;
+#                 raise it, e.g. 0.5, for a track that ends in a long fade or a held note)
 #   overworld=yes adds the track to the random draw the overworld makes
 #   replace=      plays instead of a retail track: a number 0-16 or a name from
 #                 include/bgm.h (TITLE, DOJO_PRACTICE, BATTLE_THEME_A, ...)
 #   start=, end=  seconds to cut from the file's start / end (shorter song, smaller ROM)
+#   (A repeating track is cut at its first and last sound, so silence at either end is
+#   not a gap in every repeat.)
 #   gain=         dB on top of the automatic loudness (the loudest peak is 98% full scale)
 #
 # The game mixes at 8000 Hz, so the music is turned into mono 8 kHz, 4-bit ADPCM:
@@ -21,3 +25,4 @@
 # track music/my_song.mp3 name="My Song" overworld=yes
 # track music/boss.wav name="Boss Fight" loop=12.5 replace=BATTLE_THEME_E
 track music/Banjo-PilotEarlyCranky.wav name="Pilot Early Cranky"
+track music/Title_With_Voices.wav name="Title With Voices" replace=TITLE

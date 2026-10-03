@@ -35,7 +35,7 @@ from gba_adpcm import (RATE, ROM_BUDGET, chunk, decode, encode, fade, human, loa
 
 MAX_NAME = 18                # characters the debug menu has room for
 MAX_TRACKS = 200             # debug menu stores the BGM number in a u8 (17 retail + custom)
-TOOL_VERSION = "1"
+TOOL_VERSION = "2"
 
 
 # ---------------------------------------------------------------- tracks.txt
@@ -58,7 +58,7 @@ def parse_tracks(path, root):
             continue
         if words[0] != "track" or len(words) < 2:
             sys.exit("%s:%d: expected 'track <file> [key=value ...]'" % (path, n))
-        t = dict(file=words[1], name=None, loop=0.0, overworld=False, replace=None, gain=0.0, start=0.0, end=None, line=n)
+        t = dict(file=words[1], name=None, loop=0.0, overworld=False, replace=None, gain=0.0, start=0.0, end=None, xfade=0.01, line=n)
         for opt in words[2:]:
             key, eq, val = opt.partition("=")
             if not eq:
@@ -71,7 +71,7 @@ def parse_tracks(path, root):
                 t["overworld"] = val.lower() in ("yes", "true", "1", "on")
             elif key == "gain":
                 t["gain"] = float(val)
-            elif key in ("start", "end"):
+            elif key in ("start", "end", "xfade"):
                 t[key] = float(val)
             elif key == "replace":
                 v = val.upper().replace(" ", "_")
@@ -85,7 +85,7 @@ def parse_tracks(path, root):
                 if not 0 <= t["replace"] < len(retail):
                     sys.exit("%s:%d: replace is a retail track, 0-%d" % (path, n, len(retail) - 1))
             else:
-                sys.exit("%s:%d: unknown option '%s' (name, loop, overworld, replace, gain, start, end)" % (path, n, key))
+                sys.exit("%s:%d: unknown option '%s' (name, loop, overworld, replace, gain, start, end, xfade)" % (path, n, key))
         tracks.append(t)
     if len(tracks) > MAX_TRACKS:
         sys.exit("%s: at most %d tracks" % (path, MAX_TRACKS))
@@ -109,12 +109,62 @@ def display_name(t):
 
 # ---------------------------------------------------------------- build
 
+SILENCE = 0.003              # below this (about -50 dB) the start and end of a file count as silence
+
+
+def loop_parts(a, loop, xfade, line):
+    """-> (intro samples or None, body samples) for a track that repeats.
+
+    The body is what repeats: it starts at the loop point S and ends with the file's last sound
+    crossfaded (`xfade` seconds, equal power) into the audio just before S, which is exactly what
+    the body's first sample continues. With no loop point S is where the music starts (leading
+    silence is dropped), so the repeat goes straight from the last note to the first. Leading
+    silence and a silent tail are cut, since they would be a gap in every repeat. The decoder
+    restarts from zero at the body's first sample, so S is moved to the quietest sample within
+    5 ms when it was given.
+    """
+    loud = np.nonzero(np.abs(a) > SILENCE)[0]
+    if len(loud) == 0:
+        sys.exit("tracks.txt:%d: the track is silent" % line)
+    end = int(loud[-1]) + 1
+    xf = int(round(xfade * RATE))
+    if loop:
+        start = int(round(loop * RATE))
+        if not 0 < start < end - RATE:
+            sys.exit("tracks.txt:%d: loop=%s is outside the track (%.1f s long)" % (line, loop, end / RATE))
+        near = np.arange(max(1, start - 40), min(end, start + 40))
+        start = int(near[np.argmin(np.abs(a[near]) + 4 * np.abs(a[near + 1] - a[near]))])
+    else:
+        start = int(loud[0])
+    first = start
+    if start < xf:
+        # nothing before the loop point to crossfade from: the repeat starts xf later
+        # and the head is what the end fades into
+        partner = a[start:start + xf]
+        start += xf
+    else:
+        partner = a[start - xf:start]
+    xf = min(xf, end - start - 1)
+    body = a[start:end].copy()
+    if xf > 0:
+        t = np.linspace(0, np.pi / 2, xf)
+        body[-xf:] = body[-xf:] * np.cos(t) + partner[:xf] * np.sin(t)
+    body = np.clip(body, -1, 1)
+    # intro: everything before the loop point, unless it is silence
+    intro = a[:first]
+    if first == 0 or np.abs(intro).max() <= SILENCE:
+        intro = None
+    else:
+        intro = fade(intro[: len(intro) & ~1], True, False)
+    return intro, body[: len(body) & ~1]
+
+
 def build_track(t, mod, out, delta, nxt):
     """-> (intro bytes or None, body bytes, preview samples)."""
     path = os.path.join(mod, t["file"])
     if not os.path.isfile(path):
         sys.exit("tracks.txt:%d: %s not found" % (t["line"], path))
-    key = hashlib.sha1(open(path, "rb").read() + repr((t["loop"], t["gain"], t["start"], t["end"], TOOL_VERSION)).encode()).hexdigest()[:16]
+    key = hashlib.sha1(open(path, "rb").read() + repr((t["loop"], t["gain"], t["start"], t["end"], t["xfade"], TOOL_VERSION)).encode()).hexdigest()[:16]
     cache = {k: os.path.join(out, "%s_%s.bin" % (key, k)) for k in ("intro", "body")}
     prev = os.path.join(out, "preview", "%s.wav" % key)
     if os.path.isfile(cache["body"]) and os.path.isfile(prev):
@@ -123,18 +173,11 @@ def build_track(t, mod, out, delta, nxt):
 
     a = prepare_clip(path, t["start"], t["end"], t["gain"], "tracks.txt:%d" % t["line"])
 
-    split = 0
-    if t["loop"]:
-        split = int(round(t["loop"] * RATE)) & ~1
-        if not 0 < split < len(a) - RATE:
-            sys.exit("tracks.txt:%d: loop=%s is outside the track (%.1f s long)" % (t["line"], t["loop"], len(a) / RATE))
-    looping = t["loop"] is not None
-    parts = []
-    if split:
-        parts.append(("intro", fade(a[:split], True, True)))
-        parts.append(("body", fade(a[split:], True, True)))
+    if t["loop"] is None:
+        parts = [("body", fade(a, True, True))]
     else:
-        parts.append(("body", fade(a, True, True)))
+        intro, body = loop_parts(a, t["loop"], t["xfade"], t["line"])
+        parts = ([("intro", intro)] if intro is not None else []) + [("body", body)]
 
     decoded, blobs, source = [], {}, []
     for name, samples in parts:

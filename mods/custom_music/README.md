@@ -40,6 +40,7 @@ The debug menu's BGM entry lists the new tracks after the retail ones, by name.
    |--------|---------|
    | `name=` | Name in the debug menu, 18 characters of ASCII. Default: the file name |
    | `loop=` | Seconds into the track where the repeat starts (the part before plays once). `none` plays the track once. Default: the whole track repeats |
+   | `xfade=` | Seconds the end is crossfaded into the start of the repeat (default `0.01`). Raise it, e.g. `0.5`, for a track that ends in a long fade or a held note |
    | `overworld=yes` | Adds the track to the overworld's random draw |
    | `replace=` | A retail track to play this one instead: a number `0`-`16` or a name from [`include/bgm.h`](../../include/bgm.h) (`TITLE`, `DOJO_PRACTICE`, `BATTLE_THEME_A`, ...). One track per retail track |
    | `start=`, `end=` | Seconds to cut from the start / end of the file, for a shorter (smaller) song |
@@ -65,6 +66,8 @@ The game does not use the GBA's usual m4a/MP2K engine. It has a small software m
 - The retail tracks are lists of chunks. `SoundPlayFromList(list, index)` plays `list[index[0]]`; when a chunk ends the mixer plays the chunk named by the next `index` entry, and `-1` goes back to `index[0]`. A one-entry list with index `{0, -1}` repeats forever; that is how a custom track loops, with no gap beyond the decoder restart.
 - `SoundPlay(chunk, 0)` plays one chunk once and stops the channel at its end (`loop=none`).
 - An intro is the same channel started on the intro chunk instead: the mod starts the loop chunk through `SoundPlayFromList`, then (interrupts off) points the channel at the intro; when the intro ends the mixer follows the list into the loop chunk.
+
+**Seamless repeats.** A repeating track is cut at its first and last sound (leading and trailing silence would be a gap in every repeat). The repeating part starts at the loop point and ends with the file's last `xfade` seconds crossfaded (equal power) into the audio just before that point, which is what the first sample continues. Without `loop=` the repeat starts at the first sound, so it goes straight from the last note to the first. A given `loop=` is moved to the quietest sample within 5 ms, because the decoder restarts from zero there.
 
 Why 8 kHz mono: that is the mixer's output rate, and ADPCM chunks ignore the channel's pitch. A file is mixed to mono, resampled to 8000 Hz with an anti-alias filter, scaled, faded for 2 ms at every cut (the decoder restarts from zero at a cut) and encoded greedily (nearest of 16 deltas per sample). Retail music is the same format, so loudness matches it.
 
@@ -106,7 +109,7 @@ Please report issues in the repository's **Issues** tab.
 - Sound quality is that of the game's own music: mono, 8 kHz, 4-bit.
 - The ROM has to stay under 16 MB (the save EEPROM is mapped at `0x0D000000` for smaller ROMs), so the tool refuses more than 11 MB of music, about 23 minutes. Retail is 4 MB.
 - Names are ASCII; the debug menu has room for about 18 characters.
-- A looping track restarts the decoder at the seam; the 2 ms fade hides it, but a loop point on a loud note can still be heard as a small tick. Choose `loop=` at a quiet moment.
+- A looping track restarts the decoder at the seam. The repeat is cut at silence and crossfaded, so it is usually inaudible, but a loop point on a loud, steep part of the wave can still tick; move `loop=` a little or raise `xfade=`.
 - Checked in mGBA: the mixer's output buffer matches the tool's own decode (correlation 0.9999), retail tracks still use their own table, a replaced track (`TITLE`) plays through the title screen and the main menu, looping and the intro switch work, `loop=none` stops at the end, the overworld draw is uniform. The sound itself was not listened to.
 - Mods cannot combine with `compare`; the SHA1 differs by design.
 
