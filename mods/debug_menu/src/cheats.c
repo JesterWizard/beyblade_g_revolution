@@ -72,7 +72,7 @@ extern u32 *_0805A304(u32 *script, u32 *enabled);
 
 const char *CharacterName(u32 value)
 {
-    static char buf[12];
+    char *buf = gDebug.nameBuf; /* not a static: mod .bss would land on vanilla IWRAM */
     u32 portrait = value == 0 ? HERO_PORTRAIT : gCharacterLooks[value - 1].portrait;
     u32 n;
     s32 len = 0;

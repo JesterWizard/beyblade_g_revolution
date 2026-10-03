@@ -30,6 +30,11 @@ SECTIONS {
         __iwram_end = .;
     } > IWRAM
 
+    /* Mod C must not have .bss/COMMON: it would be linked here, on top of vanilla
+     * IWRAM (0x03000000 holds live game variables). Keep mod state in the EWRAM
+     * state page (mods/<name>/src/ram.s) or in a struct that lives there. */
+    ASSERT(__iwram_end == __iwram_start, "mod .bss/COMMON linked at 0x03000000, on vanilla IWRAM; move the static into the mod's EWRAM state")
+
     /* Optional insert after .rom_head: `ld --defsym=__rom_shift_bytes=0x1000`. */
 PROVIDE(__rom_shift_bytes = 0);
     INCLUDE rom_layout.ld

@@ -112,6 +112,7 @@ struct DebugState {
     u8 characterOn;
     u16 turbine; /* frames spent travelling the stadium edge since the last hit */
     u32 siphonRest; /* hundredths of a spin point Siphon has not paid out yet */
+    char nameBuf[12]; /* CharacterName's "NPC n" text */
 };
 
 extern struct DebugState gDebug;
