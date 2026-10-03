@@ -1,0 +1,8 @@
+# Finishers. See docs/modding.md for the format.
+
+# sub_08032A88 (blades in contact) resolves a clash with sub_0802FFAC and, when
+# somebody won it, shows the damage number with sub_08033630(damage, 80, 60,
+# index of the winner). This is the one place that has the damage and the winner
+# together, so the mod wraps it: it adds to the loser's blade damage (so a blade
+# can break) and knocks the loser back (so it can be rung out).
+call 0x08032B3C _08033630 FinishersClash

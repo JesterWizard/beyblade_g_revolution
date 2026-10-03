@@ -21,5 +21,6 @@
 #define MOD_SKIP_INTRO      1
 #define MOD_KEEP_BLADE      1
 #define MOD_FIXED_OPPONENTS 1
+#define MOD_FINISHERS       1
 
 #endif /* MODS_H */
