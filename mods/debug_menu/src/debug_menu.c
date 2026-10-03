@@ -380,7 +380,7 @@ void DebugItemRange(u32 item, s32 *lo, s32 *hi)
         *hi = MAX_MOVE_SPEED;
         break;
     case DBG_BGM:
-        *hi = BGM_TRACKS - 1;
+        *hi = BGM_TRACKS + CustomBgmCount() - 1;
         break;
     case DBG_CHARACTER:
         *hi = CHARACTER_COUNT;
@@ -455,7 +455,7 @@ static void OpenMenu(void)
     struct MainWork *work = gMainWorkPtr;
 
     /* Show the track that is actually playing. */
-    if (work->bgmTrack >= 0 && work->bgmTrack < BGM_TRACKS)
+    if (work->bgmTrack >= 0 && work->bgmTrack < BGM_TRACKS + CustomBgmCount())
         gDebug.value[DBG_BGM] = work->bgmTrack;
 
     sub_0804109C((struct MenuState *)&work->unk0530, (struct Unk4109CInput *)&sDebugPage);

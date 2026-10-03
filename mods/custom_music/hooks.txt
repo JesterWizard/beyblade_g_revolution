@@ -1,0 +1,14 @@
+# Custom music. See docs/modding.md for the format.
+
+# BgmPlay (sub_0805FED4) after it has stopped the old track and stored the new
+# number in r4: tracks 17+ (and any retail track tracks.txt replaces) are
+# played from the mod's data, everything else falls through to the retail
+# jump table. The hook takes the 16 bytes at 0x0805FEF4 (cmp r4, #0x10 ... mov pc, r0).
+0x0805FEF4 CustomBgmDispatch
+
+# The overworld picks its track with RandRange(6), then BgmPlay. Three places:
+# the map load (0x0803B336, 0x080465BC) and the day change (0x08043E2A).
+# Tracks marked overworld=yes join that draw.
+call 0x0803B336 sub_080628B4 CustomBgmRand
+call 0x08043E2A sub_080628B4 CustomBgmRand
+call 0x080465BC sub_080628B4 CustomBgmRand

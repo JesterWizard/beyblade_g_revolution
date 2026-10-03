@@ -168,6 +168,11 @@ s32 StadiumSteer(s32 speed);
 /* Display name of a track, or "?" when out of range. */
 const char *BgmName(unsigned int track);
 
+/* Tracks that mods/custom_music adds after the 17 retail ones (numbers BGM_TRACKS...).
+ * Without that mod the weak stubs in bgm_weak.s say there are none. */
+u32 CustomBgmCount(void);
+const char *CustomBgmName(u32 i);
+
 /* Name of character `value` (0 = the player). */
 const char *CharacterName(u32 value);
 

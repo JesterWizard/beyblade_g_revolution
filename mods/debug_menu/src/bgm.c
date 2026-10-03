@@ -21,5 +21,7 @@ const char *BgmName(unsigned int track)
     case BGM_FAILED_TO_LAUNCH: return "Failed to Launch";
     case BGM_LOST_BATTLE: return "Lost Battle";
     }
+    if (track >= BGM_TRACKS)
+        return CustomBgmName(track - BGM_TRACKS);
     return "?";
 }

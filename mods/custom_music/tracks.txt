@@ -1,0 +1,23 @@
+# Custom BGM tracks. Each line adds one track to the game's 17 (numbers 17, 18, ...).
+#
+#   track <file> [name=...] [loop=...] [overworld=yes] [replace=...] [gain=...]
+#
+#   <file>        path inside this folder: music/song.mp3, music/song.wav (anything
+#                 ffmpeg reads; a plain PCM .wav needs no ffmpeg)
+#   name=         shown in the debug menu (18 characters); default: the file name
+#   loop=         seconds into the track where the repeat starts (the start plays
+#                 once as an intro); loop=none plays the track once; default: the
+#                 whole track repeats
+#   overworld=yes adds the track to the random draw the overworld makes
+#   replace=      plays instead of a retail track: a number 0-16 or a name from
+#                 include/bgm.h (TITLE, DOJO_PRACTICE, BATTLE_THEME_A, ...)
+#   start=, end=  seconds to cut from the file's start / end (shorter song, smaller ROM)
+#   gain=         dB on top of the automatic loudness (the loudest peak is 98% full scale)
+#
+# The game mixes at 8000 Hz, so the music is turned into mono 8 kHz, 4-bit ADPCM:
+# about 4 KB per second, the quality of the game's own tracks. build/.../preview/*.wav
+# holds what the game will play. The ROM has to stay under 16 MB (about 11 MB of music).
+#
+# track music/my_song.mp3 name="My Song" overworld=yes
+# track music/boss.wav name="Boss Fight" loop=12.5 replace=BATTLE_THEME_E
+track music/Banjo-PilotEarlyCranky.wav name="Pilot Early Cranky"
