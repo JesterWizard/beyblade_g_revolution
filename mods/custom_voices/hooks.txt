@@ -1,0 +1,11 @@
+# Custom voices. See docs/modding.md for the format.
+
+# The player's blade is released: the launch state (9) calls
+# _0803CECC (the launch RPM; debug_menu hooks that bl at 0x0803C230), then stores
+# state 5. This hook takes the 16 bytes from the state store on (0x0803C234), plays
+# the `on=launch` voice, and runs the displaced instructions.
+0x0803C234 VoiceLaunchHook
+
+# SfxPlayInSlot (sub_080601C4): every sound effect goes through it. The replacement
+# plays a voice in place of an effect that voices.txt replaces, else the retail effect.
+sub_080601C4 SfxPlayInSlot__Voices

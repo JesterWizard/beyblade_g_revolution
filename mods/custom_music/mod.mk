@@ -6,7 +6,7 @@ MUSIC_BUILD := $(MOD_BUILDDIR)
 MUSIC_FILES := $(filter-out %/SIZES.md,$(wildcard $(MUSIC_DIR)/music/*))
 MOD_OBJS    += $(MUSIC_BUILD)/music_data.o
 
-$(MUSIC_BUILD)/music_data.s: $(MUSIC_DIR)/tools/gen_music.py $(MUSIC_DIR)/tracks.txt include/bgm.h baserom.gba $(MUSIC_FILES)
+$(MUSIC_BUILD)/music_data.s: $(MUSIC_DIR)/tools/gen_music.py tools/mod/gba_adpcm.py $(MUSIC_DIR)/tracks.txt include/bgm.h baserom.gba $(MUSIC_FILES)
 	@mkdir -p $(dir $@)
 	python3 $< $(MUSIC_DIR) $(MUSIC_BUILD)
 

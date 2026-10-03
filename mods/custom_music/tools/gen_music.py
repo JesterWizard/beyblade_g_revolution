@@ -19,165 +19,23 @@ decoder is the mixer routine in IWRAM (0x03004B74 area), two tables from the ROM
 and every byte is XORed with 0xEC. A new chunk starts from predictor 0, step 0.
 """
 
-import bisect
 import hashlib
-import io
 import math
 import os
 import re
 import shlex
 import shutil
-import struct
-import subprocess
 import sys
-import wave
 
 import numpy as np
-from scipy import signal
 
-RATE = 8000
-FADE = 16                    # samples faded at every cut (the decoder restarts from 0 there)
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "tools", "mod"))
+from gba_adpcm import (RATE, ROM_BUDGET, chunk, decode, encode, fade, human, load_tables,  # noqa: E402
+                       prepare_clip, repo_root, snr_db, write_preview, write_sizes)
+
 MAX_NAME = 18                # characters the debug menu has room for
 MAX_TRACKS = 200             # debug menu stores the BGM number in a u8 (17 retail + custom)
-ROM_BUDGET = 11 * 1024 * 1024  # the ROM must stay under 16 MB (EEPROM sits at 0x0D000000); retail is 4 MB
 TOOL_VERSION = "1"
-
-DELTA_TABLE, NEXT_TABLE, STEPS = 0x3D299C, 0x3D2FBC, 49
-
-
-def repo_root(mod):
-    return os.path.abspath(os.path.join(mod, "..", ".."))
-
-
-def load_tables(root):
-    rom = open(os.path.join(root, "baserom.gba"), "rb").read()
-    flat = struct.unpack_from("<%dh" % (STEPS * 16), rom, DELTA_TABLE)
-    delta = [flat[i * 16:(i + 1) * 16] for i in range(STEPS)]
-    nxt = [list(rom[NEXT_TABLE + i * 8:NEXT_TABLE + i * 8 + 8]) for i in range(STEPS)]
-    assert all(max(n) < STEPS for n in nxt), "baserom.gba is not the expected ROM"
-    for row in delta:
-        assert list(row[:8]) == sorted(row[:8]) and all(row[8 + k] == -row[k] for k in range(8)), "baserom.gba is not the expected ROM"
-    return delta, nxt
-
-
-# ---------------------------------------------------------------- ADPCM
-
-def encode(samples, delta, nxt):
-    """samples: floats in [-1, 1]. -> bytes, decoded samples (the predictor, +-2048)."""
-    mags = [list(row[:8]) for row in delta]
-    x = np.clip(np.round(np.asarray(samples) * 2047.0), -2048, 2047).astype(int).tolist()
-    if len(x) % 2:
-        x.append(0)
-    lr, st = 0, 0
-    out = bytearray()
-    dec = []
-    pending = None
-    for v in x:
-        m = mags[st]
-        d = v - lr
-        a = -d if d < 0 else d
-        k = bisect.bisect_left(m, a)
-        if k >= 8:
-            k = 7
-        elif k > 0 and a - m[k - 1] <= m[k] - a:
-            k -= 1
-        n = k | (8 if d < 0 else 0)
-        lr += delta[st][n]
-        lr = 2047 if lr > 2047 else (-2048 if lr < -2048 else lr)
-        st = nxt[st][k]
-        dec.append(lr)
-        if pending is None:
-            pending = n
-        else:
-            out.append(((pending << 4) | n) ^ 0xEC)
-            pending = None
-    return bytes(out), dec
-
-
-def decode(data, delta, nxt):
-    """The mixer's own decoder: bytes -> predictor values."""
-    lr, st = 0, 0
-    dec = []
-    for b in data:
-        b ^= 0xEC
-        for n in (b >> 4, b & 15):
-            lr += delta[st][n]
-            lr = 2047 if lr > 2047 else (-2048 if lr < -2048 else lr)
-            st = nxt[st][n & 7]
-            dec.append(lr)
-    return dec
-
-
-def chunk(data):
-    return struct.pack("<IIII", 0, len(data), 0, 0) + data + b"\0" * ((-len(data)) % 4)
-
-
-# ---------------------------------------------------------------- audio input
-
-def ffmpeg_exe():
-    for cand in ("ffmpeg",):
-        try:
-            subprocess.run([cand, "-version"], capture_output=True, check=True)
-            return cand
-        except (OSError, subprocess.CalledProcessError):
-            pass
-    try:
-        import imageio_ffmpeg
-        return imageio_ffmpeg.get_ffmpeg_exe()
-    except ImportError:
-        sys.exit("gen_music: this file needs ffmpeg to decode (install ffmpeg, or use a PCM .wav)")
-
-
-def read_wav(path):
-    with wave.open(path, "rb") as w:
-        ch, width, sr, n = w.getnchannels(), w.getsampwidth(), w.getframerate(), w.getnframes()
-        raw = w.readframes(n)
-    if width == 1:
-        a = (np.frombuffer(raw, np.uint8).astype(np.float32) - 128) / 128
-    elif width == 2:
-        a = np.frombuffer(raw, "<i2").astype(np.float32) / 32768
-    elif width == 3:
-        b = np.frombuffer(raw, np.uint8).reshape(-1, 3)
-        a = ((b[:, 0].astype(np.int32) | (b[:, 1].astype(np.int32) << 8) | (b[:, 2].astype(np.int32) << 16)) << 8 >> 8) / 8388608
-        a = a.astype(np.float32)
-    elif width == 4:
-        a = np.frombuffer(raw, "<i4").astype(np.float32) / 2147483648
-    else:
-        raise wave.Error("unsupported sample width")
-    return a.reshape(-1, ch).mean(axis=1), sr
-
-
-def load_audio(path):
-    """-> mono float32 samples at 8000 Hz."""
-    if path.lower().endswith(".wav"):
-        try:
-            a, sr = read_wav(path)
-        except (wave.Error, EOFError):
-            a = None  # float / extensible WAV: let ffmpeg have it
-        if a is not None:
-            return resample(a, sr)
-    cmd = [ffmpeg_exe(), "-v", "error", "-i", path, "-vn", "-ac", "1", "-ar", "48000", "-f", "f32le", "pipe:1"]
-    r = subprocess.run(cmd, capture_output=True)
-    if r.returncode != 0 or not r.stdout:
-        sys.exit("gen_music: ffmpeg could not read %s: %s" % (path, r.stderr.decode(errors="replace").strip()))
-    return resample(np.frombuffer(r.stdout, "<f4"), 48000)
-
-
-def resample(a, sr):
-    if sr != RATE:
-        g = math.gcd(sr, RATE)
-        a = signal.resample_poly(a, RATE // g, sr // g)
-    return a.astype(np.float64)
-
-
-def fade(a, head, tail):
-    a = a.copy()
-    r = np.linspace(0, 1, FADE, endpoint=False)
-    if head:
-        a[:FADE] *= r
-    if tail:
-        a[-FADE:] *= r[::-1]
-    return a
 
 
 # ---------------------------------------------------------------- tracks.txt
@@ -263,23 +121,7 @@ def build_track(t, mod, out, delta, nxt):
         intro = open(cache["intro"], "rb").read() if os.path.isfile(cache["intro"]) else None
         return intro, open(cache["body"], "rb").read(), prev
 
-    a = load_audio(path)
-    if len(a) < RATE:
-        sys.exit("tracks.txt:%d: %s is shorter than a second" % (t["line"], t["file"]))
-    first = int(round(t["start"] * RATE))
-    last = len(a) if t["end"] is None else int(round(t["end"] * RATE))
-    if not 0 <= first < last <= len(a):
-        sys.exit("tracks.txt:%d: start=%s end=%s is outside the track (%.1f s long)" % (t["line"], t["start"], t["end"], len(a) / RATE))
-    a = a[first:last]
-    if len(a) < RATE:
-        sys.exit("tracks.txt:%d: %s is shorter than a second after start/end" % (t["line"], t["file"]))
-    a = a - a.mean()
-    peak = float(np.abs(a).max())
-    if peak > 0:
-        a = a * (0.98 / peak)
-    a = np.clip(a * 10 ** (t["gain"] / 20), -1, 1)
-    if len(a) % 2:
-        a = a[:-1]
+    a = prepare_clip(path, t["start"], t["end"], t["gain"], "tracks.txt:%d" % t["line"])
 
     split = 0
     if t["loop"]:
@@ -302,42 +144,14 @@ def build_track(t, mod, out, delta, nxt):
         open(cache[name], "wb").write(blobs[name])
         decoded += dec
         source += list(samples)
-    src = np.array(source) * 2047.0
-    err = src - np.array(decoded[:len(src)])
-    print("gen_music: %s encoded, signal-to-noise %.1f dB" % (t["file"], 10 * math.log10(max((src ** 2).sum(), 1) / max((err ** 2).sum(), 1))))
+    print("gen_music: %s encoded, signal-to-noise %.1f dB" % (t["file"], snr_db(source, decoded)))
     if "intro" not in blobs and os.path.isfile(cache["intro"]):
         os.remove(cache["intro"])
 
-    os.makedirs(os.path.dirname(prev), exist_ok=True)
-    pcm = (np.array(decoded, dtype=np.int32) * 16).astype("<i2")
-    with wave.open(prev, "wb") as w:
-        w.setnchannels(1)
-        w.setsampwidth(2)
-        w.setframerate(RATE)
-        w.writeframes(pcm.tobytes())
+    write_preview(prev, decoded)
     return blobs.get("intro"), blobs["body"], prev
 
 
-def human(n):
-    return "%.2f MB" % (n / 2**20) if n >= 2**20 else "%.1f KB" % (n / 1024)
-
-
-def write_sizes(path, rows):
-    """music/SIZES.md: each file's size on disk against what it takes in the ROM."""
-    lines = ["# Music sizes", "",
-             "Written by `tools/gen_music.py` on every build; do not edit.",
-             "*Original* is the file in this folder, *in game* the chunks in the ROM (16-byte header + 4-bit ADPCM, mono, 8000 Hz).", ""]
-    if rows:
-        lines += ["| Track | Name | File | Original | In game | Reduction |", "|---:|---|---|---:|---:|---:|"]
-        for n, name, f, orig, ingame in rows:
-            lines.append("| %d | %s | %s | %s | %s | %.1f%% |" % (n, name, os.path.basename(f), human(orig), human(ingame), 100 * (1 - ingame / orig)))
-        to, ti = sum(r[3] for r in rows), sum(r[4] for r in rows)
-        lines.append("| | **Total** | | **%s** | **%s** | **%.1f%%** |" % (human(to), human(ti), 100 * (1 - ti / to)))
-    else:
-        lines.append("No tracks in `tracks.txt` yet.")
-    text = "\n".join(lines) + "\n"
-    if not os.path.isfile(path) or open(path).read() != text:
-        open(path, "w").write(text)
 
 
 def main():
@@ -374,7 +188,7 @@ def main():
         print("gen_music: track %d  %-18s %6.1f s  %4d KB  preview %s" % (17 + i, display_name(t), secs, (len(body) + (len(intro) if intro else 0)) // 1024, listen))
     if total > ROM_BUDGET:
         sys.exit("gen_music: %.1f MB of music; the ROM has to stay under 16 MB, so %.1f MB is the limit" % (total / 2**20, ROM_BUDGET / 2**20))
-    write_sizes(os.path.join(mod, "music", "SIZES.md"), rows)
+    write_sizes(os.path.join(mod, "music", "SIZES.md"), rows, "Music sizes", "Track")
     open(os.path.join(out, "music_data.s"), "w").write("\n".join(lines + [""] + tail) + "\n")
 
 

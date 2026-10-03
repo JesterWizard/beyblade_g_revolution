@@ -1,0 +1,19 @@
+# Custom voice clips. Each line adds one clip.
+#
+#   voice <file> [name=...] [on=launch] [replace=...] [gain=...] [start=...] [end=...]
+#
+#   <file>        path inside this folder: voices/rip.wav, voices/rip.mp3 (anything ffmpeg
+#                 reads; a plain PCM .wav needs no ffmpeg)
+#   name=         only used in voices/SIZES.md; default: the file name
+#   on=launch     plays when the player's blade is launched. Several clips with on=launch:
+#                 one is picked at random each launch
+#   replace=      plays instead of a retail sound effect, 0-15 (the effects are written to
+#                 build/bbgr/mod/custom_voices/sfx/sfx00.wav ... to listen to which is which)
+#   gain=         dB on top of the automatic loudness (the loudest peak is 98% full scale)
+#   start=, end=  seconds to cut from the file's start / end
+#
+# The game mixes at 8000 Hz, so a clip becomes mono 8 kHz, 4-bit ADPCM (about 4 KB per
+# second). Its effects and music are mixed in the same eight channels.
+#
+# voice voices/let_it_rip.wav name="Let it rip" on=launch
+# voice voices/hit.wav name="Hit" replace=3
