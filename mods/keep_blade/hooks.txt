@@ -1,0 +1,9 @@
+# Keep blade. See docs/modding.md for the format.
+
+# sub_08037F98 (battle result), loss branch. Retail tests the two scores at
+# 0x080380E0 (`cmp r2, r0; bcs` = draw / win) and, below that, spares the blade
+# only in battle modes 11, 8, 7, 10 and 9 (each `beq 0x08038144`, which sets the
+# "kept" result). Every other mode falls through to 0x080380FC, where the blade
+# is taken. Turn that first instruction (`movs r0, #1`) into `b 0x08038144`, so a
+# loss in any mode takes the same spare exit.
+patch 0x080380FC 22 E0 expect 01 20
