@@ -1,0 +1,8 @@
+# Charge levels: what each attack charge level does. Edit a number and run `make`.
+# Light, medium and heavy are the three charge levels of an attack (the counter
+# at release: 0-29, 30-59, 60-120). The retail values are in brackets.
+
+# Frames of recovery after an attack before the next one is allowed.
+recovery_light  = 40     # (75)
+recovery_medium = 80     # (90)
+recovery_heavy  = 120    # (120)

@@ -44,6 +44,7 @@ It is enabled by `MOD_FINISHERS` in [`mods/mods.h`](../mods.h); set it to 0 to g
 
 ## 🐛 Limitations & Bugs
 
+
 - Checked in the headless emulator on the first duel of a new game with the attack stat raised: at the earlier, four times stronger setting a 32-damage hit added 16% wear and six hits broke the opponent (now 2%, about 50 hits) (the result screen shows the credits for a win), and a green or red hit that landed on a blade near the wall rang it out about 20 frames after the clash scene. Not played through by hand.
 - The knockback is applied when the clash is resolved, then the clash scene plays, so the throw only becomes visible when it ends.
 - Throwing the player is on by default, so a charged hit from the opponent next to the wall can end a match at once. The retail AI does not know about this and does not try to avoid or aim for it.
